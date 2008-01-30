@@ -1,0 +1,6 @@
+E:\Projects\Ares\bin\Release\Ares.Data.dll
+E:\Projects\Ares\bin\Release\Ares.Data.pdb
+E:\Projects\Ares\bin\Release\Ares.Data.xml
+E:\Projects\Ares\Ares.Data\obj\Release\ResolveAssemblyReference.cache
+E:\Projects\Ares\Ares.Data\obj\Release\Ares.Data.dll
+E:\Projects\Ares\Ares.Data\obj\Release\Ares.Data.pdb
