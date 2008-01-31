@@ -83,7 +83,7 @@ namespace Ares.Data
         /// <summary>
         /// Removes a sound choice from the library.
         /// </summary>
-        void RemoveElement(int ID);
+        void RemoveElement(int id);
 
         /// <summary>
         /// Returns all sound choices in the library.

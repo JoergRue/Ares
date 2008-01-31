@@ -14,11 +14,11 @@ namespace Ares.Data
         {
             get
             {
-                return mParallelElement.Repeat;
+                return m_ParallelElement.Repeat;
             }
             set
             {
-                mParallelElement.Repeat = value;
+                m_ParallelElement.Repeat = value;
             }
         }
 
@@ -26,11 +26,11 @@ namespace Ares.Data
         {
             get
             {
-                return mParallelElement.FixedIntermediateDelay;
+                return m_ParallelElement.FixedIntermediateDelay;
             }
             set
             {
-                mParallelElement.FixedIntermediateDelay = value;
+                m_ParallelElement.FixedIntermediateDelay = value;
             }
         }
 
@@ -38,11 +38,11 @@ namespace Ares.Data
         {
             get 
             { 
-                return mParallelElement.MaximumRandomIntermediateDelay; 
+                return m_ParallelElement.MaximumRandomIntermediateDelay; 
             }
             set
             {
-                mParallelElement.MaximumRandomIntermediateDelay = value;
+                m_ParallelElement.MaximumRandomIntermediateDelay = value;
             }
         }
 
@@ -54,11 +54,11 @@ namespace Ares.Data
         {
             get
             {
-                return mSequentialElement.FixedStartDelay;
+                return m_SequentialElement.FixedStartDelay;
             }
             set
             {
-                mSequentialElement.FixedStartDelay = value;
+                m_SequentialElement.FixedStartDelay = value;
             }
         }
 
@@ -66,11 +66,11 @@ namespace Ares.Data
         {
             get 
             { 
-                return mSequentialElement.MaximumRandomStartDelay; 
+                return m_SequentialElement.MaximumRandomStartDelay; 
             }
             set
             {
-                mSequentialElement.MaximumRandomStartDelay = value;
+                m_SequentialElement.MaximumRandomStartDelay = value;
             }
         }
 
@@ -80,17 +80,17 @@ namespace Ares.Data
 
         public IChoiceElement AddElement(IElement element)
         {
-            return mThirdContainer.AddElement(element);
+            return m_ThirdContainer.AddElement(element);
         }
 
         public void RemoveElement(int ID)
         {
-            mThirdContainer.RemoveElement(ID);
+            m_ThirdContainer.RemoveElement(ID);
         }
 
         public IList<IChoiceElement> GetElements()
         {
-            return mThirdContainer.GetElements();
+            return m_ThirdContainer.GetElements();
         }
 
         #endregion
@@ -106,7 +106,8 @@ namespace Ares.Data
             set
             {
                 m_Trigger = value;
-                m_Trigger.TargetElement = mFirstContainer;
+                m_Trigger.TargetElement = m_FirstContainer;
+                m_Trigger.StopMusic = true;
             }
         }
 
@@ -121,26 +122,31 @@ namespace Ares.Data
 
         #endregion
 
+        public override void Visit(IElementVisitor visitor)
+        {
+            visitor.VisitSequentialContainer(m_FirstContainer);
+        }
+        
         internal RandomBackgroundMusicList(Int32 id, String title)
             : base(id)
         {
             Title = title;
-            mThirdContainer = DataModule.ElementFactory.CreateChoiceContainer(title + "_Choices");
-            mSecondContainer = DataModule.ElementFactory.CreateParallelContainer(title + "_Repeat");
-            mFirstContainer = DataModule.ElementFactory.CreateSequentialContainer(title + "_Delay");
-            mParallelElement = mSecondContainer.AddElement(mThirdContainer);
-            mSequentialElement = mFirstContainer.AddElement(mSecondContainer);
-            mParallelElement.Repeat = true;
+            m_ThirdContainer = DataModule.ElementFactory.CreateChoiceContainer(title + "_Choices");
+            m_SecondContainer = DataModule.ElementFactory.CreateParallelContainer(title + "_Repeat");
+            m_FirstContainer = DataModule.ElementFactory.CreateSequentialContainer(title + "_Delay");
+            m_ParallelElement = m_SecondContainer.AddElement(m_ThirdContainer);
+            m_SequentialElement = m_FirstContainer.AddElement(m_SecondContainer);
+            m_ParallelElement.Repeat = true;
         }
 
         private ITrigger m_Trigger;
 
-        private IElementContainer<ISequentialElement> mFirstContainer;
-        private IElementContainer<IParallelElement> mSecondContainer;
-        private IElementContainer<IChoiceElement> mThirdContainer;
+        private IElementContainer<ISequentialElement> m_FirstContainer;
+        private IElementContainer<IParallelElement> m_SecondContainer;
+        private IElementContainer<IChoiceElement> m_ThirdContainer;
 
-        private ISequentialElement mSequentialElement;
-        private IParallelElement mParallelElement;
+        private ISequentialElement m_SequentialElement;
+        private IParallelElement m_ParallelElement;
 
     }
 }

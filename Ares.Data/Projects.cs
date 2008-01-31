@@ -25,6 +25,17 @@ namespace Ares.Data
             return new List<IModeElement>(m_Elements);
         }
 
+        public bool ContainsKeyTrigger(Int32 keyCode)
+        {
+            return GetTriggeredElement(keyCode) != null;
+        }
+
+        public IModeElement GetTriggeredElement(Int32 keyCode)
+        {
+            return m_Elements.Find(e => e.Trigger.TriggerType == TriggerType.Key
+                && (e as IKeyTrigger).KeyCode == keyCode);
+        }
+
         internal Mode(String title)
         {
             Title = title;
@@ -61,12 +72,37 @@ namespace Ares.Data
             return new List<IMode>(m_Modes);
         }
 
+        public bool ContainsKeyMode(Int32 keyCode)
+        {
+            return GetMode(keyCode) != null;
+        }
+
+        public IMode GetMode(Int32 keyCode)
+        {
+            return m_Modes.Find(m => m.KeyCode == keyCode);
+        }
+
+        public Int32 GetVolume(VolumeTarget target)
+        {
+            return m_Volumes[(int)target];
+        }
+
+        public void SetVolume(VolumeTarget target, Int32 value)
+        {
+            if (value < 0 || value > 100) throw new ArgumentException(StringResources.InvalidVolume);
+            m_Volumes[(int)target] = value;
+        }
+
         internal Project(String title)
         {
             Title = title;
             m_Modes = new List<IMode>();
+            m_Volumes = new Int32[3];
+            for (int i = 0; i < m_Volumes.Length; ++i) m_Volumes[i] = 100;
         }
 
         private List<IMode> m_Modes;
+        private Int32[] m_Volumes;
+
     }
 }

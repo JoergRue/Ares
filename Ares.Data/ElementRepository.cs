@@ -11,27 +11,27 @@ namespace Ares.Data
         /// <summary>
         /// Returns a specific element. Returns null if the element isn't found.
         /// </summary>
-        /// <param name="ID">ID of the element.</param>
-        IElement GetElement(int ID);
+        /// <param name="Id">ID of the element.</param>
+        IElement GetElement(int id);
         /// <summary>
         /// Removes an element from the repository. No effect if the element isn't found.
         /// </summary>
-        /// <param name="ID">ID of the element.</param>
-        void DeleteElement(int ID);
+        /// <param name="Id">ID of the element.</param>
+        void DeleteElement(int id);
     }
 
     class ElementRepository : IElementRepository
     {
-        public IElement GetElement(int ID)
+        public IElement GetElement(int id)
         {
             IElement value;
-            m_Elements.TryGetValue(ID, out value);
+            m_Elements.TryGetValue(id, out value);
             return value;
         }
 
-        public void DeleteElement(int ID)
+        public void DeleteElement(int id)
         {
-            m_Elements.Remove(ID);
+            m_Elements.Remove(id);
         }
 
         internal ElementRepository()

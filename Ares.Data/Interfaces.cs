@@ -4,6 +4,29 @@ using System.Collections.Generic;
 namespace Ares.Data
 {
     /// <summary>
+    /// Visitor pattern on elements.
+    /// </summary>
+    public interface IElementVisitor
+    {
+        /// <summary>
+        /// Visit a file element.
+        /// </summary>
+        void VisitFileElement(IFileElement fileElement);
+        /// <summary>
+        /// Visit a sequential container.
+        /// </summary>
+        void VisitSequentialContainer(IElementContainer<ISequentialElement> sequentialContainer);
+        /// <summary>
+        /// Visit a parallel container.
+        /// </summary>
+        void VisitParallelContainer(IElementContainer<IParallelElement> parallelContainer);
+        /// <summary>
+        /// Visit a choice container.
+        /// </summary>
+        void VisitChoiceContainer(IElementContainer<IChoiceElement> choiceContainer);
+    }
+
+    /// <summary>
     /// Basic interface for an audio element.
     /// </summary>
     public interface IElement
@@ -11,7 +34,7 @@ namespace Ares.Data
         /// <summary>
         /// Unique ID with which the element can be referenced.
         /// </summary>
-        int ID { get; }
+        int Id { get; }
         /// <summary>
         /// Title of the element.
         /// </summary>
@@ -21,6 +44,30 @@ namespace Ares.Data
         /// Clones the element; makes a shallow copy for container elements.
         /// </summary>
         IElement Clone();
+
+        /// <summary>
+        /// Visitor pattern.
+        /// </summary>
+        void Visit(IElementVisitor visitor);
+    }
+
+    /// <summary>
+    /// A basic classification of files.
+    /// </summary>
+    public enum BasicFileCategory
+    {
+        /// <summary>
+        /// Classification unknown.
+        /// </summary>
+        Unknown,
+        /// <summary>
+        /// A music file.
+        /// </summary>
+        MusicFile,
+        /// <summary>
+        /// A sound file.
+        /// </summary>
+        SoundFile
     }
 
     /// <summary>
@@ -36,6 +83,10 @@ namespace Ares.Data
         /// The full path of the file.
         /// </summary>
         String FilePath { get; set; }
+        /// <summary>
+        /// The category of the file.
+        /// </summary>
+        BasicFileCategory FileCategory { get; }
     }
 
     /// <summary>
@@ -138,7 +189,7 @@ namespace Ares.Data
         /// <summary>
         /// Removes an element from the container. Has no effect if the element is not in the container.
         /// </summary>
-        void RemoveElement(int ID);
+        void RemoveElement(int id);
 
         /// <summary>
         /// Returns a shallow copy of the elements in the container.
@@ -175,6 +226,16 @@ namespace Ares.Data
         /// The element which is triggered
         /// </summary>
         IElement TargetElement { get; set; }
+
+        /// <summary>
+        /// Shall sound be stopped before triggering the target?
+        /// </summary>
+        bool StopSounds { get; set; }
+
+        /// <summary>
+        /// Shall music be stopped before triggering the target?
+        /// </summary>
+        bool StopMusic { get; set; }
     }
 
     /// <summary>
@@ -196,7 +257,7 @@ namespace Ares.Data
         /// <summary>
         /// ID of the element which triggers
         /// </summary>
-        Int32 ElementID { get; set; }
+        Int32 ElementId { get; set; }
     }
 
 }

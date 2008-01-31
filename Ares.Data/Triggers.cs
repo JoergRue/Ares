@@ -6,6 +6,16 @@ namespace Ares.Data
     abstract class Trigger
     {
         public IElement TargetElement { get; set; }
+
+        public bool StopMusic { get; set; }
+
+        public bool StopSounds { get; set; }
+
+        protected Trigger()
+        {
+            StopMusic = false;
+            StopSounds = false;
+        }
     }
 
     [Serializable]
@@ -26,11 +36,11 @@ namespace Ares.Data
     {
         public TriggerType TriggerType { get { return TriggerType.ElementFinished; } }
 
-        public Int32 ElementID { get; set; }
+        public Int32 ElementId { get; set; }
 
         internal ElementFinishTrigger()
         {
-            ElementID = 0;
+            ElementId = 0;
         }
     }
 }

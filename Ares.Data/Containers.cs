@@ -16,9 +16,9 @@ namespace Ares.Data
     [Serializable]
     abstract class ContainerElement
     {
-        public int ID
+        public int Id
         {
-            get { return m_Element.ID; }
+            get { return m_Element.Id; }
         }
 
         public string Title
@@ -38,6 +38,11 @@ namespace Ares.Data
             return (IElement) MemberwiseClone();
         }
 
+        public void Visit(IElementVisitor visitor)
+        {
+            m_Element.Visit(visitor);
+        }
+
         protected ContainerElement()
         {
         }
@@ -48,7 +53,7 @@ namespace Ares.Data
     }
 
     [Serializable]
-    class Container<I, T> : ContainerBase where I : IContainerElement where T : ContainerElement, I, new()
+    abstract class Container<I, T> : ContainerBase where I : IContainerElement where T : ContainerElement, I, new()
     {
         public I AddElement(IElement element)
         {
@@ -60,7 +65,7 @@ namespace Ares.Data
 
         public void RemoveElement(int ID)
         {
-            T element = m_Elements.Find(e => e.ID == ID);
+            T element = m_Elements.Find(e => e.Id == ID);
             if (element != null)
             {
                 m_Elements.Remove(element);
@@ -100,6 +105,11 @@ namespace Ares.Data
 
     class SequentialContainer : Container<ISequentialElement, SequentialElement>, IElementContainer<ISequentialElement>
     {
+        public override void Visit(IElementVisitor visitor)
+        {
+            visitor.VisitSequentialContainer(this);
+        }
+
         internal SequentialContainer(int ID, String title)
             : base(ID, title)
         {
@@ -120,6 +130,11 @@ namespace Ares.Data
 
     class ChoiceContainer : Container<IChoiceElement, ChoiceElement>, IElementContainer<IChoiceElement>
     {
+        public override void Visit(IElementVisitor visitor)
+        {
+            visitor.VisitChoiceContainer(this);
+        }
+
         internal ChoiceContainer(int ID, String title)
             : base(ID, title)
         {
@@ -151,6 +166,12 @@ namespace Ares.Data
 
     class ParallelContainer : Container<IParallelElement, ParallelElement>, IElementContainer<IParallelElement>
     {
+
+        public override void Visit(IElementVisitor visitor)
+        {
+            visitor.VisitParallelContainer(this);
+        }
+
         internal ParallelContainer(int ID, String title)
             : base(ID, title)
         {

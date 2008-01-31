@@ -78,6 +78,7 @@ namespace Ares.Data
             {
                 m_Trigger = value;
                 m_Trigger.TargetElement = mFirstContainer;
+                m_Trigger.StopMusic = true;
             }
         }
 
@@ -92,6 +93,11 @@ namespace Ares.Data
 
         #endregion
 
+        public override void Visit(IElementVisitor visitor)
+        {
+            visitor.VisitParallelContainer(mFirstContainer);
+        }
+        
         internal SequentialBackgroundMusicList(Int32 id, String title)
             : base(id)
         {

@@ -33,6 +33,35 @@ namespace Ares.Data
         /// Returns all elements in the mode.
         /// </summary>
         IList<IModeElement> GetElements();
+
+        /// <summary>
+        /// Returns whether a certain key triggers an element in this mode.
+        /// </summary>
+        bool ContainsKeyTrigger(Int32 keyCode);
+
+        /// <summary>
+        /// Returns the element which is triggered by a certain key.
+        /// </summary>
+        IModeElement GetTriggeredElement(Int32 keyCode);
+    }
+
+    /// <summary>
+    /// Global Volumes which can be set.
+    /// </summary>
+    public enum VolumeTarget
+    {
+        /// <summary>
+        /// Sound effects.
+        /// </summary>
+        Sounds = 0,
+        /// <summary>
+        /// Music files.
+        /// </summary>
+        Music = 1,
+        /// <summary>
+        /// Overall volume.
+        /// </summary>
+        Both = 2
     }
 
     /// <summary>
@@ -69,5 +98,25 @@ namespace Ares.Data
         /// Returns all modes in the project.
         /// </summary>
         IList<IMode> GetModes();
+
+        /// <summary>
+        /// Returns whether the project contains a mode for a certain key.
+        /// </summary>
+        bool ContainsKeyMode(Int32 keyCode);
+
+        /// <summary>
+        /// Returns the mode for a certain key.
+        /// </summary>
+        IMode GetMode(Int32 keyCode);
+
+        /// <summary>
+        /// Returns a volume setting.
+        /// </summary>
+        Int32 GetVolume(VolumeTarget target);
+
+        /// <summary>
+        /// Sets a volume.
+        /// </summary>
+        void SetVolume(VolumeTarget target, Int32 value);
     }
 }

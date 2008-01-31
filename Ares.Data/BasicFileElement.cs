@@ -5,11 +5,17 @@ namespace Ares.Data
     [Serializable]
     class BasicFileElement : ElementBase, IElement, IFileElement
     {
-        internal BasicFileElement(int ID, String filePath)
+        public override void Visit(IElementVisitor visitor)
+        {
+            visitor.VisitFileElement(this);
+        }
+
+        internal BasicFileElement(int ID, String filePath, BasicFileCategory category)
             : base(ID)
         {
             FilePath = filePath;
             Title = FileName;
+            m_FileCategory = category;
         }
 
         public String FileName { get { return m_FileName; } }
@@ -21,8 +27,11 @@ namespace Ares.Data
             }
         }
 
+        public BasicFileCategory FileCategory { get { return m_FileCategory; } }
+
         private String m_FileName;
         private String m_FilePath;
+        private BasicFileCategory m_FileCategory;
 
     }
 }

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Ares.Data
 {
@@ -96,6 +94,11 @@ namespace Ares.Data
 
         #endregion
 
+        public override void Visit(IElementVisitor visitor)
+        {
+            visitor.VisitChoiceContainer(m_Container);
+        }
+        
         internal BackgroundSoundChoice(Int32 id, String title)
             : base(id)
         {
@@ -121,11 +124,11 @@ namespace Ares.Data
 
         public void RemoveElement(Int32 id)
         {
-            IBackgroundSoundChoice element = m_Elements.Find(e => e.ID == id);
+            IBackgroundSoundChoice element = m_Elements.Find(e => e.Id == id);
             if (element != null)
             {
                 m_Elements.Remove(element);
-                m_Container.RemoveElement((element as BackgroundSoundChoice).ParallelElement.ID);
+                m_Container.RemoveElement((element as BackgroundSoundChoice).ParallelElement.Id);
             }
         }
 
@@ -155,11 +158,17 @@ namespace Ares.Data
             {
                 m_Trigger = value;
                 m_Trigger.TargetElement = m_Container;
+                m_Trigger.StopSounds = true;
             }
         }
 
         #endregion
-        
+
+        public override void Visit(IElementVisitor visitor)
+        {
+            visitor.VisitParallelContainer(m_Container);
+        }
+
         internal BackgroundSounds(Int32 id, String title)
             : base(id)
         {

@@ -11,8 +11,7 @@ namespace Ares.Data
         /// <summary>
         /// Creates a file element.
         /// </summary>
-        /// <param name="filePath">The path to the file.</param>
-        IFileElement CreateFileElement(String filePath);
+        IFileElement CreateFileElement(String filePath, BasicFileCategory category);
 
         /// <summary>
         /// Creates a choice container
@@ -57,9 +56,9 @@ namespace Ares.Data
 
     class ElementFactory : IElementFactory
     {
-        public IFileElement CreateFileElement(String filePath)
+        public IFileElement CreateFileElement(String filePath, BasicFileCategory category)
         {
-            return new BasicFileElement(GetNextID(), filePath);
+            return new BasicFileElement(GetNextID(), filePath, category);
         }
 
         public IElementContainer<IChoiceElement> CreateChoiceContainer(String title)
@@ -104,7 +103,7 @@ namespace Ares.Data
 
         internal ElementFactory()
         {
-            m_NextID = 0;
+            // m_NextID = 0;
         }
 
         internal int GetNextID()
@@ -118,7 +117,7 @@ namespace Ares.Data
 
     abstract class ElementBase : IElement
     {
-        public int ID { get { return m_ID; } }
+        public int Id { get { return m_ID; } }
 
         public String Title { get; set; }
 
@@ -128,6 +127,8 @@ namespace Ares.Data
             clone.m_ID = DataModule.TheElementFactory.GetNextID();
             return clone;
         }
+
+        public abstract void Visit(IElementVisitor visitor);
 
         protected ElementBase(int ID)
         {
