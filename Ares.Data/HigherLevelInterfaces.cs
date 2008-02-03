@@ -28,6 +28,17 @@ namespace Ares.Data
         /// The trigger for the element.
         /// </summary>
         ITrigger Trigger { get; set; }
+
+        /// <summary>
+        /// Whether the element is currently active.
+        /// </summary>
+        bool IsPlaying { get; set; }
+
+        /// <summary>
+        /// Returns the first element in the mode (the one which will be 
+        /// attached to the trigger.
+        /// </summary>
+        IElement StartElement { get; }
     }
 
     /// <summary>

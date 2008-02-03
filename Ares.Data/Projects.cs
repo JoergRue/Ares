@@ -51,9 +51,17 @@ namespace Ares.Data
     {
         public String Title { get; set; }
 
-        public String FileName { get; set; }
+        public String FileName 
+        {
+            get { return m_FileName; }
+            set { m_FileName = value; }
+        }
 
-        public bool Changed { get; set; }
+        public bool Changed 
+        {
+            get { return m_Changed; }
+            set { m_Changed = value; }
+        }
 
         public IMode AddMode(String title)
         {
@@ -99,10 +107,17 @@ namespace Ares.Data
             m_Modes = new List<IMode>();
             m_Volumes = new Int32[3];
             for (int i = 0; i < m_Volumes.Length; ++i) m_Volumes[i] = 100;
+            FileName = "";
+            Changed = false;
         }
 
         private List<IMode> m_Modes;
         private Int32[] m_Volumes;
+
+        [NonSerialized]
+        private String m_FileName;
+        [NonSerialized]
+        private bool m_Changed;
 
     }
 }

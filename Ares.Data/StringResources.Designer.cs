@@ -61,6 +61,15 @@ namespace Ares.Data {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You must specify a file name first!.
+        /// </summary>
+        internal static string FileNameMustBeSet {
+            get {
+                return ResourceManager.GetString("FileNameMustBeSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Volume must be a percent specification!.
         /// </summary>
         internal static string InvalidVolume {

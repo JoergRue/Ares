@@ -110,13 +110,14 @@ namespace Ares.Data
         private IElementContainer<IChoiceElement> m_Container;
     }
 
-    class BackgroundSounds : ElementBase, IBackgroundSounds
+    class BackgroundSounds : ModeElementBase, IBackgroundSounds
     {
         public IBackgroundSoundChoice AddElement(IElement element)
         {
             BackgroundSoundChoice choice = new BackgroundSoundChoice(
                 DataModule.TheElementFactory.GetNextID(), element.Title);
             IParallelElement parallelElement = m_Container.AddElement(choice);
+            parallelElement.Repeat = true;
             choice.ParallelElement = parallelElement;
             m_Elements.Add(choice);
             return choice;
@@ -161,6 +162,8 @@ namespace Ares.Data
                 m_Trigger.StopSounds = true;
             }
         }
+
+        public IElement StartElement { get { return m_Container; } }
 
         #endregion
 

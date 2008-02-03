@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Ares.Data
 {
-    class SequentialBackgroundMusicList : ElementBase, ISequentialBackgroundMusicList
+    class SequentialBackgroundMusicList : ModeElementBase, ISequentialBackgroundMusicList
     {
         #region IRepeatableElement Members
 
@@ -13,11 +13,11 @@ namespace Ares.Data
         {
             get
             {
-                return mParallelElement.Repeat;
+                return m_ParallelElement.Repeat;
             }
             set
             {
-                mParallelElement.Repeat = value;
+                m_ParallelElement.Repeat = value;
             }
         }
 
@@ -25,11 +25,11 @@ namespace Ares.Data
         {
             get
             {
-                return mParallelElement.FixedIntermediateDelay;
+                return m_ParallelElement.FixedIntermediateDelay;
             }
             set
             {
-                mParallelElement.FixedIntermediateDelay = value;
+                m_ParallelElement.FixedIntermediateDelay = value;
             }
         }
 
@@ -37,11 +37,11 @@ namespace Ares.Data
         {
             get 
             { 
-                return mParallelElement.MaximumRandomIntermediateDelay; 
+                return m_ParallelElement.MaximumRandomIntermediateDelay; 
             }
             set
             {
-                mParallelElement.MaximumRandomIntermediateDelay = value;
+                m_ParallelElement.MaximumRandomIntermediateDelay = value;
             }
         }
 
@@ -51,17 +51,17 @@ namespace Ares.Data
 
         public ISequentialElement AddElement(IElement element)
         {
-            return mSecondContainer.AddElement(element);
+            return m_SecondContainer.AddElement(element);
         }
 
         public void RemoveElement(int ID)
         {
-            mSecondContainer.RemoveElement(ID);
+            m_SecondContainer.RemoveElement(ID);
         }
 
         public IList<ISequentialElement> GetElements()
         {
-            return mSecondContainer.GetElements();
+            return m_SecondContainer.GetElements();
         }
 
         #endregion
@@ -77,10 +77,12 @@ namespace Ares.Data
             set
             {
                 m_Trigger = value;
-                m_Trigger.TargetElement = mFirstContainer;
+                m_Trigger.TargetElement = m_FirstContainer;
                 m_Trigger.StopMusic = true;
             }
         }
+
+        public IElement StartElement { get { return m_FirstContainer; } }
 
         #endregion
 
@@ -95,25 +97,25 @@ namespace Ares.Data
 
         public override void Visit(IElementVisitor visitor)
         {
-            visitor.VisitParallelContainer(mFirstContainer);
+            visitor.VisitParallelContainer(m_FirstContainer);
         }
         
         internal SequentialBackgroundMusicList(Int32 id, String title)
             : base(id)
         {
             Title = title;
-            mSecondContainer = DataModule.ElementFactory.CreateSequentialContainer(title + "_Sequence");
-            mFirstContainer = DataModule.ElementFactory.CreateParallelContainer(title + "_Repeat");
-            mParallelElement = mFirstContainer.AddElement(mSecondContainer);
-            mParallelElement.Repeat = false;
+            m_SecondContainer = DataModule.ElementFactory.CreateSequentialContainer(title + "_Sequence");
+            m_FirstContainer = DataModule.ElementFactory.CreateParallelContainer(title + "_Repeat");
+            m_ParallelElement = m_FirstContainer.AddElement(m_SecondContainer);
+            m_ParallelElement.Repeat = false;
         }
 
         private ITrigger m_Trigger;
 
-        private IElementContainer<IParallelElement> mFirstContainer;
-        private IElementContainer<ISequentialElement> mSecondContainer;
+        private IElementContainer<IParallelElement> m_FirstContainer;
+        private IElementContainer<ISequentialElement> m_SecondContainer;
 
-        private IParallelElement mParallelElement;
+        private IParallelElement m_ParallelElement;
 
     }
 }

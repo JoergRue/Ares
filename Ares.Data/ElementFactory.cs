@@ -115,7 +115,8 @@ namespace Ares.Data
 
     }
 
-    abstract class ElementBase : IElement
+    [Serializable]
+    abstract class ElementBase : IElement, System.Runtime.Serialization.IDeserializationCallback
     {
         public int Id { get { return m_ID; } }
 
@@ -125,6 +126,7 @@ namespace Ares.Data
         {
             ElementBase clone = (ElementBase)this.MemberwiseClone();
             clone.m_ID = DataModule.TheElementFactory.GetNextID();
+            DataModule.TheElementRepository.AddElement(clone.m_ID, this);
             return clone;
         }
 
@@ -133,9 +135,16 @@ namespace Ares.Data
         protected ElementBase(int ID)
         {
             m_ID = ID;
+            DataModule.TheElementRepository.AddElement(m_ID, this);
         }
 
         [NonSerialized]
         private int m_ID;
+
+        public void OnDeserialization(object sender)
+        {
+            m_ID = DataModule.TheElementFactory.GetNextID();
+            DataModule.TheElementRepository.AddElement(m_ID, this);
+        }
     }
 }

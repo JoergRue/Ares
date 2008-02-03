@@ -103,6 +103,7 @@ namespace Ares.Data
         }
     }
 
+    [Serializable]
     class SequentialContainer : Container<ISequentialElement, SequentialElement>, IElementContainer<ISequentialElement>
     {
         public override void Visit(IElementVisitor visitor)
@@ -128,6 +129,7 @@ namespace Ares.Data
         }
     }
 
+    [Serializable]
     class ChoiceContainer : Container<IChoiceElement, ChoiceElement>, IElementContainer<IChoiceElement>
     {
         public override void Visit(IElementVisitor visitor)
@@ -164,6 +166,7 @@ namespace Ares.Data
         }
     }
 
+    [Serializable]
     class ParallelContainer : Container<IParallelElement, ParallelElement>, IElementContainer<IParallelElement>
     {
 

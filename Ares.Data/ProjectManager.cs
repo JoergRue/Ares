@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Ares.Data
 {
@@ -23,12 +23,17 @@ namespace Ares.Data
         /// <summary>
         /// Saves a project. The file name must already be set.
         /// </summary>
-        void SaveProject();
+        void SaveProject(IProject project);
 
         /// <summary>
         /// Saves a project to a file.
         /// </summary>
-        void SaveProject(String fileName);
+        void SaveProject(IProject project, String fileName);
+
+        /// <summary>
+        /// Unloads a project.
+        /// </summary>
+        void UnloadProject(IProject project);
 
     }
 
@@ -43,17 +48,100 @@ namespace Ares.Data
 
         public IProject LoadProject(String fileName)
         {
-            throw new NotImplementedException();
+            BinaryFormatter formatter = new BinaryFormatter();
+            formatter.AssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple;
+            using (System.IO.FileStream stream = new System.IO.FileStream(fileName, System.IO.FileMode.Open))
+            {
+                IProject project = (IProject) formatter.Deserialize(stream);
+                project.Changed = false;
+                return project;
+            }
         }
 
-        public void SaveProject()
+        public void SaveProject(IProject project)
         {
-            throw new NotImplementedException();
+            if (String.IsNullOrEmpty(project.FileName))
+            {
+                throw new ArgumentException(StringResources.FileNameMustBeSet);
+            }
+            DoSaveProject(project, project.FileName);
+            project.Changed = false;
         }
 
-        public void SaveProject(String fileName)
+        public void SaveProject(IProject project, String fileName)
         {
-            throw new NotImplementedException();
+            DoSaveProject(project, fileName);
+            project.FileName = fileName;
+            project.Changed = false;
+        }
+
+        private static void DoSaveProject(IProject project, String fileName)
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            formatter.AssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple;
+            String tempFileName = System.IO.Path.GetTempFileName();
+            using (System.IO.FileStream stream = new System.IO.FileStream(tempFileName, System.IO.FileMode.Create, 
+                System.IO.FileAccess.Write, System.IO.FileShare.Delete | System.IO.FileShare.Write))
+            {
+                formatter.Serialize(stream, project);
+                stream.Flush();
+            }
+            System.IO.File.Copy(tempFileName, fileName, true);
+            System.IO.File.Delete(tempFileName);
+        }
+
+        private class ElementRemover : IElementVisitor
+        {
+            public ElementRemover()
+            {
+                repository = DataModule.TheElementRepository;
+            }
+
+            private ElementRepository repository;
+
+            public void VisitFileElement(IFileElement fileElement)
+            {
+                repository.DeleteElement((fileElement as IElement).Id);
+            }
+
+            public void VisitSequentialContainer(IElementContainer<ISequentialElement> sequentialContainer)
+            {
+                repository.DeleteElement(sequentialContainer.Id);
+                foreach (ISequentialElement element in sequentialContainer.GetElements())
+                {
+                    element.Visit(this);
+                }
+            }
+
+            public void VisitParallelContainer(IElementContainer<IParallelElement> parallelContainer)
+            {
+                repository.DeleteElement(parallelContainer.Id);
+                foreach (IParallelElement element in parallelContainer.GetElements())
+                {
+                    element.Visit(this);
+                }
+            }
+
+            public void VisitChoiceContainer(IElementContainer<IChoiceElement> choiceContainer)
+            {
+                repository.DeleteElement(choiceContainer.Id);
+                foreach (IChoiceElement element in choiceContainer.GetElements())
+                {
+                    element.Visit(this);
+                }
+            }
+        }
+
+        public void UnloadProject(IProject project)
+        {
+            ElementRemover remover = new ElementRemover();
+            foreach (IMode mode in project.GetModes())
+            {
+                foreach (IModeElement modeElement in mode.GetElements())
+                {
+                    modeElement.StartElement.Visit(remover);   
+                }
+            }
         }
 
         #endregion

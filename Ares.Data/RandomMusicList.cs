@@ -6,7 +6,19 @@ using System.Text;
 namespace Ares.Data
 {
     [Serializable]
-    class RandomBackgroundMusicList : ElementBase, IRandomBackgroundMusicList
+    abstract class ModeElementBase : ElementBase
+    {
+        public bool IsPlaying { get; set; }
+
+        protected ModeElementBase(int ID) 
+            : base(ID)
+        {
+            // IsPlaying = false;
+        }
+    }
+
+    [Serializable]
+    class RandomBackgroundMusicList : ModeElementBase, IRandomBackgroundMusicList
     {
         #region IRepeatableElement Members
 
@@ -110,6 +122,8 @@ namespace Ares.Data
                 m_Trigger.StopMusic = true;
             }
         }
+
+        public IElement StartElement { get { return m_FirstContainer; } }
 
         #endregion
 
