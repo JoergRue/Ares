@@ -11,12 +11,12 @@ namespace Ares.Data
         /// <summary>
         /// Returns a specific element. Returns null if the element isn't found.
         /// </summary>
-        /// <param name="Id">ID of the element.</param>
+        /// <param name="id">ID of the element.</param>
         IElement GetElement(int id);
         /// <summary>
         /// Removes an element from the repository. No effect if the element isn't found.
         /// </summary>
-        /// <param name="Id">ID of the element.</param>
+        /// <param name="id">ID of the element.</param>
         void DeleteElement(int id);
     }
 
