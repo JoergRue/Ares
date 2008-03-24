@@ -161,7 +161,7 @@ namespace Ares.Serialization
 
         private void FillObject(ObjectReference reference)
         {
-            if (reference.Fixup == FixupType.Normal) return;
+            if (reference.Fixup == FixupType.Normal || reference.RefID == 0) return;
 
             object newObject = reference.RealObject;
             if (newObject == null) return;
@@ -183,11 +183,15 @@ namespace Ares.Serialization
             SerializationInfoEnumerator enumerator = info.GetEnumerator();
             while (enumerator.MoveNext())
             {
-                if (enumerator.Value is ObjectReference)
+                ObjectReference reference = enumerator.Value as ObjectReference;
+                if (reference != null && reference.RefID != 0)
                 {
-                    ObjectReference reference = enumerator.Value as ObjectReference;
                     m_ObjectManager.RecordDelayedFixup(objectID, enumerator.Name, reference.RefID);
-                    if (reference.Fixup == FixupType.ValueType) FillObject(reference);
+                    if (reference.Fixup == FixupType.ValueType) 
+                    {
+                        m_ObjectManager.RegisterObject(reference.RealObject, reference.RefID, reference.Info);
+                        FillObject(reference);
+                    }
                 }
             }
         }
@@ -232,14 +236,19 @@ namespace Ares.Serialization
                 {
                     object value = info.GetValue(members[i].Name, typeof(object));
                     ObjectReference reference = value as ObjectReference;
-                    if (reference != null)
+                    if (reference != null && reference.RefID != 0)
                     {
                         if (reference.Fixup == FixupType.ValueType)
                         {
                             m_ObjectManager.RegisterObject(reference.RealObject, reference.RefID, reference.Info, objectID, members[i]);
                             FillObject(reference);
+                            data[i] = reference.RealObject;
                         }
                         m_ObjectManager.RecordFixup(objectID, members[i], reference.RefID);
+                    }
+                    else if (reference != null)
+                    {
+                        data[i] = null;
                     }
                     else
                     {
@@ -384,16 +393,18 @@ namespace Ares.Serialization
             }
             m_Reader.ReadEndElement();
 
+            object[] arrayElements = new object[count];
+            m_Reader.ReadStartElement("Elements");
+
             Array array = Array.CreateInstance(memberType, lengths, lowerBounds);
             SerializationInfo info = new SerializationInfo(typeof(Array), m_Converter);
             ReadMembers(info);
 
-            object[] arrayElements = new object[count];
-            m_Reader.ReadStartElement("Elements");
             for (long i = 0; i < count; ++i)
             {
-                arrayElements[i] = info.GetValue("Element" + count, typeof(Object));
+                arrayElements[i] = info.GetValue("Element" + i, typeof(Object));
             }
+            
             m_Reader.ReadEndElement(); // </Elements>
             m_Reader.ReadEndElement(); // </Array>
 
@@ -403,28 +414,39 @@ namespace Ares.Serialization
             for (int i = 0; i < rank; ++i) indices[i] = lowerBounds[i];
             for (long i = 0; i < count; ++i)
             {
+                if (i > 0) 
+                {
+                    int currentDim = rank - 1;
+                    ++indices[currentDim];
+                    while (indices[currentDim] > upperBounds[currentDim])
+                    {
+                        indices[currentDim] = lowerBounds[currentDim];
+                        --currentDim;
+                        ++indices[currentDim];
+                    }
+                }
+
                 if (arrayElements[i] is ObjectReference)
                 {
                     ObjectReference reference = arrayElements[i] as ObjectReference;
-                    if (reference.Fixup == FixupType.ValueType)
+                    if (reference.Fixup == FixupType.ValueType && reference.RefID != 0)
                     {
-                        m_ObjectManager.RegisterObject(reference.RealObject, reference.RefID, reference.Info, objID, null, indices);
                         FillObject(reference);
+                        m_ObjectManager.RegisterObject(reference.RealObject, reference.RefID, reference.Info, objID, null, indices);
+                        m_ObjectManager.RecordArrayElementFixup(objID, (int) i, reference.RefID);
                     }
-                    m_ObjectManager.RecordArrayElementFixup(objID, indices, reference.RefID);
+                    else if (reference.RefID == 0)
+                    {
+                        array.SetValue(null, indices);
+                    }
+                    else
+                    {
+                        m_ObjectManager.RecordArrayElementFixup(objID, (int) i, reference.RefID);
+                    }
                 }
                 else
                 {
                     array.SetValue(arrayElements[i], indices);
-                }
-
-                int currentDim = rank - 1;
-                ++indices[currentDim];
-                while (indices[currentDim] > upperBounds[currentDim])
-                {
-                    indices[currentDim] = lowerBounds[currentDim];
-                    --currentDim;
-                    ++indices[currentDim];
                 }
             }
 
@@ -436,7 +458,7 @@ namespace Ares.Serialization
             ObjectReference reference = new ObjectReference();
             reference.Fixup = FixupType.Normal;
             reference.RefID = m_Converter.ToInt64(m_Reader.ReadString());
-            return reference;
+            return reference.RefID != 0 ? reference : null;
         }
 
         private object ReadBoolean()

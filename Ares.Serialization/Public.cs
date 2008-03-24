@@ -38,7 +38,7 @@ namespace Ares.Serialization
         /// casted into T.
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        public static T GetObject<T>(this SerializationInfo info, String name)
+        public static T GetValue<T>(this SerializationInfo info, String name)
         {
             Object value = info.GetValue(name, typeof(T));
             return (T)value;
@@ -127,7 +127,8 @@ namespace Ares.Serialization
             AssemblyStyle = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Full;
         }
 
-        private FormatterConverter m_Converter;
+        private IFormatterConverter m_Converter;
     }
+
 
 }

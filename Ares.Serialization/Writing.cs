@@ -237,7 +237,8 @@ namespace Ares.Serialization
 
                 m_Writer.WriteStartElement("Array");
                 m_Writer.WriteAttributeString("ID", m_Converter.ToString(objectID));
-                WriteTypeInfo(GetAssemblyName(memberType.Assembly), memberType.FullName, obj);
+                Type elementType = memberType.GetElementType();
+                WriteTypeInfo(GetAssemblyName(elementType.Assembly), elementType.FullName, obj);
                 m_Writer.WriteAttributeString("Rank", m_Converter.ToString(a.Rank));
                 m_Writer.WriteStartElement("Dimensions");
                 for (int i = 0; i < a.Rank; ++i)
