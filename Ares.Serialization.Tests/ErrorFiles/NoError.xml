@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ObjectGraph>
+  <Object ID="1" Assembly="Ares.Serialization.Tests, Version=1.0.0.1, Culture=neutral, PublicKeyToken=9d390e07c24a1b09" Type="Ares.Serialization.Tests.BasicTests+Derived" TypeID="1">
+    <Member Name="j" MemberType="Int32">4</Member>
+    <Member Name="i" MemberType="Int32">3</Member>
+  </Object>
+</ObjectGraph>

@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ObjectGraph>
+  <Object ID="1" Assembly="Ares.Serialization.Tests, Version=1.0.0.1, Culture=neutral, PublicKeyToken=9d390e07c24a1b09" Type="Ares.Serialization.Tests.BasicTests+Graph1" TypeID="1">
+    <Member Name="i" MemberType="Int32">3</Member>
+    <Member Name="g2" MemberType="ObjectReference">2</Member>
+    <Member Name="g3" MemberType="ObjectReference">3</Member>
+  </Object>
+  <Object ID="4" Assembly="Ares.Serialization.Tests, Version=1.0.0.1, Culture=neutral, PublicKeyToken=9d390e07c24a1b09" Type="Ares.Serialization.Tests.BasicTests+Graph2" TypeID="2">
+    <Member Name="j" MemberType="Int32">4</Member>
+    <Member Name="g3" MemberType="ObjectReference">3</Member>
+  </Object>
+  <Object ID="3" Assembly="Ares.Serialization.Tests, Version=1.0.0.1, Culture=neutral, PublicKeyToken=9d390e07c24a1b09" Type="Ares.Serialization.Tests.BasicTests+Graph3" TypeID="3">
+    <Member Name="k" MemberType="Int32">5</Member>
+    <Member Name="g2" MemberType="ObjectReference">3</Member>
+    <Member Name="g1" MemberType="ObjectReference">1</Member>
+  </Object>
+</ObjectGraph>

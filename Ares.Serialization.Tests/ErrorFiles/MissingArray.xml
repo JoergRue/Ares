@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ObjectGraph>
+  <Object ID="1" Assembly="Ares.Serialization.Tests, Version=1.0.0.1, Culture=neutral, PublicKeyToken=9d390e07c24a1b09" Type="Ares.Serialization.Tests.BasicTests+WithArray" TypeID="1">
+    <Member Name="a" MemberType="Array">
+    </Member>
+    <Member Name="b" MemberType="Array">
+      <Array ID="3" Assembly="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Type="System.String" TypeID="3" Rank="1">
+        <Dimensions>
+          <Dimension LowerBound="0" UpperBound="1" />
+        </Dimensions>
+        <Elements>
+          <Member Name="Element0" MemberType="String">One</Member>
+          <Member Name="Element1" MemberType="String">Two</Member>
+        </Elements>
+      </Array>
+    </Member>
+    <Member Name="c" MemberType="Array">
+      <Array ID="4" Assembly="Ares.Serialization.Tests, Version=1.0.0.1, Culture=neutral, PublicKeyToken=9d390e07c24a1b09" Type="Ares.Serialization.Tests.BasicTests+SimpleVS" TypeID="4" Rank="1">
+        <Dimensions>
+          <Dimension LowerBound="0" UpperBound="1" />
+        </Dimensions>
+        <Elements>
+          <Member Name="Element0" MemberType="ValueType">
+            <Content ID="5" TypeRef="4">
+              <Member Name="i" MemberType="Int32">6</Member>
+            </Content>
+          </Member>
+          <Member Name="Element1" MemberType="ValueType">
+            <Content ID="6" TypeRef="4">
+              <Member Name="i" MemberType="Int32">7</Member>
+            </Content>
+          </Member>
+        </Elements>
+      </Array>
+    </Member>
+    <Member Name="d" MemberType="Array">
+      <Array ID="7" Assembly="Ares.Serialization.Tests, Version=1.0.0.1, Culture=neutral, PublicKeyToken=9d390e07c24a1b09" Type="Ares.Serialization.Tests.BasicTests+SimpleRS" TypeID="5" Rank="1">
+        <Dimensions>
+          <Dimension LowerBound="0" UpperBound="3" />
+        </Dimensions>
+        <Elements>
+          <Member Name="Element0" MemberType="ObjectReference">8</Member>
+          <Member Name="Element1" MemberType="ObjectReference">8</Member>
+          <Member Name="Element2" MemberType="ObjectReference">0</Member>
+          <Member Name="Element3" MemberType="ObjectReference">9</Member>
+        </Elements>
+      </Array>
+    </Member>
+    <Member Name="e" MemberType="Array">
+      <Array ID="10" Assembly="Ares.Serialization.Tests, Version=1.0.0.1, Culture=neutral, PublicKeyToken=9d390e07c24a1b09" Type="Ares.Serialization.Tests.BasicTests+SimpleVI" TypeID="6" Rank="1">
+        <Dimensions>
+          <Dimension LowerBound="0" UpperBound="0" />
+        </Dimensions>
+        <Elements>
+          <Member Name="Element0" MemberType="ValueType">
+            <Content ID="11" TypeRef="6">
+              <Member Name="i" MemberType="Int32">10</Member>
+            </Content>
+          </Member>
+        </Elements>
+      </Array>
+    </Member>
+    <Member Name="f" MemberType="Array">
+      <Array ID="12" Assembly="Ares.Serialization.Tests, Version=1.0.0.1, Culture=neutral, PublicKeyToken=9d390e07c24a1b09" Type="Ares.Serialization.Tests.BasicTests+SimpleRI" TypeID="7" Rank="1">
+        <Dimensions>
+          <Dimension LowerBound="0" UpperBound="2" />
+        </Dimensions>
+        <Elements>
+          <Member Name="Element0" MemberType="ObjectReference">13</Member>
+          <Member Name="Element1" MemberType="ObjectReference">13</Member>
+          <Member Name="Element2" MemberType="ObjectReference">0</Member>
+        </Elements>
+      </Array>
+    </Member>
+  </Object>
+  <Object ID="8" TypeRef="5">
+    <Member Name="i" MemberType="Int32">8</Member>
+  </Object>
+  <Object ID="9" TypeRef="5">
+    <Member Name="i" MemberType="Int32">9</Member>
+  </Object>
+  <Object ID="13" TypeRef="7">
+    <Member Name="i" MemberType="Int32">11</Member>
+  </Object>
+</ObjectGraph>

@@ -37,20 +37,17 @@ namespace Ares.Serialization
         /// SerializationInfo.GetValue is typeof(T); the returned object is 
         /// casted into T.
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        public static T GetValue<T>(this SerializationInfo info, String name)
+        public static void GetValue<T>(this SerializationInfo info, String name, out T t)
         {
-            Object value = info.GetValue(name, typeof(T));
-            return (T)value;
+            t = (T) info.GetValue(name, typeof(T));
         }
 
         /// <summary>
         /// Deserializes an object stream and casts the root object into T.
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        public static T Deserialize<T>(this IFormatter formatter, System.IO.Stream serializationStream)
+        public static void Deserialize<T>(this IFormatter formatter, System.IO.Stream serializationStream, out T t)
         {
-            return (T)formatter.Deserialize(serializationStream);
+            t = (T)formatter.Deserialize(serializationStream);
         }
     }
 

@@ -59,11 +59,22 @@ namespace Ares.Serialization
                     m_Reader.ReadToFollowing("ObjectGraph");
                     m_Reader.ReadStartElement("ObjectGraph");
 
+                    bool found = true;
+                    if (!m_Reader.IsStartElement("Object")) found = m_Reader.ReadToFollowing("Object");
+                    if (!found) return null;
+                    
                     object result = ReadTopLevelObject();
 
-                    while (m_Reader.IsStartElement("Object"))
+                    while (m_Reader.IsStartElement())
                     {
-                        ReadTopLevelObject();
+                        if (m_Reader.Name == "Object")
+                        {
+                            ReadTopLevelObject();
+                        }
+                        else
+                        {
+                            m_Reader.ReadOuterXml();
+                        }
                     }
 
                     m_Reader.ReadEndElement();
@@ -76,9 +87,11 @@ namespace Ares.Serialization
                 }
                 catch (System.Xml.XmlException ex)
                 {
-                    ThrowException(Resources.XmlDefect, ex);
-                    // to make the compiler happy ...
-                    return null;
+                    return ThrowException(Resources.XmlDefect, ex);
+                }
+                catch (System.FormatException ex)
+                {
+                    return ThrowException(Resources.XmlDefect, ex);
                 }
             }
         }
@@ -87,7 +100,7 @@ namespace Ares.Serialization
         {
             long objID; SerializationInfo info;
             Object newObject = ReadObject(out objID, out info);
-            if (newObject == null) return null;
+            System.Diagnostics.Debug.Assert(newObject != null);
 
             ISurrogateSelector sel;
             ISerializationSurrogate surrogate = (SurrogateSelector != null) ? SurrogateSelector.GetSurrogate(newObject.GetType(), Context, out sel) : null;
@@ -107,24 +120,34 @@ namespace Ares.Serialization
 
         private object ReadObject(out long objID, out SerializationInfo members)
         {
-            objID = m_Converter.ToInt64(m_Reader.GetAttribute("ID"));
-
-            if (m_Reader.GetAttribute("IsNull") != null)
+            string objIDValue = m_Reader.GetAttribute("ID");
+            if (objIDValue == null) 
             {
-                m_ObjectManager.RegisterObject(null, objID);
-                members = null;
-                return null;
+                objID = 0; members = null;
+                return ThrowException(Resources.XmlDefect);
             }
+            
+            objID = m_Converter.ToInt64(objIDValue);
 
             Type objType = ReadTypeInfo();
             Object newObject = FormatterServices.GetSafeUninitializedObject(objType);
+            m_ObjectManager.RaiseOnDeserializingEvent(newObject);
+            
             members = new SerializationInfo(objType, m_Converter);
+            
+            if (!m_Reader.IsEmptyElement)
+            {
 
-            m_Reader.ReadStartElement();
-
-            ReadMembers(members);
-
-            m_Reader.ReadEndElement();
+                m_Reader.ReadStartElement();
+    
+                ReadMembers(members);
+    
+                m_Reader.ReadEndElement();
+            }
+            else
+            {
+                m_Reader.ReadOuterXml();
+            }
 
             return newObject;
         }
@@ -161,10 +184,10 @@ namespace Ares.Serialization
 
         private void FillObject(ObjectReference reference)
         {
-            if (reference.Fixup == FixupType.Normal || reference.RefID == 0) return;
+            System.Diagnostics.Debug.Assert(reference.Fixup != FixupType.Normal && reference.RefID != 0);
 
             object newObject = reference.RealObject;
-            if (newObject == null) return;
+            System.Diagnostics.Debug.Assert(newObject != null);
 
             ISurrogateSelector sel;
             ISerializationSurrogate surrogate = (SurrogateSelector != null) ? SurrogateSelector.GetSurrogate(newObject.GetType(), Context, out sel) : null;
@@ -184,8 +207,9 @@ namespace Ares.Serialization
             while (enumerator.MoveNext())
             {
                 ObjectReference reference = enumerator.Value as ObjectReference;
-                if (reference != null && reference.RefID != 0)
+                if (reference != null)
                 {
+                    System.Diagnostics.Debug.Assert(reference.RefID != 0);
                     m_ObjectManager.RecordDelayedFixup(objectID, enumerator.Name, reference.RefID);
                     if (reference.Fixup == FixupType.ValueType) 
                     {
@@ -236,8 +260,9 @@ namespace Ares.Serialization
                 {
                     object value = info.GetValue(members[i].Name, typeof(object));
                     ObjectReference reference = value as ObjectReference;
-                    if (reference != null && reference.RefID != 0)
+                    if (reference != null)
                     {
+                        System.Diagnostics.Debug.Assert(reference.RefID != 0);
                         if (reference.Fixup == FixupType.ValueType)
                         {
                             m_ObjectManager.RegisterObject(reference.RealObject, reference.RefID, reference.Info, objectID, members[i]);
@@ -245,10 +270,6 @@ namespace Ares.Serialization
                             data[i] = reference.RealObject;
                         }
                         m_ObjectManager.RecordFixup(objectID, members[i], reference.RefID);
-                    }
-                    else if (reference != null)
-                    {
-                        data[i] = null;
                     }
                     else
                     {
@@ -268,7 +289,7 @@ namespace Ares.Serialization
                 long typeID = m_Converter.ToInt64(typeRef);
                 if (!m_ReadTypes.ContainsKey(typeID))
                 {
-                    ThrowException(Resources.TypeNotYetRead, typeID);
+                    return (Type)ThrowException(Resources.TypeNotYetRead, typeID);
                 }
                 return m_ReadTypes[typeID];
             }
@@ -280,10 +301,15 @@ namespace Ares.Serialization
                 String version = m_Reader.GetAttribute("SerializationVersion");
                 if (assemblyName == null || typeName == null || typeIDString == null)
                 {
-                    ThrowException(Resources.TypeInfoMissing);
+                    return (Type)ThrowException(Resources.TypeInfoMissing);
                 }
 
                 long typeID = m_Converter.ToInt64(typeIDString);
+                
+                if (m_ReadTypes.ContainsKey(typeID))
+                {
+                    return (Type)ThrowException(Resources.TypeIDDuplicate);
+                }
 
                 if (Binder != null)
                 {
@@ -300,22 +326,22 @@ namespace Ares.Serialization
                 }
 
                 AssemblyName an = null;
-                if (AssemblyStyle == System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Full)
-                {
-                    an = new AssemblyName(assemblyName);
-                }
-                else
-                {
-                    an = new AssemblyName();
-                    an.Name = assemblyName;
-                }
                 try
                 {
+                if (AssemblyStyle == System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Full)
+                    {
+                        an = new AssemblyName(assemblyName);
+                    }
+                    else
+                    {
+                        an = new AssemblyName();
+                        an.Name = assemblyName;
+                    }
                     Assembly assembly = Assembly.Load(an);
                     Type type = assembly.GetType(typeName);
                     if (type == null)
                     {
-                        ThrowException(Resources.TypeNotFound, typeName);
+                        return (Type)ThrowException(Resources.TypeNotFound, typeName);
                     }
                     m_ReadTypes[typeID] = type;
                     if (version != null)
@@ -326,20 +352,17 @@ namespace Ares.Serialization
                 }
                 catch (System.IO.FileNotFoundException ex)
                 {
-                    ThrowException(Resources.AssemblyNotFound, assemblyName, ex);
+                    return (Type)ThrowException(Resources.AssemblyNotFound, assemblyName, ex);
                 }
                 catch (System.IO.FileLoadException ex)
                 {
-                    ThrowException(Resources.AssemblyNotFound, assemblyName, ex);
+                    return (Type)ThrowException(Resources.AssemblyNotFound, assemblyName, ex);
                 }
                 catch (BadImageFormatException ex)
                 {
-                    ThrowException(Resources.AssemblyNotFound, assemblyName, ex);
+                    return (Type)ThrowException(Resources.AssemblyNotFound, assemblyName, ex);
                 }
             }
-            // to make the compiler happy ...
-            System.Diagnostics.Debug.Assert(false, "Is never reached");
-            return null;
         }
 
         private enum FixupType { Normal, ValueType };
@@ -366,11 +389,22 @@ namespace Ares.Serialization
 
             return reference;
         }
+        
+        private T[] CloneArray<T>(T[] t)
+        {
+            T[] result = new T[t.Length];
+            for (int i = 0; i < t.Length; ++i) result[i] = t[i];
+            return result;
+        }
 
         private object ReadArray()
         {
-            long objID = m_Converter.ToInt64(m_Reader.GetAttribute("ID"));
-            int rank = m_Converter.ToInt32(m_Reader.GetAttribute("Rank"));
+            String val = m_Reader.GetAttribute("ID");
+            if (val == null) ThrowException(Resources.XmlDefect);
+            long objID = m_Converter.ToInt64(val);
+            val = m_Reader.GetAttribute("Rank");
+            if (val == null) ThrowException(Resources.XmlDefect);
+            int rank = m_Converter.ToInt32(val);
             Type memberType = ReadTypeInfo();
             m_Reader.ReadStartElement("Array");
             int[] lowerBounds = new int[rank];
@@ -381,8 +415,12 @@ namespace Ares.Serialization
             m_Reader.ReadStartElement("Dimensions");
             for (int i = 0; i < rank; ++i)
             {
-                lowerBounds[i] = m_Converter.ToInt32(m_Reader.GetAttribute("LowerBound"));
-                upperBounds[i] = m_Converter.ToInt32(m_Reader.GetAttribute("UpperBound"));
+                val = m_Reader.GetAttribute("LowerBound");
+                if (val == null) ThrowException(Resources.XmlDefect);
+                lowerBounds[i] = m_Converter.ToInt32(val);
+                val = m_Reader.GetAttribute("UpperBound");
+                if (val == null) ThrowException(Resources.XmlDefect);
+                upperBounds[i] = m_Converter.ToInt32(val);
                 if (upperBounds[i] < lowerBounds[i])
                 {
                     ThrowException(Resources.InvalidArrayBounds);
@@ -429,19 +467,17 @@ namespace Ares.Serialization
                 if (arrayElements[i] is ObjectReference)
                 {
                     ObjectReference reference = arrayElements[i] as ObjectReference;
-                    if (reference.Fixup == FixupType.ValueType && reference.RefID != 0)
+                    if (reference.Fixup == FixupType.ValueType)
                     {
+                        System.Diagnostics.Debug.Assert(reference.RefID != 0);
                         FillObject(reference);
                         m_ObjectManager.RegisterObject(reference.RealObject, reference.RefID, reference.Info, objID, null, indices);
-                        m_ObjectManager.RecordArrayElementFixup(objID, (int) i, reference.RefID);
-                    }
-                    else if (reference.RefID == 0)
-                    {
-                        array.SetValue(null, indices);
+                        m_ObjectManager.RecordArrayElementFixup(objID, CloneArray(indices), reference.RefID);
                     }
                     else
                     {
-                        m_ObjectManager.RecordArrayElementFixup(objID, (int) i, reference.RefID);
+                        System.Diagnostics.Debug.Assert(reference.RefID != 0);
+                        m_ObjectManager.RecordArrayElementFixup(objID, CloneArray(indices), reference.RefID);
                     }
                 }
                 else

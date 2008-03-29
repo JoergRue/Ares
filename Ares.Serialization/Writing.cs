@@ -13,9 +13,12 @@ namespace Ares.Serialization
         private long m_NextTypeID;
         
         private System.Xml.XmlWriter m_Writer;
+        
+        private SerializationObjectManager m_SerializationObjectManager;
 
         private void DoSerialize(System.IO.Stream serializationStream, object graph)
         {
+            m_SerializationObjectManager = new SerializationObjectManager(Context);
             m_WrittenTypes = new Dictionary<String, Dictionary<String, long>>();
             m_NextTypeID = 1;
 
@@ -38,6 +41,8 @@ namespace Ares.Serialization
                 m_Writer.WriteEndDocument();
                 m_Writer.Flush();
             }
+            
+            m_SerializationObjectManager.RaiseOnSerializedEvent();
         }
 
         private static System.Xml.XmlWriter CreateWriter(System.IO.Stream serializationStream)
@@ -53,6 +58,7 @@ namespace Ares.Serialization
 
         private void DoSerialize(Object obj, long objectID)
         {
+            m_SerializationObjectManager.RegisterObject(obj);
             m_Writer.WriteStartElement("Object");
             WriteObject(obj, objectID);
         }
@@ -70,13 +76,6 @@ namespace Ares.Serialization
                 surrogate.GetObjectData(obj, info, Context);
                 WriteTypeInfo(info.AssemblyName, info.FullTypeName, obj);
                 WriteSerializationInfo(info);
-                m_Writer.WriteEndElement();
-                return;
-            }
-
-            if (obj == null)
-            {
-                m_Writer.WriteAttributeString("IsNull", "true");
                 m_Writer.WriteEndElement();
                 return;
             }
@@ -164,7 +163,12 @@ namespace Ares.Serialization
         {
             for (int i = 0; i < members.Length; ++i)
             {
-                if (members[i].IsDefined(typeof(NonSerializedAttribute), true)) continue;
+                System.Diagnostics.Debug.Assert(!members[i].IsDefined(typeof(NonSerializedAttribute), true));
+                Type memberType = null;
+                FieldInfo fieldInfo = members[i] as FieldInfo;
+                if (fieldInfo != null) memberType = fieldInfo.FieldType;
+                if (memberType == null || !memberType.IsSerializable) 
+                    ThrowException(Resources.NotSerializable, memberType != null ? memberType.FullName : members[i].Name);
                 WriteMember(members[i].Name, data[i]);
             }
         }
@@ -178,6 +182,8 @@ namespace Ares.Serialization
             m_Writer.WriteAttributeString("Name", name);
             m_Writer.WriteAttributeString("MemberType", "ValueType");
             m_Writer.WriteStartElement("Content");
+            
+            m_SerializationObjectManager.RegisterObject(obj);
             
             bool dummy;
             WriteObject(obj, m_idGenerator.GetId(obj, out dummy));
@@ -197,28 +203,28 @@ namespace Ares.Serialization
             }
         }
 
-        private static void ThrowException(String message)
+        private static object ThrowException(String message)
         {
             throw new SerializationException(message);
         }
 
-        private static void ThrowException(String message, object value)
+        private static object ThrowException(String message, object value)
         {
             String formatted = String.Format(System.Globalization.CultureInfo.CurrentCulture, message,
                 new object[] { value });
-            ThrowException(formatted);
+            return ThrowException(formatted);
         }
 
-        private static void ThrowException(String message, Exception inner)
+        private static object ThrowException(String message, Exception inner)
         {
             throw new SerializationException(message, inner);
         }
 
-        private static void ThrowException(String message, object value, Exception inner)
+        private static object ThrowException(String message, object value, Exception inner)
         {
             String formatted = String.Format(System.Globalization.CultureInfo.CurrentCulture, message,
                 new object[] { value });
-            ThrowException(formatted, inner);
+            return ThrowException(formatted, inner);
         }
 
         /// <summary>

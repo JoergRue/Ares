@@ -8,7 +8,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Ares.Serialization {
+namespace Ares.Serialization
+{
     using System;
     
     
@@ -22,23 +23,28 @@ namespace Ares.Serialization {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "2.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    internal class Resources
+    {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resources() {
+        internal Resources()
+        {
         }
         
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
-            get {
-                if (object.ReferenceEquals(resourceMan, null)) {
+        internal static global::System.Resources.ResourceManager ResourceManager
+        {
+            get
+            {
+                if (object.ReferenceEquals(resourceMan, null))
+                {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Ares.Serialization.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
@@ -51,11 +57,14 @@ namespace Ares.Serialization {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
-            get {
+        internal static global::System.Globalization.CultureInfo Culture
+        {
+            get
+            {
                 return resourceCulture;
             }
-            set {
+            set
+            {
                 resourceCulture = value;
             }
         }
@@ -63,8 +72,10 @@ namespace Ares.Serialization {
         /// <summary>
         ///   Looks up a localized string similar to Assembly {0} could not be loaded!.
         /// </summary>
-        internal static string AssemblyNotFound {
-            get {
+        internal static string AssemblyNotFound
+        {
+            get
+            {
                 return ResourceManager.GetString("AssemblyNotFound", resourceCulture);
             }
         }
@@ -72,8 +83,10 @@ namespace Ares.Serialization {
         /// <summary>
         ///   Looks up a localized string similar to Invalid array bounds!.
         /// </summary>
-        internal static string InvalidArrayBounds {
-            get {
+        internal static string InvalidArrayBounds
+        {
+            get
+            {
                 return ResourceManager.GetString("InvalidArrayBounds", resourceCulture);
             }
         }
@@ -81,8 +94,10 @@ namespace Ares.Serialization {
         /// <summary>
         ///   Looks up a localized string similar to Member information is missing!.
         /// </summary>
-        internal static string MemberInfoMissing {
-            get {
+        internal static string MemberInfoMissing
+        {
+            get
+            {
                 return ResourceManager.GetString("MemberInfoMissing", resourceCulture);
             }
         }
@@ -90,8 +105,10 @@ namespace Ares.Serialization {
         /// <summary>
         ///   Looks up a localized string similar to Member type {0} unknown!.
         /// </summary>
-        internal static string MemberTypeUnknown {
-            get {
+        internal static string MemberTypeUnknown
+        {
+            get
+            {
                 return ResourceManager.GetString("MemberTypeUnknown", resourceCulture);
             }
         }
@@ -99,17 +116,32 @@ namespace Ares.Serialization {
         /// <summary>
         ///   Looks up a localized string similar to Type {0} is not serializable!.
         /// </summary>
-        internal static string NotSerializable {
-            get {
+        internal static string NotSerializable
+        {
+            get
+            {
                 return ResourceManager.GetString("NotSerializable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Duplicate TypeID found!.
+        /// </summary>
+        internal static string TypeIDDuplicate
+        {
+            get
+            {
+                return ResourceManager.GetString("TypeIDDuplicate", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Type information is missing!.
         /// </summary>
-        internal static string TypeInfoMissing {
-            get {
+        internal static string TypeInfoMissing
+        {
+            get
+            {
                 return ResourceManager.GetString("TypeInfoMissing", resourceCulture);
             }
         }
@@ -117,8 +149,10 @@ namespace Ares.Serialization {
         /// <summary>
         ///   Looks up a localized string similar to Type {0} could not be loaded!.
         /// </summary>
-        internal static string TypeNotFound {
-            get {
+        internal static string TypeNotFound
+        {
+            get
+            {
                 return ResourceManager.GetString("TypeNotFound", resourceCulture);
             }
         }
@@ -126,8 +160,10 @@ namespace Ares.Serialization {
         /// <summary>
         ///   Looks up a localized string similar to Type {0} not yet read!.
         /// </summary>
-        internal static string TypeNotYetRead {
-            get {
+        internal static string TypeNotYetRead
+        {
+            get
+            {
                 return ResourceManager.GetString("TypeNotYetRead", resourceCulture);
             }
         }
@@ -135,8 +171,10 @@ namespace Ares.Serialization {
         /// <summary>
         ///   Looks up a localized string similar to Defect XML format!.
         /// </summary>
-        internal static string XmlDefect {
-            get {
+        internal static string XmlDefect
+        {
+            get
+            {
                 return ResourceManager.GetString("XmlDefect", resourceCulture);
             }
         }

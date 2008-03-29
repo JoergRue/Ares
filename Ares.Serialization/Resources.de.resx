@@ -144,4 +144,7 @@
   <data name="XmlDefect" xml:space="preserve">
     <value>XML-Format ist ungültig!</value>
   </data>
+  <data name="TypeIDDuplicate" xml:space="preserve">
+    <value>Doppelte Typ-ID gefunden!</value>
+  </data>
 </root>

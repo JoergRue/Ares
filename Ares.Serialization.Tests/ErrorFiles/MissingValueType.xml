@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ObjectGraph>
+  <Object ID="1" Assembly="Ares.Serialization.Tests, Version=1.0.0.1, Culture=neutral, PublicKeyToken=9d390e07c24a1b09" Type="Ares.Serialization.Tests.BasicTests+ComplexRS" TypeID="1">
+    <Member Name="m1" MemberType="ObjectReference">2</Member>
+    <Member Name="m2" MemberType="ObjectReference">3</Member>
+    <Member Name="m3" MemberType="ObjectReference">4</Member>
+    <Member Name="m4" MemberType="ObjectReference">5</Member>
+    <Member Name="m5" MemberType="ObjectReference">6</Member>
+    <Member Name="m6" MemberType="ObjectReference">7</Member>
+    <Member Name="m7" MemberType="ValueType">
+      <Content ID="8" Assembly="Ares.Serialization.Tests, Version=1.0.0.1, Culture=neutral, PublicKeyToken=9d390e07c24a1b09" Type="Ares.Serialization.Tests.BasicTests+ComplexVI" TypeID="2">
+        <Member Name="vs" MemberType="ValueType">
+        </Member>
+        <Member Name="rs" MemberType="ObjectReference">10</Member>
+        <Member Name="ri" MemberType="ObjectReference">11</Member>
+        <Member Name="vi" MemberType="ValueType">
+          <Content ID="12" Assembly="Ares.Serialization.Tests, Version=1.0.0.1, Culture=neutral, PublicKeyToken=9d390e07c24a1b09" Type="Ares.Serialization.Tests.BasicTests+SimpleVI" TypeID="4">
+            <Member Name="i" MemberType="Int32">9</Member>
+          </Content>
+        </Member>
+      </Content>
+    </Member>
+    <Member Name="m8" MemberType="ValueType">
+      <Content ID="13" Assembly="Ares.Serialization.Tests, Version=1.0.0.1, Culture=neutral, PublicKeyToken=9d390e07c24a1b09" Type="Ares.Serialization.Tests.BasicTests+ComplexVS" TypeID="5">
+        <Member Name="vs" MemberType="ValueType">
+          <Content ID="14" TypeRef="3">
+            <Member Name="i" MemberType="Int32">14</Member>
+          </Content>
+        </Member>
+        <Member Name="rs" MemberType="ObjectReference">15</Member>
+        <Member Name="ri" MemberType="ObjectReference">16</Member>
+        <Member Name="vi" MemberType="ValueType">
+          <Content ID="17" TypeRef="4">
+            <Member Name="i" MemberType="Int32">13</Member>
+          </Content>
+        </Member>
+      </Content>
+    </Member>
+  </Object>
+  <Object ID="2" Assembly="Ares.Serialization.Tests, Version=1.0.0.1, Culture=neutral, PublicKeyToken=9d390e07c24a1b09" Type="Ares.Serialization.Tests.BasicTests+VSInRI" TypeID="6">
+    <Member Name="vs" MemberType="ValueType">
+      <Content ID="18" TypeRef="3">
+        <Member Name="i" MemberType="Int32">1</Member>
+      </Content>
+    </Member>
+  </Object>
+  <Object ID="3" Assembly="Ares.Serialization.Tests, Version=1.0.0.1, Culture=neutral, PublicKeyToken=9d390e07c24a1b09" Type="Ares.Serialization.Tests.BasicTests+RSInRI" TypeID="7">
+    <Member Name="rs" MemberType="ObjectReference">19</Member>
+  </Object>
+  <Object ID="4" Assembly="Ares.Serialization.Tests, Version=1.0.0.1, Culture=neutral, PublicKeyToken=9d390e07c24a1b09" Type="Ares.Serialization.Tests.BasicTests+RIInRI" TypeID="8">
+    <Member Name="ri" MemberType="ObjectReference">20</Member>
+  </Object>
+  <Object ID="5" Assembly="Ares.Serialization.Tests, Version=1.0.0.1, Culture=neutral, PublicKeyToken=9d390e07c24a1b09" Type="Ares.Serialization.Tests.BasicTests+VIInRI" TypeID="9">
+    <Member Name="vi" MemberType="ValueType">
+      <Content ID="21" TypeRef="4">
+        <Member Name="i" MemberType="Int32">4</Member>
+      </Content>
+    </Member>
+  </Object>
+  <Object ID="6" Assembly="Ares.Serialization.Tests, Version=1.0.0.1, Culture=neutral, PublicKeyToken=9d390e07c24a1b09" Type="Ares.Serialization.Tests.BasicTests+RIInRS" TypeID="10">
+    <Member Name="ri" MemberType="ObjectReference">22</Member>
+  </Object>
+  <Object ID="7" Assembly="Ares.Serialization.Tests, Version=1.0.0.1, Culture=neutral, PublicKeyToken=9d390e07c24a1b09" Type="Ares.Serialization.Tests.BasicTests+VIInRS" TypeID="11">
+    <Member Name="vi" MemberType="ValueType">
+      <Content ID="23" TypeRef="4">
+        <Member Name="i" MemberType="Int32">6</Member>
+      </Content>
+    </Member>
+  </Object>
+  <Object ID="10" Assembly="Ares.Serialization.Tests, Version=1.0.0.1, Culture=neutral, PublicKeyToken=9d390e07c24a1b09" Type="Ares.Serialization.Tests.BasicTests+SimpleRS" TypeID="12">
+    <Member Name="i" MemberType="Int32">8</Member>
+  </Object>
+  <Object ID="11" Assembly="Ares.Serialization.Tests, Version=1.0.0.1, Culture=neutral, PublicKeyToken=9d390e07c24a1b09" Type="Ares.Serialization.Tests.BasicTests+SimpleRI" TypeID="13">
+    <Member Name="i" MemberType="Int32">7</Member>
+  </Object>
+  <Object ID="15" TypeRef="12">
+    <Member Name="i" MemberType="Int32">12</Member>
+  </Object>
+  <Object ID="16" TypeRef="13">
+    <Member Name="i" MemberType="Int32">11</Member>
+  </Object>
+  <Object ID="19" TypeRef="12">
+    <Member Name="i" MemberType="Int32">2</Member>
+  </Object>
+  <Object ID="20" TypeRef="13">
+    <Member Name="i" MemberType="Int32">3</Member>
+  </Object>
+  <Object ID="22" TypeRef="13">
+    <Member Name="i" MemberType="Int32">5</Member>
+  </Object>
+</ObjectGraph>

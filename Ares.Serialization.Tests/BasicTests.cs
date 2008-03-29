@@ -10,10 +10,11 @@ namespace Ares.Serialization.Tests
 {
     
     [TestFixture]
+    [Category("Normal Serialization")]
     public class BasicTests
     {
         private static readonly bool sTestXML = true;
-        private static readonly bool sUseFile = true;
+        private static readonly bool sUseFile = false;
         
         public static IFormatter CreateFormatter()
         {
@@ -35,13 +36,76 @@ namespace Ares.Serialization.Tests
                 
                 IFormatter formatter2 = CreateFormatter();
                 stream.Seek(0, System.IO.SeekOrigin.Begin);
-                return formatter2.Deserialize<T>(stream);
+                T result; formatter2.Deserialize(stream, out result);
+                return result;
             }
+        }
+        
+        [Serializable]
+        class Empty {}
+                
+        [Test]
+        public void TestEmpty()
+        {
+            Empty x = new Empty();
+            Empty y = SerializationRoundtrip(x);
+        }
+        
+        [Serializable]
+        class EmptyI : ISerializable
+        {
+            public EmptyI() {}
+            private EmptyI(SerializationInfo info, StreamingContext context) {}
+            public void GetObjectData(SerializationInfo info, StreamingContext context) {}
+        }
+        
+        [Test]
+        public void TestEmptyI()
+        {
+            EmptyI x = new EmptyI();
+            EmptyI y = SerializationRoundtrip(x);
+        }
+        
+        [Serializable]
+        class EmptyMembers
+        {
+            public EmptyI i = new EmptyI();
+            public Empty j = new Empty();
+        }
+        
+        [Test]
+        public void TestEmptyMembers()
+        {
+            EmptyMembers x = new EmptyMembers();
+            EmptyMembers y = SerializationRoundtrip(x);
+            Assert.IsNotNull(y.i);
+            Assert.IsNotNull(y.j);
+        }
+        
+        [Serializable]
+        class PrivateMember
+        {
+            private int i;
+            public PrivateMember(int j) { i = j; }
+            public int GetMemberValue() { return i; }
+        }
+        
+        [Test]
+        public void TestPrivateMember()
+        {
+            PrivateMember x = new PrivateMember(3);
+            PrivateMember y = SerializationRoundtrip(x);
+            Assert.IsTrue(x.GetMemberValue() == y.GetMemberValue());
         }
         
         [Serializable]
         class SimpleRS {
             public int i;
+            
+            public override int GetHashCode()
+            {
+                return base.GetHashCode();
+            }
             
             public override bool Equals(object obj)
             {
@@ -53,6 +117,11 @@ namespace Ares.Serialization.Tests
         [Serializable]
         struct SimpleVS {
             public int i;
+            
+            public override int GetHashCode()
+            {
+                return base.GetHashCode();
+            }
             
             public override bool Equals(object obj)
             {
@@ -87,6 +156,11 @@ namespace Ares.Serialization.Tests
                 info.AddValue("i", i);
             }
             
+            public override int GetHashCode()
+            {
+                return base.GetHashCode();
+            }
+            
             public override bool Equals(object obj)
             {
                 if (obj is SimpleRI) return ((SimpleRI)obj).i == i;
@@ -119,6 +193,11 @@ namespace Ares.Serialization.Tests
             public bool Equals(SimpleVI obj)
             {
                 return obj.i == i;
+            }
+            
+            public override int GetHashCode()
+            {
+                return base.GetHashCode();
             }
         }
         
@@ -254,7 +333,7 @@ namespace Ares.Serialization.Tests
                 i3 = info.GetInt64("i3");
                 sb = info.GetSByte("sb");
                 s = info.GetSingle("s");
-                ts = info.GetValue<TimeSpan>("ts");
+                info.GetValue("ts", out ts);
                 ui1 = info.GetUInt16("ui1");
                 ui2 = info.GetUInt32("ui2");
                 ui3 = info.GetUInt64("ui3");
@@ -435,10 +514,10 @@ namespace Ares.Serialization.Tests
             
             private OuterRI(SerializationInfo info, StreamingContext context)
             {
-                m1 = info.GetValue<RinRS>("m1");
-                m3 = info.GetValue<SinRS>("m3");
-                m5 = info.GetValue<SinSS>("m5");
-                m7 = info.GetValue<RinSS>("m7");
+                info.GetValue("m1", out m1);
+                info.GetValue("m3", out m3);
+                info.GetValue("m5", out m5);
+                info.GetValue("m7", out m7);
             }
         }
         
@@ -468,7 +547,7 @@ namespace Ares.Serialization.Tests
             public RIInRI() {}
             private RIInRI(SerializationInfo info, StreamingContext context)
             {
-                ri = info.GetValue<SimpleRI>("ri");
+                info.GetValue("ri", out ri);
             }
             public void GetObjectData(SerializationInfo info, StreamingContext context)
             {
@@ -482,7 +561,7 @@ namespace Ares.Serialization.Tests
             public VIInRI() {}
             private VIInRI(SerializationInfo info, StreamingContext context)
             {
-                vi = info.GetValue<SimpleVI>("vi");
+                info.GetValue("vi", out vi);
             }
             public void GetObjectData(SerializationInfo info, StreamingContext context)
             {
@@ -496,7 +575,7 @@ namespace Ares.Serialization.Tests
             public RSInRI() {}
             private RSInRI(SerializationInfo info, StreamingContext context)
             {
-                rs = info.GetValue<SimpleRS>("rs");
+                info.GetValue("rs", out rs);
             }
             public void GetObjectData(SerializationInfo info, StreamingContext context)
             {
@@ -510,7 +589,7 @@ namespace Ares.Serialization.Tests
             public VSInRI() {}
             private VSInRI(SerializationInfo info, StreamingContext context)
             {
-                vs = info.GetValue<SimpleVS>("vs");
+                info.GetValue("vs", out vs);
             }
             public void GetObjectData(SerializationInfo info, StreamingContext context)
             {
@@ -533,10 +612,10 @@ namespace Ares.Serialization.Tests
             }
             private ComplexVI(SerializationInfo info, StreamingContext context)
             {
-                vs = info.GetValue<SimpleVS>("vs");
-                rs = info.GetValue<SimpleRS>("rs");
-                ri = info.GetValue<SimpleRI>("ri");
-                vi = info.GetValue<SimpleVI>("vi");
+                info.GetValue("vs", out vs);
+                info.GetValue("rs", out rs);
+                info.GetValue("ri", out ri);
+                info.GetValue("vi", out vi);
             }
             public void GetObjectData(SerializationInfo info, StreamingContext context)
             {
@@ -725,6 +804,27 @@ namespace Ares.Serialization.Tests
         }
         
         [Serializable]
+        class MultipleSameType
+        {
+            public SimpleRS i = new SimpleRS();
+            public SimpleRS j = new SimpleRS();
+            public SimpleRS k = new SimpleRS();
+        }
+        
+        [Test]
+        public void TestMultipleSameType()
+        {
+            MultipleSameType x = new MultipleSameType();
+            x.i.i = 1;
+            x.j.i = 2;
+            x.k.i = 3;
+            MultipleSameType y = SerializationRoundtrip(x);
+            Assert.IsTrue(x.i.i == y.i.i);
+            Assert.IsTrue(x.j.i == y.j.i);
+            Assert.IsTrue(x.k.i == y.k.i);
+        }
+        
+        [Serializable]
         class NullRef
         {
             public int i;
@@ -742,6 +842,7 @@ namespace Ares.Serialization.Tests
             Assert.IsTrue(x.x == y.x);
             Assert.IsTrue(x.v.HasValue == y.v.HasValue);
         }
+        
         
         [Serializable]
         class NullRefS : ISerializable
@@ -777,6 +878,24 @@ namespace Ares.Serialization.Tests
             Assert.IsTrue(x.i == y.i);
             Assert.IsTrue(x.x == y.x);
             Assert.IsTrue(x.v.HasValue == y.v.HasValue);
+        }
+        
+        [Serializable]
+        class NullRefArray
+        {
+            public SimpleRS[] i = new SimpleRS[3];
+            public SimpleRS[] j = null;
+        }
+        
+        [Test]
+        public void TestNullRefArray()
+        {
+            NullRefArray x = new NullRefArray();
+            NullRefArray y = SerializationRoundtrip(x);
+            Assert.IsTrue(y.j == null);
+            Assert.IsTrue(y.i[0] == null);
+            Assert.IsTrue(y.i[1] == null);
+            Assert.IsTrue(y.i[2] == null);
         }
         
         [Serializable]
@@ -840,6 +959,191 @@ namespace Ares.Serialization.Tests
         }
         
         [Serializable]
+        class WithArrayI : ISerializable
+        {
+            public int[] a = new int[3];
+            public String[] b = new String[2];
+            public SimpleVS[] c = new SimpleVS[2];
+            public SimpleRS[] d = new SimpleRS[4];
+            public SimpleVI[] e = new SimpleVI[1];
+            public SimpleRI[] f = new SimpleRI[3];
+            
+            public void GetObjectData(SerializationInfo info, StreamingContext context)
+            {
+                info.AddValue("a", a);
+                info.AddValue("b", b);
+                info.AddValue("c", c);
+                info.AddValue("d", d);
+                info.AddValue("e", e);
+                info.AddValue("f", f);
+            }
+            
+            private WithArrayI(SerializationInfo info, StreamingContext context)
+            {
+                info.GetValue("a", out a);
+                info.GetValue("b", out b);
+                info.GetValue("c", out c);
+                info.GetValue("d", out d);
+                info.GetValue("e", out e);
+                info.GetValue("f", out f);
+            }
+            
+            public WithArrayI() {}
+        }
+        
+        [Test]
+        public void TestWithArrayI()
+        {
+            WithArrayI x = new WithArrayI();
+            x.a[0] = 3;
+            x.a[1] = 4;
+            x.a[2] = 5;
+            x.b[0] = "One";
+            x.b[1] = "Two";
+            x.c[0] = new SimpleVS();
+            x.c[0].i = 6;
+            x.c[1] = new SimpleVS();
+            x.c[1].i = 7;
+            x.d[0] = new SimpleRS();
+            x.d[0].i = 8;
+            x.d[1] = x.d[0];
+            x.d[2] = null;
+            x.d[3] = new SimpleRS();
+            x.d[3].i = 9;
+            x.e[0].i = 10;
+            x.f[0] = new SimpleRI();
+            x.f[0].i = 11;
+            x.f[1] = x.f[0];
+            x.f[2] = null;
+            WithArrayI y = SerializationRoundtrip(x);
+            TestArrayEquality(x.a, y.a);
+            TestArrayEquality(x.b, y.b);
+            TestArrayEquality(x.c, y.c);
+            TestArrayEquality(x.d, y.d);
+            TestArrayEquality(x.e, y.e);
+            TestArrayEquality(x.f, y.f);
+        }
+        
+        [Serializable]
+        struct NestedArraysS
+        {
+            public SimpleRS[] a;
+            
+            public NestedArraysS(int i)
+            {
+                a = new SimpleRS[3];
+                a[0] = new SimpleRS();
+                a[1] = new SimpleRS();
+                a[2] = new SimpleRS();
+            }
+        }
+        
+        [Serializable]
+        class NestedArrays
+        {
+            public NestedArraysS[] b = new NestedArraysS[3];
+            public NestedArrays()
+            {
+                b[0] = new NestedArraysS(1);
+                b[1] = new NestedArraysS(2);
+                b[2] = new NestedArraysS(3);
+            }
+        }
+        
+        [Test]
+        public void TestNestedArrays()
+        {
+            NestedArrays x = new NestedArrays();
+            x.b[0].a[0].i = 1;
+            x.b[0].a[1].i = 2;
+            x.b[0].a[2].i = 3;
+            x.b[1].a[0].i = 4;
+            x.b[1].a[1].i = 5;
+            x.b[1].a[2].i = 6;
+            x.b[2].a[0].i = 7;
+            x.b[2].a[1].i = 8;
+            x.b[2].a[2].i = 9;
+            NestedArrays y = SerializationRoundtrip(x);
+            Assert.IsTrue(x.b[0].a[0].i == y.b[0].a[0].i);
+            Assert.IsTrue(x.b[0].a[1].i == y.b[0].a[1].i);
+            Assert.IsTrue(x.b[0].a[2].i == y.b[0].a[2].i);
+            Assert.IsTrue(x.b[1].a[0].i == y.b[1].a[0].i);
+            Assert.IsTrue(x.b[1].a[1].i == y.b[1].a[1].i);
+            Assert.IsTrue(x.b[1].a[2].i == y.b[1].a[2].i);
+            Assert.IsTrue(x.b[2].a[0].i == y.b[2].a[0].i);
+            Assert.IsTrue(x.b[2].a[1].i == y.b[2].a[1].i);
+            Assert.IsTrue(x.b[2].a[2].i == y.b[2].a[2].i);
+        }
+        
+        [Serializable]
+        class MultiDimArray
+        {
+            public int[,] i;
+            public MultiDimArray()
+            {
+                i = new int[3, 3];
+                for (int a = 0; a < 3; ++a) for (int b = 0; b < 3; ++b) 
+                    i[a, b] = a*3 + b;
+            }
+        }
+        
+        [Test]
+        public void TestMultiDimArray()
+        {
+            MultiDimArray x = new MultiDimArray();
+            MultiDimArray y = SerializationRoundtrip(x);
+            for (int a = 0; a < 3; ++a) for (int b = 0; b < 3; ++b) 
+                Assert.IsTrue(x.i[a,b] == y.i[a,b]);
+        }
+        
+        [Serializable]
+        class JaggedArray
+        {
+            public int[][] i;
+            public JaggedArray()
+            {
+                i = new int[3][];
+                i[0] = new int[1];
+                i[1] = new int[2];
+                i[2] = new int[3];
+                for (int a = 0; a < 3; ++a) for (int b = 0; b <= a; ++b)
+                    i[a][b] = a * 3 + b;
+            }
+        }
+        
+        [Test]
+        public void TestJaggedArray()
+        {
+            JaggedArray x = new JaggedArray();
+            JaggedArray y = SerializationRoundtrip(x);
+            for (int a = 0; a < 3; ++a) for (int b = 0; b <= a; ++b)
+                Assert.IsTrue(x.i[a][b] == y.i[a][b]);
+        }
+        
+        [Serializable]
+        class AliasedArray
+        {
+            public int[] i;
+            public int[] j;
+            
+            public AliasedArray()
+            {
+                i = new int[3];
+                j = i;
+                i[0] = 1; i[1] = 2; i[2] = 5;
+            }
+        }
+        
+        [Test]
+        public void TestAliasedArray()
+        {
+            AliasedArray x = new AliasedArray();
+            AliasedArray y = SerializationRoundtrip(x);
+            Assert.IsTrue(y.i == y.j);
+            TestArrayEquality(x.i, y.j);
+        }
+        
+        [Serializable]
         class ListsS
         {
             public List<int> l1 = new List<int>();
@@ -862,5 +1166,208 @@ namespace Ares.Serialization.Tests
             Assert.AreEqual(x.l3, y.l3);
         }
         
+        [Serializable]
+        class ListsI : ISerializable
+        {
+            public List<int> l1 = new List<int>();
+            public List<String> l2 = new List<string>();
+            public List<Base> l3 = null;
+            
+            public void GetObjectData(SerializationInfo info, StreamingContext context)
+            {
+                info.AddValue("l1", l1);
+                info.AddValue("l2", l2);
+                info.AddValue("l3", l3);
+            }
+            
+            public ListsI() {}
+            
+            private ListsI(SerializationInfo info, StreamingContext context)
+            {
+                info.GetValue("l1", out l1);
+                info.GetValue("l2", out l2);
+                info.GetValue("l3", out l3);
+            }
+        }
+        
+        [Test]
+        public void TestListsI()
+        {
+            ListsI x = new ListsI();
+            x.l1.Add(3);
+            x.l1.Add(4);
+            x.l2.Add("Eins");
+            x.l2.Add("Zwei");
+            x.l2.Add("Drei");
+            ListsI y = SerializationRoundtrip(x);
+            Assert.AreEqual(x.l1, y.l1);
+            Assert.AreEqual(x.l2, y.l2);
+            Assert.AreEqual(x.l3, y.l3);
+        }
+        
+        [Serializable]
+        class Properties
+        {
+            public int I { get; set; }
+            public int J { get { return k; } set { k = value; } }
+            private int k;
+        }
+        
+        [Test]
+        public void TestProperties()
+        {
+            Properties x = new Properties();
+            x.I = 2;
+            x.J = 4;
+            Properties y = SerializationRoundtrip(x);
+            Assert.IsTrue(x.I == y.I);
+            Assert.IsTrue(x.J == y.J);;
+        }
+        
+        [Serializable]
+        class Callbacks : IDeserializationCallback
+        {
+            public void OnDeserialization(object sender)
+            {
+                onDeserializationCalled = true;
+            }
+            
+            [OnDeserializing]
+            public void Deserializing(StreamingContext context) { onDeserializingCalled = true; }
+            
+            [OnDeserialized]
+            public void Deserialized(StreamingContext context) { onDeserializedCalled = true; }
+            
+            [OnSerializing]
+            public void Serializing(StreamingContext context) { onSerializingCalled = true; }
+            
+            [OnSerialized]
+            public void Serialized(StreamingContext context) { onSerializedCalled = true; }
+            
+            public Callbacks next;
+            public CallbacksI i = new CallbacksI();
+            public CallbacksS s = new CallbacksS();
+            
+            [NonSerialized]
+            public bool onDeserializationCalled;
+            [NonSerialized]
+            public bool onDeserializingCalled;
+            [NonSerialized]
+            public bool onDeserializedCalled;
+            [NonSerialized]
+            public bool onSerializingCalled;
+            [NonSerialized]
+            public bool onSerializedCalled;
+        }
+        
+        [Serializable]
+        class CallbacksS : IDeserializationCallback
+        {
+            public void OnDeserialization(object sender)
+            {
+                onDeserializationCalled = true;
+            }
+            
+            [OnDeserializing]
+            public void Deserializing(StreamingContext context) { onDeserializingCalled = true; }
+            
+            [OnDeserialized]
+            public void Deserialized(StreamingContext context) { onDeserializedCalled = true; }
+            
+            [OnSerializing]
+            public void Serializing(StreamingContext context) { onSerializingCalled = true; }
+            
+            [OnSerialized]
+            public void Serialized(StreamingContext context) { onSerializedCalled = true; }
+            
+            [NonSerialized]
+            public bool onDeserializationCalled;
+            [NonSerialized]
+            public bool onDeserializingCalled;
+            [NonSerialized]
+            public bool onDeserializedCalled;
+            [NonSerialized]
+            public bool onSerializingCalled;
+            [NonSerialized]
+            public bool onSerializedCalled;
+        }
+        
+        [Serializable]
+        class CallbacksI : IDeserializationCallback, ISerializable
+        {
+            public void OnDeserialization(object sender)
+            {
+                onDeserializationCalled = true;
+            }
+            
+            [OnDeserializing]
+            public void Deserializing(StreamingContext context) { onDeserializingCalled = true; }
+            
+            [OnDeserialized]
+            public void Deserialized(StreamingContext context) { onDeserializedCalled = true; }
+            
+            [OnSerializing]
+            public void Serializing(StreamingContext context) { onSerializingCalled = true; }
+            
+            [OnSerialized]
+            public void Serialized(StreamingContext context) { onSerializedCalled = true; }
+            
+            public CallbacksI next;
+            
+            public bool onDeserializationCalled;
+            public bool onDeserializingCalled;
+            public bool onDeserializedCalled;
+            public bool onSerializingCalled;
+            public bool onSerializedCalled;
+            
+            public CallbacksI() {}
+            public void GetObjectData(SerializationInfo info, StreamingContext context)
+            {
+                info.AddValue("next", next);
+            }
+            private CallbacksI(SerializationInfo info, StreamingContext context)
+            {
+                info.GetValue("next", out next);
+            }
+        }
+        
+        [Test]
+        public void TestCallbacks()
+        {
+            Callbacks x = new Callbacks();
+            x.next = new Callbacks();
+            x.i.next = new CallbacksI();
+            Callbacks y = SerializationRoundtrip(x);
+            Assert.IsTrue(x.onSerializingCalled);
+            Assert.IsTrue(x.onSerializedCalled);
+            Assert.IsTrue(y.onDeserializingCalled);
+            Assert.IsTrue(y.onDeserializedCalled);
+            Assert.IsTrue(y.onDeserializationCalled);
+            Assert.IsTrue(x.next.onSerializingCalled);
+            Assert.IsTrue(x.next.onSerializedCalled);
+            Assert.IsTrue(y.next.onDeserializingCalled);
+            Assert.IsTrue(y.next.onDeserializedCalled);
+            Assert.IsTrue(y.next.onDeserializationCalled);
+            Assert.IsTrue(x.i.onSerializingCalled);
+            Assert.IsTrue(x.i.onSerializedCalled);
+            Assert.IsTrue(y.i.onDeserializingCalled);
+            Assert.IsTrue(y.i.onDeserializedCalled);
+            Assert.IsTrue(y.i.onDeserializationCalled);
+            Assert.IsTrue(x.s.onSerializingCalled);
+            Assert.IsTrue(x.s.onSerializedCalled);
+            Assert.IsTrue(y.s.onDeserializingCalled);
+            Assert.IsTrue(y.s.onDeserializedCalled);
+            Assert.IsTrue(y.s.onDeserializationCalled);
+            Assert.IsTrue(x.next.i.onSerializingCalled);
+            Assert.IsTrue(x.next.i.onSerializedCalled);
+            Assert.IsTrue(y.next.i.onDeserializingCalled);
+            Assert.IsTrue(y.next.i.onDeserializedCalled);
+            Assert.IsTrue(y.next.i.onDeserializationCalled);
+            Assert.IsTrue(x.i.next.onSerializingCalled);
+            Assert.IsTrue(x.i.next.onSerializedCalled);
+            Assert.IsTrue(y.i.next.onDeserializingCalled);
+            Assert.IsTrue(y.i.next.onDeserializedCalled);
+            Assert.IsTrue(y.i.next.onDeserializationCalled);
+        }
    }
 }
