@@ -49,31 +49,33 @@ namespace Ares.Data
         /// Visitor pattern.
         /// </summary>
         void Visit(IElementVisitor visitor);
+
+        /// <summary>
+        /// Serializes to an xml stream.
+        /// </summary>
+        /// <param name="writer">Writer for the xml</param>
+        void WriteToXml(System.Xml.XmlWriter writer);
     }
 
     /// <summary>
-    /// A basic classification of files.
+    /// Type of a sound file: music or effect
     /// </summary>
-    public enum BasicFileCategory
+    public enum SoundFileType
     {
         /// <summary>
-        /// Classification unknown.
+        /// Music, longer file
         /// </summary>
-        Unknown,
+        Music,
         /// <summary>
-        /// A music file.
+        /// Sound effect, shorter file
         /// </summary>
-        MusicFile,
-        /// <summary>
-        /// A sound file.
-        /// </summary>
-        SoundFile
+        SoundEffect
     }
 
     /// <summary>
     /// An element consisting of a physical file.
     /// </summary>
-    public interface IFileElement
+    public interface IFileElement : IElement
     {
         /// <summary>
         /// The name of the file.
@@ -84,9 +86,9 @@ namespace Ares.Data
         /// </summary>
         String FilePath { get; set; }
         /// <summary>
-        /// The category of the file.
+        /// Type of the file
         /// </summary>
-        BasicFileCategory FileCategory { get; }
+        SoundFileType SoundFileType { get; set; }
     }
 
     /// <summary>
@@ -138,7 +140,7 @@ namespace Ares.Data
         /// </summary>
         /// <remarks>
         /// When playing, the repetition will be delayed by a random time between
-        /// the minimum random delay and the maximum random delay.
+        /// the fixed intermediate delay and the maximum random delay.
         /// </remarks>
         TimeSpan MaximumRandomIntermediateDelay { get; set;  }
     }
@@ -152,7 +154,7 @@ namespace Ares.Data
 
     /// <summary>
     /// Base interface for an element in a parallel container. 
-    /// Parallel elements can be randomized, delayed, and repeated.
+    /// Parallel elements can be delayed and repeated.
     /// </summary>
     public interface IParallelElement : IContainerElement, IDelayableElement, IRepeatableElement
     {
@@ -225,7 +227,7 @@ namespace Ares.Data
         /// <summary>
         /// The element which is triggered
         /// </summary>
-        IElement TargetElement { get; set; }
+        Int32 TargetElementId { get; set; }
 
         /// <summary>
         /// Shall sound be stopped before triggering the target?
@@ -236,6 +238,12 @@ namespace Ares.Data
         /// Shall music be stopped before triggering the target?
         /// </summary>
         bool StopMusic { get; set; }
+
+        /// <summary>
+        /// Serializes to an xml stream.
+        /// </summary>
+        /// <param name="writer">Writer for the xml</param>
+        void WriteToXml(System.Xml.XmlWriter writer);
     }
 
     /// <summary>

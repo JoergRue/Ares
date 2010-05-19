@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
+using System.Xml;
 
 namespace Ares.Data
 {
@@ -48,13 +47,17 @@ namespace Ares.Data
 
         public IProject LoadProject(String fileName)
         {
-            BinaryFormatter formatter = new BinaryFormatter();
-            formatter.AssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple;
+            XmlReaderSettings settings = new XmlReaderSettings();
+            settings.IgnoreComments = true;
+            settings.ProhibitDtd = false;
             using (System.IO.FileStream stream = new System.IO.FileStream(fileName, System.IO.FileMode.Open))
             {
-                IProject project = (IProject) formatter.Deserialize(stream);
-                project.Changed = false;
-                return project;
+                using (XmlReader reader = XmlReader.Create(stream, settings))
+                {
+                    reader.Read();
+                    reader.MoveToElement();
+                    return new Project(reader, fileName);
+                }
             }
         }
 
@@ -77,14 +80,17 @@ namespace Ares.Data
 
         private static void DoSaveProject(IProject project, String fileName)
         {
-            BinaryFormatter formatter = new BinaryFormatter();
-            formatter.AssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple;
             String tempFileName = System.IO.Path.GetTempFileName();
-            using (System.IO.FileStream stream = new System.IO.FileStream(tempFileName, System.IO.FileMode.Create, 
-                System.IO.FileAccess.Write, System.IO.FileShare.Delete | System.IO.FileShare.Write))
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.CloseOutput = true;
+            settings.ConformanceLevel = ConformanceLevel.Document;
+            settings.Indent = true;
+            using (XmlWriter writer = XmlWriter.Create(tempFileName, settings))
             {
-                formatter.Serialize(stream, project);
-                stream.Flush();
+                writer.WriteStartDocument();
+                project.WriteToXml(writer);
+                writer.WriteEndDocument();
+                writer.Flush();
             }
             System.IO.File.Copy(tempFileName, fileName, true);
             System.IO.File.Delete(tempFileName);

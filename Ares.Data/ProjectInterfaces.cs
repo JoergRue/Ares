@@ -43,6 +43,12 @@ namespace Ares.Data
         /// Returns the element which is triggered by a certain key.
         /// </summary>
         IModeElement GetTriggeredElement(Int32 keyCode);
+
+        /// <summary>
+        /// Serializes to an xml stream.
+        /// </summary>
+        /// <param name="writer">Writer for the xml</param>
+        void WriteToXml(System.Xml.XmlWriter writer);
     }
 
     /// <summary>
@@ -118,5 +124,11 @@ namespace Ares.Data
         /// Sets a volume.
         /// </summary>
         void SetVolume(VolumeTarget target, Int32 value);
+
+        /// <summary>
+        /// Serializes to an xml stream.
+        /// </summary>
+        /// <param name="writer">Writer for the xml</param>
+        void WriteToXml(System.Xml.XmlWriter writer);
     }
 }

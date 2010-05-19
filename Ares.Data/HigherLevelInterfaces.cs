@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace Ares.Data
@@ -36,9 +35,15 @@ namespace Ares.Data
 
         /// <summary>
         /// Returns the first element in the mode (the one which will be 
-        /// attached to the trigger.
+        /// attached to the trigger).
         /// </summary>
         IElement StartElement { get; }
+
+        /// <summary>
+        /// Serializes to an xml stream.
+        /// </summary>
+        /// <param name="writer">Writer for the xml</param>
+        void WriteToXml(System.Xml.XmlWriter writer);
     }
 
     /// <summary>

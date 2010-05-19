@@ -77,7 +77,7 @@ namespace Ares.Data
             set
             {
                 m_Trigger = value;
-                m_Trigger.TargetElement = m_FirstContainer;
+                m_Trigger.TargetElementId = m_FirstContainer.Id;
                 m_Trigger.StopMusic = true;
             }
         }
@@ -99,7 +99,16 @@ namespace Ares.Data
         {
             visitor.VisitParallelContainer(m_FirstContainer);
         }
-        
+
+        public override void WriteToXml(System.Xml.XmlWriter writer)
+        {
+            writer.WriteStartElement("SequentialMusicList");
+            DoWriteToXml(writer);
+            m_FirstContainer.WriteToXml(writer);
+            m_Trigger.WriteToXml(writer);
+            writer.WriteEndElement();
+        }
+
         internal SequentialBackgroundMusicList(Int32 id, String title)
             : base(id)
         {
@@ -108,6 +117,21 @@ namespace Ares.Data
             m_FirstContainer = DataModule.ElementFactory.CreateParallelContainer(title + "_Repeat");
             m_ParallelElement = m_FirstContainer.AddElement(m_SecondContainer);
             m_ParallelElement.Repeat = false;
+        }
+
+        internal SequentialBackgroundMusicList(System.Xml.XmlReader reader)
+            : base(reader)
+        {
+            if (reader.IsEmptyElement)
+            {
+                XmlHelpers.ThrowException(StringResources.ExpectedContent, reader);
+            }
+            reader.MoveToContent();
+            m_FirstContainer = DataModule.TheElementFactory.CreateParallelContainer(reader);
+            m_ParallelElement = m_FirstContainer.GetElements()[0];
+            m_SecondContainer = (IElementContainer<ISequentialElement>)((ParallelElement)m_ParallelElement).InnerElement;
+            m_Trigger = DataModule.TheElementFactory.CreateTrigger(reader);
+            reader.ReadEndElement();
         }
 
         private ITrigger m_Trigger;

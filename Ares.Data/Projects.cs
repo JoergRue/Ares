@@ -36,11 +36,52 @@ namespace Ares.Data
                 && (e as IKeyTrigger).KeyCode == keyCode);
         }
 
+        public void WriteToXml(System.Xml.XmlWriter writer)
+        {
+            writer.WriteStartElement("Mode");
+            writer.WriteAttributeString("Title", Title);
+            writer.WriteAttributeString("Key", KeyCode.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            writer.WriteStartElement("Elements");
+            m_Elements.ForEach(e => e.WriteToXml(writer));
+            writer.WriteEndElement();
+            writer.WriteEndElement();
+        }
+
         internal Mode(String title)
         {
             Title = title;
             KeyCode = 0;
             m_Elements = new List<IModeElement>();
+        }
+
+        internal Mode(System.Xml.XmlReader reader)
+        {
+            Title = reader.GetNonEmptyAttribute("Title");
+            KeyCode = reader.GetIntegerAttribute("Key");
+            if (!reader.IsEmptyElement)
+            {
+                reader.MoveToContent();
+                while (reader.IsStartElement())
+                {
+                    if (reader.IsStartElement("Elements") && !reader.IsEmptyElement)
+                    {
+                        reader.MoveToContent();
+                        while (reader.IsStartElement())
+                        {
+                            IModeElement element = DataModule.TheElementFactory.CreateModeElement(reader);
+                            if (element != null)
+                            {
+                                m_Elements.Add(element);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        reader.ReadOuterXml();
+                    }
+                }
+                reader.ReadEndElement();
+            }
         }
 
         private List<IModeElement> m_Elements;
@@ -101,6 +142,19 @@ namespace Ares.Data
             m_Volumes[(int)target] = value;
         }
 
+        public void WriteToXml(System.Xml.XmlWriter writer)
+        {
+            writer.WriteStartElement("Project");
+            writer.WriteAttributeString("Title", Title);
+            writer.WriteAttributeString("SoundVolume", GetVolume(VolumeTarget.Sounds).ToString(System.Globalization.CultureInfo.InvariantCulture));
+            writer.WriteAttributeString("MusicVolume", GetVolume(VolumeTarget.Music).ToString(System.Globalization.CultureInfo.InvariantCulture));
+            writer.WriteAttributeString("Volume", GetVolume(VolumeTarget.Both).ToString(System.Globalization.CultureInfo.InvariantCulture));
+            writer.WriteStartElement("Modes");
+            m_Modes.ForEach(e => e.WriteToXml(writer));
+            writer.WriteEndElement();
+            writer.WriteEndElement();
+        }
+
         internal Project(String title)
         {
             Title = title;
@@ -108,6 +162,55 @@ namespace Ares.Data
             m_Volumes = new Int32[3];
             for (int i = 0; i < m_Volumes.Length; ++i) m_Volumes[i] = 100;
             FileName = "";
+            Changed = false;
+        }
+
+        internal Project(System.Xml.XmlReader reader, String fileName)
+        {
+            m_Modes = new List<IMode>();
+            m_Volumes = new Int32[3];
+
+            if (!reader.IsStartElement("Project"))
+            {
+                XmlHelpers.ThrowException(String.Format(StringResources.ExpectedElement, "Project"), reader);
+            }
+            Title = reader.GetNonEmptyAttribute("Title");
+            SetVolume(VolumeTarget.Sounds, reader.GetIntegerAttribute("SoundVolume"));
+            SetVolume(VolumeTarget.Music, reader.GetIntegerAttribute("MusicVolume"));
+            SetVolume(VolumeTarget.Both, reader.GetIntegerAttribute("Volume"));
+            if (!reader.IsEmptyElement)
+            {
+                reader.MoveToContent();
+                while (reader.IsStartElement())
+                {
+                    if (reader.IsStartElement("Modes") && !reader.IsEmptyElement)
+                    {
+                        reader.MoveToContent();
+                        while (reader.IsStartElement())
+                        {
+                            if (reader.IsStartElement("Mode"))
+                            {
+                                m_Modes.Add(new Mode(reader));
+                            }
+                            else
+                            {
+                                reader.ReadOuterXml();
+                            }
+                        }
+                        reader.ReadEndElement();
+                    }
+                    else
+                    {
+                        reader.ReadOuterXml();
+                    }
+                }
+                reader.ReadEndElement();
+            }
+            else
+            {
+                reader.Read();
+            }
+            FileName = fileName;
             Changed = false;
         }
 

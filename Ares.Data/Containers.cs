@@ -11,6 +11,11 @@ namespace Ares.Data
         {
             Title = title;
         }
+
+        protected ContainerBase(System.Xml.XmlReader reader)
+            : base(reader)
+        {
+        }
     }
 
     [Serializable]
@@ -43,11 +48,21 @@ namespace Ares.Data
             m_Element.Visit(visitor);
         }
 
+        protected void DoWriteToXml(System.Xml.XmlWriter writer)
+        {
+            m_Element.WriteToXml(writer);
+        }
+
         protected ContainerElement()
         {
         }
 
-        internal IElement InnerElement { set { m_Element = value; } }
+        protected void DoReadFromXml(System.Xml.XmlReader reader)
+        {
+            m_Element = DataModule.TheElementFactory.CreateElement(reader);
+        }
+
+        internal IElement InnerElement { set { m_Element = value; } get { return m_Element; } }
 
         protected IElement m_Element;
     }
@@ -85,6 +100,48 @@ namespace Ares.Data
             m_Elements = new List<T>();
         }
 
+        protected override void DoWriteToXml(System.Xml.XmlWriter writer)
+        {
+            base.DoWriteToXml(writer);
+            writer.WriteStartElement("SubElements");
+            m_Elements.ForEach(e => e.WriteToXml(writer));
+            writer.WriteEndElement();
+        }
+
+        internal Container(System.Xml.XmlReader reader)
+            : base(reader)
+        {
+            m_Elements = new List<T>();
+            if (reader.IsEmptyElement)
+            {
+                XmlHelpers.ThrowException(StringResources.ExpectedContent, reader);
+            }
+            reader.MoveToContent();
+            while (reader.IsStartElement())
+            {
+                if (reader.IsStartElement("SubElements") && !reader.IsEmptyElement)
+                {
+                    reader.MoveToContent();
+                    while (reader.IsStartElement())
+                    {
+                        T element = ReadContainerElement(reader);
+                        if (element != null)
+                        {
+                            m_Elements.Add(element);
+                        }
+                    }
+                    reader.ReadEndElement();
+                }
+                else
+                {
+                    reader.ReadOuterXml();
+                }
+            }
+            reader.ReadEndElement();
+        }
+
+        protected abstract T ReadContainerElement(System.Xml.XmlReader reader);
+
         private List<T> m_Elements;
     }
 
@@ -101,6 +158,30 @@ namespace Ares.Data
             FixedStartDelay = TimeSpan.Zero;
             MaximumRandomStartDelay = TimeSpan.Zero;
         }
+
+        public SequentialElement(System.Xml.XmlReader reader)
+        {
+            if (reader.IsEmptyElement)
+            {
+                XmlHelpers.ThrowException(StringResources.ExpectedContent, reader);
+            }
+            FixedStartDelay = reader.GetTimeSpanAttribute("fixedDelay");
+            MaximumRandomStartDelay = reader.GetTimeSpanAttribute("maxDelay");
+            reader.MoveToContent();
+            DoReadFromXml(reader);
+            reader.ReadEndElement();
+        }
+
+        public void WriteToXml(System.Xml.XmlWriter writer)
+        {
+            writer.WriteStartElement("Sequential");
+            writer.WriteAttributeString("fixedDelay", FixedStartDelay.Ticks.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            writer.WriteAttributeString("maxDelay", MaximumRandomStartDelay.Ticks.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            
+            DoWriteToXml(writer);
+
+            writer.WriteEndElement();
+        }
     }
 
     [Serializable]
@@ -115,6 +196,27 @@ namespace Ares.Data
             : base(ID, title)
         {
         }
+
+        internal SequentialContainer(System.Xml.XmlReader reader)
+            : base(reader)
+        {
+        }
+
+        public override void WriteToXml(System.Xml.XmlWriter writer)
+        {
+            writer.WriteStartElement("SequentialContainer");
+            DoWriteToXml(writer);
+            writer.WriteEndElement();
+        }
+
+        protected override SequentialElement ReadContainerElement(System.Xml.XmlReader reader)
+        {
+            if (!reader.IsStartElement("Sequential"))
+            {
+                XmlHelpers.ThrowException(String.Format(StringResources.ExpectedElement, "Sequential"), reader);
+            }
+            return new SequentialElement(reader);
+        }
     }
 
     [Serializable]
@@ -126,6 +228,28 @@ namespace Ares.Data
             : base()
         {
             RandomChance = 100;
+        }
+
+        public ChoiceElement(System.Xml.XmlReader reader)
+        {
+            if (reader.IsEmptyElement)
+            {
+                XmlHelpers.ThrowException(StringResources.ExpectedContent, reader);
+            }
+            RandomChance = reader.GetIntegerAttribute("chance");
+            reader.MoveToContent();
+            DoReadFromXml(reader);
+            reader.ReadEndElement();
+        }
+
+        public void WriteToXml(System.Xml.XmlWriter writer)
+        {
+            writer.WriteStartElement("Choice");
+            writer.WriteAttributeString("chance", RandomChance.ToString(System.Globalization.CultureInfo.InvariantCulture));
+
+            DoWriteToXml(writer);
+
+            writer.WriteEndElement();
         }
     }
 
@@ -140,6 +264,27 @@ namespace Ares.Data
         internal ChoiceContainer(int ID, String title)
             : base(ID, title)
         {
+        }
+
+        internal ChoiceContainer(System.Xml.XmlReader reader)
+            : base(reader)
+        {
+        }
+
+        public override void WriteToXml(System.Xml.XmlWriter writer)
+        {
+            writer.WriteStartElement("ChoiceContainer");
+            DoWriteToXml(writer);
+            writer.WriteEndElement();
+        }
+
+        protected override ChoiceElement ReadContainerElement(System.Xml.XmlReader reader)
+        {
+            if (!reader.IsStartElement("Choice"))
+            {
+                XmlHelpers.ThrowException(String.Format(StringResources.ExpectedElement, "Choice"), reader);
+            }
+            return new ChoiceElement(reader);
         }
     }
 
@@ -164,6 +309,37 @@ namespace Ares.Data
             MaximumRandomIntermediateDelay = TimeSpan.Zero;
             Repeat = false;
         }
+
+        public ParallelElement(System.Xml.XmlReader reader)
+        {
+            if (reader.IsEmptyElement)
+            {
+                XmlHelpers.ThrowException(StringResources.ExpectedContent, reader);
+            }
+            FixedStartDelay = reader.GetTimeSpanAttribute("fixedDelay");
+            MaximumRandomStartDelay = reader.GetTimeSpanAttribute("maxDelay");
+            Repeat = reader.GetBooleanAttribute("repeat");
+            FixedIntermediateDelay = reader.GetTimeSpanAttribute("fixedIntermediateDelay");
+            MaximumRandomIntermediateDelay = reader.GetTimeSpanAttribute("maxIntermediateDelay");
+
+            reader.MoveToContent();
+            DoReadFromXml(reader);
+            reader.ReadEndElement();
+        }
+
+        public void WriteToXml(System.Xml.XmlWriter writer)
+        {
+            writer.WriteStartElement("Parallel");
+            writer.WriteAttributeString("fixedDelay", FixedStartDelay.Ticks.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            writer.WriteAttributeString("maxDelay", MaximumRandomStartDelay.Ticks.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            writer.WriteAttributeString("repeat", Repeat ? "true" : "false");
+            writer.WriteAttributeString("fixedIntermediateDelay", FixedIntermediateDelay.Ticks.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            writer.WriteAttributeString("maxIntermediateDelay", MaximumRandomIntermediateDelay.Ticks.ToString(System.Globalization.CultureInfo.InvariantCulture));
+
+            DoWriteToXml(writer);
+
+            writer.WriteEndElement();
+        }
     }
 
     [Serializable]
@@ -178,6 +354,27 @@ namespace Ares.Data
         internal ParallelContainer(int ID, String title)
             : base(ID, title)
         {
+        }
+
+        internal ParallelContainer(System.Xml.XmlReader reader)
+            : base(reader)
+        {
+        }
+
+        public override void WriteToXml(System.Xml.XmlWriter writer)
+        {
+            writer.WriteStartElement("ParallelContainer");
+            DoWriteToXml(writer);
+            writer.WriteEndElement();
+        }
+
+        protected override ParallelElement ReadContainerElement(System.Xml.XmlReader reader)
+        {
+            if (!reader.IsStartElement("Parallel"))
+            {
+                XmlHelpers.ThrowException(String.Format(StringResources.ExpectedElement, "Parallel"), reader);
+            }
+            return new ParallelElement(reader);
         }
     }
 

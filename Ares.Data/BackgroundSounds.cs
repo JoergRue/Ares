@@ -98,11 +98,31 @@ namespace Ares.Data
         {
             visitor.VisitChoiceContainer(m_Container);
         }
-        
+
+        public override void WriteToXml(System.Xml.XmlWriter writer)
+        {
+            writer.WriteStartElement("BackgroundSoundChoice");
+            DoWriteToXml(writer);
+            m_Container.WriteToXml(writer);
+            writer.WriteEndElement();
+        }
+
         internal BackgroundSoundChoice(Int32 id, String title)
             : base(id)
         {
             m_Container = DataModule.ElementFactory.CreateChoiceContainer(title + "_Choice");
+        }
+
+        internal BackgroundSoundChoice(System.Xml.XmlReader reader)
+            : base(reader)
+        {
+            if (reader.IsEmptyElement)
+            {
+                XmlHelpers.ThrowException(StringResources.ExpectedContent, reader);
+            }
+            reader.MoveToContent();
+            m_Container = DataModule.TheElementFactory.CreateChoiceContainer(reader);
+            reader.ReadEndElement();
         }
 
         internal IParallelElement ParallelElement { get; set; }
@@ -158,7 +178,7 @@ namespace Ares.Data
             set
             {
                 m_Trigger = value;
-                m_Trigger.TargetElement = m_Container;
+                m_Trigger.TargetElementId = m_Container.Id;
                 m_Trigger.StopSounds = true;
             }
         }
@@ -179,6 +199,60 @@ namespace Ares.Data
             m_Elements = new List<IBackgroundSoundChoice>();
             m_Container = DataModule.ElementFactory.CreateParallelContainer(title + "_Parallel");
         }
+
+        public override void WriteToXml(System.Xml.XmlWriter writer)
+        {
+            writer.WriteStartElement("BackgroundSounds");
+            DoWriteToXml(writer);
+            writer.WriteStartElement("SubElements");
+            m_Elements.ForEach(e => e.WriteToXml(writer));
+            writer.WriteEndElement();
+            m_Trigger.WriteToXml(writer);
+            writer.WriteEndElement();
+        }
+
+        internal BackgroundSounds(System.Xml.XmlReader reader)
+            : base(reader)
+        {
+            m_Elements = new List<IBackgroundSoundChoice>();
+            m_Container = DataModule.ElementFactory.CreateParallelContainer(Title + "_Parallel");
+
+            if (reader.IsEmptyElement)
+            {
+                XmlHelpers.ThrowException(StringResources.ExpectedContent, reader);
+            }
+            reader.MoveToContent();
+            while (reader.IsStartElement())
+            {
+                if (reader.IsStartElement("SubElements") && !reader.IsEmptyElement)
+                {
+                    reader.MoveToContent();
+                    while (reader.IsStartElement())
+                    {
+                        if (reader.IsStartElement("BackgroundSoundChoice"))
+                        {
+                            BackgroundSoundChoice choice = new BackgroundSoundChoice(reader);
+                            IParallelElement parallelElement = m_Container.AddElement(choice);
+                            parallelElement.Repeat = true;
+                            choice.ParallelElement = parallelElement;
+                            m_Elements.Add(choice);
+                        }
+                        else
+                        {
+                            reader.ReadOuterXml();
+                        }
+                    }
+                    reader.ReadEndElement();
+                }
+                else
+                {
+                    reader.ReadOuterXml();
+                }
+            }
+
+            m_Trigger = DataModule.TheElementFactory.CreateTrigger(reader);
+            reader.ReadEndElement();
+        }        
 
         private ITrigger m_Trigger;
 

@@ -10,12 +10,12 @@ namespace Ares.Data
             visitor.VisitFileElement(this);
         }
 
-        internal BasicFileElement(int ID, String filePath, BasicFileCategory category)
+        internal BasicFileElement(int ID, String filePath, SoundFileType fileType)
             : base(ID)
         {
             FilePath = filePath;
             Title = FileName;
-            m_FileCategory = category;
+            SoundFileType = fileType;
         }
 
         public String FileName { get { return m_FileName; } }
@@ -27,11 +27,27 @@ namespace Ares.Data
             }
         }
 
-        public BasicFileCategory FileCategory { get { return m_FileCategory; } }
+        public SoundFileType SoundFileType { get; set; }
+
+        public override void WriteToXml(System.Xml.XmlWriter writer)
+        {
+            writer.WriteStartElement("FileElement");
+            DoWriteToXml(writer);
+            writer.WriteAttributeString("Path", FilePath);
+            writer.WriteAttributeString("SoundType", SoundFileType == Data.SoundFileType.Music ? "Music" : "Sound");
+            writer.WriteEndElement();
+        }
+
+        internal BasicFileElement(System.Xml.XmlReader reader)
+            : base(reader)
+        {
+            FilePath = reader.GetNonEmptyAttribute("Path");
+            String soundType = reader.GetNonEmptyAttribute("SoundType");
+            SoundFileType = soundType == "Music" ? SoundFileType.Music : SoundFileType.SoundEffect;
+            reader.ReadOuterXml();
+        }
 
         private String m_FileName;
         private String m_FilePath;
-        private BasicFileCategory m_FileCategory;
-
     }
 }
