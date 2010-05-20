@@ -52,6 +52,11 @@ namespace Ares.Data
         /// Creates a background sound library.
         /// </summary>
         IBackgroundSounds CreateBackgroundSounds(String title);
+
+        /// <summary>
+        /// Creates a mode.
+        /// </summary>
+        IModeElement CreateModeElement(String title, IElement firstElement);
     }
 
     class ElementFactory : IElementFactory
@@ -101,6 +106,11 @@ namespace Ares.Data
             return new BackgroundSounds(GetNextID(), title);
         }
 
+        public IModeElement CreateModeElement(String title, IElement firstElement)
+        {
+            return new ModeElement(GetNextID(), title, firstElement);
+        }
+
         internal ElementFactory()
         {
             // m_NextID = 0;
@@ -109,27 +119,6 @@ namespace Ares.Data
         internal int GetNextID()
         {
             return m_NextID++;
-        }
-
-        internal IModeElement CreateModeElement(System.Xml.XmlReader reader)
-        {
-            if (reader.IsStartElement("SequentialMusicList"))
-            {
-                return new SequentialBackgroundMusicList(reader);
-            }
-            else if (reader.IsStartElement("RandomMusicList"))
-            {
-                return new RandomBackgroundMusicList(reader);
-            }
-            else if (reader.IsStartElement("BackgroundSounds"))
-            {
-                return new BackgroundSounds(reader);
-            }
-            else
-            {
-                reader.ReadOuterXml();
-                return null;
-            }
         }
 
         internal IElementContainer<IParallelElement> CreateParallelContainer(System.Xml.XmlReader reader)
@@ -178,7 +167,19 @@ namespace Ares.Data
 
         internal IElement CreateElement(System.Xml.XmlReader reader)
         {
-            if (reader.IsStartElement("SequentialContainer"))
+            if (reader.IsStartElement("SequentialMusicList"))
+            {
+                return new SequentialBackgroundMusicList(reader);
+            }
+            else if (reader.IsStartElement("RandomMusicList"))
+            {
+                return new RandomBackgroundMusicList(reader);
+            }
+            else if (reader.IsStartElement("BackgroundSounds"))
+            {
+                return new BackgroundSounds(reader);
+            }
+            else if (reader.IsStartElement("SequentialContainer"))
             {
                 return new SequentialContainer(reader);
             }
@@ -196,6 +197,7 @@ namespace Ares.Data
             }
             else
             {
+                reader.ReadOuterXml();
                 return null;
             }
         }

@@ -120,7 +120,7 @@ namespace Ares.Data
             {
                 XmlHelpers.ThrowException(StringResources.ExpectedContent, reader);
             }
-            reader.MoveToContent();
+            reader.Read();
             m_Container = DataModule.TheElementFactory.CreateChoiceContainer(reader);
             reader.ReadEndElement();
         }
@@ -130,12 +130,12 @@ namespace Ares.Data
         private IElementContainer<IChoiceElement> m_Container;
     }
 
-    class BackgroundSounds : ModeElementBase, IBackgroundSounds
+    class BackgroundSounds : ElementBase, IBackgroundSounds
     {
-        public IBackgroundSoundChoice AddElement(IElement element)
+        public IBackgroundSoundChoice AddElement(String title)
         {
             BackgroundSoundChoice choice = new BackgroundSoundChoice(
-                DataModule.TheElementFactory.GetNextID(), element.Title);
+                DataModule.TheElementFactory.GetNextID(), title);
             IParallelElement parallelElement = m_Container.AddElement(choice);
             parallelElement.Repeat = true;
             choice.ParallelElement = parallelElement;
@@ -166,26 +166,6 @@ namespace Ares.Data
             }
             return false;
         }
-
-        #region IModeElement Members
-
-        public ITrigger Trigger
-        {
-            get
-            {
-                return m_Trigger;
-            }
-            set
-            {
-                m_Trigger = value;
-                m_Trigger.TargetElementId = m_Container.Id;
-                m_Trigger.StopSounds = true;
-            }
-        }
-
-        public IElement StartElement { get { return m_Container; } }
-
-        #endregion
 
         public override void Visit(IElementVisitor visitor)
         {
@@ -221,12 +201,12 @@ namespace Ares.Data
             {
                 XmlHelpers.ThrowException(StringResources.ExpectedContent, reader);
             }
-            reader.MoveToContent();
+            reader.Read();
             while (reader.IsStartElement())
             {
                 if (reader.IsStartElement("SubElements") && !reader.IsEmptyElement)
                 {
-                    reader.MoveToContent();
+                    reader.Read();
                     while (reader.IsStartElement())
                     {
                         if (reader.IsStartElement("BackgroundSoundChoice"))

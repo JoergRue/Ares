@@ -21,7 +21,7 @@ namespace Ares.Data
     /// A top-level element inside a mode which is triggered 
     /// externally.
     /// </summary>
-    public interface IModeElement : ICompositeElement
+    public interface IModeElement : IElement, ICompositeElement
     {
         /// <summary>
         /// The trigger for the element.
@@ -38,12 +38,6 @@ namespace Ares.Data
         /// attached to the trigger).
         /// </summary>
         IElement StartElement { get; }
-
-        /// <summary>
-        /// Serializes to an xml stream.
-        /// </summary>
-        /// <param name="writer">Writer for the xml</param>
-        void WriteToXml(System.Xml.XmlWriter writer);
     }
 
     /// <summary>
@@ -57,7 +51,7 @@ namespace Ares.Data
     /// interface methods.
     /// </remarks>
     public interface IRandomBackgroundMusicList : IElement, IRepeatableElement,
-        IDelayableElement, IElementContainer<IChoiceElement>, IModeElement
+        IDelayableElement, IElementContainer<IChoiceElement>, IMusicList
     {
     }
 
@@ -69,7 +63,7 @@ namespace Ares.Data
     /// list can be delayed, which means an interval between the songs.
     /// </remarks>
     public interface ISequentialBackgroundMusicList : IElement, IRepeatableElement,
-        IElementContainer<ISequentialElement>, IModeElement
+        IElementContainer<ISequentialElement>, IMusicList
     {
     }
 
@@ -89,12 +83,12 @@ namespace Ares.Data
     /// The background sounds library contains a list of parallel elements, and
     /// each of these in turn contains a list of choice elements.
     /// </remarks>
-    public interface IBackgroundSounds : IElement, IModeElement
+    public interface IBackgroundSounds : IElement
     {
         /// <summary>
         /// Adds an sound choice to the library.
         /// </summary>
-        IBackgroundSoundChoice AddElement(IElement element);
+        IBackgroundSoundChoice AddElement(String title);
 
         /// <summary>
         /// Removes a sound choice from the library.

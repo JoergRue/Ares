@@ -24,6 +24,14 @@ namespace Ares.Data
         /// Visit a choice container.
         /// </summary>
         void VisitChoiceContainer(IElementContainer<IChoiceElement> choiceContainer);
+        /// <summary>
+        /// Visits a sequential music list
+        /// </summary>
+        void VisitSequentialMusicList(ISequentialBackgroundMusicList musicList);
+        /// <summary>
+        /// Visits a randomized music list
+        /// </summary>
+        void VisitRandomMusicList(IRandomBackgroundMusicList musicList);
     }
 
     /// <summary>
@@ -55,6 +63,17 @@ namespace Ares.Data
         /// </summary>
         /// <param name="writer">Writer for the xml</param>
         void WriteToXml(System.Xml.XmlWriter writer);
+    }
+
+    /// <summary>
+    /// Interface for a music list.
+    /// </summary>
+    public interface IMusicList
+    {
+        /// <summary>
+        /// Visitor pattern; put through to the elements
+        /// </summary>
+        void VisitElements(IElementVisitor visitor);
     }
 
     /// <summary>

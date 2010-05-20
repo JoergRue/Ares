@@ -116,12 +116,12 @@ namespace Ares.Data
             {
                 XmlHelpers.ThrowException(StringResources.ExpectedContent, reader);
             }
-            reader.MoveToContent();
+            reader.Read();
             while (reader.IsStartElement())
             {
                 if (reader.IsStartElement("SubElements") && !reader.IsEmptyElement)
                 {
-                    reader.MoveToContent();
+                    reader.Read();
                     while (reader.IsStartElement())
                     {
                         T element = ReadContainerElement(reader);
@@ -167,7 +167,7 @@ namespace Ares.Data
             }
             FixedStartDelay = reader.GetTimeSpanAttribute("fixedDelay");
             MaximumRandomStartDelay = reader.GetTimeSpanAttribute("maxDelay");
-            reader.MoveToContent();
+            reader.Read();
             DoReadFromXml(reader);
             reader.ReadEndElement();
         }
@@ -237,7 +237,7 @@ namespace Ares.Data
                 XmlHelpers.ThrowException(StringResources.ExpectedContent, reader);
             }
             RandomChance = reader.GetIntegerAttribute("chance");
-            reader.MoveToContent();
+            reader.Read();
             DoReadFromXml(reader);
             reader.ReadEndElement();
         }
@@ -322,7 +322,7 @@ namespace Ares.Data
             FixedIntermediateDelay = reader.GetTimeSpanAttribute("fixedIntermediateDelay");
             MaximumRandomIntermediateDelay = reader.GetTimeSpanAttribute("maxIntermediateDelay");
 
-            reader.MoveToContent();
+            reader.Read();
             DoReadFromXml(reader);
             reader.ReadEndElement();
         }

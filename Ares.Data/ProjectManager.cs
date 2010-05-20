@@ -136,6 +136,16 @@ namespace Ares.Data
                     element.Visit(this);
                 }
             }
+
+            public void VisitSequentialMusicList(ISequentialBackgroundMusicList musicList)
+            {
+                musicList.VisitElements(this);
+            }
+
+            public void VisitRandomMusicList(IRandomBackgroundMusicList musicList)
+            {
+                musicList.VisitElements(this);
+            }
         }
 
         public void UnloadProject(IProject project)

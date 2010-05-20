@@ -21,6 +21,11 @@ namespace Ares.Playing
             sPlayer.Callbacks = callbacks;
         }
 
+        internal static Player ThePlayer
+        {
+            get { return sPlayer; }
+        }
+
         internal static IFilePlayer FilePlayer
         {
             get { return sFilePlayer; }

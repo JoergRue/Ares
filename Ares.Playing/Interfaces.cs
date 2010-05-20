@@ -42,5 +42,10 @@ namespace Ares.Playing
         void SetProject(Ares.Data.IProject project);
 
         void KeyReceived(Int32 keyCode);
+
+        void NextMusicTitle();
+        void PreviousMusicTitle();
+
+        void StopAll();
     }
 }

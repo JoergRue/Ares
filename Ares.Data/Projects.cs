@@ -4,90 +4,6 @@ using System.Collections.Generic;
 namespace Ares.Data
 {
     [Serializable]
-    class Mode : IMode
-    {
-        public String Title { get; set; }
-
-        public Int32 KeyCode { get; set; }
-
-        public void AddElement(IModeElement element)
-        {
-            m_Elements.Add(element);
-        }
-
-        public void RemoveElement(IModeElement element)
-        {
-            m_Elements.Remove(element);
-        }
-
-        public IList<IModeElement> GetElements()
-        {
-            return new List<IModeElement>(m_Elements);
-        }
-
-        public bool ContainsKeyTrigger(Int32 keyCode)
-        {
-            return GetTriggeredElement(keyCode) != null;
-        }
-
-        public IModeElement GetTriggeredElement(Int32 keyCode)
-        {
-            return m_Elements.Find(e => e.Trigger.TriggerType == TriggerType.Key
-                && (e as IKeyTrigger).KeyCode == keyCode);
-        }
-
-        public void WriteToXml(System.Xml.XmlWriter writer)
-        {
-            writer.WriteStartElement("Mode");
-            writer.WriteAttributeString("Title", Title);
-            writer.WriteAttributeString("Key", KeyCode.ToString(System.Globalization.CultureInfo.InvariantCulture));
-            writer.WriteStartElement("Elements");
-            m_Elements.ForEach(e => e.WriteToXml(writer));
-            writer.WriteEndElement();
-            writer.WriteEndElement();
-        }
-
-        internal Mode(String title)
-        {
-            Title = title;
-            KeyCode = 0;
-            m_Elements = new List<IModeElement>();
-        }
-
-        internal Mode(System.Xml.XmlReader reader)
-        {
-            Title = reader.GetNonEmptyAttribute("Title");
-            KeyCode = reader.GetIntegerAttribute("Key");
-            if (!reader.IsEmptyElement)
-            {
-                reader.MoveToContent();
-                while (reader.IsStartElement())
-                {
-                    if (reader.IsStartElement("Elements") && !reader.IsEmptyElement)
-                    {
-                        reader.MoveToContent();
-                        while (reader.IsStartElement())
-                        {
-                            IModeElement element = DataModule.TheElementFactory.CreateModeElement(reader);
-                            if (element != null)
-                            {
-                                m_Elements.Add(element);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        reader.ReadOuterXml();
-                    }
-                }
-                reader.ReadEndElement();
-            }
-        }
-
-        private List<IModeElement> m_Elements;
-    }
-
-    [Serializable]
     class Project : IProject
     {
         public String Title { get; set; }
@@ -180,12 +96,12 @@ namespace Ares.Data
             SetVolume(VolumeTarget.Both, reader.GetIntegerAttribute("Volume"));
             if (!reader.IsEmptyElement)
             {
-                reader.MoveToContent();
+                reader.Read();
                 while (reader.IsStartElement())
                 {
                     if (reader.IsStartElement("Modes") && !reader.IsEmptyElement)
                     {
-                        reader.MoveToContent();
+                        reader.Read();
                         while (reader.IsStartElement())
                         {
                             if (reader.IsStartElement("Mode"))

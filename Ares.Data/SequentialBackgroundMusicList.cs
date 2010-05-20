@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Ares.Data
 {
-    class SequentialBackgroundMusicList : ModeElementBase, ISequentialBackgroundMusicList
+    class SequentialBackgroundMusicList : ElementBase, ISequentialBackgroundMusicList
     {
         #region IRepeatableElement Members
 
@@ -66,26 +66,6 @@ namespace Ares.Data
 
         #endregion
 
-        #region IModeElement Members
-
-        public ITrigger Trigger
-        {
-            get
-            {
-                return m_Trigger;
-            }
-            set
-            {
-                m_Trigger = value;
-                m_Trigger.TargetElementId = m_FirstContainer.Id;
-                m_Trigger.StopMusic = true;
-            }
-        }
-
-        public IElement StartElement { get { return m_FirstContainer; } }
-
-        #endregion
-
         #region ICompositeElement Members
 
         public bool IsEndless()
@@ -96,6 +76,11 @@ namespace Ares.Data
         #endregion
 
         public override void Visit(IElementVisitor visitor)
+        {
+            visitor.VisitSequentialMusicList(this);
+        }
+
+        public void VisitElements(IElementVisitor visitor)
         {
             visitor.VisitParallelContainer(m_FirstContainer);
         }
@@ -126,7 +111,7 @@ namespace Ares.Data
             {
                 XmlHelpers.ThrowException(StringResources.ExpectedContent, reader);
             }
-            reader.MoveToContent();
+            reader.Read();
             m_FirstContainer = DataModule.TheElementFactory.CreateParallelContainer(reader);
             m_ParallelElement = m_FirstContainer.GetElements()[0];
             m_SecondContainer = (IElementContainer<ISequentialElement>)((ParallelElement)m_ParallelElement).InnerElement;

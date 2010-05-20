@@ -1,30 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Ares.Data
 {
     [Serializable]
-    abstract class ModeElementBase : ElementBase
-    {
-        public bool IsPlaying { get; set; }
-
-        protected ModeElementBase(int ID) 
-            : base(ID)
-        {
-            // IsPlaying = false;
-        }
-
-        protected ModeElementBase(System.Xml.XmlReader reader)
-            : base(reader)
-        {
-            // IsPlaying = false;
-        }
-    }
-
-    [Serializable]
-    class RandomBackgroundMusicList : ModeElementBase, IRandomBackgroundMusicList
+    class RandomBackgroundMusicList : ElementBase, IRandomBackgroundMusicList
     {
         #region IRepeatableElement Members
 
@@ -113,26 +93,6 @@ namespace Ares.Data
 
         #endregion
 
-        #region IModeElement Members
-
-        public ITrigger Trigger 
-        {
-            get
-            {
-                return m_Trigger;
-            }
-            set
-            {
-                m_Trigger = value;
-                m_Trigger.TargetElementId = m_FirstContainer.Id;
-                m_Trigger.StopMusic = true;
-            }
-        }
-
-        public IElement StartElement { get { return m_FirstContainer; } }
-
-        #endregion
-
         #region ICompositeElement Members
 
         public bool IsEndless()
@@ -144,6 +104,11 @@ namespace Ares.Data
 
         public override void Visit(IElementVisitor visitor)
         {
+            visitor.VisitRandomMusicList(this);
+        }
+
+        public void VisitElements(IElementVisitor visitor)
+        {
             visitor.VisitSequentialContainer(m_FirstContainer);
         }
 
@@ -152,7 +117,6 @@ namespace Ares.Data
             writer.WriteStartElement("RandomMusicList");
             DoWriteToXml(writer);
             m_FirstContainer.WriteToXml(writer);
-            m_Trigger.WriteToXml(writer);
             writer.WriteEndElement();
         }
         
@@ -175,17 +139,14 @@ namespace Ares.Data
             {
                 XmlHelpers.ThrowException(StringResources.ExpectedContent, reader);
             }
-            reader.MoveToContent();
+            reader.Read();
             m_FirstContainer = DataModule.TheElementFactory.CreateSequentialContainer(reader);
             m_SequentialElement = m_FirstContainer.GetElements()[0];
             m_SecondContainer = (IElementContainer<IParallelElement>)((SequentialElement)m_SequentialElement).InnerElement;
             m_ParallelElement = m_SecondContainer.GetElements()[0];
             m_ThirdContainer = (IElementContainer<IChoiceElement>)((ParallelElement)m_ParallelElement).InnerElement;
-            m_Trigger = DataModule.TheElementFactory.CreateTrigger(reader);
             reader.ReadEndElement();
         }
-
-        private ITrigger m_Trigger;
 
         private IElementContainer<ISequentialElement> m_FirstContainer;
         private IElementContainer<IParallelElement> m_SecondContainer;
