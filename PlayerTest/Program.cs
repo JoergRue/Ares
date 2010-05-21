@@ -131,6 +131,19 @@ namespace PlayerTest
             mode.KeyCode = 20;
             mode.AddElement(modeElement);
 
+            IRandomBackgroundMusicList randomList = factory.CreateRandomBackgroundMusicList("Random");
+            randomList.FixedIntermediateDelay = TimeSpan.FromSeconds(3.0);
+            randomList.AddElement(factory.CreateFileElement(@"D:\Projekte\Ares\trunk\PlayerTest\Haunted.mp3", Ares.Data.SoundFileType.Music));
+            randomList.AddElement(factory.CreateFileElement(@"D:\Projekte\Ares\trunk\PlayerTest\Defeat.mp3", Ares.Data.SoundFileType.Music));
+            randomList.AddElement(factory.CreateFileElement(@"D:\Projekte\Ares\trunk\PlayerTest\Witchdrums.mp3", Ares.Data.SoundFileType.Music));
+            randomList.AddElement(factory.CreateFileElement(@"D:\Projekte\Ares\trunk\PlayerTest\TheCursed.mp3", Ares.Data.SoundFileType.Music));
+            randomList.AddElement(factory.CreateFileElement(@"D:\Projekte\Ares\trunk\PlayerTest\WildRage.mp3", Ares.Data.SoundFileType.Music));
+            IKeyTrigger trigger2 = factory.CreateKeyTrigger();
+            trigger2.KeyCode = 30;
+            IModeElement modeElement2 = factory.CreateModeElement("mode2", randomList);
+            modeElement2.Trigger = trigger2;
+            mode.AddElement(modeElement2);
+
             Callbacks callbacks = new Callbacks();
             PlayingModule.SetCallbacks(callbacks);
 
@@ -144,6 +157,15 @@ namespace PlayerTest
             {
                 if (info.KeyChar == 'm')
                     player.KeyReceived(10);
+                else if (info.KeyChar == 'n')
+                    player.NextMusicTitle();
+                else if (info.KeyChar == 'p')
+                    player.PreviousMusicTitle();
+                else if (info.KeyChar == 'r')
+                {
+                    player.StopAll();
+                    player.KeyReceived(30);
+                }
                 info = System.Console.ReadKey();
             }
             player.StopAll();

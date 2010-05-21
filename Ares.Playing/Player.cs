@@ -154,17 +154,22 @@ namespace Ares.Playing
 
         protected int CurrentPlayedHandle { get; set; }
 
-        public void Next()
+        protected void StopCurrentFile()
         {
             lock (syncObject)
             {
                 if (CurrentPlayedHandle != 0)
                 {
-                    PlayingModule.FilePlayer.StopFile(CurrentPlayedHandle);
+                    int handle = CurrentPlayedHandle;
                     CurrentPlayedHandle = 0;
+                    PlayingModule.FilePlayer.StopFile(handle);
                 }
             }
-            PlayNext();
+        }
+
+        public void Next()
+        {
+            StopCurrentFile(); // will automatically start the next file
         }
 
         public abstract void Previous();
@@ -184,15 +189,10 @@ namespace Ares.Playing
             lock(syncObject)
             {
                 m_Index -= 2;
-                if (m_Index < 0) 
+                if (m_Index < -1) 
                     m_Index = -1;
-                if (CurrentPlayedHandle != 0)
-                {
-                    PlayingModule.FilePlayer.StopFile(CurrentPlayedHandle);
-                    CurrentPlayedHandle = 0;
-                }
             }
-            PlayNext();
+            StopCurrentFile(); // will automatically start the next file
         }
 
         public override void PlayNext()
@@ -262,6 +262,7 @@ namespace Ares.Playing
     {
         public override void Previous()
         {
+            m_GoBack = true;
             Next();
         }
 
@@ -273,9 +274,19 @@ namespace Ares.Playing
                 Monitor.Exit(syncObject);
                 Client.SubPlayerFinished();
             }
+            else if (m_GoBack && m_LastElementsStack.Count > 1)
+            {
+                IChoiceElement element = m_LastElementsStack[m_LastElementsStack.Count - 2];
+                m_LastElementsStack.RemoveAt(m_LastElementsStack.Count - 1);
+                m_GoBack = false;
+                Monitor.Exit(syncObject);
+                Repeat(m_Container, element);
+            }
             else
             {
                 IChoiceElement element = SelectRandomElement(m_Container);
+                m_LastElementsStack.Add(element);
+                m_GoBack = false;
                 Monitor.Exit(syncObject);
                 Repeat(m_Container, element);
             }
@@ -299,9 +310,13 @@ namespace Ares.Playing
             : base(stoppedEvent, client)
         {
             m_Container = list;
+            m_LastElementsStack = new List<IChoiceElement>();
+            m_GoBack = false;
         }
 
         private IRandomBackgroundMusicList m_Container;
+        private List<IChoiceElement> m_LastElementsStack;
+        private bool m_GoBack;
     }
 
     class ElementPlayer : ElementPlayerBase, IElementPlayerClient
@@ -474,6 +489,17 @@ namespace Ares.Playing
         public int PlayFile(IFileElement fileElement, Action afterPlayed)
         {
             SoundFile soundFile = new SoundFile(fileElement);
+            if (m_Callbacks != null)
+            {
+                if (fileElement.SoundFileType == Data.SoundFileType.Music)
+                {
+                    m_Callbacks.MusicStarted(fileElement.Id);
+                }
+                else
+                {
+                    m_Callbacks.SoundStarted(fileElement.Id);
+                }
+            }
             int handle = PlayingModule.FilePlayer.PlayFile(soundFile, (id, handle2) =>
             {
                 if (m_Callbacks != null)
