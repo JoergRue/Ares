@@ -11,49 +11,52 @@ namespace Ares.Editor
 {
     partial class SettingsDialog : Form
     {
-        public SettingsDialog(Settings settings)
+        public SettingsDialog(Settings settings, BasicSettings basicSettings)
         {
             InitializeComponent();
             musicDirLabel.Text = settings.MusicDirectory;
             soundDirLabel.Text = settings.SoundDirectory;
-            if (AppSettings.Default.SettingsLocation == 0)
+            if (basicSettings.UserSettingsLocation == BasicSettings.SettingsLocation.Custom)
             {
-                userDirButton.Checked = true;
+                otherDirButton.Checked = true;
             }
-            else if (AppSettings.Default.SettingsLocation == 1)
+            else if (basicSettings.UserSettingsLocation == BasicSettings.SettingsLocation.AppDir && BasicSettings.IsAppDirAllowed())
             {
                 appDirButton.Checked = true;
             }
             else
             {
-                otherDirButton.Checked = true;
+                userDirButton.Checked = true;
             }
-            otherDirLabel.Text = AppSettings.Default.CustomSettingsDirectory;
-            userDirLabel.Text = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Ares");
-            appDirLabel.Text = System.IO.Path.GetDirectoryName(Application.ExecutablePath);
+            otherDirLabel.Text = basicSettings.CustomSettingsDirectory;
+            userDirLabel.Text = basicSettings.GetSettingsDir(BasicSettings.SettingsLocation.AppDataDir);
+            appDirLabel.Text = basicSettings.GetSettingsDir(BasicSettings.SettingsLocation.AppDir);
+            appDirButton.Enabled = BasicSettings.IsAppDirAllowed();
             m_Settings = settings;
+            m_BasicSettings = basicSettings;
         }
 
         private void okButton_Click(object sender, EventArgs e)
         {
             m_Settings.MusicDirectory = musicDirLabel.Text;
             m_Settings.SoundDirectory = soundDirLabel.Text;
-            if (userDirButton.Checked)
+            if (otherDirButton.Checked)
             {
-                AppSettings.Default.SettingsLocation = 0;
+                m_BasicSettings.UserSettingsLocation = BasicSettings.SettingsLocation.Custom;
             }
-            else if (appDirButton.Checked)
+            else if (appDirButton.Checked && BasicSettings.IsAppDirAllowed())
             {
-                AppSettings.Default.SettingsLocation = 1;
+                m_BasicSettings.UserSettingsLocation = BasicSettings.SettingsLocation.AppDir;
             }
             else
             {
-                AppSettings.Default.SettingsLocation = 2;
+                m_BasicSettings.UserSettingsLocation = BasicSettings.SettingsLocation.AppDataDir;
             }
-            AppSettings.Default.CustomSettingsDirectory = otherDirLabel.Text;
+            m_BasicSettings.CustomSettingsDirectory = otherDirLabel.Text;
         }
 
         private Settings m_Settings { get; set; }
+        private BasicSettings m_BasicSettings { get; set; }
 
         private void selectMusicButton_Click(object sender, EventArgs e)
         {

@@ -47,5 +47,8 @@ namespace Ares.Playing
         void PreviousMusicTitle();
 
         void StopAll();
+
+        void SetMusicPath(String path);
+        void SetSoundPath(String path);
     }
 }

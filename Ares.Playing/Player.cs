@@ -10,26 +10,27 @@ namespace Ares.Playing
         public int Id
         {
             get;
-            set; 
+            private set; 
         }
 
         public string Path
         {
             get;
-            set;
+            private set;
         }
 
         public SoundFileType SoundFileType
         {
             get;
-            set;
+            private set;
         }
 
         public SoundFile(IFileElement element)
         {
             Id = element.Id;
-            Path = element.FilePath;
             SoundFileType = element.SoundFileType == Data.SoundFileType.Music ? SoundFileType.Music : SoundFileType.SoundEffect;
+            String dir = (SoundFileType == Playing.SoundFileType.Music) ? PlayingModule.ThePlayer.MusicPath : PlayingModule.ThePlayer.SoundPath;
+            Path = System.IO.Path.Combine(dir, element.FilePath);
         }
     }
 
@@ -691,6 +692,16 @@ namespace Ares.Playing
             }
         }
 
+        public void SetMusicPath(String path)
+        {
+            MusicPath = path;
+        }
+
+        public void SetSoundPath(String path)
+        {
+            SoundPath = path;
+        }
+
         private void TriggerElement(int keyCode)
         {
             IModeElement element = m_ActiveMode.GetTriggeredElement(keyCode);
@@ -741,6 +752,9 @@ namespace Ares.Playing
         internal IPlayingCallbacks Callbacks { get; set; }
 
         internal IMusicPlayer ActiveMusicPlayer { get; set; }
+
+        internal String MusicPath { get; private set; }
+        internal String SoundPath { get; private set; }
 
         public Player()
         {

@@ -62,7 +62,7 @@ namespace Ares.Data
             m_Element = DataModule.TheElementFactory.CreateElement(reader);
         }
 
-        internal IElement InnerElement { set { m_Element = value; } get { return m_Element; } }
+        public IElement InnerElement { internal set { m_Element = value; } get { return m_Element; } }
 
         protected IElement m_Element;
     }
@@ -70,6 +70,16 @@ namespace Ares.Data
     [Serializable]
     abstract class Container<I, T> : ContainerBase where I : IContainerElement where T : ContainerElement, I, new()
     {
+        public IElement AddGeneralElement(IElement element)
+        {
+            return AddElement(element);
+        }
+
+        public void InsertGeneralElement(int index, IElement element)
+        {
+            m_Elements.Insert(index, (T)element);
+        }
+
         public I AddElement(IElement element)
         {
             T wrapper = new T();
@@ -85,6 +95,13 @@ namespace Ares.Data
             {
                 m_Elements.Remove(element);
             }
+        }
+
+        public IList<IElement> GetGeneralElements()
+        {
+            List<IElement> result = new List<IElement>();
+            m_Elements.ForEach(e => result.Add(e));
+            return result;
         }
 
         public IList<I> GetElements()

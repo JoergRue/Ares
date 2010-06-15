@@ -29,35 +29,301 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProjectExplorer));
             this.projectContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.projectTree = new System.Windows.Forms.TreeView();
+            this.modeContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.renameToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.addScenarioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addRandomPlaylistToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addSequentialPlaylistToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addBackgroundSoundsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.addParallelElementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addSequentialElementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addChoiceListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.containerContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.renameToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.selectKeyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.addRandomPlaylistToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.addSequentialPlaylistToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.addBackgroundSoundsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.addParallelElementToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.addSequentialElementToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.addChoiceListToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.elementContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.editToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.renameToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.selectKeyToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.projectContextMenu.SuspendLayout();
+            this.modeContextMenu.SuspendLayout();
+            this.containerContextMenu.SuspendLayout();
+            this.elementContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // projectContextMenu
             // 
+            this.projectContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.renameToolStripMenuItem,
+            this.toolStripMenuItem1});
             this.projectContextMenu.Name = "projectContextMenu";
-            this.projectContextMenu.Size = new System.Drawing.Size(61, 4);
+            resources.ApplyResources(this.projectContextMenu, "projectContextMenu");
+            // 
+            // renameToolStripMenuItem
+            // 
+            this.renameToolStripMenuItem.Name = "renameToolStripMenuItem";
+            resources.ApplyResources(this.renameToolStripMenuItem, "renameToolStripMenuItem");
+            this.renameToolStripMenuItem.Click += new System.EventHandler(this.renameToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            resources.ApplyResources(this.toolStripMenuItem1, "toolStripMenuItem1");
+            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
             // projectTree
             // 
-            this.projectTree.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.projectTree.Location = new System.Drawing.Point(0, 0);
+            resources.ApplyResources(this.projectTree, "projectTree");
             this.projectTree.Name = "projectTree";
-            this.projectTree.Size = new System.Drawing.Size(284, 262);
-            this.projectTree.TabIndex = 1;
+            this.projectTree.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.projectTree_AfterLabelEdit);
+            this.projectTree.DoubleClick += new System.EventHandler(this.projectTree_DoubleClick);
+            this.projectTree.MouseDown += new System.Windows.Forms.MouseEventHandler(this.projectTree_MouseDown);
+            // 
+            // modeContextMenu
+            // 
+            this.modeContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.renameToolStripMenuItem1,
+            this.toolStripMenuItem2,
+            this.deleteToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.addScenarioToolStripMenuItem,
+            this.addRandomPlaylistToolStripMenuItem,
+            this.addSequentialPlaylistToolStripMenuItem,
+            this.addBackgroundSoundsToolStripMenuItem,
+            this.toolStripSeparator2,
+            this.addParallelElementToolStripMenuItem,
+            this.addSequentialElementToolStripMenuItem,
+            this.addChoiceListToolStripMenuItem});
+            this.modeContextMenu.Name = "modeContextMenu";
+            resources.ApplyResources(this.modeContextMenu, "modeContextMenu");
+            // 
+            // renameToolStripMenuItem1
+            // 
+            this.renameToolStripMenuItem1.Name = "renameToolStripMenuItem1";
+            resources.ApplyResources(this.renameToolStripMenuItem1, "renameToolStripMenuItem1");
+            this.renameToolStripMenuItem1.Click += new System.EventHandler(this.renameToolStripMenuItem1_Click);
+            // 
+            // toolStripMenuItem2
+            // 
+            resources.ApplyResources(this.toolStripMenuItem2, "toolStripMenuItem2");
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
+            // 
+            // deleteToolStripMenuItem
+            // 
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            resources.ApplyResources(this.deleteToolStripMenuItem, "deleteToolStripMenuItem");
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            resources.ApplyResources(this.toolStripSeparator1, "toolStripSeparator1");
+            // 
+            // addScenarioToolStripMenuItem
+            // 
+            this.addScenarioToolStripMenuItem.Name = "addScenarioToolStripMenuItem";
+            resources.ApplyResources(this.addScenarioToolStripMenuItem, "addScenarioToolStripMenuItem");
+            this.addScenarioToolStripMenuItem.Click += new System.EventHandler(this.addScenarioToolStripMenuItem_Click);
+            // 
+            // addRandomPlaylistToolStripMenuItem
+            // 
+            this.addRandomPlaylistToolStripMenuItem.Name = "addRandomPlaylistToolStripMenuItem";
+            resources.ApplyResources(this.addRandomPlaylistToolStripMenuItem, "addRandomPlaylistToolStripMenuItem");
+            this.addRandomPlaylistToolStripMenuItem.Click += new System.EventHandler(this.addRandomPlaylistToolStripMenuItem_Click);
+            // 
+            // addSequentialPlaylistToolStripMenuItem
+            // 
+            this.addSequentialPlaylistToolStripMenuItem.Name = "addSequentialPlaylistToolStripMenuItem";
+            resources.ApplyResources(this.addSequentialPlaylistToolStripMenuItem, "addSequentialPlaylistToolStripMenuItem");
+            this.addSequentialPlaylistToolStripMenuItem.Click += new System.EventHandler(this.addSequentialPlaylistToolStripMenuItem_Click);
+            // 
+            // addBackgroundSoundsToolStripMenuItem
+            // 
+            this.addBackgroundSoundsToolStripMenuItem.Name = "addBackgroundSoundsToolStripMenuItem";
+            resources.ApplyResources(this.addBackgroundSoundsToolStripMenuItem, "addBackgroundSoundsToolStripMenuItem");
+            this.addBackgroundSoundsToolStripMenuItem.Click += new System.EventHandler(this.addBackgroundSoundsToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            resources.ApplyResources(this.toolStripSeparator2, "toolStripSeparator2");
+            // 
+            // addParallelElementToolStripMenuItem
+            // 
+            this.addParallelElementToolStripMenuItem.Name = "addParallelElementToolStripMenuItem";
+            resources.ApplyResources(this.addParallelElementToolStripMenuItem, "addParallelElementToolStripMenuItem");
+            this.addParallelElementToolStripMenuItem.Click += new System.EventHandler(this.addParallelElementToolStripMenuItem_Click);
+            // 
+            // addSequentialElementToolStripMenuItem
+            // 
+            this.addSequentialElementToolStripMenuItem.Name = "addSequentialElementToolStripMenuItem";
+            resources.ApplyResources(this.addSequentialElementToolStripMenuItem, "addSequentialElementToolStripMenuItem");
+            this.addSequentialElementToolStripMenuItem.Click += new System.EventHandler(this.addSequentialElementToolStripMenuItem_Click);
+            // 
+            // addChoiceListToolStripMenuItem
+            // 
+            this.addChoiceListToolStripMenuItem.Name = "addChoiceListToolStripMenuItem";
+            resources.ApplyResources(this.addChoiceListToolStripMenuItem, "addChoiceListToolStripMenuItem");
+            this.addChoiceListToolStripMenuItem.Click += new System.EventHandler(this.addChoiceListToolStripMenuItem_Click);
+            // 
+            // containerContextMenu
+            // 
+            this.containerContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.editToolStripMenuItem,
+            this.renameToolStripMenuItem2,
+            this.selectKeyToolStripMenuItem,
+            this.deleteToolStripMenuItem1,
+            this.toolStripSeparator3,
+            this.addRandomPlaylistToolStripMenuItem1,
+            this.addSequentialPlaylistToolStripMenuItem1,
+            this.addBackgroundSoundsToolStripMenuItem1,
+            this.toolStripSeparator4,
+            this.addParallelElementToolStripMenuItem1,
+            this.addSequentialElementToolStripMenuItem1,
+            this.addChoiceListToolStripMenuItem1});
+            this.containerContextMenu.Name = "containerContextMenu";
+            resources.ApplyResources(this.containerContextMenu, "containerContextMenu");
+            this.containerContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.containerContextMenu_Opening);
+            // 
+            // editToolStripMenuItem
+            // 
+            resources.ApplyResources(this.editToolStripMenuItem, "editToolStripMenuItem");
+            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+            this.editToolStripMenuItem.Click += new System.EventHandler(this.editToolStripMenuItem_Click);
+            // 
+            // renameToolStripMenuItem2
+            // 
+            this.renameToolStripMenuItem2.Name = "renameToolStripMenuItem2";
+            resources.ApplyResources(this.renameToolStripMenuItem2, "renameToolStripMenuItem2");
+            this.renameToolStripMenuItem2.Click += new System.EventHandler(this.renameToolStripMenuItem2_Click);
+            // 
+            // selectKeyToolStripMenuItem
+            // 
+            this.selectKeyToolStripMenuItem.Name = "selectKeyToolStripMenuItem";
+            resources.ApplyResources(this.selectKeyToolStripMenuItem, "selectKeyToolStripMenuItem");
+            this.selectKeyToolStripMenuItem.Click += new System.EventHandler(this.selectKeyToolStripMenuItem_Click);
+            // 
+            // deleteToolStripMenuItem1
+            // 
+            this.deleteToolStripMenuItem1.Name = "deleteToolStripMenuItem1";
+            resources.ApplyResources(this.deleteToolStripMenuItem1, "deleteToolStripMenuItem1");
+            this.deleteToolStripMenuItem1.Click += new System.EventHandler(this.deleteToolStripMenuItem1_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            resources.ApplyResources(this.toolStripSeparator3, "toolStripSeparator3");
+            // 
+            // addRandomPlaylistToolStripMenuItem1
+            // 
+            this.addRandomPlaylistToolStripMenuItem1.Name = "addRandomPlaylistToolStripMenuItem1";
+            resources.ApplyResources(this.addRandomPlaylistToolStripMenuItem1, "addRandomPlaylistToolStripMenuItem1");
+            this.addRandomPlaylistToolStripMenuItem1.Click += new System.EventHandler(this.addRandomPlaylistToolStripMenuItem1_Click);
+            // 
+            // addSequentialPlaylistToolStripMenuItem1
+            // 
+            this.addSequentialPlaylistToolStripMenuItem1.Name = "addSequentialPlaylistToolStripMenuItem1";
+            resources.ApplyResources(this.addSequentialPlaylistToolStripMenuItem1, "addSequentialPlaylistToolStripMenuItem1");
+            this.addSequentialPlaylistToolStripMenuItem1.Click += new System.EventHandler(this.addSequentialPlaylistToolStripMenuItem1_Click);
+            // 
+            // addBackgroundSoundsToolStripMenuItem1
+            // 
+            this.addBackgroundSoundsToolStripMenuItem1.Name = "addBackgroundSoundsToolStripMenuItem1";
+            resources.ApplyResources(this.addBackgroundSoundsToolStripMenuItem1, "addBackgroundSoundsToolStripMenuItem1");
+            this.addBackgroundSoundsToolStripMenuItem1.Click += new System.EventHandler(this.addBackgroundSoundsToolStripMenuItem1_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            resources.ApplyResources(this.toolStripSeparator4, "toolStripSeparator4");
+            // 
+            // addParallelElementToolStripMenuItem1
+            // 
+            this.addParallelElementToolStripMenuItem1.Name = "addParallelElementToolStripMenuItem1";
+            resources.ApplyResources(this.addParallelElementToolStripMenuItem1, "addParallelElementToolStripMenuItem1");
+            this.addParallelElementToolStripMenuItem1.Click += new System.EventHandler(this.addParallelElementToolStripMenuItem1_Click);
+            // 
+            // addSequentialElementToolStripMenuItem1
+            // 
+            this.addSequentialElementToolStripMenuItem1.Name = "addSequentialElementToolStripMenuItem1";
+            resources.ApplyResources(this.addSequentialElementToolStripMenuItem1, "addSequentialElementToolStripMenuItem1");
+            this.addSequentialElementToolStripMenuItem1.Click += new System.EventHandler(this.addSequentialElementToolStripMenuItem1_Click);
+            // 
+            // addChoiceListToolStripMenuItem1
+            // 
+            this.addChoiceListToolStripMenuItem1.Name = "addChoiceListToolStripMenuItem1";
+            resources.ApplyResources(this.addChoiceListToolStripMenuItem1, "addChoiceListToolStripMenuItem1");
+            this.addChoiceListToolStripMenuItem1.Click += new System.EventHandler(this.addChoiceListToolStripMenuItem1_Click);
+            // 
+            // elementContextMenu
+            // 
+            this.elementContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.editToolStripMenuItem1,
+            this.renameToolStripMenuItem3,
+            this.selectKeyToolStripMenuItem1,
+            this.deleteToolStripMenuItem2});
+            this.elementContextMenu.Name = "elementContextMenu";
+            resources.ApplyResources(this.elementContextMenu, "elementContextMenu");
+            this.elementContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.elementContextMenu_Opening);
+            // 
+            // editToolStripMenuItem1
+            // 
+            resources.ApplyResources(this.editToolStripMenuItem1, "editToolStripMenuItem1");
+            this.editToolStripMenuItem1.Name = "editToolStripMenuItem1";
+            this.editToolStripMenuItem1.Click += new System.EventHandler(this.editToolStripMenuItem1_Click);
+            // 
+            // renameToolStripMenuItem3
+            // 
+            this.renameToolStripMenuItem3.Name = "renameToolStripMenuItem3";
+            resources.ApplyResources(this.renameToolStripMenuItem3, "renameToolStripMenuItem3");
+            this.renameToolStripMenuItem3.Click += new System.EventHandler(this.renameToolStripMenuItem3_Click);
+            // 
+            // selectKeyToolStripMenuItem1
+            // 
+            this.selectKeyToolStripMenuItem1.Name = "selectKeyToolStripMenuItem1";
+            resources.ApplyResources(this.selectKeyToolStripMenuItem1, "selectKeyToolStripMenuItem1");
+            this.selectKeyToolStripMenuItem1.Click += new System.EventHandler(this.selectKeyToolStripMenuItem1_Click);
+            // 
+            // deleteToolStripMenuItem2
+            // 
+            this.deleteToolStripMenuItem2.Name = "deleteToolStripMenuItem2";
+            resources.ApplyResources(this.deleteToolStripMenuItem2, "deleteToolStripMenuItem2");
+            this.deleteToolStripMenuItem2.Click += new System.EventHandler(this.deleteToolStripMenuItem2_Click);
             // 
             // ProjectExplorer
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 262);
             this.Controls.Add(this.projectTree);
             this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)((((WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)
                         | WeifenLuo.WinFormsUI.Docking.DockAreas.DockTop)
                         | WeifenLuo.WinFormsUI.Docking.DockAreas.DockBottom)));
-            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "ProjectExplorer";
-            this.Text = "Project Explorer";
+            this.projectContextMenu.ResumeLayout(false);
+            this.modeContextMenu.ResumeLayout(false);
+            this.containerContextMenu.ResumeLayout(false);
+            this.elementContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -66,5 +332,38 @@
 
         private System.Windows.Forms.ContextMenuStrip projectContextMenu;
         private System.Windows.Forms.TreeView projectTree;
+        private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ContextMenuStrip modeContextMenu;
+        private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem addScenarioToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addRandomPlaylistToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addSequentialPlaylistToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addBackgroundSoundsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem addParallelElementToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addSequentialElementToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip containerContextMenu;
+        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem selectKeyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripMenuItem addRandomPlaylistToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem addSequentialPlaylistToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem addBackgroundSoundsToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripMenuItem addParallelElementToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem addSequentialElementToolStripMenuItem1;
+        private System.Windows.Forms.ContextMenuStrip elementContextMenu;
+        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem3;
+        private System.Windows.Forms.ToolStripMenuItem selectKeyToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem addChoiceListToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addChoiceListToolStripMenuItem1;
     }
 }

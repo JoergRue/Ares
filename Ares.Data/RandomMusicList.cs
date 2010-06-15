@@ -76,6 +76,16 @@ namespace Ares.Data
 
         #region IElementContainer<IChoiceElement> Members
 
+        public IElement AddGeneralElement(IElement element)
+        {
+            return AddElement(element);
+        }
+
+        public void InsertGeneralElement(int index, IElement element)
+        {
+            m_ThirdContainer.InsertGeneralElement(index, element);
+        }
+
         public IChoiceElement AddElement(IElement element)
         {
             return m_ThirdContainer.AddElement(element);
@@ -84,6 +94,11 @@ namespace Ares.Data
         public void RemoveElement(int ID)
         {
             m_ThirdContainer.RemoveElement(ID);
+        }
+
+        public IList<IElement> GetGeneralElements()
+        {
+            return m_ThirdContainer.GetGeneralElements();
         }
 
         public IList<IChoiceElement> GetElements()

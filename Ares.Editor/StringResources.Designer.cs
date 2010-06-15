@@ -70,11 +70,101 @@ namespace Ares.Editor {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Ares Editor - {0} ähnelt.
+        /// </summary>
+        internal static string AresEditorTitle {
+            get {
+                return ResourceManager.GetString("AresEditorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Error opening the project: {0} ähnelt.
+        /// </summary>
+        internal static string LoadError {
+            get {
+                return ResourceManager.GetString("LoadError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Music ähnelt.
+        /// </summary>
+        internal static string Music {
+            get {
+                return ResourceManager.GetString("Music", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die New Background Sounds ähnelt.
+        /// </summary>
+        internal static string NewBackgroundSounds {
+            get {
+                return ResourceManager.GetString("NewBackgroundSounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die New Parallel List ähnelt.
+        /// </summary>
+        internal static string NewParallelList {
+            get {
+                return ResourceManager.GetString("NewParallelList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die New Playlist ähnelt.
+        /// </summary>
+        internal static string NewPlaylist {
+            get {
+                return ResourceManager.GetString("NewPlaylist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die New Project ähnelt.
+        /// </summary>
+        internal static string NewProject {
+            get {
+                return ResourceManager.GetString("NewProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die New Random List ähnelt.
+        /// </summary>
+        internal static string NewRandomList {
+            get {
+                return ResourceManager.GetString("NewRandomList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die New Sequential List ähnelt.
+        /// </summary>
+        internal static string NewSequentialList {
+            get {
+                return ResourceManager.GetString("NewSequentialList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die No Project Opened ähnelt.
         /// </summary>
         internal static string NoOpenedProject {
             get {
                 return ResourceManager.GetString("NoOpenedProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die [No name] ähnelt.
+        /// </summary>
+        internal static string NoProjectName {
+            get {
+                return ResourceManager.GetString("NoProjectName", resourceCulture);
             }
         }
         
@@ -85,6 +175,33 @@ namespace Ares.Editor {
         internal static string NoSettings {
             get {
                 return ResourceManager.GetString("NoSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The current project has unsaved changes. Shall it be saved now? ähnelt.
+        /// </summary>
+        internal static string ProjectChanged {
+            get {
+                return ResourceManager.GetString("ProjectChanged", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Error saving the project: {0} ähnelt.
+        /// </summary>
+        internal static string SaveError {
+            get {
+                return ResourceManager.GetString("SaveError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Sounds ähnelt.
+        /// </summary>
+        internal static string Sounds {
+            get {
+                return ResourceManager.GetString("Sounds", resourceCulture);
             }
         }
         

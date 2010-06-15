@@ -120,12 +120,51 @@
   <data name="Ares" xml:space="preserve">
     <value>Ares</value>
   </data>
+  <data name="AresEditorTitle" xml:space="preserve">
+    <value>Ares Editor - {0}</value>
+  </data>
+  <data name="LoadError" xml:space="preserve">
+    <value>Error opening the project: {0}</value>
+  </data>
+  <data name="Music" xml:space="preserve">
+    <value>Music</value>
+  </data>
+  <data name="NewBackgroundSounds" xml:space="preserve">
+    <value>New Background Sounds</value>
+  </data>
+  <data name="NewParallelList" xml:space="preserve">
+    <value>New Parallel List</value>
+  </data>
+  <data name="NewPlaylist" xml:space="preserve">
+    <value>New Playlist</value>
+  </data>
+  <data name="NewProject" xml:space="preserve">
+    <value>New Project</value>
+  </data>
+  <data name="NewRandomList" xml:space="preserve">
+    <value>New Random List</value>
+  </data>
+  <data name="NewSequentialList" xml:space="preserve">
+    <value>New Sequential List</value>
+  </data>
   <data name="NoOpenedProject" xml:space="preserve">
     <value>No Project Opened</value>
+  </data>
+  <data name="NoProjectName" xml:space="preserve">
+    <value>[No name]</value>
   </data>
   <data name="NoSettings" xml:space="preserve">
     <value>This seems to be the first start of the editor.
 You should adapt some settings first.</value>
+  </data>
+  <data name="ProjectChanged" xml:space="preserve">
+    <value>The current project has unsaved changes. Shall it be saved now?</value>
+  </data>
+  <data name="SaveError" xml:space="preserve">
+    <value>Error saving the project: {0}</value>
+  </data>
+  <data name="Sounds" xml:space="preserve">
+    <value>Sounds</value>
   </data>
   <data name="WriteSettingsError" xml:space="preserve">
     <value>Settings could not be saved. Reason:

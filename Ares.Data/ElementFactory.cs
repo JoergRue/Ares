@@ -160,8 +160,7 @@ namespace Ares.Data
             }
             else
             {
-                XmlHelpers.ThrowException(String.Format(StringResources.ExpectedElement, "Trigger"), reader);
-                return null; // to make the compiler happy
+                return null;
             }
         }
 

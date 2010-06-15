@@ -81,14 +81,14 @@ namespace PlayerTest
             using (IFilePlayer player = PlayingModule.CreatePlayer())
             {
                 System.Console.WriteLine("Playing music file");
-                SoundFile file = new SoundFile(1, @"D:\Projekte\Ares\trunk\PlayerTest\Defeat.mp3", SoundFileType.Music);
+                SoundFile file = new SoundFile(1, @"Defeat.mp3", SoundFileType.Music);
                 player.PlayFile(file, new PlayingFinished((id, handle) => 
                     {
                         System.Console.WriteLine("Finished playing id " + id);
                         finishEvent.Set();
                     }));
                 System.Threading.Thread.Sleep(2000);
-                SoundFile file2 = new SoundFile(2, @"D:\Projekte\Ares\trunk\PlayerTest\PferdeWiehern.wav", SoundFileType.SoundEffect);
+                SoundFile file2 = new SoundFile(2, @"PferdeWiehern.wav", SoundFileType.SoundEffect);
                 player.PlayFile(file2, (id, handle) => System.Console.WriteLine("Finished playing id " + id));
                 System.Threading.Thread.Sleep(2000);
                 player.PlayFile(file2, (id, handle) => System.Console.WriteLine("Finished playing id " + id));
@@ -99,23 +99,23 @@ namespace PlayerTest
             IProject project = DataModule.ProjectManager.CreateProject("Test");
             ISequentialBackgroundMusicList musicList = factory.CreateSequentialBackgroundMusicList("My Music");
             musicList.FixedIntermediateDelay = TimeSpan.FromSeconds(5.0);
-            musicList.AddElement(factory.CreateFileElement(@"D:\Projekte\Ares\trunk\PlayerTest\Defeat.mp3", Ares.Data.SoundFileType.Music));
-            musicList.AddElement(factory.CreateFileElement(@"D:\Projekte\Ares\trunk\PlayerTest\Witchdrums.mp3", Ares.Data.SoundFileType.Music));
+            musicList.AddElement(factory.CreateFileElement(@"Defeat.mp3", Ares.Data.SoundFileType.Music));
+            musicList.AddElement(factory.CreateFileElement(@"Witchdrums.mp3", Ares.Data.SoundFileType.Music));
 
             IBackgroundSounds sounds = factory.CreateBackgroundSounds("My Sounds");
             IBackgroundSoundChoice choice1 = sounds.AddElement("Pferde");
             choice1.FixedStartDelay = TimeSpan.FromSeconds(2.0);
             choice1.FixedIntermediateDelay = TimeSpan.FromSeconds(2.0);
             choice1.MaximumRandomIntermediateDelay = TimeSpan.FromSeconds(10.0);
-            choice1.AddElement(factory.CreateFileElement(@"D:\Projekte\Ares\trunk\PlayerTest\PferdeWiehern.wav", Ares.Data.SoundFileType.SoundEffect));
-            choice1.AddElement(factory.CreateFileElement(@"D:\Projekte\Ares\trunk\PlayerTest\PferdeSchnauben.wav", Ares.Data.SoundFileType.SoundEffect));
+            choice1.AddElement(factory.CreateFileElement(@"PferdeWiehern.wav", Ares.Data.SoundFileType.SoundEffect));
+            choice1.AddElement(factory.CreateFileElement(@"PferdeSchnauben.wav", Ares.Data.SoundFileType.SoundEffect));
             IBackgroundSoundChoice choice2 = sounds.AddElement("Vögel");
             choice2.FixedStartDelay = TimeSpan.FromSeconds(5.0);
             choice2.FixedIntermediateDelay = TimeSpan.FromSeconds(3.0);
             choice2.MaximumRandomIntermediateDelay = TimeSpan.FromSeconds(15.0);
-            choice2.AddElement(factory.CreateFileElement(@"D:\Projekte\Ares\trunk\PlayerTest\Vogel0000.wav", Ares.Data.SoundFileType.SoundEffect)).RandomChance = 60;
-            choice2.AddElement(factory.CreateFileElement(@"D:\Projekte\Ares\trunk\PlayerTest\Vogel0002.wav", Ares.Data.SoundFileType.SoundEffect)).RandomChance = 20;
-            choice2.AddElement(factory.CreateFileElement(@"D:\Projekte\Ares\trunk\PlayerTest\VogelFlattern0000.wav", Ares.Data.SoundFileType.SoundEffect)).RandomChance = 20;
+            choice2.AddElement(factory.CreateFileElement(@"Vogel0000.wav", Ares.Data.SoundFileType.SoundEffect)).RandomChance = 60;
+            choice2.AddElement(factory.CreateFileElement(@"Vogel0002.wav", Ares.Data.SoundFileType.SoundEffect)).RandomChance = 20;
+            choice2.AddElement(factory.CreateFileElement(@"VogelFlattern0000.wav", Ares.Data.SoundFileType.SoundEffect)).RandomChance = 20;
 
             IElementContainer<IParallelElement> modeContainer = factory.CreateParallelContainer("ModeContainer");
             modeContainer.AddElement(musicList);
@@ -133,11 +133,11 @@ namespace PlayerTest
 
             IRandomBackgroundMusicList randomList = factory.CreateRandomBackgroundMusicList("Random");
             randomList.FixedIntermediateDelay = TimeSpan.FromSeconds(3.0);
-            randomList.AddElement(factory.CreateFileElement(@"D:\Projekte\Ares\trunk\PlayerTest\Haunted.mp3", Ares.Data.SoundFileType.Music));
-            randomList.AddElement(factory.CreateFileElement(@"D:\Projekte\Ares\trunk\PlayerTest\Defeat.mp3", Ares.Data.SoundFileType.Music));
-            randomList.AddElement(factory.CreateFileElement(@"D:\Projekte\Ares\trunk\PlayerTest\Witchdrums.mp3", Ares.Data.SoundFileType.Music));
-            randomList.AddElement(factory.CreateFileElement(@"D:\Projekte\Ares\trunk\PlayerTest\TheCursed.mp3", Ares.Data.SoundFileType.Music));
-            randomList.AddElement(factory.CreateFileElement(@"D:\Projekte\Ares\trunk\PlayerTest\WildRage.mp3", Ares.Data.SoundFileType.Music));
+            randomList.AddElement(factory.CreateFileElement(@"Haunted.mp3", Ares.Data.SoundFileType.Music));
+            randomList.AddElement(factory.CreateFileElement(@"Defeat.mp3", Ares.Data.SoundFileType.Music));
+            randomList.AddElement(factory.CreateFileElement(@"Witchdrums.mp3", Ares.Data.SoundFileType.Music));
+            randomList.AddElement(factory.CreateFileElement(@"TheCursed.mp3", Ares.Data.SoundFileType.Music));
+            randomList.AddElement(factory.CreateFileElement(@"WildRage.mp3", Ares.Data.SoundFileType.Music));
             IKeyTrigger trigger2 = factory.CreateKeyTrigger();
             trigger2.KeyCode = 30;
             IModeElement modeElement2 = factory.CreateModeElement("mode2", randomList);
@@ -148,6 +148,8 @@ namespace PlayerTest
             PlayingModule.SetCallbacks(callbacks);
 
             IPlayer player = PlayingModule.Player;
+            player.SetMusicPath(@"D:\Projekte\Ares\trunk\PlayerTest\");
+            player.SetSoundPath(@"D:\Projekte\Ares\trunk\PlayerTest\");
             player.SetProject(project);
             player.KeyReceived(20);
             player.KeyReceived(10);

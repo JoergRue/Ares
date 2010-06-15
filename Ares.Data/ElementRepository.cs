@@ -39,6 +39,11 @@ namespace Ares.Data
             m_Elements.Add(id, element);
         }
 
+        internal void Clear()
+        {
+            m_Elements.Clear();
+        }
+
         internal ElementRepository()
         {
             m_Elements = new Dictionary<int, IElement>();

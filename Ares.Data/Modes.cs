@@ -56,9 +56,17 @@ namespace Ares.Data
             : base(reader)
         {
             // IsPlaying = false;
-            StartElement = DataModule.TheElementFactory.CreateElement(reader);
-            m_Trigger = DataModule.TheElementFactory.CreateTrigger(reader);
-            reader.ReadEndElement();
+            if (!reader.IsEmptyElement)
+            {
+                reader.Read();
+                StartElement = DataModule.TheElementFactory.CreateElement(reader);
+                m_Trigger = DataModule.TheElementFactory.CreateTrigger(reader);
+                reader.ReadEndElement();
+            }
+            else
+            {
+                reader.Read();
+            }
         }
 
         public override void WriteToXml(System.Xml.XmlWriter writer)
@@ -86,6 +94,11 @@ namespace Ares.Data
         public void AddElement(IModeElement element)
         {
             m_Elements.Add(element);
+        }
+
+        public void InsertElement(int index, IModeElement element)
+        {
+            m_Elements.Insert(index, element);
         }
 
         public void RemoveElement(IModeElement element)
@@ -129,6 +142,7 @@ namespace Ares.Data
 
         internal Mode(System.Xml.XmlReader reader)
         {
+            m_Elements = new List<IModeElement>();
             Title = reader.GetNonEmptyAttribute("Title");
             KeyCode = reader.GetIntegerAttribute("Key");
             if (!reader.IsEmptyElement)
@@ -151,6 +165,7 @@ namespace Ares.Data
                                 reader.ReadOuterXml();
                             }
                         }
+                        reader.ReadEndElement();
                     }
                     else
                     {

@@ -25,6 +25,11 @@ namespace Ares.Data
         void AddElement(IModeElement element);
 
         /// <summary>
+        /// Inserts a top-level elment to the node at the specified index
+        /// </summary>
+        void InsertElement(int index, IModeElement element);
+
+        /// <summary>
         /// Removes an element from the mode.
         /// </summary>
         void RemoveElement(IModeElement element);
@@ -94,6 +99,11 @@ namespace Ares.Data
         /// Adds a mode to the project.
         /// </summary>
         IMode AddMode(String title);
+
+        /// <summary>
+        /// Adds an existing mode to the project at the specified index
+        /// </summary>
+        void InsertMode(int index, IMode mode);
 
         /// <summary>
         /// Removes a mode from the project.

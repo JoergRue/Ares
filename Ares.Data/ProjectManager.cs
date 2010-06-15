@@ -96,68 +96,9 @@ namespace Ares.Data
             System.IO.File.Delete(tempFileName);
         }
 
-        private class ElementRemover : IElementVisitor
-        {
-            public ElementRemover()
-            {
-                repository = DataModule.TheElementRepository;
-            }
-
-            private ElementRepository repository;
-
-            public void VisitFileElement(IFileElement fileElement)
-            {
-                repository.DeleteElement((fileElement as IElement).Id);
-            }
-
-            public void VisitSequentialContainer(IElementContainer<ISequentialElement> sequentialContainer)
-            {
-                repository.DeleteElement(sequentialContainer.Id);
-                foreach (ISequentialElement element in sequentialContainer.GetElements())
-                {
-                    element.Visit(this);
-                }
-            }
-
-            public void VisitParallelContainer(IElementContainer<IParallelElement> parallelContainer)
-            {
-                repository.DeleteElement(parallelContainer.Id);
-                foreach (IParallelElement element in parallelContainer.GetElements())
-                {
-                    element.Visit(this);
-                }
-            }
-
-            public void VisitChoiceContainer(IElementContainer<IChoiceElement> choiceContainer)
-            {
-                repository.DeleteElement(choiceContainer.Id);
-                foreach (IChoiceElement element in choiceContainer.GetElements())
-                {
-                    element.Visit(this);
-                }
-            }
-
-            public void VisitSequentialMusicList(ISequentialBackgroundMusicList musicList)
-            {
-                musicList.VisitElements(this);
-            }
-
-            public void VisitRandomMusicList(IRandomBackgroundMusicList musicList)
-            {
-                musicList.VisitElements(this);
-            }
-        }
-
         public void UnloadProject(IProject project)
         {
-            ElementRemover remover = new ElementRemover();
-            foreach (IMode mode in project.GetModes())
-            {
-                foreach (IModeElement modeElement in mode.GetElements())
-                {
-                    modeElement.StartElement.Visit(remover);   
-                }
-            }
+            DataModule.TheElementRepository.Clear();
         }
 
         #endregion

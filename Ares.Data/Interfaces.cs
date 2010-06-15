@@ -113,7 +113,7 @@ namespace Ares.Data
     /// <summary>
     /// An element which can be given a random chance to play.
     /// </summary>
-    public interface IRandomizedElement
+    public interface IRandomizedElement : IElement
     {
         /// <summary>
         /// The chance -- between 0 and 100, in percent.
@@ -124,7 +124,7 @@ namespace Ares.Data
     /// <summary>
     /// An element whose start can be delayed.
     /// </summary>
-    public interface IDelayableElement
+    public interface IDelayableElement : IElement
     {
         /// <summary>
         /// Fixed time to delay the element.
@@ -144,7 +144,7 @@ namespace Ares.Data
     /// <summary>
     /// An element which can be repeated automatically.
     /// </summary>
-    public interface IRepeatableElement
+    public interface IRepeatableElement : IElement
     {
         /// <summary>
         /// Whether the element shall be repeated.
@@ -169,6 +169,10 @@ namespace Ares.Data
     /// </summary>
     public interface IContainerElement : IElement
     {
+        /// <summary>
+        /// The inner element wrapped in the delayable element
+        /// </summary>
+        IElement InnerElement { get; }
     }
 
     /// <summary>
@@ -196,21 +200,43 @@ namespace Ares.Data
     }
 
     /// <summary>
+    /// Base interface for a container.
+    /// </summary>
+    public interface IGeneralElementContainer : IElement
+    {
+        /// <summary>
+        /// Returns a shallow copy of the elements in the container
+        /// </summary>
+        IList<IElement> GetGeneralElements();
+
+        /// <summary>
+        /// Adds a new element to the container.
+        /// </summary>
+        IElement AddGeneralElement(IElement element);
+
+        /// <summary>
+        /// Inserts an existing element into the container.
+        /// </summary>
+        void InsertGeneralElement(int index, IElement element);
+
+        /// <summary>
+        /// Removes an element from the container. Has no effect if the element is not in the container.
+        /// </summary>
+        void RemoveElement(int id);
+    }
+
+    /// <summary>
     /// Interface for a container.
     /// A container for choice elements could e.g. be a 'playlist'.
     /// A container for parallel elements could e.g. be a background for fighting.
     /// A container for sequential elements could e.g. be a special effect.
     /// </summary>
-    public interface IElementContainer<T> : IElement where T : IContainerElement
+    public interface IElementContainer<T> : IGeneralElementContainer where T : IContainerElement
     {
         /// <summary>
         /// Adds an element to the container.
         /// </summary>
         T AddElement(IElement element);
-        /// <summary>
-        /// Removes an element from the container. Has no effect if the element is not in the container.
-        /// </summary>
-        void RemoveElement(int id);
 
         /// <summary>
         /// Returns a shallow copy of the elements in the container.

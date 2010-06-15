@@ -12,7 +12,19 @@ namespace Ares.Editor
 
         public String WindowLayout { get; set; }
 
-        public Settings()
+        public static Settings Instance
+        {
+            get
+            {
+                if (s_Instance == null)
+                    s_Instance = new Settings();
+                return s_Instance;
+            }
+        }
+
+        private static Settings s_Instance;
+
+        private Settings()
         {
             InitDefaults();
         }
@@ -86,7 +98,9 @@ namespace Ares.Editor
             writer.WriteStartElement("Settings");
             writer.WriteElementString("MusicDirectory", MusicDirectory);
             writer.WriteElementString("SoundsDirectory", SoundDirectory);
-            writer.WriteElementString("WindowLayout", WindowLayout);
+            writer.WriteStartElement("WindowLayout");
+            writer.WriteRaw(WindowLayout);
+            writer.WriteEndElement();
             writer.WriteEndElement();
         }
 

@@ -49,6 +49,16 @@ namespace Ares.Data
 
         #region IElementContainer<ISequentialElement> Members
 
+        public IElement AddGeneralElement(IElement element)
+        {
+            return AddElement(element);
+        }
+
+        public void InsertGeneralElement(int index, IElement element)
+        {
+            m_SecondContainer.InsertGeneralElement(index, element);
+        }
+
         public ISequentialElement AddElement(IElement element)
         {
             return m_SecondContainer.AddElement(element);
@@ -57,6 +67,11 @@ namespace Ares.Data
         public void RemoveElement(int ID)
         {
             m_SecondContainer.RemoveElement(ID);
+        }
+
+        public IList<IElement> GetGeneralElements()
+        {
+            return m_SecondContainer.GetGeneralElements();
         }
 
         public IList<ISequentialElement> GetElements()

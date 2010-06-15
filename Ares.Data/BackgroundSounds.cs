@@ -9,6 +9,16 @@ namespace Ares.Data
 
         #region IElementContainer<IChoiceElement> Members
 
+        public IElement AddGeneralElement(IElement element)
+        {
+            return AddElement(element);
+        }
+
+        public void InsertGeneralElement(int index, IElement element)
+        {
+            m_Container.InsertGeneralElement(index, element);
+        }
+
         public IChoiceElement AddElement(IElement element)
         {
             return m_Container.AddElement(element);
@@ -17,6 +27,11 @@ namespace Ares.Data
         public void RemoveElement(int ID)
         {
             m_Container.RemoveElement(ID);
+        }
+
+        public IList<IElement> GetGeneralElements()
+        {
+            return m_Container.GetGeneralElements();
         }
 
         public IList<IChoiceElement> GetElements()
@@ -106,6 +121,8 @@ namespace Ares.Data
             m_Container.WriteToXml(writer);
             writer.WriteEndElement();
         }
+
+        public IElement InnerElement { get { return m_Container; } }
 
         internal BackgroundSoundChoice(Int32 id, String title)
             : base(id)

@@ -27,6 +27,11 @@ namespace Ares.Data
             return mode;
         }
 
+        public void InsertMode(int index, IMode mode)
+        {
+            m_Modes.Insert(index, mode);
+        }
+
         public void RemoveMode(IMode mode)
         {
             m_Modes.Remove(mode);
@@ -78,7 +83,7 @@ namespace Ares.Data
             m_Volumes = new Int32[3];
             for (int i = 0; i < m_Volumes.Length; ++i) m_Volumes[i] = 100;
             FileName = "";
-            Changed = false;
+            Changed = true;
         }
 
         internal Project(System.Xml.XmlReader reader, String fileName)
