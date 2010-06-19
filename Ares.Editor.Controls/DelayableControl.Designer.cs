@@ -16,9 +16,10 @@
             if (disposing && (components != null))
             {
                 components.Dispose();
+                if (m_Element != null)
+                    Actions.ElementChanges.Instance.RemoveListener(m_Element.Id, Update);
             }
             base.Dispose(disposing);
-            Actions.ElementChanges.Instance.RemoveListener(m_Element.Id, Update);
         }
 
         #region Vom Komponenten-Designer generierter Code
@@ -75,7 +76,7 @@
             0,
             0});
             this.maxDelayUpDown.Name = "maxDelayUpDown";
-            this.maxDelayUpDown.Leave += new System.EventHandler(this.maxDelayUpDown_Leave);
+            this.maxDelayUpDown.ValueChanged += new System.EventHandler(this.maxDelayUpDown_ValueChanged);
             // 
             // label3
             // 
@@ -103,7 +104,7 @@
             0,
             0});
             this.fixedDelayUpDown.Name = "fixedDelayUpDown";
-            this.fixedDelayUpDown.Leave += new System.EventHandler(this.fixedDelayUpDown_Leave);
+            this.fixedDelayUpDown.ValueChanged += new System.EventHandler(this.fixedDelayUpDown_ValueChanged);
             // 
             // fixedLabel
             // 

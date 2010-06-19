@@ -11,14 +11,24 @@ namespace Ares.Playing
             return new FilePlayer();
         }
 
-        public static IPlayer Player
+        public static IProjectPlayer ProjectPlayer
         {
             get { return sPlayer; }
         }
 
-        public static void SetCallbacks(IPlayingCallbacks callbacks)
+        public static IElementPlayer ElementPlayer
         {
-            sPlayer.Callbacks = callbacks;
+            get { return sPlayer; }
+        }
+
+        public static void SetCallbacks(IProjectPlayingCallbacks callbacks)
+        {
+            sPlayer.ProjectCallbacks = callbacks;
+        }
+
+        public static void SetCallbacks(IElementPlayingCallbacks callbacks)
+        {
+            sPlayer.ElementCallbacks = callbacks;
         }
 
         internal static Player ThePlayer

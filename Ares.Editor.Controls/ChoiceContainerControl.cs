@@ -29,6 +29,7 @@ namespace Ares.Editor.ElementEditorControls
         {
             if (!listen)
                 return;
+            listen = false;
             if (elementID == m_Container.Id && changeType == Actions.ElementChanges.ChangeType.Changed)
             {
                 elementsGrid.SuspendLayout();
@@ -71,6 +72,7 @@ namespace Ares.Editor.ElementEditorControls
                         ((IChoiceElement)Ares.Data.DataModule.ElementRepository.GetElement(elementID)).RandomChance;
                 }
             }
+            listen = true;
         }
 
         public void AddElements(IList<IElement> elements)
@@ -109,6 +111,8 @@ namespace Ares.Editor.ElementEditorControls
 
         private void elementsGrid_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
         {
+            if (!listen)
+                return;
             listen = false;
             List<IElement> elements = new List<IElement>();
             IList<IChoiceElement> containerElements = m_Container.GetElements();

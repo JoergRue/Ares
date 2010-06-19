@@ -20,7 +20,7 @@ namespace Ares.Editor
             ResumeLayout();
 
             Timer t = new Timer();
-            t.Interval = 300;
+            t.Interval = 150;
             t.Tick += new EventHandler((o, args) =>
                 {
                     t.Stop();
@@ -46,7 +46,12 @@ namespace Ares.Editor
                     fileExplorerToolStripMenuItem.Checked = !m_FileExplorer.IsHidden;
                     projectExplorerToolStripMenuItem.Checked = !m_ProjectExplorer.IsHidden;
                     Actions.Actions.Instance.UpdateGUI = UpdateGUI;
+                    Actions.Playing.Instance.SetDirectories(Settings.Instance.MusicDirectory, Settings.Instance.SoundDirectory);
                     UpdateGUI();
+                    if (Settings.Instance.RecentFiles.GetFiles().Count > 0)
+                    {
+                        OpenProject(Settings.Instance.RecentFiles.GetFiles()[0].FilePath);
+                    }
                 });
             t.Start();
         }
@@ -73,7 +78,10 @@ namespace Ares.Editor
         private void ShowSettingsDialog()
         {
             SettingsDialog dialog = new SettingsDialog(Settings.Instance, m_BasicSettings);
-            dialog.ShowDialog(this);
+            if (dialog.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
+            {
+                Actions.Playing.Instance.SetDirectories(Settings.Instance.MusicDirectory, Settings.Instance.SoundDirectory);
+            }
         }
 
         private void projectExplorerToolStripMenuItem_Click(object sender, EventArgs e)
@@ -95,7 +103,6 @@ namespace Ares.Editor
             {
                 m_ProjectExplorer.IsHidden = !m_ProjectExplorer.IsHidden;
             }
-            projectExplorerToolStripMenuItem.Checked = !m_ProjectExplorer.IsHidden;
         }
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -164,7 +171,6 @@ namespace Ares.Editor
             {
                 m_FileExplorer.IsHidden = !m_FileExplorer.IsHidden;
             }
-            fileExplorerToolStripMenuItem.Checked = !m_FileExplorer.IsHidden;
         }
 
         private Ares.Data.IProject m_CurrentProject;
@@ -205,6 +211,8 @@ namespace Ares.Editor
 
             undoToolStripMenuItem.Enabled = Actions.Actions.Instance.CanUndo;
             redoToolStripMenuItem.Enabled = Actions.Actions.Instance.CanRedo;
+            undoButton.Enabled = Actions.Actions.Instance.CanUndo;
+            redoButton.Enabled = Actions.Actions.Instance.CanRedo;
         }
 
         private bool UnloadProject()
@@ -284,7 +292,12 @@ namespace Ares.Editor
             if (result != System.Windows.Forms.DialogResult.OK)
                 return false;
             m_CurrentProject.FileName = saveFileDialog.FileName;
-            return SaveProject();
+            bool result2 = SaveProject();
+            if (result2)
+            {
+                Settings.Instance.RecentFiles.AddFile(new RecentFiles.ProjectEntry(m_CurrentProject.FileName, m_CurrentProject.Title));
+            }
+            return result2;
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -307,13 +320,18 @@ namespace Ares.Editor
             DialogResult result = openFileDialog.ShowDialog(this);
             if (result != System.Windows.Forms.DialogResult.OK)
                 return;
+            OpenProject(openFileDialog.FileName);
+        }
 
+        private void OpenProject(String filePath)
+        {
             if (!UnloadProject())
                 return;
 
             try
             {
-                m_CurrentProject = Ares.Data.DataModule.ProjectManager.LoadProject(openFileDialog.FileName);
+                m_CurrentProject = Ares.Data.DataModule.ProjectManager.LoadProject(filePath);
+                Settings.Instance.RecentFiles.AddFile(new RecentFiles.ProjectEntry(m_CurrentProject.FileName, m_CurrentProject.Title));
             }
             catch (Exception e)
             {
@@ -365,6 +383,72 @@ namespace Ares.Editor
                         editMenu.DropDownItems.RemoveAt(cNrOfStaticItems); // Separator
                 }
             }
+        }
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Actions.Playing.Instance.StopAll();
+        }
+
+        private void extrasToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
+        {
+            settingsToolStripMenuItem.Enabled = !Actions.Playing.Instance.IsPlaying;
+            stopAllToolStipMenuItem.Enabled = Actions.Playing.Instance.IsPlaying;
+        }
+
+        private void viewToolStripMenuItem_DropDownOpened(object sender, EventArgs e)
+        {
+            projectExplorerToolStripMenuItem.Checked = m_ProjectExplorer != null && !m_ProjectExplorer.IsHidden;
+            fileExplorerToolStripMenuItem.Checked = m_FileExplorer != null && !m_FileExplorer.IsHidden;
+        }
+
+        private void recentMenuItem_DropDownOpening(object sender, EventArgs e)
+        {
+            recentMenuItem.DropDownItems.Clear();
+            foreach (RecentFiles.ProjectEntry projectEntry in Settings.Instance.RecentFiles.GetFiles())
+            {
+                ToolStripMenuItem item = new ToolStripMenuItem(projectEntry.ProjectName);
+                item.ToolTipText = projectEntry.FilePath;
+                item.Tag = projectEntry;
+                item.Click += new EventHandler(recentItem_Click);
+                
+                recentMenuItem.DropDownItems.Add(item);
+            }
+        }
+
+        void recentItem_Click(object sender, EventArgs e)
+        {
+            OpenProject(((sender as ToolStripMenuItem).Tag as RecentFiles.ProjectEntry).FilePath);
+        }
+
+        private void saveButton_Click(object sender, EventArgs e)
+        {
+            SaveProject();
+        }
+
+        private void openButton_Click(object sender, EventArgs e)
+        {
+            OpenProject();
+        }
+
+        private void newButton_Click(object sender, EventArgs e)
+        {
+            NewProject();
+        }
+
+        private void undoButton_Click(object sender, EventArgs e)
+        {
+            Actions.Actions.Instance.Undo();
+        }
+
+        private void redoButton_Click(object sender, EventArgs e)
+        {
+            Actions.Actions.Instance.Redo();
+        }
+
+        private void stopButton_Click(object sender, EventArgs e)
+        {
+            Actions.Playing.Instance.StopAll();
         }
 
     }

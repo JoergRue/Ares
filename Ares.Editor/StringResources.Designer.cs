@@ -79,6 +79,15 @@ namespace Ares.Editor {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Fatal: Couldn&apos;t initialize BASS engine! ähnelt.
+        /// </summary>
+        internal static string BassInitFail {
+            get {
+                return ResourceManager.GetString("BassInitFail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Error opening the project: {0} ähnelt.
         /// </summary>
         internal static string LoadError {

@@ -15,6 +15,14 @@ namespace Ares.Editor.Actions
             } 
         }
 
+        public Action LastAction
+        {
+            get
+            {
+                return m_Actions.Count > 0 ? m_Actions[m_Actions.Count - 1] : null;
+            }
+        }
+
         public void AddNew(Action action)
         {
             if (m_Actions.Count > m_Index)

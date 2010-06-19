@@ -13,6 +13,8 @@ namespace PlayerTest
         public String Path { get; set; }
         public Ares.Playing.SoundFileType SoundFileType { get; set; }
 
+        public int Volume { get { return 100; } }
+
         public SoundFile(Int32 id, String path, Ares.Playing.SoundFileType type)
         {
             Id = id;
@@ -21,7 +23,7 @@ namespace PlayerTest
         }
     }
 
-    class Callbacks : IPlayingCallbacks
+    class Callbacks : IProjectPlayingCallbacks
     {
 
         private String GetTitle(int elementId)
@@ -147,7 +149,7 @@ namespace PlayerTest
             Callbacks callbacks = new Callbacks();
             PlayingModule.SetCallbacks(callbacks);
 
-            IPlayer player = PlayingModule.Player;
+            IProjectPlayer player = PlayingModule.ProjectPlayer;
             player.SetMusicPath(@"D:\Projekte\Ares\trunk\PlayerTest\");
             player.SetSoundPath(@"D:\Projekte\Ares\trunk\PlayerTest\");
             player.SetProject(project);

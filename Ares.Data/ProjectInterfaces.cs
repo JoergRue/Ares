@@ -57,25 +57,6 @@ namespace Ares.Data
     }
 
     /// <summary>
-    /// Global Volumes which can be set.
-    /// </summary>
-    public enum VolumeTarget
-    {
-        /// <summary>
-        /// Sound effects.
-        /// </summary>
-        Sounds = 0,
-        /// <summary>
-        /// Music files.
-        /// </summary>
-        Music = 1,
-        /// <summary>
-        /// Overall volume.
-        /// </summary>
-        Both = 2
-    }
-
-    /// <summary>
     /// Represents an ARES project.
     /// </summary>
     public interface IProject
@@ -124,16 +105,6 @@ namespace Ares.Data
         /// Returns the mode for a certain key.
         /// </summary>
         IMode GetMode(Int32 keyCode);
-
-        /// <summary>
-        /// Returns a volume setting.
-        /// </summary>
-        Int32 GetVolume(VolumeTarget target);
-
-        /// <summary>
-        /// Sets a volume.
-        /// </summary>
-        void SetVolume(VolumeTarget target, Int32 value);
 
         /// <summary>
         /// Serializes to an xml stream.

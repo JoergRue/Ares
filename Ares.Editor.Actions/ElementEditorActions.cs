@@ -7,6 +7,70 @@ using Ares.Data;
 
 namespace Ares.Editor.Actions
 {
+    public class ElementVolumeChangeAction : Action
+    {
+        public ElementVolumeChangeAction(IElement element, bool setsMusic, bool setsSound, int music, int sound)
+        {
+            m_Element = element;
+
+            m_OldSetsMusic = element.SetsMusicVolume;
+            m_OldSetsSound = element.SetsSoundVolume;
+            m_OldMusic = element.MusicVolume;
+            m_OldSound = element.SoundVolume;
+
+            m_NewMusic = music;
+            m_NewSetsMusic = setsMusic;
+            m_NewSetsSound = setsSound;
+            m_NewSound = sound;
+        }
+
+        public void SetData(bool setsMusic, bool setsSound, int music, int sound)
+        {
+            m_NewSound = sound;
+            m_NewMusic = music;
+            m_NewSetsSound = setsSound;
+            m_NewSetsMusic = setsMusic;
+        }
+
+        public IElement Element
+        {
+            get
+            {
+                return m_Element;
+            }
+        }
+
+        public override void Do()
+        {
+            m_Element.SetsMusicVolume = m_NewSetsMusic;
+            m_Element.MusicVolume = m_NewMusic;
+            m_Element.SetsSoundVolume = m_NewSetsSound;
+            m_Element.SoundVolume = m_NewSound;
+            ElementChanges.Instance.ElementChanged(m_Element.Id);
+        }
+
+        public override void Undo()
+        {
+            m_Element.SetsMusicVolume = m_OldSetsMusic;
+            m_Element.SetsSoundVolume = m_OldSetsSound;
+            m_Element.MusicVolume = m_OldMusic;
+            m_Element.SoundVolume = m_OldSound;
+            ElementChanges.Instance.ElementChanged(m_Element.Id);
+        }
+
+        private IElement m_Element;
+
+        private bool m_OldSetsMusic;
+        private bool m_OldSetsSound;
+        private int m_OldMusic;
+        private int m_OldSound;
+
+        private bool m_NewSetsMusic;
+        private bool m_NewSetsSound;
+        private int m_NewMusic;
+        private int m_NewSound;
+    }
+
     public class DelayableElementChangeAction : Action
     {
         public DelayableElementChangeAction(IDelayableElement element, int fixedDelay, int maxDelay)
@@ -14,6 +78,20 @@ namespace Ares.Editor.Actions
             m_Element = element;
             m_OldFixed = element.FixedStartDelay;
             m_OldMax = element.MaximumRandomStartDelay;
+            m_NewFixed = TimeSpan.FromMilliseconds(fixedDelay);
+            m_NewMax = TimeSpan.FromMilliseconds(maxDelay);
+        }
+
+        public IDelayableElement Element
+        {
+            get
+            {
+                return m_Element;
+            }
+        }
+
+        public void SetData(int fixedDelay, int maxDelay)
+        {
             m_NewFixed = TimeSpan.FromMilliseconds(fixedDelay);
             m_NewMax = TimeSpan.FromMilliseconds(maxDelay);
         }
@@ -50,6 +128,21 @@ namespace Ares.Editor.Actions
             m_NewRepeat = repeat;
             m_NewFixed = TimeSpan.FromMilliseconds(fixedDelay);
             m_NewMax = TimeSpan.FromMilliseconds(maxDelay);
+        }
+
+        public IRepeatableElement Element
+        {
+            get
+            {
+                return m_Element;
+            }
+        }
+
+        public void SetData(bool repeat, int fixedDelay, int maxDelay)
+        {
+            m_NewFixed = TimeSpan.FromMilliseconds(fixedDelay);
+            m_NewMax = TimeSpan.FromMilliseconds(maxDelay);
+            m_NewRepeat = repeat;
         }
 
         public override void Do()

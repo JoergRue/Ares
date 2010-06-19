@@ -25,12 +25,19 @@ namespace Ares.Playing
             private set;
         }
 
+        public int Volume
+        {
+            get;
+            private set;
+        }
+
         public SoundFile(IFileElement element)
         {
             Id = element.Id;
             SoundFileType = element.SoundFileType == Data.SoundFileType.Music ? SoundFileType.Music : SoundFileType.SoundEffect;
             String dir = (SoundFileType == Playing.SoundFileType.Music) ? PlayingModule.ThePlayer.MusicPath : PlayingModule.ThePlayer.SoundPath;
             Path = System.IO.Path.Combine(dir, element.FilePath);
+            Volume = SoundFileType == Playing.SoundFileType.Music ? PlayingModule.ThePlayer.MusicVolume : PlayingModule.ThePlayer.SoundVolume;
         }
     }
 
@@ -48,6 +55,8 @@ namespace Ares.Playing
     {
         void Next();
         void Previous();
+        void Stop();
+        void SetVolume(int volume);
     }
 
     abstract class ElementPlayerBase : IElementVisitor
@@ -102,6 +111,14 @@ namespace Ares.Playing
 
         protected void Process(IElement element)
         {
+            if (element.SetsMusicVolume)
+            {
+                PlayingModule.ThePlayer.SetVolume(VolumeTarget.Music, element.MusicVolume);
+            }
+            if (element.SetsSoundVolume)
+            {
+                PlayingModule.ThePlayer.SetVolume(VolumeTarget.Sounds, element.MusicVolume);
+            }
             element.Visit(this);
         }
 
@@ -147,7 +164,22 @@ namespace Ares.Playing
     {
         public override void VisitFileElement(IFileElement fileElement)
         {
-            CurrentPlayedHandle = Client.PlayFile(fileElement, () => PlayNext());
+            CurrentPlayedHandle = Client.PlayFile(fileElement, () =>
+                {
+                    bool stop = false;
+                    lock (syncObject)
+                    {
+                        stop = shallStop;
+                    }
+                    if (stop)
+                    {
+                        Client.SubPlayerFinished();
+                    }
+                    else
+                    {
+                        PlayNext();
+                    }
+                });
             PlayingModule.ThePlayer.ActiveMusicPlayer = this;
         }
 
@@ -168,6 +200,26 @@ namespace Ares.Playing
             }
         }
 
+        public void Stop()
+        {
+            lock (syncObject)
+            {
+                shallStop = true;
+            }
+            StopCurrentFile();
+        }
+
+        public void SetVolume(int volume)
+        {
+            lock (syncObject)
+            {
+                if (CurrentPlayedHandle != 0)
+                {
+                    ((FilePlayer)PlayingModule.FilePlayer).SetVolume(CurrentPlayedHandle, volume);
+                }
+            }
+        }
+
         public void Next()
         {
             StopCurrentFile(); // will automatically start the next file
@@ -181,6 +233,7 @@ namespace Ares.Playing
         }
 
         protected Object syncObject = new Int16();
+        private bool shallStop = false;
     }
 
     class SequentialMusicPlayer : MusicPlayer, IMusicPlayer
@@ -270,7 +323,7 @@ namespace Ares.Playing
         public override void  PlayNext()
         {
             Monitor.Enter(syncObject);
-            if (Client.Stopped)
+            if (Client.Stopped || !m_Container.Repeat)
             {
                 Monitor.Exit(syncObject);
                 Client.SubPlayerFinished();
@@ -301,10 +354,13 @@ namespace Ares.Playing
 
         public void Start()
         {
-            if (m_Container.GetElements().Count > 0)
-            {
-                ThreadPool.QueueUserWorkItem(state => Delay(m_Container, m_Container));
-            }
+            Monitor.Enter(syncObject);
+            // Don't delay, start immediately (start delay was already processed by calling player)
+            IChoiceElement element = SelectRandomElement(m_Container);
+            m_LastElementsStack.Add(element);
+            m_GoBack = false;
+            Monitor.Exit(syncObject);
+            Process(element);
         }
 
         public RandomMusicPlayer(IRandomBackgroundMusicList list, WaitHandle stoppedEvent, IElementPlayerClient client)
@@ -380,6 +436,8 @@ namespace Ares.Playing
 
         public override void VisitChoiceContainer(IElementContainer<IChoiceElement> choiceContainer)
         {
+            if (choiceContainer.GetElements().Count == 0)
+                return;
             IChoiceElement element = SelectRandomElement(choiceContainer);
             if (element != null)
             {
@@ -390,6 +448,8 @@ namespace Ares.Playing
 
         public override void VisitSequentialMusicList(ISequentialBackgroundMusicList list)
         {
+            if (list.GetElements().Count == 0)
+                return;
             SequentialMusicPlayer subPlayer = new SequentialMusicPlayer(list, StoppedEvent, this);
             Client.SubPlayerStarted();
             Interlocked.Increment(ref m_ActiveSubPlayers);
@@ -398,6 +458,8 @@ namespace Ares.Playing
 
         public override void VisitRandomMusicList(IRandomBackgroundMusicList list)
         {
+            if (list.GetElements().Count == 0)
+                return;
             RandomMusicPlayer subPlayer = new RandomMusicPlayer(list, StoppedEvent, this);
             Client.SubPlayerStarted();
             Interlocked.Increment(ref m_ActiveSubPlayers);
@@ -485,41 +547,21 @@ namespace Ares.Playing
         private int m_ActiveSubPlayers;
     }
 
-    class ModeElementPlayer : IElementPlayerClient
+    abstract class StartElementPlayer : IElementPlayerClient
     {
         public int PlayFile(IFileElement fileElement, Action afterPlayed)
         {
             SoundFile soundFile = new SoundFile(fileElement);
-            if (m_Callbacks != null)
-            {
-                if (fileElement.SoundFileType == Data.SoundFileType.Music)
-                {
-                    m_Callbacks.MusicStarted(fileElement.Id);
-                }
-                else
-                {
-                    m_Callbacks.SoundStarted(fileElement.Id);
-                }
-            }
+            FileStarted(fileElement);
             int handle = PlayingModule.FilePlayer.PlayFile(soundFile, (id, handle2) =>
-            {
-                if (m_Callbacks != null)
                 {
-                    if (fileElement.SoundFileType == Data.SoundFileType.Music)
+                    FileFinished(id, fileElement.SoundFileType);
+                    lock (syncObject)
                     {
-                        m_Callbacks.MusicFinished(id);
+                        m_CurrentFiles.Remove(handle2);
                     }
-                    else
-                    {
-                        m_Callbacks.SoundFinished(id);
-                    }
-                }
-                lock (syncObject)
-                {
-                    m_CurrentFiles.Remove(handle2);
-                }
-                afterPlayed();
-            });
+                    afterPlayed();
+                });
             lock (syncObject)
             {
                 m_CurrentFiles.Add(handle);
@@ -546,15 +588,12 @@ namespace Ares.Playing
         public void SubPlayerFinished()
         {
             Monitor.Enter(syncObject);
-            if (Interlocked.Decrement(ref m_SubPlayers) == 0 &&  m_Mode.IsPlaying)
+            if (Interlocked.Decrement(ref m_SubPlayers) == 0 && Playing)
             {
-                m_Mode.IsPlaying = false;
+                Playing = false;
                 Monitor.Exit(syncObject);
-                if (m_Callbacks != null)
-                {
-                    m_Callbacks.ModeElementFinished(m_Mode);
-                    m_FinishedAction(this);
-                }
+                PlayerFinished();
+                m_FinishedAction(this);
             }
             else
             {
@@ -564,14 +603,11 @@ namespace Ares.Playing
 
         public void Start()
         {
-            if (m_Callbacks != null)
+            PlayerStarted();
+            if (m_Element != null)
             {
-                m_Callbacks.ModeElementStarted(m_Mode);
-            }
-            m_Mode.IsPlaying = true;
-            if (m_Mode.StartElement != null)
-            {
-                ElementPlayer subPlayer = new ElementPlayer(this, m_StoppedEvent, m_Mode.StartElement);
+                Playing = true;
+                ElementPlayer subPlayer = new ElementPlayer(this, m_StoppedEvent, m_Element);
                 Interlocked.Increment(ref m_SubPlayers);
                 subPlayer.Start();
             }
@@ -590,15 +626,12 @@ namespace Ares.Playing
             Monitor.Enter(syncObject);
             m_CurrentFiles.Clear();
             m_SubPlayers = 0;
-            if (m_Mode.IsPlaying)
+            if (Playing)
             {
-                m_Mode.IsPlaying = false;
+                Playing = false;
                 Monitor.Exit(syncObject);
-                if (m_Callbacks != null)
-                {
-                    m_Callbacks.ModeElementFinished(m_Mode);
-                    m_FinishedAction(this);
-                }
+                PlayerFinished();
+                m_FinishedAction(this);
             }
             else
             {
@@ -606,31 +639,146 @@ namespace Ares.Playing
             }
         }
 
-        public ModeElementPlayer(IModeElement modeElement, IPlayingCallbacks callbacks, Action<ModeElementPlayer> finishedAction)
+        protected abstract void FileStarted(IFileElement fileElement);
+        protected abstract void FileFinished(Int32 id, Data.SoundFileType soundFileType);
+
+        protected abstract void PlayerStarted();
+        protected abstract void PlayerFinished();
+
+        protected abstract bool Playing { get; set; }
+
+        protected StartElementPlayer(IElement element, Action<StartElementPlayer> finishedAction)
         {
+            m_Element = element;
             m_CurrentFiles = new List<int>();
             m_SubPlayers = 0;
-            m_Mode = modeElement;
-            m_Callbacks = callbacks;
             m_Stopped = false;
             m_StoppedEvent = new ManualResetEvent(false);
             m_FinishedAction = finishedAction;
         }
 
-        private List<Int32> m_CurrentFiles;
         private int m_SubPlayers;
-        private IModeElement m_Mode;
-        private IPlayingCallbacks m_Callbacks;
-        private Action<ModeElementPlayer> m_FinishedAction;
-
+        private List<Int32> m_CurrentFiles;
         private bool m_Stopped;
         private ManualResetEvent m_StoppedEvent;
+        private Action<StartElementPlayer> m_FinishedAction;
 
-        private Object syncObject = new Int16();
+        private IElement m_Element;
 
+        protected Object syncObject = new Int16();
     }
 
-    class Player : IPlayer
+    class SingleElementPlayer : StartElementPlayer
+    {
+        protected override void FileStarted(IFileElement fileElement)
+        {
+        }
+
+        protected override void FileFinished(int id, Data.SoundFileType soundFileType)
+        {
+        }
+
+        protected override void PlayerStarted()
+        {
+        }
+
+        protected override void PlayerFinished()
+        {
+            if (m_Callbacks != null)
+            {
+                m_Callbacks.ElementFinished(m_ElementId);
+            }
+        }
+
+        protected override bool Playing
+        {
+            get; set; 
+        }
+
+        public SingleElementPlayer(IElement element, IElementPlayingCallbacks callbacks, Action<StartElementPlayer> finishedAction)
+            : base(element, finishedAction)
+        {
+            m_Callbacks = callbacks;
+            m_ElementId = element.Id;
+        }
+
+        private IElementPlayingCallbacks m_Callbacks;
+        private int m_ElementId;
+    }
+
+    class ModeElementPlayer : StartElementPlayer
+    {
+        protected override void FileStarted(IFileElement fileElement)
+        {
+            if (m_Callbacks != null)
+            {
+                if (fileElement.SoundFileType == Data.SoundFileType.Music)
+                {
+                    m_Callbacks.MusicStarted(fileElement.Id);
+                }
+                else
+                {
+                    m_Callbacks.SoundStarted(fileElement.Id);
+                }
+            }            
+        }
+
+        protected override void FileFinished(int id, Data.SoundFileType soundFileType)
+        {
+            if (m_Callbacks != null)
+            {
+                if (soundFileType == Data.SoundFileType.Music)
+                {
+                    m_Callbacks.MusicFinished(id);
+                }
+                else
+                {
+                    m_Callbacks.SoundFinished(id);
+                }
+            }            
+        }
+
+        protected override void PlayerStarted()
+        {
+            if (m_Callbacks != null)
+            {
+                m_Callbacks.ModeElementStarted(m_Mode);
+            }
+            m_Mode.IsPlaying = true;
+        }
+
+        protected override void PlayerFinished()
+        {
+            if (m_Callbacks != null)
+            {
+                m_Callbacks.ModeElementFinished(m_Mode);
+            }
+        }
+
+        protected override bool Playing
+        {
+            get
+            {
+                return m_Mode.IsPlaying;
+            }
+            set
+            {
+                m_Mode.IsPlaying = value;
+            }
+        }
+
+        public ModeElementPlayer(IModeElement modeElement, IProjectPlayingCallbacks callbacks, Action<StartElementPlayer> finishedAction)
+            : base(modeElement.StartElement, finishedAction)
+        {
+            m_Mode = modeElement;
+            m_Callbacks = callbacks;
+        }
+
+        private IModeElement m_Mode;
+        private IProjectPlayingCallbacks m_Callbacks;
+    }
+
+    class Player : IProjectPlayer, IElementPlayer
     {
         public void SetProject(Data.IProject project)
         {
@@ -638,12 +786,11 @@ namespace Ares.Playing
             if (m_Project.GetModes().Count > 0)
             {
                 m_ActiveMode = m_Project.GetModes()[0];
-                if (Callbacks != null)
+                if (ProjectCallbacks != null)
                 {
-                    Callbacks.ModeChanged(m_ActiveMode);
+                    ProjectCallbacks.ModeChanged(m_ActiveMode);
                 }
             }
-            // TODO: set volume
         }
 
         public void KeyReceived(int keyCode)
@@ -654,9 +801,9 @@ namespace Ares.Playing
             if (mode != null)
             {
                 m_ActiveMode = mode;
-                if (Callbacks != null)
+                if (ProjectCallbacks != null)
                 {
-                    Callbacks.ModeChanged(mode);
+                    ProjectCallbacks.ModeChanged(mode);
                 }
             }
             else if (m_ActiveMode != null)
@@ -683,12 +830,34 @@ namespace Ares.Playing
 
         public void StopAll()
         {
-            List<ModeElementPlayer> copy = new List<ModeElementPlayer>();
+            List<StartElementPlayer> copy = new List<StartElementPlayer>();
             copy.AddRange(m_Players.Values);
             copy.ForEach(player => player.Stop());
             if (nrOfActivePlayers > 0)
             {
                 stoppingEvent.WaitOne();
+            }
+        }
+
+        public void SetVolume(VolumeTarget target, Int32 value)
+        {
+            if (value < 0 || value > 100)
+                throw new ArgumentException("Volume must be between 0 and 100");
+            if (target == VolumeTarget.Music)
+            {
+                MusicVolume = value;
+                if (ActiveMusicPlayer != null)
+                {
+                    ActiveMusicPlayer.SetVolume(MusicVolume);
+                }
+            }
+            else if (target == VolumeTarget.Sounds)
+            {
+                SoundVolume = value;
+            }
+            else
+            {
+                Un4seen.Bass.Bass.BASS_SetVolume(value / 100.0f);
             }
         }
 
@@ -715,21 +884,20 @@ namespace Ares.Playing
             }
         }
 
-        private void StopElement(IModeElement element)
+        private void DoStartElement(IElement element, StartElementPlayer player)
         {
-            if (m_Players.ContainsKey(element))
+            StartElementPlayer oldPlayer = null;
+            lock (syncObject)
             {
-                m_Players[element].Stop();
+                if (m_Players.ContainsKey(element))
+                {
+                    oldPlayer = m_Players[element];
+                }
             }
-        }
-
-        private void StartElement(IModeElement element)
-        {
-            if (m_Players.ContainsKey(element))
+            if (oldPlayer != null)
             {
-                m_Players[element].Stop();
+                oldPlayer.Stop();
             }
-            ModeElementPlayer player = new ModeElementPlayer(element, Callbacks, player2 => PlayerStopped(player2, element));
             lock (syncObject)
             {
                 m_Players[element] = player;
@@ -738,7 +906,45 @@ namespace Ares.Playing
             player.Start();
         }
 
-        private void PlayerStopped(ModeElementPlayer player, IModeElement element)
+        private void DoStopElement(IElement element)
+        {
+            StartElementPlayer player = null;
+            lock (syncObject)
+            {
+                if (m_Players.ContainsKey(element))
+                {
+                    player = m_Players[element];
+                }
+            }
+            if (player != null)
+            {
+                player.Stop();
+            }
+        }
+
+        private void StopElement(IModeElement element)
+        {
+            DoStopElement(element);
+        }
+
+        private void StartElement(IModeElement element)
+        {
+            ModeElementPlayer player = new ModeElementPlayer(element, ProjectCallbacks, player2 => PlayerStopped(player2, element));
+            DoStartElement(element, player);
+        }
+
+        public void PlayElement(IElement element)
+        {
+            SingleElementPlayer player = new SingleElementPlayer(element, ElementCallbacks, player2 => PlayerStopped(player2, element));
+            DoStartElement(element, player);
+        }
+
+        public void StopElement(IElement element)
+        {
+            DoStopElement(element);
+        }
+
+        private void PlayerStopped(StartElementPlayer player, IElement element)
         {
             lock (syncObject)
             {
@@ -749,22 +955,44 @@ namespace Ares.Playing
                 stoppingEvent.Set();
         }
 
-        internal IPlayingCallbacks Callbacks { get; set; }
+        internal IProjectPlayingCallbacks ProjectCallbacks { get; set; }
+        internal IElementPlayingCallbacks ElementCallbacks { get; set; }
 
-        internal IMusicPlayer ActiveMusicPlayer { get; set; }
+        internal int MusicVolume { get; set; }
+        internal int SoundVolume { get; set; }
+
+        internal IMusicPlayer ActiveMusicPlayer
+        {
+            get
+            {
+                return m_ActiveMusicPlayer;
+            }
+            set
+            {
+                if (m_ActiveMusicPlayer != null && m_ActiveMusicPlayer != value)
+                {
+                    m_ActiveMusicPlayer.Stop();
+                }
+                m_ActiveMusicPlayer = value;
+            }
+        }
+
+        private IMusicPlayer m_ActiveMusicPlayer;
 
         internal String MusicPath { get; private set; }
         internal String SoundPath { get; private set; }
 
         public Player()
         {
-            m_Players = new Dictionary<IModeElement, ModeElementPlayer>();
+            m_Players = new Dictionary<IElement, StartElementPlayer>();
+            MusicVolume = 100;
+            SoundVolume = 100;
         }
 
         private IProject m_Project;
         private IMode m_ActiveMode;
 
-        private IDictionary<IModeElement, ModeElementPlayer> m_Players;
+        private IDictionary<IElement, StartElementPlayer> m_Players;
 
         private AutoResetEvent stoppingEvent = new AutoResetEvent(false);
         private int nrOfActivePlayers;

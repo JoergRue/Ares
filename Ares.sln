@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ares.Editor.Controls", "Are
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ares.Editor.Actions", "Ares.Editor.Actions\Ares.Editor.Actions.csproj", "{7799985C-64E9-4414-ACA8-01184B704032}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BassRegistration", "BassRegistration\BassRegistration.csproj", "{B105A062-B32E-4269-9085-E8F7034DF606}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,16 @@ Global
 		{7799985C-64E9-4414-ACA8-01184B704032}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{7799985C-64E9-4414-ACA8-01184B704032}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{7799985C-64E9-4414-ACA8-01184B704032}.Release|x86.ActiveCfg = Release|Any CPU
+		{B105A062-B32E-4269-9085-E8F7034DF606}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B105A062-B32E-4269-9085-E8F7034DF606}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B105A062-B32E-4269-9085-E8F7034DF606}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{B105A062-B32E-4269-9085-E8F7034DF606}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{B105A062-B32E-4269-9085-E8F7034DF606}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B105A062-B32E-4269-9085-E8F7034DF606}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B105A062-B32E-4269-9085-E8F7034DF606}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B105A062-B32E-4269-9085-E8F7034DF606}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{B105A062-B32E-4269-9085-E8F7034DF606}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{B105A062-B32E-4269-9085-E8F7034DF606}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

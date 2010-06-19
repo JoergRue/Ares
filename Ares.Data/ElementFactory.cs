@@ -220,6 +220,14 @@ namespace Ares.Data
 
         public String Title { get; set; }
 
+        public bool SetsMusicVolume { get; set; }
+
+        public int MusicVolume { get; set; }
+
+        public bool SetsSoundVolume { get; set; }
+
+        public int SoundVolume { get; set; }
+
         public IElement Clone()
         {
             ElementBase clone = (ElementBase)this.MemberwiseClone();
@@ -234,12 +242,25 @@ namespace Ares.Data
         {
             m_ID = ID;
             DataModule.TheElementRepository.AddElement(m_ID, this);
+            SetsMusicVolume = false;
+            SetsSoundVolume = false;
+            MusicVolume = 100;
+            SoundVolume = 100;
         }
 
         protected ElementBase(System.Xml.XmlReader reader)
         {
             m_ID = reader.GetIntegerAttribute("Id");
             Title = reader.GetNonEmptyAttribute("Title");
+            SetsMusicVolume = reader.GetBooleanAttributeOrDefault("SetsMusicVolume", false);
+            SetsSoundVolume = reader.GetBooleanAttributeOrDefault("SetsSoundVolume", false);
+            MusicVolume = reader.GetIntegerAttributeOrDefault("MusicVolume", 100);
+            if (MusicVolume < 0 || MusicVolume > 100)
+                XmlHelpers.ThrowException(StringResources.InvalidVolume, reader);
+            SoundVolume = reader.GetIntegerAttributeOrDefault("SoundVolume", 100);
+            if (SoundVolume < 0 || SoundVolume > 100)
+                XmlHelpers.ThrowException(StringResources.InvalidVolume, reader);
+            
             DataModule.TheElementRepository.AddElement(m_ID, this);
             DataModule.TheElementFactory.UpdateNextID(m_ID);
         }
@@ -256,6 +277,10 @@ namespace Ares.Data
         {
             writer.WriteAttributeString("Id", Id.ToString(System.Globalization.CultureInfo.InvariantCulture));
             writer.WriteAttributeString("Title", Title);
+            writer.WriteAttributeString("SetsMusicVolume", SetsMusicVolume ? "true" : "false");
+            writer.WriteAttributeString("SetsSoundVolume", SetsSoundVolume ? "true" : "false");
+            writer.WriteAttributeString("MusicVolume", MusicVolume.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            writer.WriteAttributeString("SoundVolume", SoundVolume.ToString(System.Globalization.CultureInfo.InvariantCulture));
         }
 
         public abstract void WriteToXml(System.Xml.XmlWriter writer);

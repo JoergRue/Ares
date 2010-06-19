@@ -123,6 +123,9 @@
   <data name="AresEditorTitle" xml:space="preserve">
     <value>Ares Editor - {0}</value>
   </data>
+  <data name="BassInitFail" xml:space="preserve">
+    <value>Fatal: Couldn't initialize BASS engine!</value>
+  </data>
   <data name="LoadError" xml:space="preserve">
     <value>Error opening the project: {0}</value>
   </data>

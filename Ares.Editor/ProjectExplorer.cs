@@ -154,9 +154,12 @@ namespace Ares.Editor
 
         private TreeNode m_SelectedNode;
 
+        private bool cancelExpand = false;
+
         private void projectTree_MouseDown(object sender, MouseEventArgs e)
         {
             m_SelectedNode = projectTree.GetNodeAt(e.X, e.Y);
+            cancelExpand = e.Clicks > 1;
         }
 
         private void renameToolStripMenuItem_Click(object sender, EventArgs e)
@@ -560,6 +563,24 @@ namespace Ares.Editor
         private void editToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             EditElement(GetElement(m_SelectedNode));
+        }
+
+        private void projectTree_BeforeExpand(object sender, TreeViewCancelEventArgs e)
+        {
+            if (cancelExpand)
+            {
+                e.Cancel = true;
+                cancelExpand = false;
+            }
+        }
+
+        private void projectTree_BeforeCollapse(object sender, TreeViewCancelEventArgs e)
+        {
+            if (cancelExpand)
+            {
+                e.Cancel = true;
+                cancelExpand = false;
+            }
         }
 
 

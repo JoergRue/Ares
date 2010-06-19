@@ -52,24 +52,10 @@ namespace Ares.Data
             return m_Modes.Find(m => m.KeyCode == keyCode);
         }
 
-        public Int32 GetVolume(VolumeTarget target)
-        {
-            return m_Volumes[(int)target];
-        }
-
-        public void SetVolume(VolumeTarget target, Int32 value)
-        {
-            if (value < 0 || value > 100) throw new ArgumentException(StringResources.InvalidVolume);
-            m_Volumes[(int)target] = value;
-        }
-
         public void WriteToXml(System.Xml.XmlWriter writer)
         {
             writer.WriteStartElement("Project");
             writer.WriteAttributeString("Title", Title);
-            writer.WriteAttributeString("SoundVolume", GetVolume(VolumeTarget.Sounds).ToString(System.Globalization.CultureInfo.InvariantCulture));
-            writer.WriteAttributeString("MusicVolume", GetVolume(VolumeTarget.Music).ToString(System.Globalization.CultureInfo.InvariantCulture));
-            writer.WriteAttributeString("Volume", GetVolume(VolumeTarget.Both).ToString(System.Globalization.CultureInfo.InvariantCulture));
             writer.WriteStartElement("Modes");
             m_Modes.ForEach(e => e.WriteToXml(writer));
             writer.WriteEndElement();
@@ -80,8 +66,6 @@ namespace Ares.Data
         {
             Title = title;
             m_Modes = new List<IMode>();
-            m_Volumes = new Int32[3];
-            for (int i = 0; i < m_Volumes.Length; ++i) m_Volumes[i] = 100;
             FileName = "";
             Changed = true;
         }
@@ -89,16 +73,12 @@ namespace Ares.Data
         internal Project(System.Xml.XmlReader reader, String fileName)
         {
             m_Modes = new List<IMode>();
-            m_Volumes = new Int32[3];
 
             if (!reader.IsStartElement("Project"))
             {
                 XmlHelpers.ThrowException(String.Format(StringResources.ExpectedElement, "Project"), reader);
             }
             Title = reader.GetNonEmptyAttribute("Title");
-            SetVolume(VolumeTarget.Sounds, reader.GetIntegerAttribute("SoundVolume"));
-            SetVolume(VolumeTarget.Music, reader.GetIntegerAttribute("MusicVolume"));
-            SetVolume(VolumeTarget.Both, reader.GetIntegerAttribute("Volume"));
             if (!reader.IsEmptyElement)
             {
                 reader.Read();
@@ -136,7 +116,6 @@ namespace Ares.Data
         }
 
         private List<IMode> m_Modes;
-        private Int32[] m_Volumes;
 
         [NonSerialized]
         private String m_FileName;

@@ -46,10 +46,11 @@ namespace Ares.Editor
             {
                 String[] subDirs = System.IO.Directory.GetDirectories(directory);
                 int subLength = directory.EndsWith(new String(System.IO.Path.DirectorySeparatorChar, 1)) ? directory.Length : directory.Length + 1;
+                int rootLength = root.EndsWith(new String(System.IO.Path.DirectorySeparatorChar, 1)) ? root.Length : root.Length + 1;
                 foreach (String subDir in subDirs)
                 {
                     TreeNode subNode = new TreeNode(subDir.Substring(subLength));
-                    subNode.Tag = new DraggedItem { NodeType = DraggedItemType.Directory, ItemType = dirType, RelativePath = subDir.Substring(root.Length) };
+                    subNode.Tag = new DraggedItem { NodeType = DraggedItemType.Directory, ItemType = dirType, RelativePath = subDir.Substring(rootLength) };
                     FillTreeNode(subNode, subDir, root, dirType);
                     node.Nodes.Add(subNode);
                 }
@@ -60,7 +61,7 @@ namespace Ares.Editor
                 foreach (String file in files)
                 {
                     TreeNode subNode = new TreeNode(file.Substring(subLength));
-                    subNode.Tag = new DraggedItem { NodeType = DraggedItemType.File, ItemType = dirType, RelativePath = file.Substring(root.Length) };
+                    subNode.Tag = new DraggedItem { NodeType = DraggedItemType.File, ItemType = dirType, RelativePath = file.Substring(rootLength) };
                     node.Nodes.Add(subNode);
                 }
             }
@@ -100,10 +101,54 @@ namespace Ares.Editor
                 List<DraggedItem> items = new List<DraggedItem>();
                 treeView1.SelectedNodes.ForEach(node => items.Add((DraggedItem)node.Tag));
                 DoDragDrop(items, DragDropEffects.Copy);
+                m_InDrag = false;
             }
         }
 
-        
+        private void playButton_Click(object sender, EventArgs e)
+        {
+            TreeNode node = treeView1.SelectedNode;
+            DraggedItem item = node.Tag as DraggedItem;
+            m_PlayedElement = Actions.Playing.Instance.PlayFile(item.RelativePath, item.ItemType == FileType.Music, this, () =>
+                {
+                    m_PlayedElement = null;
+                    stopButton.Enabled = false;
+                    playButton.Enabled = PlayingPossible;
+                });
+            stopButton.Enabled = true;
+            playButton.Enabled = false;
+        }
+
+        private bool PlayingPossible
+        {
+            get
+            {
+                if (m_PlayedElement != null) 
+                    return false;
+                TreeNode node = treeView1.SelectedNode;
+                if (node == null)
+                    return false;
+                DraggedItem item = node.Tag as DraggedItem;
+                if (item == null)
+                    return false;
+                return item.NodeType == DraggedItemType.File;
+            }
+        }
+
+        private Ares.Data.IElement m_PlayedElement;
+
+        private void stopButton_Click(object sender, EventArgs e)
+        {
+            if (m_PlayedElement != null)
+            {
+                Actions.Playing.Instance.StopElement(m_PlayedElement);
+            }
+        }
+
+        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            playButton.Enabled = PlayingPossible;
+        }
     }
 
     public enum DraggedItemType

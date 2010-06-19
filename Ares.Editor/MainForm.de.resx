@@ -148,17 +148,20 @@
   <data name="toolStripSeparator2.Size" type="System.Drawing.Size, System.Drawing">
     <value>166, 6</value>
   </data>
+  <data name="recentMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>169, 22</value>
+  </data>
+  <data name="toolStripSeparator5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>166, 6</value>
+  </data>
   <data name="exitToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>169, 22</value>
   </data>
   <data name="exitToolStripMenuItem.Text" xml:space="preserve">
     <value>Beenden</value>
   </data>
-  <data name="fileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>46, 20</value>
-  </data>
   <data name="fileToolStripMenuItem.Text" xml:space="preserve">
-    <value>Datei</value>
+    <value>Projekt</value>
   </data>
   <data name="undoToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>141, 22</value>
@@ -190,16 +193,86 @@
   <data name="viewToolStripMenuItem.Text" xml:space="preserve">
     <value>Ansicht</value>
   </data>
-  <data name="startPlayerToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 22</value>
-  </data>
   <data name="startPlayerToolStripMenuItem.Text" xml:space="preserve">
     <value>Starte Player</value>
   </data>
-  <data name="settingsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 22</value>
+  <data name="stopAllToolStipMenuItem.Text" xml:space="preserve">
+    <value>Stoppe Alles</value>
   </data>
   <data name="settingsToolStripMenuItem.Text" xml:space="preserve">
     <value>Einstellungen ...</value>
+  </data>
+  <data name="newButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGdSURBVDhPjZJNS0JBFIYvQStp1TboB7RqUZuofeGmRb8g
+        /4QQ9ANyU5GQVoQZaIGQBqGQFRVkEhJ+oGmJaIr5bZp6He/bXPWOhvkxcDjD3HmfM+c9l+PaixBFlZBV
+        P7Qc4OZA6vIwIWu89H1gbvhlZl5JhdgDLmn2tfbNs9Li2VAI8ctemOCYii64lphC8oEFmOweGK0u6C0O
+        nFgcWz1AXkUv79HYFkXiMrReoqFhkM6Ag/NbzK8oeiHEx9VJbFLATqt/fIwDNzRXZ4HoVBtKa+itsD16
+        mhCd+UnFXkKI3MlaECvS6swTbDLAru6qKZaiAygt3THBIQWExjomYp8B6qQBESKB/nghpGc2GsEJNUwU
+        EJsGMko6AS0TC4KAcoVHMlNuAuaW1/HvdI5M90zUvanxBNlCBZFEYTBAY7T3AEhDQLFcQzxVwlskOxig
+        PrX1ACrVOlK5H4Q/83AHU4MBYn/dSzQu/11FNFmEP5yB05sYHdBtXCiaw2vgCw+u2OiAbuO872k43HFc
+        P0dGA0jz7pf7jlGasXhhWIj/wS/d4TgK+7uzhgAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="newButton.Text" xml:space="preserve">
+    <value>Neues Projekt</value>
+  </data>
+  <data name="openButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAJ0SURBVDhPvZNbSBNgGIZ30UU3WWRGIiRZIhaIgSHVRYgS
+        5ZHyCEpqVDqlzFDMeWibx7mDTl2paJuHpk4rSzGsEApFIrQ8UGJqFhSVYmqo5OlpTpBWduFNP7w3P9/7
+        fO/3HwSC/7GyiqvdJWo912WV5GgMpMh1qZvqG5GgwV+oDFs1XU6usJIaYYmZ2sDwhGIEjTX5wUbxp1rr
+        cpT/6iIUlfgExCrxExaYAAz16ZifajDp56SexXEthkolTTUZ0o0g/jEq/KLVeEcVIWioUjE3WWtmXv5S
+        wuJAPLW3ZVSXZqMtllJWkM4thYii3CTMoHU6OXPfdOudV4xmhkQwELWh/gLcKc/lx+cyU+xVc1uj3KRH
+        hjya9bncr87GoM1AXyahUnODCnUqpSoRGnnyWprqsmxmPhSyGnu0Q0xTrYrlUQmMZZrrvXFvJAUGE+BN
+        LL31QcRF+lYJtJoMpodl8FHBgzolXY8Va0W/j/A6HLoDWOr0Yv6JG++qnBCe85i+esHnkKBcLeb7Wwlj
+        nWk06RWsjIihP3oN0HveaAxhqcuX+faTzLQeZ6LxMBKhPSHulgWmwyxRpTHRl8zdGjk9z41JBuONgIvQ
+        E8bKizMsPDvNbNsJJptc+FrnSHfWDkK97HBx2OZgAmjyRPS3p3OvJg+G0+GVMe7LQBY6vJl96sZUsyvj
+        Bic+6Q4woLBEHLUf54PWLetXWZiTREOljIGHMXTnC9bVpdhCe+5WWqTbqU+1Qptkw81rtoR67ltxdbb1
+        XAfkZyaSL75ETnIEKVeCiTvvS2SQB2dPHcX9mBNHnOxxtLNhr/Uudu+0YI+lhflD2tSv2qD4F+S85QcY
+        IJA9AAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="openButton.Text" xml:space="preserve">
+    <value>Projekt öffnen</value>
+  </data>
+  <data name="saveButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAIuSURBVDhPpZPdS5NxFMeff6H7boIuuq2pMVyL1eAx51BW
+        DUOL6O0RNd/SZZqkWJlKzTfIVrh04nI2CScV+QKmSIkoU8nKzBUtcagpNhEMvv7Or9yvlXXjA+fy8zm/
+        c873kSRJwjZLwrOnQV6ejhW0u5fxyLmIpsYA7ttmUVf7BdY7Ptwqm0ZJ8XsUFrxBXu44sjK9m40lDvb2
+        ALU1a/jft7q2DkNiL04kPuH16+US3I+XuKCi/Ns/eYIDi6s4aHoOlUqB+bhLCJwtC1xQUvx1S8Em/NG/
+        hAijBwVXZnDU1CwE9oY5Lrhs+fCX4Hd4bCqAPbIbOdmTSIi3C0H9XT8XZFwcDxP8CQ96/dipc0JRhmE0
+        2oSgpvozFygXhkOCreCeoU/YEd2I5JMvERtbJwSVFTPo7gI7JXD67GuYTw3wbdPCaGZ6NnX+CffhmPkF
+        ZNkqBNdLp9DpAcsA0Oz4we7+HWU35/lSaWE0c3qaNwTHJXRAry8XgquFk3C1Ag/t6yw4QRiSssPKdMaC
+        pNQi3jkunsFHXNDpSoXAkjfBYKC6Ksg7k4BCEqGRMfJuDhPT81Byb+CwoZ3DmkMOaLVFQkCxtN1D6Nkk
+        IDgl/zbe+hbgm13GpWtWROocDG5C5IEH0ETnC0F62iibe4XPvFvvwq59Mto6++HpGkR33xAGXo0gxmiG
+        StuAKAbvVddDrc4JF5w/18/jSQmjkNCd6VS0bVoYzUxdqQjeH5UhBNv5nTcAp993Lg6R/SwAAAAASUVO
+        RK5CYII=
+</value>
+  </data>
+  <data name="saveButton.Text" xml:space="preserve">
+    <value>Projekt speichern</value>
+  </data>
+  <data name="undoButton.Text" xml:space="preserve">
+    <value>Rückgängig</value>
+  </data>
+  <data name="redoButton.Text" xml:space="preserve">
+    <value>Wiederholen</value>
+  </data>
+  <data name="toolStripSeparator7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>6, 25</value>
+  </data>
+  <data name="stopButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="stopButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 22</value>
+  </data>
+  <data name="stopButton.Text" xml:space="preserve">
+    <value>Alles stoppen</value>
   </data>
 </root>

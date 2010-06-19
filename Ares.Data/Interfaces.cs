@@ -49,6 +49,26 @@ namespace Ares.Data
         String Title { get; set; }
 
         /// <summary>
+        /// Whether the start of the element changes the global music volume
+        /// </summary>
+        bool SetsMusicVolume { get; set; }
+
+        /// <summary>
+        /// The global music volume to set
+        /// </summary>
+        int MusicVolume { get; set; }
+
+        /// <summary>
+        /// Whether the start of the element changes the global sounds volume
+        /// </summary>
+        bool SetsSoundVolume { get; set; }
+
+        /// <summary>
+        /// The global sounds volume to set
+        /// </summary>
+        int SoundVolume { get; set; }
+
+        /// <summary>
         /// Clones the element; makes a shallow copy for container elements.
         /// </summary>
         IElement Clone();

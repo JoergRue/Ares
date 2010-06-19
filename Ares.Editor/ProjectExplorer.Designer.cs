@@ -96,6 +96,8 @@
             resources.ApplyResources(this.projectTree, "projectTree");
             this.projectTree.Name = "projectTree";
             this.projectTree.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.projectTree_AfterLabelEdit);
+            this.projectTree.BeforeCollapse += new System.Windows.Forms.TreeViewCancelEventHandler(this.projectTree_BeforeCollapse);
+            this.projectTree.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.projectTree_BeforeExpand);
             this.projectTree.DoubleClick += new System.EventHandler(this.projectTree_DoubleClick);
             this.projectTree.MouseDown += new System.Windows.Forms.MouseEventHandler(this.projectTree_MouseDown);
             // 

@@ -27,14 +27,28 @@ namespace Ares.Editor.ElementEditors
         {
             if (listen && changeType == Actions.ElementChanges.ChangeType.Changed)
             {
-                fixedDelayUpDown.Value = m_Element.FixedStartDelay.Milliseconds;
-                maxDelayUpDown.Value = m_Element.MaximumRandomStartDelay.Milliseconds;
+                listen = false;
+                fixedDelayUpDown.Value = (int)m_Element.FixedStartDelay.TotalMilliseconds;
+                maxDelayUpDown.Value = (int)m_Element.MaximumRandomStartDelay.TotalMilliseconds;
+                listen = true;
             }
         }
 
         private void Commit()
         {
             listen = false;
+            Actions.Action action = Actions.Actions.Instance.LastAction;
+            if (action != null && action is Actions.DelayableElementChangeAction)
+            {
+                Actions.DelayableElementChangeAction deca = action as Actions.DelayableElementChangeAction;
+                if (deca.Element == m_Element)
+                {
+                    deca.SetData((int)fixedDelayUpDown.Value, (int)maxDelayUpDown.Value);
+                    deca.Do();
+                    listen = true;
+                    return;
+                }
+            }
             Actions.Actions.Instance.AddNew(new Actions.DelayableElementChangeAction(m_Element, 
                 (int)fixedDelayUpDown.Value, (int)maxDelayUpDown.Value));
             listen = true;
@@ -43,13 +57,17 @@ namespace Ares.Editor.ElementEditors
         private Ares.Data.IDelayableElement m_Element;
         private bool listen = true;
 
-        private void fixedDelayUpDown_Leave(object sender, EventArgs e)
+        private void fixedDelayUpDown_ValueChanged(object sender, EventArgs e)
         {
+            if (!listen)
+                return;
             Commit();
         }
 
-        private void maxDelayUpDown_Leave(object sender, EventArgs e)
+        private void maxDelayUpDown_ValueChanged(object sender, EventArgs e)
         {
+            if (!listen)
+                return;
             Commit();
         }
 

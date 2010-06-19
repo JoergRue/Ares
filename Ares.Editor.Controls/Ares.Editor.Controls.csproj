@@ -67,6 +67,12 @@
     <Compile Include="RepeatableControl.Designer.cs">
       <DependentUpon>RepeatableControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="VolumeControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="VolumeControl.Designer.cs">
+      <DependentUpon>VolumeControl.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ares.Data\Ares.Data.csproj">
@@ -79,6 +85,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ChoiceContainerControl.de.resx">
+      <DependentUpon>ChoiceContainerControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ChoiceContainerControl.resx">
       <DependentUpon>ChoiceContainerControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -93,6 +102,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="RepeatableControl.resx">
       <DependentUpon>RepeatableControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VolumeControl.de.resx">
+      <DependentUpon>VolumeControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VolumeControl.resx">
+      <DependentUpon>VolumeControl.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

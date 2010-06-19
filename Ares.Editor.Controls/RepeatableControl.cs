@@ -31,8 +31,8 @@ namespace Ares.Editor.ElementEditors
             {
                 listen = false;
                 repeatBox.Checked = m_Element.Repeat;
-                fixedDelayUpDown.Value = m_Element.FixedIntermediateDelay.Milliseconds;
-                maxDelayUpDown.Value = m_Element.MaximumRandomIntermediateDelay.Milliseconds;
+                fixedDelayUpDown.Value = (int)m_Element.FixedIntermediateDelay.TotalMilliseconds;
+                maxDelayUpDown.Value = (int)m_Element.MaximumRandomIntermediateDelay.TotalMilliseconds;
                 fixedDelayUpDown.Enabled = repeatBox.Checked;
                 maxDelayUpDown.Enabled = repeatBox.Checked;
                 this.Refresh();
@@ -43,24 +43,25 @@ namespace Ares.Editor.ElementEditors
         private void Commit()
         {
             listen = false;
+            Actions.Action action = Actions.Actions.Instance.LastAction;
+            if (action != null && action is Actions.RepeatableElementChangeAction)
+            {
+                Actions.RepeatableElementChangeAction reca = action as Actions.RepeatableElementChangeAction;
+                if (reca.Element == m_Element)
+                {
+                    reca.SetData(repeatBox.Checked, (int)fixedDelayUpDown.Value, (int)maxDelayUpDown.Value);
+                    reca.Do();
+                    listen = true;
+                    return;
+                }
+            }
             Actions.Actions.Instance.AddNew(new Actions.RepeatableElementChangeAction(m_Element,
                 repeatBox.Checked, (int)fixedDelayUpDown.Value, (int)maxDelayUpDown.Value));
             listen = true;
-            this.Refresh();
         }
 
         private IRepeatableElement m_Element;
         private bool listen = true;
-
-        private void fixedDelayUpDown_Leave(object sender, EventArgs e)
-        {
-            Commit();
-        }
-
-        private void maxDelayUpDown_Leave(object sender, EventArgs e)
-        {
-            Commit();
-        }
 
         private void repeatBox_CheckedStateChanged(object sender, EventArgs e)
         {
@@ -68,6 +69,18 @@ namespace Ares.Editor.ElementEditors
             Commit();
             fixedDelayUpDown.Enabled = repeatBox.Checked;
             maxDelayUpDown.Enabled = repeatBox.Checked;
+        }
+
+        private void fixedDelayUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            if (!listen) return;
+            Commit();
+        }
+
+        private void maxDelayUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            if (!listen) return;
+            Commit();
         }
 
     }

@@ -25,6 +25,7 @@ namespace Ares.Editor.ElementEditors
             delayableControl.SetElement(playList);
             repeatableControl.SetElement(playList);
             choiceContainerControl.SetContainer(playList);
+            volumeControl.SetElement(playList);
             Update(m_Playlist.Id, Actions.ElementChanges.ChangeType.Renamed);
             Actions.ElementChanges.Instance.AddListener(m_Playlist.Id, Update);
         }
@@ -48,10 +49,6 @@ namespace Ares.Editor.ElementEditors
 
         private void RandomPlaylistEditor_SizeChanged(object sender, EventArgs e)
         {
-            int space = this.Width - 24;
-            if (space < 0) space = 1;
-            delayableControl.Width = space;
-            repeatableControl.Width = space;
             Font font = label1.Font;
             String text = label1.Text;
             using (Graphics g = label1.CreateGraphics())
@@ -66,7 +63,7 @@ namespace Ares.Editor.ElementEditors
 
         private void RandomPlaylistEditor_DragEnter(object sender, DragEventArgs e)
         {
-            m_AcceptDrop = e.Data.GetDataPresent(typeof(List<DraggedItem>));
+            m_AcceptDrop = choiceContainerControl.Enabled && e.Data.GetDataPresent(typeof(List<DraggedItem>));
         }
 
         private void RandomPlaylistEditor_DragLeave(object sender, EventArgs e)
@@ -133,6 +130,33 @@ namespace Ares.Editor.ElementEditors
                     uniqueItems[key] = item;
                 }
             }
+        }
+
+        private void playButton_Click(object sender, EventArgs e)
+        {
+            if (m_Playlist != null)
+            {
+                playButton.Enabled = false;
+                stopButton.Enabled = true;
+                choiceContainerControl.Enabled = false;
+                delayableControl.Enabled = false;
+                repeatableControl.Enabled = false;
+                volumeControl.Enabled = false;
+                Actions.Playing.Instance.PlayElement(m_Playlist, this, () =>
+                    {
+                        playButton.Enabled = true;
+                        stopButton.Enabled = false;
+                        choiceContainerControl.Enabled = true;
+                        delayableControl.Enabled = true;
+                        repeatableControl.Enabled = true;
+                        volumeControl.Enabled = true;
+                    });
+            }
+        }
+
+        private void stopButton_Click(object sender, EventArgs e)
+        {
+            Actions.Playing.Instance.StopElement(m_Playlist);
         }
 
     }

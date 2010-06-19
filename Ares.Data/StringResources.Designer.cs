@@ -79,6 +79,15 @@ namespace Ares.Data {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Floating point number expected for attribute {0}. ähnelt.
+        /// </summary>
+        internal static string ExpectedDouble {
+            get {
+                return ResourceManager.GetString("ExpectedDouble", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Element {0} expected. ähnelt.
         /// </summary>
         internal static string ExpectedElement {

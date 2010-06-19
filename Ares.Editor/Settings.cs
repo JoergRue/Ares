@@ -12,6 +12,8 @@ namespace Ares.Editor
 
         public String WindowLayout { get; set; }
 
+        public RecentFiles RecentFiles { get; set; }
+
         public static Settings Instance
         {
             get
@@ -88,7 +90,7 @@ namespace Ares.Editor
         private void InitDefaults()
         {
             WindowLayout = null;
-
+            RecentFiles = new RecentFiles();
             MusicDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
             SoundDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
         }
@@ -101,11 +103,13 @@ namespace Ares.Editor
             writer.WriteStartElement("WindowLayout");
             writer.WriteRaw(WindowLayout);
             writer.WriteEndElement();
+            RecentFiles.WriteFiles(writer);
             writer.WriteEndElement();
         }
 
         private void ReadSettings(XmlReader reader)
         {
+            RecentFiles = new RecentFiles();
             if (!reader.IsStartElement("Settings"))
             {
                 throw new XmlException("Expected Settings element");
@@ -131,6 +135,10 @@ namespace Ares.Editor
                     {
                         reader.Read();
                     }
+                }
+                else if (reader.IsStartElement("RecentFiles"))
+                {
+                    RecentFiles.ReadFiles(reader);
                 }
                 else
                 {

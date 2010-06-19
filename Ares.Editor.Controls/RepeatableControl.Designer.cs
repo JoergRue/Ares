@@ -16,9 +16,10 @@
             if (disposing && (components != null))
             {
                 components.Dispose();
+                if (m_Element != null)
+                    Actions.ElementChanges.Instance.RemoveListener(m_Element.Id, Update);
             }
             base.Dispose(disposing);
-            Actions.ElementChanges.Instance.RemoveListener(m_Element.Id, Update);
         }
 
         #region Vom Komponenten-Designer generierter Code
@@ -46,7 +47,6 @@
             // 
             // groupBox1
             // 
-            resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.repeatBox);
             this.groupBox1.Controls.Add(this.lastLabel);
@@ -55,6 +55,7 @@
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.fixedDelayUpDown);
             this.groupBox1.Controls.Add(this.fixedLabel);
+            resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
             this.groupBox1.UseCompatibleTextRendering = true;
@@ -81,19 +82,19 @@
             // 
             // maxDelayUpDown
             // 
-            resources.ApplyResources(this.maxDelayUpDown, "maxDelayUpDown");
             this.maxDelayUpDown.Increment = new decimal(new int[] {
             10,
             0,
             0,
             0});
+            resources.ApplyResources(this.maxDelayUpDown, "maxDelayUpDown");
             this.maxDelayUpDown.Maximum = new decimal(new int[] {
             100000000,
             0,
             0,
             0});
             this.maxDelayUpDown.Name = "maxDelayUpDown";
-            this.maxDelayUpDown.Leave += new System.EventHandler(this.maxDelayUpDown_Leave);
+            this.maxDelayUpDown.ValueChanged += new System.EventHandler(this.maxDelayUpDown_ValueChanged);
             // 
             // label3
             // 
@@ -109,19 +110,19 @@
             // 
             // fixedDelayUpDown
             // 
-            resources.ApplyResources(this.fixedDelayUpDown, "fixedDelayUpDown");
             this.fixedDelayUpDown.Increment = new decimal(new int[] {
             10,
             0,
             0,
             0});
+            resources.ApplyResources(this.fixedDelayUpDown, "fixedDelayUpDown");
             this.fixedDelayUpDown.Maximum = new decimal(new int[] {
             100000000,
             0,
             0,
             0});
             this.fixedDelayUpDown.Name = "fixedDelayUpDown";
-            this.fixedDelayUpDown.Leave += new System.EventHandler(this.fixedDelayUpDown_Leave);
+            this.fixedDelayUpDown.ValueChanged += new System.EventHandler(this.fixedDelayUpDown_ValueChanged);
             // 
             // fixedLabel
             // 

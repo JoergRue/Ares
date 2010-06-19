@@ -38,6 +38,30 @@ namespace Ares.Data
             }
         }
 
+        public bool SetsMusicVolume
+        {
+            get { return m_Element.SetsMusicVolume; }
+            set { m_Element.SetsMusicVolume = value; }
+        }
+
+        public bool SetsSoundVolume
+        {
+            get { return m_Element.SetsSoundVolume; }
+            set { m_Element.SetsMusicVolume = value; }
+        }
+
+        public int MusicVolume
+        {
+            get { return m_Element.MusicVolume; }
+            set { m_Element.MusicVolume = value; }
+        }
+
+        public int SoundVolume
+        {
+            get { return m_Element.SoundVolume; }
+            set { m_Element.SoundVolume = value; }
+        }
+
         public IElement Clone()
         {
             return (IElement) MemberwiseClone();
