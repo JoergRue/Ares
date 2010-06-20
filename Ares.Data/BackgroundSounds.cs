@@ -29,7 +29,7 @@ namespace Ares.Data
             m_Container.RemoveElement(ID);
         }
 
-        public IList<IElement> GetGeneralElements()
+        public IList<IContainerElement> GetGeneralElements()
         {
             return m_Container.GetGeneralElements();
         }
@@ -122,11 +122,12 @@ namespace Ares.Data
             writer.WriteEndElement();
         }
 
-        public IElement InnerElement { get { return m_Container; } }
+        public IElement InnerElement { get { return this; } }
 
         internal BackgroundSoundChoice(Int32 id, String title)
             : base(id)
         {
+            Title = title;
             m_Container = DataModule.ElementFactory.CreateChoiceContainer(title + "_Choice");
         }
 
@@ -149,6 +150,9 @@ namespace Ares.Data
 
     class BackgroundSounds : ElementBase, IBackgroundSounds
     {
+
+        #region IElementContainer<IBackgroundSoundChoice> Members
+
         public IBackgroundSoundChoice AddElement(String title)
         {
             BackgroundSoundChoice choice = new BackgroundSoundChoice(
@@ -158,6 +162,28 @@ namespace Ares.Data
             choice.ParallelElement = parallelElement;
             m_Elements.Add(choice);
             return choice;
+        }
+
+        public IBackgroundSoundChoice AddElement(IElement element)
+        {
+            throw new InvalidOperationException();
+        }
+
+        public IElement AddGeneralElement(IElement element)
+        {
+            throw new InvalidOperationException();
+        }
+
+        public void InsertElement(int index, IBackgroundSoundChoice element)
+        {
+            BackgroundSoundChoice bsc = element as BackgroundSoundChoice;
+            m_Container.InsertGeneralElement(index, bsc.ParallelElement);
+            m_Elements.Insert(index, bsc);
+        }
+
+        public void InsertGeneralElement(int index, IElement element)
+        {
+            InsertElement(index, element as IBackgroundSoundChoice);
         }
 
         public void RemoveElement(Int32 id)
@@ -174,6 +200,15 @@ namespace Ares.Data
         {
             return new List<IBackgroundSoundChoice>(m_Elements);
         }
+
+        public IList<IContainerElement> GetGeneralElements()
+        {
+            List<IContainerElement> elements = new List<IContainerElement>(m_Elements.Count);
+            m_Elements.ForEach(e => elements.Add(e));
+            return elements;
+        }
+
+        #endregion
 
         public bool IsEndless()
         {
@@ -201,10 +236,20 @@ namespace Ares.Data
         {
             writer.WriteStartElement("BackgroundSounds");
             DoWriteToXml(writer);
+            writer.WriteAttributeString("ContainerId", m_Container.Id.ToString(System.Globalization.CultureInfo.InvariantCulture));
             writer.WriteStartElement("SubElements");
-            m_Elements.ForEach(e => e.WriteToXml(writer));
+            foreach (IBackgroundSoundChoice choice in m_Elements)
+            {
+                choice.WriteToXml(writer);
+                writer.WriteStartElement("ParallelElementData");
+                writer.WriteAttributeString("FixedStartDelay", choice.FixedStartDelay.TotalMilliseconds.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                writer.WriteAttributeString("RandomStartDelay", choice.MaximumRandomStartDelay.TotalMilliseconds.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                writer.WriteAttributeString("FixedInterDelay", choice.FixedIntermediateDelay.TotalMilliseconds.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                writer.WriteAttributeString("RandomInterDelay", choice.MaximumRandomIntermediateDelay.TotalMilliseconds.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                writer.WriteAttributeString("Repeat", choice.Repeat ? "true" : "false");
+                writer.WriteEndElement();
+            }
             writer.WriteEndElement();
-            m_Trigger.WriteToXml(writer);
             writer.WriteEndElement();
         }
 
@@ -212,7 +257,8 @@ namespace Ares.Data
             : base(reader)
         {
             m_Elements = new List<IBackgroundSoundChoice>();
-            m_Container = DataModule.ElementFactory.CreateParallelContainer(Title + "_Parallel");
+            int id = reader.GetIntegerAttribute("ContainerId");
+            m_Container = DataModule.TheElementFactory.CreateParallelContainer(Title + "_Parallel", id);
 
             if (reader.IsEmptyElement)
             {
@@ -232,6 +278,24 @@ namespace Ares.Data
                             IParallelElement parallelElement = m_Container.AddElement(choice);
                             parallelElement.Repeat = true;
                             choice.ParallelElement = parallelElement;
+                            if (reader.IsStartElement("ParallelElementData"))
+                            {
+                                parallelElement.FixedStartDelay = TimeSpan.FromMilliseconds(reader.GetIntegerAttribute("FixedStartDelay"));
+                                parallelElement.MaximumRandomStartDelay = TimeSpan.FromMilliseconds(reader.GetIntegerAttribute("RandomStartDelay"));
+                                parallelElement.FixedIntermediateDelay = TimeSpan.FromMilliseconds(reader.GetIntegerAttribute("FixedInterDelay"));
+                                parallelElement.MaximumRandomIntermediateDelay = TimeSpan.FromMilliseconds(reader.GetIntegerAttribute("RandomInterDelay"));
+                                parallelElement.Repeat = reader.GetBooleanAttribute("Repeat");
+                                if (reader.IsEmptyElement)
+                                {
+                                    reader.Read();
+                                }
+                                else
+                                {
+                                    reader.Read();
+                                    reader.ReadInnerXml();
+                                    reader.ReadEndElement();
+                                }
+                            }
                             m_Elements.Add(choice);
                         }
                         else
@@ -247,11 +311,8 @@ namespace Ares.Data
                 }
             }
 
-            m_Trigger = DataModule.TheElementFactory.CreateTrigger(reader);
             reader.ReadEndElement();
         }        
-
-        private ITrigger m_Trigger;
 
         private List<IBackgroundSoundChoice> m_Elements;
         private IElementContainer<IParallelElement> m_Container;

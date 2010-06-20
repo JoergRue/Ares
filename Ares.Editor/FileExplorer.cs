@@ -11,36 +11,36 @@ namespace Ares.Editor
 {
     partial class FileExplorer : WeifenLuo.WinFormsUI.Docking.DockContent
     {
-        public FileExplorer()
+        public FileExplorer(FileType fileType)
         {
             InitializeComponent();
+            this.Text = String.Format(StringResources.FileExplorerTitle, fileType == FileType.Music ? StringResources.Music : StringResources.Sounds);
+            m_FileType = fileType;
             HideOnClose = true;
             ReFillTree();
         }
 
+        private FileType m_FileType;
+
         protected override string GetPersistString()
         {
-            return "FileExplorer";
+            return "FileExplorer_" + (int) m_FileType;
         }
 
         public void ReFillTree()
         {
             treeView1.BeginUpdate();
             treeView1.Nodes.Clear();
-            m_MusicRoot = new TreeNode(StringResources.Music);
-            m_MusicRoot.Tag = new DraggedItem { NodeType = DraggedItemType.Directory, ItemType = FileType.Music, RelativePath = String.Empty };
-            FillTreeNode(m_MusicRoot, Settings.Instance.MusicDirectory, Settings.Instance.MusicDirectory, FileType.Music);
-            treeView1.Nodes.Add(m_MusicRoot);
-            m_SoundsRoot = new TreeNode(StringResources.Sounds);
-            m_SoundsRoot.Tag = new DraggedItem { NodeType = DraggedItemType.Directory, ItemType = FileType.Sound, RelativePath = String.Empty };
-            FillTreeNode(m_SoundsRoot, Settings.Instance.SoundDirectory, Settings.Instance.SoundDirectory, FileType.Sound);
-            treeView1.Nodes.Add(m_SoundsRoot);
-            m_MusicRoot.Expand();
-            m_SoundsRoot.Expand();
+            m_Root = new TreeNode(m_FileType == FileType.Music ? StringResources.Music : StringResources.Sounds);
+            m_Root.Tag = new DraggedItem { NodeType = DraggedItemType.Directory, ItemType = m_FileType, RelativePath = String.Empty };
+            String directory = m_FileType == FileType.Music ? Ares.Settings.Settings.Instance.MusicDirectory : Ares.Settings.Settings.Instance.SoundDirectory;
+            FillTreeNode(m_Root, directory, directory, m_FileType);
+            treeView1.Nodes.Add(m_Root);
+            m_Root.Expand();
             treeView1.EndUpdate();
         }
 
-        private void FillTreeNode(TreeNode node, String directory, String root, FileType dirType)
+        private static void FillTreeNode(TreeNode node, String directory, String root, FileType dirType)
         {
             try
             {
@@ -72,8 +72,7 @@ namespace Ares.Editor
             }
         }
 
-        TreeNode m_MusicRoot;
-        TreeNode m_SoundsRoot;
+        TreeNode m_Root;
 
         TreeNode m_SelectedNode;
         Point m_DragPoint;
@@ -106,6 +105,11 @@ namespace Ares.Editor
         }
 
         private void playButton_Click(object sender, EventArgs e)
+        {
+            PlaySelectedFile();
+        }
+
+        private void PlaySelectedFile()
         {
             TreeNode node = treeView1.SelectedNode;
             DraggedItem item = node.Tag as DraggedItem;
@@ -148,6 +152,14 @@ namespace Ares.Editor
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
             playButton.Enabled = PlayingPossible;
+        }
+
+        private void treeView1_DoubleClick(object sender, EventArgs e)
+        {
+            if (PlayingPossible)
+            {
+                PlaySelectedFile();
+            }
         }
     }
 

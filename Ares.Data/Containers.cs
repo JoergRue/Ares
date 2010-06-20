@@ -121,9 +121,9 @@ namespace Ares.Data
             }
         }
 
-        public IList<IElement> GetGeneralElements()
+        public IList<IContainerElement> GetGeneralElements()
         {
-            List<IElement> result = new List<IElement>();
+            List<IContainerElement> result = new List<IContainerElement>();
             m_Elements.ForEach(e => result.Add(e));
             return result;
         }

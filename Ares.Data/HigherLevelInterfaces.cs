@@ -83,7 +83,7 @@ namespace Ares.Data
     /// The background sounds library contains a list of parallel elements, and
     /// each of these in turn contains a list of choice elements.
     /// </remarks>
-    public interface IBackgroundSounds : IElement
+    public interface IBackgroundSounds : IElement, IElementContainer<IBackgroundSoundChoice>
     {
         /// <summary>
         /// Adds an sound choice to the library.
@@ -91,13 +91,8 @@ namespace Ares.Data
         IBackgroundSoundChoice AddElement(String title);
 
         /// <summary>
-        /// Removes a sound choice from the library.
+        /// Inserts an existing sound choice to the library.
         /// </summary>
-        void RemoveElement(int id);
-
-        /// <summary>
-        /// Returns all sound choices in the library.
-        /// </summary>
-        IList<IBackgroundSoundChoice> GetElements();
+        void InsertElement(int index, IBackgroundSoundChoice element);
     }
 }

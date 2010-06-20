@@ -19,7 +19,7 @@ namespace Ares.Editor.Actions
             }
         }
 
-        public enum ChangeType { Changed, Renamed, Removed }
+        public enum ChangeType { Changed, Renamed, Removed, Played, Stopped }
 
         public void AddListener(int elementID, Action<int, ChangeType> callback)
         {
@@ -56,6 +56,16 @@ namespace Ares.Editor.Actions
         public void ElementRemoved(int elementID)
         {
             Notify(elementID, ChangeType.Removed);
+        }
+
+        public void ElementPlayed(int elementID)
+        {
+            Notify(elementID, ChangeType.Played);
+        }
+
+        public void ElementStopped(int elementID)
+        {
+            Notify(elementID, ChangeType.Stopped);
         }
 
         private void Notify(int elementID, ChangeType changeType)

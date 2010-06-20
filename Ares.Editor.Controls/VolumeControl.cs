@@ -1,0 +1,89 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+
+namespace Ares.Editor.Controls
+{
+    public partial class VolumeControl : UserControl
+    {
+        public VolumeControl()
+        {
+            InitializeComponent();
+        }
+
+        public void SetElement(Ares.Data.IElement element)
+        {
+            m_Element = element;
+            listen = false;
+            UpdateData();
+            Actions.ElementChanges.Instance.AddListener(m_Element.Id, Update);
+            listen = true;
+        }
+
+        private void setsMusicBox_CheckedChanged(object sender, EventArgs e)
+        {
+            musicVolumeBar.Enabled = setsMusicBox.Checked;
+            Commit();
+        }
+
+        private void setsSoundBox_CheckedChanged(object sender, EventArgs e)
+        {
+            soundVolumeBar.Enabled = setsSoundBox.Checked;
+            Commit();
+        }
+
+        private void musicVolumeBar_ValueChanged(object sender, EventArgs e)
+        {
+            Commit();
+        }
+
+        private void Update(int id, Actions.ElementChanges.ChangeType changeType)
+        {
+            if (listen && changeType == Actions.ElementChanges.ChangeType.Changed)
+            {
+                listen = false;
+                UpdateData();
+                listen = true;
+            }
+        }
+
+        private void UpdateData()
+        {
+            setsMusicBox.Checked = m_Element.SetsMusicVolume;
+            setsSoundBox.Checked = m_Element.SetsSoundVolume;
+            musicVolumeBar.Value = m_Element.MusicVolume;
+            soundVolumeBar.Value = m_Element.SoundVolume;
+        }
+
+        private void Commit()
+        {
+            if (!listen)
+                return;
+            listen = false;
+            Actions.Action action = Actions.Actions.Instance.LastAction;
+            if (action != null && (action is Actions.ElementVolumeChangeAction))
+            {
+                Actions.ElementVolumeChangeAction evca = action as Actions.ElementVolumeChangeAction;
+                if (evca.Element == m_Element)
+                {
+                    evca.SetData(setsMusicBox.Checked, setsSoundBox.Checked, musicVolumeBar.Value, soundVolumeBar.Value);
+                    evca.Do();
+                    listen = true;
+                    return;
+                }
+            }
+            Actions.Actions.Instance.AddNew(new Actions.ElementVolumeChangeAction(m_Element, setsMusicBox.Checked, setsSoundBox.Checked,
+                musicVolumeBar.Value, soundVolumeBar.Value));
+            listen = true;
+        }
+
+        private Ares.Data.IElement m_Element;
+        private bool listen;
+
+    }
+}

@@ -1,6 +1,6 @@
 ﻿namespace Ares.Editor.ElementEditors
 {
-    partial class RandomPlaylistEditor
+    partial class RandomPlaylistOrBGSoundChoiceEditor
     {
         /// <summary>
         /// Erforderliche Designervariable.
@@ -16,7 +16,7 @@
             if (disposing && (components != null))
             {
                 components.Dispose();
-                Actions.ElementChanges.Instance.RemoveListener(m_Playlist.Id, Update);
+                Actions.ElementChanges.Instance.RemoveListener(m_Element.Id, Update);
             }
             base.Dispose(disposing);
         }
@@ -29,7 +29,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RandomPlaylistEditor));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RandomPlaylistOrBGSoundChoiceEditor));
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.stopButton = new System.Windows.Forms.Button();
@@ -43,8 +43,8 @@
             // 
             // label1
             // 
-            this.label1.AllowDrop = true;
             resources.ApplyResources(this.label1, "label1");
+            this.label1.AllowDrop = true;
             this.label1.ForeColor = System.Drawing.SystemColors.InactiveCaption;
             this.label1.Name = "label1";
             this.label1.UseCompatibleTextRendering = true;
@@ -73,8 +73,8 @@
             // 
             // playButton
             // 
-            this.playButton.Image = global::Ares.Editor.ImageResources.RunSmall;
             resources.ApplyResources(this.playButton, "playButton");
+            this.playButton.Image = global::Ares.Editor.ImageResources.RunSmall;
             this.playButton.Name = "playButton";
             this.playButton.UseCompatibleTextRendering = true;
             this.playButton.UseVisualStyleBackColor = true;
@@ -82,8 +82,8 @@
             // 
             // delayableControl
             // 
-            this.delayableControl.BackColor = System.Drawing.SystemColors.Control;
             resources.ApplyResources(this.delayableControl, "delayableControl");
+            this.delayableControl.BackColor = System.Drawing.SystemColors.Control;
             this.delayableControl.MaximumSize = new System.Drawing.Size(346, 57);
             this.delayableControl.Name = "delayableControl";
             // 
@@ -104,10 +104,10 @@
             this.volumeControl.MinimumSize = new System.Drawing.Size(297, 83);
             this.volumeControl.Name = "volumeControl";
             // 
-            // RandomPlaylistEditor
+            // RandomPlaylistOrBGSoundChoiceEditor
             // 
-            this.AllowDrop = true;
             resources.ApplyResources(this, "$this");
+            this.AllowDrop = true;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.volumeControl);
             this.Controls.Add(this.groupBox1);
@@ -116,7 +116,7 @@
             this.Controls.Add(this.choiceContainerControl);
             this.Controls.Add(this.label1);
             this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.Document)));
-            this.Name = "RandomPlaylistEditor";
+            this.Name = "RandomPlaylistOrBGSoundChoiceEditor";
             this.SizeChanged += new System.EventHandler(this.RandomPlaylistEditor_SizeChanged);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.RandomPlaylistEditor_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.RandomPlaylistEditor_DragEnter);

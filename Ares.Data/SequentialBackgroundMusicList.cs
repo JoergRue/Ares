@@ -69,7 +69,7 @@ namespace Ares.Data
             m_SecondContainer.RemoveElement(ID);
         }
 
-        public IList<IElement> GetGeneralElements()
+        public IList<IContainerElement> GetGeneralElements()
         {
             return m_SecondContainer.GetGeneralElements();
         }

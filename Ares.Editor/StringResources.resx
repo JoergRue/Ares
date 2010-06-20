@@ -126,6 +126,9 @@
   <data name="BassInitFail" xml:space="preserve">
     <value>Fatal: Couldn't initialize BASS engine!</value>
   </data>
+  <data name="FileExplorerTitle" xml:space="preserve">
+    <value>{0} Explorer</value>
+  </data>
   <data name="LoadError" xml:space="preserve">
     <value>Error opening the project: {0}</value>
   </data>
@@ -147,8 +150,14 @@
   <data name="NewRandomList" xml:space="preserve">
     <value>New Random List</value>
   </data>
+  <data name="NewScenario" xml:space="preserve">
+    <value>New Scenario</value>
+  </data>
   <data name="NewSequentialList" xml:space="preserve">
     <value>New Sequential List</value>
+  </data>
+  <data name="NewSoundChoice" xml:space="preserve">
+    <value>New Sound Choice</value>
   </data>
   <data name="NoOpenedProject" xml:space="preserve">
     <value>No Project Opened</value>
@@ -159,6 +168,10 @@
   <data name="NoSettings" xml:space="preserve">
     <value>This seems to be the first start of the editor.
 You should adapt some settings first.</value>
+  </data>
+  <data name="PlayerStartError" xml:space="preserve">
+    <value>Could not start player. Reason:
+{0}</value>
   </data>
   <data name="ProjectChanged" xml:space="preserve">
     <value>The current project has unsaved changes. Shall it be saved now?</value>

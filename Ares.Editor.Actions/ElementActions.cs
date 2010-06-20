@@ -45,9 +45,9 @@ namespace Ares.Editor.Actions
                 return;
             if (element is IGeneralElementContainer)
             {
-                foreach (IElement subElement in (element as IGeneralElementContainer).GetGeneralElements())
+                foreach (IContainerElement subElement in (element as IGeneralElementContainer).GetGeneralElements())
                 {
-                    NotifyRemoval(subElement);
+                    NotifyRemoval(subElement.InnerElement);
                 }
             }
             Notify(element);
@@ -80,6 +80,34 @@ namespace Ares.Editor.Actions
         {
             m_Parent.Nodes.Insert(m_Index, m_Node);
             (m_Parent.Tag as IMode).InsertElement(m_Index, (m_Node.Tag as IModeElement));
+        }
+
+        private TreeNode m_Parent;
+        private TreeNode m_Node;
+        private int m_Index;
+    }
+
+    public class DeleteBackgroundSoundChoiceAction : Action
+    {
+        public DeleteBackgroundSoundChoiceAction(TreeNode node)
+        {
+            m_Parent = node.Parent;
+            m_Node = node;
+            m_Index = node.Parent.Nodes.IndexOf(node);
+        }
+
+        public override void Do()
+        {
+            m_Parent.Nodes.Remove(m_Node);
+            IBackgroundSoundChoice soundChoice = (m_Node.Tag as IBackgroundSoundChoice);
+            (m_Parent.Tag as IBackgroundSounds).RemoveElement(soundChoice.Id);
+            ElementRemoval.NotifyRemoval(soundChoice);
+        }
+
+        public override void Undo()
+        {
+            m_Parent.Nodes.Insert(m_Index, m_Node);
+            (m_Parent.Tag as IBackgroundSounds).InsertElement(m_Index, (m_Node.Tag as IBackgroundSoundChoice));
         }
 
         private TreeNode m_Parent;
@@ -187,31 +215,67 @@ namespace Ares.Editor.Actions
     {
         public delegate TreeNode NodeCreator(IElement element);
 
-        public AddElementAction(TreeNode parent, IElement element, NodeCreator nodeCreator, out TreeNode node)
+        public AddElementAction(TreeNode parent, IGeneralElementContainer container, IElement element, NodeCreator nodeCreator, out TreeNode node)
         {
             m_Parent = parent;
-            m_Element = (m_Parent.Tag as IGeneralElementContainer).AddGeneralElement(element);
-            m_Node = nodeCreator(m_Element);
+            m_Element = (IContainerElement)container.AddGeneralElement(element);
+            m_Node = nodeCreator(m_Element.InnerElement);
             m_Index = m_Parent.Nodes.Count;
-            (m_Parent.Tag as IGeneralElementContainer).RemoveElement(m_Element.Id);
+            container.RemoveElement(m_Element.Id);
+            m_Container = container;
             node = m_Node;
         }
 
         public override void Do()
         {
             m_Parent.Nodes.Add(m_Node);
-            (m_Parent.Tag as IGeneralElementContainer).InsertGeneralElement(m_Index, m_Element);
+            m_Container.InsertGeneralElement(m_Index, m_Element);
         }
 
         public override void Undo()
         {
             m_Parent.Nodes.Remove(m_Node);
-            (m_Parent.Tag as IGeneralElementContainer).RemoveElement(m_Element.Id);
+            m_Container.RemoveElement(m_Element.Id);
         }
 
         private TreeNode m_Parent;
         private TreeNode m_Node;
-        private IElement m_Element;
+        private IContainerElement m_Element;
+        private int m_Index;
+        private IGeneralElementContainer m_Container;
+    }
+
+    public class AddSoundChoiceAction : Action
+    {
+        public delegate TreeNode NodeCreator(IElement element);
+
+        public AddSoundChoiceAction(TreeNode parent, IBackgroundSounds bgSounds, String name, NodeCreator nodeCreator, out TreeNode node)
+        {
+            m_Parent = parent;
+            m_Element = bgSounds.AddElement(name);
+            m_Node = nodeCreator(m_Element);
+            m_Index = m_Parent.Nodes.Count;
+            bgSounds.RemoveElement(m_Element.Id);
+            node = m_Node;
+            m_BGSounds = bgSounds;
+        }
+
+        public override void Do()
+        {
+            m_Parent.Nodes.Add(m_Node);
+            m_BGSounds.InsertElement(m_Index, m_Element);
+        }
+
+        public override void Undo()
+        {
+            m_Parent.Nodes.Remove(m_Node);
+            m_BGSounds.RemoveElement(m_Element.Id);
+        }
+
+        private TreeNode m_Parent;
+        private TreeNode m_Node;
+        private IBackgroundSoundChoice m_Element;
+        private IBackgroundSounds m_BGSounds;
         private int m_Index;
     }
 

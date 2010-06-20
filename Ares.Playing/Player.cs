@@ -783,6 +783,11 @@ namespace Ares.Playing
         public void SetProject(Data.IProject project)
         {
             m_Project = project;
+            if (m_Project == null)
+            {
+                m_ActiveMode = null;
+                return;
+            }
             if (m_Project.GetModes().Count > 0)
             {
                 m_ActiveMode = m_Project.GetModes()[0];
@@ -874,6 +879,8 @@ namespace Ares.Playing
         private void TriggerElement(int keyCode)
         {
             IModeElement element = m_ActiveMode.GetTriggeredElement(keyCode);
+            if (element == null)
+                return;
             if (element.IsPlaying)
             {
                 StopElement(element);

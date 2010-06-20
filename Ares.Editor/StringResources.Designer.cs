@@ -88,6 +88,15 @@ namespace Ares.Editor {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {0} Explorer ähnelt.
+        /// </summary>
+        internal static string FileExplorerTitle {
+            get {
+                return ResourceManager.GetString("FileExplorerTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Error opening the project: {0} ähnelt.
         /// </summary>
         internal static string LoadError {
@@ -151,11 +160,29 @@ namespace Ares.Editor {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die New Scenario ähnelt.
+        /// </summary>
+        internal static string NewScenario {
+            get {
+                return ResourceManager.GetString("NewScenario", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die New Sequential List ähnelt.
         /// </summary>
         internal static string NewSequentialList {
             get {
                 return ResourceManager.GetString("NewSequentialList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die New Sound Choice ähnelt.
+        /// </summary>
+        internal static string NewSoundChoice {
+            get {
+                return ResourceManager.GetString("NewSoundChoice", resourceCulture);
             }
         }
         
@@ -184,6 +211,16 @@ namespace Ares.Editor {
         internal static string NoSettings {
             get {
                 return ResourceManager.GetString("NoSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Could not start player. Reason:
+        ///{0} ähnelt.
+        /// </summary>
+        internal static string PlayerStartError {
+            get {
+                return ResourceManager.GetString("PlayerStartError", resourceCulture);
             }
         }
         

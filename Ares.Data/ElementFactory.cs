@@ -76,6 +76,12 @@ namespace Ares.Data
             return new ParallelContainer(GetNextID(), title);
         }
 
+        internal IElementContainer<IParallelElement> CreateParallelContainer(String title, int id)
+        {
+            UpdateNextID(id);
+            return new ParallelContainer(id, title);
+        }
+
         public IElementContainer<ISequentialElement> CreateSequentialContainer(String title)
         {
             return new SequentialContainer(GetNextID(), title);

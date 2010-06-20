@@ -117,7 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="fileToolStripMenuItem.Text" xml:space="preserve">
+    <value>Projekt</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="editMenu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 20</value>
+  </data>
+  <data name="editMenu.Text" xml:space="preserve">
+    <value>Bearbeiten</value>
+  </data>
+  <data name="viewToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>59, 20</value>
+  </data>
+  <data name="viewToolStripMenuItem.Text" xml:space="preserve">
+    <value>Ansicht</value>
+  </data>
+  <data name="hilfeToolStripMenuItem.Text" xml:space="preserve">
+    <value>Hilfe</value>
+  </data>
   <data name="newToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>169, 22</value>
   </data>
@@ -160,59 +178,74 @@
   <data name="exitToolStripMenuItem.Text" xml:space="preserve">
     <value>Beenden</value>
   </data>
-  <data name="fileToolStripMenuItem.Text" xml:space="preserve">
-    <value>Projekt</value>
-  </data>
   <data name="undoToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>141, 22</value>
+    <value>184, 22</value>
   </data>
   <data name="undoToolStripMenuItem.Text" xml:space="preserve">
     <value>Rückgängig</value>
   </data>
   <data name="redoToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>141, 22</value>
+    <value>184, 22</value>
   </data>
   <data name="redoToolStripMenuItem.Text" xml:space="preserve">
     <value>Wiederholen</value>
   </data>
-  <data name="editMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 20</value>
-  </data>
-  <data name="editMenu.Text" xml:space="preserve">
-    <value>Bearbeiten</value>
+  <data name="projectExplorerToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>168, 22</value>
   </data>
   <data name="projectExplorerToolStripMenuItem.Text" xml:space="preserve">
     <value>Projekt Explorer</value>
   </data>
+  <data name="fileExplorerToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>168, 22</value>
+  </data>
   <data name="fileExplorerToolStripMenuItem.Text" xml:space="preserve">
-    <value>Datei Explorer</value>
+    <value>Musik Explorer</value>
   </data>
-  <data name="viewToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>59, 20</value>
+  <data name="soundFileExplorerToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>168, 22</value>
   </data>
-  <data name="viewToolStripMenuItem.Text" xml:space="preserve">
-    <value>Ansicht</value>
+  <data name="soundFileExplorerToolStripMenuItem.Text" xml:space="preserve">
+    <value>Geräusch Explorer</value>
+  </data>
+  <data name="startPlayerToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>157, 22</value>
   </data>
   <data name="startPlayerToolStripMenuItem.Text" xml:space="preserve">
     <value>Starte Player</value>
   </data>
+  <data name="toolStripSeparator3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>154, 6</value>
+  </data>
+  <data name="stopAllToolStipMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>157, 22</value>
+  </data>
   <data name="stopAllToolStipMenuItem.Text" xml:space="preserve">
     <value>Stoppe Alles</value>
+  </data>
+  <data name="toolStripSeparator4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>154, 6</value>
+  </data>
+  <data name="settingsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>157, 22</value>
   </data>
   <data name="settingsToolStripMenuItem.Text" xml:space="preserve">
     <value>Einstellungen ...</value>
   </data>
+  <data name="aboutToolStripMenuItem.Text" xml:space="preserve">
+    <value>Über Ares ...</value>
+  </data>
   <data name="newButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGdSURBVDhPjZJNS0JBFIYvQStp1TboB7RqUZuofeGmRb8g
-        /4QQ9ANyU5GQVoQZaIGQBqGQFRVkEhJ+oGmJaIr5bZp6He/bXPWOhvkxcDjD3HmfM+c9l+PaixBFlZBV
-        P7Qc4OZA6vIwIWu89H1gbvhlZl5JhdgDLmn2tfbNs9Li2VAI8ctemOCYii64lphC8oEFmOweGK0u6C0O
-        nFgcWz1AXkUv79HYFkXiMrReoqFhkM6Ag/NbzK8oeiHEx9VJbFLATqt/fIwDNzRXZ4HoVBtKa+itsD16
-        mhCd+UnFXkKI3MlaECvS6swTbDLAru6qKZaiAygt3THBIQWExjomYp8B6qQBESKB/nghpGc2GsEJNUwU
-        EJsGMko6AS0TC4KAcoVHMlNuAuaW1/HvdI5M90zUvanxBNlCBZFEYTBAY7T3AEhDQLFcQzxVwlskOxig
-        PrX1ACrVOlK5H4Q/83AHU4MBYn/dSzQu/11FNFmEP5yB05sYHdBtXCiaw2vgCw+u2OiAbuO872k43HFc
-        P0dGA0jz7pf7jlGasXhhWIj/wS/d4TgK+7uzhgAAAABJRU5ErkJggg==
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGfSURBVDhPjZJNSwJRFIaHoJW0ahv0A1q1qE3Uvo9N9A+q
+        PyEE/YDaVBSkFWEGWiCkQSj0RQWZhIQfaFpiWmF+m6beGeftjuNcjSnzwuFc7tz3Ofe8ZziusQiZrfD8
+        dAB6DvBw4PnJCCEzRPneNtcCGivRUiHWgWOa/fK+flYcPfgXIgQ090ywS0VHnCymkFxwBJYzL8x2N4w2
+        J/ZsziUVkCzTy+s0ViSRtEzyS3Q0TMoZsHV4geGJeTWE+DmevPSKWJX7x3M3cE5zZRCI9TWgtIbRDseN
+        tw4xWG+X2UsEYcrFWpAq0urMEywywJrhpC5Wogkojl0ywTYFhLuaJmKTAXihBgmigH54IaYGFmqhng1Y
+        KCDeD6S1dAJ6JhZFEaUyQSJdqgOGxufw63R2LFdM1LqpEgGZfBnR93x7gM58pgIINRGFUhVvySIeo5n2
+        gI19hwpQrvBIZr8Qec3BE0q2B0j9tS7JuNxnBbFEAYFIGi7fe+eAVuPCsSwegh+4dsc7B7Qa53tKwel5
+        w+ldtDOAMu+/8p9jVGYsXfgvpP/gG4wIN/ToF1QpAAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="newButton.Text" xml:space="preserve">
@@ -221,18 +254,18 @@
   <data name="openButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAJ0SURBVDhPvZNbSBNgGIZ30UU3WWRGIiRZIhaIgSHVRYgS
-        5ZHyCEpqVDqlzFDMeWibx7mDTl2paJuHpk4rSzGsEApFIrQ8UGJqFhSVYmqo5OlpTpBWduFNP7w3P9/7
-        fO/3HwSC/7GyiqvdJWo912WV5GgMpMh1qZvqG5GgwV+oDFs1XU6usJIaYYmZ2sDwhGIEjTX5wUbxp1rr
-        cpT/6iIUlfgExCrxExaYAAz16ZifajDp56SexXEthkolTTUZ0o0g/jEq/KLVeEcVIWioUjE3WWtmXv5S
-        wuJAPLW3ZVSXZqMtllJWkM4thYii3CTMoHU6OXPfdOudV4xmhkQwELWh/gLcKc/lx+cyU+xVc1uj3KRH
-        hjya9bncr87GoM1AXyahUnODCnUqpSoRGnnyWprqsmxmPhSyGnu0Q0xTrYrlUQmMZZrrvXFvJAUGE+BN
-        LL31QcRF+lYJtJoMpodl8FHBgzolXY8Va0W/j/A6HLoDWOr0Yv6JG++qnBCe85i+esHnkKBcLeb7Wwlj
-        nWk06RWsjIihP3oN0HveaAxhqcuX+faTzLQeZ6LxMBKhPSHulgWmwyxRpTHRl8zdGjk9z41JBuONgIvQ
-        E8bKizMsPDvNbNsJJptc+FrnSHfWDkK97HBx2OZgAmjyRPS3p3OvJg+G0+GVMe7LQBY6vJl96sZUsyvj
-        Bic+6Q4woLBEHLUf54PWLetXWZiTREOljIGHMXTnC9bVpdhCe+5WWqTbqU+1Qptkw81rtoR67ltxdbb1
-        XAfkZyaSL75ETnIEKVeCiTvvS2SQB2dPHcX9mBNHnOxxtLNhr/Uudu+0YI+lhflD2tSv2qD4F+S85QcY
-        IJA9AAAAAElFTkSuQmCC
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAJ0SURBVDhPvZNbSBNgGIZ30UU3WWRGEiRZIhaIgSHVRZgR
+        5ZHyCEoeqHRKmaGY89A2j3MHjysVbZva1GllKYYVQqFIhJY6SkzNgqJSTA2VPD3NCZJlF970w3vz873P
+        937/QSD4HyuzuMpNUqDnukxHttpAslybsqG+YfFqfIXKkGXT5aQKK6kJlpCh8Q+NL0bQUJ0XaBJ/qqU2
+        W/mvLkJRiZdfjBIfYb4ZwECvltmJerN+juuZH9Vg0ClprE6XrgfxjVbhE1WAZ2QRgvpKFTPjNWvMi19K
+        mDfGUXNbRlVpFppiKWX5adxSiCjKSWQNtFYrZ+abdrXzksnMgAiMkevqL8Cd8hx+fC4zx142tzbIzXpk
+        yKVJn8P9qiwMmnT0ZRJ06htUFKRQqhKhlietpKkqy2LqQyHLsYfbxTTWqFgclsBIxlq9N+0NJUN/PLyJ
+        oacugNhw70qBRp3O5KAMPip4UKuk87Fipej3EV6HQpcfCx0ezD5x5V2lI5HnT0xeveB1UFBeIOb7Wwkj
+        Hak06hUsDYmhL2oF0BNhMgax0OnNbNspplqOMdZwCInQjiA3y3zzYZaoUhnrTeJutZzu56Yk/XEmwEXo
+        DmHpxVnmnp1huvU4443OfK11oCtzG8Eetjjbb7E3A9S5Ivra0rhXnQuDafDKFPelP3Ptnkw/dWWiyYVR
+        gyOftPsxKiwRR+7D6YB18+pVFmYnUq+TYXwYTVeeYFWdik205WymWbqVuhQrNIm7uXnNhmD3vUsuTjbu
+        q4C8jATyxJfITgoj+UogsRHehAec5NzpI7gddeSwox0OtrvZY72Dndst2GVpsfYhbehXrVP8C96I5QP2
+        f3eFAAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="openButton.Text" xml:space="preserve">
@@ -263,14 +296,20 @@
   <data name="redoButton.Text" xml:space="preserve">
     <value>Wiederholen</value>
   </data>
-  <data name="toolStripSeparator7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>6, 25</value>
+  <data name="stopButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABUAAAAUCAYAAABiS3YzAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFTSURBVDhP7ZLNK4MBHMc//wzZbEMLLVzY27PNYzalHCiX
+        HRSl5CW2KCQvy6a50G4r4qDUHJTbQhwYEfI27O05SFKcPM/+g2elKL/779P3Df7vjyfQ9tWP530AjzSM
+        +OLHcTeB7WIa28ksluMg5sNF9Q4VoF3S4k2X486YsGetNOdctEhexKduKiOnRUBlhc5UCa58dQHmyrXj
+        yPgQU73UbQ9hCF2phyqWW9M6hIwFId+B8NiDkBrBejmJaTOMfu5BPVTJ0CLV4s56ZLU+HKlBrDeTmJMh
+        jKvraKey6qFKKWLGjFPqRHjuw34/heVsmcaDGBWROJqJ198ClafjybsR03KW1+PYkmGaEjHqd7YwLOxS
+        FvhQr1TZovO2i4aNUWrWQlRHZdvBOPqZPbSBfUr9X+qhyriN0QTGlSOqls7Rzd8VytGMv1E69lkcVL2M
+        /48fTOAbAaWOJ58w8acAAAAASUVORK5CYII=
+</value>
   </data>
   <data name="stopButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
     <value>Magenta</value>
-  </data>
-  <data name="stopButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 22</value>
   </data>
   <data name="stopButton.Text" xml:space="preserve">
     <value>Alles stoppen</value>

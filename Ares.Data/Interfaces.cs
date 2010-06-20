@@ -227,7 +227,7 @@ namespace Ares.Data
         /// <summary>
         /// Returns a shallow copy of the elements in the container
         /// </summary>
-        IList<IElement> GetGeneralElements();
+        IList<IContainerElement> GetGeneralElements();
 
         /// <summary>
         /// Adds a new element to the container.

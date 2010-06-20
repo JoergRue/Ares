@@ -96,7 +96,7 @@ namespace Ares.Data
             m_ThirdContainer.RemoveElement(ID);
         }
 
-        public IList<IElement> GetGeneralElements()
+        public IList<IContainerElement> GetGeneralElements()
         {
             return m_ThirdContainer.GetGeneralElements();
         }

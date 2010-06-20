@@ -118,7 +118,7 @@ namespace Ares.Data
 
         public IModeElement GetTriggeredElement(Int32 keyCode)
         {
-            return m_Elements.Find(e => e.Trigger.TriggerType == TriggerType.Key
+            return m_Elements.Find(e => e.Trigger != null && e.Trigger.TriggerType == TriggerType.Key
                 && (e.Trigger as IKeyTrigger).KeyCode == keyCode);
         }
 

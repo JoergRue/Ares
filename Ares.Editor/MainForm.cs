@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Ares.Settings;
 
 namespace Ares.Editor
 {
@@ -14,43 +15,42 @@ namespace Ares.Editor
         public MainForm()
         {
             InitializeComponent();
-
-            SuspendLayout();
-
-            ResumeLayout();
-
             Timer t = new Timer();
             t.Interval = 150;
             t.Tick += new EventHandler((o, args) =>
                 {
                     t.Stop();
                     m_BasicSettings = new BasicSettings();
-                    if (!m_BasicSettings.ReadFromFile() || !Settings.Instance.ReadFromFile(m_BasicSettings.GetSettingsDir()))
+                    if (!m_BasicSettings.ReadFromFile() || !Ares.Settings.Settings.Instance.ReadFromFile(m_BasicSettings.GetSettingsDir()))
                     {
                         MessageBox.Show(this, StringResources.NoSettings, StringResources.Ares);
                         ShowSettingsDialog();
                         ShowProjectExplorer();
-                        ShowFileExplorer();
+                        ShowFileExplorer(FileType.Music);
+                        ShowFileExplorer(FileType.Sound);
                     }
-                    else if (!String.IsNullOrEmpty(Settings.Instance.WindowLayout))
+                    else if (!String.IsNullOrEmpty(Ares.Settings.Settings.Instance.WindowLayout))
                     {
                         System.IO.MemoryStream stream = new System.IO.MemoryStream(
-                            System.Text.Encoding.UTF8.GetBytes(Settings.Instance.WindowLayout));
+                            System.Text.Encoding.UTF8.GetBytes(Ares.Settings.Settings.Instance.WindowLayout));
                         dockPanel.LoadFromXml(stream, new WeifenLuo.WinFormsUI.Docking.DeserializeDockContent(DeserializeDockContent));
                     }
                     else
                     {
                         ShowProjectExplorer();
-                        ShowFileExplorer();
+                        ShowFileExplorer(FileType.Music);
+                        ShowFileExplorer(FileType.Sound);
                     }
-                    fileExplorerToolStripMenuItem.Checked = !m_FileExplorer.IsHidden;
+                    fileExplorerToolStripMenuItem.Checked = !m_FileExplorers[0].IsHidden;
+                    soundFileExplorerToolStripMenuItem.Checked = !m_FileExplorers[1].IsHidden;
                     projectExplorerToolStripMenuItem.Checked = !m_ProjectExplorer.IsHidden;
                     Actions.Actions.Instance.UpdateGUI = UpdateGUI;
-                    Actions.Playing.Instance.SetDirectories(Settings.Instance.MusicDirectory, Settings.Instance.SoundDirectory);
+                    Actions.Playing.Instance.SetDirectories(Ares.Settings.Settings.Instance.MusicDirectory, Ares.Settings.Settings.Instance.SoundDirectory);
                     UpdateGUI();
-                    if (Settings.Instance.RecentFiles.GetFiles().Count > 0)
+                    fileSystemWatcher1.Path = m_BasicSettings.GetSettingsDir();
+                    if (Ares.Settings.Settings.Instance.RecentFiles.GetFiles().Count > 0)
                     {
-                        OpenProject(Settings.Instance.RecentFiles.GetFiles()[0].FilePath);
+                        OpenProject(Ares.Settings.Settings.Instance.RecentFiles.GetFiles()[0].FilePath);
                     }
                 });
             t.Start();
@@ -58,10 +58,16 @@ namespace Ares.Editor
 
         private WeifenLuo.WinFormsUI.Docking.IDockContent DeserializeDockContent(string persistString)
         {
-            if (persistString == "FileExplorer")
+            if (persistString.StartsWith("FileExplorer_"))
             {
-                m_FileExplorer = new FileExplorer();
-                return m_FileExplorer;
+                int index = 0;
+                bool success = Int32.TryParse(persistString.Substring("FileExplorer_".Length), out index);
+                if (!success)
+                    return null;
+                if (index < 0 || index > 1)
+                    return null;
+                m_FileExplorers[index] = new FileExplorer((FileType)index);
+                return m_FileExplorers[index];
             }
             else if (persistString == "ProjectExplorer")
             {
@@ -77,10 +83,11 @@ namespace Ares.Editor
 
         private void ShowSettingsDialog()
         {
-            SettingsDialog dialog = new SettingsDialog(Settings.Instance, m_BasicSettings);
+            SettingsDialog dialog = new SettingsDialog(Ares.Settings.Settings.Instance, m_BasicSettings);
             if (dialog.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
             {
-                Actions.Playing.Instance.SetDirectories(Settings.Instance.MusicDirectory, Settings.Instance.SoundDirectory);
+                Actions.Playing.Instance.SetDirectories(Ares.Settings.Settings.Instance.MusicDirectory, Ares.Settings.Settings.Instance.SoundDirectory);
+                WriteSettings();
             }
         }
 
@@ -107,15 +114,19 @@ namespace Ares.Editor
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Settings settings = Settings.Instance;
+            Ares.Settings.Settings settings = Ares.Settings.Settings.Instance;
             String oldSoundsDir = settings.SoundDirectory;
             String oldMusicDir = settings.MusicDirectory;
             ShowSettingsDialog();
             if (oldSoundsDir != settings.SoundDirectory || oldMusicDir != settings.MusicDirectory)
             {
-                if (m_FileExplorer != null)
+                if (m_FileExplorers[0] != null)
                 {
-                    m_FileExplorer.ReFillTree();
+                    m_FileExplorers[0].ReFillTree();
+                }
+                if (m_FileExplorers[1] != null)
+                {
+                    m_FileExplorers[1].ReFillTree();
                 }
             }
         }
@@ -135,15 +146,20 @@ namespace Ares.Editor
                 return;
             }
 
+            WriteSettings();
+        }
+
+        private void WriteSettings()
+        {
             try
             {
                 using (System.IO.MemoryStream stream = new System.IO.MemoryStream())
                 {
                     dockPanel.SaveAsXml(stream, System.Text.Encoding.UTF8, true);
                     string layout = System.Text.Encoding.UTF8.GetString(stream.GetBuffer(), 0, (int)stream.Length);
-                    Settings.Instance.WindowLayout = layout;
+                    Ares.Settings.Settings.Instance.WindowLayout = layout;
                 }
-                Settings.Instance.WriteToFile(m_BasicSettings.GetSettingsDir());
+                Ares.Settings.Settings.Instance.WriteToFile(m_BasicSettings.GetSettingsDir());
                 m_BasicSettings.WriteToFile();
             }
             catch (Exception ex)
@@ -152,24 +168,53 @@ namespace Ares.Editor
             }
         }
 
-        private void fileExplorerToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ReadSettings()
         {
-            ShowFileExplorer();
-        }
-
-        private FileExplorer m_FileExplorer;
-
-        private void ShowFileExplorer()
-        {
-            if (m_FileExplorer == null)
+            Ares.Settings.Settings settings = Ares.Settings.Settings.Instance;
+            String oldSoundsDir = settings.SoundDirectory;
+            String oldMusicDir = settings.MusicDirectory;
+            if (!m_BasicSettings.ReadFromFile() || !settings.ReadFromFile(m_BasicSettings.GetSettingsDir()))
             {
-                m_FileExplorer = new FileExplorer();
-                m_FileExplorer.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockRight;
-                m_FileExplorer.Show(dockPanel);
+                MessageBox.Show(this, StringResources.NoSettings, StringResources.Ares);
+                ShowSettingsDialog();
             }
             else
             {
-                m_FileExplorer.IsHidden = !m_FileExplorer.IsHidden;
+                Actions.Playing.Instance.SetDirectories(Ares.Settings.Settings.Instance.MusicDirectory, Ares.Settings.Settings.Instance.SoundDirectory);
+            }
+            if (oldSoundsDir != settings.SoundDirectory || oldMusicDir != settings.MusicDirectory)
+            {
+                if (m_FileExplorers[0] != null)
+                {
+                    m_FileExplorers[0].ReFillTree();
+                }
+                if (m_FileExplorers[1] != null)
+                {
+                    m_FileExplorers[1].ReFillTree();
+                }
+            }
+            fileSystemWatcher1.Path = m_BasicSettings.GetSettingsDir();
+        }
+
+        private void fileExplorerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowFileExplorer(FileType.Music);
+        }
+
+        private FileExplorer[] m_FileExplorers = new FileExplorer[2];
+
+        private void ShowFileExplorer(FileType fileType)
+        {
+            int index = (int)fileType;
+            if (m_FileExplorers[index] == null)
+            {
+                m_FileExplorers[index] = new FileExplorer(fileType);
+                m_FileExplorers[index].ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockRight;
+                m_FileExplorers[index].Show(dockPanel);
+            }
+            else
+            {
+                m_FileExplorers[index].IsHidden = !m_FileExplorers[index].IsHidden;
             }
         }
 
@@ -195,7 +240,7 @@ namespace Ares.Editor
                 ShowProjectExplorer();
             UpdateGUI();
 
-            m_ProjectExplorer.RenameProject();
+            m_ProjectExplorer.InitNewProject();
 
         }
 
@@ -209,10 +254,10 @@ namespace Ares.Editor
                 title += "*";
             this.Text = title;
 
-            undoToolStripMenuItem.Enabled = Actions.Actions.Instance.CanUndo;
-            redoToolStripMenuItem.Enabled = Actions.Actions.Instance.CanRedo;
-            undoButton.Enabled = Actions.Actions.Instance.CanUndo;
-            redoButton.Enabled = Actions.Actions.Instance.CanRedo;
+            undoButton.Enabled = Actions.Actions.Instance.CanUndo && !Actions.Playing.Instance.IsPlaying;
+            redoButton.Enabled = Actions.Actions.Instance.CanRedo && !Actions.Playing.Instance.IsPlaying;
+
+            stopButton.Enabled = Actions.Playing.Instance.IsPlaying;
         }
 
         private bool UnloadProject()
@@ -295,7 +340,7 @@ namespace Ares.Editor
             bool result2 = SaveProject();
             if (result2)
             {
-                Settings.Instance.RecentFiles.AddFile(new RecentFiles.ProjectEntry(m_CurrentProject.FileName, m_CurrentProject.Title));
+                Ares.Settings.Settings.Instance.RecentFiles.AddFile(new RecentFiles.ProjectEntry(m_CurrentProject.FileName, m_CurrentProject.Title));
             }
             return result2;
         }
@@ -331,7 +376,7 @@ namespace Ares.Editor
             try
             {
                 m_CurrentProject = Ares.Data.DataModule.ProjectManager.LoadProject(filePath);
-                Settings.Instance.RecentFiles.AddFile(new RecentFiles.ProjectEntry(m_CurrentProject.FileName, m_CurrentProject.Title));
+                Ares.Settings.Settings.Instance.RecentFiles.AddFile(new RecentFiles.ProjectEntry(m_CurrentProject.FileName, m_CurrentProject.Title));
             }
             catch (Exception e)
             {
@@ -366,6 +411,8 @@ namespace Ares.Editor
                     editMenu.DropDownItems.Add(item);
                 }
             }
+            undoToolStripMenuItem.Enabled = Actions.Actions.Instance.CanUndo && !Actions.Playing.Instance.IsPlaying;
+            redoToolStripMenuItem.Enabled = Actions.Actions.Instance.CanRedo && !Actions.Playing.Instance.IsPlaying;
         }
 
         private void editMenu_DropDownClosed(object sender, EventArgs e)
@@ -399,13 +446,14 @@ namespace Ares.Editor
         private void viewToolStripMenuItem_DropDownOpened(object sender, EventArgs e)
         {
             projectExplorerToolStripMenuItem.Checked = m_ProjectExplorer != null && !m_ProjectExplorer.IsHidden;
-            fileExplorerToolStripMenuItem.Checked = m_FileExplorer != null && !m_FileExplorer.IsHidden;
+            fileExplorerToolStripMenuItem.Checked =  m_FileExplorers[0] != null && !m_FileExplorers[0].IsHidden;
+            soundFileExplorerToolStripMenuItem.Checked = m_FileExplorers[1] != null && !m_FileExplorers[1].IsHidden;
         }
 
         private void recentMenuItem_DropDownOpening(object sender, EventArgs e)
         {
             recentMenuItem.DropDownItems.Clear();
-            foreach (RecentFiles.ProjectEntry projectEntry in Settings.Instance.RecentFiles.GetFiles())
+            foreach (RecentFiles.ProjectEntry projectEntry in Ares.Settings.Settings.Instance.RecentFiles.GetFiles())
             {
                 ToolStripMenuItem item = new ToolStripMenuItem(projectEntry.ProjectName);
                 item.ToolTipText = projectEntry.FilePath;
@@ -449,6 +497,43 @@ namespace Ares.Editor
         private void stopButton_Click(object sender, EventArgs e)
         {
             Actions.Playing.Instance.StopAll();
+        }
+
+        private void startPlayerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            StartPlayer();
+        }
+
+        private void StartPlayer()
+        {
+            if (!SaveCurrentProject())
+                return;
+            String commandLine = "Ares.Player.exe";
+            String arguments = m_CurrentProject != null ? "\"" + m_CurrentProject.FileName + "\"" : String.Empty;
+            try
+            {
+                System.Diagnostics.Process.Start(commandLine, arguments);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, String.Format(StringResources.PlayerStartError, ex.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Ares.Settings.AboutDialog dialog = new Ares.Settings.AboutDialog();
+            dialog.ShowDialog(this);
+        }
+
+        private void fileSystemWatcher1_Changed(object sender, System.IO.FileSystemEventArgs e)
+        {
+            String path = System.IO.Path.Combine(m_BasicSettings.GetSettingsDir(), Ares.Settings.Settings.Instance.settingsFileName);
+            if (path == e.FullPath)
+            {
+                Actions.Playing.Instance.StopAll();
+                ReadSettings();
+            }
         }
 
     }

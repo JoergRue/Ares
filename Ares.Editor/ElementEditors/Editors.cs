@@ -18,9 +18,16 @@ namespace Ares.Editor.ElementEditors
             {
                 if (element is Ares.Data.IRandomBackgroundMusicList)
                 {
-                    RandomPlaylistEditor editor = new RandomPlaylistEditor();
+                    RandomPlaylistOrBGSoundChoiceEditor editor = new RandomPlaylistOrBGSoundChoiceEditor();
                     editor.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Document;
                     editor.SetPlaylist(element as Ares.Data.IRandomBackgroundMusicList);
+                    editor.Show(dockPanel);
+                }
+                else if (element is Ares.Data.IBackgroundSoundChoice)
+                {
+                    RandomPlaylistOrBGSoundChoiceEditor editor = new RandomPlaylistOrBGSoundChoiceEditor();
+                    editor.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Document;
+                    editor.SetBGSoundChoice(element as Ares.Data.IBackgroundSoundChoice);
                     editor.Show(dockPanel);
                 }
             }

@@ -16,6 +16,7 @@
             if (disposing && (components != null))
             {
                 components.Dispose();
+                RemoveChangeListener();
             }
             base.Dispose(disposing);
         }
@@ -65,10 +66,20 @@
             this.renameToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.selectKeyToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.bgSoundsContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.renameToolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
+            this.selectKeyToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.addSoundChoiceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.playButton = new System.Windows.Forms.ToolStripButton();
+            this.stopButton = new System.Windows.Forms.ToolStripButton();
             this.projectContextMenu.SuspendLayout();
             this.modeContextMenu.SuspendLayout();
             this.containerContextMenu.SuspendLayout();
             this.elementContextMenu.SuspendLayout();
+            this.bgSoundsContextMenu.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // projectContextMenu
@@ -98,7 +109,10 @@
             this.projectTree.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.projectTree_AfterLabelEdit);
             this.projectTree.BeforeCollapse += new System.Windows.Forms.TreeViewCancelEventHandler(this.projectTree_BeforeCollapse);
             this.projectTree.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.projectTree_BeforeExpand);
+            this.projectTree.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.projectTree_BeforeSelect);
+            this.projectTree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.projectTree_AfterSelect);
             this.projectTree.DoubleClick += new System.EventHandler(this.projectTree_DoubleClick);
+            this.projectTree.KeyDown += new System.Windows.Forms.KeyEventHandler(this.projectTree_KeyDown);
             this.projectTree.MouseDown += new System.Windows.Forms.MouseEventHandler(this.projectTree_MouseDown);
             // 
             // modeContextMenu
@@ -118,6 +132,7 @@
             this.addChoiceListToolStripMenuItem});
             this.modeContextMenu.Name = "modeContextMenu";
             resources.ApplyResources(this.modeContextMenu, "modeContextMenu");
+            this.modeContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.modeContextMenu_Opening);
             // 
             // renameToolStripMenuItem1
             // 
@@ -313,11 +328,71 @@
             resources.ApplyResources(this.deleteToolStripMenuItem2, "deleteToolStripMenuItem2");
             this.deleteToolStripMenuItem2.Click += new System.EventHandler(this.deleteToolStripMenuItem2_Click);
             // 
+            // bgSoundsContextMenu
+            // 
+            this.bgSoundsContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.renameToolStripMenuItem4,
+            this.selectKeyToolStripMenuItem2,
+            this.deleteToolStripMenuItem3,
+            this.addSoundChoiceToolStripMenuItem});
+            this.bgSoundsContextMenu.Name = "bgSoundsContextMenu";
+            resources.ApplyResources(this.bgSoundsContextMenu, "bgSoundsContextMenu");
+            this.bgSoundsContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.bgSoundsContextMenu_Opening);
+            // 
+            // renameToolStripMenuItem4
+            // 
+            this.renameToolStripMenuItem4.Name = "renameToolStripMenuItem4";
+            resources.ApplyResources(this.renameToolStripMenuItem4, "renameToolStripMenuItem4");
+            this.renameToolStripMenuItem4.Click += new System.EventHandler(this.renameToolStripMenuItem4_Click);
+            // 
+            // selectKeyToolStripMenuItem2
+            // 
+            resources.ApplyResources(this.selectKeyToolStripMenuItem2, "selectKeyToolStripMenuItem2");
+            this.selectKeyToolStripMenuItem2.Name = "selectKeyToolStripMenuItem2";
+            this.selectKeyToolStripMenuItem2.Click += new System.EventHandler(this.selectKeyToolStripMenuItem2_Click);
+            // 
+            // deleteToolStripMenuItem3
+            // 
+            this.deleteToolStripMenuItem3.Name = "deleteToolStripMenuItem3";
+            resources.ApplyResources(this.deleteToolStripMenuItem3, "deleteToolStripMenuItem3");
+            this.deleteToolStripMenuItem3.Click += new System.EventHandler(this.deleteToolStripMenuItem3_Click);
+            // 
+            // addSoundChoiceToolStripMenuItem
+            // 
+            this.addSoundChoiceToolStripMenuItem.Name = "addSoundChoiceToolStripMenuItem";
+            resources.ApplyResources(this.addSoundChoiceToolStripMenuItem, "addSoundChoiceToolStripMenuItem");
+            this.addSoundChoiceToolStripMenuItem.Click += new System.EventHandler(this.addSoundChoiceToolStripMenuItem_Click);
+            // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.playButton,
+            this.stopButton});
+            resources.ApplyResources(this.toolStrip1, "toolStrip1");
+            this.toolStrip1.Name = "toolStrip1";
+            // 
+            // playButton
+            // 
+            this.playButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.playButton, "playButton");
+            this.playButton.Image = global::Ares.Editor.ImageResources.RunSmall;
+            this.playButton.Name = "playButton";
+            this.playButton.Click += new System.EventHandler(this.playButton_Click);
+            // 
+            // stopButton
+            // 
+            this.stopButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.stopButton, "stopButton");
+            this.stopButton.Image = global::Ares.Editor.ImageResources.StopSmall;
+            this.stopButton.Name = "stopButton";
+            this.stopButton.Click += new System.EventHandler(this.stopButton_Click);
+            // 
             // ProjectExplorer
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.projectTree);
+            this.Controls.Add(this.toolStrip1);
             this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)((((WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)
                         | WeifenLuo.WinFormsUI.Docking.DockAreas.DockTop)
                         | WeifenLuo.WinFormsUI.Docking.DockAreas.DockBottom)));
@@ -326,7 +401,11 @@
             this.modeContextMenu.ResumeLayout(false);
             this.containerContextMenu.ResumeLayout(false);
             this.elementContextMenu.ResumeLayout(false);
+            this.bgSoundsContextMenu.ResumeLayout(false);
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -367,5 +446,13 @@
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem addChoiceListToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addChoiceListToolStripMenuItem1;
+        private System.Windows.Forms.ContextMenuStrip bgSoundsContextMenu;
+        private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem4;
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem3;
+        private System.Windows.Forms.ToolStripMenuItem addSoundChoiceToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem selectKeyToolStripMenuItem2;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripButton playButton;
+        private System.Windows.Forms.ToolStripButton stopButton;
     }
 }
