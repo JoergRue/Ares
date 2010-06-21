@@ -83,12 +83,6 @@
     <Compile Include="FileExplorer.Designer.cs">
       <DependentUpon>FileExplorer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\InputDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Dialogs\InputDialog.Designer.cs">
-      <DependentUpon>InputDialog.cs</DependentUpon>
-    </Compile>
     <Compile Include="ImageResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -118,9 +112,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>StringResources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Dialogs\InputDialog.de.resx">
-      <DependentUpon>InputDialog.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\KeyDialog.de.resx">
       <DependentUpon>KeyDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -140,9 +131,6 @@
     <EmbeddedResource Include="FileExplorer.resx">
       <DependentUpon>FileExplorer.cs</DependentUpon>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\InputDialog.resx">
-      <DependentUpon>InputDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ImageResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -203,6 +191,10 @@
       <Project>{E9189223-5024-4284-B02A-9F22C83DAE88}</Project>
       <Name>Ares.Editor.Controls</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Ares.Ipc\Ares.Ipc.csproj">
+      <Project>{07BE1372-C1D2-4E2A-9678-DC27BE0D9FF0}</Project>
+      <Name>Ares.Ipc</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Ares.Playing\Ares.Playing.csproj">
       <Project>{6C55F933-0F49-489C-AFF4-E0E0A8581E42}</Project>
       <Name>Ares.Playing</Name>
@@ -235,6 +227,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\undo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Spartan-Helm-icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

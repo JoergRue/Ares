@@ -129,6 +129,9 @@
   <data name="FileExplorerTitle" xml:space="preserve">
     <value>{0} Explorer</value>
   </data>
+  <data name="FilePlayed" xml:space="preserve">
+    <value>Error at file: {0}</value>
+  </data>
   <data name="LoadError" xml:space="preserve">
     <value>Error opening the project: {0}</value>
   </data>
@@ -168,6 +171,9 @@
   <data name="NoSettings" xml:space="preserve">
     <value>This seems to be the first start of the editor.
 You should adapt some settings first.</value>
+  </data>
+  <data name="OpenProjectQuestion" xml:space="preserve">
+    <value>Open project {0}?</value>
   </data>
   <data name="PlayerStartError" xml:space="preserve">
     <value>Could not start player. Reason:

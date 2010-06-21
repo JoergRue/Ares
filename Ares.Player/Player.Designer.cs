@@ -1,4 +1,23 @@
-﻿namespace Ares.Player
+﻿/*
+ Copyright (c) 2010 [Joerg Ruedenauer]
+ 
+ This file is part of Ares.
+
+ Ares is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+ Ares is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Ares; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
+namespace Ares.Player
 {
     partial class Player
     {
@@ -16,6 +35,7 @@
             if (disposing && (components != null))
             {
                 components.Dispose();
+                m_Instance.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -30,6 +50,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Player));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.messagesButton = new System.Windows.Forms.CheckBox();
             this.aboutButton = new System.Windows.Forms.Button();
             this.settingsButton = new System.Windows.Forms.Button();
             this.openButton = new System.Windows.Forms.Button();
@@ -54,6 +75,7 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
             this.settingsFileWatcher = new System.IO.FileSystemWatcher();
+            this.editorButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.soundVolumeBar)).BeginInit();
@@ -68,6 +90,8 @@
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.editorButton);
+            this.groupBox1.Controls.Add(this.messagesButton);
             this.groupBox1.Controls.Add(this.aboutButton);
             this.groupBox1.Controls.Add(this.settingsButton);
             this.groupBox1.Controls.Add(this.openButton);
@@ -80,6 +104,18 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Project";
             this.groupBox1.UseCompatibleTextRendering = true;
+            // 
+            // messagesButton
+            // 
+            this.messagesButton.Appearance = System.Windows.Forms.Appearance.Button;
+            this.messagesButton.Image = ((System.Drawing.Image)(resources.GetObject("messagesButton.Image")));
+            this.messagesButton.Location = new System.Drawing.Point(428, 10);
+            this.messagesButton.Name = "messagesButton";
+            this.messagesButton.Size = new System.Drawing.Size(32, 23);
+            this.messagesButton.TabIndex = 5;
+            this.messagesButton.UseCompatibleTextRendering = true;
+            this.messagesButton.UseVisualStyleBackColor = true;
+            this.messagesButton.CheckedChanged += new System.EventHandler(this.messagesButton_CheckedChanged);
             // 
             // aboutButton
             // 
@@ -97,7 +133,7 @@
             // 
             this.settingsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.settingsButton.Image = ((System.Drawing.Image)(resources.GetObject("settingsButton.Image")));
-            this.settingsButton.Location = new System.Drawing.Point(503, 11);
+            this.settingsButton.Location = new System.Drawing.Point(503, 10);
             this.settingsButton.Name = "settingsButton";
             this.settingsButton.Size = new System.Drawing.Size(32, 23);
             this.settingsButton.TabIndex = 3;
@@ -109,7 +145,7 @@
             // 
             this.openButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.openButton.Image = ((System.Drawing.Image)(resources.GetObject("openButton.Image")));
-            this.openButton.Location = new System.Drawing.Point(465, 10);
+            this.openButton.Location = new System.Drawing.Point(390, 10);
             this.openButton.Name = "openButton";
             this.openButton.Size = new System.Drawing.Size(32, 23);
             this.openButton.TabIndex = 2;
@@ -251,8 +287,7 @@
             // 
             // soundsLabel
             // 
-            this.soundsLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
+            this.soundsLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.soundsLabel.Location = new System.Drawing.Point(67, 131);
             this.soundsLabel.Name = "soundsLabel";
@@ -349,6 +384,18 @@
             this.settingsFileWatcher.SynchronizingObject = this;
             this.settingsFileWatcher.Changed += new System.IO.FileSystemEventHandler(this.settingsFileWatcher_Changed);
             // 
+            // editorButton
+            // 
+            this.editorButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.editorButton.Image = ((System.Drawing.Image)(resources.GetObject("editorButton.Image")));
+            this.editorButton.Location = new System.Drawing.Point(465, 10);
+            this.editorButton.Name = "editorButton";
+            this.editorButton.Size = new System.Drawing.Size(32, 23);
+            this.editorButton.TabIndex = 6;
+            this.editorButton.UseCompatibleTextRendering = true;
+            this.editorButton.UseVisualStyleBackColor = true;
+            this.editorButton.Click += new System.EventHandler(this.editorButton_Click);
+            // 
             // Player
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -357,6 +404,7 @@
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Name = "Player";
             this.Text = "Ares Player";
@@ -404,6 +452,8 @@
         private System.IO.FileSystemWatcher fileSystemWatcher1;
         private System.Windows.Forms.Button aboutButton;
         private System.IO.FileSystemWatcher settingsFileWatcher;
+        private System.Windows.Forms.CheckBox messagesButton;
+        private System.Windows.Forms.Button editorButton;
     }
 }
 

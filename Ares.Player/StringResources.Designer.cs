@@ -88,6 +88,16 @@ namespace Ares.Player {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Could not start editor. Reason:
+        ///{0} ähnelt.
+        /// </summary>
+        internal static string EditorStartError {
+            get {
+                return ResourceManager.GetString("EditorStartError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Error opening the project: {0} ähnelt.
         /// </summary>
         internal static string LoadError {
@@ -112,6 +122,60 @@ namespace Ares.Player {
         internal static string NoSettings {
             get {
                 return ResourceManager.GetString("NoSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Open a project ... ähnelt.
+        /// </summary>
+        internal static string OpenProject {
+            get {
+                return ResourceManager.GetString("OpenProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Open project {0}? ähnelt.
+        /// </summary>
+        internal static string OpenProjectQuestion {
+            get {
+                return ResourceManager.GetString("OpenProjectQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die About Ares ... ähnelt.
+        /// </summary>
+        internal static string ShowInfo {
+            get {
+                return ResourceManager.GetString("ShowInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Messages ... ähnelt.
+        /// </summary>
+        internal static string ShowMessages {
+            get {
+                return ResourceManager.GetString("ShowMessages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Settings ... ähnelt.
+        /// </summary>
+        internal static string ShowSettings {
+            get {
+                return ResourceManager.GetString("ShowSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Open Editor ähnelt.
+        /// </summary>
+        internal static string StartEditor {
+            get {
+                return ResourceManager.GetString("StartEditor", resourceCulture);
             }
         }
         

@@ -59,5 +59,33 @@ namespace Ares.Player.Properties {
                 resourceCulture = value;
             }
         }
+        
+        internal static System.Drawing.Icon eventlogError {
+            get {
+                object obj = ResourceManager.GetObject("eventlogError", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Icon eventlogInfo {
+            get {
+                object obj = ResourceManager.GetObject("eventlogInfo", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Icon eventlogWarn {
+            get {
+                object obj = ResourceManager.GetObject("eventlogWarn", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap gear {
+            get {
+                object obj = ResourceManager.GetObject("gear", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

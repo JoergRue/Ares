@@ -117,7 +117,91 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="cancelButton.Text" xml:space="preserve">
-    <value>Abbrechen</value>
+  <data name="BufLostError" xml:space="preserve">
+    <value>Samplingpuffer verloren</value>
+  </data>
+  <data name="CodecError" xml:space="preserve">
+    <value>Codec nicht verfügbar</value>
+  </data>
+  <data name="CreateError" xml:space="preserve">
+    <value>Datei konnte nicht erzeugt werden</value>
+  </data>
+  <data name="DeviceError" xml:space="preserve">
+    <value>Ungültige Gerätenummer</value>
+  </data>
+  <data name="DriverError" xml:space="preserve">
+    <value>Kann keinen Treiber finden</value>
+  </data>
+  <data name="DxError" xml:space="preserve">
+    <value>Keine ausreichende Version von DirectX installiert</value>
+  </data>
+  <data name="EndedError" xml:space="preserve">
+    <value>Kanal / Datei hat geendet</value>
+  </data>
+  <data name="FileformError" xml:space="preserve">
+    <value>Nicht unterstütztes Dateiformat</value>
+  </data>
+  <data name="FileOpenError" xml:space="preserve">
+    <value>Kann Datei nicht öffnen</value>
+  </data>
+  <data name="FormatError" xml:space="preserve">
+    <value>Nicht unterstütztes Sample Format</value>
+  </data>
+  <data name="FreqError" xml:space="preserve">
+    <value>Ungültige Samplingrate</value>
+  </data>
+  <data name="HandleError" xml:space="preserve">
+    <value>Ungültiges Handle</value>
+  </data>
+  <data name="IllParamError" xml:space="preserve">
+    <value>Ungültiger Parameter angegeben</value>
+  </data>
+  <data name="IllTypeError" xml:space="preserve">
+    <value>Ungültiger Typ angegeben</value>
+  </data>
+  <data name="MemError" xml:space="preserve">
+    <value>Speicherfehler</value>
+  </data>
+  <data name="No3DError" xml:space="preserve">
+    <value>Keine 3D-Unterstützung</value>
+  </data>
+  <data name="NoChanError" xml:space="preserve">
+    <value>Kann keinen freien Kanal finden</value>
+  </data>
+  <data name="NoEaxError" xml:space="preserve">
+    <value>Keine EAX-Unterstützung</value>
+  </data>
+  <data name="NoFxError" xml:space="preserve">
+    <value>Effekte sind nicht verfügbar</value>
+  </data>
+  <data name="NoHwError" xml:space="preserve">
+    <value>Keine Hardwarestimmen verfügbar</value>
+  </data>
+  <data name="NoPlayError" xml:space="preserve">
+    <value>Wird nicht abgespielt</value>
+  </data>
+  <data name="NotAudioError" xml:space="preserve">
+    <value>Kein Audio Track</value>
+  </data>
+  <data name="NotFileError" xml:space="preserve">
+    <value>Der Datenstrom ist kein Dateistrom</value>
+  </data>
+  <data name="PlayingError" xml:space="preserve">
+    <value>Kanal wird abgespielt</value>
+  </data>
+  <data name="PositionError" xml:space="preserve">
+    <value>Ungültige Abspielposition</value>
+  </data>
+  <data name="SpeakerError" xml:space="preserve">
+    <value>Lautsprecher nicht verfügbar</value>
+  </data>
+  <data name="UnexpectedError" xml:space="preserve">
+    <value>Unerwarteter Fehler: {0}</value>
+  </data>
+  <data name="FilePlayingError" xml:space="preserve">
+    <value>Fehler beim Abspielen der Datei: {0}</value>
+  </data>
+  <data name="SetVolumeError" xml:space="preserve">
+    <value>Fehler beim Setzen der Lautstärke: {0}</value>
   </data>
 </root>

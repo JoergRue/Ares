@@ -1,4 +1,23 @@
-﻿using System;
+﻿/*
+ Copyright (c) 2010 [Joerg Ruedenauer]
+ 
+ This file is part of Ares.
+
+ Ares is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+ Ares is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Ares; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -11,10 +30,26 @@ namespace Ares.Editor
 {
     public partial class MainForm : Form
     {
+        private Ares.Ipc.ApplicationInstance m_Instance;
 
         public MainForm()
         {
+            String projectName = Environment.GetCommandLineArgs().Length > 1 ? Environment.GetCommandLineArgs()[1] : String.Empty;
+            if (String.IsNullOrEmpty(projectName))
+            {
+                m_Instance = Ares.Ipc.ApplicationInstance.CreateOrActivate("Ares.Editor");
+            }
+            else
+            {
+                m_Instance = Ares.Ipc.ApplicationInstance.CreateOrActivate("Ares.Editor", projectName);
+            }
+            if (m_Instance == null)
+            {
+                throw new Ares.Ipc.ApplicationAlreadyStartedException();
+            }
             InitializeComponent();
+            m_Instance.SetWindowHandle(Handle);
+            m_Instance.ProjectOpenAction = (projectName2, projectPath) => OpenProjectFromRequest(projectName2, projectPath);
             Timer t = new Timer();
             t.Interval = 150;
             t.Tick += new EventHandler((o, args) =>
@@ -46,6 +81,7 @@ namespace Ares.Editor
                     projectExplorerToolStripMenuItem.Checked = !m_ProjectExplorer.IsHidden;
                     Actions.Actions.Instance.UpdateGUI = UpdateGUI;
                     Actions.Playing.Instance.SetDirectories(Ares.Settings.Settings.Instance.MusicDirectory, Ares.Settings.Settings.Instance.SoundDirectory);
+                    Actions.Playing.Instance.ErrorHandling = new Actions.Playing.ErrorHandler(this, HandlePlayingError);
                     UpdateGUI();
                     fileSystemWatcher1.Path = m_BasicSettings.GetSettingsDir();
                     if (Ares.Settings.Settings.Instance.RecentFiles.GetFiles().Count > 0)
@@ -54,6 +90,16 @@ namespace Ares.Editor
                     }
                 });
             t.Start();
+        }
+
+        private void HandlePlayingError(Ares.Data.IElement element, String errorMessage)
+        {
+            if (element is Ares.Data.IFileElement)
+            {
+                errorMessage += "\n";
+                errorMessage += String.Format(StringResources.FilePlayed, (element as Ares.Data.IFileElement).FilePath);
+            }
+            MessageBox.Show(this, errorMessage, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private WeifenLuo.WinFormsUI.Docking.IDockContent DeserializeDockContent(string persistString)
@@ -276,6 +322,7 @@ namespace Ares.Editor
                 Ares.Data.DataModule.ProjectManager.UnloadProject(m_CurrentProject);
                 m_CurrentProject = null;
                 Actions.Actions.Instance.Clear();
+                m_Instance.SetLoadedProject("-");
             }
             
             return true;
@@ -368,6 +415,21 @@ namespace Ares.Editor
             OpenProject(openFileDialog.FileName);
         }
 
+        private void OpenProjectFromRequest(String projectName, String projectPath)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new MethodInvoker(() => OpenProjectFromRequest(projectName, projectPath)));
+            }
+            else
+            {
+                if (MessageBox.Show(this, String.Format(StringResources.OpenProjectQuestion, projectName), StringResources.Ares, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
+                {
+                    OpenProject(projectPath);
+                }
+            }
+        }
+
         private void OpenProject(String filePath)
         {
             if (!UnloadProject())
@@ -385,6 +447,7 @@ namespace Ares.Editor
             }
 
             m_ProjectExplorer.SetProject(m_CurrentProject);
+            m_Instance.SetLoadedProject(filePath);
             UpdateGUI();
         }
 
@@ -509,10 +572,10 @@ namespace Ares.Editor
             if (!SaveCurrentProject())
                 return;
             String commandLine = "Ares.Player.exe";
-            String arguments = m_CurrentProject != null ? "\"" + m_CurrentProject.FileName + "\"" : String.Empty;
             try
             {
-                System.Diagnostics.Process.Start(commandLine, arguments);
+                Ares.Ipc.ApplicationInstance.CreateOrActivate("Ares.Player", commandLine,
+                    m_CurrentProject != null ? m_CurrentProject.Title : "", m_CurrentProject != null ? m_CurrentProject.FileName : "");
             }
             catch (Exception ex)
             {

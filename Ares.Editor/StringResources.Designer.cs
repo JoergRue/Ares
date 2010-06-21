@@ -97,6 +97,15 @@ namespace Ares.Editor {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Error at file: {0} ähnelt.
+        /// </summary>
+        internal static string FilePlayed {
+            get {
+                return ResourceManager.GetString("FilePlayed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Error opening the project: {0} ähnelt.
         /// </summary>
         internal static string LoadError {
@@ -211,6 +220,15 @@ namespace Ares.Editor {
         internal static string NoSettings {
             get {
                 return ResourceManager.GetString("NoSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Open project {0}? ähnelt.
+        /// </summary>
+        internal static string OpenProjectQuestion {
+            get {
+                return ResourceManager.GetString("OpenProjectQuestion", resourceCulture);
             }
         }
         

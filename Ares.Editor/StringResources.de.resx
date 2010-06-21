@@ -129,6 +129,9 @@
   <data name="FileExplorerTitle" xml:space="preserve">
     <value>{0}-Explorer</value>
   </data>
+  <data name="FlePlayed" xml:space="preserve">
+    <value>Fehler bei Datei: {0}</value>
+  </data>
   <data name="LoadError" xml:space="preserve">
     <value>Fehler beim Laden des Projektes: {0}</value>
   </data>
@@ -168,6 +171,9 @@
   <data name="NoSettings" xml:space="preserve">
     <value>Dies scheint der erste Start des Editors zu sein.
 Sie sollten zuerst ein paar Einstellungen vornehmen.</value>
+  </data>
+  <data name="OpenProjectQuestion" xml:space="preserve">
+    <value>Projekt {0} öffnen?</value>
   </data>
   <data name="PlayerStartError" xml:space="preserve">
     <value>Konnte Player nicht starten. Grund:

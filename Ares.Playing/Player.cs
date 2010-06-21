@@ -1,4 +1,23 @@
-﻿using System;
+﻿/*
+ Copyright (c) 2010 [Joerg Ruedenauer]
+ 
+ This file is part of Ares.
+
+ Ares is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+ Ares is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Ares; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using Ares.Data;
@@ -38,6 +57,85 @@ namespace Ares.Playing
             String dir = (SoundFileType == Playing.SoundFileType.Music) ? PlayingModule.ThePlayer.MusicPath : PlayingModule.ThePlayer.SoundPath;
             Path = System.IO.Path.Combine(dir, element.FilePath);
             Volume = SoundFileType == Playing.SoundFileType.Music ? PlayingModule.ThePlayer.MusicVolume : PlayingModule.ThePlayer.SoundVolume;
+        }
+    }
+
+    class ErrorHandling
+    {
+        public static void BassErrorOccurred(int elementID, String msgFormat)
+        {
+            Un4seen.Bass.BASSError error = Un4seen.Bass.Bass.BASS_ErrorGetCode();
+            String msg = GetMsgForError(error);
+            String message = String.Format(msgFormat, msg);
+            if (PlayingModule.ThePlayer.ElementCallbacks != null)
+            {
+                PlayingModule.ThePlayer.ElementCallbacks.ErrorOccurred(elementID, message);
+            }
+            else if (PlayingModule.ThePlayer.ProjectCallbacks != null)
+            {
+                PlayingModule.ThePlayer.ProjectCallbacks.ErrorOccurred(elementID, message);
+            }
+        }
+
+        private static String GetMsgForError(Un4seen.Bass.BASSError error)
+        {
+            switch (error)
+            {
+                case Un4seen.Bass.BASSError.BASS_ERROR_MEM:
+                    return StringResources.MemError;
+                case Un4seen.Bass.BASSError.BASS_ERROR_FILEOPEN:
+                    return StringResources.FileOpenError;
+                case Un4seen.Bass.BASSError.BASS_ERROR_DRIVER:
+                    return StringResources.DriverError;
+                case Un4seen.Bass.BASSError.BASS_ERROR_BUFLOST:
+                    return StringResources.BufLostError;
+                case Un4seen.Bass.BASSError.BASS_ERROR_HANDLE:
+                    return StringResources.HandleError;
+                case Un4seen.Bass.BASSError.BASS_ERROR_FORMAT:
+                    return StringResources.FormatError;
+                case Un4seen.Bass.BASSError.BASS_ERROR_POSITION:
+                    return StringResources.PositionError;
+                case Un4seen.Bass.BASSError.BASS_ERROR_NOTAUDIO:
+                    return StringResources.NotAudioError;
+                case Un4seen.Bass.BASSError.BASS_ERROR_NOCHAN:
+                    return StringResources.NoChanError;
+                case Un4seen.Bass.BASSError.BASS_ERROR_ILLTYPE:
+                    return StringResources.IllTypeError;
+                case Un4seen.Bass.BASSError.BASS_ERROR_ILLPARAM:
+                    return StringResources.IllParamError;
+                case Un4seen.Bass.BASSError.BASS_ERROR_NO3D:
+                    return StringResources.No3DError;
+                case Un4seen.Bass.BASSError.BASS_ERROR_NOEAX:
+                    return StringResources.NoEaxError;
+                case Un4seen.Bass.BASSError.BASS_ERROR_DEVICE:
+                    return StringResources.DeviceError;
+                case Un4seen.Bass.BASSError.BASS_ERROR_FREQ:
+                    return StringResources.FreqError;
+                case Un4seen.Bass.BASSError.BASS_ERROR_NOTFILE:
+                    return StringResources.NotFileError;
+                case Un4seen.Bass.BASSError.BASS_ERROR_NOHW:
+                    return StringResources.NoHwError;
+                case Un4seen.Bass.BASSError.BASS_ERROR_CREATE:
+                    return StringResources.CreateError;
+                case Un4seen.Bass.BASSError.BASS_ERROR_NOFX:
+                    return StringResources.NoFxError;
+                case Un4seen.Bass.BASSError.BASS_ERROR_NOPLAY:
+                    return StringResources.NoPlayError;
+                case Un4seen.Bass.BASSError.BASS_ERROR_PLAYING:
+                    return StringResources.PlayingError;
+                case Un4seen.Bass.BASSError.BASS_ERROR_DX:
+                    return StringResources.DxError;
+                case Un4seen.Bass.BASSError.BASS_ERROR_FILEFORM:
+                    return StringResources.FileformError;
+                case Un4seen.Bass.BASSError.BASS_ERROR_SPEAKER:
+                    return StringResources.SpeakerError;
+                case Un4seen.Bass.BASSError.BASS_ERROR_CODEC:
+                    return StringResources.CodecError;
+                case Un4seen.Bass.BASSError.BASS_ERROR_ENDED:
+                    return StringResources.EndedError;
+                default:
+                    return String.Format(StringResources.UnexpectedError, error);
+            }
         }
     }
 
@@ -862,7 +960,10 @@ namespace Ares.Playing
             }
             else
             {
-                Un4seen.Bass.Bass.BASS_SetVolume(value / 100.0f);
+                if (!Un4seen.Bass.Bass.BASS_SetVolume(value / 100.0f))
+                {
+                    ErrorHandling.BassErrorOccurred(-1, StringResources.SetVolumeError);
+                }
             }
         }
 

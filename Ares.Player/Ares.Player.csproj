@@ -57,6 +57,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Messages.cs" />
+    <Compile Include="MessagesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MessagesForm.Designer.cs">
+      <DependentUpon>MessagesForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Player.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -76,6 +83,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>StringResources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="MessagesForm.de.resx">
+      <DependentUpon>MessagesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MessagesForm.resx">
+      <DependentUpon>MessagesForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Player.resx">
       <DependentUpon>Player.cs</DependentUpon>
     </EmbeddedResource>
@@ -114,6 +127,10 @@
       <Project>{F64D6AF3-3543-47F0-A7B8-0336750B09C3}</Project>
       <Name>Ares.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Ares.Ipc\Ares.Ipc.csproj">
+      <Project>{07BE1372-C1D2-4E2A-9678-DC27BE0D9FF0}</Project>
+      <Name>Ares.Ipc</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Ares.Playing\Ares.Playing.csproj">
       <Project>{6C55F933-0F49-489C-AFF4-E0E0A8581E42}</Project>
       <Name>Ares.Playing</Name>
@@ -122,6 +139,18 @@
       <Project>{E99E229E-2D6A-4C49-8E6F-C06E3F346606}</Project>
       <Name>Ares.Settings</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gear.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\eventlogError.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\eventlogInfo.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\eventlogWarn.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

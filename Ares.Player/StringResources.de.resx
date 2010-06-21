@@ -126,6 +126,10 @@
   <data name="BassInitFail" xml:space="preserve">
     <value>Fehler: Konnte BASS nicht initialisieren!</value>
   </data>
+  <data name="EditorStartError" xml:space="preserve">
+    <value>Konnte Editor nicht starten. Grund:
+{0}</value>
+  </data>
   <data name="LoadError" xml:space="preserve">
     <value>Fehler beim Laden des Projektes: {0}</value>
   </data>
@@ -135,6 +139,24 @@
   <data name="NoSettings" xml:space="preserve">
     <value>Dies scheint der erste Start des Players zu sein.
 Sie sollten zuerst ein paar Einstellungen vornehmen.</value>
+  </data>
+  <data name="OpenProject" xml:space="preserve">
+    <value>Projekt öffnen ...</value>
+  </data>
+  <data name="OpenProjectQuestion" xml:space="preserve">
+    <value>Projekt {0} öffnen?</value>
+  </data>
+  <data name="ShowInfo" xml:space="preserve">
+    <value>Über Ares ...</value>
+  </data>
+  <data name="ShowMessages" xml:space="preserve">
+    <value>Nachrichten ...</value>
+  </data>
+  <data name="ShowSettings" xml:space="preserve">
+    <value>Einstellungen ...</value>
+  </data>
+  <data name="StartEditor" xml:space="preserve">
+    <value>Editor öffnen</value>
   </data>
   <data name="WriteSettingsError" xml:space="preserve">
     <value>Einstellungen konnten nicht gespeichert werden. Grund:
