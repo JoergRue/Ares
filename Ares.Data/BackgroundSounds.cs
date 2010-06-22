@@ -90,15 +90,15 @@ namespace Ares.Data
 
         #region IRepeatableElement Members
 
-        public bool Repeat
+        public int RepeatCount
         {
             get
             {
-                return ParallelElement.Repeat;
+                return ParallelElement.RepeatCount;
             }
             set
             {
-                ParallelElement.Repeat = value;
+                ParallelElement.RepeatCount = value;
             }
         }
 
@@ -177,7 +177,7 @@ namespace Ares.Data
             BackgroundSoundChoice choice = new BackgroundSoundChoice(
                 DataModule.TheElementFactory.GetNextID(), title);
             IParallelElement parallelElement = m_Container.AddElement(choice);
-            parallelElement.Repeat = true;
+            parallelElement.RepeatCount = -1;
             choice.ParallelElement = parallelElement;
             m_Elements.Add(choice);
             return choice;
@@ -233,7 +233,7 @@ namespace Ares.Data
         {
             foreach (IBackgroundSoundChoice choice in m_Elements)
             {
-                if (choice.Repeat) return true;
+                if (choice.RepeatCount == -1) return true;
             }
             return false;
         }
@@ -265,7 +265,7 @@ namespace Ares.Data
                 writer.WriteAttributeString("RandomStartDelay", choice.MaximumRandomStartDelay.TotalMilliseconds.ToString(System.Globalization.CultureInfo.InvariantCulture));
                 writer.WriteAttributeString("FixedInterDelay", choice.FixedIntermediateDelay.TotalMilliseconds.ToString(System.Globalization.CultureInfo.InvariantCulture));
                 writer.WriteAttributeString("RandomInterDelay", choice.MaximumRandomIntermediateDelay.TotalMilliseconds.ToString(System.Globalization.CultureInfo.InvariantCulture));
-                writer.WriteAttributeString("Repeat", choice.Repeat ? "true" : "false");
+                writer.WriteAttributeString("RepeatCount", choice.RepeatCount.ToString(System.Globalization.CultureInfo.InvariantCulture));
                 writer.WriteEndElement();
             }
             writer.WriteEndElement();
@@ -295,7 +295,7 @@ namespace Ares.Data
                         {
                             BackgroundSoundChoice choice = new BackgroundSoundChoice(reader);
                             IParallelElement parallelElement = m_Container.AddElement(choice);
-                            parallelElement.Repeat = true;
+                            parallelElement.RepeatCount = -1;
                             choice.ParallelElement = parallelElement;
                             if (reader.IsStartElement("ParallelElementData"))
                             {
@@ -303,7 +303,7 @@ namespace Ares.Data
                                 parallelElement.MaximumRandomStartDelay = TimeSpan.FromMilliseconds(reader.GetIntegerAttribute("RandomStartDelay"));
                                 parallelElement.FixedIntermediateDelay = TimeSpan.FromMilliseconds(reader.GetIntegerAttribute("FixedInterDelay"));
                                 parallelElement.MaximumRandomIntermediateDelay = TimeSpan.FromMilliseconds(reader.GetIntegerAttribute("RandomInterDelay"));
-                                parallelElement.Repeat = reader.GetBooleanAttribute("Repeat");
+                                parallelElement.RepeatCount = reader.GetIntegerAttribute("RepeatCount");
                                 if (reader.IsEmptyElement)
                                 {
                                     reader.Read();

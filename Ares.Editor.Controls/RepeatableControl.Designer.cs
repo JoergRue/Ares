@@ -51,8 +51,11 @@ namespace Ares.Editor.ElementEditors
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RepeatableControl));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.loopButton = new System.Windows.Forms.RadioButton();
+            this.label4 = new System.Windows.Forms.Label();
+            this.repeatCountUpDown = new System.Windows.Forms.NumericUpDown();
+            this.noLoopButton = new System.Windows.Forms.RadioButton();
             this.label1 = new System.Windows.Forms.Label();
-            this.repeatBox = new System.Windows.Forms.CheckBox();
             this.lastLabel = new System.Windows.Forms.Label();
             this.maxDelayUpDown = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
@@ -60,14 +63,18 @@ namespace Ares.Editor.ElementEditors
             this.fixedDelayUpDown = new System.Windows.Forms.NumericUpDown();
             this.fixedLabel = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.repeatCountUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.maxDelayUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fixedDelayUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.loopButton);
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.repeatCountUpDown);
+            this.groupBox1.Controls.Add(this.noLoopButton);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.repeatBox);
             this.groupBox1.Controls.Add(this.lastLabel);
             this.groupBox1.Controls.Add(this.maxDelayUpDown);
             this.groupBox1.Controls.Add(this.label3);
@@ -79,19 +86,56 @@ namespace Ares.Editor.ElementEditors
             this.groupBox1.TabStop = false;
             this.groupBox1.UseCompatibleTextRendering = true;
             // 
+            // loopButton
+            // 
+            resources.ApplyResources(this.loopButton, "loopButton");
+            this.loopButton.Name = "loopButton";
+            this.loopButton.TabStop = true;
+            this.loopButton.UseCompatibleTextRendering = true;
+            this.loopButton.UseVisualStyleBackColor = true;
+            this.loopButton.CheckedChanged += new System.EventHandler(this.loopButton_CheckedChanged);
+            // 
+            // label4
+            // 
+            resources.ApplyResources(this.label4, "label4");
+            this.label4.Name = "label4";
+            this.label4.UseCompatibleTextRendering = true;
+            // 
+            // repeatCountUpDown
+            // 
+            resources.ApplyResources(this.repeatCountUpDown, "repeatCountUpDown");
+            this.repeatCountUpDown.Maximum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            0});
+            this.repeatCountUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.repeatCountUpDown.Name = "repeatCountUpDown";
+            this.repeatCountUpDown.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.repeatCountUpDown.ValueChanged += new System.EventHandler(this.repeatCountUpDown_ValueChanged);
+            // 
+            // noLoopButton
+            // 
+            resources.ApplyResources(this.noLoopButton, "noLoopButton");
+            this.noLoopButton.Name = "noLoopButton";
+            this.noLoopButton.TabStop = true;
+            this.noLoopButton.UseCompatibleTextRendering = true;
+            this.noLoopButton.UseVisualStyleBackColor = true;
+            this.noLoopButton.CheckedChanged += new System.EventHandler(this.noLoopButton_CheckedChanged);
+            // 
             // label1
             // 
             resources.ApplyResources(this.label1, "label1");
             this.label1.Name = "label1";
             this.label1.UseCompatibleTextRendering = true;
-            // 
-            // repeatBox
-            // 
-            resources.ApplyResources(this.repeatBox, "repeatBox");
-            this.repeatBox.Name = "repeatBox";
-            this.repeatBox.UseCompatibleTextRendering = true;
-            this.repeatBox.UseVisualStyleBackColor = true;
-            this.repeatBox.CheckedChanged += new System.EventHandler(this.repeatBox_CheckedStateChanged);
             // 
             // lastLabel
             // 
@@ -157,6 +201,7 @@ namespace Ares.Editor.ElementEditors
             this.Name = "RepeatableControl";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.repeatCountUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.maxDelayUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fixedDelayUpDown)).EndInit();
             this.ResumeLayout(false);
@@ -173,6 +218,9 @@ namespace Ares.Editor.ElementEditors
         private System.Windows.Forms.NumericUpDown fixedDelayUpDown;
         private System.Windows.Forms.Label fixedLabel;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.CheckBox repeatBox;
+        private System.Windows.Forms.RadioButton loopButton;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.NumericUpDown repeatCountUpDown;
+        private System.Windows.Forms.RadioButton noLoopButton;
     }
 }

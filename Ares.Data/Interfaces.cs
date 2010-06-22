@@ -186,9 +186,9 @@ namespace Ares.Data
     public interface IRepeatableElement : IElement
     {
         /// <summary>
-        /// Whether the element shall be repeated.
+        /// How many times the element shall be played. -1 for infinite. 0 is not allowed.
         /// </summary>
-        bool Repeat { get; set; }
+        int RepeatCount { get; set; }
         /// <summary>
         /// Fixed delay before repeating the element.
         /// </summary>

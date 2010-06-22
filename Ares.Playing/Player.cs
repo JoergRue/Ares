@@ -359,7 +359,8 @@ namespace Ares.Playing
             ++m_Index;
             if (m_Index >= m_Container.GetElements().Count)
             {
-                if (m_Container.Repeat)
+                ++m_RepeatCount;
+                if (m_Container.RepeatCount == -1 || m_RepeatCount < m_Container.RepeatCount)
                 {
                     Monitor.Exit(syncObject);
                     Repeat(m_Container, m_Container);
@@ -392,6 +393,7 @@ namespace Ares.Playing
             : base(stoppedEvent, client)
         {
             m_Container = list;
+            m_RepeatCount = 0;
         }
 
         public void Start()
@@ -408,6 +410,7 @@ namespace Ares.Playing
 
         private ISequentialBackgroundMusicList m_Container;
         private int m_Index;
+        private int m_RepeatCount;
     }
 
     class RandomMusicPlayer : MusicPlayer, IMusicPlayer
@@ -421,7 +424,7 @@ namespace Ares.Playing
         public override void  PlayNext()
         {
             Monitor.Enter(syncObject);
-            if (Client.Stopped || !m_Container.Repeat)
+            if (Client.Stopped || (m_Container.RepeatCount != -1 && m_Container.RepeatCount <= ++m_RepeatCount))
             {
                 Monitor.Exit(syncObject);
                 Client.SubPlayerFinished();
@@ -467,11 +470,13 @@ namespace Ares.Playing
             m_Container = list;
             m_LastElementsStack = new List<IChoiceElement>();
             m_GoBack = false;
+            m_RepeatCount = 0;
         }
 
         private IRandomBackgroundMusicList m_Container;
         private List<IChoiceElement> m_LastElementsStack;
         private bool m_GoBack;
+        private int m_RepeatCount;
     }
 
     class ElementPlayer : ElementPlayerBase, IElementPlayerClient
@@ -587,16 +592,14 @@ namespace Ares.Playing
             else
             {
                 StackElement element = m_ElementStack[m_ElementStack.Count - 1];
-                bool firstPlay = element.FirstPlay;
+                bool firstPlay = element.PlayCount == 0;
+                ++element.PlayCount;
                 IRepeatableElement repeatable = element.Element as IRepeatableElement;
-                if (repeatable == null || !repeatable.Repeat)
+                IMusicList musicList = element.Element as IMusicList;
+                if (musicList != null || repeatable == null || (repeatable.RepeatCount != -1 && element.PlayCount >= repeatable.RepeatCount))
                 {
-                    // will not be played again
+                    // will not be played again; music lists are repeated inside their own players
                     m_ElementStack.RemoveAt(m_ElementStack.Count - 1);
-                }
-                else
-                {
-                    element.FirstPlay = false;
                 }
                 Monitor.Exit(syncObject);
                 if (firstPlay)
@@ -629,12 +632,12 @@ namespace Ares.Playing
         private class StackElement
         {
             public IElement Element { get; set; }
-            public bool FirstPlay { get; set; }
+            public int PlayCount { get; set; }
 
             public StackElement(IElement element)
             {
                 Element = element;
-                FirstPlay = true;
+                PlayCount = 0;
             }
         }
 

@@ -117,145 +117,145 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="&gt;&gt;setsMusicBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="setsMusicBox.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 13</value>
-  </data>
-  <data name="setsMusicBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 19</value>
-  </data>
-  <data name="musicVolumeBar.Size" type="System.Drawing.Size, System.Drawing">
-    <value>122, 45</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="groupBox1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="&gt;&gt;musicVolumeBar.Name" xml:space="preserve">
-    <value>musicVolumeBar</value>
-  </data>
-  <data name="soundVolumeBar.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.UserControl, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;groupBox1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;soundVolumeBar.Parent" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="&gt;&gt;setsMusicBox.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>297, 96</value>
+  <data name="soundVolumeBar.Location" type="System.Drawing.Point, System.Drawing">
+    <value>168, 46</value>
   </data>
   <data name="soundVolumeBar.Size" type="System.Drawing.Size, System.Drawing">
     <value>121, 45</value>
   </data>
-  <data name="setsSoundBox.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
+  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="soundVolumeBar.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
   </data>
-  <data name="&gt;&gt;musicVolumeBar.Type" xml:space="preserve">
+  <data name="&gt;&gt;soundVolumeBar.Name" xml:space="preserve">
+    <value>soundVolumeBar</value>
+  </data>
+  <data name="&gt;&gt;soundVolumeBar.Type" xml:space="preserve">
     <value>System.Windows.Forms.TrackBar, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="setsSoundBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 46</value>
-  </data>
-  <data name="&gt;&gt;groupBox1.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;musicVolumeBar.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="setsMusicBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>155, 18</value>
-  </data>
-  <data name="setsMusicBox.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;setsSoundBox.Name" xml:space="preserve">
-    <value>setsSoundBox</value>
-  </data>
-  <data name="&gt;&gt;groupBox1.Name" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;setsSoundBox.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;musicVolumeBar.Parent" xml:space="preserve">
+  <data name="&gt;&gt;soundVolumeBar.Parent" xml:space="preserve">
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;soundVolumeBar.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;setsSoundBox.Parent" xml:space="preserve">
-    <value>groupBox1</value>
+  <data name="setsSoundBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
-  <data name="groupBox1.Text" xml:space="preserve">
-    <value>Volume</value>
-  </data>
-  <data name="musicVolumeBar.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;groupBox1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>VolumeControl</value>
+  <data name="setsSoundBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 46</value>
   </data>
   <data name="setsSoundBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>156, 18</value>
   </data>
-  <data name="&gt;&gt;soundVolumeBar.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TrackBar, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="setsMusicBox.Text" xml:space="preserve">
-    <value>Sets global music volume:</value>
-  </data>
-  <data name="&gt;&gt;setsMusicBox.Parent" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="setsSoundBox.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="setsSoundBox.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
   </data>
   <data name="setsSoundBox.Text" xml:space="preserve">
     <value>Sets global sound volume:</value>
   </data>
-  <data name="musicVolumeBar.Location" type="System.Drawing.Point, System.Drawing">
-    <value>167, 19</value>
-  </data>
-  <data name="&gt;&gt;setsMusicBox.Name" xml:space="preserve">
-    <value>setsMusicBox</value>
-  </data>
-  <data name="&gt;&gt;soundVolumeBar.Name" xml:space="preserve">
-    <value>soundVolumeBar</value>
-  </data>
-  <data name="soundVolumeBar.Location" type="System.Drawing.Point, System.Drawing">
-    <value>168, 46</value>
-  </data>
-  <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>297, 96</value>
+  <data name="&gt;&gt;setsSoundBox.Name" xml:space="preserve">
+    <value>setsSoundBox</value>
   </data>
   <data name="&gt;&gt;setsSoundBox.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;setsSoundBox.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;setsSoundBox.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="musicVolumeBar.Location" type="System.Drawing.Point, System.Drawing">
+    <value>167, 19</value>
+  </data>
+  <data name="musicVolumeBar.Size" type="System.Drawing.Size, System.Drawing">
+    <value>122, 45</value>
+  </data>
+  <data name="musicVolumeBar.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;musicVolumeBar.Name" xml:space="preserve">
+    <value>musicVolumeBar</value>
+  </data>
+  <data name="&gt;&gt;musicVolumeBar.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TrackBar, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;musicVolumeBar.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;musicVolumeBar.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="setsMusicBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="setsMusicBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 19</value>
+  </data>
+  <data name="setsMusicBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>155, 18</value>
+  </data>
+  <data name="setsMusicBox.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="setsMusicBox.Text" xml:space="preserve">
+    <value>Sets global music volume:</value>
+  </data>
+  <data name="&gt;&gt;setsMusicBox.Name" xml:space="preserve">
+    <value>setsMusicBox</value>
+  </data>
+  <data name="&gt;&gt;setsMusicBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;setsMusicBox.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;setsMusicBox.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="groupBox1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>297, 96</value>
+  </data>
+  <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="groupBox1.Text" xml:space="preserve">
+    <value>Volume</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.Name" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 13</value>
+  </data>
+  <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
+    <value>297, 96</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>VolumeControl</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.UserControl, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

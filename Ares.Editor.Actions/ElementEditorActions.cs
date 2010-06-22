@@ -138,13 +138,13 @@ namespace Ares.Editor.Actions
 
     public class RepeatableElementChangeAction : Action
     {
-        public RepeatableElementChangeAction(IRepeatableElement element, bool repeat, int fixedDelay, int maxDelay)
+        public RepeatableElementChangeAction(IRepeatableElement element, int repeatCount, int fixedDelay, int maxDelay)
         {
             m_Element = element;
-            m_OldRepeat = element.Repeat;
+            m_OldRepeatCount = element.RepeatCount;
             m_OldFixed = element.FixedIntermediateDelay;
             m_OldMax = element.MaximumRandomIntermediateDelay;
-            m_NewRepeat = repeat;
+            m_NewRepeatCount = repeatCount;
             m_NewFixed = TimeSpan.FromMilliseconds(fixedDelay);
             m_NewMax = TimeSpan.FromMilliseconds(maxDelay);
         }
@@ -157,16 +157,16 @@ namespace Ares.Editor.Actions
             }
         }
 
-        public void SetData(bool repeat, int fixedDelay, int maxDelay)
+        public void SetData(int repeatCount, int fixedDelay, int maxDelay)
         {
             m_NewFixed = TimeSpan.FromMilliseconds(fixedDelay);
             m_NewMax = TimeSpan.FromMilliseconds(maxDelay);
-            m_NewRepeat = repeat;
+            m_NewRepeatCount = repeatCount;
         }
 
         public override void Do()
         {
-            m_Element.Repeat = m_NewRepeat;
+            m_Element.RepeatCount = m_NewRepeatCount;
             m_Element.FixedIntermediateDelay = m_NewFixed;
             m_Element.MaximumRandomIntermediateDelay = m_NewMax;
             ElementChanges.Instance.ElementChanged(m_Element.Id);
@@ -174,15 +174,15 @@ namespace Ares.Editor.Actions
 
         public override void Undo()
         {
-            m_Element.Repeat = m_OldRepeat;
+            m_Element.RepeatCount = m_OldRepeatCount;
             m_Element.FixedIntermediateDelay = m_OldFixed;
             m_Element.MaximumRandomIntermediateDelay = m_OldMax;
             ElementChanges.Instance.ElementChanged(m_Element.Id);
         }
 
         private IRepeatableElement m_Element;
-        private bool m_OldRepeat;
-        private bool m_NewRepeat;
+        private int m_OldRepeatCount;
+        private int m_NewRepeatCount;
 
         private TimeSpan m_OldFixed;
         private TimeSpan m_NewFixed;

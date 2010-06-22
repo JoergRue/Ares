@@ -333,7 +333,7 @@ namespace Ares.Editor
         {
             if (m_CurrentProject != null && Actions.Actions.Instance.IsChanged)
             {
-                DialogResult result = MessageBox.Show(this, StringResources.ProjectChanged, StringResources.Ares, MessageBoxButtons.YesNoCancel);
+                DialogResult result = MessageBox.Show(this, StringResources.ProjectChanged, StringResources.Ares, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                 if (result == System.Windows.Forms.DialogResult.Yes)
                 {
                     return SaveProject();

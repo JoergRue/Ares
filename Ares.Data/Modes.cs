@@ -53,7 +53,7 @@ namespace Ares.Data
             IRepeatableElement repeatable = StartElement as IRepeatableElement;
             if (repeatable != null)
             {
-                return repeatable.Repeat;
+                return repeatable.RepeatCount == -1;
             }
             ICompositeElement composite = StartElement as ICompositeElement;
             if (composite != null)

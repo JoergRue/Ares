@@ -53,17 +53,17 @@ namespace Ares.Editor.ElementEditors
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.stopButton = new System.Windows.Forms.Button();
             this.playButton = new System.Windows.Forms.Button();
+            this.volumeControl = new Ares.Editor.Controls.VolumeControl();
             this.delayableControl = new Ares.Editor.ElementEditors.DelayableControl();
             this.repeatableControl = new Ares.Editor.ElementEditors.RepeatableControl();
             this.choiceContainerControl = new Ares.Editor.ElementEditorControls.ChoiceContainerControl();
-            this.volumeControl = new Ares.Editor.Controls.VolumeControl();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
             // 
-            resources.ApplyResources(this.label1, "label1");
             this.label1.AllowDrop = true;
+            resources.ApplyResources(this.label1, "label1");
             this.label1.ForeColor = System.Drawing.SystemColors.InactiveCaption;
             this.label1.Name = "label1";
             this.label1.UseCompatibleTextRendering = true;
@@ -92,30 +92,12 @@ namespace Ares.Editor.ElementEditors
             // 
             // playButton
             // 
-            resources.ApplyResources(this.playButton, "playButton");
             this.playButton.Image = global::Ares.Editor.ImageResources.RunSmall;
+            resources.ApplyResources(this.playButton, "playButton");
             this.playButton.Name = "playButton";
             this.playButton.UseCompatibleTextRendering = true;
             this.playButton.UseVisualStyleBackColor = true;
             this.playButton.Click += new System.EventHandler(this.playButton_Click);
-            // 
-            // delayableControl
-            // 
-            resources.ApplyResources(this.delayableControl, "delayableControl");
-            this.delayableControl.BackColor = System.Drawing.SystemColors.Control;
-            this.delayableControl.MaximumSize = new System.Drawing.Size(346, 57);
-            this.delayableControl.Name = "delayableControl";
-            // 
-            // repeatableControl
-            // 
-            resources.ApplyResources(this.repeatableControl, "repeatableControl");
-            this.repeatableControl.MaximumSize = new System.Drawing.Size(346, 96);
-            this.repeatableControl.Name = "repeatableControl";
-            // 
-            // choiceContainerControl
-            // 
-            resources.ApplyResources(this.choiceContainerControl, "choiceContainerControl");
-            this.choiceContainerControl.Name = "choiceContainerControl";
             // 
             // volumeControl
             // 
@@ -123,10 +105,27 @@ namespace Ares.Editor.ElementEditors
             this.volumeControl.MinimumSize = new System.Drawing.Size(297, 83);
             this.volumeControl.Name = "volumeControl";
             // 
+            // delayableControl
+            // 
+            this.delayableControl.BackColor = System.Drawing.SystemColors.Control;
+            resources.ApplyResources(this.delayableControl, "delayableControl");
+            this.delayableControl.MaximumSize = new System.Drawing.Size(346, 57);
+            this.delayableControl.Name = "delayableControl";
+            // 
+            // repeatableControl
+            // 
+            resources.ApplyResources(this.repeatableControl, "repeatableControl");
+            this.repeatableControl.Name = "repeatableControl";
+            // 
+            // choiceContainerControl
+            // 
+            resources.ApplyResources(this.choiceContainerControl, "choiceContainerControl");
+            this.choiceContainerControl.Name = "choiceContainerControl";
+            // 
             // RandomPlaylistOrBGSoundChoiceEditor
             // 
-            resources.ApplyResources(this, "$this");
             this.AllowDrop = true;
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.volumeControl);
             this.Controls.Add(this.groupBox1);

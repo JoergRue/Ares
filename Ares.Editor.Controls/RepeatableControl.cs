@@ -49,11 +49,12 @@ namespace Ares.Editor.ElementEditors
             if (listen && changeType == Actions.ElementChanges.ChangeType.Changed)
             {
                 listen = false;
-                repeatBox.Checked = m_Element.Repeat;
+                loopButton.Checked = m_Element.RepeatCount == -1;
+                noLoopButton.Checked = m_Element.RepeatCount != -1;
+                repeatCountUpDown.Value = m_Element.RepeatCount == -1 ? 1 : m_Element.RepeatCount;
                 fixedDelayUpDown.Value = (int)m_Element.FixedIntermediateDelay.TotalMilliseconds;
                 maxDelayUpDown.Value = (int)m_Element.MaximumRandomIntermediateDelay.TotalMilliseconds;
-                fixedDelayUpDown.Enabled = repeatBox.Checked;
-                maxDelayUpDown.Enabled = repeatBox.Checked;
+                UpdateControlActivation();
                 this.Refresh();
                 listen = true;
             }
@@ -62,32 +63,33 @@ namespace Ares.Editor.ElementEditors
         private void Commit()
         {
             listen = false;
+            int repeatCount = loopButton.Checked ? -1 : (int)repeatCountUpDown.Value;
             Actions.Action action = Actions.Actions.Instance.LastAction;
             if (action != null && action is Actions.RepeatableElementChangeAction)
             {
                 Actions.RepeatableElementChangeAction reca = action as Actions.RepeatableElementChangeAction;
                 if (reca.Element == m_Element)
                 {
-                    reca.SetData(repeatBox.Checked, (int)fixedDelayUpDown.Value, (int)maxDelayUpDown.Value);
+                    reca.SetData(repeatCount, (int)fixedDelayUpDown.Value, (int)maxDelayUpDown.Value);
                     reca.Do();
                     listen = true;
                     return;
                 }
             }
             Actions.Actions.Instance.AddNew(new Actions.RepeatableElementChangeAction(m_Element,
-                repeatBox.Checked, (int)fixedDelayUpDown.Value, (int)maxDelayUpDown.Value));
+                repeatCount, (int)fixedDelayUpDown.Value, (int)maxDelayUpDown.Value));
             listen = true;
         }
 
         private IRepeatableElement m_Element;
         private bool listen = true;
 
-        private void repeatBox_CheckedStateChanged(object sender, EventArgs e)
+        private void UpdateControlActivation()
         {
-            if (!listen) return;
-            Commit();
-            fixedDelayUpDown.Enabled = repeatBox.Checked;
-            maxDelayUpDown.Enabled = repeatBox.Checked;
+            bool repeat = loopButton.Checked || repeatCountUpDown.Value > 1;
+            repeatCountUpDown.Enabled = noLoopButton.Checked;
+            fixedDelayUpDown.Enabled = repeat;
+            maxDelayUpDown.Enabled = repeat;
         }
 
         private void fixedDelayUpDown_ValueChanged(object sender, EventArgs e)
@@ -99,6 +101,27 @@ namespace Ares.Editor.ElementEditors
         private void maxDelayUpDown_ValueChanged(object sender, EventArgs e)
         {
             if (!listen) return;
+            Commit();
+        }
+
+        private void noLoopButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!listen) return;
+            UpdateControlActivation();
+            Commit();
+        }
+
+        private void loopButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!listen) return;
+            UpdateControlActivation();
+            Commit();
+        }
+
+        private void repeatCountUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            if (!listen) return;
+            UpdateControlActivation();
             Commit();
         }
 

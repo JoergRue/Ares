@@ -28,15 +28,15 @@ namespace Ares.Data
     {
         #region IRepeatableElement Members
 
-        public bool Repeat
+        public int RepeatCount
         {
             get
             {
-                return m_ParallelElement.Repeat;
+                return m_ParallelElement.RepeatCount;
             }
             set
             {
-                m_ParallelElement.Repeat = value;
+                m_ParallelElement.RepeatCount = value;
             }
         }
 
@@ -104,7 +104,7 @@ namespace Ares.Data
 
         public bool IsEndless()
         {
-            return Repeat;
+            return RepeatCount == -1;
         }
 
         #endregion
@@ -135,7 +135,7 @@ namespace Ares.Data
             m_SecondContainer = DataModule.ElementFactory.CreateSequentialContainer(title + "_Sequence");
             m_FirstContainer = DataModule.ElementFactory.CreateParallelContainer(title + "_Repeat");
             m_ParallelElement = m_FirstContainer.AddElement(m_SecondContainer);
-            m_ParallelElement.Repeat = false;
+            m_ParallelElement.RepeatCount = 1;
         }
 
         internal SequentialBackgroundMusicList(System.Xml.XmlReader reader)

@@ -27,15 +27,15 @@ namespace Ares.Data
     {
         #region IRepeatableElement Members
 
-        public bool Repeat
+        public int RepeatCount
         {
             get
             {
-                return m_ParallelElement.Repeat;
+                return m_ParallelElement.RepeatCount;
             }
             set
             {
-                m_ParallelElement.Repeat = value;
+                m_ParallelElement.RepeatCount = value;
             }
         }
 
@@ -163,7 +163,7 @@ namespace Ares.Data
             m_FirstContainer = DataModule.ElementFactory.CreateSequentialContainer(title + "_Delay");
             m_ParallelElement = m_SecondContainer.AddElement(m_ThirdContainer);
             m_SequentialElement = m_FirstContainer.AddElement(m_SecondContainer);
-            m_ParallelElement.Repeat = true;
+            m_ParallelElement.RepeatCount = -1;
         }
 
         internal RandomBackgroundMusicList(System.Xml.XmlReader reader)

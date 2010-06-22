@@ -355,7 +355,7 @@ namespace Ares.Data
 
         public TimeSpan MaximumRandomStartDelay { get; set; }
 
-        public bool Repeat { get; set; }
+        public int RepeatCount { get; set; }
 
         public TimeSpan FixedIntermediateDelay { get; set; }
 
@@ -367,7 +367,7 @@ namespace Ares.Data
             MaximumRandomStartDelay = TimeSpan.Zero;
             FixedIntermediateDelay = TimeSpan.Zero;
             MaximumRandomIntermediateDelay = TimeSpan.Zero;
-            Repeat = false;
+            RepeatCount = 1;
         }
 
         public ParallelElement(System.Xml.XmlReader reader)
@@ -378,7 +378,7 @@ namespace Ares.Data
             }
             FixedStartDelay = reader.GetTimeSpanAttribute("fixedDelay");
             MaximumRandomStartDelay = reader.GetTimeSpanAttribute("maxDelay");
-            Repeat = reader.GetBooleanAttribute("repeat");
+            RepeatCount = reader.GetIntegerAttribute("repeatCount");
             FixedIntermediateDelay = reader.GetTimeSpanAttribute("fixedIntermediateDelay");
             MaximumRandomIntermediateDelay = reader.GetTimeSpanAttribute("maxIntermediateDelay");
 
@@ -392,7 +392,7 @@ namespace Ares.Data
             writer.WriteStartElement("Parallel");
             writer.WriteAttributeString("fixedDelay", FixedStartDelay.Ticks.ToString(System.Globalization.CultureInfo.InvariantCulture));
             writer.WriteAttributeString("maxDelay", MaximumRandomStartDelay.Ticks.ToString(System.Globalization.CultureInfo.InvariantCulture));
-            writer.WriteAttributeString("repeat", Repeat ? "true" : "false");
+            writer.WriteAttributeString("repeatCount", RepeatCount.ToString(System.Globalization.CultureInfo.InvariantCulture));
             writer.WriteAttributeString("fixedIntermediateDelay", FixedIntermediateDelay.Ticks.ToString(System.Globalization.CultureInfo.InvariantCulture));
             writer.WriteAttributeString("maxIntermediateDelay", MaximumRandomIntermediateDelay.Ticks.ToString(System.Globalization.CultureInfo.InvariantCulture));
 

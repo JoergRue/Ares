@@ -117,137 +117,115 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="&gt;&gt;label1.Name" xml:space="preserve">
-    <value>label1</value>
-  </data>
-  <data name="&gt;&gt;label1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;repeatBox.Name" xml:space="preserve">
-    <value>repeatBox</value>
-  </data>
-  <data name="&gt;&gt;repeatBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;repeatBox.Parent" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="&gt;&gt;repeatBox.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;lastLabel.Name" xml:space="preserve">
-    <value>lastLabel</value>
-  </data>
-  <data name="&gt;&gt;lastLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lastLabel.Parent" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="&gt;&gt;lastLabel.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;maxDelayUpDown.Name" xml:space="preserve">
-    <value>maxDelayUpDown</value>
-  </data>
-  <data name="&gt;&gt;maxDelayUpDown.Type" xml:space="preserve">
-    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;maxDelayUpDown.Parent" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="&gt;&gt;maxDelayUpDown.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;label3.Name" xml:space="preserve">
-    <value>label3</value>
-  </data>
-  <data name="&gt;&gt;label3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label3.Parent" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;label2.Name" xml:space="preserve">
-    <value>label2</value>
-  </data>
-  <data name="&gt;&gt;label2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;fixedDelayUpDown.Name" xml:space="preserve">
-    <value>fixedDelayUpDown</value>
-  </data>
-  <data name="&gt;&gt;fixedDelayUpDown.Type" xml:space="preserve">
-    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;fixedDelayUpDown.Parent" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="&gt;&gt;fixedDelayUpDown.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;fixedLabel.Name" xml:space="preserve">
-    <value>fixedLabel</value>
-  </data>
-  <data name="&gt;&gt;fixedLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;fixedLabel.Parent" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="&gt;&gt;fixedLabel.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="groupBox1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
+  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="loopButton.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
+  <data name="loopButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>175, 19</value>
   </data>
-  <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>346, 96</value>
+  <data name="loopButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>80, 18</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+  <data name="loopButton.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
   </data>
-  <data name="groupBox1.Text" xml:space="preserve">
-    <value>Repeating</value>
+  <data name="loopButton.Text" xml:space="preserve">
+    <value>Infinite loop</value>
   </data>
-  <data name="&gt;&gt;groupBox1.Name" xml:space="preserve">
+  <data name="&gt;&gt;loopButton.Name" xml:space="preserve">
+    <value>loopButton</value>
+  </data>
+  <data name="&gt;&gt;loopButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;loopButton.Parent" xml:space="preserve">
     <value>groupBox1</value>
   </data>
-  <data name="&gt;&gt;groupBox1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;groupBox1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;groupBox1.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;loopButton.ZOrder" xml:space="preserve">
     <value>0</value>
+  </data>
+  <data name="label4.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>132, 22</value>
+  </data>
+  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>31, 17</value>
+  </data>
+  <data name="label4.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="label4.Text" xml:space="preserve">
+    <value>times</value>
+  </data>
+  <data name="&gt;&gt;label4.Name" xml:space="preserve">
+    <value>label4</value>
+  </data>
+  <data name="&gt;&gt;label4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label4.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="repeatCountUpDown.Location" type="System.Drawing.Point, System.Drawing">
+    <value>56, 20</value>
+  </data>
+  <data name="repeatCountUpDown.Size" type="System.Drawing.Size, System.Drawing">
+    <value>70, 20</value>
+  </data>
+  <data name="repeatCountUpDown.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;repeatCountUpDown.Name" xml:space="preserve">
+    <value>repeatCountUpDown</value>
+  </data>
+  <data name="&gt;&gt;repeatCountUpDown.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;repeatCountUpDown.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;repeatCountUpDown.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="noLoopButton.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="noLoopButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 19</value>
+  </data>
+  <data name="noLoopButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>44, 18</value>
+  </data>
+  <data name="noLoopButton.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="noLoopButton.Text" xml:space="preserve">
+    <value>Play</value>
+  </data>
+  <data name="&gt;&gt;noLoopButton.Name" xml:space="preserve">
+    <value>noLoopButton</value>
+  </data>
+  <data name="&gt;&gt;noLoopButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;noLoopButton.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;noLoopButton.ZOrder" xml:space="preserve">
+    <value>3</value>
   </data>
   <data name="label1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 40</value>
+    <value>6, 43</value>
   </data>
   <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
     <value>101, 17</value>
@@ -268,43 +246,17 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="repeatBox.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="repeatBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 19</value>
-  </data>
-  <data name="repeatBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 18</value>
-  </data>
-  <data name="repeatBox.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="repeatBox.Text" xml:space="preserve">
-    <value>Repeat</value>
-  </data>
-  <data name="&gt;&gt;repeatBox.Name" xml:space="preserve">
-    <value>repeatBox</value>
-  </data>
-  <data name="&gt;&gt;repeatBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;repeatBox.Parent" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="&gt;&gt;repeatBox.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>4</value>
   </data>
   <data name="lastLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="lastLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="lastLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>316, 63</value>
+    <value>313, 66</value>
   </data>
   <data name="lastLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>19, 17</value>
@@ -325,10 +277,10 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;lastLabel.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>5</value>
   </data>
   <data name="maxDelayUpDown.Location" type="System.Drawing.Point, System.Drawing">
-    <value>231, 61</value>
+    <value>228, 63</value>
   </data>
   <data name="maxDelayUpDown.Size" type="System.Drawing.Size, System.Drawing">
     <value>79, 20</value>
@@ -349,7 +301,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;maxDelayUpDown.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>6</value>
   </data>
   <data name="label3.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -358,7 +310,7 @@
     <value>NoControl</value>
   </data>
   <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>175, 63</value>
+    <value>172, 66</value>
   </data>
   <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
     <value>50, 17</value>
@@ -379,7 +331,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>7</value>
   </data>
   <data name="label2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -388,7 +340,7 @@
     <value>NoControl</value>
   </data>
   <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>132, 63</value>
+    <value>132, 66</value>
   </data>
   <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
     <value>19, 17</value>
@@ -409,10 +361,10 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>8</value>
   </data>
   <data name="fixedDelayUpDown.Location" type="System.Drawing.Point, System.Drawing">
-    <value>47, 61</value>
+    <value>47, 64</value>
   </data>
   <data name="fixedDelayUpDown.Size" type="System.Drawing.Size, System.Drawing">
     <value>79, 20</value>
@@ -433,7 +385,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;fixedDelayUpDown.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>9</value>
   </data>
   <data name="fixedLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -442,7 +394,7 @@
     <value>NoControl</value>
   </data>
   <data name="fixedLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 63</value>
+    <value>6, 66</value>
   </data>
   <data name="fixedLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>35, 17</value>
@@ -463,7 +415,34 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;fixedLabel.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>10</value>
+  </data>
+  <data name="groupBox1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>346, 96</value>
+  </data>
+  <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="groupBox1.Text" xml:space="preserve">
+    <value>Repeating</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.Name" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>

@@ -62,11 +62,11 @@ namespace Ares.Editor.Controls
             // 
             // groupBox1
             // 
-            resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Controls.Add(this.soundVolumeBar);
             this.groupBox1.Controls.Add(this.setsSoundBox);
             this.groupBox1.Controls.Add(this.musicVolumeBar);
             this.groupBox1.Controls.Add(this.setsMusicBox);
+            resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
             this.groupBox1.UseCompatibleTextRendering = true;
@@ -110,7 +110,6 @@ namespace Ares.Editor.Controls
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.groupBox1);
-            this.MinimumSize = new System.Drawing.Size(297, 83);
             this.Name = "VolumeControl";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

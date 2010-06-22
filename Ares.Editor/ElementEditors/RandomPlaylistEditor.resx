@@ -117,65 +117,38 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="label1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left, Right</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="label1.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 20.25pt</value>
+  </data>
+  <data name="label1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 571</value>
+  </data>
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>654, 64</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="label1.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
   <data name="label1.Text" xml:space="preserve">
     <value>Drop files or directories from the {0}</value>
   </data>
-  <data name="&gt;&gt;stopButton.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="playButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="delayableControl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 12</value>
-  </data>
-  <data name="volumeControl.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
-  <data name="&gt;&gt;stopButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>RandomPlaylistOrBGSoundChoiceEditor</value>
+  <data name="label1.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
   </data>
   <data name="&gt;&gt;label1.Name" xml:space="preserve">
     <value>label1</value>
   </data>
-  <data name="&gt;&gt;playButton.Name" xml:space="preserve">
-    <value>playButton</value>
-  </data>
-  <data name="&gt;&gt;stopButton.Parent" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="&gt;&gt;choiceContainerControl.Name" xml:space="preserve">
-    <value>choiceContainerControl</value>
-  </data>
-  <data name="choiceContainerControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>649, 391</value>
-  </data>
-  <data name="&gt;&gt;delayableControl.Name" xml:space="preserve">
-    <value>delayableControl</value>
-  </data>
-  <data name="&gt;&gt;playButton.Parent" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="label1.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 20.25pt</value>
-  </data>
-  <data name="&gt;&gt;volumeControl.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="stopButton.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 8.25pt</value>
-  </data>
-  <data name="label1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left, Right</value>
+  <data name="&gt;&gt;label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;label1.Parent" xml:space="preserve">
     <value>$this</value>
@@ -183,166 +156,193 @@
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
-  <data name="groupBox1.Text" xml:space="preserve">
-    <value>Test</value>
+  <data name="groupBox1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
   </data>
-  <data name="label1.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>649, 64</value>
-  </data>
-  <data name="&gt;&gt;delayableControl.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;volumeControl.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;repeatableControl.Type" xml:space="preserve">
-    <value>Ares.Editor.ElementEditors.RepeatableControl, Ares.Editor.Controls, Version=0.1.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
-  </data>
-  <data name="&gt;&gt;playButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="stopButton.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="stopButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="&gt;&gt;volumeControl.Name" xml:space="preserve">
-    <value>volumeControl</value>
-  </data>
-  <data name="playButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 19</value>
-  </data>
-  <data name="&gt;&gt;choiceContainerControl.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="delayableControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>346, 57</value>
-  </data>
-  <data name="label1.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
-  </data>
-  <data name="volumeControl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>364, 75</value>
-  </data>
   <data name="stopButton.Location" type="System.Drawing.Point, System.Drawing">
     <value>43, 19</value>
-  </data>
-  <data name="&gt;&gt;repeatableControl.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="label1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="&gt;&gt;groupBox1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;delayableControl.Type" xml:space="preserve">
-    <value>Ares.Editor.ElementEditors.DelayableControl, Ares.Editor.Controls, Version=0.1.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
-  </data>
-  <data name="repeatableControl.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="playButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>31, 23</value>
-  </data>
-  <data name="choiceContainerControl.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;repeatableControl.Name" xml:space="preserve">
-    <value>repeatableControl</value>
-  </data>
-  <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>364, 12</value>
-  </data>
-  <data name="playButton.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;repeatableControl.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>297, 57</value>
-  </data>
-  <data name="&gt;&gt;choiceContainerControl.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="stopButton.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
-  </data>
-  <data name="&gt;&gt;choiceContainerControl.Type" xml:space="preserve">
-    <value>Ares.Editor.ElementEditorControls.ChoiceContainerControl, Ares.Editor.Controls, Version=0.1.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
-  </data>
-  <data name="choiceContainerControl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 177</value>
-  </data>
-  <data name="&gt;&gt;groupBox1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;stopButton.Name" xml:space="preserve">
-    <value>stopButton</value>
-  </data>
-  <data name="choiceContainerControl.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
-  </data>
-  <data name="delayableControl.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
-  </data>
-  <data name="&gt;&gt;volumeControl.Type" xml:space="preserve">
-    <value>Ares.Editor.Controls.VolumeControl, Ares.Editor.Controls, Version=0.1.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
-  </data>
-  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 571</value>
-  </data>
-  <data name="&gt;&gt;delayableControl.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="volumeControl.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
-  </data>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 13</value>
-  </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>RandomPlaylistEditor</value>
   </data>
   <data name="stopButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>31, 23</value>
   </data>
-  <data name="&gt;&gt;groupBox1.Name" xml:space="preserve">
+  <data name="stopButton.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;stopButton.Name" xml:space="preserve">
+    <value>stopButton</value>
+  </data>
+  <data name="&gt;&gt;stopButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;stopButton.Parent" xml:space="preserve">
     <value>groupBox1</value>
   </data>
-  <data name="volumeControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>297, 96</value>
+  <data name="&gt;&gt;stopButton.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="playButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="playButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 19</value>
+  </data>
+  <data name="playButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>31, 23</value>
+  </data>
+  <data name="playButton.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;playButton.Name" xml:space="preserve">
+    <value>playButton</value>
+  </data>
+  <data name="&gt;&gt;playButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;playButton.Parent" xml:space="preserve">
+    <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;playButton.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>673, 644</value>
+  <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>364, 12</value>
+  </data>
+  <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>302, 57</value>
+  </data>
+  <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="groupBox1.Text" xml:space="preserve">
+    <value>Test</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.Name" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
   <data name="&gt;&gt;groupBox1.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="repeatableControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>346, 96</value>
+  <data name="volumeControl.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="volumeControl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>364, 75</value>
+  </data>
+  <data name="volumeControl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>302, 96</value>
+  </data>
+  <data name="volumeControl.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;volumeControl.Name" xml:space="preserve">
+    <value>volumeControl</value>
+  </data>
+  <data name="&gt;&gt;volumeControl.Type" xml:space="preserve">
+    <value>Ares.Editor.Controls.VolumeControl, Ares.Editor.Controls, Version=0.1.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
+  </data>
+  <data name="&gt;&gt;volumeControl.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;volumeControl.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="delayableControl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 12</value>
+  </data>
+  <data name="delayableControl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>346, 57</value>
+  </data>
+  <data name="delayableControl.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;delayableControl.Name" xml:space="preserve">
+    <value>delayableControl</value>
+  </data>
+  <data name="&gt;&gt;delayableControl.Type" xml:space="preserve">
+    <value>Ares.Editor.ElementEditors.DelayableControl, Ares.Editor.Controls, Version=0.1.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
+  </data>
+  <data name="&gt;&gt;delayableControl.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;delayableControl.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
   <data name="repeatableControl.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 75</value>
   </data>
-  <data name="groupBox1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
+  <data name="repeatableControl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>346, 96</value>
   </data>
-  <data name="&gt;&gt;label1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="repeatableControl.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
   </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>Ares.Editor.ElementEditors.EditorBase, Ares.Editor, Version=0.1.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
+  <data name="&gt;&gt;repeatableControl.Name" xml:space="preserve">
+    <value>repeatableControl</value>
+  </data>
+  <data name="&gt;&gt;repeatableControl.Type" xml:space="preserve">
+    <value>Ares.Editor.ElementEditors.RepeatableControl, Ares.Editor.Controls, Version=0.1.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
+  </data>
+  <data name="&gt;&gt;repeatableControl.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;repeatableControl.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="choiceContainerControl.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="choiceContainerControl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 177</value>
+  </data>
+  <data name="choiceContainerControl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>654, 391</value>
+  </data>
+  <data name="choiceContainerControl.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;choiceContainerControl.Name" xml:space="preserve">
+    <value>choiceContainerControl</value>
+  </data>
+  <data name="&gt;&gt;choiceContainerControl.Type" xml:space="preserve">
+    <value>Ares.Editor.ElementEditorControls.ChoiceContainerControl, Ares.Editor.Controls, Version=0.1.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
+  </data>
+  <data name="&gt;&gt;choiceContainerControl.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;choiceContainerControl.ZOrder" xml:space="preserve">
+    <value>4</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 13</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>678, 644</value>
+  </data>
+  <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 8.25pt</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>RandomPlaylistEditor</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>RandomPlaylistOrBGSoundChoiceEditor</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>Ares.Editor.ElementEditors.EditorBase, Ares.Editor, Version=0.1.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
+  </data>
 </root>

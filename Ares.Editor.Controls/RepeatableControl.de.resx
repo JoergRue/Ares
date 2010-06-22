@@ -118,17 +118,41 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="loopButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>172, 18</value>
+  </data>
+  <data name="loopButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>95, 18</value>
+  </data>
+  <data name="loopButton.Text" xml:space="preserve">
+    <value>Endlosschleife</value>
+  </data>
+  <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>132, 21</value>
+  </data>
+  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>22, 17</value>
+  </data>
+  <data name="label4.Text" xml:space="preserve">
+    <value>Mal</value>
+  </data>
+  <data name="repeatCountUpDown.Location" type="System.Drawing.Point, System.Drawing">
+    <value>66, 19</value>
+  </data>
+  <data name="repeatCountUpDown.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 20</value>
+  </data>
+  <data name="noLoopButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>54, 18</value>
+  </data>
+  <data name="noLoopButton.Text" xml:space="preserve">
+    <value>Spiele</value>
+  </data>
   <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
     <value>188, 17</value>
   </data>
   <data name="label1.Text" xml:space="preserve">
     <value>Verzögerung zwischen dem Spielen:</value>
-  </data>
-  <data name="repeatBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>81, 18</value>
-  </data>
-  <data name="repeatBox.Text" xml:space="preserve">
-    <value>Wiederhole</value>
   </data>
   <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
     <value>44, 17</value>
