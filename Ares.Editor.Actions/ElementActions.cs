@@ -169,38 +169,6 @@ namespace Ares.Editor.Actions
     }
 
 
-    public class SetModeElementKeyAction : Action
-    {
-        public SetModeElementKeyAction(TreeNode modeElementNode, int newKey)
-        {
-            m_Node = modeElementNode;
-            IModeElement modeElement = (m_Node.Tag as IModeElement);
-            m_OldTrigger = modeElement.Trigger;
-            IKeyTrigger newTrigger = DataModule.ElementFactory.CreateKeyTrigger();
-            newTrigger.TargetElementId = modeElement.Id;
-            newTrigger.KeyCode = newKey;
-            m_NewTrigger = newTrigger;
-        }
-
-        public override void Do()
-        {
-            IModeElement modeElement = (m_Node.Tag as IModeElement);
-            modeElement.Trigger = m_NewTrigger;
-            m_Node.Text = modeElement.GetNodeTitle();
-        }
-
-        public override void Undo()
-        {
-            IModeElement modeElement = (m_Node.Tag as IModeElement);
-            modeElement.Trigger = m_OldTrigger;
-            m_Node.Text = modeElement.GetNodeTitle();
-        }
-
-        private TreeNode m_Node;
-        private ITrigger m_OldTrigger;
-        private ITrigger m_NewTrigger;
-    }
-
     public class RenameElementAction : Action
     {
         public RenameElementAction(TreeNode node, String newName)
@@ -249,12 +217,14 @@ namespace Ares.Editor.Actions
         {
             m_Parent.Nodes.Add(m_Node);
             m_Container.InsertGeneralElement(m_Index, m_Element);
+            ElementChanges.Instance.ElementChanged(m_Container.Id);
         }
 
         public override void Undo()
         {
             m_Parent.Nodes.Remove(m_Node);
             m_Container.RemoveElement(m_Element.Id);
+            ElementChanges.Instance.ElementChanged(m_Container.Id);
         }
 
         private TreeNode m_Parent;
@@ -283,12 +253,14 @@ namespace Ares.Editor.Actions
         {
             m_Parent.Nodes.Add(m_Node);
             m_BGSounds.InsertElement(m_Index, m_Element);
+            ElementChanges.Instance.ElementChanged(m_BGSounds.Id);
         }
 
         public override void Undo()
         {
             m_Parent.Nodes.Remove(m_Node);
             m_BGSounds.RemoveElement(m_Element.Id);
+            ElementChanges.Instance.ElementChanged(m_BGSounds.Id);
         }
 
         private TreeNode m_Parent;
@@ -305,23 +277,30 @@ namespace Ares.Editor.Actions
             m_Parent = node.Parent;
             m_Node = node;
             m_Index = node.Parent.Nodes.IndexOf(node);
+            IElement parentElement = m_Parent.Tag is IModeElement ? (m_Parent.Tag as IModeElement).StartElement : m_Parent.Tag as IElement;
+            m_Container = parentElement as IGeneralElementContainer;
+            m_Element = m_Container.GetGeneralElements()[m_Index];
         }
 
         public override void Do()
         {
             m_Parent.Nodes.Remove(m_Node);
-            (m_Parent.Tag as IGeneralElementContainer).RemoveElement((m_Node.Tag as IElement).Id);
+            m_Container.RemoveElement((m_Node.Tag as IElement).Id);
             ElementRemoval.NotifyRemoval(m_Node.Tag as IElement);
+            ElementChanges.Instance.ElementChanged(m_Container.Id);
         }
 
         public override void Undo()
         {
             m_Parent.Nodes.Insert(m_Index, m_Node);
-            (m_Parent.Tag as IGeneralElementContainer).InsertGeneralElement(m_Index, (m_Node.Tag as IElement));
+            m_Container.InsertGeneralElement(m_Index, m_Element);
+            ElementChanges.Instance.ElementChanged(m_Container.Id);
         }
 
         private TreeNode m_Parent;
         private TreeNode m_Node;
+        private IGeneralElementContainer m_Container;
+        private IElement m_Element;
         private int m_Index;
     }
 }

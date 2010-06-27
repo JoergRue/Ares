@@ -52,5 +52,21 @@ namespace Ares.Editor.ElementEditors
             }
         }
 
+        public static void ShowTriggerEditor(Ares.Data.IModeElement element, WeifenLuo.WinFormsUI.Docking.DockPanel dockPanel)
+        {
+            EditorBase existing = EditorRegistry.Instance.GetEditor(element.Id);
+            if (existing != null)
+            {
+                existing.Activate();
+            }
+            else
+            {
+                TriggerEditor editor = new TriggerEditor();
+                editor.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Document;
+                editor.SetElement(element);
+                editor.Show(dockPanel);
+            }
+        }
+
     }
 }

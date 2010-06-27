@@ -88,6 +88,24 @@ namespace Ares.Editor {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die A second key press stops the element (it contains infinite repeats). ähnelt.
+        /// </summary>
+        internal static string ElementIsEndless {
+            get {
+                return ResourceManager.GetString("ElementIsEndless", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die A second key press starts the element a second time. ähnelt.
+        /// </summary>
+        internal static string ElementIsSingle {
+            get {
+                return ResourceManager.GetString("ElementIsSingle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {0} Explorer ähnelt.
         /// </summary>
         internal static string FileExplorerTitle {
@@ -196,6 +214,15 @@ namespace Ares.Editor {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die &lt;No Key&gt; ähnelt.
+        /// </summary>
+        internal static string NoKey {
+            get {
+                return ResourceManager.GetString("NoKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die No Project Opened ähnelt.
         /// </summary>
         internal static string NoOpenedProject {
@@ -266,6 +293,15 @@ namespace Ares.Editor {
         internal static string Sounds {
             get {
                 return ResourceManager.GetString("Sounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Start of {0} ähnelt.
+        /// </summary>
+        internal static string TriggerEditorTitle {
+            get {
+                return ResourceManager.GetString("TriggerEditorTitle", resourceCulture);
             }
         }
         

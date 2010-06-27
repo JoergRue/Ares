@@ -127,15 +127,6 @@ namespace Ares.Data
 
         #endregion
 
-        #region ICompositeElement Members
-
-        public bool IsEndless()
-        {
-            return true;
-        }
-
-        #endregion
-
         public override void Visit(IElementVisitor visitor)
         {
             visitor.VisitRandomMusicList(this);

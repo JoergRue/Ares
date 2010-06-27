@@ -100,15 +100,6 @@ namespace Ares.Data
 
         #endregion
 
-        #region ICompositeElement Members
-
-        public bool IsEndless()
-        {
-            return RepeatCount == -1;
-        }
-
-        #endregion
-
         public override void Visit(IElementVisitor visitor)
         {
             visitor.VisitSequentialMusicList(this);

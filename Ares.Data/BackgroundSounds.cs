@@ -229,15 +229,6 @@ namespace Ares.Data
 
         #endregion
 
-        public bool IsEndless()
-        {
-            foreach (IBackgroundSoundChoice choice in m_Elements)
-            {
-                if (choice.RepeatCount == -1) return true;
-            }
-            return false;
-        }
-
         public override void Visit(IElementVisitor visitor)
         {
             visitor.VisitParallelContainer(m_Container);

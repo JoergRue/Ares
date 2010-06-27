@@ -279,6 +279,7 @@ namespace Ares.Editor
                 return;
             
             m_CurrentProject = Ares.Data.DataModule.ProjectManager.CreateProject(title);
+            Ares.ModelInfo.ModelChecks.Instance.Project = m_CurrentProject;
 
             m_ProjectExplorer.SetProject(m_CurrentProject);
 
@@ -321,6 +322,7 @@ namespace Ares.Editor
                 }
                 Ares.Data.DataModule.ProjectManager.UnloadProject(m_CurrentProject);
                 m_CurrentProject = null;
+                Ares.ModelInfo.ModelChecks.Instance.Project = m_CurrentProject;
                 Actions.Actions.Instance.Clear();
                 m_Instance.SetLoadedProject("-");
             }
@@ -447,6 +449,7 @@ namespace Ares.Editor
             }
 
             m_ProjectExplorer.SetProject(m_CurrentProject);
+            Ares.ModelInfo.ModelChecks.Instance.Project = m_CurrentProject;
             m_Instance.SetLoadedProject(filePath);
             UpdateGUI();
         }

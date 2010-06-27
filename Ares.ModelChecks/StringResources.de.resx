@@ -117,91 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Ares" xml:space="preserve">
-    <value>Ares</value>
+  <data name="KeyUsedByMode" xml:space="preserve">
+    <value>Diese Taste wird bereits benutzt, um den Modus "{0}" auszuwählen</value>
   </data>
-  <data name="AresEditorTitle" xml:space="preserve">
-    <value>Ares Editor - {0}</value>
-  </data>
-  <data name="BassInitFail" xml:space="preserve">
-    <value>Fatal: Couldn't initialize BASS engine!</value>
-  </data>
-  <data name="ElementIsEndless" xml:space="preserve">
-    <value>A second key press stops the element (it contains infinite repeats).</value>
-  </data>
-  <data name="ElementIsSingle" xml:space="preserve">
-    <value>A second key press starts the element a second time.</value>
-  </data>
-  <data name="FileExplorerTitle" xml:space="preserve">
-    <value>{0} Explorer</value>
-  </data>
-  <data name="FilePlayed" xml:space="preserve">
-    <value>Error at file: {0}</value>
-  </data>
-  <data name="LoadError" xml:space="preserve">
-    <value>Error opening the project: {0}</value>
-  </data>
-  <data name="Music" xml:space="preserve">
-    <value>Music</value>
-  </data>
-  <data name="NewBackgroundSounds" xml:space="preserve">
-    <value>New Background Sounds</value>
-  </data>
-  <data name="NewParallelList" xml:space="preserve">
-    <value>New Parallel List</value>
-  </data>
-  <data name="NewPlaylist" xml:space="preserve">
-    <value>New Playlist</value>
-  </data>
-  <data name="NewProject" xml:space="preserve">
-    <value>New Project</value>
-  </data>
-  <data name="NewRandomList" xml:space="preserve">
-    <value>New Random List</value>
-  </data>
-  <data name="NewScenario" xml:space="preserve">
-    <value>New Scenario</value>
-  </data>
-  <data name="NewSequentialList" xml:space="preserve">
-    <value>New Sequential List</value>
-  </data>
-  <data name="NewSoundChoice" xml:space="preserve">
-    <value>New Sound Choice</value>
-  </data>
-  <data name="NoKey" xml:space="preserve">
-    <value>&lt;No Key&gt;</value>
-  </data>
-  <data name="NoOpenedProject" xml:space="preserve">
-    <value>No Project Opened</value>
-  </data>
-  <data name="NoProjectName" xml:space="preserve">
-    <value>[No name]</value>
-  </data>
-  <data name="NoSettings" xml:space="preserve">
-    <value>This seems to be the first start of the editor.
-You should adapt some settings first.</value>
-  </data>
-  <data name="OpenProjectQuestion" xml:space="preserve">
-    <value>Open project {0}?</value>
-  </data>
-  <data name="PlayerStartError" xml:space="preserve">
-    <value>Could not start player. Reason:
-{0}</value>
-  </data>
-  <data name="ProjectChanged" xml:space="preserve">
-    <value>The current project has unsaved changes. Shall it be saved now?</value>
-  </data>
-  <data name="SaveError" xml:space="preserve">
-    <value>Error saving the project: {0}</value>
-  </data>
-  <data name="Sounds" xml:space="preserve">
-    <value>Sounds</value>
-  </data>
-  <data name="TriggerEditorTitle" xml:space="preserve">
-    <value>Start of {0}</value>
-  </data>
-  <data name="WriteSettingsError" xml:space="preserve">
-    <value>Settings could not be saved. Reason:
-{0}</value>
+  <data name="KeyUsedByModeElement" xml:space="preserve">
+    <value>Diese Taste wird bereits benutzt, um "{0}" zu starten</value>
   </data>
 </root>

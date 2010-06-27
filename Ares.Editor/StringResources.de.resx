@@ -126,6 +126,12 @@
   <data name="BassInitFail" xml:space="preserve">
     <value>Fehler: Konnte BASS nicht initialisieren!</value>
   </data>
+  <data name="ElementIsEndless" xml:space="preserve">
+    <value>Ein erneuter Tastendruck stoppt das Element (es enthält unbegrenzte Wiederholungen).</value>
+  </data>
+  <data name="ElementIsSingle" xml:space="preserve">
+    <value>Ein erneuter Tastendruck startet das Element ein weiteres Mal.</value>
+  </data>
   <data name="FileExplorerTitle" xml:space="preserve">
     <value>{0}-Explorer</value>
   </data>
@@ -162,6 +168,9 @@
   <data name="NewSoundChoice" xml:space="preserve">
     <value>Neue Geräuschauswahl</value>
   </data>
+  <data name="NoKey" xml:space="preserve">
+    <value>&lt;Keine Taste&gt;</value>
+  </data>
   <data name="NoOpenedProject" xml:space="preserve">
     <value>Kein Projekt geöffnet</value>
   </data>
@@ -188,6 +197,9 @@ Soll es jetzt gespeichert werden?</value>
   </data>
   <data name="Sounds" xml:space="preserve">
     <value>Geräusche</value>
+  </data>
+  <data name="TriggerEditorTitle" xml:space="preserve">
+    <value>Start von {0}</value>
   </data>
   <data name="WriteSettingsError" xml:space="preserve">
     <value>Einstellungen konnten nicht gespeichert werden. Grund:

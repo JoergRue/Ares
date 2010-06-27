@@ -58,6 +58,11 @@ namespace Ares.Data
         IElementFinishTrigger CreateElementFinishTrigger();
 
         /// <summary>
+        /// Create a trigger which isn't completely defined (yet)
+        /// </summary>
+        ITrigger CreateNoTrigger();
+
+        /// <summary>
         /// Crates a random background music list
         /// </summary>
         IRandomBackgroundMusicList CreateRandomBackgroundMusicList(String title);
@@ -114,6 +119,11 @@ namespace Ares.Data
         public IElementFinishTrigger CreateElementFinishTrigger()
         {
             return new ElementFinishTrigger();
+        }
+
+        public ITrigger CreateNoTrigger()
+        {
+            return new NoTrigger();
         }
 
         public IRandomBackgroundMusicList CreateRandomBackgroundMusicList(String title)
@@ -182,6 +192,10 @@ namespace Ares.Data
             else if (reader.IsStartElement("ElementFinishTrigger"))
             {
                 return new ElementFinishTrigger(reader);
+            }
+            else if (reader.IsStartElement("NoTrigger"))
+            {
+                return new NoTrigger(reader);
             }
             else
             {

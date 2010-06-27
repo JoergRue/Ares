@@ -117,91 +117,44 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Ares" xml:space="preserve">
-    <value>Ares</value>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="stopMusicLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>204, 17</value>
   </data>
-  <data name="AresEditorTitle" xml:space="preserve">
-    <value>Ares Editor - {0}</value>
+  <data name="stopMusicLabel.Text" xml:space="preserve">
+    <value>(immer weil immer Musik gestartet wird)</value>
   </data>
-  <data name="BassInitFail" xml:space="preserve">
-    <value>Fatal: Couldn't initialize BASS engine!</value>
+  <data name="stopMusicBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>92, 18</value>
   </data>
-  <data name="ElementIsEndless" xml:space="preserve">
-    <value>A second key press stops the element (it contains infinite repeats).</value>
+  <data name="stopMusicBox.Text" xml:space="preserve">
+    <value>Stoppe Musik</value>
   </data>
-  <data name="ElementIsSingle" xml:space="preserve">
-    <value>A second key press starts the element a second time.</value>
+  <data name="stopSoundsBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>156, 18</value>
   </data>
-  <data name="FileExplorerTitle" xml:space="preserve">
-    <value>{0} Explorer</value>
+  <data name="stopSoundsBox.Text" xml:space="preserve">
+    <value>Stoppe andere Geräusche</value>
   </data>
-  <data name="FilePlayed" xml:space="preserve">
-    <value>Error at file: {0}</value>
+  <data name="groupBox2.Text" xml:space="preserve">
+    <value>Steuerung</value>
   </data>
-  <data name="LoadError" xml:space="preserve">
-    <value>Error opening the project: {0}</value>
+  <data name="selectKeyButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>48, 19</value>
   </data>
-  <data name="Music" xml:space="preserve">
-    <value>Music</value>
+  <data name="selectKeyButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>114, 23</value>
   </data>
-  <data name="NewBackgroundSounds" xml:space="preserve">
-    <value>New Background Sounds</value>
+  <data name="selectKeyButton.Text" xml:space="preserve">
+    <value>&lt;Keine Taste&gt;</value>
   </data>
-  <data name="NewParallelList" xml:space="preserve">
-    <value>New Parallel List</value>
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>36, 17</value>
   </data>
-  <data name="NewPlaylist" xml:space="preserve">
-    <value>New Playlist</value>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Taste:</value>
   </data>
-  <data name="NewProject" xml:space="preserve">
-    <value>New Project</value>
-  </data>
-  <data name="NewRandomList" xml:space="preserve">
-    <value>New Random List</value>
-  </data>
-  <data name="NewScenario" xml:space="preserve">
-    <value>New Scenario</value>
-  </data>
-  <data name="NewSequentialList" xml:space="preserve">
-    <value>New Sequential List</value>
-  </data>
-  <data name="NewSoundChoice" xml:space="preserve">
-    <value>New Sound Choice</value>
-  </data>
-  <data name="NoKey" xml:space="preserve">
-    <value>&lt;No Key&gt;</value>
-  </data>
-  <data name="NoOpenedProject" xml:space="preserve">
-    <value>No Project Opened</value>
-  </data>
-  <data name="NoProjectName" xml:space="preserve">
-    <value>[No name]</value>
-  </data>
-  <data name="NoSettings" xml:space="preserve">
-    <value>This seems to be the first start of the editor.
-You should adapt some settings first.</value>
-  </data>
-  <data name="OpenProjectQuestion" xml:space="preserve">
-    <value>Open project {0}?</value>
-  </data>
-  <data name="PlayerStartError" xml:space="preserve">
-    <value>Could not start player. Reason:
-{0}</value>
-  </data>
-  <data name="ProjectChanged" xml:space="preserve">
-    <value>The current project has unsaved changes. Shall it be saved now?</value>
-  </data>
-  <data name="SaveError" xml:space="preserve">
-    <value>Error saving the project: {0}</value>
-  </data>
-  <data name="Sounds" xml:space="preserve">
-    <value>Sounds</value>
-  </data>
-  <data name="TriggerEditorTitle" xml:space="preserve">
-    <value>Start of {0}</value>
-  </data>
-  <data name="WriteSettingsError" xml:space="preserve">
-    <value>Settings could not be saved. Reason:
-{0}</value>
+  <data name="groupBox1.Text" xml:space="preserve">
+    <value>Auslöser</value>
   </data>
 </root>

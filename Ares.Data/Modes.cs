@@ -39,28 +39,16 @@ namespace Ares.Data
             set
             {
                 m_Trigger = value;
-                m_Trigger.TargetElementId = StartElement.Id;
+                if (m_Trigger != null)
+                {
+                    m_Trigger.TargetElementId = StartElement.Id;
+                }
             }
         }
 
         public override void Visit(IElementVisitor visitor)
         {
             StartElement.Visit(visitor);
-        }
-
-        public bool IsEndless()
-        {
-            IRepeatableElement repeatable = StartElement as IRepeatableElement;
-            if (repeatable != null)
-            {
-                return repeatable.RepeatCount == -1;
-            }
-            ICompositeElement composite = StartElement as ICompositeElement;
-            if (composite != null)
-            {
-                return composite.IsEndless();
-            }
-            return false;
         }
 
         internal ModeElement(int ID, String title, IElement startElement)

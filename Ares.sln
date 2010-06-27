@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ares.Player", "Ares.Player\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ares.Ipc", "Ares.Ipc\Ares.Ipc.csproj", "{07BE1372-C1D2-4E2A-9678-DC27BE0D9FF0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ares.ModelInfo", "Ares.ModelChecks\Ares.ModelInfo.csproj", "{50EA19EE-5337-499C-8B7B-1B22EA9E24A6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -111,6 +113,16 @@ Global
 		{07BE1372-C1D2-4E2A-9678-DC27BE0D9FF0}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{07BE1372-C1D2-4E2A-9678-DC27BE0D9FF0}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{07BE1372-C1D2-4E2A-9678-DC27BE0D9FF0}.Release|x86.ActiveCfg = Release|Any CPU
+		{50EA19EE-5337-499C-8B7B-1B22EA9E24A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50EA19EE-5337-499C-8B7B-1B22EA9E24A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50EA19EE-5337-499C-8B7B-1B22EA9E24A6}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{50EA19EE-5337-499C-8B7B-1B22EA9E24A6}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{50EA19EE-5337-499C-8B7B-1B22EA9E24A6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{50EA19EE-5337-499C-8B7B-1B22EA9E24A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50EA19EE-5337-499C-8B7B-1B22EA9E24A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50EA19EE-5337-499C-8B7B-1B22EA9E24A6}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{50EA19EE-5337-499C-8B7B-1B22EA9E24A6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{50EA19EE-5337-499C-8B7B-1B22EA9E24A6}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

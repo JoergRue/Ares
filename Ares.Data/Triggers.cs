@@ -100,8 +100,30 @@ namespace Ares.Data
         }
 
         internal ElementFinishTrigger(System.Xml.XmlReader reader)
+            : base(reader)
         {
             ElementId = reader.GetIntegerAttribute("elementId");
+            reader.ReadOuterXml();
+        }
+    }
+
+    [Serializable]
+    class NoTrigger : Trigger, ITrigger
+    {
+        public TriggerType TriggerType { get { return TriggerType.None; } }
+
+        public void WriteToXml(System.Xml.XmlWriter writer)
+        {
+            writer.WriteStartElement("NoTrigger");
+            DoWriteToXml(writer);
+            writer.WriteEndElement();
+        }
+
+        internal NoTrigger() { }
+
+        internal NoTrigger(System.Xml.XmlReader reader)
+            : base(reader)
+        {
             reader.ReadOuterXml();
         }
     }

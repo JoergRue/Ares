@@ -36,6 +36,7 @@ namespace Ares.Editor
             {
                 components.Dispose();
                 RemoveChangeListener();
+                Ares.Editor.Actions.ElementChanges.Instance.RemoveListener(-1, ElementTriggerChanged);
             }
             base.Dispose(disposing);
         }
@@ -70,7 +71,7 @@ namespace Ares.Editor
             this.containerContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.renameToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.selectKeyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.modeElementStartingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.addRandomPlaylistToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -83,11 +84,11 @@ namespace Ares.Editor
             this.elementContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.editToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.renameToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
-            this.selectKeyToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.modeElementStartingToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.bgSoundsContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.renameToolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
-            this.selectKeyToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.modeElementStartingToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.addSoundChoiceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
@@ -103,22 +104,22 @@ namespace Ares.Editor
             // 
             // projectContextMenu
             // 
+            resources.ApplyResources(this.projectContextMenu, "projectContextMenu");
             this.projectContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.renameToolStripMenuItem,
             this.toolStripMenuItem1});
             this.projectContextMenu.Name = "projectContextMenu";
-            resources.ApplyResources(this.projectContextMenu, "projectContextMenu");
             // 
             // renameToolStripMenuItem
             // 
-            this.renameToolStripMenuItem.Name = "renameToolStripMenuItem";
             resources.ApplyResources(this.renameToolStripMenuItem, "renameToolStripMenuItem");
+            this.renameToolStripMenuItem.Name = "renameToolStripMenuItem";
             this.renameToolStripMenuItem.Click += new System.EventHandler(this.renameToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             resources.ApplyResources(this.toolStripMenuItem1, "toolStripMenuItem1");
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
             // projectTree
@@ -136,6 +137,7 @@ namespace Ares.Editor
             // 
             // modeContextMenu
             // 
+            resources.ApplyResources(this.modeContextMenu, "modeContextMenu");
             this.modeContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.renameToolStripMenuItem1,
             this.toolStripMenuItem2,
@@ -150,13 +152,12 @@ namespace Ares.Editor
             this.addSequentialElementToolStripMenuItem,
             this.addChoiceListToolStripMenuItem});
             this.modeContextMenu.Name = "modeContextMenu";
-            resources.ApplyResources(this.modeContextMenu, "modeContextMenu");
             this.modeContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.modeContextMenu_Opening);
             // 
             // renameToolStripMenuItem1
             // 
-            this.renameToolStripMenuItem1.Name = "renameToolStripMenuItem1";
             resources.ApplyResources(this.renameToolStripMenuItem1, "renameToolStripMenuItem1");
+            this.renameToolStripMenuItem1.Name = "renameToolStripMenuItem1";
             this.renameToolStripMenuItem1.Click += new System.EventHandler(this.renameToolStripMenuItem1_Click);
             // 
             // toolStripMenuItem2
@@ -167,68 +168,69 @@ namespace Ares.Editor
             // 
             // deleteToolStripMenuItem
             // 
-            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
             resources.ApplyResources(this.deleteToolStripMenuItem, "deleteToolStripMenuItem");
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
             resources.ApplyResources(this.toolStripSeparator1, "toolStripSeparator1");
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
             // 
             // addScenarioToolStripMenuItem
             // 
-            this.addScenarioToolStripMenuItem.Name = "addScenarioToolStripMenuItem";
             resources.ApplyResources(this.addScenarioToolStripMenuItem, "addScenarioToolStripMenuItem");
+            this.addScenarioToolStripMenuItem.Name = "addScenarioToolStripMenuItem";
             this.addScenarioToolStripMenuItem.Click += new System.EventHandler(this.addScenarioToolStripMenuItem_Click);
             // 
             // addRandomPlaylistToolStripMenuItem
             // 
-            this.addRandomPlaylistToolStripMenuItem.Name = "addRandomPlaylistToolStripMenuItem";
             resources.ApplyResources(this.addRandomPlaylistToolStripMenuItem, "addRandomPlaylistToolStripMenuItem");
+            this.addRandomPlaylistToolStripMenuItem.Name = "addRandomPlaylistToolStripMenuItem";
             this.addRandomPlaylistToolStripMenuItem.Click += new System.EventHandler(this.addRandomPlaylistToolStripMenuItem_Click);
             // 
             // addSequentialPlaylistToolStripMenuItem
             // 
-            this.addSequentialPlaylistToolStripMenuItem.Name = "addSequentialPlaylistToolStripMenuItem";
             resources.ApplyResources(this.addSequentialPlaylistToolStripMenuItem, "addSequentialPlaylistToolStripMenuItem");
+            this.addSequentialPlaylistToolStripMenuItem.Name = "addSequentialPlaylistToolStripMenuItem";
             this.addSequentialPlaylistToolStripMenuItem.Click += new System.EventHandler(this.addSequentialPlaylistToolStripMenuItem_Click);
             // 
             // addBackgroundSoundsToolStripMenuItem
             // 
-            this.addBackgroundSoundsToolStripMenuItem.Name = "addBackgroundSoundsToolStripMenuItem";
             resources.ApplyResources(this.addBackgroundSoundsToolStripMenuItem, "addBackgroundSoundsToolStripMenuItem");
+            this.addBackgroundSoundsToolStripMenuItem.Name = "addBackgroundSoundsToolStripMenuItem";
             this.addBackgroundSoundsToolStripMenuItem.Click += new System.EventHandler(this.addBackgroundSoundsToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
             resources.ApplyResources(this.toolStripSeparator2, "toolStripSeparator2");
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
             // 
             // addParallelElementToolStripMenuItem
             // 
-            this.addParallelElementToolStripMenuItem.Name = "addParallelElementToolStripMenuItem";
             resources.ApplyResources(this.addParallelElementToolStripMenuItem, "addParallelElementToolStripMenuItem");
+            this.addParallelElementToolStripMenuItem.Name = "addParallelElementToolStripMenuItem";
             this.addParallelElementToolStripMenuItem.Click += new System.EventHandler(this.addParallelElementToolStripMenuItem_Click);
             // 
             // addSequentialElementToolStripMenuItem
             // 
-            this.addSequentialElementToolStripMenuItem.Name = "addSequentialElementToolStripMenuItem";
             resources.ApplyResources(this.addSequentialElementToolStripMenuItem, "addSequentialElementToolStripMenuItem");
+            this.addSequentialElementToolStripMenuItem.Name = "addSequentialElementToolStripMenuItem";
             this.addSequentialElementToolStripMenuItem.Click += new System.EventHandler(this.addSequentialElementToolStripMenuItem_Click);
             // 
             // addChoiceListToolStripMenuItem
             // 
-            this.addChoiceListToolStripMenuItem.Name = "addChoiceListToolStripMenuItem";
             resources.ApplyResources(this.addChoiceListToolStripMenuItem, "addChoiceListToolStripMenuItem");
+            this.addChoiceListToolStripMenuItem.Name = "addChoiceListToolStripMenuItem";
             this.addChoiceListToolStripMenuItem.Click += new System.EventHandler(this.addChoiceListToolStripMenuItem_Click);
             // 
             // containerContextMenu
             // 
+            resources.ApplyResources(this.containerContextMenu, "containerContextMenu");
             this.containerContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.editToolStripMenuItem,
             this.renameToolStripMenuItem2,
-            this.selectKeyToolStripMenuItem,
+            this.modeElementStartingToolStripMenuItem,
             this.deleteToolStripMenuItem1,
             this.toolStripSeparator3,
             this.addRandomPlaylistToolStripMenuItem1,
@@ -239,7 +241,6 @@ namespace Ares.Editor
             this.addSequentialElementToolStripMenuItem1,
             this.addChoiceListToolStripMenuItem1});
             this.containerContextMenu.Name = "containerContextMenu";
-            resources.ApplyResources(this.containerContextMenu, "containerContextMenu");
             this.containerContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.containerContextMenu_Opening);
             // 
             // editToolStripMenuItem
@@ -250,77 +251,77 @@ namespace Ares.Editor
             // 
             // renameToolStripMenuItem2
             // 
-            this.renameToolStripMenuItem2.Name = "renameToolStripMenuItem2";
             resources.ApplyResources(this.renameToolStripMenuItem2, "renameToolStripMenuItem2");
+            this.renameToolStripMenuItem2.Name = "renameToolStripMenuItem2";
             this.renameToolStripMenuItem2.Click += new System.EventHandler(this.renameToolStripMenuItem2_Click);
             // 
-            // selectKeyToolStripMenuItem
+            // modeElementStartingToolStripMenuItem
             // 
-            this.selectKeyToolStripMenuItem.Name = "selectKeyToolStripMenuItem";
-            resources.ApplyResources(this.selectKeyToolStripMenuItem, "selectKeyToolStripMenuItem");
-            this.selectKeyToolStripMenuItem.Click += new System.EventHandler(this.selectKeyToolStripMenuItem_Click);
+            resources.ApplyResources(this.modeElementStartingToolStripMenuItem, "modeElementStartingToolStripMenuItem");
+            this.modeElementStartingToolStripMenuItem.Name = "modeElementStartingToolStripMenuItem";
+            this.modeElementStartingToolStripMenuItem.Click += new System.EventHandler(this.selectKeyToolStripMenuItem_Click);
             // 
             // deleteToolStripMenuItem1
             // 
-            this.deleteToolStripMenuItem1.Name = "deleteToolStripMenuItem1";
             resources.ApplyResources(this.deleteToolStripMenuItem1, "deleteToolStripMenuItem1");
+            this.deleteToolStripMenuItem1.Name = "deleteToolStripMenuItem1";
             this.deleteToolStripMenuItem1.Click += new System.EventHandler(this.deleteToolStripMenuItem1_Click);
             // 
             // toolStripSeparator3
             // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
             resources.ApplyResources(this.toolStripSeparator3, "toolStripSeparator3");
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
             // 
             // addRandomPlaylistToolStripMenuItem1
             // 
-            this.addRandomPlaylistToolStripMenuItem1.Name = "addRandomPlaylistToolStripMenuItem1";
             resources.ApplyResources(this.addRandomPlaylistToolStripMenuItem1, "addRandomPlaylistToolStripMenuItem1");
+            this.addRandomPlaylistToolStripMenuItem1.Name = "addRandomPlaylistToolStripMenuItem1";
             this.addRandomPlaylistToolStripMenuItem1.Click += new System.EventHandler(this.addRandomPlaylistToolStripMenuItem1_Click);
             // 
             // addSequentialPlaylistToolStripMenuItem1
             // 
-            this.addSequentialPlaylistToolStripMenuItem1.Name = "addSequentialPlaylistToolStripMenuItem1";
             resources.ApplyResources(this.addSequentialPlaylistToolStripMenuItem1, "addSequentialPlaylistToolStripMenuItem1");
+            this.addSequentialPlaylistToolStripMenuItem1.Name = "addSequentialPlaylistToolStripMenuItem1";
             this.addSequentialPlaylistToolStripMenuItem1.Click += new System.EventHandler(this.addSequentialPlaylistToolStripMenuItem1_Click);
             // 
             // addBackgroundSoundsToolStripMenuItem1
             // 
-            this.addBackgroundSoundsToolStripMenuItem1.Name = "addBackgroundSoundsToolStripMenuItem1";
             resources.ApplyResources(this.addBackgroundSoundsToolStripMenuItem1, "addBackgroundSoundsToolStripMenuItem1");
+            this.addBackgroundSoundsToolStripMenuItem1.Name = "addBackgroundSoundsToolStripMenuItem1";
             this.addBackgroundSoundsToolStripMenuItem1.Click += new System.EventHandler(this.addBackgroundSoundsToolStripMenuItem1_Click);
             // 
             // toolStripSeparator4
             // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
             resources.ApplyResources(this.toolStripSeparator4, "toolStripSeparator4");
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
             // 
             // addParallelElementToolStripMenuItem1
             // 
-            this.addParallelElementToolStripMenuItem1.Name = "addParallelElementToolStripMenuItem1";
             resources.ApplyResources(this.addParallelElementToolStripMenuItem1, "addParallelElementToolStripMenuItem1");
+            this.addParallelElementToolStripMenuItem1.Name = "addParallelElementToolStripMenuItem1";
             this.addParallelElementToolStripMenuItem1.Click += new System.EventHandler(this.addParallelElementToolStripMenuItem1_Click);
             // 
             // addSequentialElementToolStripMenuItem1
             // 
-            this.addSequentialElementToolStripMenuItem1.Name = "addSequentialElementToolStripMenuItem1";
             resources.ApplyResources(this.addSequentialElementToolStripMenuItem1, "addSequentialElementToolStripMenuItem1");
+            this.addSequentialElementToolStripMenuItem1.Name = "addSequentialElementToolStripMenuItem1";
             this.addSequentialElementToolStripMenuItem1.Click += new System.EventHandler(this.addSequentialElementToolStripMenuItem1_Click);
             // 
             // addChoiceListToolStripMenuItem1
             // 
-            this.addChoiceListToolStripMenuItem1.Name = "addChoiceListToolStripMenuItem1";
             resources.ApplyResources(this.addChoiceListToolStripMenuItem1, "addChoiceListToolStripMenuItem1");
+            this.addChoiceListToolStripMenuItem1.Name = "addChoiceListToolStripMenuItem1";
             this.addChoiceListToolStripMenuItem1.Click += new System.EventHandler(this.addChoiceListToolStripMenuItem1_Click);
             // 
             // elementContextMenu
             // 
+            resources.ApplyResources(this.elementContextMenu, "elementContextMenu");
             this.elementContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.editToolStripMenuItem1,
             this.renameToolStripMenuItem3,
-            this.selectKeyToolStripMenuItem1,
+            this.modeElementStartingToolStripMenuItem1,
             this.deleteToolStripMenuItem2});
             this.elementContextMenu.Name = "elementContextMenu";
-            resources.ApplyResources(this.elementContextMenu, "elementContextMenu");
             this.elementContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.elementContextMenu_Opening);
             // 
             // editToolStripMenuItem1
@@ -331,77 +332,77 @@ namespace Ares.Editor
             // 
             // renameToolStripMenuItem3
             // 
-            this.renameToolStripMenuItem3.Name = "renameToolStripMenuItem3";
             resources.ApplyResources(this.renameToolStripMenuItem3, "renameToolStripMenuItem3");
+            this.renameToolStripMenuItem3.Name = "renameToolStripMenuItem3";
             this.renameToolStripMenuItem3.Click += new System.EventHandler(this.renameToolStripMenuItem3_Click);
             // 
-            // selectKeyToolStripMenuItem1
+            // modeElementStartingToolStripMenuItem1
             // 
-            this.selectKeyToolStripMenuItem1.Name = "selectKeyToolStripMenuItem1";
-            resources.ApplyResources(this.selectKeyToolStripMenuItem1, "selectKeyToolStripMenuItem1");
-            this.selectKeyToolStripMenuItem1.Click += new System.EventHandler(this.selectKeyToolStripMenuItem1_Click);
+            resources.ApplyResources(this.modeElementStartingToolStripMenuItem1, "modeElementStartingToolStripMenuItem1");
+            this.modeElementStartingToolStripMenuItem1.Name = "modeElementStartingToolStripMenuItem1";
+            this.modeElementStartingToolStripMenuItem1.Click += new System.EventHandler(this.selectKeyToolStripMenuItem1_Click);
             // 
             // deleteToolStripMenuItem2
             // 
-            this.deleteToolStripMenuItem2.Name = "deleteToolStripMenuItem2";
             resources.ApplyResources(this.deleteToolStripMenuItem2, "deleteToolStripMenuItem2");
+            this.deleteToolStripMenuItem2.Name = "deleteToolStripMenuItem2";
             this.deleteToolStripMenuItem2.Click += new System.EventHandler(this.deleteToolStripMenuItem2_Click);
             // 
             // bgSoundsContextMenu
             // 
+            resources.ApplyResources(this.bgSoundsContextMenu, "bgSoundsContextMenu");
             this.bgSoundsContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.renameToolStripMenuItem4,
-            this.selectKeyToolStripMenuItem2,
+            this.modeElementStartingToolStripMenuItem2,
             this.deleteToolStripMenuItem3,
             this.addSoundChoiceToolStripMenuItem});
             this.bgSoundsContextMenu.Name = "bgSoundsContextMenu";
-            resources.ApplyResources(this.bgSoundsContextMenu, "bgSoundsContextMenu");
             this.bgSoundsContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.bgSoundsContextMenu_Opening);
             // 
             // renameToolStripMenuItem4
             // 
-            this.renameToolStripMenuItem4.Name = "renameToolStripMenuItem4";
             resources.ApplyResources(this.renameToolStripMenuItem4, "renameToolStripMenuItem4");
+            this.renameToolStripMenuItem4.Name = "renameToolStripMenuItem4";
             this.renameToolStripMenuItem4.Click += new System.EventHandler(this.renameToolStripMenuItem4_Click);
             // 
-            // selectKeyToolStripMenuItem2
+            // modeElementStartingToolStripMenuItem2
             // 
-            resources.ApplyResources(this.selectKeyToolStripMenuItem2, "selectKeyToolStripMenuItem2");
-            this.selectKeyToolStripMenuItem2.Name = "selectKeyToolStripMenuItem2";
-            this.selectKeyToolStripMenuItem2.Click += new System.EventHandler(this.selectKeyToolStripMenuItem2_Click);
+            resources.ApplyResources(this.modeElementStartingToolStripMenuItem2, "modeElementStartingToolStripMenuItem2");
+            this.modeElementStartingToolStripMenuItem2.Name = "modeElementStartingToolStripMenuItem2";
+            this.modeElementStartingToolStripMenuItem2.Click += new System.EventHandler(this.selectKeyToolStripMenuItem2_Click);
             // 
             // deleteToolStripMenuItem3
             // 
-            this.deleteToolStripMenuItem3.Name = "deleteToolStripMenuItem3";
             resources.ApplyResources(this.deleteToolStripMenuItem3, "deleteToolStripMenuItem3");
+            this.deleteToolStripMenuItem3.Name = "deleteToolStripMenuItem3";
             this.deleteToolStripMenuItem3.Click += new System.EventHandler(this.deleteToolStripMenuItem3_Click);
             // 
             // addSoundChoiceToolStripMenuItem
             // 
-            this.addSoundChoiceToolStripMenuItem.Name = "addSoundChoiceToolStripMenuItem";
             resources.ApplyResources(this.addSoundChoiceToolStripMenuItem, "addSoundChoiceToolStripMenuItem");
+            this.addSoundChoiceToolStripMenuItem.Name = "addSoundChoiceToolStripMenuItem";
             this.addSoundChoiceToolStripMenuItem.Click += new System.EventHandler(this.addSoundChoiceToolStripMenuItem_Click);
             // 
             // toolStrip1
             // 
+            resources.ApplyResources(this.toolStrip1, "toolStrip1");
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.playButton,
             this.stopButton});
-            resources.ApplyResources(this.toolStrip1, "toolStrip1");
             this.toolStrip1.Name = "toolStrip1";
             // 
             // playButton
             // 
-            this.playButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             resources.ApplyResources(this.playButton, "playButton");
+            this.playButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.playButton.Image = global::Ares.Editor.ImageResources.RunSmall;
             this.playButton.Name = "playButton";
             this.playButton.Click += new System.EventHandler(this.playButton_Click);
             // 
             // stopButton
             // 
-            this.stopButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             resources.ApplyResources(this.stopButton, "stopButton");
+            this.stopButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.stopButton.Image = global::Ares.Editor.ImageResources.StopSmall;
             this.stopButton.Name = "stopButton";
             this.stopButton.Click += new System.EventHandler(this.stopButton_Click);
@@ -449,7 +450,7 @@ namespace Ares.Editor
         private System.Windows.Forms.ContextMenuStrip containerContextMenu;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem selectKeyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem modeElementStartingToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem addRandomPlaylistToolStripMenuItem1;
@@ -461,7 +462,7 @@ namespace Ares.Editor
         private System.Windows.Forms.ContextMenuStrip elementContextMenu;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem3;
-        private System.Windows.Forms.ToolStripMenuItem selectKeyToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem modeElementStartingToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem addChoiceListToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addChoiceListToolStripMenuItem1;
@@ -469,7 +470,7 @@ namespace Ares.Editor
         private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem4;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem3;
         private System.Windows.Forms.ToolStripMenuItem addSoundChoiceToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem selectKeyToolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem modeElementStartingToolStripMenuItem2;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton playButton;
         private System.Windows.Forms.ToolStripButton stopButton;

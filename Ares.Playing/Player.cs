@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using Ares.Data;
+using Ares.ModelInfo;
 
 namespace Ares.Playing
 {
@@ -145,8 +146,8 @@ namespace Ares.Playing
 
         bool Stopped { get; }
 
-        void SubPlayerStarted();
-        void SubPlayerFinished();
+        void SubPlayerStarted(ElementPlayerBase subPlayer);
+        void SubPlayerFinished(ElementPlayerBase subPlayer);
     }
 
     interface IMusicPlayer
@@ -154,7 +155,7 @@ namespace Ares.Playing
         void Next();
         void Previous();
         void Stop();
-        void SetVolume(int volume);
+        void SetMusicVolume(int volume);
     }
 
     abstract class ElementPlayerBase : IElementVisitor
@@ -170,6 +171,25 @@ namespace Ares.Playing
         public virtual void VisitSequentialMusicList(ISequentialBackgroundMusicList musicList) { }
 
         public virtual void VisitRandomMusicList(IRandomBackgroundMusicList musicList) { }
+
+        public abstract void StopMusic();
+        public abstract void StopSounds();
+        public abstract void SetSoundVolume(int volume);
+
+        protected int CurrentPlayedHandle { get; set; }
+
+        protected void StopCurrentFile()
+        {
+            lock (syncObject)
+            {
+                if (CurrentPlayedHandle != 0)
+                {
+                    int handle = CurrentPlayedHandle;
+                    CurrentPlayedHandle = 0;
+                    PlayingModule.FilePlayer.StopFile(handle);
+                }
+            }
+        }
 
         protected void Delay(IDelayableElement element, IElement original)
         {
@@ -256,6 +276,8 @@ namespace Ares.Playing
         private RegisteredWaitHandle m_RegisteredWaitHandle;
         private WaitHandle m_StoppedEvent;
         private IElementPlayerClient m_Client;
+
+        protected Object syncObject = new Int16();
     }
 
     abstract class MusicPlayer : ElementPlayerBase, IMusicPlayer
@@ -267,11 +289,12 @@ namespace Ares.Playing
                     bool stop = false;
                     lock (syncObject)
                     {
+                        CurrentPlayedHandle = 0;
                         stop = shallStop;
                     }
                     if (stop)
                     {
-                        Client.SubPlayerFinished();
+                        Client.SubPlayerFinished(this);
                     }
                     else
                     {
@@ -283,21 +306,6 @@ namespace Ares.Playing
 
         public abstract void PlayNext();
 
-        protected int CurrentPlayedHandle { get; set; }
-
-        protected void StopCurrentFile()
-        {
-            lock (syncObject)
-            {
-                if (CurrentPlayedHandle != 0)
-                {
-                    int handle = CurrentPlayedHandle;
-                    CurrentPlayedHandle = 0;
-                    PlayingModule.FilePlayer.StopFile(handle);
-                }
-            }
-        }
-
         public void Stop()
         {
             lock (syncObject)
@@ -307,7 +315,20 @@ namespace Ares.Playing
             StopCurrentFile();
         }
 
-        public void SetVolume(int volume)
+        public override void StopMusic()
+        {
+            Stop();
+        }
+
+        public override void StopSounds()
+        {
+        }
+
+        public override void SetSoundVolume(int volume)
+        {
+        }
+
+        public void SetMusicVolume(int volume)
         {
             lock (syncObject)
             {
@@ -330,8 +351,7 @@ namespace Ares.Playing
         {
         }
 
-        protected Object syncObject = new Int16();
-        private bool shallStop = false;
+        protected bool shallStop = false;
     }
 
     class SequentialMusicPlayer : MusicPlayer, IMusicPlayer
@@ -350,10 +370,10 @@ namespace Ares.Playing
         public override void PlayNext()
         {
             Monitor.Enter(syncObject);
-            if (Client.Stopped)
+            if (Client.Stopped || shallStop)
             {
                 Monitor.Exit(syncObject);
-                Client.SubPlayerFinished();
+                Client.SubPlayerFinished(this);
                 return;
             }
             ++m_Index;
@@ -368,7 +388,7 @@ namespace Ares.Playing
                 else
                 {
                     Monitor.Exit(syncObject);
-                    Client.SubPlayerFinished();
+                    Client.SubPlayerFinished(this);
                 }
             }
             else
@@ -404,7 +424,7 @@ namespace Ares.Playing
             }
             else
             {
-                Client.SubPlayerFinished();
+                Client.SubPlayerFinished(this);
             }
         }
 
@@ -424,10 +444,10 @@ namespace Ares.Playing
         public override void  PlayNext()
         {
             Monitor.Enter(syncObject);
-            if (Client.Stopped || (m_Container.RepeatCount != -1 && m_Container.RepeatCount <= ++m_RepeatCount))
+            if (Client.Stopped || shallStop || (m_Container.RepeatCount != -1 && m_Container.RepeatCount <= ++m_RepeatCount))
             {
                 Monitor.Exit(syncObject);
-                Client.SubPlayerFinished();
+                Client.SubPlayerFinished(this);
             }
             else if (m_GoBack && m_LastElementsStack.Count > 1)
             {
@@ -492,15 +512,15 @@ namespace Ares.Playing
 
         public bool Stopped { get { return Client.Stopped; } }
 
-        public void SubPlayerStarted()
+        public void SubPlayerStarted(ElementPlayerBase player)
         {
-            Client.SubPlayerStarted();
+            Client.SubPlayerStarted(player);
             Interlocked.Increment(ref m_ActiveSubPlayers);
         }
 
-        public void SubPlayerFinished()
+        public void SubPlayerFinished(ElementPlayerBase player)
         {
-            Client.SubPlayerFinished();
+            Client.SubPlayerFinished(player);
             if (Interlocked.Decrement(ref m_ActiveSubPlayers) == 0)
             {
                 // done with the parallel container or music player
@@ -510,11 +530,62 @@ namespace Ares.Playing
             }
         }
 
+        // From ElementPlayerBase
+        
+        // Because this player doesn't play music by itself, but delegates to sub-players,
+        // no implementation is necessary
+        public override void StopMusic()
+        { 
+        }
+
+        public override void StopSounds()
+        {
+            lock (syncObject)
+            {
+                m_StopSounds = true;
+            }
+            StopCurrentFile();
+        }
+
+        public override void SetSoundVolume(int volume)
+        {
+            lock (syncObject)
+            {
+                if (CurrentPlayedHandle != 0)
+                {
+                    ((FilePlayer)PlayingModule.FilePlayer).SetVolume(CurrentPlayedHandle, volume);
+                }
+            }            
+        }
+
         // Interface IElementVisitor
 
         public override void VisitFileElement(IFileElement fileElement)
         {
-            Client.PlayFile(fileElement, () => Next());
+            bool stopSounds = false;
+            lock (syncObject)
+            {
+                stopSounds = m_StopSounds;
+            }
+            if (stopSounds)
+            {
+                Next();
+            }
+            else
+            {
+                int handle = Client.PlayFile(fileElement, () =>
+                    {
+                        lock (syncObject)
+                        {
+                            CurrentPlayedHandle = 0;
+                        }
+                        Next();
+                    });
+                lock (syncObject)
+                {
+                    CurrentPlayedHandle = handle;
+                }
+            }
         }
 
         public override void VisitSequentialContainer(IElementContainer<ISequentialElement> sequentialContainer)
@@ -531,7 +602,7 @@ namespace Ares.Playing
             foreach (IParallelElement element in parallelContainer.GetElements())
             {
                 ElementPlayer subPlayer = new ElementPlayer(this, StoppedEvent, element);
-                Client.SubPlayerStarted();
+                Client.SubPlayerStarted(subPlayer);
                 Interlocked.Increment(ref m_ActiveSubPlayers);
                 subPlayer.Start();
             }
@@ -554,7 +625,7 @@ namespace Ares.Playing
             if (list.GetElements().Count == 0)
                 return;
             SequentialMusicPlayer subPlayer = new SequentialMusicPlayer(list, StoppedEvent, this);
-            Client.SubPlayerStarted();
+            Client.SubPlayerStarted(subPlayer);
             Interlocked.Increment(ref m_ActiveSubPlayers);
             subPlayer.Start();
         }
@@ -564,7 +635,7 @@ namespace Ares.Playing
             if (list.GetElements().Count == 0)
                 return;
             RandomMusicPlayer subPlayer = new RandomMusicPlayer(list, StoppedEvent, this);
-            Client.SubPlayerStarted();
+            Client.SubPlayerStarted(subPlayer);
             Interlocked.Increment(ref m_ActiveSubPlayers);
             subPlayer.Start();
         }
@@ -587,7 +658,7 @@ namespace Ares.Playing
             {
                 // finished, nothing to play any more
                 Monitor.Exit(syncObject);
-                Client.SubPlayerFinished();
+                Client.SubPlayerFinished(this);
             }
             else
             {
@@ -596,7 +667,7 @@ namespace Ares.Playing
                 ++element.PlayCount;
                 IRepeatableElement repeatable = element.Element as IRepeatableElement;
                 IMusicList musicList = element.Element as IMusicList;
-                if (musicList != null || repeatable == null || (repeatable.RepeatCount != -1 && element.PlayCount >= repeatable.RepeatCount))
+                if (m_StopSounds || musicList != null || repeatable == null || (repeatable.RepeatCount != -1 && element.PlayCount >= repeatable.RepeatCount))
                 {
                     // will not be played again; music lists are repeated inside their own players
                     m_ElementStack.RemoveAt(m_ElementStack.Count - 1);
@@ -627,6 +698,7 @@ namespace Ares.Playing
             m_ElementStack = new List<StackElement>();
             m_ElementStack.Add(new StackElement(startElement));
             m_ActiveSubPlayers = 0;
+            m_StopSounds = false;
         }
 
         private class StackElement
@@ -643,9 +715,9 @@ namespace Ares.Playing
 
         private List<StackElement> m_ElementStack;
 
-        private Object syncObject = new Int16();
-        
         private int m_ActiveSubPlayers;
+
+        private bool m_StopSounds;
     }
 
     abstract class StartElementPlayer : IElementPlayerClient
@@ -681,15 +753,58 @@ namespace Ares.Playing
             }
         }
 
-        public void SubPlayerStarted()
+        public void StopMusic()
         {
-            Interlocked.Increment(ref m_SubPlayers);
+            List<ElementPlayerBase> players = new List<ElementPlayerBase>();
+            lock (syncObject)
+            {
+                players.AddRange(m_SubPlayers.Keys);
+            }
+            foreach (ElementPlayerBase player in players)
+            {
+                player.StopMusic();
+            }
         }
 
-        public void SubPlayerFinished()
+        public void StopSounds()
+        {
+            List<ElementPlayerBase> players = new List<ElementPlayerBase>();
+            lock (syncObject)
+            {
+                players.AddRange(m_SubPlayers.Keys);
+            }
+            foreach (ElementPlayerBase player in players)
+            {
+                player.StopSounds();
+            }
+        }
+
+        public void SetSoundVolume(int volume)
+        {
+            List<ElementPlayerBase> players = new List<ElementPlayerBase>();
+            lock (syncObject)
+            {
+                players.AddRange(m_SubPlayers.Keys);
+            }
+            foreach (ElementPlayerBase player in players)
+            {
+                player.SetSoundVolume(volume);
+            }
+        }
+
+        public void SubPlayerStarted(ElementPlayerBase subPlayer)
+        {
+            lock (syncObject)
+            {
+                m_SubPlayers[subPlayer] = true;
+            }
+        }
+
+        public void SubPlayerFinished(ElementPlayerBase subPlayer)
         {
             Monitor.Enter(syncObject);
-            if (Interlocked.Decrement(ref m_SubPlayers) == 0 && Playing)
+            m_SubPlayers.Remove(subPlayer);
+            if (m_SubPlayers.Count == 0 && Playing)
             {
                 Playing = false;
                 Monitor.Exit(syncObject);
@@ -709,7 +824,10 @@ namespace Ares.Playing
             {
                 Playing = true;
                 ElementPlayer subPlayer = new ElementPlayer(this, m_StoppedEvent, m_Element);
-                Interlocked.Increment(ref m_SubPlayers);
+                lock (syncObject)
+                {
+                    m_SubPlayers[subPlayer] = true;
+                }
                 subPlayer.Start();
             }
         }
@@ -726,7 +844,7 @@ namespace Ares.Playing
             m_StoppedEvent.Set();
             Monitor.Enter(syncObject);
             m_CurrentFiles.Clear();
-            m_SubPlayers = 0;
+            m_SubPlayers.Clear();
             if (Playing)
             {
                 Playing = false;
@@ -752,13 +870,13 @@ namespace Ares.Playing
         {
             m_Element = element;
             m_CurrentFiles = new List<int>();
-            m_SubPlayers = 0;
+            m_SubPlayers = new Dictionary<ElementPlayerBase,bool>();
             m_Stopped = false;
             m_StoppedEvent = new ManualResetEvent(false);
             m_FinishedAction = finishedAction;
         }
 
-        private int m_SubPlayers;
+        private Dictionary<ElementPlayerBase, bool> m_SubPlayers;
         private List<Int32> m_CurrentFiles;
         private bool m_Stopped;
         private ManualResetEvent m_StoppedEvent;
@@ -845,7 +963,7 @@ namespace Ares.Playing
             {
                 m_Callbacks.ModeElementStarted(m_Mode);
             }
-            m_Mode.IsPlaying = true;
+            Playing = true;
         }
 
         protected override void PlayerFinished()
@@ -860,11 +978,15 @@ namespace Ares.Playing
         {
             get
             {
-                return m_Mode.IsPlaying;
+                return m_IsPlaying;
             }
             set
             {
-                m_Mode.IsPlaying = value;
+                m_IsPlaying = value;
+                if (m_Mode.IsEndless())
+                {
+                    m_Mode.IsPlaying = value;
+                }
             }
         }
 
@@ -876,6 +998,7 @@ namespace Ares.Playing
         }
 
         private IModeElement m_Mode;
+        private bool m_IsPlaying;
         private IProjectPlayingCallbacks m_Callbacks;
     }
 
@@ -937,12 +1060,35 @@ namespace Ares.Playing
         public void StopAll()
         {
             List<StartElementPlayer> copy = new List<StartElementPlayer>();
-            copy.AddRange(m_Players.Values);
+            foreach (IElement key in m_Players.Keys)
+            {
+                copy.AddRange(m_Players[key]);
+            }
             copy.ForEach(player => player.Stop());
             if (nrOfActivePlayers > 0)
             {
                 stoppingEvent.WaitOne();
             }
+        }
+
+        private void StopMusic()
+        {
+            List<StartElementPlayer> copy = new List<StartElementPlayer>();
+            foreach (IElement key in m_Players.Keys)
+            {
+                copy.AddRange(m_Players[key]);
+            }
+            copy.ForEach(player => player.StopMusic());
+        }
+
+        private void StopSounds()
+        {
+            List<StartElementPlayer> copy = new List<StartElementPlayer>();
+            foreach (IElement key in m_Players.Keys)
+            {
+                copy.AddRange(m_Players[key]);
+            }
+            copy.ForEach(player => player.StopSounds());
         }
 
         public void SetVolume(VolumeTarget target, Int32 value)
@@ -954,12 +1100,18 @@ namespace Ares.Playing
                 MusicVolume = value;
                 if (ActiveMusicPlayer != null)
                 {
-                    ActiveMusicPlayer.SetVolume(MusicVolume);
+                    ActiveMusicPlayer.SetMusicVolume(MusicVolume);
                 }
             }
             else if (target == VolumeTarget.Sounds)
             {
                 SoundVolume = value;
+                List<StartElementPlayer> copy = new List<StartElementPlayer>();
+                foreach (IElement key in m_Players.Keys)
+                {
+                    copy.AddRange(m_Players[key]);
+                }
+                copy.ForEach(player => player.SetSoundVolume(value));
             }
             else
             {
@@ -985,7 +1137,7 @@ namespace Ares.Playing
             IModeElement element = m_ActiveMode.GetTriggeredElement(keyCode);
             if (element == null)
                 return;
-            if (element.IsPlaying)
+            if (element.IsEndless() && element.IsPlaying)
             {
                 StopElement(element);
             }
@@ -997,21 +1149,13 @@ namespace Ares.Playing
 
         private void DoStartElement(IElement element, StartElementPlayer player)
         {
-            StartElementPlayer oldPlayer = null;
             lock (syncObject)
             {
-                if (m_Players.ContainsKey(element))
+                if (!m_Players.ContainsKey(element))
                 {
-                    oldPlayer = m_Players[element];
+                    m_Players[element] = new List<StartElementPlayer>();
                 }
-            }
-            if (oldPlayer != null)
-            {
-                oldPlayer.Stop();
-            }
-            lock (syncObject)
-            {
-                m_Players[element] = player;
+                m_Players[element].Add(player);
                 ++nrOfActivePlayers;
             }
             player.Start();
@@ -1024,7 +1168,7 @@ namespace Ares.Playing
             {
                 if (m_Players.ContainsKey(element))
                 {
-                    player = m_Players[element];
+                    player = m_Players[element][0];
                 }
             }
             if (player != null)
@@ -1040,6 +1184,14 @@ namespace Ares.Playing
 
         private void StartElement(IModeElement element)
         {
+            if (element.Trigger != null && element.Trigger.StopMusic)
+            {
+                StopMusic();
+            }
+            if (element.Trigger != null && element.Trigger.StopSounds)
+            {
+                StopSounds();
+            }
             ModeElementPlayer player = new ModeElementPlayer(element, ProjectCallbacks, player2 => PlayerStopped(player2, element));
             DoStartElement(element, player);
         }
@@ -1059,8 +1211,15 @@ namespace Ares.Playing
         {
             lock (syncObject)
             {
-                m_Players.Remove(element);
-                --nrOfActivePlayers;
+                if (m_Players.ContainsKey(element))
+                {
+                    m_Players[element].Remove(player);
+                    if (m_Players[element].Count == 0)
+                    {
+                        m_Players.Remove(element);
+                    }
+                    --nrOfActivePlayers;
+                }
             }
             if (nrOfActivePlayers <= 0)
                 stoppingEvent.Set();
@@ -1095,7 +1254,7 @@ namespace Ares.Playing
 
         public Player()
         {
-            m_Players = new Dictionary<IElement, StartElementPlayer>();
+            m_Players = new Dictionary<IElement, List<StartElementPlayer>>();
             MusicVolume = 100;
             SoundVolume = 100;
         }
@@ -1103,7 +1262,7 @@ namespace Ares.Playing
         private IProject m_Project;
         private IMode m_ActiveMode;
 
-        private IDictionary<IElement, StartElementPlayer> m_Players;
+        private IDictionary<IElement, List<StartElementPlayer>> m_Players;
 
         private AutoResetEvent stoppingEvent = new AutoResetEvent(false);
         private int nrOfActivePlayers;

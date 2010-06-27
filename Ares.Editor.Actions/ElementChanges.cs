@@ -38,7 +38,7 @@ namespace Ares.Editor.Actions
             }
         }
 
-        public enum ChangeType { Changed, Renamed, Removed, Played, Stopped }
+        public enum ChangeType { Changed, Renamed, Removed, Played, Stopped, TriggerChanged }
 
         public void AddListener(int elementID, Action<int, ChangeType> callback)
         {
@@ -65,6 +65,7 @@ namespace Ares.Editor.Actions
         public void ElementChanged(int elementID)
         {
             Notify(elementID, ChangeType.Changed);
+            NotifyAll(elementID, ChangeType.Changed);
         }
 
         public void ElementRenamed(int elementID)
@@ -75,6 +76,7 @@ namespace Ares.Editor.Actions
         public void ElementRemoved(int elementID)
         {
             Notify(elementID, ChangeType.Removed);
+            NotifyAll(elementID, ChangeType.Removed);
         }
 
         public void ElementPlayed(int elementID)
@@ -85,6 +87,21 @@ namespace Ares.Editor.Actions
         public void ElementStopped(int elementID)
         {
             Notify(elementID, ChangeType.Stopped);
+        }
+
+        public void ElementTriggerChanged(int elementID)
+        {
+            Notify(elementID, ChangeType.TriggerChanged);
+            NotifyAll(elementID, ChangeType.TriggerChanged);
+        }
+
+        private void NotifyAll(int elementID, ChangeType changeType)
+        {
+            if (m_Listeners.ContainsKey(-1))
+            {
+                List<Action<int, ChangeType>> copy = new List<Action<int, ChangeType>>(m_Listeners[-1]);
+                copy.ForEach(action => action(elementID, changeType));
+            }
         }
 
         private void Notify(int elementID, ChangeType changeType)

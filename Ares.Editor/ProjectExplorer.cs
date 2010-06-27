@@ -26,6 +26,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Ares.Editor.Actions;
+using Ares.Data;
 
 namespace Ares.Editor
 {
@@ -36,6 +37,7 @@ namespace Ares.Editor
             InitializeComponent();
             HideOnClose = true;
             RecreateTree();
+            ElementChanges.Instance.AddListener(-1, ElementTriggerChanged);
         }
 
         private System.Action m_AfterEditAction;
@@ -45,7 +47,7 @@ namespace Ares.Editor
             return "ProjectExplorer";
         }
 
-        public void SetProject(Ares.Data.IProject project)
+        public void SetProject(IProject project)
         {
             m_Project = project;
             RecreateTree();
@@ -82,65 +84,65 @@ namespace Ares.Editor
             projectTree.EndUpdate();
         }
 
-        private void AddModeNodes(TreeNode projectNode, Ares.Data.IProject project)
+        private void AddModeNodes(TreeNode projectNode, IProject project)
         {
             KeysConverter converter = new KeysConverter();
-            foreach (Ares.Data.IMode mode in project.GetModes())
+            foreach (IMode mode in project.GetModes())
             {
                 TreeNode modeNode = new TreeNode(mode.GetNodeTitle());
                 projectNode.Nodes.Add(modeNode);
                 modeNode.Tag = mode;
                 modeNode.ContextMenuStrip = modeContextMenu;
-                foreach (Ares.Data.IModeElement element in mode.GetElements())
+                foreach (IModeElement element in mode.GetElements())
                 {
                     AddModeElement(modeNode, element);
                 }
             }
         }
 
-        private void AddModeElement(TreeNode modeNode, Ares.Data.IModeElement modeElement)
+        private void AddModeElement(TreeNode modeNode, IModeElement modeElement)
         {
             TreeNode node = CreateModeElementNode(modeElement);
             modeNode.Nodes.Add(node);
-            Ares.Data.IElement startElement = modeElement.StartElement;
-            if (startElement is Ares.Data.IGeneralElementContainer)
+            IElement startElement = modeElement.StartElement;
+            if (startElement is IGeneralElementContainer)
             {
-                AddSubElements(node, (startElement as Ares.Data.IGeneralElementContainer).GetGeneralElements());
+                AddSubElements(node, (startElement as IGeneralElementContainer).GetGeneralElements());
             }
-            else if (startElement is Ares.Data.IBackgroundSounds)
+            else if (startElement is IBackgroundSounds)
             {
-                AddSubElements(node, (startElement as Ares.Data.IBackgroundSounds).GetElements());
+                AddSubElements(node, (startElement as IBackgroundSounds).GetElements());
             }
         }
 
-        private void AddSubElements(TreeNode parent, IList<Ares.Data.IContainerElement> subElements)
+        private void AddSubElements(TreeNode parent, IList<IContainerElement> subElements)
         {
-            foreach (Ares.Data.IContainerElement subElement in subElements)
+            foreach (IContainerElement subElement in subElements)
             {
-                Ares.Data.IElement innerElement = subElement.InnerElement;
-                if (innerElement is Ares.Data.IFileElement)
+                IElement innerElement = subElement.InnerElement;
+                if (innerElement is IFileElement)
                 {
                     continue;
                 }
                 TreeNode node = CreateElementNode(innerElement);
                 parent.Nodes.Add(node);
-                if (innerElement is Ares.Data.IGeneralElementContainer)
+                if (innerElement is IGeneralElementContainer)
                 {
-                    AddSubElements(node, (innerElement as Ares.Data.IGeneralElementContainer).GetGeneralElements());
+                    AddSubElements(node, (innerElement as IGeneralElementContainer).GetGeneralElements());
                 }
             }
         }
 
-        private void AddSubElements(TreeNode parent, IList<Ares.Data.IBackgroundSoundChoice> subElements)
+        private void AddSubElements(TreeNode parent, IList<IBackgroundSoundChoice> subElements)
         {
-            foreach (Ares.Data.IBackgroundSoundChoice subElement in subElements)
+            foreach (IBackgroundSoundChoice subElement in subElements)
             {
                 TreeNode node = CreateElementNode(subElement);
                 parent.Nodes.Add(node);
             }
         }
 
-        private TreeNode CreateModeElementNode(Ares.Data.IModeElement modeElement)
+        private TreeNode CreateModeElementNode(IModeElement modeElement)
         {
             TreeNode node = CreateElementNode(modeElement.StartElement);
             node.Text = modeElement.GetNodeTitle();
@@ -148,46 +150,46 @@ namespace Ares.Editor
             return node;
         }
 
-        private TreeNode CreateElementNode(Ares.Data.IElement element)
+        private TreeNode CreateElementNode(IElement element)
         {
             TreeNode node = new TreeNode(element.Title);
             node.Tag = element;
-            if (element is Ares.Data.IBackgroundSounds)
+            if (element is IBackgroundSounds)
             {
                 node.ContextMenuStrip = bgSoundsContextMenu;
             }
-            else if (element is Ares.Data.IBackgroundSoundChoice)
+            else if (element is IBackgroundSoundChoice)
             {
                 node.ContextMenuStrip = elementContextMenu;
             }
-            else if (element is Ares.Data.IRandomBackgroundMusicList)
+            else if (element is IRandomBackgroundMusicList)
             {
                 node.ContextMenuStrip = elementContextMenu;
             }
-            else if (element is Ares.Data.ISequentialBackgroundMusicList)
+            else if (element is ISequentialBackgroundMusicList)
             {
                 node.ContextMenuStrip = elementContextMenu;
             }
-            else if (element is Ares.Data.IGeneralElementContainer)
+            else if (element is IGeneralElementContainer)
             {
                 node.ContextMenuStrip = containerContextMenu;
             }
             return node;
         }
 
-        private static Ares.Data.IElement GetElement(TreeNode node)
+        private static IElement GetElement(TreeNode node)
         {
-            if (node.Tag is Ares.Data.IModeElement)
+            if (node.Tag is IModeElement)
             {
-                return (node.Tag as Ares.Data.IModeElement).StartElement;
+                return (node.Tag as IModeElement).StartElement;
             }
             else
             {
-                return node.Tag as Ares.Data.IElement;
+                return node.Tag as IElement;
             }
         }
 
-        private Ares.Data.IProject m_Project;
+        private IProject m_Project;
 
         private TreeNode m_SelectedNode;
 
@@ -237,26 +239,26 @@ namespace Ares.Editor
                     return;
                 Actions.Actions.Instance.AddNew(new RenameProjectAction(e.Node, text));
             }
-            else if (e.Node.Tag is Ares.Data.IMode)
+            else if (e.Node.Tag is IMode)
             {
                 if (e.Label == null)
                 {
-                    e.Node.Text = (e.Node.Tag as Ares.Data.IMode).GetNodeTitle();
+                    e.Node.Text = (e.Node.Tag as IMode).GetNodeTitle();
                     return;
                 }
-                Ares.Data.IMode mode = e.Node.Tag as Ares.Data.IMode;
+                IMode mode = e.Node.Tag as IMode;
                 Actions.Actions.Instance.AddNew(new RenameModeAction(e.Node, text));
                 e.CancelEdit = true; // the text is already changed by the action
                 // TODO: check for empty or equal titles, output warning
             }
-            else if (e.Node.Tag is Ares.Data.IModeElement)
+            else if (e.Node.Tag is IModeElement)
             {
                 if (e.Label == null)
                 {
-                    e.Node.Text = (e.Node.Tag as Ares.Data.IModeElement).GetNodeTitle();
+                    e.Node.Text = (e.Node.Tag as IModeElement).GetNodeTitle();
                     return;
                 }
-                Ares.Data.IModeElement modeElement = e.Node.Tag as Ares.Data.IModeElement;
+                IModeElement modeElement = e.Node.Tag as IModeElement;
                 Actions.Actions.Instance.AddNew(new RenameModeElementAction(e.Node, text));
                 e.CancelEdit = true; // the text is already changed by the action
             }
@@ -266,7 +268,7 @@ namespace Ares.Editor
                 {
                     return;
                 }
-                Ares.Data.IElement element = e.Node.Tag as Ares.Data.IElement;
+                IElement element = e.Node.Tag as IElement;
                 Actions.Actions.Instance.AddNew(new RenameElementAction(e.Node, text));
             }
             projectTree.LabelEdit = false;
@@ -298,7 +300,7 @@ namespace Ares.Editor
             projectTree.LabelEdit = true;
             if (!m_SelectedNode.IsEditing)
             {
-                m_SelectedNode.Text = (m_SelectedNode.Tag as Ares.Data.IMode).Title;
+                m_SelectedNode.Text = (m_SelectedNode.Tag as IMode).Title;
                 m_SelectedNode.BeginEdit();
             }
         }
@@ -306,8 +308,8 @@ namespace Ares.Editor
         private void AddRandomPlaylist()
         {
             String name = StringResources.NewPlaylist;
-            Ares.Data.IRandomBackgroundMusicList element = Ares.Data.DataModule.ElementFactory.CreateRandomBackgroundMusicList(name);
-            if (m_SelectedNode.Tag is Ares.Data.IMode)
+            IRandomBackgroundMusicList element = DataModule.ElementFactory.CreateRandomBackgroundMusicList(name);
+            if (m_SelectedNode.Tag is IMode)
             {
                 AddModeElement(element, name);
             }
@@ -321,8 +323,8 @@ namespace Ares.Editor
         private void AddSequentialPlaylist()
         {
             String name = StringResources.NewPlaylist;
-            Ares.Data.ISequentialBackgroundMusicList element = Ares.Data.DataModule.ElementFactory.CreateSequentialBackgroundMusicList(name);
-            if (m_SelectedNode.Tag is Ares.Data.IMode)
+            ISequentialBackgroundMusicList element = DataModule.ElementFactory.CreateSequentialBackgroundMusicList(name);
+            if (m_SelectedNode.Tag is IMode)
             {
                 AddModeElement(element, name);
             }
@@ -336,8 +338,8 @@ namespace Ares.Editor
         private void AddBackgroundSounds()
         {
             String name = StringResources.NewBackgroundSounds;
-            Ares.Data.IBackgroundSounds element = Ares.Data.DataModule.ElementFactory.CreateBackgroundSounds(name);
-            if (m_SelectedNode.Tag is Ares.Data.IMode)
+            IBackgroundSounds element = DataModule.ElementFactory.CreateBackgroundSounds(name);
+            if (m_SelectedNode.Tag is IMode)
             {
                 AddModeElement(element, name);
             }
@@ -358,7 +360,7 @@ namespace Ares.Editor
             String name = StringResources.NewSoundChoice;
             TreeNode node;
             Actions.Actions.Instance.AddNew(new Actions.AddSoundChoiceAction(m_SelectedNode, 
-                GetElement(m_SelectedNode) as Ares.Data.IBackgroundSounds, 
+                GetElement(m_SelectedNode) as IBackgroundSounds, 
                 name, CreateElementNode, out node));
             m_SelectedNode.Expand();
             m_SelectedNode = node;
@@ -369,8 +371,8 @@ namespace Ares.Editor
         private void AddParallelList()
         {
             String name = StringResources.NewParallelList;
-            Ares.Data.IElementContainer<Ares.Data.IParallelElement> element = Ares.Data.DataModule.ElementFactory.CreateParallelContainer(name);
-            if (m_SelectedNode.Tag is Ares.Data.IMode)
+            IElementContainer<IParallelElement> element = DataModule.ElementFactory.CreateParallelContainer(name);
+            if (m_SelectedNode.Tag is IMode)
             {
                 AddModeElement(element, name);
             }
@@ -384,8 +386,8 @@ namespace Ares.Editor
         private void AddSequentialList()
         {
             String name = StringResources.NewSequentialList;
-            Ares.Data.IElementContainer<Ares.Data.ISequentialElement> element = Ares.Data.DataModule.ElementFactory.CreateSequentialContainer(name);
-            if (m_SelectedNode.Tag is Ares.Data.IMode)
+            IElementContainer<ISequentialElement> element = DataModule.ElementFactory.CreateSequentialContainer(name);
+            if (m_SelectedNode.Tag is IMode)
             {
                 AddModeElement(element, name);
             }
@@ -399,8 +401,8 @@ namespace Ares.Editor
         private void AddRandomList()
         {
             String name = StringResources.NewRandomList;
-            Ares.Data.IElementContainer<Ares.Data.IChoiceElement> element = Ares.Data.DataModule.ElementFactory.CreateChoiceContainer(name);
-            if (m_SelectedNode.Tag is Ares.Data.IMode)
+            IElementContainer<IChoiceElement> element = DataModule.ElementFactory.CreateChoiceContainer(name);
+            if (m_SelectedNode.Tag is IMode)
             {
                 AddModeElement(element, name);
             }
@@ -414,15 +416,18 @@ namespace Ares.Editor
         private void AddScenario()
         {
             String name = StringResources.NewScenario;
-            Ares.Data.IElementContainer<Ares.Data.IParallelElement> element = Ares.Data.DataModule.ElementFactory.CreateParallelContainer(name);
+            IElementContainer<IParallelElement> element = DataModule.ElementFactory.CreateParallelContainer(name);
             AddModeElement(element, name);
             TreeNode scenarioNode = m_SelectedNode;
+            IModeElement modeElement = scenarioNode.Tag as IModeElement;
+            modeElement.Trigger = DataModule.ElementFactory.CreateNoTrigger();
+            modeElement.Trigger.StopSounds = true;
             String name2 = StringResources.Music;
-            Ares.Data.IRandomBackgroundMusicList element2 = Ares.Data.DataModule.ElementFactory.CreateRandomBackgroundMusicList(name2);
+            IRandomBackgroundMusicList element2 = DataModule.ElementFactory.CreateRandomBackgroundMusicList(name2);
             AddContainerElement(element2);
             m_SelectedNode = scenarioNode;
             String name3 = StringResources.Sounds;
-            Ares.Data.IBackgroundSounds element3 = Ares.Data.DataModule.ElementFactory.CreateBackgroundSounds(name3);
+            IBackgroundSounds element3 = DataModule.ElementFactory.CreateBackgroundSounds(name3);
             AddContainerElement(element3);
             AddSoundChoice(false);
             TreeNode soundChoiceNode = m_SelectedNode;
@@ -436,20 +441,20 @@ namespace Ares.Editor
             RenameElement();
         }
 
-        private void AddModeElement(Ares.Data.IElement startElement, String title)
+        private void AddModeElement(IElement startElement, String title)
         {
-            Ares.Data.IModeElement modeElement = Ares.Data.DataModule.ElementFactory.CreateModeElement(title, startElement);
+            IModeElement modeElement = DataModule.ElementFactory.CreateModeElement(title, startElement);
             TreeNode node = CreateModeElementNode(modeElement);
             Actions.Actions.Instance.AddNew(new AddModeElementAction(m_SelectedNode, modeElement, node));
             m_SelectedNode.Expand();
             m_SelectedNode = node;
         }
 
-        private void AddContainerElement(Ares.Data.IElement element)
+        private void AddContainerElement(IElement element)
         {
             TreeNode node;
             Actions.Actions.Instance.AddNew(new AddElementAction(m_SelectedNode, 
-                GetElement(m_SelectedNode) as Ares.Data.IGeneralElementContainer, element, CreateElementNode, out node));
+                GetElement(m_SelectedNode) as IGeneralElementContainer, element, CreateElementNode, out node));
             m_SelectedNode.Expand();
             m_SelectedNode = node;
         }
@@ -460,7 +465,7 @@ namespace Ares.Editor
             projectTree.LabelEdit = true;
             if (!m_SelectedNode.IsEditing)
             {
-                m_SelectedNode.Text = (m_SelectedNode.Tag as Ares.Data.IElement).Title;
+                m_SelectedNode.Text = (m_SelectedNode.Tag as IElement).Title;
                 m_SelectedNode.BeginEdit();
             }
         }
@@ -482,7 +487,7 @@ namespace Ares.Editor
 
         private void DeleteMode()
         {
-            Ares.Data.IMode mode = m_SelectedNode as Ares.Data.IMode;
+            IMode mode = m_SelectedNode as IMode;
             if (m_SelectedNode != null)
             {
                 Actions.Actions.Instance.AddNew(new DeleteModeAction(m_SelectedNode));
@@ -504,39 +509,57 @@ namespace Ares.Editor
             }
         }
 
-        private void SelectModeElementKey()
+        private void ElementTriggerChanged(int elementId, ElementChanges.ChangeType changeType)
         {
-            int keyCode = 0;
-            DialogResult result = Dialogs.KeyDialog.Show(this, out keyCode);
-            if (result != DialogResult.Cancel)
+            if (changeType == ElementChanges.ChangeType.TriggerChanged)
             {
-                Actions.Actions.Instance.AddNew(new Actions.SetModeElementKeyAction(m_SelectedNode, keyCode));
+                foreach (TreeNode node in projectTree.Nodes[0].Nodes)
+                {
+                    if (node.Tag is IMode)
+                    {
+                        foreach (TreeNode node2 in node.Nodes)
+                        {
+                            IModeElement modeElement = node2.Tag as IModeElement;
+                            if (modeElement != null && modeElement.Id == elementId)
+                            {
+                                node2.Text = modeElement.GetNodeTitle();
+                                return;
+                            }
+                        }
+                    }
+                }
             }
+        }
+
+        private void EditModeElementTrigger()
+        {
+            IModeElement element = m_SelectedNode.Tag as IModeElement;
+            ElementEditors.Editors.ShowTriggerEditor(element, DockPanel);
         }
 
         private void containerContextMenu_Opening(object sender, CancelEventArgs e)
         {
             UpdateContextMenuDueToPlaying(sender as ContextMenuStrip);
-            if (m_SelectedNode.Tag is Ares.Data.IModeElement)
+            if (m_SelectedNode.Tag is IModeElement)
             {
-                selectKeyToolStripMenuItem.Visible = true;
+                modeElementStartingToolStripMenuItem.Visible = true;
             }
             else
             {
-                selectKeyToolStripMenuItem.Visible = false;
+                modeElementStartingToolStripMenuItem.Visible = false;
             }
         }
 
         private void elementContextMenu_Opening(object sender, CancelEventArgs e)
         {
             UpdateContextMenuDueToPlaying(sender as ContextMenuStrip);
-            if (m_SelectedNode.Tag is Ares.Data.IModeElement)
+            if (m_SelectedNode.Tag is IModeElement)
             {
-                selectKeyToolStripMenuItem1.Visible = true;
+                modeElementStartingToolStripMenuItem1.Visible = true;
             }
             else
             {
-                selectKeyToolStripMenuItem1.Visible = false;
+                modeElementStartingToolStripMenuItem1.Visible = false;
             }
         }
 
@@ -552,11 +575,11 @@ namespace Ares.Editor
 
         private void DeleteElement()
         {
-            if (m_SelectedNode.Parent.Tag is Ares.Data.IMode)
+            if (m_SelectedNode.Parent.Tag is IMode)
             {
                 Actions.Actions.Instance.AddNew(new DeleteModeElementAction(m_SelectedNode));
             }
-            else if (m_SelectedNode.Parent.Tag is Ares.Data.IBackgroundSounds)
+            else if (m_SelectedNode.Parent.Tag is IBackgroundSounds)
             {
                 Actions.Actions.Instance.AddNew(new DeleteBackgroundSoundChoiceAction(m_SelectedNode));
             }
@@ -566,7 +589,7 @@ namespace Ares.Editor
             }
         }
 
-        private void EditElement(Ares.Data.IElement element)
+        private void EditElement(IElement element)
         {
             ElementEditors.Editors.ShowEditor(element, DockPanel);
         }
@@ -588,12 +611,12 @@ namespace Ares.Editor
 
         private void selectKeyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SelectModeElementKey();
+            EditModeElementTrigger();
         }
 
         private void selectKeyToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            SelectModeElementKey();
+            EditModeElementTrigger();
         }
 
         private void addSequentialPlaylistToolStripMenuItem_Click(object sender, EventArgs e)
@@ -655,15 +678,15 @@ namespace Ares.Editor
         {
             if (m_SelectedNode != null)
             {
-                if (m_SelectedNode.Tag is Ares.Data.IMode)
+                if (m_SelectedNode.Tag is IMode)
                 {
                     SelectModeKey();
                 }
-                else if (m_SelectedNode.Tag is Ares.Data.IModeElement && GetElement(m_SelectedNode) is Ares.Data.IBackgroundSounds)
+                else if (m_SelectedNode.Tag is IModeElement && GetElement(m_SelectedNode) is IBackgroundSounds)
                 {
-                    SelectModeElementKey();
+                    EditModeElementTrigger();
                 }
-                else if (m_SelectedNode.Tag is Ares.Data.IElement)
+                else if (m_SelectedNode.Tag is IElement)
                 {
                     EditElement(GetElement(m_SelectedNode));
                 }
@@ -716,27 +739,27 @@ namespace Ares.Editor
         private void bgSoundsContextMenu_Opening(object sender, CancelEventArgs e)
         {
             UpdateContextMenuDueToPlaying(sender as ContextMenuStrip);
-            if (m_SelectedNode.Tag is Ares.Data.IModeElement)
+            if (m_SelectedNode.Tag is IModeElement)
             {
-                selectKeyToolStripMenuItem2.Visible = true;
+                modeElementStartingToolStripMenuItem2.Visible = true;
             }
             else
             {
-                selectKeyToolStripMenuItem2.Visible = false;
+                modeElementStartingToolStripMenuItem2.Visible = false;
             }
 
         }
 
         private void selectKeyToolStripMenuItem2_Click(object sender, EventArgs e)
         {
-            SelectModeElementKey();
+            EditModeElementTrigger();
         }
 
-        private Ares.Data.IElement m_PlayedElement;
+        private IElement m_PlayedElement;
 
         private void playButton_Click(object sender, EventArgs e)
         {
-            Ares.Data.IElement element = GetElement(m_SelectedNode);
+            IElement element = GetElement(m_SelectedNode);
             if (element != null)
             {
                 m_PlayedElement = element;
@@ -759,7 +782,7 @@ namespace Ares.Editor
                     return false;
                 if (m_SelectedNode == null)
                     return false;
-                Ares.Data.IElement element = GetElement(m_SelectedNode);
+                IElement element = GetElement(m_SelectedNode);
                 if (element == null)
                     return false;
                 if (Actions.Playing.Instance.IsElementOrSubElementPlaying(element))
@@ -791,7 +814,7 @@ namespace Ares.Editor
         {
             if (m_SelectedNode != null)
             {
-                Ares.Data.IElement element = GetElement(m_SelectedNode);
+                IElement element = GetElement(m_SelectedNode);
                 if (element != null)
                 {
                     Actions.ElementChanges.Instance.AddListener(element.Id, UpdateAfterElementChange);
@@ -804,7 +827,7 @@ namespace Ares.Editor
         {
             if (m_SelectedNode != null)
             {
-                Ares.Data.IElement element = GetElement(m_SelectedNode);
+                IElement element = GetElement(m_SelectedNode);
                 if (element != null)
                 {
                     Actions.ElementChanges.Instance.RemoveListener(element.Id, UpdateAfterElementChange);
@@ -816,7 +839,7 @@ namespace Ares.Editor
         {
             if (m_SelectedNode != null)
             {
-                Ares.Data.IElement element = GetElement(m_SelectedNode);
+                IElement element = GetElement(m_SelectedNode);
                 if (element != null)
                 {
                     if (changeType == ElementChanges.ChangeType.Stopped || changeType == ElementChanges.ChangeType.Played)
@@ -834,12 +857,12 @@ namespace Ares.Editor
 
         private static bool IsNodePlaying(TreeNode node)
         {
-            Ares.Data.IElement element = GetElement(node);
+            IElement element = GetElement(node);
             if (element != null && Actions.Playing.Instance.IsElementOrSubElementPlaying(element))
             {
                 return true;
             }
-            else if (node.Tag is Ares.Data.IMode)
+            else if (node.Tag is IMode)
             {
                 foreach (TreeNode subNode in node.Nodes)
                 {
@@ -868,7 +891,7 @@ namespace Ares.Editor
                 {
                     if (m_SelectedNode == projectTree.Nodes[0])
                         RenameProject();
-                    else if (m_SelectedNode.Tag is Ares.Data.IMode)
+                    else if (m_SelectedNode.Tag is IMode)
                         RenameMode();
                     else
                         RenameElement();

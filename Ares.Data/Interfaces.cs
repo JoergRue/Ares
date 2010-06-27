@@ -295,7 +295,11 @@ namespace Ares.Data
         /// <summary>
         /// Triggered by an another element which has finished playing.
         /// </summary>
-        ElementFinished
+        ElementFinished,
+        /// <summary>
+        /// No trigger defined (yet)
+        /// </summary>
+        None
     }
 
     /// <summary>

@@ -24,23 +24,10 @@ using System.Text;
 namespace Ares.Data
 {
     /// <summary>
-    /// An element which contains several other elements.
-    /// </summary>
-    public interface ICompositeElement
-    {
-        /// <summary>
-        /// Returns whether the element will finish playing
-        /// without an external trigger or whether it will
-        /// play forever.
-        /// </summary>
-        bool IsEndless();
-    }
-
-    /// <summary>
     /// A top-level element inside a mode which is triggered 
     /// externally.
     /// </summary>
-    public interface IModeElement : IElement, ICompositeElement
+    public interface IModeElement : IElement
     {
         /// <summary>
         /// The trigger for the element.
@@ -48,15 +35,15 @@ namespace Ares.Data
         ITrigger Trigger { get; set; }
 
         /// <summary>
-        /// Whether the element is currently active.
-        /// </summary>
-        bool IsPlaying { get; set; }
-
-        /// <summary>
         /// Returns the first element in the mode (the one which will be 
         /// attached to the trigger).
         /// </summary>
         IElement StartElement { get; }
+
+        /// <summary>
+        /// Whether the element is currently playing
+        /// </summary>
+        bool IsPlaying { get; set; }
     }
 
     /// <summary>

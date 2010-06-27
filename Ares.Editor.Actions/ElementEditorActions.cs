@@ -289,4 +289,31 @@ namespace Ares.Editor.Actions
         private IList<IElement> m_Elements;
         private int m_Index;
     }
+
+    public class SetModeElementTriggerAction : Action
+    {
+        public SetModeElementTriggerAction(IModeElement modeElement, ITrigger trigger)
+        {
+            m_ModeElement = modeElement;
+            m_OldTrigger = modeElement.Trigger;
+            m_NewTrigger = trigger;
+        }
+
+        public override void Do()
+        {
+            m_ModeElement.Trigger = m_NewTrigger;
+            ElementChanges.Instance.ElementTriggerChanged(m_ModeElement.Id);
+        }
+
+        public override void Undo()
+        {
+            m_ModeElement.Trigger = m_OldTrigger;
+            ElementChanges.Instance.ElementTriggerChanged(m_ModeElement.Id);
+        }
+
+        private IModeElement m_ModeElement;
+        private ITrigger m_OldTrigger;
+        private ITrigger m_NewTrigger;
+    }
+
 }

@@ -77,6 +77,12 @@
     <Compile Include="ElementEditors\RandomPlaylistEditor.Designer.cs">
       <DependentUpon>RandomPlaylistEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="ElementEditors\TriggerEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ElementEditors\TriggerEditor.Designer.cs">
+      <DependentUpon>TriggerEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="FileExplorer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -123,6 +129,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ElementEditors\RandomPlaylistEditor.resx">
       <DependentUpon>RandomPlaylistEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ElementEditors\TriggerEditor.de.resx">
+      <DependentUpon>TriggerEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ElementEditors\TriggerEditor.resx">
+      <DependentUpon>TriggerEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FileExplorer.de.resx">
       <DependentUpon>FileExplorer.cs</DependentUpon>
@@ -194,6 +206,10 @@
     <ProjectReference Include="..\Ares.Ipc\Ares.Ipc.csproj">
       <Project>{07BE1372-C1D2-4E2A-9678-DC27BE0D9FF0}</Project>
       <Name>Ares.Ipc</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ares.ModelChecks\Ares.ModelInfo.csproj">
+      <Project>{50EA19EE-5337-499C-8B7B-1B22EA9E24A6}</Project>
+      <Name>Ares.ModelInfo</Name>
     </ProjectReference>
     <ProjectReference Include="..\Ares.Playing\Ares.Playing.csproj">
       <Project>{6C55F933-0F49-489C-AFF4-E0E0A8581E42}</Project>

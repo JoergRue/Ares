@@ -99,7 +99,9 @@ namespace Ares.Editor.ElementEditors
             using (Graphics g = label1.CreateGraphics())
             {
                 float textWidth = g.MeasureString(text, font).Width;
+                if (textWidth == 0) return;
                 float factor = label1.Width / textWidth;
+                if (factor == 0) return;
                 label1.Font = new Font(font.Name, font.SizeInPoints * factor);
             }
         }

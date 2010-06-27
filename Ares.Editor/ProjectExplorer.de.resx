@@ -214,11 +214,11 @@
   <data name="renameToolStripMenuItem2.Text" xml:space="preserve">
     <value>Umbenennen</value>
   </data>
-  <data name="selectKeyToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="modeElementStartingToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>269, 22</value>
   </data>
-  <data name="selectKeyToolStripMenuItem.Text" xml:space="preserve">
-    <value>Taste wählen ...</value>
+  <data name="modeElementStartingToolStripMenuItem.Text" xml:space="preserve">
+    <value>Start ...</value>
   </data>
   <data name="deleteToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
     <value>269, 22</value>
@@ -272,37 +272,46 @@
     <value>270, 236</value>
   </data>
   <data name="editToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>155, 22</value>
+    <value>148, 22</value>
   </data>
   <data name="editToolStripMenuItem1.Text" xml:space="preserve">
     <value>Bearbeiten ...</value>
   </data>
   <data name="renameToolStripMenuItem3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>155, 22</value>
+    <value>148, 22</value>
   </data>
   <data name="renameToolStripMenuItem3.Text" xml:space="preserve">
     <value>Umbenennen</value>
   </data>
-  <data name="selectKeyToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>155, 22</value>
+  <data name="modeElementStartingToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>148, 22</value>
   </data>
-  <data name="selectKeyToolStripMenuItem1.Text" xml:space="preserve">
-    <value>Taste wählen ...</value>
+  <data name="modeElementStartingToolStripMenuItem1.Text" xml:space="preserve">
+    <value>Start ...</value>
   </data>
   <data name="deleteToolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>155, 22</value>
+    <value>148, 22</value>
   </data>
   <data name="deleteToolStripMenuItem2.Text" xml:space="preserve">
     <value>Löschen</value>
   </data>
   <data name="elementContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>156, 92</value>
+    <value>149, 92</value>
+  </data>
+  <data name="renameToolStripMenuItem4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>229, 22</value>
   </data>
   <data name="renameToolStripMenuItem4.Text" xml:space="preserve">
     <value>Umbenennen</value>
   </data>
-  <data name="selectKeyToolStripMenuItem2.Text" xml:space="preserve">
-    <value>Taste wählen ...</value>
+  <data name="modeElementStartingToolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>229, 22</value>
+  </data>
+  <data name="modeElementStartingToolStripMenuItem2.Text" xml:space="preserve">
+    <value>Start ...</value>
+  </data>
+  <data name="deleteToolStripMenuItem3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>229, 22</value>
   </data>
   <data name="deleteToolStripMenuItem3.Text" xml:space="preserve">
     <value>Löschen</value>
