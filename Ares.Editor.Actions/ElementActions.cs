@@ -207,7 +207,8 @@ namespace Ares.Editor.Actions
             m_Parent = parent;
             m_Element = (IContainerElement)container.AddGeneralElement(element);
             m_Node = nodeCreator(m_Element.InnerElement);
-            m_Index = m_Parent.Nodes.Count;
+            m_NodeIndex = m_Parent.Nodes.Count;
+            m_ElementIndex = container.GetGeneralElements().Count - 1;
             container.RemoveElement(m_Element.Id);
             m_Container = container;
             node = m_Node;
@@ -216,7 +217,7 @@ namespace Ares.Editor.Actions
         public override void Do()
         {
             m_Parent.Nodes.Add(m_Node);
-            m_Container.InsertGeneralElement(m_Index, m_Element);
+            m_Container.InsertGeneralElement(m_ElementIndex, m_Element);
             ElementChanges.Instance.ElementChanged(m_Container.Id);
         }
 
@@ -230,7 +231,8 @@ namespace Ares.Editor.Actions
         private TreeNode m_Parent;
         private TreeNode m_Node;
         private IContainerElement m_Element;
-        private int m_Index;
+        private int m_NodeIndex;
+        private int m_ElementIndex;
         private IGeneralElementContainer m_Container;
     }
 

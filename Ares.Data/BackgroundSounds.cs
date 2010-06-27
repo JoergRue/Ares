@@ -58,6 +58,11 @@ namespace Ares.Data
             return m_Container.GetElements();
         }
 
+        public IChoiceElement GetElement(int ID)
+        {
+            return m_Container.GetElement(ID);
+        }
+
         #endregion
 
         #region IDelayableElement Members
@@ -225,6 +230,11 @@ namespace Ares.Data
             List<IContainerElement> elements = new List<IContainerElement>(m_Elements.Count);
             m_Elements.ForEach(e => elements.Add(e));
             return elements;
+        }
+
+        public IBackgroundSoundChoice GetElement(int ID)
+        {
+            return m_Elements.Find(e => e.Id == ID);
         }
 
         #endregion

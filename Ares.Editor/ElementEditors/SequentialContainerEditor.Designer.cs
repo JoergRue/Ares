@@ -1,6 +1,6 @@
 ﻿namespace Ares.Editor.ElementEditors
 {
-    partial class ChoiceContainerEditor
+    partial class SequentialContainerEditor
     {
         /// <summary>
         /// Erforderliche Designervariable.
@@ -29,13 +29,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChoiceContainerEditor));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SequentialContainerEditor));
             this.volumeControl = new Ares.Editor.Controls.VolumeControl();
-            this.choiceContainerControl = new Ares.Editor.ElementEditorControls.ChoiceContainerControl();
+            this.sequentialContainerControl = new Ares.Editor.Controls.SequentialContainerControl();
+            this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.stopButton = new System.Windows.Forms.Button();
             this.playButton = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -44,10 +44,17 @@
             resources.ApplyResources(this.volumeControl, "volumeControl");
             this.volumeControl.Name = "volumeControl";
             // 
-            // choiceContainerControl
+            // sequentialContainerControl
             // 
-            resources.ApplyResources(this.choiceContainerControl, "choiceContainerControl");
-            this.choiceContainerControl.Name = "choiceContainerControl";
+            resources.ApplyResources(this.sequentialContainerControl, "sequentialContainerControl");
+            this.sequentialContainerControl.Name = "sequentialContainerControl";
+            // 
+            // label1
+            // 
+            resources.ApplyResources(this.label1, "label1");
+            this.label1.ForeColor = System.Drawing.SystemColors.InactiveCaption;
+            this.label1.Name = "label1";
+            this.label1.UseCompatibleTextRendering = true;
             // 
             // groupBox1
             // 
@@ -76,28 +83,21 @@
             this.playButton.UseVisualStyleBackColor = true;
             this.playButton.Click += new System.EventHandler(this.playButton_Click);
             // 
-            // label1
-            // 
-            resources.ApplyResources(this.label1, "label1");
-            this.label1.ForeColor = System.Drawing.SystemColors.InactiveCaption;
-            this.label1.Name = "label1";
-            this.label1.UseCompatibleTextRendering = true;
-            // 
-            // ChoiceContainerEditor
+            // SequentialContainerEditor
             // 
             resources.ApplyResources(this, "$this");
             this.AllowDrop = true;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.choiceContainerControl);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.sequentialContainerControl);
             this.Controls.Add(this.volumeControl);
-            this.Name = "ChoiceContainerEditor";
-            this.SizeChanged += new System.EventHandler(this.ChoiceContainerEditor_SizeChanged);
-            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.ChoiceContainerEditor_DragDrop);
-            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.ChoiceContainerEditor_DragEnter);
-            this.DragOver += new System.Windows.Forms.DragEventHandler(this.ChoiceContainerEditor_DragOver);
-            this.DragLeave += new System.EventHandler(this.ChoiceContainerEditor_DragLeave);
+            this.Name = "SequentialContainerEditor";
+            this.SizeChanged += new System.EventHandler(this.SequentialContainerEditor_SizeChanged);
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.SequentialContainerEditor_DragDrop);
+            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.SequentialContainerEditor_DragEnter);
+            this.DragOver += new System.Windows.Forms.DragEventHandler(this.SequentialContainerEditor_DragOver);
+            this.DragLeave += new System.EventHandler(this.SequentialContainerEditor_DragLeave);
             this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -106,10 +106,10 @@
         #endregion
 
         private Controls.VolumeControl volumeControl;
-        private ElementEditorControls.ChoiceContainerControl choiceContainerControl;
+        private Controls.SequentialContainerControl sequentialContainerControl;
+        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button stopButton;
         private System.Windows.Forms.Button playButton;
-        private System.Windows.Forms.Label label1;
     }
 }

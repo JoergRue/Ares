@@ -117,7 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="label1.Text" xml:space="preserve">
-    <value>Ziehe Dateien oder füge Elemente im Projekt-Explorer hinzu</value>
+  <data name="fixedDelayCol.HeaderText" xml:space="preserve">
+    <value>Feste Verzögerung</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="fixedDelayCol.Width" type="System.Int32, mscorlib">
+    <value>111</value>
+  </data>
+  <data name="randomDelayCol.HeaderText" xml:space="preserve">
+    <value>Zufällige Verzögerung</value>
+  </data>
+  <data name="randomDelayCol.Width" type="System.Int32, mscorlib">
+    <value>124</value>
+  </data>
+  <data name="groupBox1.Text" xml:space="preserve">
+    <value>Elemente</value>
   </data>
 </root>

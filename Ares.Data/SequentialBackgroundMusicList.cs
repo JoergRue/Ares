@@ -98,6 +98,11 @@ namespace Ares.Data
             return m_SecondContainer.GetElements();
         }
 
+        public ISequentialElement GetElement(int ID)
+        {
+            return m_SecondContainer.GetElement(ID);
+        }
+
         #endregion
 
         public override void Visit(IElementVisitor visitor)

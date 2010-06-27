@@ -281,6 +281,11 @@ namespace Ares.Data
         /// Returns a shallow copy of the elements in the container.
         /// </summary>
         IList<T> GetElements();
+
+        /// <summary>
+        /// Returns the element with the specified Id.
+        /// </summary>
+        T GetElement(int id);
     }
 
     /// <summary>

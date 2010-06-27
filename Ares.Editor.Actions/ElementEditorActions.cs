@@ -216,6 +216,38 @@ namespace Ares.Editor.Actions
         private int m_NewChance;
     }
 
+    public class SequentialElementChangeAction : Action
+    {
+        public SequentialElementChangeAction(ISequentialElement element, int newFixed, int newRandom)
+        {
+            m_Element = element;
+            m_OldFixed = element.FixedStartDelay;
+            m_OldRandom = element.MaximumRandomStartDelay;
+            m_NewFixed = TimeSpan.FromMilliseconds(newFixed);
+            m_NewRandom = TimeSpan.FromMilliseconds(newRandom);
+        }
+
+        public override void Do()
+        {
+            m_Element.FixedStartDelay = m_NewFixed;
+            m_Element.MaximumRandomStartDelay = m_NewRandom;
+            ElementChanges.Instance.ElementChanged(m_Element.Id);
+        }
+
+        public override void Undo()
+        {
+            m_Element.FixedStartDelay = m_OldFixed;
+            m_Element.MaximumRandomStartDelay = m_OldRandom;
+            ElementChanges.Instance.ElementChanged(m_Element.Id);
+        }
+
+        private ISequentialElement m_Element;
+        private TimeSpan m_OldFixed;
+        private TimeSpan m_NewFixed;
+        private TimeSpan m_OldRandom;
+        private TimeSpan m_NewRandom;
+    }
+
     public class AddContainerElementsAction : Action
     {
         public AddContainerElementsAction(IGeneralElementContainer container, IList<IElement> elements)

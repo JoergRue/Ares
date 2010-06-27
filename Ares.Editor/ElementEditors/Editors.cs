@@ -56,6 +56,13 @@ namespace Ares.Editor.ElementEditors
                     editor.SetContainer(element as Ares.Data.IElementContainer<Ares.Data.IChoiceElement>);
                     editor.Show(dockPanel);
                 }
+                else if (element is Ares.Data.IElementContainer<Ares.Data.ISequentialElement>)
+                {
+                    SequentialContainerEditor editor = new SequentialContainerEditor();
+                    editor.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Document;
+                    editor.SetContainer(element as Ares.Data.IElementContainer<Ares.Data.ISequentialElement>);
+                    editor.Show(dockPanel);
+                }
             }
         }
 

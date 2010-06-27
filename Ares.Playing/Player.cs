@@ -592,7 +592,7 @@ namespace Ares.Playing
         {
             foreach (ISequentialElement element in sequentialContainer.GetElements())
             {
-                m_ElementStack.Add(new StackElement(element));
+                m_ElementQueue.Add(new QueueElement(element));
             }
             Next();
         }
@@ -615,7 +615,7 @@ namespace Ares.Playing
             IChoiceElement element = SelectRandomElement(choiceContainer);
             if (element != null)
             {
-                m_ElementStack.Add(new StackElement(element));
+                m_ElementQueue.Add(new QueueElement(element));
             }
             Next();
         }
@@ -654,7 +654,7 @@ namespace Ares.Playing
                 return;
             }
             Monitor.Enter(syncObject);
-            if (m_ElementStack.Count == 0)
+            if (m_ElementQueue.Count == 0)
             {
                 // finished, nothing to play any more
                 Monitor.Exit(syncObject);
@@ -662,7 +662,7 @@ namespace Ares.Playing
             }
             else
             {
-                StackElement element = m_ElementStack[m_ElementStack.Count - 1];
+                QueueElement element = m_ElementQueue[0];
                 bool firstPlay = element.PlayCount == 0;
                 ++element.PlayCount;
                 IRepeatableElement repeatable = element.Element as IRepeatableElement;
@@ -670,7 +670,7 @@ namespace Ares.Playing
                 if (m_StopSounds || musicList != null || repeatable == null || (repeatable.RepeatCount != -1 && element.PlayCount >= repeatable.RepeatCount))
                 {
                     // will not be played again; music lists are repeated inside their own players
-                    m_ElementStack.RemoveAt(m_ElementStack.Count - 1);
+                    m_ElementQueue.RemoveAt(0);
                 }
                 Monitor.Exit(syncObject);
                 if (firstPlay)
@@ -695,25 +695,25 @@ namespace Ares.Playing
         public ElementPlayer(IElementPlayerClient client, WaitHandle stoppedEvent, IElement startElement)
             : base(stoppedEvent, client)
         {
-            m_ElementStack = new List<StackElement>();
-            m_ElementStack.Add(new StackElement(startElement));
+            m_ElementQueue = new List<QueueElement>();
+            m_ElementQueue.Add(new QueueElement(startElement));
             m_ActiveSubPlayers = 0;
             m_StopSounds = false;
         }
 
-        private class StackElement
+        private class QueueElement
         {
             public IElement Element { get; set; }
             public int PlayCount { get; set; }
 
-            public StackElement(IElement element)
+            public QueueElement(IElement element)
             {
                 Element = element;
                 PlayCount = 0;
             }
         }
 
-        private List<StackElement> m_ElementStack;
+        private List<QueueElement> m_ElementQueue;
 
         private int m_ActiveSubPlayers;
 

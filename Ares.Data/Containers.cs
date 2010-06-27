@@ -154,6 +154,11 @@ namespace Ares.Data
             return result;
         }
 
+        public I GetElement(int id)
+        {
+            return m_Elements.Find(e => e.Id == id);
+        }
+
         internal Container(int ID, String title)
             : base(ID, title)
         {

@@ -73,6 +73,12 @@
     <Compile Include="RepeatableControl.Designer.cs">
       <DependentUpon>RepeatableControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="SequentialContainerControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SequentialContainerControl.Designer.cs">
+      <DependentUpon>SequentialContainerControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="VolumeControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -108,6 +114,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="RepeatableControl.resx">
       <DependentUpon>RepeatableControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SequentialContainerControl.de.resx">
+      <DependentUpon>SequentialContainerControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SequentialContainerControl.resx">
+      <DependentUpon>SequentialContainerControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="VolumeControl.de.resx">
       <DependentUpon>VolumeControl.cs</DependentUpon>

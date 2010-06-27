@@ -84,6 +84,12 @@
     <Compile Include="ElementEditors\RandomPlaylistEditor.Designer.cs">
       <DependentUpon>RandomPlaylistEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="ElementEditors\SequentialContainerEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ElementEditors\SequentialContainerEditor.Designer.cs">
+      <DependentUpon>SequentialContainerEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="ElementEditors\TriggerEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -142,6 +148,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ElementEditors\RandomPlaylistEditor.resx">
       <DependentUpon>RandomPlaylistEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ElementEditors\SequentialContainerEditor.de.resx">
+      <DependentUpon>SequentialContainerEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ElementEditors\SequentialContainerEditor.resx">
+      <DependentUpon>SequentialContainerEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ElementEditors\TriggerEditor.de.resx">
       <DependentUpon>TriggerEditor.cs</DependentUpon>

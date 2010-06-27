@@ -1,23 +1,4 @@
-﻿/*
- Copyright (c) 2010 [Joerg Ruedenauer]
- 
- This file is part of Ares.
-
- Ares is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
-
- Ares is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with Ares; if not, write to the Free Software
- Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- */
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -25,19 +6,18 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-
 using Ares.Data;
 
-namespace Ares.Editor.ElementEditorControls
+namespace Ares.Editor.Controls
 {
-    public partial class ChoiceContainerControl : UserControl
+    public partial class SequentialContainerControl : UserControl
     {
-        public ChoiceContainerControl()
+        public SequentialContainerControl()
         {
             InitializeComponent();
         }
 
-        public void SetContainer(IElementContainer<IChoiceElement> container)
+        public void SetContainer(IElementContainer<ISequentialElement> container)
         {
             m_Container = container;
             Update(m_Container.Id, Actions.ElementChanges.ChangeType.Changed);
@@ -59,16 +39,16 @@ namespace Ares.Editor.ElementEditorControls
                 }
                 m_ElementsToRows.Clear();
                 int row = 0;
-                foreach (IChoiceElement element in m_Container.GetElements())
+                foreach (ISequentialElement element in m_Container.GetElements())
                 {
-                    elementsGrid.Rows.Add(new object[] { element.Title, element.RandomChance });
+                    elementsGrid.Rows.Add(new object[] { element.Title, element.FixedStartDelay.TotalMilliseconds, element.MaximumRandomStartDelay.TotalMilliseconds });
                     if (element.InnerElement is IFileElement)
                     {
                         elementsGrid.Rows[row].Cells[0].ToolTipText = (element.InnerElement as IFileElement).FilePath;
                     }
                     m_ElementsToRows[element.Id] = row;
                     Actions.ElementChanges.Instance.AddListener(element.Id, Update);
-                    
+
                     ++row;
                 }
                 elementsGrid.ResumeLayout();
@@ -88,7 +68,9 @@ namespace Ares.Editor.ElementEditorControls
                 else if (changeType == Actions.ElementChanges.ChangeType.Changed)
                 {
                     elementsGrid.Rows[m_ElementsToRows[elementID]].Cells[1].Value =
-                        (m_Container.GetElement(elementID)).RandomChance;
+                        (m_Container.GetElement(elementID)).FixedStartDelay.TotalMilliseconds;
+                    elementsGrid.Rows[m_ElementsToRows[elementID]].Cells[2].Value =
+                        (m_Container.GetElement(elementID)).MaximumRandomStartDelay.TotalMilliseconds;
                 }
             }
             listen = true;
@@ -99,10 +81,10 @@ namespace Ares.Editor.ElementEditorControls
             listen = false;
             int index = m_Container.GetElements().Count;
             Actions.Actions.Instance.AddNew(new Actions.AddContainerElementsAction(m_Container, elements));
-            IList<IChoiceElement> containerElements = m_Container.GetElements();
+            IList<ISequentialElement> containerElements = m_Container.GetElements();
             for (int i = index; i < containerElements.Count; ++i)
             {
-                elementsGrid.Rows.Add(new object[] { containerElements[i].Title, containerElements[i].RandomChance });
+                elementsGrid.Rows.Add(new object[] { containerElements[i].Title, containerElements[i].FixedStartDelay.TotalMilliseconds, containerElements[i].MaximumRandomStartDelay.TotalMilliseconds });
                 if (containerElements[i].InnerElement is IFileElement)
                 {
                     elementsGrid.Rows[index].Cells[0].ToolTipText = (containerElements[i].InnerElement as IFileElement).FilePath;
@@ -112,18 +94,19 @@ namespace Ares.Editor.ElementEditorControls
             listen = true;
         }
 
-        private IElementContainer<IChoiceElement> m_Container;
+        private IElementContainer<ISequentialElement> m_Container;
         private Dictionary<int, int> m_ElementsToRows = new Dictionary<int, int>();
         private bool listen = true;
 
         private void elementsGrid_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             listen = false;
-            if (e.ColumnIndex == 1)
+            if (e.ColumnIndex == 1 || e.ColumnIndex == 2)
             {
-                int chance = Convert.ToInt32(elementsGrid.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
-                Actions.Actions.Instance.AddNew(new Actions.ChoiceElementChangeAction(
-                    m_Container.GetElements()[e.RowIndex], chance));
+                int fixedDelay = Convert.ToInt32(elementsGrid.Rows[e.RowIndex].Cells[1].Value);
+                int randomDelay = Convert.ToInt32(elementsGrid.Rows[e.RowIndex].Cells[2].Value);
+                Actions.Actions.Instance.AddNew(new Actions.SequentialElementChangeAction(
+                    m_Container.GetElements()[e.RowIndex], fixedDelay, randomDelay));
             }
             listen = true;
         }
@@ -134,7 +117,7 @@ namespace Ares.Editor.ElementEditorControls
                 return;
             listen = false;
             List<IElement> elements = new List<IElement>();
-            IList<IChoiceElement> containerElements = m_Container.GetElements();
+            IList<ISequentialElement> containerElements = m_Container.GetElements();
             for (int i = 0; i < e.RowCount; ++i)
             {
                 elements.Add(containerElements[e.RowIndex + i]);

@@ -125,6 +125,11 @@ namespace Ares.Data
             return m_ThirdContainer.GetElements();
         }
 
+        public IChoiceElement GetElement(int ID)
+        {
+            return m_ThirdContainer.GetElement(ID);
+        }
+
         #endregion
 
         public override void Visit(IElementVisitor visitor)
