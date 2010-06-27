@@ -66,6 +66,13 @@
     <Compile Include="Dialogs\KeyDialog.Designer.cs">
       <DependentUpon>KeyDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="DragAndDrop.cs" />
+    <Compile Include="ElementEditors\ChoiceContainerEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ElementEditors\ChoiceContainerEditor.Designer.cs">
+      <DependentUpon>ChoiceContainerEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="ElementEditors\EditorBase.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -123,6 +130,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\KeyDialog.resx">
       <DependentUpon>KeyDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ElementEditors\ChoiceContainerEditor.de.resx">
+      <DependentUpon>ChoiceContainerEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ElementEditors\ChoiceContainerEditor.resx">
+      <DependentUpon>ChoiceContainerEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ElementEditors\RandomPlaylistEditor.de.resx">
       <DependentUpon>RandomPlaylistEditor.cs</DependentUpon>

@@ -49,6 +49,13 @@ namespace Ares.Editor.ElementEditors
                     editor.SetBGSoundChoice(element as Ares.Data.IBackgroundSoundChoice);
                     editor.Show(dockPanel);
                 }
+                else if (element is Ares.Data.IElementContainer<Ares.Data.IChoiceElement>)
+                {
+                    ChoiceContainerEditor editor = new ChoiceContainerEditor();
+                    editor.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Document;
+                    editor.SetContainer(element as Ares.Data.IElementContainer<Ares.Data.IChoiceElement>);
+                    editor.Show(dockPanel);
+                }
             }
         }
 

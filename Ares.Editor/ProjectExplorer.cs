@@ -37,10 +37,11 @@ namespace Ares.Editor
             InitializeComponent();
             HideOnClose = true;
             RecreateTree();
-            ElementChanges.Instance.AddListener(-1, ElementTriggerChanged);
+            ElementChanges.Instance.AddListener(-1, ElementChanged);
         }
 
         private System.Action m_AfterEditAction;
+        private bool listenForContainerChanges = true;
 
         protected override String GetPersistString()
         {
@@ -357,6 +358,8 @@ namespace Ares.Editor
 
         private void AddSoundChoice(bool renameImmediately)
         {
+            bool oldListen = listenForContainerChanges;
+            listenForContainerChanges = false;
             String name = StringResources.NewSoundChoice;
             TreeNode node;
             Actions.Actions.Instance.AddNew(new Actions.AddSoundChoiceAction(m_SelectedNode, 
@@ -366,10 +369,13 @@ namespace Ares.Editor
             m_SelectedNode = node;
             if (renameImmediately)
                 RenameElement();
+            listenForContainerChanges = oldListen;
         }
 
         private void AddParallelList()
         {
+            bool oldListen = listenForContainerChanges;
+            listenForContainerChanges = false;
             String name = StringResources.NewParallelList;
             IElementContainer<IParallelElement> element = DataModule.ElementFactory.CreateParallelContainer(name);
             if (m_SelectedNode.Tag is IMode)
@@ -381,10 +387,13 @@ namespace Ares.Editor
                 AddContainerElement(element);
             }
             RenameElement();
+            listenForContainerChanges = oldListen;
         }
 
         private void AddSequentialList()
         {
+            bool oldListen = listenForContainerChanges;
+            listenForContainerChanges = false;
             String name = StringResources.NewSequentialList;
             IElementContainer<ISequentialElement> element = DataModule.ElementFactory.CreateSequentialContainer(name);
             if (m_SelectedNode.Tag is IMode)
@@ -396,10 +405,13 @@ namespace Ares.Editor
                 AddContainerElement(element);
             }
             RenameElement();
+            listenForContainerChanges = oldListen;
         }
 
         private void AddRandomList()
         {
+            bool oldListen = listenForContainerChanges;
+            listenForContainerChanges = false;
             String name = StringResources.NewRandomList;
             IElementContainer<IChoiceElement> element = DataModule.ElementFactory.CreateChoiceContainer(name);
             if (m_SelectedNode.Tag is IMode)
@@ -411,10 +423,13 @@ namespace Ares.Editor
                 AddContainerElement(element);
             }
             RenameElement();
+            listenForContainerChanges = oldListen;
         }
 
         private void AddScenario()
         {
+            bool oldListen = listenForContainerChanges;
+            listenForContainerChanges = false;
             String name = StringResources.NewScenario;
             IElementContainer<IParallelElement> element = DataModule.ElementFactory.CreateParallelContainer(name);
             AddModeElement(element, name);
@@ -439,6 +454,7 @@ namespace Ares.Editor
                     RenameElement();
                 };
             RenameElement();
+            listenForContainerChanges = oldListen;
         }
 
         private void AddModeElement(IElement startElement, String title)
@@ -452,11 +468,14 @@ namespace Ares.Editor
 
         private void AddContainerElement(IElement element)
         {
+            bool oldListen = listenForContainerChanges;
+            listenForContainerChanges = false;
             TreeNode node;
             Actions.Actions.Instance.AddNew(new AddElementAction(m_SelectedNode, 
                 GetElement(m_SelectedNode) as IGeneralElementContainer, element, CreateElementNode, out node));
             m_SelectedNode.Expand();
             m_SelectedNode = node;
+            listenForContainerChanges = oldListen;
         }
 
         private void RenameElement()
@@ -509,7 +528,7 @@ namespace Ares.Editor
             }
         }
 
-        private void ElementTriggerChanged(int elementId, ElementChanges.ChangeType changeType)
+        private void ElementChanged(int elementId, ElementChanges.ChangeType changeType)
         {
             if (changeType == ElementChanges.ChangeType.TriggerChanged)
             {
@@ -529,6 +548,32 @@ namespace Ares.Editor
                     }
                 }
             }
+            else if (changeType == ElementChanges.ChangeType.Changed && listenForContainerChanges)
+            {
+                TreeNode node = FindNodeForElement(elementId, projectTree.Nodes[0]);
+                if (node != null && GetElement(node) is IGeneralElementContainer)
+                {
+                    node.Nodes.Clear();
+                    AddSubElements(node, (GetElement(node) as IGeneralElementContainer).GetGeneralElements());
+                }
+            }
+        }
+
+        private TreeNode FindNodeForElement(int elementId, TreeNode node)
+        {
+            if (node.Tag is IElement && (node.Tag as IElement).Id == elementId)
+                return node;
+            if (GetElement(node) != null && GetElement(node).Id == elementId)
+                return node;
+            foreach (TreeNode subNode in node.Nodes)
+            {
+                TreeNode foundNode = FindNodeForElement(elementId, subNode);
+                if (foundNode != null)
+                {
+                    return foundNode;
+                }
+            }
+            return null;
         }
 
         private void EditModeElementTrigger()
@@ -575,6 +620,8 @@ namespace Ares.Editor
 
         private void DeleteElement()
         {
+            bool oldListen = listenForContainerChanges;
+            listenForContainerChanges = false;
             if (m_SelectedNode.Parent.Tag is IMode)
             {
                 Actions.Actions.Instance.AddNew(new DeleteModeElementAction(m_SelectedNode));
@@ -587,6 +634,7 @@ namespace Ares.Editor
             {
                 Actions.Actions.Instance.AddNew(new DeleteElementAction(m_SelectedNode));
             }
+            listenForContainerChanges = oldListen;
         }
 
         private void EditElement(IElement element)

@@ -36,7 +36,7 @@ namespace Ares.Editor
             {
                 components.Dispose();
                 RemoveChangeListener();
-                Ares.Editor.Actions.ElementChanges.Instance.RemoveListener(-1, ElementTriggerChanged);
+                Ares.Editor.Actions.ElementChanges.Instance.RemoveListener(-1, ElementChanged);
             }
             base.Dispose(disposing);
         }
