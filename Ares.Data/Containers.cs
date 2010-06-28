@@ -207,7 +207,7 @@ namespace Ares.Data
 
         protected abstract T ReadContainerElement(System.Xml.XmlReader reader);
 
-        private List<T> m_Elements;
+        protected List<T> m_Elements;
     }
 
     [Serializable]
@@ -250,7 +250,7 @@ namespace Ares.Data
     }
 
     [Serializable]
-    class SequentialContainer : Container<ISequentialElement, SequentialElement>, IElementContainer<ISequentialElement>
+    class SequentialContainer : Container<ISequentialElement, SequentialElement>, ISequentialContainer
     {
         public override void Visit(IElementVisitor visitor)
         {
@@ -265,6 +265,13 @@ namespace Ares.Data
         internal SequentialContainer(System.Xml.XmlReader reader)
             : base(reader)
         {
+        }
+
+        public void MoveElements(int startIndex, int endIndex, int offset)
+        {
+            List<SequentialElement> elements = m_Elements.GetRange(startIndex, endIndex - startIndex + 1);
+            m_Elements.RemoveRange(startIndex, endIndex - startIndex + 1);
+            m_Elements.InsertRange(startIndex + offset, elements);
         }
 
         public override void WriteToXml(System.Xml.XmlWriter writer)

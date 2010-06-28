@@ -25,26 +25,30 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Ares.Data;
 
 namespace Ares.Editor.ElementEditors
 {
-    partial class SequentialContainerEditor : EditorBase
+    partial class SequentialPlaylistEditor : EditorBase
     {
-        public SequentialContainerEditor()
+        public SequentialPlaylistEditor()
         {
             InitializeComponent();
         }
 
-        public void SetContainer(Ares.Data.ISequentialContainer container)
+        public void SetPlaylist(ISequentialBackgroundMusicList playList)
         {
-            ElementId = container.Id;
-            m_Element = container;
-            sequentialContainerControl.SetContainer(container);
-            volumeControl.SetElement(container);
+            ElementId = playList.Id;
+            m_Element = playList;
+            repeatableControl.SetElement(playList);
+            sequentialContainerControl.SetContainer(playList);
+            volumeControl.SetElement(playList);
             label1.Text = String.Format(label1.Text, String.Format(StringResources.FileExplorerTitle, StringResources.Music));
             Update(m_Element.Id, Actions.ElementChanges.ChangeType.Renamed);
-            Actions.ElementChanges.Instance.AddListener(-1, Update);
+            Actions.ElementChanges.Instance.AddListener(m_Element.Id, Update);
         }
+
+        private bool listen = true;
 
         private void Update(int elementId, Actions.ElementChanges.ChangeType changeType)
         {
@@ -69,20 +73,11 @@ namespace Ares.Editor.ElementEditors
                     EnableControls();
                 }
             }
-            else if (changeType == Actions.ElementChanges.ChangeType.Played || changeType == Actions.ElementChanges.ChangeType.Stopped)
-            {
-                if (Actions.Playing.Instance.IsElementOrSubElementPlaying(m_Element))
-                {
-                    DisableControls(false);
-                }
-                else
-                {
-                    EnableControls();
-                }
-            }
         }
 
-        private void SequentialContainerEditor_SizeChanged(object sender, EventArgs e)
+        private IElement m_Element;
+
+        private void RandomPlaylistEditor_SizeChanged(object sender, EventArgs e)
         {
             Font font = label1.Font;
             String text = label1.Text;
@@ -98,17 +93,17 @@ namespace Ares.Editor.ElementEditors
 
         private bool m_AcceptDrop;
 
-        private void SequentialContainerEditor_DragEnter(object sender, DragEventArgs e)
+        private void SequentialPlaylistEditor_DragEnter(object sender, DragEventArgs e)
         {
             m_AcceptDrop = sequentialContainerControl.Enabled && e.Data.GetDataPresent(typeof(List<DraggedItem>));
         }
 
-        private void SequentialContainerEditor_DragLeave(object sender, EventArgs e)
+        private void SequentialPlaylistEditor_DragLeave(object sender, EventArgs e)
         {
             m_AcceptDrop = false;
         }
 
-        private void SequentialContainerEditor_DragOver(object sender, DragEventArgs e)
+        private void SequentialPlaylistEditor_DragOver(object sender, DragEventArgs e)
         {
             if (m_AcceptDrop && (e.AllowedEffect & DragDropEffects.Copy) != 0)
                 e.Effect = DragDropEffects.Copy;
@@ -116,12 +111,12 @@ namespace Ares.Editor.ElementEditors
                 e.Effect = DragDropEffects.None;
         }
 
-        private void SequentialContainerEditor_DragDrop(object sender, DragEventArgs e)
+        private void SequentialPlaylistEditor_DragDrop(object sender, DragEventArgs e)
         {
             List<DraggedItem> list = e.Data.GetData(typeof(List<DraggedItem>)) as List<DraggedItem>;
             if (list != null)
             {
-                List<Ares.Data.IElement> elements = new List<Ares.Data.IElement>(DragAndDrop.GetElementsFromDroppedItems(list));
+                List<IElement> elements = new List<IElement>(DragAndDrop.GetElementsFromDroppedItems(list));
                 sequentialContainerControl.AddElements(elements);
             }
         }
@@ -131,6 +126,7 @@ namespace Ares.Editor.ElementEditors
             playButton.Enabled = false;
             stopButton.Enabled = allowStop;
             sequentialContainerControl.Enabled = false;
+            repeatableControl.Enabled = false;
             volumeControl.Enabled = false;
         }
 
@@ -139,6 +135,7 @@ namespace Ares.Editor.ElementEditors
             playButton.Enabled = true;
             stopButton.Enabled = false;
             sequentialContainerControl.Enabled = true;
+            repeatableControl.Enabled = true;
             volumeControl.Enabled = true;
         }
 
@@ -158,8 +155,6 @@ namespace Ares.Editor.ElementEditors
             Actions.Playing.Instance.StopElement(m_Element);
         }
 
-        private bool listen = true;
-
-        private Ares.Data.IElementContainer<Ares.Data.ISequentialElement> m_Element;
+    
     }
 }

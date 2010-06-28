@@ -67,6 +67,11 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="RepeatableControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -109,6 +114,10 @@
     <EmbeddedResource Include="DelayableControl.resx">
       <DependentUpon>DelayableControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="RepeatableControl.de.resx">
       <DependentUpon>RepeatableControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -130,6 +139,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ares.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MoveUp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MoveDown.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

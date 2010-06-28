@@ -162,7 +162,7 @@ namespace Ares.Playing
     {
         public abstract void VisitFileElement(IFileElement fileElement);
 
-        public virtual void VisitSequentialContainer(IElementContainer<ISequentialElement> sequentialContainer) { }
+        public virtual void VisitSequentialContainer(ISequentialContainer sequentialContainer) { }
 
         public virtual void VisitParallelContainer(IElementContainer<IParallelElement> parallelContainer) { }
 
@@ -588,12 +588,14 @@ namespace Ares.Playing
             }
         }
 
-        public override void VisitSequentialContainer(IElementContainer<ISequentialElement> sequentialContainer)
+        public override void VisitSequentialContainer(ISequentialContainer sequentialContainer)
         {
+            List<QueueElement> newElements = new List<QueueElement>();
             foreach (ISequentialElement element in sequentialContainer.GetElements())
             {
-                m_ElementQueue.Add(new QueueElement(element));
+                newElements.Add(new QueueElement(element));
             }
+            m_ElementQueue.InsertRange(0, newElements);
             Next();
         }
 
@@ -615,7 +617,7 @@ namespace Ares.Playing
             IChoiceElement element = SelectRandomElement(choiceContainer);
             if (element != null)
             {
-                m_ElementQueue.Add(new QueueElement(element));
+                m_ElementQueue.Insert(0, new QueueElement(element));
             }
             Next();
         }

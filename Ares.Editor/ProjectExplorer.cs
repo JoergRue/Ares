@@ -395,7 +395,7 @@ namespace Ares.Editor
             bool oldListen = listenForContainerChanges;
             listenForContainerChanges = false;
             String name = StringResources.NewSequentialList;
-            IElementContainer<ISequentialElement> element = DataModule.ElementFactory.CreateSequentialContainer(name);
+            ISequentialContainer element = DataModule.ElementFactory.CreateSequentialContainer(name);
             if (m_SelectedNode.Tag is IMode)
             {
                 AddModeElement(element, name);

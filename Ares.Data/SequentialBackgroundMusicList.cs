@@ -103,6 +103,11 @@ namespace Ares.Data
             return m_SecondContainer.GetElement(ID);
         }
 
+        public void MoveElements(int startIndex, int endIndex, int offset)
+        {
+            m_SecondContainer.MoveElements(startIndex, endIndex, offset);
+        }
+
         #endregion
 
         public override void Visit(IElementVisitor visitor)
@@ -120,7 +125,6 @@ namespace Ares.Data
             writer.WriteStartElement("SequentialMusicList");
             DoWriteToXml(writer);
             m_FirstContainer.WriteToXml(writer);
-            m_Trigger.WriteToXml(writer);
             writer.WriteEndElement();
         }
 
@@ -144,15 +148,12 @@ namespace Ares.Data
             reader.Read();
             m_FirstContainer = DataModule.TheElementFactory.CreateParallelContainer(reader);
             m_ParallelElement = m_FirstContainer.GetElements()[0];
-            m_SecondContainer = (IElementContainer<ISequentialElement>)((ParallelElement)m_ParallelElement).InnerElement;
-            m_Trigger = DataModule.TheElementFactory.CreateTrigger(reader);
+            m_SecondContainer = (ISequentialContainer)((ParallelElement)m_ParallelElement).InnerElement;
             reader.ReadEndElement();
         }
 
-        private ITrigger m_Trigger;
-
         private IElementContainer<IParallelElement> m_FirstContainer;
-        private IElementContainer<ISequentialElement> m_SecondContainer;
+        private ISequentialContainer m_SecondContainer;
 
         private IParallelElement m_ParallelElement;
 

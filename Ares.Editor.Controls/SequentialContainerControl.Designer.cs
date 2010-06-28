@@ -1,4 +1,23 @@
-﻿namespace Ares.Editor.Controls
+﻿/*
+ Copyright (c) 2010 [Joerg Ruedenauer]
+ 
+ This file is part of Ares.
+
+ Ares is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+ Ares is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Ares; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
+namespace Ares.Editor.Controls
 {
     partial class SequentialContainerControl
     {
@@ -34,9 +53,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SequentialContainerControl));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.downButton = new System.Windows.Forms.Button();
+            this.upButton = new System.Windows.Forms.Button();
             this.elementsGrid = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewNumericUpDownColumn1 = new DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn();
@@ -50,15 +71,36 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.downButton);
+            this.groupBox1.Controls.Add(this.upButton);
             this.groupBox1.Controls.Add(this.elementsGrid);
             resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
             this.groupBox1.UseCompatibleTextRendering = true;
             // 
+            // downButton
+            // 
+            resources.ApplyResources(this.downButton, "downButton");
+            this.downButton.Image = global::Ares.Editor.Controls.Properties.Resources.MoveDown;
+            this.downButton.Name = "downButton";
+            this.downButton.UseCompatibleTextRendering = true;
+            this.downButton.UseVisualStyleBackColor = true;
+            this.downButton.Click += new System.EventHandler(this.downButton_Click);
+            // 
+            // upButton
+            // 
+            resources.ApplyResources(this.upButton, "upButton");
+            this.upButton.Image = global::Ares.Editor.Controls.Properties.Resources.MoveUp;
+            this.upButton.Name = "upButton";
+            this.upButton.UseCompatibleTextRendering = true;
+            this.upButton.UseVisualStyleBackColor = true;
+            this.upButton.Click += new System.EventHandler(this.upButton_Click);
+            // 
             // elementsGrid
             // 
             this.elementsGrid.AllowUserToAddRows = false;
+            resources.ApplyResources(this.elementsGrid, "elementsGrid");
             this.elementsGrid.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.elementsGrid.BackgroundColor = System.Drawing.SystemColors.Control;
             this.elementsGrid.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -77,13 +119,13 @@
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.elementsGrid.DefaultCellStyle = dataGridViewCellStyle1;
-            resources.ApplyResources(this.elementsGrid, "elementsGrid");
             this.elementsGrid.GridColor = System.Drawing.SystemColors.ControlDarkDark;
             this.elementsGrid.Name = "elementsGrid";
             this.elementsGrid.RowHeadersVisible = false;
             this.elementsGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.elementsGrid.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.elementsGrid_CellEndEdit);
             this.elementsGrid.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.elementsGrid_RowsRemoved);
+            this.elementsGrid.SelectionChanged += new System.EventHandler(this.elementsGrid_SelectionChanged);
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -134,6 +176,7 @@
             resources.ApplyResources(this.nameCol, "nameCol");
             this.nameCol.Name = "nameCol";
             this.nameCol.ReadOnly = true;
+            this.nameCol.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // fixedDelayCol
             // 
@@ -150,7 +193,6 @@
             0,
             0});
             this.fixedDelayCol.Name = "fixedDelayCol";
-            this.fixedDelayCol.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // randomDelayCol
             // 
@@ -167,7 +209,6 @@
             0,
             0});
             this.randomDelayCol.Name = "randomDelayCol";
-            this.randomDelayCol.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // SequentialContainerControl
             // 
@@ -188,6 +229,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn dataGridViewNumericUpDownColumn1;
         private DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn dataGridViewNumericUpDownColumn2;
+        private System.Windows.Forms.Button upButton;
+        private System.Windows.Forms.Button downButton;
         private System.Windows.Forms.DataGridViewTextBoxColumn nameCol;
         private DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn fixedDelayCol;
         private DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn randomDelayCol;

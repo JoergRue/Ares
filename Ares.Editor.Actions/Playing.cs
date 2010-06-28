@@ -130,6 +130,12 @@ namespace Ares.Editor.Actions
                         return true;
                 }
             }
+            else if (element is Ares.Data.IContainerElement)
+            {
+                Ares.Data.IElement inner = (element as Ares.Data.IContainerElement).InnerElement;
+                if (inner != element && IsElementOrSubElementPlaying(inner))
+                    return true;
+            }
             return false;
         }
 

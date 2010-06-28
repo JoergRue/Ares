@@ -178,7 +178,7 @@ namespace Ares.Data
             reader.ReadEndElement();
         }
 
-        private IElementContainer<ISequentialElement> m_FirstContainer;
+        private ISequentialContainer m_FirstContainer;
         private IElementContainer<IParallelElement> m_SecondContainer;
         private IElementContainer<IChoiceElement> m_ThirdContainer;
 

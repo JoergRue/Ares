@@ -19,7 +19,7 @@
  */
 namespace Ares.Editor.ElementEditors
 {
-    partial class ChoiceContainerEditor
+    partial class SequentialPlaylistEditor
     {
         /// <summary>
         /// Erforderliche Designervariable.
@@ -35,7 +35,6 @@ namespace Ares.Editor.ElementEditors
             if (disposing && (components != null))
             {
                 components.Dispose();
-                Actions.ElementChanges.Instance.RemoveListener(-1, Update);
             }
             base.Dispose(disposing);
         }
@@ -48,9 +47,10 @@ namespace Ares.Editor.ElementEditors
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChoiceContainerEditor));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SequentialPlaylistEditor));
+            this.repeatableControl = new Ares.Editor.ElementEditors.RepeatableControl();
             this.volumeControl = new Ares.Editor.Controls.VolumeControl();
-            this.choiceContainerControl = new Ares.Editor.ElementEditorControls.ChoiceContainerControl();
+            this.sequentialContainerControl = new Ares.Editor.Controls.SequentialContainerControl();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.stopButton = new System.Windows.Forms.Button();
             this.playButton = new System.Windows.Forms.Button();
@@ -58,15 +58,20 @@ namespace Ares.Editor.ElementEditors
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
+            // repeatableControl
+            // 
+            resources.ApplyResources(this.repeatableControl, "repeatableControl");
+            this.repeatableControl.Name = "repeatableControl";
+            // 
             // volumeControl
             // 
             resources.ApplyResources(this.volumeControl, "volumeControl");
             this.volumeControl.Name = "volumeControl";
             // 
-            // choiceContainerControl
+            // sequentialContainerControl
             // 
-            resources.ApplyResources(this.choiceContainerControl, "choiceContainerControl");
-            this.choiceContainerControl.Name = "choiceContainerControl";
+            resources.ApplyResources(this.sequentialContainerControl, "sequentialContainerControl");
+            this.sequentialContainerControl.Name = "sequentialContainerControl";
             // 
             // groupBox1
             // 
@@ -88,8 +93,8 @@ namespace Ares.Editor.ElementEditors
             // 
             // playButton
             // 
-            resources.ApplyResources(this.playButton, "playButton");
             this.playButton.Image = global::Ares.Editor.ImageResources.RunSmall;
+            resources.ApplyResources(this.playButton, "playButton");
             this.playButton.Name = "playButton";
             this.playButton.UseCompatibleTextRendering = true;
             this.playButton.UseVisualStyleBackColor = true;
@@ -97,26 +102,28 @@ namespace Ares.Editor.ElementEditors
             // 
             // label1
             // 
+            this.label1.AllowDrop = true;
             resources.ApplyResources(this.label1, "label1");
             this.label1.ForeColor = System.Drawing.SystemColors.InactiveCaption;
             this.label1.Name = "label1";
             this.label1.UseCompatibleTextRendering = true;
             // 
-            // ChoiceContainerEditor
+            // SequentialPlaylistEditor
             // 
-            resources.ApplyResources(this, "$this");
             this.AllowDrop = true;
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.label1);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.choiceContainerControl);
+            this.Controls.Add(this.sequentialContainerControl);
             this.Controls.Add(this.volumeControl);
-            this.Name = "ChoiceContainerEditor";
-            this.SizeChanged += new System.EventHandler(this.ChoiceContainerEditor_SizeChanged);
-            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.ChoiceContainerEditor_DragDrop);
-            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.ChoiceContainerEditor_DragEnter);
-            this.DragOver += new System.Windows.Forms.DragEventHandler(this.ChoiceContainerEditor_DragOver);
-            this.DragLeave += new System.EventHandler(this.ChoiceContainerEditor_DragLeave);
+            this.Controls.Add(this.repeatableControl);
+            this.Name = "SequentialPlaylistEditor";
+            this.SizeChanged += new System.EventHandler(this.RandomPlaylistEditor_SizeChanged);
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.SequentialPlaylistEditor_DragDrop);
+            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.SequentialPlaylistEditor_DragEnter);
+            this.DragOver += new System.Windows.Forms.DragEventHandler(this.SequentialPlaylistEditor_DragOver);
+            this.DragLeave += new System.EventHandler(this.SequentialPlaylistEditor_DragLeave);
             this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -124,8 +131,9 @@ namespace Ares.Editor.ElementEditors
 
         #endregion
 
+        private RepeatableControl repeatableControl;
         private Controls.VolumeControl volumeControl;
-        private ElementEditorControls.ChoiceContainerControl choiceContainerControl;
+        private Controls.SequentialContainerControl sequentialContainerControl;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button stopButton;
         private System.Windows.Forms.Button playButton;

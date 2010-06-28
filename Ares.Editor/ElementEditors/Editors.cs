@@ -49,6 +49,13 @@ namespace Ares.Editor.ElementEditors
                     editor.SetBGSoundChoice(element as Ares.Data.IBackgroundSoundChoice);
                     editor.Show(dockPanel);
                 }
+                else if (element is Ares.Data.ISequentialBackgroundMusicList)
+                {
+                    SequentialPlaylistEditor editor = new SequentialPlaylistEditor();
+                    editor.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Document;
+                    editor.SetPlaylist(element as Ares.Data.ISequentialBackgroundMusicList);
+                    editor.Show(dockPanel);
+                }
                 else if (element is Ares.Data.IElementContainer<Ares.Data.IChoiceElement>)
                 {
                     ChoiceContainerEditor editor = new ChoiceContainerEditor();
@@ -56,11 +63,11 @@ namespace Ares.Editor.ElementEditors
                     editor.SetContainer(element as Ares.Data.IElementContainer<Ares.Data.IChoiceElement>);
                     editor.Show(dockPanel);
                 }
-                else if (element is Ares.Data.IElementContainer<Ares.Data.ISequentialElement>)
+                else if (element is Ares.Data.ISequentialContainer)
                 {
                     SequentialContainerEditor editor = new SequentialContainerEditor();
                     editor.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Document;
-                    editor.SetContainer(element as Ares.Data.IElementContainer<Ares.Data.ISequentialElement>);
+                    editor.SetContainer(element as Ares.Data.ISequentialContainer);
                     editor.Show(dockPanel);
                 }
             }

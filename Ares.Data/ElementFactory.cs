@@ -45,7 +45,7 @@ namespace Ares.Data
         /// <summary>
         /// Creates a sequential container
         /// </summary>
-        IElementContainer<ISequentialElement> CreateSequentialContainer(String title);
+        ISequentialContainer CreateSequentialContainer(String title);
 
         /// <summary>
         /// Creates a key trigger
@@ -106,7 +106,7 @@ namespace Ares.Data
             return new ParallelContainer(id, title);
         }
 
-        public IElementContainer<ISequentialElement> CreateSequentialContainer(String title)
+        public ISequentialContainer CreateSequentialContainer(String title)
         {
             return new SequentialContainer(GetNextID(), title);
         }
@@ -165,7 +165,7 @@ namespace Ares.Data
             return new ParallelContainer(reader);
         }
 
-        internal IElementContainer<ISequentialElement> CreateSequentialContainer(System.Xml.XmlReader reader)
+        internal ISequentialContainer CreateSequentialContainer(System.Xml.XmlReader reader)
         {
             if (!reader.IsStartElement("SequentialContainer"))
             {

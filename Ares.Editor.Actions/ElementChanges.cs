@@ -82,11 +82,13 @@ namespace Ares.Editor.Actions
         public void ElementPlayed(int elementID)
         {
             Notify(elementID, ChangeType.Played);
+            NotifyAll(elementID, ChangeType.Played);
         }
 
         public void ElementStopped(int elementID)
         {
             Notify(elementID, ChangeType.Stopped);
+            NotifyAll(elementID, ChangeType.Stopped);
         }
 
         public void ElementTriggerChanged(int elementID)

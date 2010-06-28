@@ -34,7 +34,7 @@ namespace Ares.Data
         /// <summary>
         /// Visit a sequential container.
         /// </summary>
-        void VisitSequentialContainer(IElementContainer<ISequentialElement> sequentialContainer);
+        void VisitSequentialContainer(ISequentialContainer sequentialContainer);
         /// <summary>
         /// Visit a parallel container.
         /// </summary>
@@ -286,6 +286,14 @@ namespace Ares.Data
         /// Returns the element with the specified Id.
         /// </summary>
         T GetElement(int id);
+    }
+
+    /// <summary>
+    /// Special interface for a sequential container
+    /// </summary>
+    public interface ISequentialContainer : IElementContainer<ISequentialElement>
+    {
+        void MoveElements(int startIndex, int endIndex, int offset);
     }
 
     /// <summary>

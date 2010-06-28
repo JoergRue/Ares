@@ -117,122 +117,143 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="downButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="downButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="downButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>544, 45</value>
+  <data name="repeatableControl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 12</value>
   </data>
-  <data name="downButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>43, 23</value>
+  <data name="repeatableControl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>346, 142</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="downButton.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;downButton.Name" xml:space="preserve">
-    <value>downButton</value>
-  </data>
-  <data name="&gt;&gt;downButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;downButton.Parent" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="&gt;&gt;downButton.ZOrder" xml:space="preserve">
+  <data name="repeatableControl.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="upButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
+  <data name="&gt;&gt;repeatableControl.Name" xml:space="preserve">
+    <value>repeatableControl</value>
   </data>
-  <data name="upButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>544, 16</value>
+  <data name="&gt;&gt;repeatableControl.Type" xml:space="preserve">
+    <value>Ares.Editor.ElementEditors.RepeatableControl, Ares.Editor.Controls, Version=0.1.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
   </data>
-  <data name="upButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>43, 23</value>
+  <data name="&gt;&gt;repeatableControl.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
-  <data name="upButton.TabIndex" type="System.Int32, mscorlib">
+  <data name="&gt;&gt;repeatableControl.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="volumeControl.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="volumeControl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>364, 75</value>
+  </data>
+  <data name="volumeControl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>291, 79</value>
+  </data>
+  <data name="volumeControl.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="&gt;&gt;upButton.Name" xml:space="preserve">
-    <value>upButton</value>
+  <data name="&gt;&gt;volumeControl.Name" xml:space="preserve">
+    <value>volumeControl</value>
   </data>
-  <data name="&gt;&gt;upButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;volumeControl.Type" xml:space="preserve">
+    <value>Ares.Editor.Controls.VolumeControl, Ares.Editor.Controls, Version=0.1.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
   </data>
-  <data name="&gt;&gt;upButton.Parent" xml:space="preserve">
-    <value>groupBox1</value>
+  <data name="&gt;&gt;volumeControl.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
-  <data name="&gt;&gt;upButton.ZOrder" xml:space="preserve">
-    <value>1</value>
+  <data name="&gt;&gt;volumeControl.ZOrder" xml:space="preserve">
+    <value>3</value>
   </data>
-  <data name="elementsGrid.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+  <data name="sequentialContainerControl.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
   </data>
-  <metadata name="nameCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="nameCol.HeaderText" xml:space="preserve">
-    <value>Name</value>
+  <data name="sequentialContainerControl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 160</value>
   </data>
-  <metadata name="fixedDelayCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="fixedDelayCol.HeaderText" xml:space="preserve">
-    <value>Fixed Delay</value>
+  <data name="sequentialContainerControl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>643, 365</value>
   </data>
-  <data name="fixedDelayCol.Width" type="System.Int32, mscorlib">
-    <value>68</value>
-  </data>
-  <metadata name="randomDelayCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="randomDelayCol.HeaderText" xml:space="preserve">
-    <value>Random Delay</value>
-  </data>
-  <data name="randomDelayCol.Width" type="System.Int32, mscorlib">
-    <value>83</value>
-  </data>
-  <data name="elementsGrid.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 16</value>
-  </data>
-  <data name="elementsGrid.Size" type="System.Drawing.Size, System.Drawing">
-    <value>535, 381</value>
-  </data>
-  <data name="elementsGrid.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;elementsGrid.Name" xml:space="preserve">
-    <value>elementsGrid</value>
-  </data>
-  <data name="&gt;&gt;elementsGrid.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;elementsGrid.Parent" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="&gt;&gt;elementsGrid.ZOrder" xml:space="preserve">
+  <data name="sequentialContainerControl.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <data name="groupBox1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
+  <data name="&gt;&gt;sequentialContainerControl.Name" xml:space="preserve">
+    <value>sequentialContainerControl</value>
   </data>
-  <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
+  <data name="&gt;&gt;sequentialContainerControl.Type" xml:space="preserve">
+    <value>Ares.Editor.Controls.SequentialContainerControl, Ares.Editor.Controls, Version=0.1.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
   </data>
-  <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>593, 400</value>
+  <data name="&gt;&gt;sequentialContainerControl.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
-  <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
+  <data name="&gt;&gt;sequentialContainerControl.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="groupBox1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="stopButton.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="stopButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="stopButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>43, 19</value>
+  </data>
+  <data name="stopButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>31, 23</value>
+  </data>
+  <data name="stopButton.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;stopButton.Name" xml:space="preserve">
+    <value>stopButton</value>
+  </data>
+  <data name="&gt;&gt;stopButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;stopButton.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;stopButton.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <data name="playButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="playButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 19</value>
+  </data>
+  <data name="playButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>31, 23</value>
+  </data>
+  <data name="playButton.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;playButton.Name" xml:space="preserve">
+    <value>playButton</value>
+  </data>
+  <data name="&gt;&gt;playButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;playButton.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;playButton.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>366, 12</value>
+  </data>
+  <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>289, 57</value>
+  </data>
+  <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
   <data name="groupBox1.Text" xml:space="preserve">
-    <value>Elements</value>
+    <value>Test</value>
   </data>
   <data name="&gt;&gt;groupBox1.Name" xml:space="preserve">
     <value>groupBox1</value>
@@ -244,16 +265,43 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;groupBox1.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="label1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left, Right</value>
+  </data>
+  <data name="label1.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 20.25pt</value>
+  </data>
+  <data name="label1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 528</value>
+  </data>
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>643, 64</value>
+  </data>
+  <data name="label1.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Drop files or directories from the {0}</value>
+  </data>
+  <data name="label1.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="&gt;&gt;label1.Name" xml:space="preserve">
+    <value>label1</value>
+  </data>
+  <data name="&gt;&gt;label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
     <value>0</value>
-  </data>
-  <data name="dataGridViewTextBoxColumn1.HeaderText" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="dataGridViewNumericUpDownColumn1.HeaderText" xml:space="preserve">
-    <value>Fixed Delay</value>
-  </data>
-  <data name="dataGridViewNumericUpDownColumn2.HeaderText" xml:space="preserve">
-    <value>Random Delay</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -261,49 +309,19 @@
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>6, 13</value>
   </data>
-  <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>593, 400</value>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>667, 601</value>
   </data>
-  <data name="&gt;&gt;dataGridViewTextBoxColumn1.Name" xml:space="preserve">
-    <value>dataGridViewTextBoxColumn1</value>
+  <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 8.25pt</value>
   </data>
-  <data name="&gt;&gt;dataGridViewTextBoxColumn1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;dataGridViewNumericUpDownColumn1.Name" xml:space="preserve">
-    <value>dataGridViewNumericUpDownColumn1</value>
-  </data>
-  <data name="&gt;&gt;dataGridViewNumericUpDownColumn1.Type" xml:space="preserve">
-    <value>DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn, Ares.Editor.Controls, Version=0.1.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
-  </data>
-  <data name="&gt;&gt;dataGridViewNumericUpDownColumn2.Name" xml:space="preserve">
-    <value>dataGridViewNumericUpDownColumn2</value>
-  </data>
-  <data name="&gt;&gt;dataGridViewNumericUpDownColumn2.Type" xml:space="preserve">
-    <value>DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn, Ares.Editor.Controls, Version=0.1.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
-  </data>
-  <data name="&gt;&gt;nameCol.Name" xml:space="preserve">
-    <value>nameCol</value>
-  </data>
-  <data name="&gt;&gt;nameCol.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;fixedDelayCol.Name" xml:space="preserve">
-    <value>fixedDelayCol</value>
-  </data>
-  <data name="&gt;&gt;fixedDelayCol.Type" xml:space="preserve">
-    <value>DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn, Ares.Editor.Controls, Version=0.1.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
-  </data>
-  <data name="&gt;&gt;randomDelayCol.Name" xml:space="preserve">
-    <value>randomDelayCol</value>
-  </data>
-  <data name="&gt;&gt;randomDelayCol.Type" xml:space="preserve">
-    <value>DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn, Ares.Editor.Controls, Version=0.1.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
+  <data name="$this.Text" xml:space="preserve">
+    <value>SequentialPlaylistEditor</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>SequentialContainerControl</value>
+    <value>SequentialPlaylistEditor</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.UserControl, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>Ares.Editor.ElementEditors.EditorBase, Ares.Editor, Version=0.1.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
   </data>
 </root>

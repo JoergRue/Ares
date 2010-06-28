@@ -1,4 +1,23 @@
-﻿using System;
+﻿/*
+ Copyright (c) 2010 [Joerg Ruedenauer]
+ 
+ This file is part of Ares.
+
+ Ares is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+ Ares is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Ares; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -17,10 +36,11 @@ namespace Ares.Editor.Controls
             InitializeComponent();
         }
 
-        public void SetContainer(IElementContainer<ISequentialElement> container)
+        public void SetContainer(ISequentialContainer container)
         {
             m_Container = container;
             Update(m_Container.Id, Actions.ElementChanges.ChangeType.Changed);
+            EnableUpDownButtons();
             Actions.ElementChanges.Instance.AddListener(m_Container.Id, Update);
         }
 
@@ -94,7 +114,7 @@ namespace Ares.Editor.Controls
             listen = true;
         }
 
-        private IElementContainer<ISequentialElement> m_Container;
+        private ISequentialContainer m_Container;
         private Dictionary<int, int> m_ElementsToRows = new Dictionary<int, int>();
         private bool listen = true;
 
@@ -124,6 +144,49 @@ namespace Ares.Editor.Controls
             }
             Actions.Actions.Instance.AddNew(new Actions.RemoveContainerElementsAction(m_Container, elements, e.RowIndex));
             listen = true;
+        }
+
+        private void upButton_Click(object sender, EventArgs e)
+        {
+            List<int> indices = new List<int>();
+            for (int i = 0; i < elementsGrid.SelectedRows.Count; ++i)
+            {
+                indices.Add(elementsGrid.SelectedRows[i].Index);
+            }
+            Actions.Actions.Instance.AddNew(new Actions.ReorderElementsAction(m_Container, indices, -1));
+            // note: the action modified the list
+            elementsGrid.ClearSelection();
+            for (int i = 0; i < indices.Count; ++i)
+            {
+                elementsGrid.Rows[indices[i]].Selected = true;                
+            }
+        }
+
+        private void downButton_Click(object sender, EventArgs e)
+        {
+            List<int> indices = new List<int>();
+            for (int i = 0; i < elementsGrid.SelectedRows.Count; ++i)
+            {
+                indices.Add(elementsGrid.SelectedRows[i].Index);
+            }
+            Actions.Actions.Instance.AddNew(new Actions.ReorderElementsAction(m_Container, indices, 1));
+            // note: the action modified the list
+            elementsGrid.ClearSelection();
+            for (int i = 0; i < indices.Count; ++i)
+            {
+                elementsGrid.Rows[indices[i]].Selected = true;
+            }
+        }
+
+        private void elementsGrid_SelectionChanged(object sender, EventArgs e)
+        {
+            EnableUpDownButtons();
+        }
+
+        private void EnableUpDownButtons()
+        {
+            upButton.Enabled = elementsGrid.Rows.Count > 0 && elementsGrid.SelectedRows.Count > 0 && !elementsGrid.Rows[0].Selected;
+            downButton.Enabled = elementsGrid.Rows.Count > 0 && elementsGrid.SelectedRows.Count > 0 && !elementsGrid.Rows[elementsGrid.Rows.Count - 1].Selected;
         }
     }
 }

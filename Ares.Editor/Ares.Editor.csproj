@@ -90,6 +90,12 @@
     <Compile Include="ElementEditors\SequentialContainerEditor.Designer.cs">
       <DependentUpon>SequentialContainerEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="ElementEditors\SequentialPlaylistEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ElementEditors\SequentialPlaylistEditor.Designer.cs">
+      <DependentUpon>SequentialPlaylistEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="ElementEditors\TriggerEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -154,6 +160,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ElementEditors\SequentialContainerEditor.resx">
       <DependentUpon>SequentialContainerEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ElementEditors\SequentialPlaylistEditor.de.resx">
+      <DependentUpon>SequentialPlaylistEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ElementEditors\SequentialPlaylistEditor.resx">
+      <DependentUpon>SequentialPlaylistEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ElementEditors\TriggerEditor.de.resx">
       <DependentUpon>TriggerEditor.cs</DependentUpon>

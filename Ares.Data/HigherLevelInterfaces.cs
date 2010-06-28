@@ -69,7 +69,7 @@ namespace Ares.Data
     /// list can be delayed, which means an interval between the songs.
     /// </remarks>
     public interface ISequentialBackgroundMusicList : IElement, IRepeatableElement,
-        IElementContainer<ISequentialElement>, IMusicList
+        ISequentialContainer, IMusicList
     {
     }
 

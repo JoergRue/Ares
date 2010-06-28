@@ -18,6 +18,7 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 using Ares.Data;
@@ -304,5 +305,71 @@ namespace Ares.Editor.Actions
         private IGeneralElementContainer m_Container;
         private IElement m_Element;
         private int m_Index;
+    }
+
+    public class ReorderElementsAction : Action
+    {
+        public ReorderElementsAction(ISequentialContainer container, List<int> indices, int offset)
+        {
+            m_Container = container;
+            indices.Sort();
+            m_Indices = indices;
+            m_offset = offset;
+            if (offset < 0)
+            {
+                while (indices.Count > 0 && indices[0] < -offset)
+                {
+                    indices.RemoveAt(0);
+                }
+            }
+            else if (offset > 0)
+            {
+                while (indices.Count > 0 && indices[indices.Count - 1] >= container.GetElements().Count - offset)
+                {
+                    indices.RemoveAt(indices.Count - 1);
+                }
+            }
+        }
+
+        public override void Do()
+        {
+            if (m_offset > 0)
+                MoveDown(m_offset);
+            else
+                MoveUp(-m_offset);
+            ElementChanges.Instance.ElementChanged(m_Container.Id);
+        }
+
+        public override void Undo()
+        {
+            if (m_offset > 0)
+                MoveUp(m_offset);
+            else
+                MoveDown(-m_offset);
+            ElementChanges.Instance.ElementChanged(m_Container.Id);
+        }
+
+        private void MoveUp(int offset)
+        {
+            for (int i = 0; i < m_Indices.Count; ++i)
+            {
+                m_Container.MoveElements(m_Indices[i], m_Indices[i], -offset);
+                m_Indices[i] -= offset;
+            }
+        }
+
+        private void MoveDown(int offset)
+        {
+            for (int i = m_Indices.Count - 1; i >= 0; --i)
+            {
+                m_Container.MoveElements(m_Indices[i], m_Indices[i], offset);
+                m_Indices[i] += offset;
+            }
+        }
+
+
+        private ISequentialContainer m_Container;
+        private List<int> m_Indices;
+        private int m_offset;
     }
 }
