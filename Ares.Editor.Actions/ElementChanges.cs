@@ -71,6 +71,7 @@ namespace Ares.Editor.Actions
         public void ElementRenamed(int elementID)
         {
             Notify(elementID, ChangeType.Renamed);
+            NotifyAll(elementID, ChangeType.Renamed);
         }
 
         public void ElementRemoved(int elementID)

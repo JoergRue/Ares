@@ -37,9 +37,21 @@ namespace Ares.Editor.ElementEditors
 
         public void SetElement(Ares.Data.IDelayableElement element)
         {
+            if (m_Element != null)
+            {
+                Actions.ElementChanges.Instance.RemoveListener(m_Element.Id, Update);
+            }
             m_Element = element;
-            Update(m_Element.Id, Actions.ElementChanges.ChangeType.Changed);
-            Actions.ElementChanges.Instance.AddListener(m_Element.Id, Update);
+            if (m_Element != null)
+            {
+                Update(m_Element.Id, Actions.ElementChanges.ChangeType.Changed);
+                Actions.ElementChanges.Instance.AddListener(m_Element.Id, Update);
+            }
+            else
+            {
+                fixedDelayUpDown.Value = 0;
+                maxDelayUpDown.Value = 0;
+            }
         }
 
         private void Update(int id, Actions.ElementChanges.ChangeType changeType)
@@ -55,6 +67,8 @@ namespace Ares.Editor.ElementEditors
 
         private void Commit()
         {
+            if (m_Element == null)
+                return;
             listen = false;
             Actions.Action action = Actions.Actions.Instance.LastAction;
             if (action != null && action is Actions.DelayableElementChangeAction)

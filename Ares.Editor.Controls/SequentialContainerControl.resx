@@ -264,24 +264,6 @@
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
     <value>593, 400</value>
   </data>
-  <data name="&gt;&gt;dataGridViewTextBoxColumn1.Name" xml:space="preserve">
-    <value>dataGridViewTextBoxColumn1</value>
-  </data>
-  <data name="&gt;&gt;dataGridViewTextBoxColumn1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;dataGridViewNumericUpDownColumn1.Name" xml:space="preserve">
-    <value>dataGridViewNumericUpDownColumn1</value>
-  </data>
-  <data name="&gt;&gt;dataGridViewNumericUpDownColumn1.Type" xml:space="preserve">
-    <value>DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn, Ares.Editor.Controls, Version=0.1.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
-  </data>
-  <data name="&gt;&gt;dataGridViewNumericUpDownColumn2.Name" xml:space="preserve">
-    <value>dataGridViewNumericUpDownColumn2</value>
-  </data>
-  <data name="&gt;&gt;dataGridViewNumericUpDownColumn2.Type" xml:space="preserve">
-    <value>DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn, Ares.Editor.Controls, Version=0.1.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
-  </data>
   <data name="&gt;&gt;nameCol.Name" xml:space="preserve">
     <value>nameCol</value>
   </data>
@@ -298,6 +280,24 @@
     <value>randomDelayCol</value>
   </data>
   <data name="&gt;&gt;randomDelayCol.Type" xml:space="preserve">
+    <value>DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn, Ares.Editor.Controls, Version=0.1.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewTextBoxColumn1.Name" xml:space="preserve">
+    <value>dataGridViewTextBoxColumn1</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewTextBoxColumn1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewNumericUpDownColumn1.Name" xml:space="preserve">
+    <value>dataGridViewNumericUpDownColumn1</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewNumericUpDownColumn1.Type" xml:space="preserve">
+    <value>DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn, Ares.Editor.Controls, Version=0.1.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewNumericUpDownColumn2.Name" xml:space="preserve">
+    <value>dataGridViewNumericUpDownColumn2</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewNumericUpDownColumn2.Type" xml:space="preserve">
     <value>DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn, Ares.Editor.Controls, Version=0.1.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">

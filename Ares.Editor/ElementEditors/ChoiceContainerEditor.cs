@@ -161,5 +161,10 @@ namespace Ares.Editor.ElementEditors
         private bool listen = true;
 
         private Ares.Data.IElementContainer<Ares.Data.IChoiceElement> m_Element;
+
+        private void choiceContainerControl_ElementDoubleClick(object sender, Controls.ElementDoubleClickEventArgs e)
+        {
+            Editors.ShowEditor(e.Element.InnerElement, this.DockPanel);
+        }
     }
 }

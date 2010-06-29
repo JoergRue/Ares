@@ -26,48 +26,31 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-using Ares.Data;
-
 namespace Ares.Editor.ElementEditors
 {
-    partial class RandomPlaylistOrBGSoundChoiceEditor : EditorBase
+    partial class ParallelContainerEditor : EditorBase
     {
-        public RandomPlaylistOrBGSoundChoiceEditor()
+        public ParallelContainerEditor()
         {
             InitializeComponent();
         }
 
-        public void SetPlaylist(IRandomBackgroundMusicList playList)
-        {
-            ElementId = playList.Id;
-            m_Element = playList;
-            delayableControl.SetElement(playList);
-            repeatableControl.SetElement(playList);
-            choiceContainerControl.SetContainer(playList);
-            volumeControl.SetElement(playList);
-            label1.Text = String.Format(label1.Text, String.Format(StringResources.FileExplorerTitle, StringResources.Music));
-            Update(m_Element.Id, Actions.ElementChanges.ChangeType.Renamed);
-            Actions.ElementChanges.Instance.AddListener(m_Element.Id, Update);
-        }
+        private bool m_HasActiveElement = false;
 
-        public void SetBGSoundChoice(IBackgroundSoundChoice bgSoundChoice)
+        public void SetContainer(Ares.Data.IElementContainer<Ares.Data.IParallelElement> container)
         {
-            ElementId = bgSoundChoice.Id;
-            m_Element = bgSoundChoice;
-            delayableControl.SetElement(bgSoundChoice);
-            repeatableControl.SetElement(bgSoundChoice);
-            choiceContainerControl.SetContainer(bgSoundChoice);
-            volumeControl.SetElement(bgSoundChoice);
-            label1.Text = String.Format(label1.Text, String.Format(StringResources.FileExplorerTitle, StringResources.Sounds));
+            ElementId = container.Id;
+            m_Element = container;
+            parallelContainerControl.SetContainer(container);
+            volumeControl.SetElement(container);
             Update(m_Element.Id, Actions.ElementChanges.ChangeType.Renamed);
-            Actions.ElementChanges.Instance.AddListener(m_Element.Id, Update);
+            UpdateActiveElement();
+            Actions.ElementChanges.Instance.AddListener(-1, Update);
         }
-
-        private bool listen = true;
 
         private void Update(int elementId, Actions.ElementChanges.ChangeType changeType)
         {
-            if (!listen) 
+            if (!listen)
                 return;
             if (elementId == m_Element.Id)
             {
@@ -88,37 +71,32 @@ namespace Ares.Editor.ElementEditors
                     EnableControls();
                 }
             }
-        }
-
-        private IElement m_Element;
-
-        private void RandomPlaylistEditor_SizeChanged(object sender, EventArgs e)
-        {
-            Font font = label1.Font;
-            String text = label1.Text;
-            using (Graphics g = label1.CreateGraphics())
+            else if (changeType == Actions.ElementChanges.ChangeType.Played || changeType == Actions.ElementChanges.ChangeType.Stopped)
             {
-                float textWidth = g.MeasureString(text, font).Width;
-                if (textWidth == 0) return;
-                float factor = label1.Width / textWidth;
-                if (factor == 0) return;
-                label1.Font = new Font(font.Name, font.SizeInPoints * factor);
+                if (Actions.Playing.Instance.IsElementOrSubElementPlaying(m_Element))
+                {
+                    DisableControls(false);
+                }
+                else
+                {
+                    EnableControls();
+                }
             }
         }
 
         private bool m_AcceptDrop;
 
-        private void RandomPlaylistEditor_DragEnter(object sender, DragEventArgs e)
+        private void ParallelContainerEditor_DragEnter(object sender, DragEventArgs e)
         {
-            m_AcceptDrop = choiceContainerControl.Enabled && e.Data.GetDataPresent(typeof(List<DraggedItem>));
+            m_AcceptDrop = parallelContainerControl.Enabled && e.Data.GetDataPresent(typeof(List<DraggedItem>));
         }
 
-        private void RandomPlaylistEditor_DragLeave(object sender, EventArgs e)
+        private void ParallelContainerEditor_DragLeave(object sender, EventArgs e)
         {
             m_AcceptDrop = false;
         }
 
-        private void RandomPlaylistEditor_DragOver(object sender, DragEventArgs e)
+        private void ParallelContainerEditor_DragOver(object sender, DragEventArgs e)
         {
             if (m_AcceptDrop && (e.AllowedEffect & DragDropEffects.Copy) != 0)
                 e.Effect = DragDropEffects.Copy;
@@ -126,13 +104,13 @@ namespace Ares.Editor.ElementEditors
                 e.Effect = DragDropEffects.None;
         }
 
-        private void RandomPlaylistEditor_DragDrop(object sender, DragEventArgs e)
+        private void ParallelContainerEditor_DragDrop(object sender, DragEventArgs e)
         {
             List<DraggedItem> list = e.Data.GetData(typeof(List<DraggedItem>)) as List<DraggedItem>;
             if (list != null)
             {
-                List<IElement> elements = new List<IElement>(DragAndDrop.GetElementsFromDroppedItems(list));
-                choiceContainerControl.AddElements(elements);
+                List<Ares.Data.IElement> elements = new List<Ares.Data.IElement>(DragAndDrop.GetElementsFromDroppedItems(list));
+                parallelContainerControl.AddElements(elements);
             }
         }
 
@@ -140,20 +118,20 @@ namespace Ares.Editor.ElementEditors
         {
             playButton.Enabled = false;
             stopButton.Enabled = allowStop;
-            choiceContainerControl.Enabled = false;
+            parallelContainerControl.Enabled = false;
+            volumeControl.Enabled = false;
             delayableControl.Enabled = false;
             repeatableControl.Enabled = false;
-            volumeControl.Enabled = false;
         }
 
         private void EnableControls()
         {
             playButton.Enabled = true;
             stopButton.Enabled = false;
-            choiceContainerControl.Enabled = true;
-            delayableControl.Enabled = true;
-            repeatableControl.Enabled = true;
+            parallelContainerControl.Enabled = true;
             volumeControl.Enabled = true;
+            delayableControl.Enabled = m_HasActiveElement;
+            repeatableControl.Enabled = m_HasActiveElement;
         }
 
         private void playButton_Click(object sender, EventArgs e)
@@ -162,7 +140,7 @@ namespace Ares.Editor.ElementEditors
             {
                 listen = false;
                 DisableControls(true);
-                Actions.Playing.Instance.PlayElement(m_Element, this, () => {});
+                Actions.Playing.Instance.PlayElement(m_Element, this, () => { });
                 listen = true;
             }
         }
@@ -172,10 +150,40 @@ namespace Ares.Editor.ElementEditors
             Actions.Playing.Instance.StopElement(m_Element);
         }
 
-        private void choiceContainerControl_ElementDoubleClick(object sender, Controls.ElementDoubleClickEventArgs e)
+        private bool listen = true;
+
+        private Ares.Data.IElementContainer<Ares.Data.IParallelElement> m_Element;
+
+        private void parallelContainerControl_ActiveRowChanged(object sender, EventArgs e)
+        {
+            UpdateActiveElement();
+        }
+
+        private void UpdateActiveElement()
+        {
+            Ares.Data.IParallelElement element = parallelContainerControl.ActiveElement;
+            if (element != null)
+            {
+                m_HasActiveElement = true;
+                delayableControl.SetElement(element);
+                repeatableControl.SetElement(element);
+                bool enabled = !Actions.Playing.Instance.IsElementOrSubElementPlaying(m_Element);
+                delayableControl.Enabled = enabled;
+                repeatableControl.Enabled = enabled;
+            }
+            else
+            {
+                m_HasActiveElement = false;
+                delayableControl.SetElement(null);
+                repeatableControl.SetElement(null);
+                delayableControl.Enabled = false;
+                repeatableControl.Enabled = false;
+            }
+        }
+
+        private void parallelContainerControl_ElementDoubleClick(object sender, Controls.ElementDoubleClickEventArgs e)
         {
             Editors.ShowEditor(e.Element.InnerElement, this.DockPanel);
         }
-
     }
 }

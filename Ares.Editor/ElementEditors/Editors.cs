@@ -70,6 +70,13 @@ namespace Ares.Editor.ElementEditors
                     editor.SetContainer(element as Ares.Data.ISequentialContainer);
                     editor.Show(dockPanel);
                 }
+                else if (element is Ares.Data.IElementContainer<Ares.Data.IParallelElement>)
+                {
+                    ParallelContainerEditor editor = new ParallelContainerEditor();
+                    editor.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Document;
+                    editor.SetContainer(element as Ares.Data.IElementContainer<Ares.Data.IParallelElement>);
+                    editor.Show(dockPanel);
+                }
             }
         }
 

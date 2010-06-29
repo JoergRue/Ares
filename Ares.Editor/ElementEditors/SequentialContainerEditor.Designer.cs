@@ -67,6 +67,7 @@ namespace Ares.Editor.ElementEditors
             // 
             resources.ApplyResources(this.sequentialContainerControl, "sequentialContainerControl");
             this.sequentialContainerControl.Name = "sequentialContainerControl";
+            this.sequentialContainerControl.ElementDoubleClick += new System.EventHandler<Ares.Editor.Controls.ElementDoubleClickEventArgs>(this.sequentialContainerControl_ElementDoubleClick);
             // 
             // label1
             // 
@@ -95,8 +96,8 @@ namespace Ares.Editor.ElementEditors
             // 
             // playButton
             // 
-            resources.ApplyResources(this.playButton, "playButton");
             this.playButton.Image = global::Ares.Editor.ImageResources.RunSmall;
+            resources.ApplyResources(this.playButton, "playButton");
             this.playButton.Name = "playButton";
             this.playButton.UseCompatibleTextRendering = true;
             this.playButton.UseVisualStyleBackColor = true;
@@ -104,8 +105,8 @@ namespace Ares.Editor.ElementEditors
             // 
             // SequentialContainerEditor
             // 
-            resources.ApplyResources(this, "$this");
             this.AllowDrop = true;
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label1);

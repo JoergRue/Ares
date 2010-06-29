@@ -30,7 +30,7 @@ using Ares.Data;
 
 namespace Ares.Editor.ElementEditorControls
 {
-    public partial class ChoiceContainerControl : UserControl
+    public partial class ChoiceContainerControl : Ares.Editor.Controls.ContainerControl
     {
         public ChoiceContainerControl()
         {
@@ -141,6 +141,11 @@ namespace Ares.Editor.ElementEditorControls
             }
             Actions.Actions.Instance.AddNew(new Actions.RemoveContainerElementsAction(m_Container, elements, e.RowIndex));
             listen = true;
+        }
+
+        private void elementsGrid_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            FireElementDoubleClick(m_Container.GetElements()[e.RowIndex]);
         }
     }
 }

@@ -59,12 +59,12 @@ namespace Ares.Editor.Controls
             this.downButton = new System.Windows.Forms.Button();
             this.upButton = new System.Windows.Forms.Button();
             this.elementsGrid = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewNumericUpDownColumn1 = new DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn();
-            this.dataGridViewNumericUpDownColumn2 = new DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn();
             this.nameCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fixedDelayCol = new DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn();
             this.randomDelayCol = new DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewNumericUpDownColumn1 = new DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn();
+            this.dataGridViewNumericUpDownColumn2 = new DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.elementsGrid)).BeginInit();
             this.SuspendLayout();
@@ -123,9 +123,50 @@ namespace Ares.Editor.Controls
             this.elementsGrid.Name = "elementsGrid";
             this.elementsGrid.RowHeadersVisible = false;
             this.elementsGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.elementsGrid.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.elementsGrid_CellDoubleClick);
             this.elementsGrid.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.elementsGrid_CellEndEdit);
             this.elementsGrid.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.elementsGrid_RowsRemoved);
             this.elementsGrid.SelectionChanged += new System.EventHandler(this.elementsGrid_SelectionChanged);
+            // 
+            // nameCol
+            // 
+            this.nameCol.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            resources.ApplyResources(this.nameCol, "nameCol");
+            this.nameCol.Name = "nameCol";
+            this.nameCol.ReadOnly = true;
+            this.nameCol.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // fixedDelayCol
+            // 
+            this.fixedDelayCol.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            resources.ApplyResources(this.fixedDelayCol, "fixedDelayCol");
+            this.fixedDelayCol.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.fixedDelayCol.Maximum = new decimal(new int[] {
+            999999,
+            0,
+            0,
+            0});
+            this.fixedDelayCol.Name = "fixedDelayCol";
+            // 
+            // randomDelayCol
+            // 
+            this.randomDelayCol.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            resources.ApplyResources(this.randomDelayCol, "randomDelayCol");
+            this.randomDelayCol.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.randomDelayCol.Maximum = new decimal(new int[] {
+            999999,
+            0,
+            0,
+            0});
+            this.randomDelayCol.Name = "randomDelayCol";
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -169,46 +210,6 @@ namespace Ares.Editor.Controls
             this.dataGridViewNumericUpDownColumn2.Name = "dataGridViewNumericUpDownColumn2";
             this.dataGridViewNumericUpDownColumn2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.dataGridViewNumericUpDownColumn2.ThousandsSeparator = true;
-            // 
-            // nameCol
-            // 
-            this.nameCol.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            resources.ApplyResources(this.nameCol, "nameCol");
-            this.nameCol.Name = "nameCol";
-            this.nameCol.ReadOnly = true;
-            this.nameCol.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // fixedDelayCol
-            // 
-            this.fixedDelayCol.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            resources.ApplyResources(this.fixedDelayCol, "fixedDelayCol");
-            this.fixedDelayCol.Increment = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.fixedDelayCol.Maximum = new decimal(new int[] {
-            999999,
-            0,
-            0,
-            0});
-            this.fixedDelayCol.Name = "fixedDelayCol";
-            // 
-            // randomDelayCol
-            // 
-            this.randomDelayCol.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            resources.ApplyResources(this.randomDelayCol, "randomDelayCol");
-            this.randomDelayCol.Increment = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.randomDelayCol.Maximum = new decimal(new int[] {
-            999999,
-            0,
-            0,
-            0});
-            this.randomDelayCol.Name = "randomDelayCol";
             // 
             // SequentialContainerControl
             // 

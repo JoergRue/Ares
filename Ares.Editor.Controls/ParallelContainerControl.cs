@@ -29,19 +29,35 @@ using Ares.Data;
 
 namespace Ares.Editor.Controls
 {
-    public partial class SequentialContainerControl : ContainerControl
+    public partial class ParallelContainerControl : ContainerControl
     {
-        public SequentialContainerControl()
+        public ParallelContainerControl()
         {
             InitializeComponent();
         }
 
-        public void SetContainer(ISequentialContainer container)
+        public void SetContainer(IElementContainer<IParallelElement> container)
         {
             m_Container = container;
             Update(m_Container.Id, Actions.ElementChanges.ChangeType.Changed);
-            EnableUpDownButtons();
             Actions.ElementChanges.Instance.AddListener(m_Container.Id, Update);
+        }
+
+        public event EventHandler ActiveRowChanged;
+
+        public IParallelElement ActiveElement
+        {
+            get
+            {
+                if (m_Container.GetElements().Count > 0 && elementsGrid.CurrentRow != null)
+                {
+                    return m_Container.GetElements()[elementsGrid.CurrentRow.Index];
+                }
+                else
+                {
+                    return null;
+                }
+            }
         }
 
         private void Update(int elementID, Actions.ElementChanges.ChangeType changeType)
@@ -59,9 +75,9 @@ namespace Ares.Editor.Controls
                 }
                 m_ElementsToRows.Clear();
                 int row = 0;
-                foreach (ISequentialElement element in m_Container.GetElements())
+                foreach (IParallelElement element in m_Container.GetElements())
                 {
-                    elementsGrid.Rows.Add(new object[] { element.Title, element.FixedStartDelay.TotalMilliseconds, element.MaximumRandomStartDelay.TotalMilliseconds });
+                    elementsGrid.Rows.Add(new object[] { element.Title });
                     if (element.InnerElement is IFileElement)
                     {
                         elementsGrid.Rows[row].Cells[0].ToolTipText = (element.InnerElement as IFileElement).FilePath;
@@ -87,10 +103,7 @@ namespace Ares.Editor.Controls
                 }
                 else if (changeType == Actions.ElementChanges.ChangeType.Changed)
                 {
-                    elementsGrid.Rows[m_ElementsToRows[elementID]].Cells[1].Value =
-                        (m_Container.GetElement(elementID)).FixedStartDelay.TotalMilliseconds;
-                    elementsGrid.Rows[m_ElementsToRows[elementID]].Cells[2].Value =
-                        (m_Container.GetElement(elementID)).MaximumRandomStartDelay.TotalMilliseconds;
+                    ActiveRowChanged(this, new EventArgs());
                 }
             }
             listen = true;
@@ -101,10 +114,10 @@ namespace Ares.Editor.Controls
             listen = false;
             int index = m_Container.GetElements().Count;
             Actions.Actions.Instance.AddNew(new Actions.AddContainerElementsAction(m_Container, elements));
-            IList<ISequentialElement> containerElements = m_Container.GetElements();
+            IList<IParallelElement> containerElements = m_Container.GetElements();
             for (int i = index; i < containerElements.Count; ++i)
             {
-                elementsGrid.Rows.Add(new object[] { containerElements[i].Title, containerElements[i].FixedStartDelay.TotalMilliseconds, containerElements[i].MaximumRandomStartDelay.TotalMilliseconds });
+                elementsGrid.Rows.Add(new object[] { containerElements[i].Title });
                 if (containerElements[i].InnerElement is IFileElement)
                 {
                     elementsGrid.Rows[index].Cells[0].ToolTipText = (containerElements[i].InnerElement as IFileElement).FilePath;
@@ -114,22 +127,9 @@ namespace Ares.Editor.Controls
             listen = true;
         }
 
-        private ISequentialContainer m_Container;
+        private IElementContainer<IParallelElement> m_Container;
         private Dictionary<int, int> m_ElementsToRows = new Dictionary<int, int>();
         private bool listen = true;
-
-        private void elementsGrid_CellEndEdit(object sender, DataGridViewCellEventArgs e)
-        {
-            listen = false;
-            if (e.ColumnIndex == 1 || e.ColumnIndex == 2)
-            {
-                int fixedDelay = Convert.ToInt32(elementsGrid.Rows[e.RowIndex].Cells[1].Value);
-                int randomDelay = Convert.ToInt32(elementsGrid.Rows[e.RowIndex].Cells[2].Value);
-                Actions.Actions.Instance.AddNew(new Actions.SequentialElementChangeAction(
-                    m_Container.GetElements()[e.RowIndex], fixedDelay, randomDelay));
-            }
-            listen = true;
-        }
 
         private void elementsGrid_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
         {
@@ -137,7 +137,7 @@ namespace Ares.Editor.Controls
                 return;
             listen = false;
             List<IElement> elements = new List<IElement>();
-            IList<ISequentialElement> containerElements = m_Container.GetElements();
+            IList<IParallelElement> containerElements = m_Container.GetElements();
             for (int i = 0; i < e.RowCount; ++i)
             {
                 elements.Add(containerElements[e.RowIndex + i]);
@@ -146,52 +146,15 @@ namespace Ares.Editor.Controls
             listen = true;
         }
 
-        private void upButton_Click(object sender, EventArgs e)
+        private void elementsGrid_CurrentCellChanged(object sender, EventArgs e)
         {
-            List<int> indices = new List<int>();
-            for (int i = 0; i < elementsGrid.SelectedRows.Count; ++i)
-            {
-                indices.Add(elementsGrid.SelectedRows[i].Index);
-            }
-            Actions.Actions.Instance.AddNew(new Actions.ReorderElementsAction(m_Container, indices, -1));
-            // note: the action modified the list
-            elementsGrid.ClearSelection();
-            for (int i = 0; i < indices.Count; ++i)
-            {
-                elementsGrid.Rows[indices[i]].Selected = true;                
-            }
-        }
-
-        private void downButton_Click(object sender, EventArgs e)
-        {
-            List<int> indices = new List<int>();
-            for (int i = 0; i < elementsGrid.SelectedRows.Count; ++i)
-            {
-                indices.Add(elementsGrid.SelectedRows[i].Index);
-            }
-            Actions.Actions.Instance.AddNew(new Actions.ReorderElementsAction(m_Container, indices, 1));
-            // note: the action modified the list
-            elementsGrid.ClearSelection();
-            for (int i = 0; i < indices.Count; ++i)
-            {
-                elementsGrid.Rows[indices[i]].Selected = true;
-            }
-        }
-
-        private void elementsGrid_SelectionChanged(object sender, EventArgs e)
-        {
-            EnableUpDownButtons();
-        }
-
-        private void EnableUpDownButtons()
-        {
-            upButton.Enabled = elementsGrid.Rows.Count > 0 && elementsGrid.SelectedRows.Count > 0 && !elementsGrid.Rows[0].Selected;
-            downButton.Enabled = elementsGrid.Rows.Count > 0 && elementsGrid.SelectedRows.Count > 0 && !elementsGrid.Rows[elementsGrid.Rows.Count - 1].Selected;
+            ActiveRowChanged(this, new EventArgs());
         }
 
         private void elementsGrid_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             FireElementDoubleClick(m_Container.GetElements()[e.RowIndex]);
         }
+    
     }
 }

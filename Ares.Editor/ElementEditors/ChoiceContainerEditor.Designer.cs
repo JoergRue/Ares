@@ -49,24 +49,14 @@ namespace Ares.Editor.ElementEditors
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChoiceContainerEditor));
-            this.volumeControl = new Ares.Editor.Controls.VolumeControl();
-            this.choiceContainerControl = new Ares.Editor.ElementEditorControls.ChoiceContainerControl();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.stopButton = new System.Windows.Forms.Button();
             this.playButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.choiceContainerControl = new Ares.Editor.ElementEditorControls.ChoiceContainerControl();
+            this.volumeControl = new Ares.Editor.Controls.VolumeControl();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // volumeControl
-            // 
-            resources.ApplyResources(this.volumeControl, "volumeControl");
-            this.volumeControl.Name = "volumeControl";
-            // 
-            // choiceContainerControl
-            // 
-            resources.ApplyResources(this.choiceContainerControl, "choiceContainerControl");
-            this.choiceContainerControl.Name = "choiceContainerControl";
             // 
             // groupBox1
             // 
@@ -88,8 +78,8 @@ namespace Ares.Editor.ElementEditors
             // 
             // playButton
             // 
-            resources.ApplyResources(this.playButton, "playButton");
             this.playButton.Image = global::Ares.Editor.ImageResources.RunSmall;
+            resources.ApplyResources(this.playButton, "playButton");
             this.playButton.Name = "playButton";
             this.playButton.UseCompatibleTextRendering = true;
             this.playButton.UseVisualStyleBackColor = true;
@@ -102,10 +92,21 @@ namespace Ares.Editor.ElementEditors
             this.label1.Name = "label1";
             this.label1.UseCompatibleTextRendering = true;
             // 
+            // choiceContainerControl
+            // 
+            resources.ApplyResources(this.choiceContainerControl, "choiceContainerControl");
+            this.choiceContainerControl.Name = "choiceContainerControl";
+            this.choiceContainerControl.ElementDoubleClick += new System.EventHandler<Ares.Editor.Controls.ElementDoubleClickEventArgs>(this.choiceContainerControl_ElementDoubleClick);
+            // 
+            // volumeControl
+            // 
+            resources.ApplyResources(this.volumeControl, "volumeControl");
+            this.volumeControl.Name = "volumeControl";
+            // 
             // ChoiceContainerEditor
             // 
-            resources.ApplyResources(this, "$this");
             this.AllowDrop = true;
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.label1);
             this.Controls.Add(this.groupBox1);

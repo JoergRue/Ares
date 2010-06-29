@@ -72,6 +72,7 @@ namespace Ares.Editor.ElementEditors
             // 
             resources.ApplyResources(this.sequentialContainerControl, "sequentialContainerControl");
             this.sequentialContainerControl.Name = "sequentialContainerControl";
+            this.sequentialContainerControl.ElementDoubleClick += new System.EventHandler<Ares.Editor.Controls.ElementDoubleClickEventArgs>(this.sequentialContainerControl_ElementDoubleClick);
             // 
             // groupBox1
             // 

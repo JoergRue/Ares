@@ -62,8 +62,8 @@ namespace Ares.Editor.ElementEditors
             // 
             // label1
             // 
-            resources.ApplyResources(this.label1, "label1");
             this.label1.AllowDrop = true;
+            resources.ApplyResources(this.label1, "label1");
             this.label1.ForeColor = System.Drawing.SystemColors.InactiveCaption;
             this.label1.Name = "label1";
             this.label1.UseCompatibleTextRendering = true;
@@ -92,8 +92,8 @@ namespace Ares.Editor.ElementEditors
             // 
             // playButton
             // 
-            resources.ApplyResources(this.playButton, "playButton");
             this.playButton.Image = global::Ares.Editor.ImageResources.RunSmall;
+            resources.ApplyResources(this.playButton, "playButton");
             this.playButton.Name = "playButton";
             this.playButton.UseCompatibleTextRendering = true;
             this.playButton.UseVisualStyleBackColor = true;
@@ -107,8 +107,8 @@ namespace Ares.Editor.ElementEditors
             // 
             // delayableControl
             // 
-            resources.ApplyResources(this.delayableControl, "delayableControl");
             this.delayableControl.BackColor = System.Drawing.SystemColors.Control;
+            resources.ApplyResources(this.delayableControl, "delayableControl");
             this.delayableControl.MaximumSize = new System.Drawing.Size(346, 57);
             this.delayableControl.Name = "delayableControl";
             // 
@@ -121,11 +121,12 @@ namespace Ares.Editor.ElementEditors
             // 
             resources.ApplyResources(this.choiceContainerControl, "choiceContainerControl");
             this.choiceContainerControl.Name = "choiceContainerControl";
+            this.choiceContainerControl.ElementDoubleClick += new System.EventHandler<Ares.Editor.Controls.ElementDoubleClickEventArgs>(this.choiceContainerControl_ElementDoubleClick);
             // 
             // RandomPlaylistOrBGSoundChoiceEditor
             // 
-            resources.ApplyResources(this, "$this");
             this.AllowDrop = true;
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.volumeControl);
             this.Controls.Add(this.groupBox1);

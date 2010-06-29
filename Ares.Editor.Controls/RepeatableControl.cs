@@ -39,9 +39,24 @@ namespace Ares.Editor.ElementEditors
 
         public void SetElement(IRepeatableElement element)
         {
+            if (m_Element != null)
+            {
+                Actions.ElementChanges.Instance.RemoveListener(m_Element.Id, Update);
+            }
             m_Element = element;
-            Update(element.Id, Actions.ElementChanges.ChangeType.Changed);
-            Actions.ElementChanges.Instance.AddListener(element.Id, Update);
+            if (m_Element != null)
+            {
+                Update(element.Id, Actions.ElementChanges.ChangeType.Changed);
+                Actions.ElementChanges.Instance.AddListener(element.Id, Update);
+            }
+            else
+            {
+                loopButton.Checked = false;
+                noLoopButton.Checked = true;
+                repeatCountUpDown.Value = 1;
+                fixedDelayUpDown.Value = 0;
+                maxDelayUpDown.Value = 0;
+            }
         }
 
         private void Update(int elementID, Actions.ElementChanges.ChangeType changeType)
@@ -62,6 +77,8 @@ namespace Ares.Editor.ElementEditors
 
         private void Commit()
         {
+            if (m_Element == null)
+                return;
             listen = false;
             int repeatCount = loopButton.Checked ? -1 : (int)repeatCountUpDown.Value;
             Actions.Action action = Actions.Actions.Instance.LastAction;

@@ -78,6 +78,12 @@
     </Compile>
     <Compile Include="ElementEditors\EditorRegistry.cs" />
     <Compile Include="ElementEditors\Editors.cs" />
+    <Compile Include="ElementEditors\ParallelContainerEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ElementEditors\ParallelContainerEditor.Designer.cs">
+      <DependentUpon>ParallelContainerEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="ElementEditors\RandomPlaylistEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -148,6 +154,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ElementEditors\ChoiceContainerEditor.resx">
       <DependentUpon>ChoiceContainerEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ElementEditors\ParallelContainerEditor.resx">
+      <DependentUpon>ParallelContainerEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ElementEditors\RandomPlaylistEditor.de.resx">
       <DependentUpon>RandomPlaylistEditor.cs</DependentUpon>

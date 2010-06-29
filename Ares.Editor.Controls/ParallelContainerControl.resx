@@ -123,16 +123,6 @@
   <data name="NameColumn.HeaderText" xml:space="preserve">
     <value>Name</value>
   </data>
-  <metadata name="ChanceColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="ChanceColumn.HeaderText" xml:space="preserve">
-    <value>Chance</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="ChanceColumn.Width" type="System.Int32, mscorlib">
-    <value>74</value>
-  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="elementsGrid.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -142,8 +132,9 @@
     <value>9, 16</value>
   </data>
   <data name="elementsGrid.Size" type="System.Drawing.Size, System.Drawing">
-    <value>550, 299</value>
+    <value>570, 367</value>
   </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="elementsGrid.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
@@ -169,10 +160,10 @@
     <value>9, 3, 9, 3</value>
   </data>
   <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>568, 318</value>
+    <value>588, 386</value>
   </data>
   <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="groupBox1.Text" xml:space="preserve">
     <value>Elements</value>
@@ -189,12 +180,6 @@
   <data name="&gt;&gt;groupBox1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="dataGridViewTextBoxColumn1.HeaderText" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="dataGridViewNumericUpDownColumn1.HeaderText" xml:space="preserve">
-    <value>Chance</value>
-  </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -202,7 +187,7 @@
     <value>6, 13</value>
   </data>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>568, 318</value>
+    <value>588, 386</value>
   </data>
   <data name="&gt;&gt;NameColumn.Name" xml:space="preserve">
     <value>NameColumn</value>
@@ -210,26 +195,8 @@
   <data name="&gt;&gt;NameColumn.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;ChanceColumn.Name" xml:space="preserve">
-    <value>ChanceColumn</value>
-  </data>
-  <data name="&gt;&gt;ChanceColumn.Type" xml:space="preserve">
-    <value>DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn, Ares.Editor.Controls, Version=0.1.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
-  </data>
-  <data name="&gt;&gt;dataGridViewTextBoxColumn1.Name" xml:space="preserve">
-    <value>dataGridViewTextBoxColumn1</value>
-  </data>
-  <data name="&gt;&gt;dataGridViewTextBoxColumn1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;dataGridViewNumericUpDownColumn1.Name" xml:space="preserve">
-    <value>dataGridViewNumericUpDownColumn1</value>
-  </data>
-  <data name="&gt;&gt;dataGridViewNumericUpDownColumn1.Type" xml:space="preserve">
-    <value>DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn, Ares.Editor.Controls, Version=0.1.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
-  </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>ChoiceContainerControl</value>
+    <value>ParallelContainerControl</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>System.Windows.Forms.UserControl, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

@@ -155,6 +155,11 @@ namespace Ares.Editor.ElementEditors
             Actions.Playing.Instance.StopElement(m_Element);
         }
 
+        private void sequentialContainerControl_ElementDoubleClick(object sender, Controls.ElementDoubleClickEventArgs e)
+        {
+            Editors.ShowEditor(e.Element.InnerElement, this.DockPanel);
+        }
+
     
     }
 }
