@@ -409,7 +409,6 @@ namespace Ares.Player
             this.Name = "Player";
             this.Text = "Ares Player";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Player_FormClosing);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Player_KeyDown);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
