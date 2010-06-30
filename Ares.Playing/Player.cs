@@ -51,6 +51,12 @@ namespace Ares.Playing
             private set;
         }
 
+        public IEffects Effects
+        {
+            get;
+            private set;
+        }
+
         public SoundFile(IFileElement element)
         {
             Id = element.Id;
@@ -58,6 +64,7 @@ namespace Ares.Playing
             String dir = (SoundFileType == Playing.SoundFileType.Music) ? PlayingModule.ThePlayer.MusicPath : PlayingModule.ThePlayer.SoundPath;
             Path = System.IO.Path.Combine(dir, element.FilePath);
             Volume = SoundFileType == Playing.SoundFileType.Music ? PlayingModule.ThePlayer.MusicVolume : PlayingModule.ThePlayer.SoundVolume;
+            Effects = element.Effects;
         }
     }
 

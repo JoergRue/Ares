@@ -77,6 +77,13 @@ namespace Ares.Editor.ElementEditors
                     editor.SetContainer(element as Ares.Data.IElementContainer<Ares.Data.IParallelElement>);
                     editor.Show(dockPanel);
                 }
+                else if (element is Ares.Data.IFileElement)
+                {
+                    FileElementEditor editor = new FileElementEditor();
+                    editor.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Document;
+                    editor.SetElement(element as Ares.Data.IFileElement);
+                    editor.Show(dockPanel);
+                }
             }
         }
 

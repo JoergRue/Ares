@@ -78,6 +78,12 @@
     </Compile>
     <Compile Include="ElementEditors\EditorRegistry.cs" />
     <Compile Include="ElementEditors\Editors.cs" />
+    <Compile Include="ElementEditors\FileElementEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ElementEditors\FileElementEditor.Designer.cs">
+      <DependentUpon>FileElementEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="ElementEditors\ParallelContainerEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -154,6 +160,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ElementEditors\ChoiceContainerEditor.resx">
       <DependentUpon>ChoiceContainerEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ElementEditors\FileElementEditor.de.resx">
+      <DependentUpon>FileElementEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ElementEditors\FileElementEditor.resx">
+      <DependentUpon>FileElementEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ElementEditors\ParallelContainerEditor.de.resx">
+      <DependentUpon>ParallelContainerEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ElementEditors\ParallelContainerEditor.resx">
       <DependentUpon>ParallelContainerEditor.cs</DependentUpon>

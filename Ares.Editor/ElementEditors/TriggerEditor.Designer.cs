@@ -74,9 +74,6 @@ namespace Ares.Editor.ElementEditors
             this.groupBox1.Controls.Add(this.triggerDescLabel);
             this.groupBox1.Controls.Add(this.selectKeyButton);
             this.groupBox1.Controls.Add(this.label1);
-            this.errorProvider.SetError(this.groupBox1, resources.GetString("groupBox1.Error"));
-            this.errorProvider.SetIconAlignment(this.groupBox1, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("groupBox1.IconAlignment"))));
-            this.errorProvider.SetIconPadding(this.groupBox1, ((int)(resources.GetObject("groupBox1.IconPadding"))));
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
             this.groupBox1.UseCompatibleTextRendering = true;
@@ -84,19 +81,13 @@ namespace Ares.Editor.ElementEditors
             // triggerDescLabel
             // 
             resources.ApplyResources(this.triggerDescLabel, "triggerDescLabel");
-            this.errorProvider.SetError(this.triggerDescLabel, resources.GetString("triggerDescLabel.Error"));
-            this.errorProvider.SetIconAlignment(this.triggerDescLabel, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("triggerDescLabel.IconAlignment"))));
-            this.errorProvider.SetIconPadding(this.triggerDescLabel, ((int)(resources.GetObject("triggerDescLabel.IconPadding"))));
             this.triggerDescLabel.Name = "triggerDescLabel";
             this.triggerDescLabel.UseCompatibleTextRendering = true;
             // 
             // selectKeyButton
             // 
-            resources.ApplyResources(this.selectKeyButton, "selectKeyButton");
-            this.errorProvider.SetError(this.selectKeyButton, resources.GetString("selectKeyButton.Error"));
             this.selectKeyButton.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
-            this.errorProvider.SetIconAlignment(this.selectKeyButton, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("selectKeyButton.IconAlignment"))));
-            this.errorProvider.SetIconPadding(this.selectKeyButton, ((int)(resources.GetObject("selectKeyButton.IconPadding"))));
+            resources.ApplyResources(this.selectKeyButton, "selectKeyButton");
             this.selectKeyButton.Name = "selectKeyButton";
             this.selectKeyButton.UseCompatibleTextRendering = true;
             this.selectKeyButton.UseVisualStyleBackColor = true;
@@ -105,9 +96,6 @@ namespace Ares.Editor.ElementEditors
             // label1
             // 
             resources.ApplyResources(this.label1, "label1");
-            this.errorProvider.SetError(this.label1, resources.GetString("label1.Error"));
-            this.errorProvider.SetIconAlignment(this.label1, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("label1.IconAlignment"))));
-            this.errorProvider.SetIconPadding(this.label1, ((int)(resources.GetObject("label1.IconPadding"))));
             this.label1.Name = "label1";
             this.label1.UseCompatibleTextRendering = true;
             // 
@@ -115,7 +103,6 @@ namespace Ares.Editor.ElementEditors
             // 
             this.errorProvider.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
             this.errorProvider.ContainerControl = this;
-            resources.ApplyResources(this.errorProvider, "errorProvider");
             // 
             // groupBox2
             // 
@@ -123,9 +110,6 @@ namespace Ares.Editor.ElementEditors
             this.groupBox2.Controls.Add(this.stopMusicLabel);
             this.groupBox2.Controls.Add(this.stopMusicBox);
             this.groupBox2.Controls.Add(this.stopSoundsBox);
-            this.errorProvider.SetError(this.groupBox2, resources.GetString("groupBox2.Error"));
-            this.errorProvider.SetIconAlignment(this.groupBox2, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("groupBox2.IconAlignment"))));
-            this.errorProvider.SetIconPadding(this.groupBox2, ((int)(resources.GetObject("groupBox2.IconPadding"))));
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.TabStop = false;
             this.groupBox2.UseCompatibleTextRendering = true;
@@ -133,18 +117,12 @@ namespace Ares.Editor.ElementEditors
             // stopMusicLabel
             // 
             resources.ApplyResources(this.stopMusicLabel, "stopMusicLabel");
-            this.errorProvider.SetError(this.stopMusicLabel, resources.GetString("stopMusicLabel.Error"));
-            this.errorProvider.SetIconAlignment(this.stopMusicLabel, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("stopMusicLabel.IconAlignment"))));
-            this.errorProvider.SetIconPadding(this.stopMusicLabel, ((int)(resources.GetObject("stopMusicLabel.IconPadding"))));
             this.stopMusicLabel.Name = "stopMusicLabel";
             this.stopMusicLabel.UseCompatibleTextRendering = true;
             // 
             // stopMusicBox
             // 
             resources.ApplyResources(this.stopMusicBox, "stopMusicBox");
-            this.errorProvider.SetError(this.stopMusicBox, resources.GetString("stopMusicBox.Error"));
-            this.errorProvider.SetIconAlignment(this.stopMusicBox, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("stopMusicBox.IconAlignment"))));
-            this.errorProvider.SetIconPadding(this.stopMusicBox, ((int)(resources.GetObject("stopMusicBox.IconPadding"))));
             this.stopMusicBox.Name = "stopMusicBox";
             this.stopMusicBox.UseCompatibleTextRendering = true;
             this.stopMusicBox.UseVisualStyleBackColor = true;
@@ -153,9 +131,6 @@ namespace Ares.Editor.ElementEditors
             // stopSoundsBox
             // 
             resources.ApplyResources(this.stopSoundsBox, "stopSoundsBox");
-            this.errorProvider.SetError(this.stopSoundsBox, resources.GetString("stopSoundsBox.Error"));
-            this.errorProvider.SetIconAlignment(this.stopSoundsBox, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("stopSoundsBox.IconAlignment"))));
-            this.errorProvider.SetIconPadding(this.stopSoundsBox, ((int)(resources.GetObject("stopSoundsBox.IconPadding"))));
             this.stopSoundsBox.Name = "stopSoundsBox";
             this.stopSoundsBox.UseCompatibleTextRendering = true;
             this.stopSoundsBox.UseVisualStyleBackColor = true;

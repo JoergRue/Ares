@@ -62,7 +62,12 @@ namespace Ares.Playing
                     }
                     return 0;
                 }
-                Un4seen.Bass.AddOn.Fx.BASS_BFX_VOLUME vol = new Un4seen.Bass.AddOn.Fx.BASS_BFX_VOLUME(file.Volume / 100.0f);
+                float volume = file.Volume / 100.0f;
+                if (file.Effects != null)
+                {
+                    volume = volume * file.Effects.Volume / 100.0f;
+                }
+                Un4seen.Bass.AddOn.Fx.BASS_BFX_VOLUME vol = new Un4seen.Bass.AddOn.Fx.BASS_BFX_VOLUME(volume);
                 if (!Bass.BASS_FXSetParameters(volumeEffect, vol))
                 {
                     ErrorHandling.BassErrorOccurred(file.Id, StringResources.SetVolumeError);

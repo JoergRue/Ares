@@ -131,6 +131,17 @@ namespace Ares.Data
     }
 
     /// <summary>
+    /// Optional effects when playing.
+    /// </summary>
+    public interface IEffects
+    {
+        /// <summary>
+        /// Relative volume, in percent.
+        /// </summary>
+        int Volume { get; set; }
+    }
+
+    /// <summary>
     /// An element consisting of a physical file.
     /// </summary>
     public interface IFileElement : IElement
@@ -147,6 +158,10 @@ namespace Ares.Data
         /// Type of the file
         /// </summary>
         SoundFileType SoundFileType { get; set; }
+        /// <summary>
+        /// Effects during playing
+        /// </summary>
+        IEffects Effects { get; }
     }
 
     /// <summary>

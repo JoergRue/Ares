@@ -90,6 +90,78 @@ namespace Ares.Editor.Actions
         private int m_NewSound;
     }
 
+    public class ElementEffectsChangeAction : Action
+    {
+        public ElementEffectsChangeAction(IFileElement element, int volume)
+        {
+            m_Element = element;
+            m_OldVolume = m_Element.Effects.Volume;
+            m_NewVolume = volume;
+        }
+
+        public IFileElement Element
+        {
+            get
+            {
+                return m_Element;
+            }
+        }
+
+        public void SetData(int volume)
+        {
+            m_NewVolume = volume;
+        }
+
+        public override void Do()
+        {
+            m_Element.Effects.Volume = m_NewVolume;
+            ElementChanges.Instance.ElementChanged(m_Element.Id);
+        }
+
+        public override void Undo()
+        {
+            m_Element.Effects.Volume = m_OldVolume;
+            ElementChanges.Instance.ElementChanged(m_Element.Id);
+        }
+
+        private IFileElement m_Element;
+        private int m_OldVolume;
+        private int m_NewVolume;
+    }
+
+    public class ElementRenamedAction : Action
+    {
+        public ElementRenamedAction(IElement element, String newName)
+        {
+            m_Element = element;
+            m_OldName = element.Title;
+            m_NewName = newName;
+        }
+
+        public IElement Element { get { return m_Element; } }
+
+        public void SetName(String newName)
+        {
+            m_NewName = newName;
+        }
+
+        public override void Do()
+        {
+            m_Element.Title = m_NewName;
+            ElementChanges.Instance.ElementRenamed(m_Element.Id);
+        }
+
+        public override void Undo()
+        {
+            m_Element.Title = m_OldName;
+            ElementChanges.Instance.ElementRenamed(m_Element.Id);
+        }
+
+        private IElement m_Element;
+        private String m_OldName;
+        private String m_NewName;
+    }
+
     public class DelayableElementChangeAction : Action
     {
         public DelayableElementChangeAction(IDelayableElement element, int fixedDelay, int maxDelay)

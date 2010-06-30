@@ -42,6 +42,7 @@ namespace Ares.Playing
         String Path { get; }
         SoundFileType SoundFileType { get; }
         int Volume { get; }
+        Ares.Data.IEffects Effects { get; }
     }
 
     /// <summary>

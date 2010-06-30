@@ -48,6 +48,7 @@ namespace Ares.Editor.ElementEditors
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ParallelContainerEditor));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.stopButton = new System.Windows.Forms.Button();
             this.playButton = new System.Windows.Forms.Button();
@@ -62,27 +63,18 @@ namespace Ares.Editor.ElementEditors
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Controls.Add(this.stopButton);
             this.groupBox1.Controls.Add(this.playButton);
-            this.groupBox1.Location = new System.Drawing.Point(12, 13);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(294, 75);
-            this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Test";
             this.groupBox1.UseCompatibleTextRendering = true;
             // 
             // stopButton
             // 
-            this.stopButton.Enabled = false;
+            resources.ApplyResources(this.stopButton, "stopButton");
             this.stopButton.Image = global::Ares.Editor.ImageResources.StopSmall;
-            this.stopButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.stopButton.Location = new System.Drawing.Point(43, 19);
             this.stopButton.Name = "stopButton";
-            this.stopButton.Size = new System.Drawing.Size(31, 23);
-            this.stopButton.TabIndex = 1;
             this.stopButton.UseCompatibleTextRendering = true;
             this.stopButton.UseVisualStyleBackColor = true;
             this.stopButton.Click += new System.EventHandler(this.stopButton_Click);
@@ -90,77 +82,54 @@ namespace Ares.Editor.ElementEditors
             // playButton
             // 
             this.playButton.Image = global::Ares.Editor.ImageResources.RunSmall;
-            this.playButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.playButton.Location = new System.Drawing.Point(6, 19);
+            resources.ApplyResources(this.playButton, "playButton");
             this.playButton.Name = "playButton";
-            this.playButton.Size = new System.Drawing.Size(31, 23);
-            this.playButton.TabIndex = 0;
             this.playButton.UseCompatibleTextRendering = true;
             this.playButton.UseVisualStyleBackColor = true;
             this.playButton.Click += new System.EventHandler(this.playButton_Click);
             // 
             // volumeControl
             // 
-            this.volumeControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.volumeControl.Location = new System.Drawing.Point(12, 94);
+            resources.ApplyResources(this.volumeControl, "volumeControl");
             this.volumeControl.Name = "volumeControl";
-            this.volumeControl.Size = new System.Drawing.Size(294, 110);
-            this.volumeControl.TabIndex = 10;
             // 
             // parallelContainerControl
             // 
-            this.parallelContainerControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.parallelContainerControl.Location = new System.Drawing.Point(12, 210);
+            resources.ApplyResources(this.parallelContainerControl, "parallelContainerControl");
             this.parallelContainerControl.Name = "parallelContainerControl";
-            this.parallelContainerControl.Size = new System.Drawing.Size(664, 323);
-            this.parallelContainerControl.TabIndex = 11;
             this.parallelContainerControl.ActiveRowChanged += new System.EventHandler(this.parallelContainerControl_ActiveRowChanged);
             this.parallelContainerControl.ElementDoubleClick += new System.EventHandler<Ares.Editor.Controls.ElementDoubleClickEventArgs>(this.parallelContainerControl_ElementDoubleClick);
             // 
             // groupBox2
             // 
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            resources.ApplyResources(this.groupBox2, "groupBox2");
             this.groupBox2.Controls.Add(this.repeatableControl);
             this.groupBox2.Controls.Add(this.delayableControl);
-            this.groupBox2.Location = new System.Drawing.Point(312, 12);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(364, 192);
-            this.groupBox2.TabIndex = 12;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Selected Element";
             this.groupBox2.UseCompatibleTextRendering = true;
             // 
             // repeatableControl
             // 
-            this.repeatableControl.Location = new System.Drawing.Point(6, 82);
+            resources.ApplyResources(this.repeatableControl, "repeatableControl");
             this.repeatableControl.Name = "repeatableControl";
-            this.repeatableControl.Size = new System.Drawing.Size(346, 96);
-            this.repeatableControl.TabIndex = 1;
             // 
             // delayableControl
             // 
             this.delayableControl.BackColor = System.Drawing.SystemColors.Control;
-            this.delayableControl.Location = new System.Drawing.Point(6, 19);
+            resources.ApplyResources(this.delayableControl, "delayableControl");
             this.delayableControl.Name = "delayableControl";
-            this.delayableControl.Size = new System.Drawing.Size(346, 57);
-            this.delayableControl.TabIndex = 0;
             // 
             // ParallelContainerEditor
             // 
             this.AllowDrop = true;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(688, 545);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.parallelContainerControl);
             this.Controls.Add(this.volumeControl);
             this.Controls.Add(this.groupBox1);
-            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "ParallelContainerEditor";
-            this.Text = "ParallelContainerEditor";
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.ParallelContainerEditor_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.ParallelContainerEditor_DragEnter);
             this.DragOver += new System.Windows.Forms.DragEventHandler(this.ParallelContainerEditor_DragOver);

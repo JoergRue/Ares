@@ -22,6 +22,39 @@ using System;
 namespace Ares.Data
 {
     [Serializable]
+    class Effects : IEffects
+    {
+        public int Volume { get; set; }
+
+        internal void WriteToXml(System.Xml.XmlWriter writer)
+        {
+            writer.WriteStartElement("Effects");
+            writer.WriteAttributeString("Volume", Volume.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            writer.WriteEndElement();
+        }
+
+        internal Effects()
+        {
+            Volume = 100;
+        }
+
+        internal Effects(System.Xml.XmlReader reader)
+        {
+            Volume = reader.GetIntegerAttribute("Volume");
+            if (reader.IsEmptyElement)
+            {
+                reader.Read();
+            }
+            else
+            {
+                reader.Read();
+                reader.ReadInnerXml();
+                reader.ReadEndElement();
+            }
+        }
+    }
+
+    [Serializable]
     class BasicFileElement : ElementBase, IElement, IFileElement
     {
         public override void Visit(IElementVisitor visitor)
@@ -35,6 +68,7 @@ namespace Ares.Data
             FilePath = filePath;
             Title = FileName;
             SoundFileType = fileType;
+            m_Effects = new Effects();
         }
 
         public String FileName { get { return m_FileName; } }
@@ -48,12 +82,15 @@ namespace Ares.Data
 
         public SoundFileType SoundFileType { get; set; }
 
+        public IEffects Effects { get { return m_Effects; } }
+
         public override void WriteToXml(System.Xml.XmlWriter writer)
         {
             writer.WriteStartElement("FileElement");
             DoWriteToXml(writer);
             writer.WriteAttributeString("Path", FilePath);
             writer.WriteAttributeString("SoundType", SoundFileType == Data.SoundFileType.Music ? "Music" : "Sound");
+            m_Effects.WriteToXml(writer);
             writer.WriteEndElement();
         }
 
@@ -63,10 +100,34 @@ namespace Ares.Data
             FilePath = reader.GetNonEmptyAttribute("Path");
             String soundType = reader.GetNonEmptyAttribute("SoundType");
             SoundFileType = soundType == "Music" ? SoundFileType.Music : SoundFileType.SoundEffect;
-            reader.ReadOuterXml();
+            if (reader.IsEmptyElement)
+            {
+                reader.Read();
+            }
+            else
+            {
+                reader.Read();
+                while (reader.IsStartElement())
+                {
+                    if (reader.IsStartElement("Effects"))
+                    {
+                        m_Effects = new Effects(reader);
+                    }
+                    else
+                    {
+                        reader.ReadOuterXml();
+                    }
+                }
+                reader.ReadEndElement();
+            }
+            if (m_Effects == null)
+            {
+                m_Effects = new Effects();
+            }
         }
 
         private String m_FileName;
         private String m_FilePath;
+        private Effects m_Effects;
     }
 }

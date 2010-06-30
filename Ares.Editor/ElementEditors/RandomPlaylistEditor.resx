@@ -136,7 +136,7 @@
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="label1.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
+    <value>5</value>
   </data>
   <data name="label1.Text" xml:space="preserve">
     <value>Drop files or directories from the {0}</value>
@@ -217,7 +217,7 @@
     <value>302, 57</value>
   </data>
   <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
+    <value>1</value>
   </data>
   <data name="groupBox1.Text" xml:space="preserve">
     <value>Test</value>
@@ -244,7 +244,7 @@
     <value>302, 96</value>
   </data>
   <data name="volumeControl.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
+    <value>3</value>
   </data>
   <data name="&gt;&gt;volumeControl.Name" xml:space="preserve">
     <value>volumeControl</value>
@@ -265,7 +265,7 @@
     <value>346, 57</value>
   </data>
   <data name="delayableControl.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
+    <value>0</value>
   </data>
   <data name="&gt;&gt;delayableControl.Name" xml:space="preserve">
     <value>delayableControl</value>
@@ -286,7 +286,7 @@
     <value>346, 96</value>
   </data>
   <data name="repeatableControl.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
+    <value>2</value>
   </data>
   <data name="&gt;&gt;repeatableControl.Name" xml:space="preserve">
     <value>repeatableControl</value>
@@ -310,7 +310,7 @@
     <value>654, 391</value>
   </data>
   <data name="choiceContainerControl.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="&gt;&gt;choiceContainerControl.Name" xml:space="preserve">
     <value>choiceContainerControl</value>

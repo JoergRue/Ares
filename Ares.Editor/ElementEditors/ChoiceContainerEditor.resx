@@ -181,7 +181,7 @@
     <value>442, 96</value>
   </data>
   <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
+    <value>1</value>
   </data>
   <data name="groupBox1.Text" xml:space="preserve">
     <value>Test</value>
@@ -211,7 +211,7 @@
     <value>745, 78</value>
   </data>
   <data name="label1.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
+    <value>3</value>
   </data>
   <data name="label1.Text" xml:space="preserve">
     <value>Drop Files or add elements in the Project Explorer</value>
@@ -241,7 +241,7 @@
     <value>745, 290</value>
   </data>
   <data name="choiceContainerControl.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="&gt;&gt;choiceContainerControl.Name" xml:space="preserve">
     <value>choiceContainerControl</value>
@@ -287,9 +287,6 @@
   </data>
   <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 8.25pt</value>
-  </data>
-  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>ChoiceContainerEditor</value>

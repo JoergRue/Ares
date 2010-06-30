@@ -117,94 +117,56 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Ares" xml:space="preserve">
-    <value>Ares</value>
+  <data name="label3.Text" xml:space="preserve">
+    <value>Pfad:</value>
   </data>
-  <data name="AresEditorTitle" xml:space="preserve">
-    <value>Ares Editor - {0}</value>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>26, 17</value>
   </data>
-  <data name="BassInitFail" xml:space="preserve">
-    <value>Fatal: Couldn't initialize BASS engine!</value>
+  <data name="label2.Text" xml:space="preserve">
+    <value>Typ:</value>
   </data>
-  <data name="ElementIsEndless" xml:space="preserve">
-    <value>A second key press stops the element (it contains infinite repeats).</value>
+  <data name="groupBox1.Text" xml:space="preserve">
+    <value>Datei</value>
   </data>
-  <data name="ElementIsSingle" xml:space="preserve">
-    <value>A second key press starts the element a second time.</value>
+  <data name="LengthLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>57, 76</value>
   </data>
-  <data name="FileExplorerTitle" xml:space="preserve">
-    <value>{0} Explorer</value>
+  <data name="LengthLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>261, 17</value>
   </data>
-  <data name="FilePlayed" xml:space="preserve">
-    <value>Error at file: {0}</value>
+  <data name="label7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>39, 17</value>
   </data>
-  <data name="LoadError" xml:space="preserve">
-    <value>Error opening the project: {0}</value>
+  <data name="label7.Text" xml:space="preserve">
+    <value>Länge:</value>
   </data>
-  <data name="Music" xml:space="preserve">
-    <value>Music</value>
+  <data name="albumLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>57, 59</value>
   </data>
-  <data name="NewBackgroundSounds" xml:space="preserve">
-    <value>New Background Sounds</value>
+  <data name="albumLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>261, 17</value>
   </data>
-  <data name="NewParallelList" xml:space="preserve">
-    <value>New Parallel List</value>
+  <data name="artistLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>57, 42</value>
   </data>
-  <data name="NewPlaylist" xml:space="preserve">
-    <value>New Playlist</value>
+  <data name="artistLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>261, 17</value>
   </data>
-  <data name="NewProject" xml:space="preserve">
-    <value>New Project</value>
+  <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>49, 17</value>
   </data>
-  <data name="NewRandomList" xml:space="preserve">
-    <value>New Random List</value>
+  <data name="label5.Text" xml:space="preserve">
+    <value>Interpret:</value>
   </data>
-  <data name="NewScenario" xml:space="preserve">
-    <value>New Scenario</value>
+  <data name="titleLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>57, 16</value>
   </data>
-  <data name="NewSequentialList" xml:space="preserve">
-    <value>New Sequential List</value>
+  <data name="titleLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>261, 17</value>
   </data>
-  <data name="NewSoundChoice" xml:space="preserve">
-    <value>New Sound Choice</value>
-  </data>
-  <data name="NoKey" xml:space="preserve">
-    <value>&lt;No Key&gt;</value>
-  </data>
-  <data name="NoOpenedProject" xml:space="preserve">
-    <value>No Project Opened</value>
-  </data>
-  <data name="NoProjectName" xml:space="preserve">
-    <value>[No name]</value>
-  </data>
-  <data name="NoSettings" xml:space="preserve">
-    <value>This seems to be the first start of the editor.
-You should adapt some settings first.</value>
-  </data>
-  <data name="OpenProjectQuestion" xml:space="preserve">
-    <value>Open project {0}?</value>
-  </data>
-  <data name="PlayerStartError" xml:space="preserve">
-    <value>Could not start player. Reason:
-{0}</value>
-  </data>
-  <data name="ProjectChanged" xml:space="preserve">
-    <value>The current project has unsaved changes. Shall it be saved now?</value>
-  </data>
-  <data name="SaveError" xml:space="preserve">
-    <value>Error saving the project: {0}</value>
-  </data>
-  <data name="Sounds" xml:space="preserve">
-    <value>Sounds</value>
-  </data>
-  <data name="TriggerEditorTitle" xml:space="preserve">
-    <value>Start of {0}</value>
-  </data>
-  <data name="Unknown" xml:space="preserve">
-    <value>Unknown</value>
-  </data>
-  <data name="WriteSettingsError" xml:space="preserve">
-    <value>Settings could not be saved. Reason:
-{0}</value>
+  <data name="label4.Text" xml:space="preserve">
+    <value>Titel:</value>
   </data>
 </root>

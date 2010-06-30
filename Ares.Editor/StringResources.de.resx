@@ -201,6 +201,9 @@ Soll es jetzt gespeichert werden?</value>
   <data name="TriggerEditorTitle" xml:space="preserve">
     <value>Start von {0}</value>
   </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>Unbekannt</value>
+  </data>
   <data name="WriteSettingsError" xml:space="preserve">
     <value>Einstellungen konnten nicht gespeichert werden. Grund:
 {0}</value>
