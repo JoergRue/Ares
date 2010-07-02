@@ -107,14 +107,27 @@ namespace Ares.Player
             }
         }
 
+        private bool listen = true;
+
         private void ShowMessagesForm()
         {
+            if (!listen)
+                return;
             if (m_MessagesForm == null)
             {
                 m_MessagesForm = new MessagesForm();
                 m_MessagesForm.Location = new Point(Location.X + Size.Width, Location.Y);
+                m_MessagesForm.FormClosed += new FormClosedEventHandler(m_MessagesForm_FormClosed);
                 m_MessagesForm.Show(this);
             }
+        }
+
+        void m_MessagesForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            listen = false;
+            messagesButton.Checked = false;
+            m_MessagesForm = null;
+            listen = true;
         }
 
         private void fileSystemWatcher1_Changed(object sender, System.IO.FileSystemEventArgs e)
@@ -212,7 +225,7 @@ namespace Ares.Player
             {
                 PlayingControl.Instance.KeyReceived(keyData);
             }
-            return base.ProcessCmdKey(ref msg, keyData);
+            return true;
         }
 
         private int lastMusicElementId = -1;
@@ -346,6 +359,7 @@ namespace Ares.Player
             if (path == e.FullPath)
             {
                 PlayingModule.ProjectPlayer.StopAll();
+                System.Threading.Thread.Sleep(300);
                 ReadSettings();
             }
         }
@@ -372,7 +386,8 @@ namespace Ares.Player
 
         private void StartEditor()
         {
-            String commandLine = "Ares.Editor.exe";
+            String appDir = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath);
+            String commandLine = System.IO.Path.Combine(appDir, "Ares.Editor.exe");
             try
             {
                 Ares.Ipc.ApplicationInstance.CreateOrActivate("Ares.Editor", commandLine,

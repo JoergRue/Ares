@@ -50,6 +50,8 @@ namespace Ares.Player
 
         private void MessageReceived(Message m)
         {
+            if (IsDisposed)
+                return;
             if (InvokeRequired)
             {
                 BeginInvoke(new MethodInvoker(() => AddMessage(m)));

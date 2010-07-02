@@ -299,6 +299,7 @@ namespace Ares.Editor
             resources.ApplyResources(this.dockPanel, "dockPanel");
             this.dockPanel.ActiveAutoHideContent = null;
             this.dockPanel.DockBackColor = System.Drawing.SystemColors.Control;
+            this.dockPanel.DockLeftPortion = 0.2D;
             this.dockPanel.Name = "dockPanel";
             dockPanelGradient1.EndColor = System.Drawing.SystemColors.ControlLight;
             dockPanelGradient1.StartColor = System.Drawing.SystemColors.ControlLight;

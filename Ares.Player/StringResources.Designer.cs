@@ -144,6 +144,15 @@ namespace Ares.Player {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die At element {0}: {1} ähnelt.
+        /// </summary>
+        internal static string PlayError {
+            get {
+                return ResourceManager.GetString("PlayError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die About Ares ... ähnelt.
         /// </summary>
         internal static string ShowInfo {

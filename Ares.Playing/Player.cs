@@ -149,7 +149,7 @@ namespace Ares.Playing
 
     interface IElementPlayerClient
     {
-        int PlayFile(IFileElement fileElement, Action afterPlayed);
+        int PlayFile(IFileElement fileElement, Action<bool> afterPlayed);
 
         bool Stopped { get; }
 
@@ -291,7 +291,7 @@ namespace Ares.Playing
     {
         public override void VisitFileElement(IFileElement fileElement)
         {
-            CurrentPlayedHandle = Client.PlayFile(fileElement, () =>
+            CurrentPlayedHandle = Client.PlayFile(fileElement, (success) =>
                 {
                     bool stop = false;
                     lock (syncObject)
@@ -299,7 +299,7 @@ namespace Ares.Playing
                         CurrentPlayedHandle = 0;
                         stop = shallStop;
                     }
-                    if (stop)
+                    if (stop || !success)
                     {
                         Client.SubPlayerFinished(this);
                     }
@@ -512,7 +512,7 @@ namespace Ares.Playing
         // in parallel containers
         // Mostly just pass through to our own client
 
-        public int PlayFile(IFileElement element, Action afterPlayed)
+        public int PlayFile(IFileElement element, Action<bool> afterPlayed)
         {
             return Client.PlayFile(element, afterPlayed);
         }
@@ -580,11 +580,13 @@ namespace Ares.Playing
             }
             else
             {
-                int handle = Client.PlayFile(fileElement, () =>
+                int handle = Client.PlayFile(fileElement, (success) =>
                     {
                         lock (syncObject)
                         {
                             CurrentPlayedHandle = 0;
+                            if (!success)
+                                m_ElementQueue.Clear();
                         }
                         Next();
                     });
@@ -731,7 +733,7 @@ namespace Ares.Playing
 
     abstract class StartElementPlayer : IElementPlayerClient
     {
-        public int PlayFile(IFileElement fileElement, Action afterPlayed)
+        public int PlayFile(IFileElement fileElement, Action<bool> afterPlayed)
         {
             SoundFile soundFile = new SoundFile(fileElement);
             FileStarted(fileElement);
@@ -742,11 +744,19 @@ namespace Ares.Playing
                     {
                         m_CurrentFiles.Remove(handle2);
                     }
-                    afterPlayed();
+                    afterPlayed(true);
                 });
-            lock (syncObject)
+            if (handle != 0)
             {
-                m_CurrentFiles.Add(handle);
+                lock (syncObject)
+                {
+                    m_CurrentFiles.Add(handle);
+                }
+            }
+            else
+            {
+                FileFinished(soundFile.Id, fileElement.SoundFileType);
+                afterPlayed(false);
             }
             return handle;
         }

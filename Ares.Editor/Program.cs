@@ -54,7 +54,13 @@ namespace Ares.Editor
                 MessageBox.Show(StringResources.BassInitFail, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return;
             }
-            Application.Run(new MainForm());
+            try
+            {
+                Application.Run(new MainForm());
+            }
+            catch (Ares.Ipc.ApplicationAlreadyStartedException)
+            {
+            }
             Un4seen.Bass.Bass.BASS_Free();
         }
     }

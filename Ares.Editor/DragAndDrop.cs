@@ -56,14 +56,14 @@ namespace Ares.Editor
         private static void AddItemsToSet(Dictionary<String, DraggedItem> uniqueItems, DraggedItem item)
         {
             String baseDir = item.ItemType == FileType.Music ? Ares.Settings.Settings.Instance.MusicDirectory : Ares.Settings.Settings.Instance.SoundDirectory;
-            String path = baseDir + item.RelativePath;
+            String path = System.IO.Path.Combine(baseDir, item.RelativePath);
             if (item.NodeType == DraggedItemType.Directory)
             {
                 if (System.IO.Directory.Exists(path))
                 {
                     foreach (String file in FileSearch.GetFilesInDirectory(path, true))
                     {
-                        AddItemsToSet(uniqueItems, new DraggedItem { NodeType = DraggedItemType.File, ItemType = item.ItemType, RelativePath = file.Substring(baseDir.Length) });
+                        AddItemsToSet(uniqueItems, new DraggedItem { NodeType = DraggedItemType.File, ItemType = item.ItemType, RelativePath = file.Substring(baseDir.Length + 1) });
                     }
                 }
             }

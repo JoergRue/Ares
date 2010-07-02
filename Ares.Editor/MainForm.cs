@@ -84,7 +84,11 @@ namespace Ares.Editor
                     Actions.Playing.Instance.ErrorHandling = new Actions.Playing.ErrorHandler(this, HandlePlayingError);
                     UpdateGUI();
                     fileSystemWatcher1.Path = m_BasicSettings.GetSettingsDir();
-                    if (Ares.Settings.Settings.Instance.RecentFiles.GetFiles().Count > 0)
+                    if (!String.IsNullOrEmpty(projectName))
+                    {
+                        OpenProject(projectName);
+                    }
+                    else if (Ares.Settings.Settings.Instance.RecentFiles.GetFiles().Count > 0)
                     {
                         OpenProject(Ares.Settings.Settings.Instance.RecentFiles.GetFiles()[0].FilePath);
                     }
@@ -574,7 +578,8 @@ namespace Ares.Editor
         {
             if (!SaveCurrentProject())
                 return;
-            String commandLine = "Ares.Player.exe";
+            String appDir = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath);
+            String commandLine = System.IO.Path.Combine(appDir, "Ares.Player.exe");
             try
             {
                 Ares.Ipc.ApplicationInstance.CreateOrActivate("Ares.Player", commandLine,
@@ -598,6 +603,7 @@ namespace Ares.Editor
             if (path == e.FullPath)
             {
                 Actions.Playing.Instance.StopAll();
+                System.Threading.Thread.Sleep(300);
                 ReadSettings();
             }
         }

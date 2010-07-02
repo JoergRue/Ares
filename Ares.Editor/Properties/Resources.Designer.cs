@@ -59,5 +59,12 @@ namespace Ares.Editor.Properties {
                 resourceCulture = value;
             }
         }
+        
+        internal static System.Drawing.Icon Ares {
+            get {
+                object obj = ResourceManager.GetObject("Ares", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
     }
 }

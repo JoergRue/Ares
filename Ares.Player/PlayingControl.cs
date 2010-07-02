@@ -298,6 +298,9 @@ namespace Ares.Player
 
         public void ErrorOccurred(int elementId, String errorMessage)
         {
+            Ares.Data.IElement element = Ares.Data.DataModule.ElementRepository.GetElement(elementId);
+            String message = String.Format(StringResources.PlayError, element.Title, errorMessage);
+            Messages.AddMessage(MessageType.Error, message);
         }
     }
 }

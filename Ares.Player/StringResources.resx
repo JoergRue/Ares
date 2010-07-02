@@ -146,6 +146,9 @@ You should adapt some settings first.</value>
   <data name="OpenProjectQuestion" xml:space="preserve">
     <value>Open project {0}?</value>
   </data>
+  <data name="PlayError" xml:space="preserve">
+    <value>At element {0}: {1}</value>
+  </data>
   <data name="ShowInfo" xml:space="preserve">
     <value>About Ares ...</value>
   </data>

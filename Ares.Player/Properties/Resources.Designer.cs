@@ -60,6 +60,13 @@ namespace Ares.Player.Properties {
             }
         }
         
+        internal static System.Drawing.Icon Ares {
+            get {
+                object obj = ResourceManager.GetObject("Ares", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
         internal static System.Drawing.Icon eventlogError {
             get {
                 object obj = ResourceManager.GetObject("eventlogError", resourceCulture);
