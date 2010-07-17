@@ -1,0 +1,13 @@
+Main-Class: ares.controller.control.Main
+Class-Path: 
+  resources.jar 
+  libraries/synthetica.jar 
+  libraries/syntheticawalnut.jar
+  libraries/l2fprod-common-directorychooser.jar
+  libraries/l2fprod-common-fontchooser.jar
+  libraries/syntheticaBlueIce.jar 
+  libraries/syntheticaBlueSteel.jar 
+  libraries/syntheticaGreenDream.jar 
+  libraries/syntheticaSilverMoon.jar 
+  libraries/skinlf.jar 
+

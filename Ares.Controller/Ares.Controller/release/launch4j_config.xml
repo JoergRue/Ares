@@ -1,0 +1,32 @@
+<launch4jConfig>
+  <dontWrapJar>false</dontWrapJar>
+  <headerType>0</headerType>
+  <jar>Ares.Controller.jar</jar>
+  <outfile>Ares.Controller.exe</outfile>
+  <errTitle>Ares Controller</errTitle>
+  <jarArgs></jarArgs>
+  <chdir>.</chdir>
+  <customProcName>true</customProcName>
+  <stayAlive>false</stayAlive>
+  <icon>Ares.ico</icon>
+  <jre>
+    <path></path>
+    <minVersion>1.6.0</minVersion>
+    <maxVersion></maxVersion>
+    <initialHeapSize>0</initialHeapSize>
+    <maxHeapSize>0</maxHeapSize>
+    <args></args>
+  </jre>
+  <versionInfo>
+    <fileVersion>1.0.0.0</fileVersion>
+    <txtFileVersion>1.0.0</txtFileVersion>
+    <fileDescription>Ares Controller</fileDescription>
+    <copyright>(c) Joerg Ruedenauer 2010</copyright>
+    <productVersion>1.0.0.0</productVersion>
+    <txtProductVersion>1.0.0</txtProductVersion>
+    <productName>Ares</productName>
+    <companyName></companyName>
+    <internalName>Ares.Controller</internalName>
+    <originalFilename>Ares.Controller.exe</originalFilename>
+  </versionInfo>
+</launch4jConfig>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Ares Controller" default="resources" basedir="../">
+
+<target name="resources" description="Update resources">
+  <native2ascii encoding="ISO-8859-1" src="source/ares/controller/util" dest="resources/ares/controller/util" includes="*.properties" />
+</target>
+
+<!--
+<target name="jar" description="Make arescontroller.jar">
+   <!- - Copy bitmaps - ->
+   <copy todir="de">
+     <fileset dir="../images/de" />
+   </copy>
+   <!- - Export File for jar - ->
+   <jar jarfile="syntheticawalnut.jar" basedir=".">
+       <manifest>
+       </manifest>
+    </jar>
+</target>
+-->
+
+</project>

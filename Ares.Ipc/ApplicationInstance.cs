@@ -332,6 +332,7 @@ namespace Ares.Ipc
                 {
                     if (m_AsyncResult != null)
                     {
+                        /*
                         try
                         {
                             m_PipeStream.EndWaitForConnection(m_AsyncResult);
@@ -339,6 +340,8 @@ namespace Ares.Ipc
                         catch (Exception)
                         { 
                         }
+                         */
+                        m_AsyncResult = null;
                     }
                     m_PipeStream.Dispose();
                     m_PipeStream = null;

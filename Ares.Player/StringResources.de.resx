@@ -126,12 +126,51 @@
   <data name="BassInitFail" xml:space="preserve">
     <value>Fehler: Konnte BASS nicht initialisieren!</value>
   </data>
+  <data name="ClientConnected" xml:space="preserve">
+    <value>Mit Client {0} verbunden</value>
+  </data>
+  <data name="ClientDisconnected" xml:space="preserve">
+    <value>Verbindung mit Client getrennt.</value>
+  </data>
+  <data name="ClientLengthReceived" xml:space="preserve">
+    <value>Länge vom Client bekommen: </value>
+  </data>
+  <data name="ClientListenError" xml:space="preserve">
+    <value>Fehler beim Warten auf Clients: </value>
+  </data>
+  <data name="CommandReceived" xml:space="preserve">
+    <value>Befehl '{0}' empfangen</value>
+  </data>
+  <data name="Connected" xml:space="preserve">
+    <value>Verbunden</value>
+  </data>
+  <data name="ConnectedWith" xml:space="preserve">
+    <value>Verbunden mit </value>
+  </data>
+  <data name="DisconnectingClient" xml:space="preserve">
+    <value>Verbindung gemäß Client-Wunsch getrennt.</value>
+  </data>
   <data name="EditorStartError" xml:space="preserve">
     <value>Konnte Editor nicht starten. Grund:
 {0}</value>
   </data>
+  <data name="InvalidKeyCode" xml:space="preserve">
+    <value>Ungültiger Tastencode: {0}</value>
+  </data>
+  <data name="KeyListenError" xml:space="preserve">
+    <value>Fehler beim Empfangen von Tasten: </value>
+  </data>
+  <data name="KeyReceived" xml:space="preserve">
+    <value>Tasten-IDs empfangen: {0} {1}</value>
+  </data>
+  <data name="LengthTooHigh" xml:space="preserve">
+    <value>Länge ist zu groß.</value>
+  </data>
   <data name="LoadError" xml:space="preserve">
     <value>Fehler beim Laden des Projektes: {0}</value>
+  </data>
+  <data name="NoClientID" xml:space="preserve">
+    <value>Client hat keine ID gesendet</value>
   </data>
   <data name="NoOpenedProject" xml:space="preserve">
     <value>Kein Projekt geladen</value>
@@ -140,11 +179,20 @@
     <value>Dies scheint der erste Start des Players zu sein.
 Sie sollten zuerst ein paar Einstellungen vornehmen.</value>
   </data>
+  <data name="NoStatusInfoError" xml:space="preserve">
+    <value>Konnte keine Statusinformationen senden. Bitte überprüfen Sie die Netzwerkverbindung.</value>
+  </data>
+  <data name="NotConnected" xml:space="preserve">
+    <value>Nicht verbunden</value>
+  </data>
   <data name="OpenProject" xml:space="preserve">
     <value>Projekt öffnen ...</value>
   </data>
   <data name="OpenProjectQuestion" xml:space="preserve">
     <value>Projekt {0} öffnen?</value>
+  </data>
+  <data name="PingReceived" xml:space="preserve">
+    <value>Ping empfangen.</value>
   </data>
   <data name="PlayError" xml:space="preserve">
     <value>Bei Element {0}: {1}</value>
@@ -158,11 +206,32 @@ Sie sollten zuerst ein paar Einstellungen vornehmen.</value>
   <data name="ShowSettings" xml:space="preserve">
     <value>Einstellungen ...</value>
   </data>
+  <data name="StartBroadcast" xml:space="preserve">
+    <value>Starte UDP-Broadcast</value>
+  </data>
   <data name="StartEditor" xml:space="preserve">
     <value>Editor öffnen</value>
+  </data>
+  <data name="StopBroadcast" xml:space="preserve">
+    <value>Stoppe UDP-Broadcast</value>
+  </data>
+  <data name="UDPError" xml:space="preserve">
+    <value>Fehler beim Senden eines UDP-Pakets: </value>
+  </data>
+  <data name="UDPSending" xml:space="preserve">
+    <value>Sende UDP-Paket '{0}'</value>
+  </data>
+  <data name="VolumeCommandReceived" xml:space="preserve">
+    <value>Lautstärkebefehl empfangen: Typ {0}, Wert {1}</value>
+  </data>
+  <data name="VolumeOutOfRange" xml:space="preserve">
+    <value>Ungültigen Lautstärkebefehl empfangen.</value>
   </data>
   <data name="WriteSettingsError" xml:space="preserve">
     <value>Einstellungen konnten nicht gespeichert werden. Grund:
 {0}</value>
+  </data>
+  <data name="WrongClientLength" xml:space="preserve">
+    <value>Länge ist ungültig.</value>
   </data>
 </root>

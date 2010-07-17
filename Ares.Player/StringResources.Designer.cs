@@ -88,6 +88,78 @@ namespace Ares.Player {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Connected with client {0} ähnelt.
+        /// </summary>
+        internal static string ClientConnected {
+            get {
+                return ResourceManager.GetString("ClientConnected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Closed connection with client. ähnelt.
+        /// </summary>
+        internal static string ClientDisconnected {
+            get {
+                return ResourceManager.GetString("ClientDisconnected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Got length from client:  ähnelt.
+        /// </summary>
+        internal static string ClientLengthReceived {
+            get {
+                return ResourceManager.GetString("ClientLengthReceived", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Error listening for client:  ähnelt.
+        /// </summary>
+        internal static string ClientListenError {
+            get {
+                return ResourceManager.GetString("ClientListenError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Received command &apos;{0}&apos; ähnelt.
+        /// </summary>
+        internal static string CommandReceived {
+            get {
+                return ResourceManager.GetString("CommandReceived", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Connected ähnelt.
+        /// </summary>
+        internal static string Connected {
+            get {
+                return ResourceManager.GetString("Connected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Connected with  ähnelt.
+        /// </summary>
+        internal static string ConnectedWith {
+            get {
+                return ResourceManager.GetString("ConnectedWith", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Disconnecting on client request. ähnelt.
+        /// </summary>
+        internal static string DisconnectingClient {
+            get {
+                return ResourceManager.GetString("DisconnectingClient", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Could not start editor. Reason:
         ///{0} ähnelt.
         /// </summary>
@@ -98,11 +170,56 @@ namespace Ares.Player {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Invalid key code: {0} ähnelt.
+        /// </summary>
+        internal static string InvalidKeyCode {
+            get {
+                return ResourceManager.GetString("InvalidKeyCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Error while listening for keys:  ähnelt.
+        /// </summary>
+        internal static string KeyListenError {
+            get {
+                return ResourceManager.GetString("KeyListenError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Received key ids: {0} {1} ähnelt.
+        /// </summary>
+        internal static string KeyReceived {
+            get {
+                return ResourceManager.GetString("KeyReceived", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Length is too high. ähnelt.
+        /// </summary>
+        internal static string LengthTooHigh {
+            get {
+                return ResourceManager.GetString("LengthTooHigh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Error opening the project: {0} ähnelt.
         /// </summary>
         internal static string LoadError {
             get {
                 return ResourceManager.GetString("LoadError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Client didn&apos;t send ID ähnelt.
+        /// </summary>
+        internal static string NoClientID {
+            get {
+                return ResourceManager.GetString("NoClientID", resourceCulture);
             }
         }
         
@@ -126,6 +243,24 @@ namespace Ares.Player {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Couldn&apos;t send status info. Check network connection. ähnelt.
+        /// </summary>
+        internal static string NoStatusInfoError {
+            get {
+                return ResourceManager.GetString("NoStatusInfoError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Not connected ähnelt.
+        /// </summary>
+        internal static string NotConnected {
+            get {
+                return ResourceManager.GetString("NotConnected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Open a project ... ähnelt.
         /// </summary>
         internal static string OpenProject {
@@ -140,6 +275,15 @@ namespace Ares.Player {
         internal static string OpenProjectQuestion {
             get {
                 return ResourceManager.GetString("OpenProjectQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Received ping. ähnelt.
+        /// </summary>
+        internal static string PingReceived {
+            get {
+                return ResourceManager.GetString("PingReceived", resourceCulture);
             }
         }
         
@@ -180,11 +324,65 @@ namespace Ares.Player {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Starting UDP broadcast ähnelt.
+        /// </summary>
+        internal static string StartBroadcast {
+            get {
+                return ResourceManager.GetString("StartBroadcast", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Open Editor ähnelt.
         /// </summary>
         internal static string StartEditor {
             get {
                 return ResourceManager.GetString("StartEditor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Stopping UDP broadcast ähnelt.
+        /// </summary>
+        internal static string StopBroadcast {
+            get {
+                return ResourceManager.GetString("StopBroadcast", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Error sending UDP packet:  ähnelt.
+        /// </summary>
+        internal static string UDPError {
+            get {
+                return ResourceManager.GetString("UDPError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Sending UDP packet &apos;{0}&apos; ähnelt.
+        /// </summary>
+        internal static string UDPSending {
+            get {
+                return ResourceManager.GetString("UDPSending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Received volume command: type {0}, volume {1} ähnelt.
+        /// </summary>
+        internal static string VolumeCommandReceived {
+            get {
+                return ResourceManager.GetString("VolumeCommandReceived", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Received out-of-range volume command ähnelt.
+        /// </summary>
+        internal static string VolumeOutOfRange {
+            get {
+                return ResourceManager.GetString("VolumeOutOfRange", resourceCulture);
             }
         }
         
@@ -195,6 +393,15 @@ namespace Ares.Player {
         internal static string WriteSettingsError {
             get {
                 return ResourceManager.GetString("WriteSettingsError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Length is wrong. ähnelt.
+        /// </summary>
+        internal static string WrongClientLength {
+            get {
+                return ResourceManager.GetString("WrongClientLength", resourceCulture);
             }
         }
     }

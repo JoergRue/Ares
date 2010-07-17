@@ -74,6 +74,7 @@ namespace Ares.Player
             // 
             // filterBox
             // 
+            resources.ApplyResources(this.filterBox, "filterBox");
             this.filterBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.filterBox.FormattingEnabled = true;
             this.filterBox.Items.AddRange(new object[] {
@@ -81,17 +82,16 @@ namespace Ares.Player
             resources.GetString("filterBox.Items1"),
             resources.GetString("filterBox.Items2"),
             resources.GetString("filterBox.Items3")});
-            resources.ApplyResources(this.filterBox, "filterBox");
             this.filterBox.Name = "filterBox";
             this.filterBox.SelectedIndexChanged += new System.EventHandler(this.filterBox_SelectedIndexChanged);
             // 
             // messagesGrid
             // 
+            resources.ApplyResources(this.messagesGrid, "messagesGrid");
             this.messagesGrid.AllowUserToAddRows = false;
             this.messagesGrid.AllowUserToDeleteRows = false;
             this.messagesGrid.AllowUserToResizeColumns = false;
             this.messagesGrid.AllowUserToResizeRows = false;
-            resources.ApplyResources(this.messagesGrid, "messagesGrid");
             this.messagesGrid.BackgroundColor = System.Drawing.SystemColors.Control;
             this.messagesGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.messagesGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {

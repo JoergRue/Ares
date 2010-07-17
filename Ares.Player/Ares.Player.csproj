@@ -82,6 +82,8 @@
     <Compile Include="MessagesForm.Designer.cs">
       <DependentUpon>MessagesForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="MusicInfo.cs" />
+    <Compile Include="Network.cs" />
     <Compile Include="Player.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -106,6 +108,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MessagesForm.resx">
       <DependentUpon>MessagesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Player.de.resx">
+      <DependentUpon>Player.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Player.resx">
       <DependentUpon>Player.cs</DependentUpon>

@@ -23,6 +23,149 @@ using System.Text;
 
 namespace Ares.Playing
 {
+
+    class ProjectCallbacks : IProjectPlayingCallbacks
+    {
+        private List<IProjectPlayingCallbacks> m_Clients = new List<IProjectPlayingCallbacks>();
+
+        private Object syncObject = new Object();
+
+        private static ProjectCallbacks s_Instance;
+
+        public static ProjectCallbacks Instance
+        {
+            get
+            {
+                if (s_Instance == null)
+                {
+                    s_Instance = new ProjectCallbacks();
+                    PlayingModule.ThePlayer.ProjectCallbacks = s_Instance;
+                }
+                return s_Instance;
+            }
+        }
+
+        public void AddCallbacks(IProjectPlayingCallbacks callbacks)
+        {
+            lock (syncObject)
+            {
+                m_Clients.Add(callbacks);
+            }
+        }
+
+        public void RemoveCallbacks(IProjectPlayingCallbacks callbacks)
+        {
+            lock (syncObject)
+            {
+                m_Clients.Remove(callbacks);
+            }
+        }
+
+        public void ModeChanged(Data.IMode newMode)
+        {
+            List<IProjectPlayingCallbacks> copy = null;
+            lock (syncObject)
+            {
+                copy = new List<IProjectPlayingCallbacks>(m_Clients);
+            }
+            foreach (IProjectPlayingCallbacks callback in copy)
+            {
+                callback.ModeChanged(newMode);
+            }
+        }
+
+        public void ModeElementStarted(Data.IModeElement element)
+        {
+            List<IProjectPlayingCallbacks> copy = null;
+            lock (syncObject)
+            {
+                copy = new List<IProjectPlayingCallbacks>(m_Clients);
+            }
+            foreach (IProjectPlayingCallbacks callback in copy)
+            {
+                callback.ModeElementStarted(element);
+            }
+        }
+
+        public void ModeElementFinished(Data.IModeElement element)
+        {
+            List<IProjectPlayingCallbacks> copy = null;
+            lock (syncObject)
+            {
+                copy = new List<IProjectPlayingCallbacks>(m_Clients);
+            }
+            foreach (IProjectPlayingCallbacks callback in copy)
+            {
+                callback.ModeElementFinished(element);
+            }
+        }
+
+        public void SoundStarted(int elementId)
+        {
+            List<IProjectPlayingCallbacks> copy = null;
+            lock (syncObject)
+            {
+                copy = new List<IProjectPlayingCallbacks>(m_Clients);
+            }
+            foreach (IProjectPlayingCallbacks callback in copy)
+            {
+                callback.SoundStarted(elementId);
+            }
+        }
+
+        public void SoundFinished(int elementId)
+        {
+            List<IProjectPlayingCallbacks> copy = null;
+            lock (syncObject)
+            {
+                copy = new List<IProjectPlayingCallbacks>(m_Clients);
+            }
+            foreach (IProjectPlayingCallbacks callback in copy)
+            {
+                callback.SoundFinished(elementId);
+            }
+        }
+
+        public void MusicStarted(int elementId)
+        {
+            List<IProjectPlayingCallbacks> copy = null;
+            lock (syncObject)
+            {
+                copy = new List<IProjectPlayingCallbacks>(m_Clients);
+            }
+            foreach (IProjectPlayingCallbacks callback in copy)
+            {
+                callback.MusicStarted(elementId);
+            }
+        }
+
+        public void MusicFinished(int elementId)
+        {
+            List<IProjectPlayingCallbacks> copy = null;
+            lock (syncObject)
+            {
+                copy = new List<IProjectPlayingCallbacks>(m_Clients);
+            }
+            foreach (IProjectPlayingCallbacks callback in copy)
+            {
+                callback.MusicFinished(elementId);
+            }
+        }
+
+        public void ErrorOccurred(int elementId, string errorMessage)
+        {
+            List<IProjectPlayingCallbacks> copy = null;
+            lock (syncObject)
+            {
+                copy = new List<IProjectPlayingCallbacks>(m_Clients);
+            }
+            foreach (IProjectPlayingCallbacks callback in copy)
+            {
+                callback.ErrorOccurred(elementId, errorMessage);
+            }
+        }
+    }
+
     public static class PlayingModule
     {
         public static IFilePlayer CreatePlayer()
@@ -40,9 +183,14 @@ namespace Ares.Playing
             get { return sPlayer; }
         }
 
-        public static void SetCallbacks(IProjectPlayingCallbacks callbacks)
+        public static void AddCallbacks(IProjectPlayingCallbacks callbacks)
         {
-            sPlayer.ProjectCallbacks = callbacks;
+            ProjectCallbacks.Instance.AddCallbacks(callbacks);
+        }
+
+        public static void RemoveCallbacks(IProjectPlayingCallbacks callbacks)
+        {
+            ProjectCallbacks.Instance.RemoveCallbacks(callbacks);
         }
 
         public static void SetCallbacks(IElementPlayingCallbacks callbacks)

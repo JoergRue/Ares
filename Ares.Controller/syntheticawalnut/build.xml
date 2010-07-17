@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="syntheticawalnut" default="jar" basedir="bin">
+
+<target name="jar" description="Make syntheticawalnut.jar">
+   <!-- Copy bitmaps -->
+   <copy todir="de">
+     <fileset dir="../images/de" />
+   </copy>
+   <!-- Export File for jar -->
+   <jar jarfile="syntheticawalnut.jar" basedir=".">
+       <manifest>
+       </manifest>
+    </jar>
+</target>
+</project>

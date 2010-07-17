@@ -1,0 +1,23 @@
+Über Ares Controller
+------------------------
+Ares Controller steuert den Ares Player, auch über das Netzwerk.
+
+Lizenz
+-------
+Ares Controller ist Open Source unter der General Public Licence. Siehe licence.txt oder lizenz-deutsch.txt
+
+Versionshistorie
+---------------
+Siehe ChangeLog.txt
+
+Bauen
+-----
+Man muss alle Libraries aus dem libraries-Verzeichnis der Binärinstallation vom Ares Controller referenzieren. Unter Linux:
+
+mkdir classes
+javac -source 1.6 -target 1.6 -d classes -cp libraries/jdic.jar:libraries/skinlf.jar:libraries/synthetica.jar:libraries/syntheticaBlueIce.jar:libraries/syntheticaBlueSteel.jar:libraries/syntheticaGreenDream.jar:libraries/syntheticaSilverMoon.jar:libraries/syntheticawalnut.jar `find source/ares -name "*.java"`
+
+mv Manifest classes/
+cd classes
+jar cfm Ares.Controller.jar Manifest ares
+

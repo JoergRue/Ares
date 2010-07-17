@@ -27,23 +27,16 @@ using Ares.Data;
 
 namespace Ares.Player
 {
-    class PlayingControl : IProjectPlayingCallbacks
+    class PlayingControl : IProjectPlayingCallbacks, IDisposable
     {
-        public static PlayingControl Instance
+        public PlayingControl()
         {
-            get
-            {
-                if (sInstance == null)
-                    sInstance = new PlayingControl();
-                return sInstance;
-            }
+            PlayingModule.AddCallbacks(this);
         }
 
-        private static PlayingControl sInstance;
-
-        private PlayingControl()
+        public void Dispose()
         {
-            PlayingModule.SetCallbacks(this);
+            PlayingModule.RemoveCallbacks(this);
         }
 
         public void UpdateDirectories()

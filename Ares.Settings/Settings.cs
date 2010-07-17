@@ -37,6 +37,9 @@ namespace Ares.Settings
         public int MusicVolume { get; set; }
         public int SoundVolume { get; set; }
 
+        public int UdpPort { get; set; }
+        public int TcpPort { get; set; }
+
         public static Settings Instance
         {
             get
@@ -116,6 +119,9 @@ namespace Ares.Settings
             RecentFiles = new RecentFiles();
             MusicDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
             SoundDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
+            GlobalVolume = MusicVolume = SoundVolume = 100;
+            TcpPort = 11112;
+            UdpPort = 8009;
         }
 
         private void WriteSettings(XmlWriter writer)
@@ -130,6 +136,10 @@ namespace Ares.Settings
             writer.WriteAttributeString("Overall", GlobalVolume.ToString(System.Globalization.CultureInfo.InvariantCulture));
             writer.WriteAttributeString("Music", MusicVolume.ToString(System.Globalization.CultureInfo.InvariantCulture));
             writer.WriteAttributeString("Sound", SoundVolume.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            writer.WriteEndElement();
+            writer.WriteStartElement("Network");
+            writer.WriteAttributeString("TcpPort", TcpPort.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            writer.WriteAttributeString("UdpPort", UdpPort.ToString(System.Globalization.CultureInfo.InvariantCulture));
             writer.WriteEndElement();
             RecentFiles.WriteFiles(writer);
             writer.WriteEndElement();
@@ -179,6 +189,19 @@ namespace Ares.Settings
                     if (MusicVolume < 0) MusicVolume = 0;
                     if (SoundVolume > 100) SoundVolume = 100;
                     if (SoundVolume < 0) SoundVolume = 0;
+                    if (reader.IsEmptyElement)
+                        reader.Read();
+                    else
+                    {
+                        reader.Read();
+                        reader.ReadInnerXml();
+                        reader.ReadEndElement();
+                    }
+                }
+                else if (reader.IsStartElement("Network"))
+                {
+                    UdpPort = reader.GetIntegerAttribute("UdpPort");
+                    TcpPort = reader.GetIntegerAttribute("TcpPort");
                     if (reader.IsEmptyElement)
                         reader.Read();
                     else

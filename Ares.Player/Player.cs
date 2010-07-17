@@ -32,9 +32,11 @@ using Ares.Settings;
 
 namespace Ares.Player
 {
-    public partial class Player : Form
+    public partial class Player : Form, INetworkClient
     {
         private Ares.Ipc.ApplicationInstance m_Instance;
+
+        private Network m_Network;
 
         public Player()
         {
@@ -54,6 +56,7 @@ namespace Ares.Player
             InitializeComponent();
             m_Instance.SetWindowHandle(Handle);
             m_Instance.ProjectOpenAction = (projectName2, projectPath) => OpenProjectFromRequest(projectName2, projectPath);
+            m_PlayingControl = new PlayingControl();
             Timer t = new Timer();
             t.Interval = 150;
             t.Tick += new EventHandler((o, args) =>
@@ -74,6 +77,15 @@ namespace Ares.Player
                     projectNameLabel.Text = m_Project != null ? m_Project.Title : StringResources.NoOpenedProject;
                     this.Text = String.Format(StringResources.AresPlayer, projectNameLabel.Text);
                 }
+                udpPortUpDown.Value = Settings.Settings.Instance.UdpPort;
+                tcpPortUpDown.Value = Settings.Settings.Instance.TcpPort;
+                listenForPorts = true;
+                m_Network = new Network(this);
+                m_Network.InitConnectionData();
+                m_Network.StartUdpBroadcast();
+                broadCastTimer.Tick += new EventHandler(broadCastTimer_Tick);
+                broadCastTimer.Enabled = true;
+                m_Network.ListenForClient();
             });
             t.Start();
             Timer updateTimer = new Timer();
@@ -82,15 +94,7 @@ namespace Ares.Player
             updateTimer.Start();
             fileSystemWatcher1.Changed += new System.IO.FileSystemEventHandler(fileSystemWatcher1_Changed);
             Messages.Instance.MessageReceived += new MessageReceivedHandler(MessageReceived);
-            m_Tooltip = new ToolTip();
-            m_Tooltip.SetToolTip(openButton, StringResources.OpenProject);
-            m_Tooltip.SetToolTip(settingsButton, StringResources.ShowSettings);
-            m_Tooltip.SetToolTip(messagesButton, StringResources.ShowMessages);
-            m_Tooltip.SetToolTip(aboutButton, StringResources.ShowInfo);
-            m_Tooltip.SetToolTip(editorButton, StringResources.StartEditor);
         }
-
-        private ToolTip m_Tooltip;
 
         private void MessageReceived(Message m)
         {
@@ -159,7 +163,7 @@ namespace Ares.Player
             Ares.Settings.SettingsDialog dialog = new Ares.Settings.SettingsDialog(Ares.Settings.Settings.Instance, m_BasicSettings);
             if (dialog.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
             {
-                PlayingControl.Instance.UpdateDirectories();
+                m_PlayingControl.UpdateDirectories();
                 WriteSettings();
             }
         }
@@ -223,7 +227,7 @@ namespace Ares.Player
             const int WM_KEYDOWN = 0x100;
             if (msg.Msg == WM_KEYDOWN)
             {
-                PlayingControl.Instance.KeyReceived(keyData);
+                m_PlayingControl.KeyReceived(keyData);
             }
             return true;
         }
@@ -232,7 +236,7 @@ namespace Ares.Player
 
         private void UpdateStatus()
         {
-            PlayingControl control = PlayingControl.Instance;
+            PlayingControl control = m_PlayingControl;
             IMode mode = control.CurrentMode;
             modeLabel.Text = mode != null ? mode.Title : String.Empty;
             StringBuilder modeElementsText = new StringBuilder();
@@ -254,64 +258,43 @@ namespace Ares.Player
             int musicElementId = control.CurrentMusicElement;
             if (musicElementId != lastMusicElementId)
             {
-                if (musicElementId != -1)
-                {
-                    IElement musicElement = Ares.Data.DataModule.ElementRepository.GetElement(musicElementId);
-                    IFileElement fileElement = musicElement as IFileElement;
-                    if (fileElement != null)
-                    {
-                        String path = Settings.Settings.Instance.MusicDirectory;
-                        path = System.IO.Path.Combine(path, fileElement.FilePath);
-                        Un4seen.Bass.AddOn.Tags.TAG_INFO tag = Un4seen.Bass.AddOn.Tags.BassTags.BASS_TAG_GetFromFile(path, true, false);
-                        if (tag != null)
-                        {
-                            StringBuilder musicInfoBuilder = new StringBuilder();
-                            musicInfoBuilder.Append(tag.artist);
-                            if (musicInfoBuilder.Length > 0)
-                                musicInfoBuilder.Append(" - ");
-                            musicInfoBuilder.Append(tag.album);
-                            if (musicInfoBuilder.Length > 0)
-                                musicInfoBuilder.Append(" - ");
-                            musicInfoBuilder.Append(tag.title);
-                            musicLabel.Text = musicInfoBuilder.ToString();
-                        }
-                        else
-                        {
-                            musicLabel.Text = musicElement.Title;
-                        }
-                    }
-                    else
-                    {
-                        musicLabel.Text = musicElement.Title;
-                    }
-                }
-                else
-                {
-                    musicLabel.Text = String.Empty;
-                }
+                musicLabel.Text = MusicInfo.GetInfo(musicElementId);
                 lastMusicElementId = musicElementId;
             }
-            overallVolumeBar.Value = control.GlobalVolume;
-            musicVolumeBar.Value = control.MusicVolume;
-            soundVolumeBar.Value = control.SoundVolume;
+            if (overallVolumeBar.Value != control.GlobalVolume)
+            {
+                overallVolumeBar.Value = control.GlobalVolume;
+                m_Network.InformClientOfVolume(VolumeTarget.Both, control.GlobalVolume);
+            }
+            if (musicVolumeBar.Value != control.MusicVolume)
+            {
+                musicVolumeBar.Value = control.MusicVolume;
+                m_Network.InformClientOfVolume(VolumeTarget.Music, control.MusicVolume);
+            }
+            if (soundVolumeBar.Value != control.SoundVolume)
+            {
+                soundVolumeBar.Value = control.SoundVolume;
+                m_Network.InformClientOfVolume(VolumeTarget.Sounds, control.SoundVolume);
+            }
         }
 
         private BasicSettings m_BasicSettings;
         private IProject m_Project;
+        private PlayingControl m_PlayingControl;
 
         private void overallVolumeBar_Scroll(object sender, EventArgs e)
         {
-            PlayingControl.Instance.GlobalVolume = overallVolumeBar.Value;
+            m_PlayingControl.GlobalVolume = overallVolumeBar.Value;
         }
 
         private void musicVolumeBar_Scroll(object sender, EventArgs e)
         {
-            PlayingControl.Instance.MusicVolume = musicVolumeBar.Value;
+            m_PlayingControl.MusicVolume = musicVolumeBar.Value;
         }
 
         private void soundVolumeBar_Scroll(object sender, EventArgs e)
         {
-            PlayingControl.Instance.SoundVolume = soundVolumeBar.Value;
+            m_PlayingControl.SoundVolume = soundVolumeBar.Value;
         }
 
         private void aboutButton_Click(object sender, EventArgs e)
@@ -322,7 +305,42 @@ namespace Ares.Player
 
         private void Player_FormClosing(object sender, FormClosingEventArgs e)
         {
+            Shutdown();
+        }
+
+        private void Shutdown()
+        {
+            if (m_Network.ClientConnected)
+            {
+                m_Network.DisconnectClient(false);
+            }
+            else
+            {
+                m_Network.StopListenForClient();
+                System.Threading.Thread.Sleep(400);
+                if (m_Network.ClientConnected)
+                {
+                    m_Network.DisconnectClient(false);
+                }
+            }
+            broadCastTimer.Enabled = false;
+            m_Network.StopUdpBroadcast();
+            m_PlayingControl.Dispose();
             WriteSettings();
+        }
+
+        private bool warnOnNetworkFail = true;
+        
+        void broadCastTimer_Tick(object sender, EventArgs e)
+        {
+            if (!m_Network.SendUdpPacket())
+            {
+                if (warnOnNetworkFail)
+                {
+                    warnOnNetworkFail = false;
+                    MessageBox.Show(this, StringResources.NoStatusInfoError, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
 
         private void WriteSettings()
@@ -348,7 +366,7 @@ namespace Ares.Player
             }
             else
             {
-                PlayingControl.Instance.UpdateDirectories();
+                m_PlayingControl.UpdateDirectories();
             }
             settingsFileWatcher.Path = m_BasicSettings.GetSettingsDir();
         }
@@ -397,6 +415,128 @@ namespace Ares.Player
             {
                 MessageBox.Show(this, String.Format(StringResources.EditorStartError, ex.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void stopButton_Click(object sender, EventArgs e)
+        {
+            m_PlayingControl.KeyReceived(Keys.Escape);
+        }
+
+        private void previousButton_Click(object sender, EventArgs e)
+        {
+            m_PlayingControl.KeyReceived(Keys.Left);
+        }
+
+        private void nextButton_Click(object sender, EventArgs e)
+        {
+            m_PlayingControl.KeyReceived(Keys.Right);
+        }
+
+        public void KeyReceived(Keys key)
+        {
+            m_PlayingControl.KeyReceived(key);
+        }
+
+        public void VolumeReceived(Ares.Playing.VolumeTarget target, int value)
+        {
+            switch (target)
+            {
+                case VolumeTarget.Both:
+                    m_PlayingControl.GlobalVolume = value;
+                    break;
+                case VolumeTarget.Music:
+                    m_PlayingControl.MusicVolume = value;
+                    break;
+                case VolumeTarget.Sounds:
+                    m_PlayingControl.SoundVolume = value;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public void ClientDataChanged()
+        {
+            this.Invoke(new MethodInvoker(UpdateClientData));
+        }
+
+        private void UpdateClientData()
+        {
+            if (m_Network.ClientConnected)
+            {
+                clientStateLabel.Text = StringResources.ConnectedWith + m_Network.ClientName;
+                clientStateLabel.ForeColor = System.Drawing.Color.DarkGreen;
+                disconnectButton.Enabled = true;
+            }
+            else
+            {
+                clientStateLabel.Text = StringResources.NotConnected;
+                clientStateLabel.ForeColor = System.Drawing.Color.Red;
+                disconnectButton.Enabled = false;
+            }
+        }
+
+        private void disconnectButton_Click(object sender, EventArgs e)
+        {
+            m_Network.DisconnectClient(true);
+        }
+
+        private bool listenForPorts = false;
+
+        private void udpPortUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            if (!listenForPorts) return;
+            Settings.Settings.Instance.UdpPort = (int)udpPortUpDown.Value;
+            WriteSettings();
+            if (m_Network.ClientConnected)
+            {
+                m_Network.DisconnectClient(true);
+            }
+        }
+
+        private void tcpPortUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            if (!listenForPorts) return;
+            Settings.Settings.Instance.TcpPort = (int)tcpPortUpDown.Value;
+            WriteSettings();
+            if (m_Network.ClientConnected)
+            {
+                m_Network.DisconnectClient(true);
+            }
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void extrasToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
+        {
+            messagesToolStripMenuItem.Checked = messagesButton.Checked;
+        }
+
+        private void messagesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            messagesButton.PerformClick();
+        }
+
+        private void recentToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
+        {
+            recentToolStripMenuItem.DropDownItems.Clear();
+            foreach (RecentFiles.ProjectEntry projectEntry in Ares.Settings.Settings.Instance.RecentFiles.GetFiles())
+            {
+                ToolStripMenuItem item = new ToolStripMenuItem(projectEntry.ProjectName);
+                item.ToolTipText = projectEntry.FilePath;
+                item.Tag = projectEntry;
+                item.Click += new EventHandler(recentItem_Click);
+
+                recentToolStripMenuItem.DropDownItems.Add(item);
+            }
+        }
+
+        void recentItem_Click(object sender, EventArgs e)
+        {
+            OpenProject(((sender as ToolStripMenuItem).Tag as RecentFiles.ProjectEntry).FilePath);
         }
     }
 }

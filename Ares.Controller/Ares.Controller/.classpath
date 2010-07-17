@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="source"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="libraries/l2fprod-common-directorychooser.jar"/>
+	<classpathentry kind="lib" path="libraries/l2fprod-common-fontchooser.jar"/>
+	<classpathentry kind="lib" path="libraries/skinlf.jar"/>
+	<classpathentry kind="lib" path="libraries/synthetica.jar"/>
+	<classpathentry kind="lib" path="libraries/syntheticaBlueIce.jar"/>
+	<classpathentry kind="lib" path="libraries/syntheticaBlueSteel.jar"/>
+	<classpathentry kind="lib" path="libraries/syntheticaGreenDream.jar"/>
+	<classpathentry kind="lib" path="libraries/syntheticaSilverMoon.jar"/>
+	<classpathentry kind="lib" path="libraries/syntheticawalnut.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
