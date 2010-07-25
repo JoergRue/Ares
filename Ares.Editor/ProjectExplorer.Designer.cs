@@ -97,6 +97,7 @@ namespace Ares.Editor
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.playButton = new System.Windows.Forms.ToolStripButton();
             this.stopButton = new System.Windows.Forms.ToolStripButton();
+            this.setKeyButton = new System.Windows.Forms.ToolStripButton();
             this.projectContextMenu.SuspendLayout();
             this.modeContextMenu.SuspendLayout();
             this.containerContextMenu.SuspendLayout();
@@ -417,7 +418,8 @@ namespace Ares.Editor
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.playButton,
-            this.stopButton});
+            this.stopButton,
+            this.setKeyButton});
             resources.ApplyResources(this.toolStrip1, "toolStrip1");
             this.toolStrip1.Name = "toolStrip1";
             // 
@@ -436,6 +438,14 @@ namespace Ares.Editor
             this.stopButton.Image = global::Ares.Editor.ImageResources.StopSmall;
             this.stopButton.Name = "stopButton";
             this.stopButton.Click += new System.EventHandler(this.stopButton_Click);
+            // 
+            // setKeyButton
+            // 
+            this.setKeyButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.setKeyButton, "setKeyButton");
+            this.setKeyButton.Image = global::Ares.Editor.ImageResources.interrogation;
+            this.setKeyButton.Name = "setKeyButton";
+            this.setKeyButton.Click += new System.EventHandler(this.setKeyButton_Click);
             // 
             // ProjectExplorer
             // 
@@ -507,5 +517,6 @@ namespace Ares.Editor
         private System.Windows.Forms.ToolStripMenuItem selectContainerKeyMenuItem;
         private System.Windows.Forms.ToolStripMenuItem selectElementKeyMenuItem;
         private System.Windows.Forms.ToolStripMenuItem selectBGSoundsKeyMenuItem;
+        private System.Windows.Forms.ToolStripButton setKeyButton;
     }
 }

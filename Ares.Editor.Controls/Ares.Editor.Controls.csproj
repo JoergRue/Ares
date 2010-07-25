@@ -118,6 +118,10 @@
       <Project>{7799985C-64E9-4414-ACA8-01184B704032}</Project>
       <Name>Ares.Editor.Actions</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Ares.Settings\Ares.Settings.csproj">
+      <Project>{E99E229E-2D6A-4C49-8E6F-C06E3F346606}</Project>
+      <Name>Ares.Settings</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ChoiceContainerControl.de.resx">

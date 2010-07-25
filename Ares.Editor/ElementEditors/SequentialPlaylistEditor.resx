@@ -117,12 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="repeatableControl.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="repeatableControl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 12</value>
+    <value>320, 75</value>
   </data>
   <data name="repeatableControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>346, 142</value>
+    <value>335, 98</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="repeatableControl.TabIndex" type="System.Int32, mscorlib">
@@ -140,15 +144,11 @@
   <data name="&gt;&gt;repeatableControl.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="volumeControl.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
   <data name="volumeControl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>364, 75</value>
+    <value>12, 12</value>
   </data>
   <data name="volumeControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>291, 79</value>
+    <value>302, 161</value>
   </data>
   <data name="volumeControl.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -169,10 +169,10 @@
     <value>Top, Bottom, Left, Right</value>
   </data>
   <data name="sequentialContainerControl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 160</value>
+    <value>12, 179</value>
   </data>
   <data name="sequentialContainerControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>643, 365</value>
+    <value>643, 346</value>
   </data>
   <data name="sequentialContainerControl.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -244,10 +244,10 @@
     <value>1</value>
   </data>
   <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>366, 12</value>
+    <value>320, 12</value>
   </data>
   <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>289, 57</value>
+    <value>335, 57</value>
   </data>
   <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>

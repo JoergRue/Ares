@@ -239,10 +239,12 @@ namespace Ares.Playing
             if (element.SetsMusicVolume)
             {
                 PlayingModule.ThePlayer.SetVolume(VolumeTarget.Music, element.MusicVolume);
+                PlayingModule.ThePlayer.ProjectCallbacks.VolumeChanged(VolumeTarget.Music, element.MusicVolume);
             }
             if (element.SetsSoundVolume)
             {
                 PlayingModule.ThePlayer.SetVolume(VolumeTarget.Sounds, element.MusicVolume);
+                PlayingModule.ThePlayer.ProjectCallbacks.VolumeChanged(VolumeTarget.Sounds, element.SoundVolume);
             }
             element.Visit(this);
         }

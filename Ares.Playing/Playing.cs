@@ -152,6 +152,19 @@ namespace Ares.Playing
             }
         }
 
+        public void VolumeChanged(VolumeTarget target, int newValue)
+        {
+            List<IProjectPlayingCallbacks> copy = null;
+            lock (syncObject)
+            {
+                copy = new List<IProjectPlayingCallbacks>(m_Clients);
+            }
+            foreach (IProjectPlayingCallbacks callback in copy)
+            {
+                callback.VolumeChanged(target, newValue);
+            }
+        }
+
         public void ErrorOccurred(int elementId, string errorMessage)
         {
             List<IProjectPlayingCallbacks> copy = null;

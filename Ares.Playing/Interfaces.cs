@@ -117,6 +117,13 @@ namespace Ares.Playing
         /// A music file was stopped or has finished playing.
         /// </summary>
         void MusicFinished(Int32 elementId);
+
+        /// <summary>
+        /// Volume changed because of an element start.
+        /// </summary>
+        /// <param name="target">volume which changed</param>
+        /// <param name="newValue">new volume value</param>
+        void VolumeChanged(VolumeTarget target, int newValue);
     }
 
     /// <summary>

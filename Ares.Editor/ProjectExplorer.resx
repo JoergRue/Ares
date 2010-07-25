@@ -121,6 +121,15 @@
     <value>17, 17</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="projectContextMenu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>143, 48</value>
+  </data>
+  <data name="&gt;&gt;projectContextMenu.Name" xml:space="preserve">
+    <value>projectContextMenu</value>
+  </data>
+  <data name="&gt;&gt;projectContextMenu.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="renameToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>142, 22</value>
   </data>
@@ -132,15 +141,6 @@
   </data>
   <data name="toolStripMenuItem1.Text" xml:space="preserve">
     <value>Add Mode ...</value>
-  </data>
-  <data name="projectContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>143, 48</value>
-  </data>
-  <data name="&gt;&gt;projectContextMenu.Name" xml:space="preserve">
-    <value>projectContextMenu</value>
-  </data>
-  <data name="&gt;&gt;projectContextMenu.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="projectTree.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
@@ -171,6 +171,15 @@
   <metadata name="modeContextMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>181, 17</value>
   </metadata>
+  <data name="modeContextMenu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>223, 236</value>
+  </data>
+  <data name="&gt;&gt;modeContextMenu.Name" xml:space="preserve">
+    <value>modeContextMenu</value>
+  </data>
+  <data name="&gt;&gt;modeContextMenu.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="renameToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
     <value>222, 22</value>
   </data>
@@ -240,18 +249,18 @@
   <data name="addChoiceListToolStripMenuItem.Text" xml:space="preserve">
     <value>Add Random List ...</value>
   </data>
-  <data name="modeContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>223, 236</value>
-  </data>
-  <data name="&gt;&gt;modeContextMenu.Name" xml:space="preserve">
-    <value>modeContextMenu</value>
-  </data>
-  <data name="&gt;&gt;modeContextMenu.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <metadata name="containerContextMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>338, 17</value>
   </metadata>
+  <data name="containerContextMenu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>223, 258</value>
+  </data>
+  <data name="&gt;&gt;containerContextMenu.Name" xml:space="preserve">
+    <value>containerContextMenu</value>
+  </data>
+  <data name="&gt;&gt;containerContextMenu.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="editToolStripMenuItem.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 9pt, style=Bold</value>
   </data>
@@ -327,18 +336,18 @@
   <data name="addChoiceListToolStripMenuItem1.Text" xml:space="preserve">
     <value>Add Random List ...</value>
   </data>
-  <data name="containerContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>223, 258</value>
-  </data>
-  <data name="&gt;&gt;containerContextMenu.Name" xml:space="preserve">
-    <value>containerContextMenu</value>
-  </data>
-  <data name="&gt;&gt;containerContextMenu.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <metadata name="elementContextMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>515, 17</value>
   </metadata>
+  <data name="elementContextMenu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>140, 114</value>
+  </data>
+  <data name="&gt;&gt;elementContextMenu.Name" xml:space="preserve">
+    <value>elementContextMenu</value>
+  </data>
+  <data name="&gt;&gt;elementContextMenu.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="editToolStripMenuItem1.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 9pt, style=Bold</value>
   </data>
@@ -372,18 +381,18 @@
   <data name="deleteToolStripMenuItem2.Text" xml:space="preserve">
     <value>Delete</value>
   </data>
-  <data name="elementContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>140, 114</value>
-  </data>
-  <data name="&gt;&gt;elementContextMenu.Name" xml:space="preserve">
-    <value>elementContextMenu</value>
-  </data>
-  <data name="&gt;&gt;elementContextMenu.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <metadata name="bgSoundsContextMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>685, 17</value>
   </metadata>
+  <data name="bgSoundsContextMenu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>174, 114</value>
+  </data>
+  <data name="&gt;&gt;bgSoundsContextMenu.Name" xml:space="preserve">
+    <value>bgSoundsContextMenu</value>
+  </data>
+  <data name="&gt;&gt;bgSoundsContextMenu.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="renameToolStripMenuItem4.Size" type="System.Drawing.Size, System.Drawing">
     <value>173, 22</value>
   </data>
@@ -417,15 +426,6 @@
   <data name="addSoundChoiceToolStripMenuItem.Text" xml:space="preserve">
     <value>Add Sound Choice</value>
   </data>
-  <data name="bgSoundsContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>174, 136</value>
-  </data>
-  <data name="&gt;&gt;bgSoundsContextMenu.Name" xml:space="preserve">
-    <value>bgSoundsContextMenu</value>
-  </data>
-  <data name="&gt;&gt;bgSoundsContextMenu.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>865, 17</value>
   </metadata>
@@ -452,6 +452,18 @@
   </data>
   <data name="stopButton.Text" xml:space="preserve">
     <value>Stop</value>
+  </data>
+  <data name="setKeyButton.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="setKeyButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="setKeyButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 22</value>
+  </data>
+  <data name="setKeyButton.Text" xml:space="preserve">
+    <value>Select Key ...</value>
   </data>
   <data name="toolStrip1.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
@@ -488,6 +500,9 @@
   </data>
   <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 8.25pt</value>
+  </data>
+  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Project Explorer</value>
@@ -724,6 +739,12 @@
     <value>stopButton</value>
   </data>
   <data name="&gt;&gt;stopButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;setKeyButton.Name" xml:space="preserve">
+    <value>setKeyButton</value>
+  </data>
+  <data name="&gt;&gt;setKeyButton.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">

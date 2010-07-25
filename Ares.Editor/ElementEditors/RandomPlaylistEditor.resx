@@ -241,7 +241,7 @@
     <value>364, 75</value>
   </data>
   <data name="volumeControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>302, 96</value>
+    <value>302, 127</value>
   </data>
   <data name="volumeControl.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -283,7 +283,7 @@
     <value>12, 75</value>
   </data>
   <data name="repeatableControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>346, 96</value>
+    <value>346, 127</value>
   </data>
   <data name="repeatableControl.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -304,10 +304,10 @@
     <value>Top, Bottom, Left, Right</value>
   </data>
   <data name="choiceContainerControl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 177</value>
+    <value>12, 208</value>
   </data>
   <data name="choiceContainerControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>654, 391</value>
+    <value>654, 360</value>
   </data>
   <data name="choiceContainerControl.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>

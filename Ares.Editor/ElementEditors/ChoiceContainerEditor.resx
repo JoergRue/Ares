@@ -178,7 +178,7 @@
     <value>315, 12</value>
   </data>
   <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>442, 96</value>
+    <value>442, 127</value>
   </data>
   <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -205,7 +205,7 @@
     <value>NoControl</value>
   </data>
   <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 407</value>
+    <value>12, 527</value>
   </data>
   <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
     <value>745, 78</value>
@@ -235,10 +235,10 @@
     <value>Top, Bottom, Left, Right</value>
   </data>
   <data name="choiceContainerControl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 114</value>
+    <value>12, 145</value>
   </data>
   <data name="choiceContainerControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>745, 290</value>
+    <value>745, 379</value>
   </data>
   <data name="choiceContainerControl.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -259,7 +259,7 @@
     <value>12, 12</value>
   </data>
   <data name="volumeControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>297, 96</value>
+    <value>297, 127</value>
   </data>
   <data name="volumeControl.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -283,7 +283,7 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>769, 494</value>
+    <value>769, 614</value>
   </data>
   <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 8.25pt</value>

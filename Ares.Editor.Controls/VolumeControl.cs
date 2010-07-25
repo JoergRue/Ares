@@ -104,5 +104,23 @@ namespace Ares.Editor.Controls
         private Ares.Data.IElement m_Element;
         private bool listen;
 
+        private void currentSoundVolumeButton_Click(object sender, EventArgs e)
+        {
+            listen = false;
+            setsSoundBox.Checked = true;
+            soundVolumeBar.Value = Ares.Settings.Settings.Instance.SoundVolume;
+            listen = true;
+            Commit();
+        }
+
+        private void currentMusicVolumeButton_Click(object sender, EventArgs e)
+        {
+            listen = false;
+            setsMusicBox.Checked = true;
+            musicVolumeBar.Value = Ares.Settings.Settings.Instance.MusicVolume;
+            listen = true;
+            Commit();
+        }
+
     }
 }

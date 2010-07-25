@@ -638,6 +638,22 @@ namespace Ares.Player
             }
         }
 
+        public void VolumeChanged(Ares.Playing.VolumeTarget target, int newValue)
+        {
+            /*
+            try
+            {
+                InformVolume(target, newValue);
+            }
+            catch (System.IO.IOException e)
+            {
+                Messages.AddMessage(MessageType.Error, e.Message);
+                DoDisconnect(true);
+            }
+             */
+            // Is informed separately by the player when it updates itself
+        }
+
         public void ErrorOccurred(int elementId, string errorMessage)
         {
             try

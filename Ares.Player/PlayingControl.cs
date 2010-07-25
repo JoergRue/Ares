@@ -289,6 +289,21 @@ namespace Ares.Player
             }
         }
 
+        public void VolumeChanged(VolumeTarget target, int newValue)
+        {
+            lock (syncObject)
+            {
+                if (target == VolumeTarget.Music)
+                {
+                    m_MusicVolume = newValue;
+                }
+                else
+                {
+                    m_SoundVolume = newValue;
+                }
+            }
+        }
+
         public void ErrorOccurred(int elementId, String errorMessage)
         {
             Ares.Data.IElement element = Ares.Data.DataModule.ElementRepository.GetElement(elementId);

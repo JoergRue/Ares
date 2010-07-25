@@ -205,7 +205,7 @@
     <value>12, 94</value>
   </data>
   <data name="volumeControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>294, 110</value>
+    <value>294, 127</value>
   </data>
   <data name="volumeControl.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -226,10 +226,10 @@
     <value>Top, Bottom, Left, Right</value>
   </data>
   <data name="parallelContainerControl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 210</value>
+    <value>12, 227</value>
   </data>
   <data name="parallelContainerControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>664, 323</value>
+    <value>664, 325</value>
   </data>
   <data name="parallelContainerControl.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -253,7 +253,7 @@
     <value>6, 82</value>
   </data>
   <data name="repeatableControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>346, 96</value>
+    <value>346, 121</value>
   </data>
   <data name="repeatableControl.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -295,7 +295,7 @@
     <value>312, 12</value>
   </data>
   <data name="groupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>364, 192</value>
+    <value>364, 209</value>
   </data>
   <data name="groupBox2.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -322,7 +322,7 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>688, 545</value>
+    <value>688, 564</value>
   </data>
   <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 8.25pt</value>

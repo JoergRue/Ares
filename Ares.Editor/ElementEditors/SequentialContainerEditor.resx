@@ -122,7 +122,7 @@
     <value>12, 12</value>
   </data>
   <data name="volumeControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>297, 96</value>
+    <value>297, 126</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="volumeControl.TabIndex" type="System.Int32, mscorlib">
@@ -145,10 +145,10 @@
     <value>Top, Bottom, Left, Right</value>
   </data>
   <data name="sequentialContainerControl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 114</value>
+    <value>12, 144</value>
   </data>
   <data name="sequentialContainerControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>728, 364</value>
+    <value>728, 334</value>
   </data>
   <data name="sequentialContainerControl.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -256,7 +256,7 @@
     <value>315, 12</value>
   </data>
   <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>425, 96</value>
+    <value>425, 126</value>
   </data>
   <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>

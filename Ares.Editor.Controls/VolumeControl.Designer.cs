@@ -51,6 +51,8 @@ namespace Ares.Editor.Controls
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(VolumeControl));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.currentSoundVolumeButton = new System.Windows.Forms.Button();
+            this.currentMusicVolumeButton = new System.Windows.Forms.Button();
             this.soundVolumeBar = new System.Windows.Forms.TrackBar();
             this.setsSoundBox = new System.Windows.Forms.CheckBox();
             this.musicVolumeBar = new System.Windows.Forms.TrackBar();
@@ -62,14 +64,32 @@ namespace Ares.Editor.Controls
             // 
             // groupBox1
             // 
+            resources.ApplyResources(this.groupBox1, "groupBox1");
+            this.groupBox1.Controls.Add(this.currentSoundVolumeButton);
+            this.groupBox1.Controls.Add(this.currentMusicVolumeButton);
             this.groupBox1.Controls.Add(this.soundVolumeBar);
             this.groupBox1.Controls.Add(this.setsSoundBox);
             this.groupBox1.Controls.Add(this.musicVolumeBar);
             this.groupBox1.Controls.Add(this.setsMusicBox);
-            resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
             this.groupBox1.UseCompatibleTextRendering = true;
+            // 
+            // currentSoundVolumeButton
+            // 
+            resources.ApplyResources(this.currentSoundVolumeButton, "currentSoundVolumeButton");
+            this.currentSoundVolumeButton.Name = "currentSoundVolumeButton";
+            this.currentSoundVolumeButton.UseCompatibleTextRendering = true;
+            this.currentSoundVolumeButton.UseVisualStyleBackColor = true;
+            this.currentSoundVolumeButton.Click += new System.EventHandler(this.currentSoundVolumeButton_Click);
+            // 
+            // currentMusicVolumeButton
+            // 
+            resources.ApplyResources(this.currentMusicVolumeButton, "currentMusicVolumeButton");
+            this.currentMusicVolumeButton.Name = "currentMusicVolumeButton";
+            this.currentMusicVolumeButton.UseCompatibleTextRendering = true;
+            this.currentMusicVolumeButton.UseVisualStyleBackColor = true;
+            this.currentMusicVolumeButton.Click += new System.EventHandler(this.currentMusicVolumeButton_Click);
             // 
             // soundVolumeBar
             // 
@@ -126,5 +146,7 @@ namespace Ares.Editor.Controls
         private System.Windows.Forms.CheckBox setsSoundBox;
         private System.Windows.Forms.TrackBar musicVolumeBar;
         private System.Windows.Forms.CheckBox setsMusicBox;
+        private System.Windows.Forms.Button currentSoundVolumeButton;
+        private System.Windows.Forms.Button currentMusicVolumeButton;
     }
 }

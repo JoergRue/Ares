@@ -60,6 +60,13 @@ namespace Ares.Editor {
             }
         }
         
+        internal static System.Drawing.Bitmap interrogation {
+            get {
+                object obj = ResourceManager.GetObject("interrogation", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap NewDocumentHS {
             get {
                 object obj = ResourceManager.GetObject("NewDocumentHS", resourceCulture);
