@@ -94,6 +94,12 @@
   <ItemGroup>
     <None Include="ares.snk" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Ares.Ipc\Ares.Ipc.csproj">
+      <Project>{07BE1372-C1D2-4E2A-9678-DC27BE0D9FF0}</Project>
+      <Name>Ares.Ipc</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

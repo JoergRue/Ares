@@ -117,49 +117,41 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="playButton.Text" xml:space="preserve">
-    <value>Abspielen</value>
-  </data>
-  <data name="stopButton.Text" xml:space="preserve">
-    <value>Stoppen</value>
-  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="refreshButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        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
-</value>
+  <data name="soundVolumeBar.Location" type="System.Drawing.Point, System.Drawing">
+    <value>78, 114</value>
   </data>
-  <data name="refreshButton.Text" xml:space="preserve">
-    <value>Aktualisieren</value>
+  <data name="soundVolumeBar.Size" type="System.Drawing.Size, System.Drawing">
+    <value>326, 45</value>
+  </data>
+  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>63, 17</value>
+  </data>
+  <data name="label4.Text" xml:space="preserve">
+    <value>Geräusche:</value>
+  </data>
+  <data name="musicVolumeBar.Location" type="System.Drawing.Point, System.Drawing">
+    <value>78, 63</value>
+  </data>
+  <data name="musicVolumeBar.Size" type="System.Drawing.Size, System.Drawing">
+    <value>326, 45</value>
+  </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>Musik:</value>
+  </data>
+  <data name="overallVolumeBar.Location" type="System.Drawing.Point, System.Drawing">
+    <value>78, 12</value>
+  </data>
+  <data name="overallVolumeBar.Size" type="System.Drawing.Size, System.Drawing">
+    <value>326, 45</value>
+  </data>
+  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>47, 17</value>
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>Gesamt:</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>Datei Explorer</value>
+    <value>Lautstärken</value>
   </data>
 </root>

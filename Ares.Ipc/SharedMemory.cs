@@ -206,7 +206,15 @@ namespace Ares.Ipc
 			: this(name, SharedMemoryProcedure.Create, SharedMemory.GetOptMemorySize(obj))
 		{
 			// das übergebene Objekt in das SharedMemory Segment schreiben
-			this.AddObject(obj);
+            Lock();
+            try
+            {
+                this.AddObject(obj, false);
+            }
+            finally
+            {
+                Unlock();
+            }
 		}
 
 
@@ -311,6 +319,7 @@ namespace Ares.Ipc
 		/// Speichert serialisierbare Objekte in einem SharedMemory Segment.
 		/// </summary>
 		/// <param name="obj">Das Objekt welches im SharedMemory Segment gespeichert werden soll.</param>
+        /// <param name="allowResize">Ob das Segment neu angelegt werden darf.</param>
 		/// <exception cref="T:System.ArgumentNullException">
 		/// Wird ausgegeben wenn der Parameter <paramref name="obj"/> = <c>null</c> ist.
 		/// </exception>
@@ -319,7 +328,7 @@ namespace Ares.Ipc
 		/// Meldung mit der Ausnahme ausgegeben.
 		/// </exception>
 		/// <remarks>n/a</remarks>
-		public void AddObject(object obj)
+		public void AddObject(object obj, bool allowResize)
 		{
 			if (obj == null)
 			{
@@ -338,7 +347,14 @@ namespace Ares.Ipc
             // überprüfen ob die angegebene Größe ausreichend ist
 			if (!this.checkSize((int)marshalledSize))
 			{
-				throw new SharedMemoryException();
+                if (allowResize)
+                {
+                    resize(GetOptMemorySize(obj));
+                }
+                else
+                {
+                    throw new SharedMemoryException();
+                }
 			}
 
 			// Einen MemoryStream zum aufnehmen der Daten erzeugen
@@ -435,6 +451,57 @@ namespace Ares.Ipc
 		#endregion
 
 		#region private Methods
+
+        /// <summary>
+        /// Aendert die Groesse des Segments. Dafuer wird es geloescht und neu erzeugt.
+        /// </summary>
+        /// <param name="size">Neue Groesse</param>
+        private void resize(int size)
+        {
+            if (nativePointer != IntPtr.Zero)
+            {
+                NativeMethods.UnmapViewOfFile(nativePointer);
+            }
+
+            if (nativeHandle != IntPtr.Zero)
+            {
+                NativeMethods.CloseHandle(nativeHandle);
+            }
+
+            nativeHandle = NativeMethods.CreateFileMapping((IntPtr)InvalidHandleValue,
+                IntPtr.Zero, (int)MapProtections.PageReadWrite,
+                0, size, _segmentName);
+
+            if (this.nativeHandle == IntPtr.Zero)
+            {
+                int i = Marshal.GetLastWin32Error();
+                // das Segment besteht bereits
+                if (i == ErrorInvalidHandle)
+                {
+                    throw new SharedMemoryException();
+                }
+                // aus das Segment kann nicht zugegriffen werden
+                else
+                {
+                    throw new SharedMemoryException();
+                }
+            }
+
+            // den Zeiger auf das SharedMemory Segment holen
+            this.nativePointer = NativeMethods.MapViewOfFile(nativeHandle,
+                (int)MapAccess.FileMapAllAccess, 0, 0, IntPtr.Zero);
+
+            // kein Zeiger zurück gegeben
+            if (this.nativePointer == IntPtr.Zero)
+            {
+                int i = Marshal.GetLastWin32Error();
+                NativeMethods.CloseHandle(nativeHandle);
+                this.nativeHandle = IntPtr.Zero;
+                throw new SharedMemoryException();
+            }
+
+            this.currentSize = size;
+        }
 
 		/// <summary>
 		/// Kopiert einen Stream in das Shared Memory Segment.

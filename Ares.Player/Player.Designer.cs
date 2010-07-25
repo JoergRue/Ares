@@ -70,7 +70,6 @@ namespace Ares.Player
             this.label5 = new System.Windows.Forms.Label();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
-            this.settingsFileWatcher = new System.IO.FileSystemWatcher();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.openButton = new System.Windows.Forms.ToolStripButton();
             this.messagesButton = new System.Windows.Forms.ToolStripButton();
@@ -114,7 +113,6 @@ namespace Ares.Player
             ((System.ComponentModel.ISupportInitialize)(this.overallVolumeBar)).BeginInit();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.settingsFileWatcher)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tcpPortUpDown)).BeginInit();
@@ -266,7 +264,6 @@ namespace Ares.Player
             // openFileDialog1
             // 
             this.openFileDialog1.DefaultExt = "ares";
-            resources.ApplyResources(this.openFileDialog1, "openFileDialog1");
             // 
             // fileSystemWatcher1
             // 
@@ -275,17 +272,8 @@ namespace Ares.Player
             this.fileSystemWatcher1.NotifyFilter = System.IO.NotifyFilters.LastWrite;
             this.fileSystemWatcher1.SynchronizingObject = this;
             // 
-            // settingsFileWatcher
-            // 
-            this.settingsFileWatcher.EnableRaisingEvents = true;
-            this.settingsFileWatcher.Filter = "*.xml";
-            this.settingsFileWatcher.NotifyFilter = System.IO.NotifyFilters.LastWrite;
-            this.settingsFileWatcher.SynchronizingObject = this;
-            this.settingsFileWatcher.Changed += new System.IO.FileSystemEventHandler(this.settingsFileWatcher_Changed);
-            // 
             // toolStrip1
             // 
-            resources.ApplyResources(this.toolStrip1, "toolStrip1");
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openButton,
             this.messagesButton,
@@ -296,67 +284,68 @@ namespace Ares.Player
             this.stopButton,
             this.previousButton,
             this.nextButton});
+            resources.ApplyResources(this.toolStrip1, "toolStrip1");
             this.toolStrip1.Name = "toolStrip1";
             // 
             // openButton
             // 
-            resources.ApplyResources(this.openButton, "openButton");
             this.openButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.openButton, "openButton");
             this.openButton.Name = "openButton";
             this.openButton.Click += new System.EventHandler(this.openButton_Click);
             // 
             // messagesButton
             // 
-            resources.ApplyResources(this.messagesButton, "messagesButton");
             this.messagesButton.CheckOnClick = true;
             this.messagesButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.messagesButton, "messagesButton");
             this.messagesButton.Name = "messagesButton";
             this.messagesButton.CheckStateChanged += new System.EventHandler(this.messagesButton_CheckedChanged);
             // 
             // editorButton
             // 
-            resources.ApplyResources(this.editorButton, "editorButton");
             this.editorButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.editorButton, "editorButton");
             this.editorButton.Name = "editorButton";
             this.editorButton.Click += new System.EventHandler(this.editorButton_Click);
             // 
             // settingsButton
             // 
-            resources.ApplyResources(this.settingsButton, "settingsButton");
             this.settingsButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.settingsButton, "settingsButton");
             this.settingsButton.Name = "settingsButton";
             this.settingsButton.Click += new System.EventHandler(this.settingsButton_Click);
             // 
             // aboutButton
             // 
-            resources.ApplyResources(this.aboutButton, "aboutButton");
             this.aboutButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.aboutButton, "aboutButton");
             this.aboutButton.Name = "aboutButton";
             this.aboutButton.Click += new System.EventHandler(this.aboutButton_Click);
             // 
             // toolStripSeparator1
             // 
-            resources.ApplyResources(this.toolStripSeparator1, "toolStripSeparator1");
             this.toolStripSeparator1.Name = "toolStripSeparator1";
+            resources.ApplyResources(this.toolStripSeparator1, "toolStripSeparator1");
             // 
             // stopButton
             // 
-            resources.ApplyResources(this.stopButton, "stopButton");
             this.stopButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.stopButton, "stopButton");
             this.stopButton.Name = "stopButton";
             this.stopButton.Click += new System.EventHandler(this.stopButton_Click);
             // 
             // previousButton
             // 
-            resources.ApplyResources(this.previousButton, "previousButton");
             this.previousButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.previousButton, "previousButton");
             this.previousButton.Name = "previousButton";
             this.previousButton.Click += new System.EventHandler(this.previousButton_Click);
             // 
             // nextButton
             // 
-            resources.ApplyResources(this.nextButton, "nextButton");
             this.nextButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.nextButton, "nextButton");
             this.nextButton.Name = "nextButton";
             this.nextButton.Click += new System.EventHandler(this.nextButton_Click);
             // 
@@ -450,126 +439,126 @@ namespace Ares.Player
             // 
             // menuStrip1
             // 
-            resources.ApplyResources(this.menuStrip1, "menuStrip1");
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.projectToolStripMenuItem,
             this.playToolStripMenuItem,
             this.extrasToolStripMenuItem,
             this.helpToolStripMenuItem});
+            resources.ApplyResources(this.menuStrip1, "menuStrip1");
             this.menuStrip1.Name = "menuStrip1";
             // 
             // projectToolStripMenuItem
             // 
-            resources.ApplyResources(this.projectToolStripMenuItem, "projectToolStripMenuItem");
             this.projectToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openToolStripMenuItem,
             this.recentToolStripMenuItem,
             this.toolStripSeparator2,
             this.exitToolStripMenuItem});
             this.projectToolStripMenuItem.Name = "projectToolStripMenuItem";
+            resources.ApplyResources(this.projectToolStripMenuItem, "projectToolStripMenuItem");
             // 
             // openToolStripMenuItem
             // 
-            resources.ApplyResources(this.openToolStripMenuItem, "openToolStripMenuItem");
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+            resources.ApplyResources(this.openToolStripMenuItem, "openToolStripMenuItem");
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openButton_Click);
             // 
             // recentToolStripMenuItem
             // 
-            resources.ApplyResources(this.recentToolStripMenuItem, "recentToolStripMenuItem");
             this.recentToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.dummyToolStripMenuItem});
             this.recentToolStripMenuItem.Name = "recentToolStripMenuItem";
+            resources.ApplyResources(this.recentToolStripMenuItem, "recentToolStripMenuItem");
             this.recentToolStripMenuItem.DropDownOpening += new System.EventHandler(this.recentToolStripMenuItem_DropDownOpening);
             // 
             // dummyToolStripMenuItem
             // 
-            resources.ApplyResources(this.dummyToolStripMenuItem, "dummyToolStripMenuItem");
             this.dummyToolStripMenuItem.Name = "dummyToolStripMenuItem";
+            resources.ApplyResources(this.dummyToolStripMenuItem, "dummyToolStripMenuItem");
             // 
             // toolStripSeparator2
             // 
-            resources.ApplyResources(this.toolStripSeparator2, "toolStripSeparator2");
             this.toolStripSeparator2.Name = "toolStripSeparator2";
+            resources.ApplyResources(this.toolStripSeparator2, "toolStripSeparator2");
             // 
             // exitToolStripMenuItem
             // 
-            resources.ApplyResources(this.exitToolStripMenuItem, "exitToolStripMenuItem");
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            resources.ApplyResources(this.exitToolStripMenuItem, "exitToolStripMenuItem");
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // playToolStripMenuItem
             // 
-            resources.ApplyResources(this.playToolStripMenuItem, "playToolStripMenuItem");
             this.playToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.stopAllToolStripMenuItem,
             this.previousMusicToolStripMenuItem,
             this.nextMusicTitleToolStripMenuItem});
             this.playToolStripMenuItem.Name = "playToolStripMenuItem";
+            resources.ApplyResources(this.playToolStripMenuItem, "playToolStripMenuItem");
             // 
             // stopAllToolStripMenuItem
             // 
-            resources.ApplyResources(this.stopAllToolStripMenuItem, "stopAllToolStripMenuItem");
             this.stopAllToolStripMenuItem.Name = "stopAllToolStripMenuItem";
+            resources.ApplyResources(this.stopAllToolStripMenuItem, "stopAllToolStripMenuItem");
             this.stopAllToolStripMenuItem.Click += new System.EventHandler(this.stopButton_Click);
             // 
             // previousMusicToolStripMenuItem
             // 
-            resources.ApplyResources(this.previousMusicToolStripMenuItem, "previousMusicToolStripMenuItem");
             this.previousMusicToolStripMenuItem.Name = "previousMusicToolStripMenuItem";
+            resources.ApplyResources(this.previousMusicToolStripMenuItem, "previousMusicToolStripMenuItem");
             this.previousMusicToolStripMenuItem.Click += new System.EventHandler(this.previousButton_Click);
             // 
             // nextMusicTitleToolStripMenuItem
             // 
-            resources.ApplyResources(this.nextMusicTitleToolStripMenuItem, "nextMusicTitleToolStripMenuItem");
             this.nextMusicTitleToolStripMenuItem.Name = "nextMusicTitleToolStripMenuItem";
+            resources.ApplyResources(this.nextMusicTitleToolStripMenuItem, "nextMusicTitleToolStripMenuItem");
             this.nextMusicTitleToolStripMenuItem.Click += new System.EventHandler(this.nextButton_Click);
             // 
             // extrasToolStripMenuItem
             // 
-            resources.ApplyResources(this.extrasToolStripMenuItem, "extrasToolStripMenuItem");
             this.extrasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.startEditorToolStripMenuItem,
             this.messagesToolStripMenuItem,
             this.toolStripSeparator3,
             this.settingsToolStripMenuItem1});
             this.extrasToolStripMenuItem.Name = "extrasToolStripMenuItem";
+            resources.ApplyResources(this.extrasToolStripMenuItem, "extrasToolStripMenuItem");
             this.extrasToolStripMenuItem.DropDownOpening += new System.EventHandler(this.extrasToolStripMenuItem_DropDownOpening);
             // 
             // startEditorToolStripMenuItem
             // 
-            resources.ApplyResources(this.startEditorToolStripMenuItem, "startEditorToolStripMenuItem");
             this.startEditorToolStripMenuItem.Name = "startEditorToolStripMenuItem";
+            resources.ApplyResources(this.startEditorToolStripMenuItem, "startEditorToolStripMenuItem");
             this.startEditorToolStripMenuItem.Click += new System.EventHandler(this.editorButton_Click);
             // 
             // messagesToolStripMenuItem
             // 
-            resources.ApplyResources(this.messagesToolStripMenuItem, "messagesToolStripMenuItem");
             this.messagesToolStripMenuItem.Name = "messagesToolStripMenuItem";
+            resources.ApplyResources(this.messagesToolStripMenuItem, "messagesToolStripMenuItem");
             this.messagesToolStripMenuItem.Click += new System.EventHandler(this.messagesToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
-            resources.ApplyResources(this.toolStripSeparator3, "toolStripSeparator3");
             this.toolStripSeparator3.Name = "toolStripSeparator3";
+            resources.ApplyResources(this.toolStripSeparator3, "toolStripSeparator3");
             // 
             // settingsToolStripMenuItem1
             // 
-            resources.ApplyResources(this.settingsToolStripMenuItem1, "settingsToolStripMenuItem1");
             this.settingsToolStripMenuItem1.Name = "settingsToolStripMenuItem1";
+            resources.ApplyResources(this.settingsToolStripMenuItem1, "settingsToolStripMenuItem1");
             this.settingsToolStripMenuItem1.Click += new System.EventHandler(this.settingsButton_Click);
             // 
             // helpToolStripMenuItem
             // 
-            resources.ApplyResources(this.helpToolStripMenuItem, "helpToolStripMenuItem");
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.aboutToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            resources.ApplyResources(this.helpToolStripMenuItem, "helpToolStripMenuItem");
             // 
             // aboutToolStripMenuItem
             // 
-            resources.ApplyResources(this.aboutToolStripMenuItem, "aboutToolStripMenuItem");
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            resources.ApplyResources(this.aboutToolStripMenuItem, "aboutToolStripMenuItem");
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutButton_Click);
             // 
             // Player
@@ -593,7 +582,6 @@ namespace Ares.Player
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.settingsFileWatcher)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.groupBox1.ResumeLayout(false);
@@ -628,7 +616,6 @@ namespace Ares.Player
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.IO.FileSystemWatcher fileSystemWatcher1;
-        private System.IO.FileSystemWatcher settingsFileWatcher;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton openButton;

@@ -72,6 +72,7 @@ namespace Ares.Settings
                 m_BasicSettings.UserSettingsLocation = BasicSettings.SettingsLocation.AppDataDir;
             }
             m_BasicSettings.CustomSettingsDirectory = otherDirLabel.Text;
+            m_Settings.Commit();
         }
 
         private Ares.Settings.Settings m_Settings { get; set; }

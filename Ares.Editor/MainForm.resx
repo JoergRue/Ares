@@ -174,6 +174,9 @@
   <data name="dummyToolStripMenuItem.Text" xml:space="preserve">
     <value>Dummy</value>
   </data>
+  <data name="volumesToolStripMenuItem.Text" xml:space="preserve">
+    <value>Volumes</value>
+  </data>
   <data name="&gt;&gt;toolStrip1.Name" xml:space="preserve">
     <value>toolStrip1</value>
   </data>
@@ -350,6 +353,9 @@
   <data name="&gt;&gt;saveButton.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="volumesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>174, 22</value>
+  </data>
   <data name="fileToolStripMenuItem.Text" xml:space="preserve">
     <value>Project</value>
   </data>
@@ -401,6 +407,9 @@
   <data name="&gt;&gt;openToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="newToolStripMenuItem.Text" xml:space="preserve">
+    <value>New ...</value>
+  </data>
   <data name="saveButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
     <value>Magenta</value>
   </data>
@@ -412,9 +421,6 @@
   </data>
   <data name="&gt;&gt;fileToolStripMenuItem.Name" xml:space="preserve">
     <value>fileToolStripMenuItem</value>
-  </data>
-  <data name="aboutToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>119, 22</value>
   </data>
   <data name="&gt;&gt;viewToolStripMenuItem.Name" xml:space="preserve">
     <value>viewToolStripMenuItem</value>
@@ -465,6 +471,9 @@
   <data name="&gt;&gt;openButton.Name" xml:space="preserve">
     <value>openButton</value>
   </data>
+  <data name="&gt;&gt;toolStrip1.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
   <data name="&gt;&gt;editMenu.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -476,6 +485,9 @@
   </data>
   <data name="&gt;&gt;stopButton.Name" xml:space="preserve">
     <value>stopButton</value>
+  </data>
+  <data name="&gt;&gt;volumesToolStripMenuItem.Name" xml:space="preserve">
+    <value>volumesToolStripMenuItem</value>
   </data>
   <data name="menuStrip1.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
@@ -526,11 +538,14 @@
   <data name="viewToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>44, 20</value>
   </data>
-  <data name="newToolStripMenuItem.Text" xml:space="preserve">
-    <value>New ...</value>
+  <data name="aboutToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>119, 22</value>
   </data>
   <data name="&gt;&gt;startPlayerToolStripMenuItem.Name" xml:space="preserve">
     <value>startPlayerToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;volumesToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;saveButton.Name" xml:space="preserve">
     <value>saveButton</value>
@@ -560,13 +575,13 @@
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAADsIAAA7CARUoSoAAAAGfSURBVDhPjZJNSwJRFIaHoJW0ahv0A1q1qE3UvnLTumX9
-        CSHoB9SmQiGtCDPQAqEPiIKsqCCTkPCDMS0RTTE/upamzYzzdsdxroZpXjicy537Puee9wzH1RchsxVR
-        nOFh4QAfB1GcjhKiF7TvHXOV1x0KBiqEETimOajua2fF8b1/IRKve2CCbSo64FQxhZDQGJwuPxynXtiO
-        3Ng5ci+1AIVletlIY0URKcuuvsRMw66dARv7lxidmm+FkCAnEr5fxqraP156gQuaK8NAfKAOpTVspzi7
-        9dcg1sO7ZfYSSdJ7WAtKRVqdeYJFBlizntTEWjQAxYkrJtikgEhPw0SsM4AoVaFANNAvL+Ts0EI13GeC
-        kwISg0DOQCdgYWJZllEqC0jnSjXAyOQc/pzOlvOaiZo334KEfKGMWKrQGWB2uFoAUlXGR+kbyUwRT7F8
-        Z4Bp96wFUK6IyLx/IfpK4AtnOgOU/pqXYhz5rCCe/gAfzcETSHUPaDYuEn/HY+gNN95E94Bm4wLPWbh9
-        SZzfx7oDaPNul9uOUZuxcuG/UP6DH1pTN6DeHh6KAAAAAElFTkSuQmCC
+        CSHoB+SmQiGtCDPQAiENQiErKsgkJPxA0xLRFFPHjzR1Zpy3O+pcDdO8cDiXO/d9zj3vGYZpL5ZdrfH8
+        ShB6BvAy4PnlKMsqOfn7wNwIKqycigihAS5IDrT2zbPy/Om/ECGoeKaCIyI6Z1piAimE5mBx+mC2e2C0
+        uXBsc231ADk1uawhsS2JpGVqvURHwiSfAftnN5hdWu+FsAGGZwPjInZa/eN9FLgmuTYNxCfaUFLDaIfj
+        wdeEGKyPavoSQVC6aQtSRVKdeoJNCtg1XDbFcnQA5YVbKjgggMhIx0TsUQAvNCBBZNAvL8Ts1EYjPKaF
+        hQASk0BORSagp2JRFFGpckjnKk3AzOIa/pzOoeWOiro3dU4AW6wilioOBujMzh6A0BBRqtSRzJTxGmMH
+        A7Qnjh5AtcYjk/9G9KMAbzgzGCD1170k4wpfNcTTJQSjObj9qeEB3cZF4nm8hD5x70kMD+g2zv+Whcub
+        xNVTbDiAPO9+ue8Y5RlLF/4L6T/4AShXN5JwX2jtAAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="newButton.Size" type="System.Drawing.Size, System.Drawing">
@@ -592,6 +607,9 @@
   </data>
   <data name="&gt;&gt;toolStripSeparator4.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;menuStrip1.ZOrder" xml:space="preserve">
+    <value>3</value>
   </data>
   <data name="&gt;&gt;aboutToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -646,6 +664,9 @@
   </data>
   <data name="redoToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
     <value>Strg+Y</value>
+  </data>
+  <data name="&gt;&gt;dockPanel.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
   <data name="&gt;&gt;saveFileDialog.Type" xml:space="preserve">
     <value>System.Windows.Forms.SaveFileDialog, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

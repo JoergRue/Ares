@@ -141,11 +141,19 @@ namespace Ares.Ipc
             {
                 using (SharedMemory mem = new SharedMemory(appName))
                 {
-                    ApplicationInfo info = (ApplicationInfo)mem.GetObject();
-                    return info;
+                    mem.Lock();
+                    try
+                    {
+                        ApplicationInfo info = (ApplicationInfo)mem.GetObject();
+                        return info;
+                    }
+                    finally
+                    {
+                        mem.Unlock();
+                    }
                 }
             }
-            catch (Exception)
+            catch (SharedMemoryException)
             {
                 return null;
             }
@@ -227,20 +235,35 @@ namespace Ares.Ipc
         {
             if (m_Disposed)
                 throw new ObjectDisposedException("ApplicationInstance");
+            m_Info.WindowHandle = handle;
             if (m_Memory != null)
             {
-                m_Memory.Dispose();
-                m_Memory = null;
+                m_Memory.Lock();
+                try
+                {
+                    m_Memory.AddObject(m_Info, true);
+                    return true;
+                }
+                catch (SharedMemoryException)
+                {
+                    return false;
+                }
+                finally
+                {
+                    m_Memory.Unlock();
+                }
             }
-            try
+            else
             {
-                m_Info.WindowHandle = handle;
-                m_Memory = new SharedMemory(m_Appname, m_Info);
-                return true;
-            }
-            catch (Exception )
-            {
-                return false;
+                try
+                {
+                    m_Memory = new SharedMemory(m_Appname, m_Info);
+                    return true;
+                }
+                catch (SharedMemoryException)
+                {
+                    return false;
+                }
             }
         }
 
@@ -251,21 +274,36 @@ namespace Ares.Ipc
         {
             if (m_Disposed)
                 throw new ObjectDisposedException("ApplicationInstance");
+            m_Info.LoadedProject = project;
             if (m_Memory != null)
             {
-                m_Memory.Dispose();
-                m_Memory = null;
+                m_Memory.Lock();
+                try
+                {
+                    m_Memory.AddObject(m_Info, true);
+                    return true;
+                }
+                catch (SharedMemoryException)
+                {
+                    return false;
+                }
+                finally
+                {
+                    m_Memory.Unlock();
+                }
             }
-            try
+            else
             {
-                m_Info.LoadedProject = project;
-                m_Memory = new SharedMemory(m_Appname, m_Info);
-                return true;
+                try
+                {
+                    m_Memory = new SharedMemory(m_Appname, m_Info);
+                    return true;
+                }
+                catch (SharedMemoryException)
+                {
+                    return false;
+                }            
             }
-            catch (Exception)
-            {
-                return false;
-            }            
         }
 
         #endregion
@@ -348,6 +386,8 @@ namespace Ares.Ipc
                 }
                 if (m_Memory != null)
                 {
+                    m_Memory.Lock();
+                    m_Memory.Unlock();
                     m_Memory.Dispose();
                     m_Memory = null;
                 }

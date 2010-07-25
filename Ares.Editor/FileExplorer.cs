@@ -180,6 +180,11 @@ namespace Ares.Editor
                 PlaySelectedFile();
             }
         }
+
+        private void refreshButton_Click(object sender, EventArgs e)
+        {
+            ReFillTree();
+        }
     }
 
     public enum DraggedItemType

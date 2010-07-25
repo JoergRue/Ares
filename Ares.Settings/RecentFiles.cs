@@ -24,10 +24,12 @@ using System.Xml;
 
 namespace Ares.Settings
 {
+    [Serializable]
     public class RecentFiles
     {
         public RecentFiles() { }
 
+        [Serializable]
         public class ProjectEntry
         {
             public string FilePath { get; set; }

@@ -164,7 +164,6 @@ namespace Ares.Player
             if (dialog.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
             {
                 m_PlayingControl.UpdateDirectories();
-                WriteSettings();
             }
         }
 
@@ -281,20 +280,30 @@ namespace Ares.Player
         private BasicSettings m_BasicSettings;
         private IProject m_Project;
         private PlayingControl m_PlayingControl;
+        private bool commitVolumes = true;
 
         private void overallVolumeBar_Scroll(object sender, EventArgs e)
         {
             m_PlayingControl.GlobalVolume = overallVolumeBar.Value;
+            if (!commitVolumes) return;
+            Settings.Settings.Instance.GlobalVolume = overallVolumeBar.Value;
+            Settings.Settings.Instance.Commit();
         }
 
         private void musicVolumeBar_Scroll(object sender, EventArgs e)
         {
             m_PlayingControl.MusicVolume = musicVolumeBar.Value;
+            if (!commitVolumes) return;
+            Settings.Settings.Instance.MusicVolume = musicVolumeBar.Value;
+            Settings.Settings.Instance.Commit();
         }
 
         private void soundVolumeBar_Scroll(object sender, EventArgs e)
         {
             m_PlayingControl.SoundVolume = soundVolumeBar.Value;
+            if (!commitVolumes) return;
+            Settings.Settings.Instance.SoundVolume = soundVolumeBar.Value;
+            Settings.Settings.Instance.Commit();
         }
 
         private void aboutButton_Click(object sender, EventArgs e)
@@ -327,6 +336,7 @@ namespace Ares.Player
             m_Network.StopUdpBroadcast();
             m_PlayingControl.Dispose();
             WriteSettings();
+            Settings.Settings.Instance.Shutdown();
         }
 
         private bool warnOnNetworkFail = true;
@@ -359,26 +369,55 @@ namespace Ares.Player
 
         private void ReadSettings()
         {
-            if (!m_BasicSettings.ReadFromFile() || !Ares.Settings.Settings.Instance.ReadFromFile(m_BasicSettings.GetSettingsDir()))
+            if (!m_BasicSettings.ReadFromFile() || !Ares.Settings.Settings.Instance.Initialize(Ares.Settings.Settings.PlayerID, m_BasicSettings.GetSettingsDir()))
             {
                 MessageBox.Show(this, StringResources.NoSettings, StringResources.Ares);
                 ShowSettingsDialog();
+                SettingsChanged(true);
             }
             else
             {
-                m_PlayingControl.UpdateDirectories();
+                SettingsChanged(true);
             }
-            settingsFileWatcher.Path = m_BasicSettings.GetSettingsDir();
+            Ares.Settings.Settings.Instance.SettingsChanged += new EventHandler<Settings.Settings.SettingsEventArgs>(SettingsChanged);
         }
 
-        private void settingsFileWatcher_Changed(object sender, System.IO.FileSystemEventArgs e)
+        void SettingsChanged(object sender, Settings.Settings.SettingsEventArgs e)
         {
-            String path = System.IO.Path.Combine(m_BasicSettings.GetSettingsDir(), Ares.Settings.Settings.Instance.settingsFileName);
-            if (path == e.FullPath)
+            SettingsChanged(e.FundamentalChange);
+        }
+
+        private void SettingsChanged(bool fundamentalChange)
+        {
+            if (InvokeRequired)
             {
-                PlayingModule.ProjectPlayer.StopAll();
-                System.Threading.Thread.Sleep(300);
-                ReadSettings();
+                Invoke(new MethodInvoker(() => SettingsChanged(fundamentalChange)));
+                return;
+            }
+            if (fundamentalChange)
+            {
+                m_PlayingControl.KeyReceived(Keys.Escape);
+                m_PlayingControl.UpdateDirectories();
+            }
+            Ares.Settings.Settings settings = Ares.Settings.Settings.Instance;
+            listenForPorts = false;
+            udpPortUpDown.Value = settings.UdpPort;
+            tcpPortUpDown.Value = settings.TcpPort;
+            listenForPorts = true;
+            commitVolumes = false;
+            overallVolumeBar.Value = settings.GlobalVolume;
+            musicVolumeBar.Value = settings.MusicVolume;
+            soundVolumeBar.Value = settings.SoundVolume;
+            m_PlayingControl.GlobalVolume = settings.GlobalVolume;
+            m_PlayingControl.MusicVolume = settings.MusicVolume;
+            m_PlayingControl.SoundVolume = settings.SoundVolume;
+            commitVolumes = true;
+            if (fundamentalChange)
+            {
+                if (m_Network != null && m_Network.ClientConnected)
+                {
+                    m_Network.DisconnectClient(true);
+                }
             }
         }
 
@@ -487,7 +526,7 @@ namespace Ares.Player
         {
             if (!listenForPorts) return;
             Settings.Settings.Instance.UdpPort = (int)udpPortUpDown.Value;
-            WriteSettings();
+            Settings.Settings.Instance.Commit();
             if (m_Network.ClientConnected)
             {
                 m_Network.DisconnectClient(true);
@@ -498,7 +537,7 @@ namespace Ares.Player
         {
             if (!listenForPorts) return;
             Settings.Settings.Instance.TcpPort = (int)tcpPortUpDown.Value;
-            WriteSettings();
+            Settings.Settings.Instance.Commit();
             if (m_Network.ClientConnected)
             {
                 m_Network.DisconnectClient(true);

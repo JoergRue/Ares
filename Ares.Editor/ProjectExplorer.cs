@@ -60,7 +60,10 @@ namespace Ares.Editor
             {
                 ContextMenuStrip menu = m_SelectedNode != null ? m_SelectedNode.ContextMenuStrip : null;
                 if (menu != null)
+                {
                     UpdateContextMenuDueToPlaying(menu);
+                    UpdateVisiblityDueToModeElement(menu);
+                }
                 return menu;
             }
         }
@@ -528,6 +531,30 @@ namespace Ares.Editor
             }
         }
 
+        private void SelectModeElementKey()
+        {
+            int keyCode = 0;
+            DialogResult result = Dialogs.KeyDialog.Show(this, out keyCode);
+            if (result != DialogResult.Cancel)
+            {
+                IModeElement modeElement = m_SelectedNode.Tag as IModeElement;
+                IKeyTrigger keyTrigger = Data.DataModule.ElementFactory.CreateKeyTrigger();
+                keyTrigger.TargetElementId = modeElement.Id;
+                keyTrigger.KeyCode = keyCode;
+                if (modeElement.Trigger != null && modeElement.Trigger.TriggerType == TriggerType.Key)
+                {
+                    IKeyTrigger oldTrigger = modeElement.Trigger as IKeyTrigger;
+                    keyTrigger.StopSounds = oldTrigger.StopSounds;
+                    keyTrigger.StopMusic = oldTrigger.StopMusic;
+                }
+                else
+                {
+                    keyTrigger.StopMusic = keyTrigger.StopSounds = false;
+                }
+                Actions.Actions.Instance.AddNew(new Actions.SetModeElementTriggerAction(modeElement, keyTrigger));
+            }
+        }
+
         private void ElementChanged(int elementId, ElementChanges.ChangeType changeType)
         {
             if (changeType == ElementChanges.ChangeType.TriggerChanged)
@@ -585,27 +612,13 @@ namespace Ares.Editor
         private void containerContextMenu_Opening(object sender, CancelEventArgs e)
         {
             UpdateContextMenuDueToPlaying(sender as ContextMenuStrip);
-            if (m_SelectedNode.Tag is IModeElement)
-            {
-                modeElementStartingToolStripMenuItem.Visible = true;
-            }
-            else
-            {
-                modeElementStartingToolStripMenuItem.Visible = false;
-            }
+            UpdateVisiblityDueToModeElement(sender as ContextMenuStrip);
         }
 
         private void elementContextMenu_Opening(object sender, CancelEventArgs e)
         {
             UpdateContextMenuDueToPlaying(sender as ContextMenuStrip);
-            if (m_SelectedNode.Tag is IModeElement)
-            {
-                modeElementStartingToolStripMenuItem1.Visible = true;
-            }
-            else
-            {
-                modeElementStartingToolStripMenuItem1.Visible = false;
-            }
+            UpdateVisiblityDueToModeElement(sender as ContextMenuStrip);
         }
 
         private void addRandomPlaylistToolStripMenuItem_Click(object sender, EventArgs e)
@@ -787,15 +800,7 @@ namespace Ares.Editor
         private void bgSoundsContextMenu_Opening(object sender, CancelEventArgs e)
         {
             UpdateContextMenuDueToPlaying(sender as ContextMenuStrip);
-            if (m_SelectedNode.Tag is IModeElement)
-            {
-                modeElementStartingToolStripMenuItem2.Visible = true;
-            }
-            else
-            {
-                modeElementStartingToolStripMenuItem2.Visible = false;
-            }
-
+            UpdateVisiblityDueToModeElement(sender as ContextMenuStrip);
         }
 
         private void selectKeyToolStripMenuItem2_Click(object sender, EventArgs e)
@@ -931,6 +936,18 @@ namespace Ares.Editor
             }
         }
 
+        private void UpdateVisiblityDueToModeElement(ContextMenuStrip contextMenu)
+        {
+            bool visible = m_SelectedNode != null && m_SelectedNode.Tag is IModeElement;
+            foreach (ToolStripItem item in contextMenu.Items)
+            {
+                if ("OnlyMode".Equals(item.Tag))
+                {
+                    item.Visible = visible;
+                }
+            }
+        }
+
         private void projectTree_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.F2)
@@ -945,6 +962,21 @@ namespace Ares.Editor
                         RenameElement();
                 }
             }
+        }
+
+        private void toolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+            SelectModeElementKey();
+        }
+
+        private void toolStripMenuItem4_Click(object sender, EventArgs e)
+        {
+            SelectModeElementKey();
+        }
+
+        private void toolStripMenuItem5_Click(object sender, EventArgs e)
+        {
+            SelectModeElementKey();
         }
     }
 }

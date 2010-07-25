@@ -146,6 +146,37 @@
   <data name="stopButton.Text" xml:space="preserve">
     <value>Stop</value>
   </data>
+  <data name="refreshButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAOtSURBVEhLzZNrTFN3GMabDWhLC9056UVoLW1PT0+5dCB1
+        itC0BmtxI3EZIxsbnZkDsovTD+xiE5eFJQZRFuYEL3RUnQwQrCCggiGEXaKZYZOMGJyIdNY5tGKHg+HY
+        mM/OSPgGnK7Lkp1PJ/n/nt/z5v2fw+OF+cQodXRq0c66MOPcMbXlWWfehVkoV25wctMhEeZIecpqRbRU
+        Gsfi0Su2Vrmf/gbIbRq+JyAIdUiKhSBCZ7aYivdUZ+3qGso+PDjhaLp63+Hp9+W235zM7Z3Cxq9mkfn2
+        wbZwCsRGZ5ln7SeXYW+5hZz2AHK6J5DTO411fTOwdk/C0jGOrNY7cHT+DG3GhsKQS8RisSz93fqvsxv8
+        yG76Ada2AFadnURq1wMkn/4VxpNBGJoD0Nffgq7OB03tdZjKvxwTkqQypJLH36w5Z/cGYGsZw4pPR5FY
+        c2maqTo/nlzdHzQdvjZjbBp7SLNyqm4UmporiN99CaqqYSS9XOHlLFhue/71nNZ7WPXh51OK9cUNgjj6
+        hcjo6HQ+j0/x+XyKSEh80lR3bUbr8UFdfQXL934PqvwimKJ9A6TeXMRVIFr78YVgcsnuixECsW3BS0+2
+        ZBnqb0PrvgGm8lvQmyvPS/Vpf4tJLjlPlZFbmJRf2sOCssVg05ZqT0rtCAzOD3pIJZPPciJO8TzAl0g0
+        7Lt8qYDesWl7rELzHMsIQhb/T0BzJE8ieew/GCYpSpbm2GQuax8gmZWvLFWgWvfSG0IhqQpxCJlYnvFM
+        cdqOk4PWY+zP5hlCRAyZsVhYVfDeLqPL+yN7TixdEBtLKu2bXamuE8OW2iFYj43C3h5E2rb9AwsEH1Hb
+        XrRrXd4+ndsPwri6lGN6CZFSWu/LrBmExc3Kjw7DetyPNR33Yaj84uayfNcexVOvvRO3cZuL2rLfQ+3s
+        +U5zaASKQzeQ4CzvZ+USrvVE0AU7Oq1Hrs/JzZ/5YTh+F7rWX0B3PQTTCzDnAH3n70hoDiLO7YOsagja
+        0saAIIZYwyWfOxcKhfHpFT23kxoD0DTeBdU2BfrMDOjTv4E6NQVN8zhUR/xYdmAE8R9dRsKrB66KSLk9
+        JPk8JDJYnNSJSeg7HsyJmbN/wHBmFrq2aWgaAtCya9Fs996JtxXW8nk83T+Sz8PKkr2nmD52Jd1/QpX3
+        Vos0M+99abZznzQzv4KgnyiJiopKDEs8HxIICLXh6OiEsSUIgZiw/CvZYmGZrWBrYlnnT9zfdvj1kSK5
+        dj0bfzRcxV/YVoPBnsGFJAAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="refreshButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="refreshButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 22</value>
+  </data>
+  <data name="refreshButton.Text" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="toolStrip1.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
@@ -177,7 +208,7 @@
   <data name="treeView1.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 28</value>
   </data>
-  <data name="treeView1.Size" type="System.Drawing.Size, System.Drawing">
+ <data name="treeView1.Size" type="System.Drawing.Size, System.Drawing">
     <value>288, 237</value>
   </data>
   <data name="treeView1.TabIndex" type="System.Int32, mscorlib">
@@ -220,6 +251,12 @@
     <value>stopButton</value>
   </data>
   <data name="&gt;&gt;stopButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;refreshButton.Name" xml:space="preserve">
+    <value>refreshButton</value>
+  </data>
+  <data name="&gt;&gt;refreshButton.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">

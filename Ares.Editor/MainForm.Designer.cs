@@ -36,6 +36,10 @@ namespace Ares.Editor
             {
                 components.Dispose();
             }
+            if (disposing)
+            {
+                Shutdown();
+            }
             base.Dispose(disposing);
         }
 
@@ -82,6 +86,7 @@ namespace Ares.Editor
             this.projectExplorerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fileExplorerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.soundFileExplorerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.volumesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.extrasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.startPlayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
@@ -220,7 +225,8 @@ namespace Ares.Editor
             this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.projectExplorerToolStripMenuItem,
             this.fileExplorerToolStripMenuItem,
-            this.soundFileExplorerToolStripMenuItem});
+            this.soundFileExplorerToolStripMenuItem,
+            this.volumesToolStripMenuItem});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             this.viewToolStripMenuItem.DropDownOpened += new System.EventHandler(this.viewToolStripMenuItem_DropDownOpened);
             // 
@@ -240,6 +246,12 @@ namespace Ares.Editor
             // 
             resources.ApplyResources(this.soundFileExplorerToolStripMenuItem, "soundFileExplorerToolStripMenuItem");
             this.soundFileExplorerToolStripMenuItem.Name = "soundFileExplorerToolStripMenuItem";
+            // 
+            // volumesToolStripMenuItem
+            // 
+            resources.ApplyResources(this.volumesToolStripMenuItem, "volumesToolStripMenuItem");
+            this.volumesToolStripMenuItem.Name = "volumesToolStripMenuItem";
+            this.volumesToolStripMenuItem.Click += new System.EventHandler(this.volumesToolStripMenuItem_Click);
             // 
             // extrasToolStripMenuItem
             // 
@@ -431,7 +443,6 @@ namespace Ares.Editor
             this.fileSystemWatcher1.Filter = "*.xml";
             this.fileSystemWatcher1.NotifyFilter = System.IO.NotifyFilters.LastWrite;
             this.fileSystemWatcher1.SynchronizingObject = this;
-            this.fileSystemWatcher1.Changed += new System.IO.FileSystemEventHandler(this.fileSystemWatcher1_Changed);
             // 
             // MainForm
             // 
@@ -497,6 +508,7 @@ namespace Ares.Editor
         private System.Windows.Forms.ToolStripMenuItem hilfeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.IO.FileSystemWatcher fileSystemWatcher1;
+        private System.Windows.Forms.ToolStripMenuItem volumesToolStripMenuItem;
     }
 }
 

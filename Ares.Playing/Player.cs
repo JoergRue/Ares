@@ -506,6 +506,31 @@ namespace Ares.Playing
         private int m_RepeatCount;
     }
 
+    class SingleMusicPlayer : MusicPlayer, IMusicPlayer
+    {
+        public override void Previous()
+        {
+        }
+
+        public override void  PlayNext()
+        {
+            Client.SubPlayerFinished(this);
+        }
+
+        public void Start()
+        {
+            Process(m_Element);
+        }
+
+        public SingleMusicPlayer(IFileElement musicFile, WaitHandle stoppedEvent, IElementPlayerClient client)
+            : base(stoppedEvent, client)
+        {
+            m_Element = musicFile;
+        }
+
+        private IFileElement m_Element;
+    }
+
     class ElementPlayer : ElementPlayerBase, IElementPlayerClient
     {
         // Interface IElementPlayerClient -- for sub-players 
@@ -577,6 +602,13 @@ namespace Ares.Playing
             if (stopSounds)
             {
                 Next();
+            }
+            else if (fileElement.SoundFileType == Data.SoundFileType.Music)
+            {
+                SingleMusicPlayer subPlayer = new SingleMusicPlayer(fileElement, StoppedEvent, this);
+                Client.SubPlayerStarted(subPlayer);
+                Interlocked.Increment(ref m_ActiveSubPlayers);
+                subPlayer.Start();
             }
             else
             {

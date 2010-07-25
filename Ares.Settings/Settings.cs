@@ -24,7 +24,8 @@ using System.Xml;
 
 namespace Ares.Settings
 {
-    public class Settings
+    [Serializable]
+    class SettingsData
     {
         public String MusicDirectory { get; set; }
         public String SoundDirectory { get; set; }
@@ -40,21 +41,121 @@ namespace Ares.Settings
         public int UdpPort { get; set; }
         public int TcpPort { get; set; }
 
+        public int Version { get; set; }
+    }
+
+    public class Settings
+    {
+        private SettingsData Data { get; set; }
+
+        public String MusicDirectory { get { return Data.MusicDirectory; } set { Data.MusicDirectory = value; } }
+        public String SoundDirectory { get { return Data.SoundDirectory; } set { Data.SoundDirectory = value; } }
+
+        public String WindowLayout { get { return Data.WindowLayout; } set { Data.WindowLayout = value; } }
+
+        public RecentFiles RecentFiles { get { return Data.RecentFiles; } set { Data.RecentFiles = value; } }
+
+        public int GlobalVolume { get { return Data.GlobalVolume; } set { Data.GlobalVolume = value; } }
+        public int MusicVolume { get { return Data.MusicVolume; } set { Data.MusicVolume = value; } }
+        public int SoundVolume { get { return Data.SoundVolume; } set { Data.SoundVolume = value; } }
+
+        public int UdpPort { get { return Data.UdpPort; } set { Data.UdpPort = value; } }
+        public int TcpPort { get { return Data.TcpPort; } set { Data.TcpPort = value; } }
+
+        public int Version { get { return Data.Version; } private set { Data.Version = value; } }
+
         public static Settings Instance
         {
             get
             {
-                if (s_Instance == null)
-                    s_Instance = new Settings();
-                return s_Instance;
+                lock (syncObject)
+                {
+                    if (s_Instance == null)
+                        s_Instance = new Settings();
+                    return s_Instance;
+                }
             }
         }
 
         private static Settings s_Instance;
 
+        public class SettingsEventArgs : EventArgs
+        {
+            public SettingsEventArgs(bool fundamentalChange)
+            {
+                FundamentalChange = fundamentalChange;
+            }
+
+            public bool FundamentalChange { get; set; }
+        }
+
+        public event EventHandler<SettingsEventArgs> SettingsChanged;
+
+        public static readonly string PlayerID = "Player";
+        public static readonly string EditorID = "Editor";
+
+        public bool Initialize(String id, String directory)
+        {
+            m_ID = id;
+            bool success = ReadFromSharedMemory();
+            if (!success)
+            {
+                success = ReadFromFile(directory);
+            }
+            if (!success)
+            {
+                InitDefaults();
+            }
+            bool createdOwn;
+            bool createdOther;
+            m_OwnWaitHandle = new System.Threading.EventWaitHandle(false, System.Threading.EventResetMode.ManualReset, "AresSettingsEvent" + m_ID, out createdOwn);
+            m_OtherWaitHandle = new System.Threading.EventWaitHandle(false, System.Threading.EventResetMode.ManualReset, "AresSettingsEvent" + (m_ID == PlayerID ? EditorID : PlayerID), out createdOther);
+            m_SharedMemoryThread = new System.Threading.Thread(ListenForSMChanges);
+            m_ContinueSMThread = true;
+            m_SharedMemoryThread.Start();
+            return success;
+        }
+
+        public void Shutdown()
+        {
+            m_OwnWaitHandle.Close();
+            m_OtherWaitHandle.Close();
+            if (m_SharedMemory != null)
+            {
+                m_SharedMemory.Lock();
+                m_SharedMemory.Unlock();
+                m_SharedMemory.Dispose();
+            }
+            m_ContinueSMThread = false;
+            m_SharedMemoryThread.Join();
+        }
+
+        public void Commit()
+        {
+            WriteToSharedMemory();
+        }
+
         private Settings()
         {
+            Data = new SettingsData();
             InitDefaults();
+        }
+
+        private void ListenForSMChanges()
+        {
+            bool continueThread = true;
+            while (continueThread)
+            {
+                if (m_OtherWaitHandle.WaitOne(100))
+                {
+                    ReadFromSharedMemory();
+                    m_OtherWaitHandle.Reset();
+                }
+                lock (syncObject)
+                {
+                    continueThread = m_ContinueSMThread;
+                }
+            }
         }
 
         public readonly String settingsFileName = "Ares.Editor.Settings.xml";
@@ -115,6 +216,7 @@ namespace Ares.Settings
 
         private void InitDefaults()
         {
+            Version = 1;
             WindowLayout = null;
             RecentFiles = new RecentFiles();
             MusicDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
@@ -127,6 +229,7 @@ namespace Ares.Settings
         private void WriteSettings(XmlWriter writer)
         {
             writer.WriteStartElement("Settings");
+            writer.WriteAttributeString("Version", 1.ToString(System.Globalization.CultureInfo.InvariantCulture));
             writer.WriteElementString("MusicDirectory", MusicDirectory);
             writer.WriteElementString("SoundsDirectory", SoundDirectory);
             writer.WriteStartElement("WindowLayout");
@@ -152,6 +255,7 @@ namespace Ares.Settings
             {
                 throw new XmlException("Expected Settings element");
             }
+            Version = reader.GetIntegerAttributeOrDefault("Version", 0);
             reader.Read();
             while (reader.IsStartElement())
             {
@@ -218,5 +322,92 @@ namespace Ares.Settings
             }
             reader.ReadEndElement();
         }
+
+        private bool CompareForFundamentalChange(SettingsData other)
+        {
+            if (other.SoundDirectory != this.SoundDirectory)
+                return true;
+            if (other.MusicDirectory != this.MusicDirectory)
+                return true;
+            if (other.TcpPort != this.TcpPort)
+                return true;
+            return false;
+        }
+
+        private bool ReadFromSharedMemory()
+        {
+            try
+            {
+                String id = "AresSettingsMemory" + (m_ID == PlayerID ? EditorID : PlayerID);
+                using (Ares.Ipc.SharedMemory mem = new Ipc.SharedMemory(id))
+                {
+                    SettingsData s = null;
+                    mem.Lock();
+                    try
+                    {
+                        s = (SettingsData)mem.GetObject();
+                    }
+                    finally
+                    {
+                        mem.Unlock();
+                    }
+                    bool fundamentalChange = CompareForFundamentalChange(s);
+                    lock (syncObject)
+                    {
+                        Data = s;
+                    }
+                    if (SettingsChanged != null)
+                    {
+                        SettingsChanged(this, new SettingsEventArgs(fundamentalChange));
+                    }
+                    return true;
+                }
+            }
+            catch (Ipc.SharedMemoryException)
+            {
+                return false;
+            }
+        }
+
+        private void WriteToSharedMemory()
+        {
+            try
+            {
+                if (m_SharedMemory == null)
+                {
+                    m_SharedMemory = new Ipc.SharedMemory("AresSettingsMemory" + m_ID, Data);
+                }
+                else
+                {
+                    m_SharedMemory.Lock();
+                    try
+                    {
+                        m_SharedMemory.AddObject(Data, true);
+                    }
+                    finally
+                    {
+                        m_SharedMemory.Unlock();
+                    }
+                }
+                m_OwnWaitHandle.Set();
+            }
+            catch (Ares.Ipc.SharedMemoryException)
+            {
+            }
+        }
+
+        private Ares.Ipc.SharedMemory m_SharedMemory;
+
+        private System.Threading.EventWaitHandle m_OwnWaitHandle;
+
+        private System.Threading.EventWaitHandle m_OtherWaitHandle;
+
+        private System.Threading.Thread m_SharedMemoryThread;
+
+        private bool m_ContinueSMThread;
+
+        private String m_ID;
+
+        private static Object syncObject = new Int16();
     }
 }

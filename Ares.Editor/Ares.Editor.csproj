@@ -152,6 +152,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>StringResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="VolumeWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VolumeWindow.Designer.cs">
+      <DependentUpon>VolumeWindow.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Dialogs\KeyDialog.de.resx">
       <DependentUpon>KeyDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -243,6 +249,12 @@
     <EmbeddedResource Include="StringResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>StringResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VolumeWindow.de.resx">
+      <DependentUpon>VolumeWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VolumeWindow.resx">
+      <DependentUpon>VolumeWindow.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="ares.snk" />
