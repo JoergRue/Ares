@@ -132,6 +132,7 @@ public final class MainFrame extends FrameController implements IMessageListener
     storeLayout();
     Control.getInstance().disconnect(true);
     Messages.getInstance().removeObserver(this);
+    serverSearch.dispose();
     FrameManagement.getInstance().setExiting();
     FrameManagement.getInstance().closeAllFrames(this);
     super.dispose();

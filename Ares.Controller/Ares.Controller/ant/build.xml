@@ -2,22 +2,70 @@
 
 <project name="Ares Controller" default="resources" basedir="../">
 
-<target name="resources" description="Update resources">
-  <native2ascii encoding="ISO-8859-1" src="source/ares/controller/util" dest="resources/ares/controller/util" includes="*.properties" />
-</target>
+	<property name="ProductVersion" value="0.2.0" />
+	
+	<property name="src.dir"     value="source" />
+	
+	<property name="resource_src.dir" value="${src.dir}/ares/controller/util" />
+	<property name="resources.dir" value="resources" />
+	<property name="resource_target.dir" value="${resources.dir}/ares/controller/util" />
+	<property name="release.dir" value="release" />
+	<property name="libraries.dir" value="libraries" />
+	
+	<property name="build.dir"   value="../../build" />
+	<property name="classes.dir" value="${build.dir}/javaclasses" />
+	<property name="jar.dir"     value="${build.dir}/Ares/Controller" />
 
-<!--
-<target name="jar" description="Make arescontroller.jar">
-   <!- - Copy bitmaps - ->
-   <copy todir="de">
-     <fileset dir="../images/de" />
-   </copy>
-   <!- - Export File for jar - ->
-   <jar jarfile="syntheticawalnut.jar" basedir=".">
-       <manifest>
-       </manifest>
-    </jar>
-</target>
--->
+	<property name="main-class"  value="ares.controller.control.Main" />
+
+	<target name="resources" description="Update resources">
+	  <native2ascii encoding="ISO-8859-1" src="${resource_src.dir}" dest="${resource_target.dir}" includes="*.properties" />
+	</target>
+
+	<target name="clean">
+	    <delete dir="${build.dir}"/>
+	</target>
+
+	<target name="compile" description="Compile java files">
+	    <mkdir dir="${classes.dir}"/>
+		<replace file="${src.dir}/ares/controller/control/Version.java" token="1.0.0" value="${ProductVersion}" />
+	    <javac srcdir="${src.dir}" destdir="${classes.dir}" source="1.6" target="1.6" 
+	        classpath="${libraries.dir}/skinlf.jar:${libraries.dir}/synthetica.jar:${libraries.dir}/syntheticaBlueIce.jar:${libraries.dir}/syntheticaBlueSteel.jar:${libraries.dir}/syntheticaGreenDream.jar:${libraries.dir}/syntheticaSilverMoon.jar:${libraries.dir}/syntheticawalnut.jar:${libraries.dir}/l2fprod-common-fontchooser.jar:${libraries.dir}/l2fprod-common-directorychooser.jar" />
+	</target>
+
+	<target name="jar" description="Build jar file" depends="resources, compile">
+	    <mkdir dir="${jar.dir}"/>
+		<jar destfile="${jar.dir}/resources.jar" basedir="${resources.dir}" />
+	    <jar destfile="${jar.dir}/Ares.Controller.jar" basedir="${classes.dir}" manifest="Manifest" />
+	</target>
+	
+	<property name="launch4j.dir" location="C:\Program Files (x86)\launch4j" />
+	
+	<taskdef name="launch4j"
+	    classname="net.sf.launch4j.ant.Launch4jTask"
+	    classpath="${launch4j.dir}/launch4j.jar
+	        :${launch4j.dir}/lib/xstream.jar" />
+	
+	<target name="makeWindowsExe" description="Make Windows Executable" depends="jar">
+		<launch4j configFile="${release.dir}/launch4j_config.xml" outfile="${jar.dir}/Ares.Controller.exe"
+			jar="${jar.dir}/Ares.Controller.jar"
+		    fileVersion="${ProductVersion}.0" txtFileVersion="${ProductVersion}"
+			productVersion="${ProductVersion}.0" txtProductVersion="${ProductVersion}"
+		/>
+	</target>
+
+	<target name="prepareSetup" description="Prepare output for setup" depends="makeWindowsExe">
+	  	<copy file="${release.dir}/Ares.ico" toDir="${jar.dir}" />	
+	  	<copy file="${release.dir}/Ares.png" toDir="${jar.dir}" />	
+	  	<copy file="${release.dir}/Liesmich.txt" toDir="${jar.dir}" />	
+	  	<copy file="${release.dir}/README.txt" toDir="${jar.dir}" />
+		<copy file="${release.dir}/Ares.Controller.sh" toDir="${jar.dir}" />
+		<copy todir="${jar.dir}/libraries" >
+		    <fileset dir="${libraries.dir}" />
+		</copy>
+		<copy todir="${jar.dir}/skins" >
+		    <fileset dir="skins" />
+		</copy>
+	</target>
 
 </project>

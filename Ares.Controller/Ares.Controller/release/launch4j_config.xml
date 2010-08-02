@@ -15,7 +15,6 @@
     <maxVersion></maxVersion>
     <initialHeapSize>0</initialHeapSize>
     <maxHeapSize>0</maxHeapSize>
-    <args></args>
   </jre>
   <versionInfo>
     <fileVersion>1.0.0.0</fileVersion>

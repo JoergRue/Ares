@@ -234,21 +234,21 @@ class MessageFrame extends SubFrame implements IMessageListener {
   
   private ImageIcon getErrorIcon() {
 	  if (errorIcon == null) {
-		  errorIcon = new ImageIcon(getClass().getResource("eventLogError.png")); //$NON-NLS-1$
+		  errorIcon = new ImageIcon(getClass().getResource("eventlogError.png")); //$NON-NLS-1$
 	  }
 	  return errorIcon;
   }
   
   private ImageIcon getWarningIcon() {
 	  if (warningIcon == null) {
-		  warningIcon = new ImageIcon(getClass().getResource("eventLogWarn.png")); //$NON-NLS-1$
+		  warningIcon = new ImageIcon(getClass().getResource("eventlogWarn.png")); //$NON-NLS-1$
 	  }
 	  return warningIcon;
   }
   
   private ImageIcon getInfoIcon() {
 	  if (infoIcon == null) {
-		  infoIcon = new ImageIcon(getClass().getResource("eventLogInfo.png")); //$NON-NLS-1$
+		  infoIcon = new ImageIcon(getClass().getResource("eventlogInfo.png")); //$NON-NLS-1$
 	  }
 	  return infoIcon;
   }
