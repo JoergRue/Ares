@@ -45,11 +45,10 @@
   <ItemGroup>
     <Reference Include="Bass.Net, Version=2.4.6.4, Culture=neutral, PublicKeyToken=b7566c273e6ef480, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\PlayerTest\bin\Release\Bass.Net.dll</HintPath>
+      <HintPath>..\Libraries\Bass.Net.dll</HintPath>
     </Reference>
-    <Reference Include="BassRegistration, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\bin\Release\BassRegistration.dll</HintPath>
+    <Reference Include="BassRegistration">
+      <HintPath>..\Libraries\BassRegistration.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -57,9 +56,8 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="WeifenLuo.WinFormsUI.Docking, Version=2.3.2.18742, Culture=neutral, PublicKeyToken=9d390e07c24a1b09, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\bin\Release\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
+    <Reference Include="WeifenLuo.WinFormsUI.Docking">
+      <HintPath>..\Libraries\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

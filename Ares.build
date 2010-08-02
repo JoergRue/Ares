@@ -1,0 +1,95 @@
+<project name="Ares" default="rebuild">
+  <property name="ProductVersion" value="0.2.0" />
+    
+  <property name="configuration" value="Release"/>
+  <property name="nant.settings.currentframework" value="net-3.5" />
+	
+	<property name="build.dir" value="build" />
+	<property name="temp.dir" value="${build.dir}/temp" />
+	<property name="output.dir" value="${build.dir}/Ares/Player_Editor" />
+	<property name="libraries.dir" value="Libraries" />
+	
+	<target name="cleanVersions" description="Remove temporary assembly info files">
+        <delete>
+            <fileset>
+                <include name="${temp.dir}/**" />
+            </fileset>
+        </delete>
+	</target>
+    
+	<target name="updateVersions" description="Update version information" depends="cleanVersions">
+	  <copy todir="${temp.dir}">
+	    <fileset>
+		    <include name="**/AssemblyInfo.cs" />
+		  </fileset>
+		  <filterchain>
+		      <replacestring from="0.1.0" to="${ProductVersion}" />
+	    </filterchain>
+	  </copy>
+	  <copy todir="." >
+	    <fileset basedir="${temp.dir}" >
+	      <include name="**/AssemblyInfo.cs" />
+	    </fileset>
+	  </copy>
+	</target>
+	
+    <target name="clean" description="Delete all previously compiled binaries." depends="cleanVersions">
+        <delete>
+            <fileset>
+                <include name="bin/**" />
+                <include name="**/obj/**" />
+            </fileset>
+        </delete>
+    </target>
+    
+    <property name="solutionFile" value="Ares.sln" />
+    
+    <target name="build" description="Build all targets." depends="updateVersions">
+	    
+		<!--
+	      <msbuild project="${solutionFile}" >
+	        <property name="Configuration" value="${configuration}" />
+	      </msbuild>
+		  -->
+		  
+        <exec program="${framework::get-framework-directory(framework::get-target-framework())}\msbuild.exe"         
+			        commandline="${solutionFile} /t:Build /p:Configuration=${configuration} /v:q" workingdir="." 
+			        />
+					
+		<property name="expected.output" value="bin/${configuration}" />
+        <property name="Ares.Player" value="${expected.output}/Ares.Player.exe" />
+        <property name="Ares.Editor" value="${expected.output}/Ares.Editor.exe" />
+        <fail unless="${file::exists(Ares.Player)}">Output file doesn't exist in ${expected.output}</fail>
+        <fail unless="${file::exists(Ares.Editor)}">Output file doesn't exist in ${expected.output}</fail>
+    </target>
+    
+    <target name="rebuild" depends="clean, build" />
+
+	<target name="prepareSetup" depends="build" >
+	    <copy todir="${output.dir}">
+		    <fileset basedir="bin/${configuration}">
+			  <include name="**/*.dll" />
+			  <include name="**/*.exe" />
+			  <include name="**/*.config" />
+			</fileset>
+	    </copy>
+	    <copy todir="${output.dir}">
+		    <fileset basedir=".">
+			  <include name="*.ico" />
+			  <include name="WeifenLuo.WinFormsUI.License.txt" />
+			</fileset>
+	    </copy>		
+	    <copy todir="${output.dir}">
+		    <fileset basedir="${libraries.dir}">
+			  <include name="*.dll" />
+			</fileset>
+	    </copy>		
+	    <copy todir="${build.dir}/Ares">
+		    <fileset basedir=".">
+			  <include name="*.txt" />
+			  <exclude name="WeifenLuo.WinFormsUI.License.txt" />
+			</fileset>
+	    </copy>		
+	</target>
+   
+</project>

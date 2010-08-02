@@ -1,4 +1,4 @@
-ï»¿/*
+/*
  Copyright (c) 2010 [Joerg Ruedenauer]
  
  This file is part of Ares.
@@ -29,7 +29,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Ares")]
-[assembly: AssemblyCopyright("Copyright Â© JÃ¶rg RÃ¼denauer 2010")]
+[assembly: AssemblyCopyright("Copyright © Jörg Rüdenauer 2010")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -51,7 +51,7 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.1.0.0")]
-[assembly: AssemblyFileVersion("0.1.0.0")]
+[assembly: AssemblyVersion("0.2.0.0")]
+[assembly: AssemblyFileVersion("0.2.0.0")]
 
 [assembly: System.CLSCompliant(true)]

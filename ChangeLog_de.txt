@@ -1,0 +1,15 @@
+Version 0.2.0
+-------------
+- Ares Controller hinzugefügt
+- Player: Toolbar / Menübar Redesign
+- Player: komplett auf Deutsch lokalisiert
+- Editor: Refresh-Button zum Datei-Explorer hinzugefügt
+- Editor: Kontextmenüeintrag und Button zur Tastenauswahl hinzugefügt
+- Editor: Lautstärkenfenster und Buttons zur Übernahme der Lautstärke hinzugefügt
+- Player / Editor: Verbesserte Synchronisierung der Einstellungen
+- Fix: Lautstärke im Player wurde nicht aktualisiert, wenn ein Element sie änderte
+- Setup-Programm geändert (jetzt InstallJammer)
+
+Version 0.1.0
+-------------
+Erste veröffentlichte Version

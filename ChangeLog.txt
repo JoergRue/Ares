@@ -1,0 +1,15 @@
+Version 0.2.0
+-------------
+- Added Ares Controller
+- Player: toolbar / menu bar redesign
+- Player: completely localized in German
+- Editor: Added Refresh button to File Explorer
+- Editor: Added context menu entry and button for key selection
+- Editor: Added Volume Window and buttons to use current volumes
+- Player / Editor: improved settings synchronization
+- Fix: Player volume didn't update when it changed due to played element settings
+- Changed Setup program (now InstallJammer)
+
+Version 0.1.0
+-------------
+First public version
