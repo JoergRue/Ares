@@ -206,7 +206,7 @@ namespace Ares.Editor
             set
             {
                 m_SelectedNode = value;
-                setKeyButton.Enabled = (m_SelectedNode.Tag is IMode) || (m_SelectedNode.Tag is IModeElement);
+                setKeyButton.Enabled = (m_SelectedNode != null) && ((m_SelectedNode.Tag is IMode) || (m_SelectedNode.Tag is IModeElement));
             }
         }
 

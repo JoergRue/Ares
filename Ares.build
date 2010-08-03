@@ -38,6 +38,8 @@
             <fileset>
                 <include name="bin/**" />
                 <include name="**/obj/**" />
+				<exclude name="bass.dll" />
+				<exclude name="bass_fx.dll" />
             </fileset>
         </delete>
     </target>

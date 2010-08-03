@@ -434,13 +434,11 @@ namespace Ares.Player
             str.Append(machineName);
             str.Append("|");
             str.Append(Settings.Settings.Instance.TcpPort);
-            foreach (IPAddress address in Dns.GetHostAddresses(machineName))
+            if (!String.IsNullOrEmpty(Settings.Settings.Instance.IPAddress))
             {
-                if (IPAddress.IsLoopback(address)) continue;
                 str.Append("|");
-                str.Append(address.ToString());
-                tcpListenAddress = address;
-                break;
+                str.Append(Settings.Settings.Instance.IPAddress);
+                tcpListenAddress = IPAddress.Parse(Settings.Settings.Instance.IPAddress);
             }
             udpString = str.ToString();
             udpPacket = System.Text.Encoding.UTF8.GetBytes(udpString);

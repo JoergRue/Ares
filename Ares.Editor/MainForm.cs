@@ -50,56 +50,7 @@ namespace Ares.Editor
             InitializeComponent();
             m_Instance.SetWindowHandle(Handle);
             m_Instance.ProjectOpenAction = (projectName2, projectPath) => OpenProjectFromRequest(projectName2, projectPath);
-            Timer t = new Timer();
-            t.Interval = 150;
-            t.Tick += new EventHandler((o, args) =>
-                {
-                    t.Stop();
-                    m_BasicSettings = new BasicSettings();
-                    if (!m_BasicSettings.ReadFromFile() || !Ares.Settings.Settings.Instance.Initialize(Ares.Settings.Settings.EditorID, m_BasicSettings.GetSettingsDir()))
-                    {
-                        MessageBox.Show(this, StringResources.NoSettings, StringResources.Ares);
-                        ShowSettingsDialog();
-                        ShowVolumeWindow();
-                        ShowProjectExplorer();
-                        ShowFileExplorer(FileType.Music);
-                        ShowFileExplorer(FileType.Sound);
-                    }
-                    else if (!String.IsNullOrEmpty(Ares.Settings.Settings.Instance.WindowLayout))
-                    {
-                        System.IO.MemoryStream stream = new System.IO.MemoryStream(
-                            System.Text.Encoding.UTF8.GetBytes(Ares.Settings.Settings.Instance.WindowLayout));
-                        dockPanel.LoadFromXml(stream, new WeifenLuo.WinFormsUI.Docking.DeserializeDockContent(DeserializeDockContent));
-                        if (Settings.Settings.Instance.Version < 1)
-                        {
-                            ShowVolumeWindow();
-                        }
-                    }
-                    else
-                    {
-                        ShowProjectExplorer();
-                        ShowVolumeWindow();
-                        ShowFileExplorer(FileType.Music);
-                        ShowFileExplorer(FileType.Sound);
-                    }
-                    Settings.Settings.Instance.SettingsChanged += new EventHandler<Settings.Settings.SettingsEventArgs>(SettingsChanged);
-                    fileExplorerToolStripMenuItem.Checked = !m_FileExplorers[0].IsHidden;
-                    soundFileExplorerToolStripMenuItem.Checked = !m_FileExplorers[1].IsHidden;
-                    projectExplorerToolStripMenuItem.Checked = !m_ProjectExplorer.IsHidden;
-                    Actions.Actions.Instance.UpdateGUI = UpdateGUI;
-                    Actions.Playing.Instance.SetDirectories(Ares.Settings.Settings.Instance.MusicDirectory, Ares.Settings.Settings.Instance.SoundDirectory);
-                    Actions.Playing.Instance.ErrorHandling = new Actions.Playing.ErrorHandler(this, HandlePlayingError);
-                    UpdateGUI();
-                    if (!String.IsNullOrEmpty(projectName))
-                    {
-                        OpenProject(projectName);
-                    }
-                    else if (Ares.Settings.Settings.Instance.RecentFiles.GetFiles().Count > 0)
-                    {
-                        OpenProject(Ares.Settings.Settings.Instance.RecentFiles.GetFiles()[0].FilePath);
-                    }
-                });
-            t.Start();
+            m_ProjectName = projectName;
         }
 
         private void SettingsChanged(object sender, Settings.Settings.SettingsEventArgs e)
@@ -633,6 +584,57 @@ namespace Ares.Editor
         private void volumesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ShowVolumeWindow();
+        }
+
+        private String m_ProjectName;
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            m_BasicSettings = new BasicSettings();
+            bool foundSettings = m_BasicSettings.ReadFromFile();
+            bool hasSettings = Ares.Settings.Settings.Instance.Initialize(Ares.Settings.Settings.EditorID, foundSettings ? m_BasicSettings.GetSettingsDir() : null);
+            if (!hasSettings)
+            {
+                MessageBox.Show(this, StringResources.NoSettings, StringResources.Ares);
+                ShowSettingsDialog();
+                ShowVolumeWindow();
+                ShowProjectExplorer();
+                ShowFileExplorer(FileType.Music);
+                ShowFileExplorer(FileType.Sound);
+            }
+            else if (!String.IsNullOrEmpty(Ares.Settings.Settings.Instance.WindowLayout))
+            {
+                System.IO.MemoryStream stream = new System.IO.MemoryStream(
+                    System.Text.Encoding.UTF8.GetBytes(Ares.Settings.Settings.Instance.WindowLayout));
+                dockPanel.LoadFromXml(stream, new WeifenLuo.WinFormsUI.Docking.DeserializeDockContent(DeserializeDockContent));
+                if (Settings.Settings.Instance.Version < 1)
+                {
+                    ShowVolumeWindow();
+                }
+            }
+            else
+            {
+                ShowProjectExplorer();
+                ShowVolumeWindow();
+                ShowFileExplorer(FileType.Music);
+                ShowFileExplorer(FileType.Sound);
+            }
+            Settings.Settings.Instance.SettingsChanged += new EventHandler<Settings.Settings.SettingsEventArgs>(SettingsChanged);
+            fileExplorerToolStripMenuItem.Checked = !m_FileExplorers[0].IsHidden;
+            soundFileExplorerToolStripMenuItem.Checked = !m_FileExplorers[1].IsHidden;
+            projectExplorerToolStripMenuItem.Checked = !m_ProjectExplorer.IsHidden;
+            Actions.Actions.Instance.UpdateGUI = UpdateGUI;
+            Actions.Playing.Instance.SetDirectories(Ares.Settings.Settings.Instance.MusicDirectory, Ares.Settings.Settings.Instance.SoundDirectory);
+            Actions.Playing.Instance.ErrorHandling = new Actions.Playing.ErrorHandler(this, HandlePlayingError);
+            UpdateGUI();
+            if (!String.IsNullOrEmpty(m_ProjectName))
+            {
+                OpenProject(m_ProjectName);
+            }
+            else if (Ares.Settings.Settings.Instance.RecentFiles.GetFiles().Count > 0)
+            {
+                OpenProject(Ares.Settings.Settings.Instance.RecentFiles.GetFiles()[0].FilePath);
+            }
         }
 
     }

@@ -57,10 +57,14 @@ namespace Ares.Settings
 
         private void okButton_Click(object sender, EventArgs e)
         {
-            m_Settings.MusicDirectory = musicDirLabel.Text;
-            m_Settings.SoundDirectory = soundDirLabel.Text;
             if (otherDirButton.Checked)
             {
+                if (String.IsNullOrEmpty(otherDirLabel.Text))
+                {
+                    MessageBox.Show(this, StringResources.NeedDirectory, "Ares", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    DialogResult = DialogResult.None;
+                    return;
+                }
                 m_BasicSettings.UserSettingsLocation = BasicSettings.SettingsLocation.Custom;
             }
             else if (appDirButton.Checked && BasicSettings.IsAppDirAllowed())
@@ -71,6 +75,8 @@ namespace Ares.Settings
             {
                 m_BasicSettings.UserSettingsLocation = BasicSettings.SettingsLocation.AppDataDir;
             }
+            m_Settings.MusicDirectory = musicDirLabel.Text;
+            m_Settings.SoundDirectory = soundDirLabel.Text;
             m_BasicSettings.CustomSettingsDirectory = otherDirLabel.Text;
             m_Settings.Commit();
         }

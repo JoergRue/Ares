@@ -77,5 +77,14 @@ namespace Ares.Settings {
                 return ResourceManager.GetString("ExpectedInteger", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Please choose a directory for the settings. ähnelt.
+        /// </summary>
+        internal static string NeedDirectory {
+            get {
+                return ResourceManager.GetString("NeedDirectory", resourceCulture);
+            }
+        }
     }
 }

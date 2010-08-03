@@ -107,6 +107,8 @@ namespace Ares.Player
             this.settingsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label12 = new System.Windows.Forms.Label();
+            this.ipAddressBox = new System.Windows.Forms.ComboBox();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.soundVolumeBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.musicVolumeBar)).BeginInit();
@@ -352,6 +354,8 @@ namespace Ares.Player
             // groupBox1
             // 
             resources.ApplyResources(this.groupBox1, "groupBox1");
+            this.groupBox1.Controls.Add(this.ipAddressBox);
+            this.groupBox1.Controls.Add(this.label12);
             this.groupBox1.Controls.Add(this.tcpPortUpDown);
             this.groupBox1.Controls.Add(this.label11);
             this.groupBox1.Controls.Add(this.udpPortUpDown);
@@ -561,6 +565,20 @@ namespace Ares.Player
             resources.ApplyResources(this.aboutToolStripMenuItem, "aboutToolStripMenuItem");
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutButton_Click);
             // 
+            // label12
+            // 
+            resources.ApplyResources(this.label12, "label12");
+            this.label12.Name = "label12";
+            this.label12.UseCompatibleTextRendering = true;
+            // 
+            // ipAddressBox
+            // 
+            this.ipAddressBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ipAddressBox.FormattingEnabled = true;
+            resources.ApplyResources(this.ipAddressBox, "ipAddressBox");
+            this.ipAddressBox.Name = "ipAddressBox";
+            this.ipAddressBox.SelectedIndexChanged += new System.EventHandler(this.ipAddressBox_SelectedIndexChanged);
+            // 
             // Player
             // 
             resources.ApplyResources(this, "$this");
@@ -574,6 +592,7 @@ namespace Ares.Player
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Player";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Player_FormClosing);
+            this.Load += new System.EventHandler(this.Player_Load);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.soundVolumeBar)).EndInit();
@@ -654,6 +673,8 @@ namespace Ares.Player
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem dummyToolStripMenuItem;
+        private System.Windows.Forms.ComboBox ipAddressBox;
+        private System.Windows.Forms.Label label12;
     }
 }
 

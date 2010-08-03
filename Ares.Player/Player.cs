@@ -57,43 +57,6 @@ namespace Ares.Player
             m_Instance.SetWindowHandle(Handle);
             m_Instance.ProjectOpenAction = (projectName2, projectPath) => OpenProjectFromRequest(projectName2, projectPath);
             m_PlayingControl = new PlayingControl();
-            Timer t = new Timer();
-            t.Interval = 150;
-            t.Tick += new EventHandler((o, args) =>
-            {
-                t.Stop();
-                m_BasicSettings = new BasicSettings();
-                ReadSettings();
-                if (Environment.GetCommandLineArgs().Length > 1)
-                {
-                    OpenProject(Environment.GetCommandLineArgs()[1]);
-                }
-                else if (Ares.Settings.Settings.Instance.RecentFiles.GetFiles().Count > 0)
-                {
-                    OpenProject(Ares.Settings.Settings.Instance.RecentFiles.GetFiles()[0].FilePath);
-                }
-                else
-                {
-                    projectNameLabel.Text = m_Project != null ? m_Project.Title : StringResources.NoOpenedProject;
-                    this.Text = String.Format(StringResources.AresPlayer, projectNameLabel.Text);
-                }
-                udpPortUpDown.Value = Settings.Settings.Instance.UdpPort;
-                tcpPortUpDown.Value = Settings.Settings.Instance.TcpPort;
-                listenForPorts = true;
-                m_Network = new Network(this);
-                m_Network.InitConnectionData();
-                m_Network.StartUdpBroadcast();
-                broadCastTimer.Tick += new EventHandler(broadCastTimer_Tick);
-                broadCastTimer.Enabled = true;
-                m_Network.ListenForClient();
-            });
-            t.Start();
-            Timer updateTimer = new Timer();
-            updateTimer.Interval = 50;
-            updateTimer.Tick += new EventHandler(updateTimer_Tick);
-            updateTimer.Start();
-            fileSystemWatcher1.Changed += new System.IO.FileSystemEventHandler(fileSystemWatcher1_Changed);
-            Messages.Instance.MessageReceived += new MessageReceivedHandler(MessageReceived);
         }
 
         private void MessageReceived(Message m)
@@ -260,20 +223,31 @@ namespace Ares.Player
                 musicLabel.Text = MusicInfo.GetInfo(musicElementId);
                 lastMusicElementId = musicElementId;
             }
+            bool settingsChanged = false;
             if (overallVolumeBar.Value != control.GlobalVolume)
             {
                 overallVolumeBar.Value = control.GlobalVolume;
                 m_Network.InformClientOfVolume(VolumeTarget.Both, control.GlobalVolume);
+                Settings.Settings.Instance.GlobalVolume = control.GlobalVolume;
+                settingsChanged = true;
             }
             if (musicVolumeBar.Value != control.MusicVolume)
             {
                 musicVolumeBar.Value = control.MusicVolume;
                 m_Network.InformClientOfVolume(VolumeTarget.Music, control.MusicVolume);
+                Settings.Settings.Instance.MusicVolume = control.MusicVolume;
+                settingsChanged = true;
             }
             if (soundVolumeBar.Value != control.SoundVolume)
             {
                 soundVolumeBar.Value = control.SoundVolume;
                 m_Network.InformClientOfVolume(VolumeTarget.Sounds, control.SoundVolume);
+                Settings.Settings.Instance.SoundVolume = control.SoundVolume;
+                settingsChanged = true;
+            }
+            if (settingsChanged)
+            {
+                Settings.Settings.Instance.Commit();
             }
         }
 
@@ -285,6 +259,7 @@ namespace Ares.Player
         private void overallVolumeBar_Scroll(object sender, EventArgs e)
         {
             m_PlayingControl.GlobalVolume = overallVolumeBar.Value;
+            m_Network.InformClientOfVolume(VolumeTarget.Both, overallVolumeBar.Value);
             if (!commitVolumes) return;
             Settings.Settings.Instance.GlobalVolume = overallVolumeBar.Value;
             Settings.Settings.Instance.Commit();
@@ -293,6 +268,7 @@ namespace Ares.Player
         private void musicVolumeBar_Scroll(object sender, EventArgs e)
         {
             m_PlayingControl.MusicVolume = musicVolumeBar.Value;
+            m_Network.InformClientOfVolume(VolumeTarget.Music, musicVolumeBar.Value);
             if (!commitVolumes) return;
             Settings.Settings.Instance.MusicVolume = musicVolumeBar.Value;
             Settings.Settings.Instance.Commit();
@@ -301,6 +277,7 @@ namespace Ares.Player
         private void soundVolumeBar_Scroll(object sender, EventArgs e)
         {
             m_PlayingControl.SoundVolume = soundVolumeBar.Value;
+            m_Network.InformClientOfVolume(VolumeTarget.Sounds, soundVolumeBar.Value);
             if (!commitVolumes) return;
             Settings.Settings.Instance.SoundVolume = soundVolumeBar.Value;
             Settings.Settings.Instance.Commit();
@@ -369,7 +346,9 @@ namespace Ares.Player
 
         private void ReadSettings()
         {
-            if (!m_BasicSettings.ReadFromFile() || !Ares.Settings.Settings.Instance.Initialize(Ares.Settings.Settings.PlayerID, m_BasicSettings.GetSettingsDir()))
+            bool foundSettings = m_BasicSettings.ReadFromFile();
+            bool hasSettings = Ares.Settings.Settings.Instance.Initialize(Ares.Settings.Settings.PlayerID, foundSettings ? m_BasicSettings.GetSettingsDir() : null);
+            if (!hasSettings)
             {
                 MessageBox.Show(this, StringResources.NoSettings, StringResources.Ares);
                 ShowSettingsDialog();
@@ -505,6 +484,9 @@ namespace Ares.Player
             {
                 clientStateLabel.Text = StringResources.ConnectedWith + m_Network.ClientName;
                 clientStateLabel.ForeColor = System.Drawing.Color.DarkGreen;
+                m_Network.InformClientOfVolume(VolumeTarget.Both, m_PlayingControl.GlobalVolume);
+                m_Network.InformClientOfVolume(VolumeTarget.Music, m_PlayingControl.MusicVolume);
+                m_Network.InformClientOfVolume(VolumeTarget.Sounds, m_PlayingControl.SoundVolume);
                 disconnectButton.Enabled = true;
             }
             else
@@ -576,6 +558,77 @@ namespace Ares.Player
         void recentItem_Click(object sender, EventArgs e)
         {
             OpenProject(((sender as ToolStripMenuItem).Tag as RecentFiles.ProjectEntry).FilePath);
+        }
+
+        private void Player_Load(object sender, EventArgs e)
+        {
+            m_BasicSettings = new BasicSettings();
+            ReadSettings();
+            if (Environment.GetCommandLineArgs().Length > 1)
+            {
+                OpenProject(Environment.GetCommandLineArgs()[1]);
+            }
+            else if (Ares.Settings.Settings.Instance.RecentFiles.GetFiles().Count > 0)
+            {
+                OpenProject(Ares.Settings.Settings.Instance.RecentFiles.GetFiles()[0].FilePath);
+            }
+            else
+            {
+                projectNameLabel.Text = m_Project != null ? m_Project.Title : StringResources.NoOpenedProject;
+                this.Text = String.Format(StringResources.AresPlayer, projectNameLabel.Text);
+            }
+            listenForPorts = false;
+            udpPortUpDown.Value = Settings.Settings.Instance.UdpPort;
+            tcpPortUpDown.Value = Settings.Settings.Instance.TcpPort;
+            bool foundAddress = false;
+            foreach (System.Net.IPAddress address in System.Net.Dns.GetHostAddresses(String.Empty))
+            {
+                if (address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6)
+                    continue;
+                String s = address.ToString();
+                ipAddressBox.Items.Add(s);
+                if (s == Settings.Settings.Instance.IPAddress)
+                    foundAddress = true;
+            }
+            if (foundAddress)
+            {
+                ipAddressBox.SelectedItem = Settings.Settings.Instance.IPAddress;
+            }
+            else if (ipAddressBox.Items.Count > 0)
+            {
+                ipAddressBox.SelectedIndex = 0;
+                Settings.Settings.Instance.IPAddress = ipAddressBox.SelectedItem.ToString();
+            }
+            else
+            {
+                ipAddressBox.Enabled = false;
+            }
+            listenForPorts = true;
+            m_Network = new Network(this);
+            m_Network.InitConnectionData();
+            m_Network.StartUdpBroadcast();
+            broadCastTimer.Tick += new EventHandler(broadCastTimer_Tick);
+            broadCastTimer.Enabled = true;
+            m_Network.ListenForClient();
+            Timer updateTimer = new Timer();
+            updateTimer.Interval = 50;
+            updateTimer.Tick += new EventHandler(updateTimer_Tick);
+            updateTimer.Start();
+            fileSystemWatcher1.Changed += new System.IO.FileSystemEventHandler(fileSystemWatcher1_Changed);
+            Messages.Instance.MessageReceived += new MessageReceivedHandler(MessageReceived);
+        }
+
+        private void ipAddressBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!listenForPorts) return;
+            Settings.Settings.Instance.IPAddress = ipAddressBox.SelectedItem.ToString();
+            if (m_Network.ClientConnected)
+            {
+                m_Network.DisconnectClient(true);
+            }
+            m_Network.StopUdpBroadcast();
+            m_Network.InitConnectionData();
+            m_Network.StartUdpBroadcast();
         }
     }
 }

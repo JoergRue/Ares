@@ -41,6 +41,8 @@ namespace Ares.Settings
         public int UdpPort { get; set; }
         public int TcpPort { get; set; }
 
+        public String IPAddress { get; set; }
+
         public int Version { get; set; }
     }
 
@@ -61,6 +63,8 @@ namespace Ares.Settings
 
         public int UdpPort { get { return Data.UdpPort; } set { Data.UdpPort = value; } }
         public int TcpPort { get { return Data.TcpPort; } set { Data.TcpPort = value; } }
+
+        public String IPAddress { get { return Data.IPAddress; } set { Data.IPAddress = value; } }
 
         public int Version { get { return Data.Version; } private set { Data.Version = value; } }
 
@@ -98,7 +102,7 @@ namespace Ares.Settings
         {
             m_ID = id;
             bool success = ReadFromSharedMemory();
-            if (!success)
+            if (!success && !String.IsNullOrEmpty(directory))
             {
                 success = ReadFromFile(directory);
             }
@@ -224,6 +228,7 @@ namespace Ares.Settings
             GlobalVolume = MusicVolume = SoundVolume = 100;
             TcpPort = 11112;
             UdpPort = 8009;
+            IPAddress = String.Empty;
         }
 
         private void WriteSettings(XmlWriter writer)
@@ -243,6 +248,7 @@ namespace Ares.Settings
             writer.WriteStartElement("Network");
             writer.WriteAttributeString("TcpPort", TcpPort.ToString(System.Globalization.CultureInfo.InvariantCulture));
             writer.WriteAttributeString("UdpPort", UdpPort.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            writer.WriteAttributeString("IPAddress", IPAddress);
             writer.WriteEndElement();
             RecentFiles.WriteFiles(writer);
             writer.WriteEndElement();
@@ -306,6 +312,8 @@ namespace Ares.Settings
                 {
                     UdpPort = reader.GetIntegerAttribute("UdpPort");
                     TcpPort = reader.GetIntegerAttribute("TcpPort");
+                    IPAddress = reader.GetAttribute("IPAddress");
+                    if (IPAddress == null) IPAddress = String.Empty;
                     if (reader.IsEmptyElement)
                         reader.Read();
                     else

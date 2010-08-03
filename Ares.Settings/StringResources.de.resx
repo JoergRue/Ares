@@ -123,4 +123,7 @@
   <data name="ExpectedInteger" xml:space="preserve">
     <value>Zahl für Attribut {0} erwartet.</value>
   </data>
+  <data name="NeedDirectory" xml:space="preserve">
+    <value>Bitte wählen Sie ein Verzeichnis für die Einstellungen.</value>
+  </data>
 </root>

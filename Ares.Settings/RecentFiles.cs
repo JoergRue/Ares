@@ -85,6 +85,11 @@ namespace Ares.Settings
             m_Files.Clear();
             if (!reader.IsStartElement("RecentFiles"))
                 return;
+            if (reader.IsEmptyElement)
+            {
+                reader.Read();
+                return;
+            }
             reader.Read();
             while (reader.IsStartElement())
             {

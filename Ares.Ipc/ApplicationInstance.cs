@@ -107,7 +107,14 @@ namespace Ares.Ipc
         {
             if (!Activate(appName, projectName, projectPath))
             {
-                System.Diagnostics.Process.Start(appPath, "\"" + projectPath + "\"");
+                if (String.IsNullOrEmpty(projectPath))
+                {
+                    System.Diagnostics.Process.Start(appPath);
+                }
+                else
+                {
+                    System.Diagnostics.Process.Start(appPath, "\"" + projectPath + "\"");
+                }
             }
         }
 
