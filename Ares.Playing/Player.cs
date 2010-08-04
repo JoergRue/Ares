@@ -149,7 +149,7 @@ namespace Ares.Playing
 
     interface IElementPlayerClient
     {
-        int PlayFile(IFileElement fileElement, Action<bool> afterPlayed);
+        int PlayFile(IFileElement fileElement, Action<bool> afterPlayed, bool loop);
 
         bool Stopped { get; }
 
@@ -309,7 +309,7 @@ namespace Ares.Playing
                     {
                         PlayNext();
                     }
-                });
+                }, false);
             PlayingModule.ThePlayer.ActiveMusicPlayer = this;
         }
 
@@ -539,9 +539,9 @@ namespace Ares.Playing
         // in parallel containers
         // Mostly just pass through to our own client
 
-        public int PlayFile(IFileElement element, Action<bool> afterPlayed)
+        public int PlayFile(IFileElement element, Action<bool> afterPlayed, bool loop)
         {
-            return Client.PlayFile(element, afterPlayed);
+            return Client.PlayFile(element, afterPlayed, loop);
         }
 
         public bool Stopped { get { return Client.Stopped; } }
@@ -623,7 +623,7 @@ namespace Ares.Playing
                                 m_ElementQueue.Clear();
                         }
                         Next();
-                    });
+                    }, m_LoopElement);
                 lock (syncObject)
                 {
                     CurrentPlayedHandle = handle;
@@ -692,6 +692,38 @@ namespace Ares.Playing
             ThreadPool.QueueUserWorkItem(state => Next());
         }
 
+        private bool HasOnlyOneLoopableFileElement(IElement element)
+        {
+            if (element is IFileElement)
+                return true;
+            if (element is IGeneralElementContainer)
+            {
+                IList<IContainerElement> elements = (element as IGeneralElementContainer).GetGeneralElements();
+                if (elements.Count == 1)
+                {
+                    IContainerElement inner = elements[0];
+                    if (inner is IDelayableElement)
+                    {
+                        if ((inner as IDelayableElement).FixedStartDelay.Ticks > 0)
+                            return false;
+                        if ((inner as IDelayableElement).MaximumRandomStartDelay.Ticks > 0)
+                            return false;
+                    }
+                    if (inner is IRepeatableElement)
+                    {
+                        if ((inner as IRepeatableElement).RepeatCount != 1)
+                            return false;
+                    }
+                    return HasOnlyOneLoopableFileElement(inner.InnerElement);
+                }
+            }
+            else if (element is IContainerElement)
+            {
+                return HasOnlyOneLoopableFileElement((element as IContainerElement).InnerElement);
+            }
+            return false;
+        }
+
         private void Next()
         {
             if (Client.Stopped)
@@ -716,6 +748,12 @@ namespace Ares.Playing
                 {
                     // will not be played again; music lists are repeated inside their own players
                     m_ElementQueue.RemoveAt(0);
+                }
+                else if (repeatable != null && repeatable.RepeatCount == -1 && repeatable.MaximumRandomIntermediateDelay.Ticks == 0 && repeatable.FixedIntermediateDelay.Ticks == 0
+                    && HasOnlyOneLoopableFileElement(element.Element))
+                {
+                    m_ElementQueue.RemoveAt(0);
+                    m_LoopElement = true;
                 }
                 Monitor.Exit(syncObject);
                 if (firstPlay)
@@ -744,6 +782,7 @@ namespace Ares.Playing
             m_ElementQueue.Add(new QueueElement(startElement));
             m_ActiveSubPlayers = 0;
             m_StopSounds = false;
+            m_LoopElement = false;
         }
 
         private class QueueElement
@@ -763,11 +802,13 @@ namespace Ares.Playing
         private int m_ActiveSubPlayers;
 
         private bool m_StopSounds;
+
+        private bool m_LoopElement;
     }
 
     abstract class StartElementPlayer : IElementPlayerClient
     {
-        public int PlayFile(IFileElement fileElement, Action<bool> afterPlayed)
+        public int PlayFile(IFileElement fileElement, Action<bool> afterPlayed, bool loop)
         {
             SoundFile soundFile = new SoundFile(fileElement);
             FileStarted(fileElement);
@@ -779,7 +820,7 @@ namespace Ares.Playing
                         m_CurrentFiles.Remove(handle2);
                     }
                     afterPlayed(true);
-                });
+                }, loop);
             if (handle != 0)
             {
                 lock (syncObject)

@@ -25,7 +25,7 @@ namespace Ares.Playing
 {
     class FilePlayer : IFilePlayer
     {
-        public int PlayFile(ISoundFile file, PlayingFinished callback)
+        public int PlayFile(ISoundFile file, PlayingFinished callback, bool loop)
         {
             int channel = 0;
             channel = Bass.BASS_StreamCreateFile(file.Path, 0, 0, BASSFlag.BASS_DEFAULT);
@@ -51,16 +51,19 @@ namespace Ares.Playing
                     });
                     m_RunningVolumeEffects[channel] = volumeEffect;
                 }
-                if (Bass.BASS_ChannelSetSync(channel, BASSSync.BASS_SYNC_END, 0, m_EndSync, IntPtr.Zero) == 0)
+                if (!loop)
                 {
-                    ErrorHandling.BassErrorOccurred(file.Id, StringResources.FilePlayingError);
-                    lock (m_Mutex)
+                    if (Bass.BASS_ChannelSetSync(channel, BASSSync.BASS_SYNC_END, 0, m_EndSync, IntPtr.Zero) == 0)
                     {
-                        Bass.BASS_StreamFree(channel);
-                        m_RunningStreams.Remove(channel);
-                        m_RunningVolumeEffects.Remove(channel);
+                        ErrorHandling.BassErrorOccurred(file.Id, StringResources.FilePlayingError);
+                        lock (m_Mutex)
+                        {
+                            Bass.BASS_StreamFree(channel);
+                            m_RunningStreams.Remove(channel);
+                            m_RunningVolumeEffects.Remove(channel);
+                        }
+                        return 0;
                     }
-                    return 0;
                 }
                 float volume = file.Volume / 100.0f;
                 if (file.Effects != null)
@@ -72,6 +75,10 @@ namespace Ares.Playing
                 {
                     ErrorHandling.BassErrorOccurred(file.Id, StringResources.SetVolumeError);
                     return 0;
+                }
+                if (loop)
+                {
+                    Bass.BASS_ChannelFlags(channel, BASSFlag.BASS_SAMPLE_LOOP, BASSFlag.BASS_SAMPLE_LOOP);
                 }
                 if (!Bass.BASS_ChannelPlay(channel, false))
                 {

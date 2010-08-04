@@ -60,7 +60,7 @@ namespace Ares.Playing
     /// </summary>
     public interface IFilePlayer : IDisposable
     {
-        int PlayFile(ISoundFile file, PlayingFinished callback);
+        int PlayFile(ISoundFile file, PlayingFinished callback, bool loop);
         void StopFile(int handle);
     }
 
