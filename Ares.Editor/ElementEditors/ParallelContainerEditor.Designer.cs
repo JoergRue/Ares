@@ -84,8 +84,8 @@ namespace Ares.Editor.ElementEditors
             // 
             // playButton
             // 
-            this.playButton.Image = global::Ares.Editor.ImageResources.RunSmall;
             resources.ApplyResources(this.playButton, "playButton");
+            this.playButton.Image = global::Ares.Editor.ImageResources.RunSmall;
             this.playButton.Name = "playButton";
             this.playButton.UseCompatibleTextRendering = true;
             this.playButton.UseVisualStyleBackColor = true;
@@ -119,14 +119,14 @@ namespace Ares.Editor.ElementEditors
             // 
             // delayableControl
             // 
-            this.delayableControl.BackColor = System.Drawing.SystemColors.Control;
             resources.ApplyResources(this.delayableControl, "delayableControl");
+            this.delayableControl.BackColor = System.Drawing.SystemColors.Control;
             this.delayableControl.Name = "delayableControl";
             // 
             // ParallelContainerEditor
             // 
-            this.AllowDrop = true;
             resources.ApplyResources(this, "$this");
+            this.AllowDrop = true;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.parallelContainerControl);

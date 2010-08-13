@@ -17,6 +17,8 @@
  along with Ares; if not, write to the Free Software
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
+using System;
+
 namespace Ares.Editor
 {
     partial class FileExplorer
@@ -35,6 +37,17 @@ namespace Ares.Editor
             if (disposing && (components != null))
             {
                 components.Dispose();
+            }
+            if (disposing)
+            {
+                if (m_FileType == FileType.Music)
+                {
+                    Actions.FilesWatcher.Instance.MusicDirChanges -= new EventHandler<EventArgs>(DirChanged);
+                }
+                else
+                {
+                    Actions.FilesWatcher.Instance.SoundDirChanges -= new EventHandler<EventArgs>(DirChanged);
+                }
             }
             base.Dispose(disposing);
         }

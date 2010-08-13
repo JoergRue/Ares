@@ -67,21 +67,12 @@ namespace Ares.Editor
             }
             Ares.Settings.Settings settings = Ares.Settings.Settings.Instance;
             Actions.Playing.Instance.SetDirectories(Ares.Settings.Settings.Instance.MusicDirectory, Ares.Settings.Settings.Instance.SoundDirectory);
-            if (fundamentalChange)
-            {
-                if (m_FileExplorers[0] != null)
-                {
-                    m_FileExplorers[0].ReFillTree();
-                }
-                if (m_FileExplorers[1] != null)
-                {
-                    m_FileExplorers[1].ReFillTree();
-                }
-            }
+            Actions.FilesWatcher.Instance.SetDirectories(Ares.Settings.Settings.Instance.MusicDirectory, Ares.Settings.Settings.Instance.SoundDirectory);
         }
 
         private void Shutdown()
         {
+            Actions.FilesWatcher.Instance.DeInit();
             Settings.Settings.Instance.SettingsChanged -= new EventHandler<Settings.Settings.SettingsEventArgs>(SettingsChanged);
             Settings.Settings.Instance.Shutdown();
         }
@@ -132,6 +123,7 @@ namespace Ares.Editor
             if (dialog.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
             {
                 Actions.Playing.Instance.SetDirectories(Ares.Settings.Settings.Instance.MusicDirectory, Ares.Settings.Settings.Instance.SoundDirectory);
+                Actions.FilesWatcher.Instance.SetDirectories(Ares.Settings.Settings.Instance.MusicDirectory, Ares.Settings.Settings.Instance.SoundDirectory);
                 WriteSettings();
             }
         }
@@ -208,17 +200,6 @@ namespace Ares.Editor
             String oldSoundsDir = settings.SoundDirectory;
             String oldMusicDir = settings.MusicDirectory;
             ShowSettingsDialog();
-            if (oldSoundsDir != settings.SoundDirectory || oldMusicDir != settings.MusicDirectory)
-            {
-                if (m_FileExplorers[0] != null)
-                {
-                    m_FileExplorers[0].ReFillTree();
-                }
-                if (m_FileExplorers[1] != null)
-                {
-                    m_FileExplorers[1].ReFillTree();
-                }
-            }
         }
 
         private BasicSettings m_BasicSettings;
@@ -652,6 +633,7 @@ namespace Ares.Editor
             projectExplorerToolStripMenuItem.Checked = !m_ProjectExplorer.IsHidden;
             Actions.Actions.Instance.UpdateGUI = UpdateGUI;
             Actions.Playing.Instance.SetDirectories(Ares.Settings.Settings.Instance.MusicDirectory, Ares.Settings.Settings.Instance.SoundDirectory);
+            Actions.FilesWatcher.Instance.SetDirectories(Ares.Settings.Settings.Instance.MusicDirectory, Ares.Settings.Settings.Instance.SoundDirectory);
             Actions.Playing.Instance.ErrorHandling = new Actions.Playing.ErrorHandler(this, HandlePlayingError);
             UpdateGUI();
             if (!String.IsNullOrEmpty(m_ProjectName))

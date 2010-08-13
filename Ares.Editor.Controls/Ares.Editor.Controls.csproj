@@ -102,6 +102,11 @@
     <Compile Include="SequentialContainerControl.Designer.cs">
       <DependentUpon>SequentialContainerControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="StringResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StringResources.resx</DependentUpon>
+    </Compile>
     <Compile Include="VolumeControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -163,6 +168,11 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SequentialContainerControl.resx">
       <DependentUpon>SequentialContainerControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StringResources.de.resx" />
+    <EmbeddedResource Include="StringResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>StringResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="VolumeControl.de.resx">
       <DependentUpon>VolumeControl.cs</DependentUpon>

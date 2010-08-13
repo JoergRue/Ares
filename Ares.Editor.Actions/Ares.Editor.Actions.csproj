@@ -52,6 +52,7 @@
     <Compile Include="ElementActions.cs" />
     <Compile Include="ElementChanges.cs" />
     <Compile Include="ElementEditorActions.cs" />
+    <Compile Include="FilesWatcher.cs" />
     <Compile Include="ModeActions.cs" />
     <Compile Include="Playing.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

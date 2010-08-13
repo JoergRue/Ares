@@ -126,7 +126,7 @@
     <value>320, 75</value>
   </data>
   <data name="repeatableControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>335, 98</value>
+    <value>363, 98</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="repeatableControl.TabIndex" type="System.Int32, mscorlib">
@@ -136,7 +136,7 @@
     <value>repeatableControl</value>
   </data>
   <data name="&gt;&gt;repeatableControl.Type" xml:space="preserve">
-    <value>Ares.Editor.ElementEditors.RepeatableControl, Ares.Editor.Controls, Version=0.1.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
+    <value>Ares.Editor.ElementEditors.RepeatableControl, Ares.Editor.Controls, Version=0.2.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
   </data>
   <data name="&gt;&gt;repeatableControl.Parent" xml:space="preserve">
     <value>$this</value>
@@ -157,7 +157,7 @@
     <value>volumeControl</value>
   </data>
   <data name="&gt;&gt;volumeControl.Type" xml:space="preserve">
-    <value>Ares.Editor.Controls.VolumeControl, Ares.Editor.Controls, Version=0.1.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
+    <value>Ares.Editor.Controls.VolumeControl, Ares.Editor.Controls, Version=0.2.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
   </data>
   <data name="&gt;&gt;volumeControl.Parent" xml:space="preserve">
     <value>$this</value>
@@ -172,7 +172,7 @@
     <value>12, 179</value>
   </data>
   <data name="sequentialContainerControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>643, 346</value>
+    <value>671, 346</value>
   </data>
   <data name="sequentialContainerControl.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -181,7 +181,7 @@
     <value>sequentialContainerControl</value>
   </data>
   <data name="&gt;&gt;sequentialContainerControl.Type" xml:space="preserve">
-    <value>Ares.Editor.Controls.SequentialContainerControl, Ares.Editor.Controls, Version=0.1.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
+    <value>Ares.Editor.Controls.SequentialContainerControl, Ares.Editor.Controls, Version=0.2.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
   </data>
   <data name="&gt;&gt;sequentialContainerControl.Parent" xml:space="preserve">
     <value>$this</value>
@@ -247,7 +247,7 @@
     <value>320, 12</value>
   </data>
   <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>335, 57</value>
+    <value>363, 57</value>
   </data>
   <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -280,7 +280,7 @@
     <value>12, 528</value>
   </data>
   <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>643, 64</value>
+    <value>671, 64</value>
   </data>
   <data name="label1.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -310,7 +310,7 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>667, 601</value>
+    <value>695, 601</value>
   </data>
   <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 8.25pt</value>
@@ -322,6 +322,6 @@
     <value>SequentialPlaylistEditor</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>Ares.Editor.ElementEditors.EditorBase, Ares.Editor, Version=0.1.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
+    <value>Ares.Editor.ElementEditors.EditorBase, Ares.Editor, Version=0.2.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
   </data>
 </root>

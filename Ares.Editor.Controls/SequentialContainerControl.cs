@@ -44,6 +44,28 @@ namespace Ares.Editor.Controls
             Actions.ElementChanges.Instance.AddListener(m_Container.Id, Update);
         }
 
+        protected override void RefillGrid()
+        {
+            elementsGrid.SuspendLayout();
+            elementsGrid.Rows.Clear();
+            foreach (int key in m_ElementsToRows.Keys)
+            {
+                Actions.ElementChanges.Instance.RemoveListener(key, Update);
+            }
+            m_ElementsToRows.Clear();
+            int row = 0;
+            foreach (ISequentialElement element in m_Container.GetElements())
+            {
+                elementsGrid.Rows.Add(new object[] { element.Title, element.FixedStartDelay.TotalMilliseconds, element.MaximumRandomStartDelay.TotalMilliseconds });
+                SetFileElementAttributes(elementsGrid, element, row);
+                m_ElementsToRows[element.Id] = row;
+                Actions.ElementChanges.Instance.AddListener(element.Id, Update);
+
+                ++row;
+            }
+            elementsGrid.ResumeLayout();
+        }
+
         private void Update(int elementID, Actions.ElementChanges.ChangeType changeType)
         {
             if (!listen)
@@ -51,27 +73,7 @@ namespace Ares.Editor.Controls
             listen = false;
             if (elementID == m_Container.Id && changeType == Actions.ElementChanges.ChangeType.Changed)
             {
-                elementsGrid.SuspendLayout();
-                elementsGrid.Rows.Clear();
-                foreach (int key in m_ElementsToRows.Keys)
-                {
-                    Actions.ElementChanges.Instance.RemoveListener(key, Update);
-                }
-                m_ElementsToRows.Clear();
-                int row = 0;
-                foreach (ISequentialElement element in m_Container.GetElements())
-                {
-                    elementsGrid.Rows.Add(new object[] { element.Title, element.FixedStartDelay.TotalMilliseconds, element.MaximumRandomStartDelay.TotalMilliseconds });
-                    if (element.InnerElement is IFileElement)
-                    {
-                        elementsGrid.Rows[row].Cells[0].ToolTipText = (element.InnerElement as IFileElement).FilePath;
-                    }
-                    m_ElementsToRows[element.Id] = row;
-                    Actions.ElementChanges.Instance.AddListener(element.Id, Update);
-
-                    ++row;
-                }
-                elementsGrid.ResumeLayout();
+                RefillGrid();
             }
             else if (m_ElementsToRows.ContainsKey(elementID))
             {
@@ -105,10 +107,7 @@ namespace Ares.Editor.Controls
             for (int i = index; i < containerElements.Count; ++i)
             {
                 elementsGrid.Rows.Add(new object[] { containerElements[i].Title, containerElements[i].FixedStartDelay.TotalMilliseconds, containerElements[i].MaximumRandomStartDelay.TotalMilliseconds });
-                if (containerElements[i].InnerElement is IFileElement)
-                {
-                    elementsGrid.Rows[i].Cells[0].ToolTipText = (containerElements[i].InnerElement as IFileElement).FilePath;
-                }
+                SetFileElementAttributes(elementsGrid, containerElements[i], i);
                 m_ElementsToRows[containerElements[i].Id] = i;
                 Actions.ElementChanges.Instance.AddListener(containerElements[i].Id, Update);
             }
@@ -117,7 +116,6 @@ namespace Ares.Editor.Controls
 
         private ISequentialContainer m_Container;
         private Dictionary<int, int> m_ElementsToRows = new Dictionary<int, int>();
-        private bool listen = true;
 
         private void elementsGrid_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {

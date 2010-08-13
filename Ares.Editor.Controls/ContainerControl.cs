@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace Ares.Editor.Controls
 {
@@ -35,13 +36,67 @@ namespace Ares.Editor.Controls
         }
     }
 
-    public class ContainerControl : UserControl
+    public abstract class ContainerControl : UserControl
     {
         public event EventHandler<ElementDoubleClickEventArgs> ElementDoubleClick;
+
+        protected bool listen = true;
+
+        protected ContainerControl()
+        {
+            Actions.FilesWatcher.Instance.AnyDirChanges += new EventHandler<EventArgs>(FileDirChanges);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                Actions.FilesWatcher.Instance.AnyDirChanges -= new EventHandler<EventArgs>(FileDirChanges);
+            }
+            base.Dispose(disposing);
+        }
+        
+        private void FileDirChanges(object sender, EventArgs e)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new MethodInvoker(FillGrid));
+            }
+            else
+            {
+                FillGrid();
+            }
+        }
+
+        private void FillGrid()
+        {
+            listen = false;
+            RefillGrid();
+            listen = true;
+        }
 
         protected void FireElementDoubleClick(Ares.Data.IContainerElement element)
         {
             ElementDoubleClick(this, new ElementDoubleClickEventArgs(element));
         }
+
+        protected void SetFileElementAttributes(DataGridView grid, Ares.Data.IContainerElement element, int row)
+        {
+            if (element.InnerElement is Ares.Data.IFileElement)
+            {
+                String path = (element.InnerElement as Ares.Data.IFileElement).FilePath;
+                grid.Rows[row].Cells[0].ToolTipText = path;
+                path = (element.InnerElement as Ares.Data.IFileElement).SoundFileType == Ares.Data.SoundFileType.Music ?
+                    System.IO.Path.Combine(Ares.Settings.Settings.Instance.MusicDirectory, path) :
+                    System.IO.Path.Combine(Ares.Settings.Settings.Instance.SoundDirectory, path);
+                if (!System.IO.File.Exists(path))
+                {
+                    grid.Rows[row].Cells[0].Style.ForeColor = Color.DarkRed;
+                    grid.Rows[row].Cells[0].ErrorText = StringResources.FileNotFound;
+                }
+            }
+        }
+
+        protected abstract void RefillGrid();
     }
 }

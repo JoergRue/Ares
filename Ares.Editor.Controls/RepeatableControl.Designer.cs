@@ -73,6 +73,7 @@ namespace Ares.Editor.ElementEditors
             // 
             // groupBox1
             // 
+            resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Controls.Add(this.loopButton);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.repeatCountUpDown);
@@ -84,7 +85,6 @@ namespace Ares.Editor.ElementEditors
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.fixedDelayUpDown);
             this.groupBox1.Controls.Add(this.fixedLabel);
-            resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
             this.groupBox1.UseCompatibleTextRendering = true;
@@ -148,12 +148,12 @@ namespace Ares.Editor.ElementEditors
             // 
             // maxDelayUpDown
             // 
+            resources.ApplyResources(this.maxDelayUpDown, "maxDelayUpDown");
             this.maxDelayUpDown.Increment = new decimal(new int[] {
             10,
             0,
             0,
             0});
-            resources.ApplyResources(this.maxDelayUpDown, "maxDelayUpDown");
             this.maxDelayUpDown.Maximum = new decimal(new int[] {
             100000000,
             0,
@@ -176,12 +176,12 @@ namespace Ares.Editor.ElementEditors
             // 
             // fixedDelayUpDown
             // 
+            resources.ApplyResources(this.fixedDelayUpDown, "fixedDelayUpDown");
             this.fixedDelayUpDown.Increment = new decimal(new int[] {
             10,
             0,
             0,
             0});
-            resources.ApplyResources(this.fixedDelayUpDown, "fixedDelayUpDown");
             this.fixedDelayUpDown.Maximum = new decimal(new int[] {
             100000000,
             0,

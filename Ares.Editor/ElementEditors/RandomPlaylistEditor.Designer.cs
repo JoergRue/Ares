@@ -112,7 +112,6 @@ namespace Ares.Editor.ElementEditors
             // 
             this.delayableControl.BackColor = System.Drawing.SystemColors.Control;
             resources.ApplyResources(this.delayableControl, "delayableControl");
-            this.delayableControl.MaximumSize = new System.Drawing.Size(346, 57);
             this.delayableControl.Name = "delayableControl";
             // 
             // repeatableControl

@@ -132,7 +132,7 @@
     <value>12, 571</value>
   </data>
   <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>654, 64</value>
+    <value>691, 64</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="label1.TabIndex" type="System.Int32, mscorlib">
@@ -211,10 +211,10 @@
     <value>1</value>
   </data>
   <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>364, 12</value>
+    <value>382, 12</value>
   </data>
   <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>302, 57</value>
+    <value>321, 57</value>
   </data>
   <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -238,10 +238,10 @@
     <value>Top, Left, Right</value>
   </data>
   <data name="volumeControl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>364, 75</value>
+    <value>382, 75</value>
   </data>
   <data name="volumeControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>302, 127</value>
+    <value>321, 127</value>
   </data>
   <data name="volumeControl.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -250,7 +250,7 @@
     <value>volumeControl</value>
   </data>
   <data name="&gt;&gt;volumeControl.Type" xml:space="preserve">
-    <value>Ares.Editor.Controls.VolumeControl, Ares.Editor.Controls, Version=0.1.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
+    <value>Ares.Editor.Controls.VolumeControl, Ares.Editor.Controls, Version=0.2.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
   </data>
   <data name="&gt;&gt;volumeControl.Parent" xml:space="preserve">
     <value>$this</value>
@@ -262,7 +262,7 @@
     <value>12, 12</value>
   </data>
   <data name="delayableControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>346, 57</value>
+    <value>364, 57</value>
   </data>
   <data name="delayableControl.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -271,7 +271,7 @@
     <value>delayableControl</value>
   </data>
   <data name="&gt;&gt;delayableControl.Type" xml:space="preserve">
-    <value>Ares.Editor.ElementEditors.DelayableControl, Ares.Editor.Controls, Version=0.1.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
+    <value>Ares.Editor.ElementEditors.DelayableControl, Ares.Editor.Controls, Version=0.2.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
   </data>
   <data name="&gt;&gt;delayableControl.Parent" xml:space="preserve">
     <value>$this</value>
@@ -283,7 +283,7 @@
     <value>12, 75</value>
   </data>
   <data name="repeatableControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>346, 127</value>
+    <value>364, 127</value>
   </data>
   <data name="repeatableControl.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -292,7 +292,7 @@
     <value>repeatableControl</value>
   </data>
   <data name="&gt;&gt;repeatableControl.Type" xml:space="preserve">
-    <value>Ares.Editor.ElementEditors.RepeatableControl, Ares.Editor.Controls, Version=0.1.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
+    <value>Ares.Editor.ElementEditors.RepeatableControl, Ares.Editor.Controls, Version=0.2.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
   </data>
   <data name="&gt;&gt;repeatableControl.Parent" xml:space="preserve">
     <value>$this</value>
@@ -307,7 +307,7 @@
     <value>12, 208</value>
   </data>
   <data name="choiceContainerControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>654, 360</value>
+    <value>691, 360</value>
   </data>
   <data name="choiceContainerControl.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -316,7 +316,7 @@
     <value>choiceContainerControl</value>
   </data>
   <data name="&gt;&gt;choiceContainerControl.Type" xml:space="preserve">
-    <value>Ares.Editor.ElementEditorControls.ChoiceContainerControl, Ares.Editor.Controls, Version=0.1.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
+    <value>Ares.Editor.ElementEditorControls.ChoiceContainerControl, Ares.Editor.Controls, Version=0.2.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
   </data>
   <data name="&gt;&gt;choiceContainerControl.Parent" xml:space="preserve">
     <value>$this</value>
@@ -331,7 +331,7 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>678, 644</value>
+    <value>715, 644</value>
   </data>
   <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 8.25pt</value>
@@ -343,6 +343,6 @@
     <value>RandomPlaylistOrBGSoundChoiceEditor</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>Ares.Editor.ElementEditors.EditorBase, Ares.Editor, Version=0.1.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
+    <value>Ares.Editor.ElementEditors.EditorBase, Ares.Editor, Version=0.2.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
   </data>
 </root>

@@ -37,9 +37,29 @@ namespace Ares.Editor
             m_FileType = fileType;
             HideOnClose = true;
             ReFillTree();
+            if (fileType == FileType.Music)
+            {
+                Actions.FilesWatcher.Instance.MusicDirChanges += new EventHandler<EventArgs>(DirChanged);
+            }
+            else
+            {
+                Actions.FilesWatcher.Instance.SoundDirChanges += new EventHandler<EventArgs>(DirChanged);
+            }
         }
 
-        private FileType m_FileType;
+        private void  DirChanged(object sender, EventArgs e)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new MethodInvoker(ReFillTree));
+            }
+            else
+            {
+                ReFillTree();
+            }
+        } 
+        
+        FileType m_FileType;
 
         protected override string GetPersistString()
         {
