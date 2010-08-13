@@ -44,6 +44,14 @@ namespace Ares.Editor.ElementEditors
             label1.Text = String.Format(label1.Text, String.Format(StringResources.FileExplorerTitle, StringResources.Music));
             Update(m_Element.Id, Actions.ElementChanges.ChangeType.Renamed);
             Actions.ElementChanges.Instance.AddListener(-1, Update);
+            if (Actions.Playing.Instance.IsElementPlaying(container))
+            {
+                DisableControls(true);
+            }
+            else if (Actions.Playing.Instance.IsElementOrSubElementPlaying(container))
+            {
+                DisableControls(false);
+            }
         }
 
         private void Update(int elementId, Actions.ElementChanges.ChangeType changeType)

@@ -79,12 +79,12 @@ namespace Ares.Editor
                 AddModeNodes(projectNode, m_Project);
                 projectNode.ContextMenuStrip = projectContextMenu;
                 projectTree.Nodes.Add(projectNode);
+                projectNode.Expand();
             }
             else
             {
                 projectTree.Nodes.Add(StringResources.NoOpenedProject);
             }
-            projectTree.ExpandAll();
             projectTree.EndUpdate();
         }
 
@@ -101,6 +101,7 @@ namespace Ares.Editor
                 {
                     AddModeElement(modeNode, element);
                 }
+                modeNode.Expand();
             }
         }
 
@@ -117,6 +118,7 @@ namespace Ares.Editor
             {
                 AddSubElements(node, (startElement as IBackgroundSounds).GetElements());
             }
+            node.Collapse();
         }
 
         private void AddSubElements(TreeNode parent, IList<IContainerElement> subElements)
@@ -134,6 +136,7 @@ namespace Ares.Editor
                 {
                     AddSubElements(node, (innerElement as IGeneralElementContainer).GetGeneralElements());
                 }
+                node.Collapse();
             }
         }
 
@@ -195,18 +198,17 @@ namespace Ares.Editor
 
         private IProject m_Project;
 
-        private TreeNode m_SelectedNode;
         private TreeNode SelectedNode
         {
             get
             {
-                return m_SelectedNode;
+                return projectTree.SelectedNode;
             }
 
             set
             {
-                m_SelectedNode = value;
-                setKeyButton.Enabled = (m_SelectedNode != null) && ((m_SelectedNode.Tag is IMode) || (m_SelectedNode.Tag is IModeElement));
+                projectTree.SelectedNode = value;
+                setKeyButton.Enabled = (value != null) && ((value.Tag is IMode) || (value.Tag is IModeElement));
             }
         }
 
@@ -253,20 +255,23 @@ namespace Ares.Editor
             String text = e.Label;
             if (e.Node.Tag == m_Project)
             {
-                if (e.Label == null)
-                    return;
-                Actions.Actions.Instance.AddNew(new RenameProjectAction(e.Node, text));
+                if (e.Label != null)
+                {
+                    Actions.Actions.Instance.AddNew(new RenameProjectAction(e.Node, text));
+                }
             }
             else if (e.Node.Tag is IMode)
             {
                 if (e.Label == null)
                 {
                     e.Node.Text = (e.Node.Tag as IMode).GetNodeTitle();
-                    return;
                 }
-                IMode mode = e.Node.Tag as IMode;
-                Actions.Actions.Instance.AddNew(new RenameModeAction(e.Node, text));
-                e.CancelEdit = true; // the text is already changed by the action
+                else
+                {
+                    IMode mode = e.Node.Tag as IMode;
+                    Actions.Actions.Instance.AddNew(new RenameModeAction(e.Node, text));
+                    e.CancelEdit = true; // the text is already changed by the action
+                }
                 // TODO: check for empty or equal titles, output warning
             }
             else if (e.Node.Tag is IModeElement)
@@ -274,20 +279,21 @@ namespace Ares.Editor
                 if (e.Label == null)
                 {
                     e.Node.Text = (e.Node.Tag as IModeElement).GetNodeTitle();
-                    return;
                 }
-                IModeElement modeElement = e.Node.Tag as IModeElement;
-                Actions.Actions.Instance.AddNew(new RenameModeElementAction(e.Node, text));
-                e.CancelEdit = true; // the text is already changed by the action
+                else
+                {
+                    IModeElement modeElement = e.Node.Tag as IModeElement;
+                    Actions.Actions.Instance.AddNew(new RenameModeElementAction(e.Node, text));
+                    e.CancelEdit = true; // the text is already changed by the action
+                }
             }
             else
             {
-                if (e.Label == null)
+                if (e.Label != null)
                 {
-                    return;
+                    IElement element = e.Node.Tag as IElement;
+                    Actions.Actions.Instance.AddNew(new RenameElementAction(e.Node, text));
                 }
-                IElement element = e.Node.Tag as IElement;
-                Actions.Actions.Instance.AddNew(new RenameElementAction(e.Node, text));
             }
             projectTree.LabelEdit = false;
             if (m_AfterEditAction != null)
@@ -314,6 +320,8 @@ namespace Ares.Editor
 
         private void RenameMode()
         {
+            if (!(SelectedNode.Tag is IMode))
+                return;
             projectTree.SelectedNode = SelectedNode;
             projectTree.LabelEdit = true;
             if (!SelectedNode.IsEditing)
@@ -335,6 +343,11 @@ namespace Ares.Editor
             {
                 AddContainerElement(element);
             }
+            m_AfterEditAction = () =>
+            {
+                m_AfterEditAction = null;
+                EditElement(GetElement(SelectedNode));
+            };
             RenameElement();
         }
 
@@ -350,6 +363,11 @@ namespace Ares.Editor
             {
                 AddContainerElement(element);
             }
+            m_AfterEditAction = () =>
+            {
+                m_AfterEditAction = null;
+                EditElement(GetElement(SelectedNode));
+            };
             RenameElement();
         }
 
@@ -385,7 +403,14 @@ namespace Ares.Editor
             SelectedNode.Expand();
             SelectedNode = node;
             if (renameImmediately)
+            {
+                m_AfterEditAction = () =>
+                {
+                    m_AfterEditAction = null;
+                    EditElement(GetElement(SelectedNode));
+                };
                 RenameElement();
+            }
             listenForContainerChanges = oldListen;
         }
 
@@ -403,6 +428,11 @@ namespace Ares.Editor
             {
                 AddContainerElement(element);
             }
+            m_AfterEditAction = () =>
+            {
+                m_AfterEditAction = null;
+                EditElement(GetElement(SelectedNode));
+            };
             RenameElement();
             listenForContainerChanges = oldListen;
         }
@@ -421,6 +451,11 @@ namespace Ares.Editor
             {
                 AddContainerElement(element);
             }
+            m_AfterEditAction = () =>
+            {
+                m_AfterEditAction = null;
+                EditElement(GetElement(SelectedNode));
+            };
             RenameElement();
             listenForContainerChanges = oldListen;
         }
@@ -439,6 +474,11 @@ namespace Ares.Editor
             {
                 AddContainerElement(element);
             }
+            m_AfterEditAction = () =>
+            {
+                m_AfterEditAction = null;
+                EditElement(GetElement(SelectedNode));
+            };
             RenameElement();
             listenForContainerChanges = oldListen;
         }
@@ -751,6 +791,11 @@ namespace Ares.Editor
 
         private void projectTree_DoubleClick(object sender, EventArgs e)
         {
+            DefaultNodeAction();
+        }
+
+        private void DefaultNodeAction()
+        {
             if (SelectedNode != null)
             {
                 if (SelectedNode.Tag is IMode)
@@ -759,7 +804,7 @@ namespace Ares.Editor
                 }
                 else if (SelectedNode.Tag is IModeElement && GetElement(SelectedNode) is IBackgroundSounds)
                 {
-                    EditModeElementTrigger();
+                    SelectModeElementKey();
                 }
                 else if (SelectedNode.Tag is IElement)
                 {
@@ -946,7 +991,8 @@ namespace Ares.Editor
             foreach (ToolStripItem item in contextMenu.Items)
             {
                 if (item is ToolStripMenuItem)
-                    item.Enabled = !disable;
+                    item.Enabled = !disable || 
+                        ((item.Tag != null) && item.Tag.ToString().Contains("DuringPlay"));
             }
         }
 
@@ -955,7 +1001,7 @@ namespace Ares.Editor
             bool visible = SelectedNode != null && SelectedNode.Tag is IModeElement;
             foreach (ToolStripItem item in contextMenu.Items)
             {
-                if ("OnlyMode".Equals(item.Tag))
+                if (item.Tag != null && item.Tag.ToString().Contains("OnlyMode"))
                 {
                     item.Visible = visible;
                 }
@@ -975,6 +1021,24 @@ namespace Ares.Editor
                     else
                         RenameElement();
                 }
+            }
+            else if (e.KeyCode == Keys.F3)
+            {
+                if (SelectedNode != null)
+                {
+                    if (SelectedNode.Tag is IMode)
+                    {
+                        SelectModeKey();
+                    }
+                    else if (SelectedNode.Tag is IModeElement)
+                    {
+                        SelectModeElementKey();
+                    }
+                }
+            }
+            else if (e.KeyCode == Keys.Return)
+            {
+                DefaultNodeAction();
             }
         }
 

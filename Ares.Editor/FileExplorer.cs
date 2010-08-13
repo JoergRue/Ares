@@ -175,6 +175,15 @@ namespace Ares.Editor
 
         private void treeView1_DoubleClick(object sender, EventArgs e)
         {
+            DefaultNodeAction();
+        }
+
+        private void DefaultNodeAction()
+        {
+            if (m_PlayedElement != null)
+            {
+                Actions.Playing.Instance.StopElement(m_PlayedElement);
+            }
             if (PlayingPossible)
             {
                 PlaySelectedFile();
@@ -184,6 +193,14 @@ namespace Ares.Editor
         private void refreshButton_Click(object sender, EventArgs e)
         {
             ReFillTree();
+        }
+
+        private void treeView1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Return)
+            {
+                DefaultNodeAction();
+            }
         }
     }
 

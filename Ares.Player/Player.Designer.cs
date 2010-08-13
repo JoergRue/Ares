@@ -35,6 +35,9 @@ namespace Ares.Player
             if (disposing && (components != null))
             {
                 components.Dispose();
+            }
+            if (disposing)
+            {
                 m_Instance.Dispose();
             }
             base.Dispose(disposing);

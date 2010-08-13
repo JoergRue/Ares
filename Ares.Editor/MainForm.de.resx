@@ -247,17 +247,23 @@
   <data name="hilfeToolStripMenuItem.Text" xml:space="preserve">
     <value>Hilfe</value>
   </data>
+  <data name="saveFileDialog.Filter" xml:space="preserve">
+    <value>Ares Projekte|*.ares|Alle Dateien|*.*</value>
+  </data>
+  <data name="openFileDialog.Filter" xml:space="preserve">
+    <value>Ares Projekte|*.ares|Alle Dateien|*.*</value>
+  </data>
   <data name="newButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGhSURBVDhPjZJNSwJRFIaHoFW0ahv0A1q1qE3Uvo9F/YIW
-        9SeEoB+QmwqFsiLMQAuENIiErKggk4jwA0tLRFNMzY+0qzPjvN1R5zYxZV44nMud+z7nnvcMx7UWIXNV
-        QZgNwcQBPg6CMBUlZIZXvrfN9VCPg9dRIQzAEc3B5r5xVh7b/xcihnrumGCHig65pphCCo+jsLv9sJ3c
-        w+L0YNfpWdYAeT29bKCxIovkZW2+ZIOGVTkDNg/OMTK5oIWQICeQaJ+E1Wb/eOkGzmiuDgHx/haU1rCc
-        wHXtb0DMjhs9e4koTntZC3JFWp15giUGWDMfN8RKfAPK4xdMsEUBka5vE7HOAIJYhwxRQD+8kLKDi/Vw
-        rxF2CkgMADkdnYCJiSVJQoXwSOcqDcDwxDx+nc62/ZKJ1JsaL+K9SBBLFdsDNmxuDUCsSyhVakhmyniK
-        vbcHGPdcGgCpCsjkPxF9LcAXzrQHyP2pl2xc4aOKeLqEUDQHbyDVOUBtXCSex8PjG67uE50D1MYFnrPw
-        +JI4vY11BlDm/Vf+c4zKjOUL/4X8H3wBKSw32b5Wry4AAAAASUVORK5CYII=
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGhSURBVDhPjZJLSwJRFMeHoFW0ahv0AVq1qE3UvgdBH6BV
+        fYkg6APkpsIgrYgy6AFCGkRBVlSQRUj4wJ4imlLmq7ypM+P8u9dxrhPm6IXDudy5/9+5539GECqLkImC
+        JI0HYRUArwBJGgkRMiZq3w1zKdjmEKepEGbggOaAui+f5QZ2G0LkYNsdF6xT0b6giikk89APu8uHnSMP
+        bE43Np3uuRqgaKKXzTTmmYitbfUlFhrb2hmwsneGvuGpWggJCBJ56VCwoPaP11bglOZCDxDprEBpDdsR
+        jq98ZciG49rEXyLLo7e8BVaRVueeYJYDFjcOy2ItqoDc4DkXrFLAc0vVRCxzgCSXwCAa6I8Xymf3TOmp
+        fQl2Coh2AclpOgErFyuKApIX8Z4kZUDv0CT+nc6a/YKL9JuiKCOVzSMczxoDLDuuGoBcUvBFioglcngM
+        p4wBS1vHNYB8QUIi/YPQWwbep4QxgPWnX8y4zHcBkfcvBENJ3PrjzQP0xj1H0rh/+MClJ9o8QG+c/+UT
+        bm8MJzfh5gDavOvlumPUZswuNAr2H/wC5zU3x0Uxk9sAAAAASUVORK5CYII=
 </value>
   </data>
   <data name="newButton.Text" xml:space="preserve">
@@ -311,13 +317,13 @@
   <data name="stopButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABUAAAAUCAYAAABiS3YzAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFUSURBVDhP7ZLLKwQBHMc//8umvB9taMOFnd2d3TXWUMqB
-        ctmDopSwaSdqSUSW1sXjpoiDUuug3DbEwStCXoOd3Z2DJMXJzP4HoxTld/99+r7g//54As2fPchvvcj6
-        ANJzGO/tMO7zUdxH4wiHUzj3p607NIEePZ+mZAEBzYEn5aI+7adBb0J67KA0dvwNqKHQp+bgz5RnYf50
-        C14tiKR2UbXZT2H00jrUtNyYLETUBMRMK+JDJ6IawnURwbE+Q9HEvXWomaGgVxJIyYbaIF61D9d1BOdJ
-        FPvCKrmRlHWoWYqkOfHpbYhP3XjuRhBO56jdW6YkFidPefktUGM6ciaAlDSyvBrCfTJDXWKZ6q0Niie3
-        yVXerSs1t+i7aadmbZCKlSjlS4btqThFYzvkK7vYwp/Woea47YsJ7PMHlM2eUTB+my0nT3nFFvr4HtS6
-        jP+PH0zgC7b1jgcMsESFAAAAAElFTkSuQmCC
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFVSURBVDhP7ZLNK4MBHMc//8oOarN5a6GFC3t7tnnMppQD
+        5bKDopS8pC1qpMmyaS5eboo4KDUH5bYQB0aEvA17ew6SlJ08j//gWSlqv/vv0/cNSvfPE+goDOL5GMIj
+        jSK++nHcT2K7nMZ2GsJyEsZ8NK/eoQK0S+V403rcGRP2rJXWnIs2yYv43Et17KwIqKzQmSrDla/9gbly
+        nTgyPsRUPw07Ixgi1+qhiuX2tAEhY0HIdyE89SGkxrBeBTFtRamYfVQPVTK0SPW4sx5ZrQ9HahjrbRBz
+        MoJxeQNtMKseqpQiZsw4pW6ElwHsD1NYzhdpPlyjKhZHF3j7K1B5Op68GzEtZ3kzgS0ZpSWxRuPuNpVz
+        e2gDn+qVKlt03vXQtDlO3XqE2lXZdjhOxcw+5YEDNP6CeqgybuNKAuPSMTULF+hD9z/l6ALvaEa+ioOq
+        l1H6+MUEvgGoHY3/xFdrJgAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="stopButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">

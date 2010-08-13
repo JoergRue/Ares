@@ -297,6 +297,15 @@ namespace Ares.Player {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Project file has changed. Stop playing and reload? ähnelt.
+        /// </summary>
+        internal static string ReloadProject {
+            get {
+                return ResourceManager.GetString("ReloadProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die About Ares ... ähnelt.
         /// </summary>
         internal static string ShowInfo {

@@ -50,6 +50,10 @@ namespace Ares.Editor
             {
                 element.Title = tag.title;
             }
+            if (String.IsNullOrEmpty(element.Title))
+            {
+                element.Title = System.IO.Path.GetFileNameWithoutExtension(path);
+            }
             return element;
         }
 

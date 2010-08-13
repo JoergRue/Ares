@@ -101,12 +101,17 @@ namespace Ares.Player
         {
             if (m_Project == null)
                 return;
+            fileSystemWatcher1.EnableRaisingEvents = false;
             String path = m_Project.FileName;
             if (e.FullPath == path)
             {
-                PlayingModule.ProjectPlayer.StopAll();
-                OpenProject(path);
+                if (MessageBox.Show(this, StringResources.ReloadProject, StringResources.Ares, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
+                {
+                    PlayingModule.ProjectPlayer.StopAll();
+                    OpenProject(path);
+                }
             }
+            fileSystemWatcher1.EnableRaisingEvents = true;
         }
 
         void updateTimer_Tick(object sender, EventArgs e)

@@ -361,11 +361,13 @@ namespace Ares.Editor
             // saveFileDialog
             // 
             this.saveFileDialog.DefaultExt = "ares";
+            resources.ApplyResources(this.saveFileDialog, "saveFileDialog");
             // 
             // openFileDialog
             // 
             this.openFileDialog.DefaultExt = "ares";
             this.openFileDialog.FileName = "openFileDialog1";
+            resources.ApplyResources(this.openFileDialog, "openFileDialog");
             // 
             // toolStrip1
             // 
@@ -450,11 +452,13 @@ namespace Ares.Editor
             this.Controls.Add(this.dockPanel);
             this.Controls.Add(this.menuStrip1);
             this.IsMdiContainer = true;
+            this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.toolStrip1.ResumeLayout(false);

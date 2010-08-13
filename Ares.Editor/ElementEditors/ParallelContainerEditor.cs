@@ -46,6 +46,14 @@ namespace Ares.Editor.ElementEditors
             Update(m_Element.Id, Actions.ElementChanges.ChangeType.Renamed);
             UpdateActiveElement();
             Actions.ElementChanges.Instance.AddListener(-1, Update);
+            if (Actions.Playing.Instance.IsElementPlaying(container))
+            {
+                DisableControls(true);
+            }
+            else if (Actions.Playing.Instance.IsElementOrSubElementPlaying(container))
+            {
+                DisableControls(false);
+            }
         }
 
         private void Update(int elementId, Actions.ElementChanges.ChangeType changeType)

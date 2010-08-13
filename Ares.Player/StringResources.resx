@@ -197,6 +197,9 @@ You should adapt some settings first.</value>
   <data name="PlayError" xml:space="preserve">
     <value>At element {0}: {1}</value>
   </data>
+  <data name="ReloadProject" xml:space="preserve">
+    <value>Project file has changed. Stop playing and reload?</value>
+  </data>
   <data name="ShowInfo" xml:space="preserve">
     <value>About Ares ...</value>
   </data>

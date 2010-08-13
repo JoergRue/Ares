@@ -105,9 +105,10 @@ namespace Ares.Editor.ElementEditorControls
                 elementsGrid.Rows.Add(new object[] { containerElements[i].Title, containerElements[i].RandomChance });
                 if (containerElements[i].InnerElement is IFileElement)
                 {
-                    elementsGrid.Rows[index].Cells[0].ToolTipText = (containerElements[i].InnerElement as IFileElement).FilePath;
+                    elementsGrid.Rows[i].Cells[0].ToolTipText = (containerElements[i].InnerElement as IFileElement).FilePath;
                 }
-                m_ElementsToRows[containerElements[i].Id] = index;
+                m_ElementsToRows[containerElements[i].Id] = i;
+                Actions.ElementChanges.Instance.AddListener(containerElements[i].Id, Update);
             }
             listen = true;
         }
@@ -145,7 +146,14 @@ namespace Ares.Editor.ElementEditorControls
 
         private void elementsGrid_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            FireElementDoubleClick(m_Container.GetElements()[e.RowIndex]);
+            if (e.ColumnIndex != 1)
+            {
+                FireElementDoubleClick(m_Container.GetElements()[e.RowIndex]);
+            }
+            else
+            {
+                elementsGrid.BeginEdit(true);
+            }
         }
     }
 }

@@ -35,6 +35,9 @@ namespace Ares.Editor.Controls
             if (disposing && (components != null))
             {
                 components.Dispose();
+            }
+            if (disposing)
+            {
                 foreach (int key in m_ElementsToRows.Keys)
                 {
                     Actions.ElementChanges.Instance.RemoveListener(key, Update);

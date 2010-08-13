@@ -35,6 +35,9 @@ namespace Ares.Player
             if (disposing && (components != null))
             {
                 components.Dispose();
+            }
+            if (disposing)
+            {
                 Messages.Instance.MessageReceived -= new MessageReceivedHandler(MessageReceived);
             }
             base.Dispose(disposing);

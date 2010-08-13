@@ -151,13 +151,44 @@ namespace Ares.Editor
                 m_ProjectExplorer.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockLeft;
                 m_ProjectExplorer.Show(dockPanel);
             }
-            else
-            {
-                m_ProjectExplorer.IsHidden = !m_ProjectExplorer.IsHidden;
-            }
+            else UpdateWindowState(m_ProjectExplorer);
+            ActivateWindow(m_ProjectExplorer);
         }
 
         private VolumeWindow m_VolumeWindow;
+
+        private void UpdateWindowState(WeifenLuo.WinFormsUI.Docking.DockContent window)
+        {
+            if (window.VisibleState == WeifenLuo.WinFormsUI.Docking.DockState.DockBottomAutoHide)
+            {
+                window.VisibleState = WeifenLuo.WinFormsUI.Docking.DockState.DockBottom;
+            }
+            else if (window.VisibleState == WeifenLuo.WinFormsUI.Docking.DockState.DockLeftAutoHide)
+            {
+                window.VisibleState = WeifenLuo.WinFormsUI.Docking.DockState.DockLeft;
+            }
+            else if (window.VisibleState == WeifenLuo.WinFormsUI.Docking.DockState.DockRightAutoHide)
+            {
+                window.VisibleState = WeifenLuo.WinFormsUI.Docking.DockState.DockRight;
+            }
+            else if (window.VisibleState == WeifenLuo.WinFormsUI.Docking.DockState.DockTopAutoHide)
+            {
+                window.VisibleState = WeifenLuo.WinFormsUI.Docking.DockState.DockTop;
+            }
+            else
+            {
+                window.IsHidden = !window.IsHidden;
+            }
+        }
+
+        private void ActivateWindow(WeifenLuo.WinFormsUI.Docking.DockContent window)
+        {
+            if (!window.IsHidden)
+            {
+                window.Activate();
+                window.Focus();
+            }
+        }
 
         private void ShowVolumeWindow()
         {
@@ -167,10 +198,8 @@ namespace Ares.Editor
                 m_VolumeWindow.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Float;
                 m_VolumeWindow.Show(dockPanel);
             }
-            else
-            {
-                m_VolumeWindow.IsHidden = !m_VolumeWindow.IsHidden;
-            }
+            else UpdateWindowState(m_VolumeWindow);
+            ActivateWindow(m_VolumeWindow);
         }
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -245,10 +274,8 @@ namespace Ares.Editor
                 m_FileExplorers[index].ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockRight;
                 m_FileExplorers[index].Show(dockPanel);
             }
-            else
-            {
-                m_FileExplorers[index].IsHidden = !m_FileExplorers[index].IsHidden;
-            }
+            else UpdateWindowState(m_FileExplorers[index]);
+            ActivateWindow(m_FileExplorers[index]);
         }
 
         private Ares.Data.IProject m_CurrentProject;
@@ -634,6 +661,34 @@ namespace Ares.Editor
             else if (Ares.Settings.Settings.Instance.RecentFiles.GetFiles().Count > 0)
             {
                 OpenProject(Ares.Settings.Settings.Instance.RecentFiles.GetFiles()[0].FilePath);
+            }
+        }
+
+        private void MainForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                if (Actions.Playing.Instance.IsPlaying)
+                {
+                    Actions.Playing.Instance.StopAll();
+                    e.Handled = true;
+                }
+            }
+            else if (e.KeyCode == Keys.F6)
+            {
+                ShowProjectExplorer();
+            }
+            else if (e.KeyCode == Keys.F7)
+            {
+                ShowFileExplorer(FileType.Music);
+            }
+            else if (e.KeyCode == Keys.F8)
+            {
+                ShowFileExplorer(FileType.Sound);
+            }
+            else if (e.KeyCode == Keys.F9)
+            {
+                ShowVolumeWindow();
             }
         }
 

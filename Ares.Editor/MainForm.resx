@@ -215,26 +215,38 @@
   <data name="editMenu.Text" xml:space="preserve">
     <value>Edit</value>
   </data>
+  <data name="projectExplorerToolStripMenuItem.ShortcutKeyDisplayString" xml:space="preserve">
+    <value>F6</value>
+  </data>
   <data name="projectExplorerToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>174, 22</value>
+    <value>193, 22</value>
   </data>
   <data name="projectExplorerToolStripMenuItem.Text" xml:space="preserve">
     <value>Project Explorer</value>
   </data>
+  <data name="fileExplorerToolStripMenuItem.ShortcutKeyDisplayString" xml:space="preserve">
+    <value>F7</value>
+  </data>
   <data name="fileExplorerToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>174, 22</value>
+    <value>193, 22</value>
   </data>
   <data name="fileExplorerToolStripMenuItem.Text" xml:space="preserve">
     <value>Music File Explorer</value>
   </data>
+  <data name="soundFileExplorerToolStripMenuItem.ShortcutKeyDisplayString" xml:space="preserve">
+    <value>F8</value>
+  </data>
   <data name="soundFileExplorerToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>174, 22</value>
+    <value>193, 22</value>
   </data>
   <data name="soundFileExplorerToolStripMenuItem.Text" xml:space="preserve">
     <value>Sound File Explorer</value>
   </data>
+  <data name="volumesToolStripMenuItem.ShortcutKeyDisplayString" xml:space="preserve">
+    <value>F9</value>
+  </data>
   <data name="volumesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>174, 22</value>
+    <value>193, 22</value>
   </data>
   <data name="volumesToolStripMenuItem.Text" xml:space="preserve">
     <value>Volumes</value>
@@ -246,25 +258,28 @@
     <value>View</value>
   </data>
   <data name="startPlayerToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>133, 22</value>
+    <value>139, 22</value>
   </data>
   <data name="startPlayerToolStripMenuItem.Text" xml:space="preserve">
     <value>Start Player</value>
   </data>
   <data name="toolStripSeparator3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>130, 6</value>
+    <value>136, 6</value>
+  </data>
+  <data name="stopAllToolStipMenuItem.ShortcutKeyDisplayString" xml:space="preserve">
+    <value>Esc</value>
   </data>
   <data name="stopAllToolStipMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>133, 22</value>
+    <value>139, 22</value>
   </data>
   <data name="stopAllToolStipMenuItem.Text" xml:space="preserve">
     <value>Stop All</value>
   </data>
   <data name="toolStripSeparator4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>130, 6</value>
+    <value>136, 6</value>
   </data>
   <data name="settingsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>133, 22</value>
+    <value>139, 22</value>
   </data>
   <data name="settingsToolStripMenuItem.Text" xml:space="preserve">
     <value>Settings ...</value>
@@ -339,23 +354,29 @@
   <metadata name="saveFileDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>240, 17</value>
   </metadata>
+  <data name="saveFileDialog.Filter" xml:space="preserve">
+    <value>Ares projects|*.ares|All files|*.*</value>
+  </data>
   <metadata name="openFileDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>369, 17</value>
   </metadata>
+  <data name="openFileDialog.Filter" xml:space="preserve">
+    <value>Ares projects|*.ares|All files|*.*</value>
+  </data>
   <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>502, 17</value>
   </metadata>
   <data name="newButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGgSURBVDhPjZJNSwJRFIaHoJW0ahv0A1q1qE3Uvo9N65b1
-        J4SgH5CbCoOyIsygDxDSIBSyooIsIkINK0tEU8xufqQ5zozzdmfGuRqT5oXDudy573Puec9wXG0RMsWL
-        4mQYNg4IcBDF8SghE4L+vWWuhk0uwUyFsAKHND9oe/WsOLz3L0QKm26ZYJOKDjhNTCG5xyE4fUHseu7g
-        cPux5fbPG4CChV620lhQRMra0V6ySmNHPwPW9k8xODZjhJAHTiShbhmLWv947QROaOb7gXhPDUprODzw
-        XgZViN11ZWEvkaSJG9aCUpFWZ55gjgGW7EeqWI86oDhyxgTrFBDpqJuIFQYQpSoUiA765YX80Tdbfe5a
-        hpMCEr0AMdMJ2JhYlmWUygLSpKQCBkan8ed0NpznTNS4qQgSPvNlxFL51oDVXZ8BIFVlFEoVJDNFPMU+
-        WwOWt70GQJkXkcl+I/qWQ+A50xqg9Ne4FONyXzzi6QLCUYKbUKp9QKNxkXgW94/vuLhLtA9oNC708gF/
-        IInj61h7AH3ezXLTMeozVi78F8p/8AMPWTeLDoxi8gAAAABJRU5ErkJggg==
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGgSURBVDhPjZJNSwJRFIaHoJW0ahv0A1q1qE3UvnLTumX9
+        CSHoB9SmQiGtCCuwAiENQqEvKsgkLNSYPkW0nFLTSnOar7c76lwnpiYvHM7lzn2fc897hmHqK5cb5UVx
+        hIWLAaIMRHE4wXFWQftummXW4hNsRAg7sE3yVW1fPSv1b/wLkVjLORUsE9EWUxMTSPG6D969GNYDEaz6
+        Q1jxh6YMQGGaXLaTmFFF6vLUXuIk4dHOgIXNA/QOjRsh3BUjchftCmZr/eOhFdgnme8GUh11KKmxGkDw
+        JFaFuH2n0/QlkmQN0xbUiqQ69QSTFDDn3qmKtWgASgOHVLBIAHctDRMxTwGiJEOFaKAfXii5rgn5ts0B
+        LwGkO4G8jUzARcWKoqBcEfCcL1cBPYNj+HU6S94jKtJvvgQJr28VJDNv5gDn+p4BIMkK3stfeMqWcJN8
+        NQc41oIGQIUXkS18IvFYRPQ2aw5Q+9Mv1bjiB4/U8zvYRB7heKZ5gN64u1QBl9cvOI6kmwfojYvf5xCK
+        PmH3LNkcQJv3X/nPMWozVi/8F+p/8A2yiDdw454EDAAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="newButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">

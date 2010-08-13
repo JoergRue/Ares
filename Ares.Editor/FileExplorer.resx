@@ -149,23 +149,23 @@
   <data name="refreshButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAOtSURBVEhLzZNrTFN3GMabDWhLC9056UVoLW1PT0+5dCB1
-        itC0BmtxI3EZIxsbnZkDsovTD+xiE5eFJQZRFuYEL3RUnQwQrCCggiGEXaKZYZOMGJyIdNY5tGKHg+HY
-        mM/OSPgGnK7Lkp1PJ/n/nt/z5v2fw+OF+cQodXRq0c66MOPcMbXlWWfehVkoV25wctMhEeZIecpqRbRU
-        Gsfi0Su2Vrmf/gbIbRq+JyAIdUiKhSBCZ7aYivdUZ+3qGso+PDjhaLp63+Hp9+W235zM7Z3Cxq9mkfn2
-        wbZwCsRGZ5ln7SeXYW+5hZz2AHK6J5DTO411fTOwdk/C0jGOrNY7cHT+DG3GhsKQS8RisSz93fqvsxv8
-        yG76Ada2AFadnURq1wMkn/4VxpNBGJoD0Nffgq7OB03tdZjKvxwTkqQypJLH36w5Z/cGYGsZw4pPR5FY
-        c2maqTo/nlzdHzQdvjZjbBp7SLNyqm4UmporiN99CaqqYSS9XOHlLFhue/71nNZ7WPXh51OK9cUNgjj6
-        hcjo6HQ+j0/x+XyKSEh80lR3bUbr8UFdfQXL934PqvwimKJ9A6TeXMRVIFr78YVgcsnuixECsW3BS0+2
-        ZBnqb0PrvgGm8lvQmyvPS/Vpf4tJLjlPlZFbmJRf2sOCssVg05ZqT0rtCAzOD3pIJZPPciJO8TzAl0g0
-        7Lt8qYDesWl7rELzHMsIQhb/T0BzJE8ieew/GCYpSpbm2GQuax8gmZWvLFWgWvfSG0IhqQpxCJlYnvFM
-        cdqOk4PWY+zP5hlCRAyZsVhYVfDeLqPL+yN7TixdEBtLKu2bXamuE8OW2iFYj43C3h5E2rb9AwsEH1Hb
-        XrRrXd4+ndsPwri6lGN6CZFSWu/LrBmExc3Kjw7DetyPNR33Yaj84uayfNcexVOvvRO3cZuL2rLfQ+3s
-        +U5zaASKQzeQ4CzvZ+USrvVE0AU7Oq1Hrs/JzZ/5YTh+F7rWX0B3PQTTCzDnAH3n70hoDiLO7YOsagja
-        0saAIIZYwyWfOxcKhfHpFT23kxoD0DTeBdU2BfrMDOjTv4E6NQVN8zhUR/xYdmAE8R9dRsKrB66KSLk9
-        JPk8JDJYnNSJSeg7HsyJmbN/wHBmFrq2aWgaAtCya9Fs996JtxXW8nk83T+Sz8PKkr2nmD52Jd1/QpX3
-        Vos0M+99abZznzQzv4KgnyiJiopKDEs8HxIICLXh6OiEsSUIgZiw/CvZYmGZrWBrYlnnT9zfdvj1kSK5
-        dj0bfzRcxV/YVoPBnsGFJAAAAABJRU5ErkJggg==
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAOuSURBVEhLzZNrTFN3GMabDWhLC90560VoLaeX0wvYCdYp
+        QtM6LKCSuAzJxtbOTIXsYtgHdqExy+ayjSFuaACdVDovDJTagYAKagi7mjk3yYhBh0hnN28VOxwMx8Z8
+        dkbCN+B0XZbsfDrJ//f8njfv/xwOJ8InTq6mF258uz7COHtMaVnrzD89CfnilU52OizCHC1dsFQWKxYn
+        MHhsWkmV+9FvgLymgds8glCGpZgJItRmi6mosiazvLP/kQ/7RrIPXryTXX/Wv7otMJrXPYY1n08i4+UP
+        WiMpEBqcWzzL95yH3XsVuW1B5HaNILd7HCt6JmDtGoWlfRiZLTeR0/EzVOkrHWGXCIVCSdqrDV9lNQaQ
+        dfAHWFuDWHJ8FAs77yLl6K8wfByCrjkIbcNVqOv9oOouw/TOZ9f5JCkPq8S0qeaE3ReEzXsdafuHYKw9
+        N657/4vh5OqvQybPpQlD07V7NCPX1A+Bqr2AxK3noKgagPGZCh9rwXzbE8/nttzGkvc+GZNlFzXyEugn
+        o2NjF3E5XA2Xy9UQScZVpj2XJlQeP5Q1FzB/x0Voys9Av6G6l9SaN7IVCJbvOB1KKd56JoontM146SmW
+        TF3DDajcV6Df9i3o9ZVfirWpf4tJNjlHkZ7nSC4oPcWAktlgZn2eBXWD0DnePEXK9QUMJ2AVTwNckYhi
+        3qVzBbQ568riZdTjDMMLW/w/Ac3RHJHogf9gmOQYSWrOukVb2npJ/eINcxUoVjz9Ap9PKsIcQiKUpj9W
+        lLrZ12c9wPxsnn5ExZHps4UVha+9ayjz/cScE3MXxMeTcvt610Mu74Clrh/WA0Owt4WQWrKzd4bgfUrb
+        U3aVy9ejdgdAGJaWskwvIlJKG/wZtX2wuBn5vgFYDwWwrP0OdNs+/XHeWlelbPVzrySsedGl2bTTo3nr
+        5HfU7kHIdl9BkqP8LCMXsa0nii7c3GHde3lKbv4oAN2hW1C3/AK68x703YD+BKDt+B1JzSEkuP2QVPWD
+        Km0M8uKIZWzyqXM+n5+YVnHyRnJTEFTTLWhax0AfmwB99DdojoyBah6GYm8A83YNInH7eSif3fW9gJTa
+        w5JPQwKdxak5PApt+90psf74H9Adm4S6dRxUYxAqZi1JZYdvJtocdVwOR/2P5NOwvHj7EX0Ps5KuP6HI
+        f8krzsh//cEsZ7U4o6CCoB8ujomJMUYkng7xeIRSt29oxOANgSckLP9KNltYYissMb7Rfo392468Plog
+        VWUz8fsjVfwF1DCDjOLreyoAAAAASUVORK5CYII=
 </value>
   </data>
   <data name="refreshButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
@@ -208,7 +208,7 @@
   <data name="treeView1.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 28</value>
   </data>
- <data name="treeView1.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="treeView1.Size" type="System.Drawing.Size, System.Drawing">
     <value>288, 237</value>
   </data>
   <data name="treeView1.TabIndex" type="System.Int32, mscorlib">
@@ -218,7 +218,7 @@
     <value>treeView1</value>
   </data>
   <data name="&gt;&gt;treeView1.Type" xml:space="preserve">
-    <value>MultiSelectTreeview.MultiSelectTreeview, Ares.Editor.Controls, Version=0.1.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
+    <value>MultiSelectTreeview.MultiSelectTreeview, Ares.Editor.Controls, Version=0.2.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
   </data>
   <data name="&gt;&gt;treeView1.Parent" xml:space="preserve">
     <value>$this</value>

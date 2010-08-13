@@ -28,6 +28,8 @@ namespace Ares.Editor.ElementEditors
     {
         public static void ShowEditor(Ares.Data.IElement element, WeifenLuo.WinFormsUI.Docking.DockPanel dockPanel)
         {
+            if (element == null)
+                return;
             EditorBase existing = EditorRegistry.Instance.GetEditor(element.Id);
             if (existing != null)
             {

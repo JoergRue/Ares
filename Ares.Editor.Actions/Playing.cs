@@ -115,6 +115,14 @@ namespace Ares.Editor.Actions
 
         public bool IsPlaying { get; private set; }
 
+        public bool IsElementPlaying(Ares.Data.IElement element)
+        {
+            lock (syncObject)
+            {
+                return m_PlayedElements.ContainsKey(element.Id);
+            }
+        }
+
         public bool IsElementOrSubElementPlaying(Ares.Data.IElement element)
         {
             lock (syncObject)
@@ -135,6 +143,39 @@ namespace Ares.Editor.Actions
                 Ares.Data.IElement inner = (element as Ares.Data.IContainerElement).InnerElement;
                 if (inner != element && IsElementOrSubElementPlaying(inner))
                     return true;
+            }
+            else
+            {
+                lock (syncObject)
+                {
+                    if (IsSubElementOfPlayedElement(element))
+                        return true;
+                }
+            }
+            return false;
+        }
+
+        private bool IsSubElementOfPlayedElement(Ares.Data.IElement element)
+        {
+            foreach (int elementID in m_PlayedElements.Keys)
+            {
+                if (IsSubElementOfElement(Ares.Data.DataModule.ElementRepository.GetElement(elementID), element))
+                    return true;
+            }
+            return false;
+        }
+
+        private bool IsSubElementOfElement(Ares.Data.IElement parent, Ares.Data.IElement element)
+        {
+            if (parent == element)
+                return true;
+            else if (parent is Ares.Data.IGeneralElementContainer)
+            {
+                foreach (Ares.Data.IContainerElement containerElement in (parent as Ares.Data.IGeneralElementContainer).GetGeneralElements())
+                {
+                    if (IsSubElementOfElement(containerElement.InnerElement, element))
+                        return true;
+                }
             }
             return false;
         }

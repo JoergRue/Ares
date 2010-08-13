@@ -35,6 +35,9 @@ namespace Ares.Editor
             if (disposing && (components != null))
             {
                 components.Dispose();
+            }
+            if (disposing)
+            {
                 RemoveChangeListener();
                 Ares.Editor.Actions.ElementChanges.Instance.RemoveListener(-1, ElementChanged);
             }
@@ -168,6 +171,7 @@ namespace Ares.Editor
             // 
             resources.ApplyResources(this.toolStripMenuItem2, "toolStripMenuItem2");
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Tag = "DuringPlay";
             this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
             // 
             // deleteToolStripMenuItem
@@ -252,6 +256,7 @@ namespace Ares.Editor
             // 
             resources.ApplyResources(this.editToolStripMenuItem, "editToolStripMenuItem");
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+            this.editToolStripMenuItem.Tag = "DuringPlay";
             this.editToolStripMenuItem.Click += new System.EventHandler(this.editToolStripMenuItem_Click);
             // 
             // renameToolStripMenuItem2
@@ -264,14 +269,14 @@ namespace Ares.Editor
             // 
             this.selectContainerKeyMenuItem.Name = "selectContainerKeyMenuItem";
             resources.ApplyResources(this.selectContainerKeyMenuItem, "selectContainerKeyMenuItem");
-            this.selectContainerKeyMenuItem.Tag = "OnlyMode";
+            this.selectContainerKeyMenuItem.Tag = "OnlyMode DuringPlay";
             this.selectContainerKeyMenuItem.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
             // 
             // modeElementStartingToolStripMenuItem
             // 
             this.modeElementStartingToolStripMenuItem.Name = "modeElementStartingToolStripMenuItem";
             resources.ApplyResources(this.modeElementStartingToolStripMenuItem, "modeElementStartingToolStripMenuItem");
-            this.modeElementStartingToolStripMenuItem.Tag = "OnlyMode";
+            this.modeElementStartingToolStripMenuItem.Tag = "OnlyMode DuringPlay";
             this.modeElementStartingToolStripMenuItem.Click += new System.EventHandler(this.selectKeyToolStripMenuItem_Click);
             // 
             // deleteToolStripMenuItem1
@@ -342,6 +347,7 @@ namespace Ares.Editor
             // 
             resources.ApplyResources(this.editToolStripMenuItem1, "editToolStripMenuItem1");
             this.editToolStripMenuItem1.Name = "editToolStripMenuItem1";
+            this.editToolStripMenuItem1.Tag = "DuringPlay";
             this.editToolStripMenuItem1.Click += new System.EventHandler(this.editToolStripMenuItem1_Click);
             // 
             // renameToolStripMenuItem3
@@ -354,14 +360,14 @@ namespace Ares.Editor
             // 
             this.selectElementKeyMenuItem.Name = "selectElementKeyMenuItem";
             resources.ApplyResources(this.selectElementKeyMenuItem, "selectElementKeyMenuItem");
-            this.selectElementKeyMenuItem.Tag = "OnlyMode";
+            this.selectElementKeyMenuItem.Tag = "OnlyMode DuringPlay";
             this.selectElementKeyMenuItem.Click += new System.EventHandler(this.toolStripMenuItem4_Click);
             // 
             // modeElementStartingToolStripMenuItem1
             // 
             this.modeElementStartingToolStripMenuItem1.Name = "modeElementStartingToolStripMenuItem1";
             resources.ApplyResources(this.modeElementStartingToolStripMenuItem1, "modeElementStartingToolStripMenuItem1");
-            this.modeElementStartingToolStripMenuItem1.Tag = "OnlyMode";
+            this.modeElementStartingToolStripMenuItem1.Tag = "OnlyMode DuringPlay";
             this.modeElementStartingToolStripMenuItem1.Click += new System.EventHandler(this.selectKeyToolStripMenuItem1_Click);
             // 
             // deleteToolStripMenuItem2
@@ -392,14 +398,14 @@ namespace Ares.Editor
             // 
             this.selectBGSoundsKeyMenuItem.Name = "selectBGSoundsKeyMenuItem";
             resources.ApplyResources(this.selectBGSoundsKeyMenuItem, "selectBGSoundsKeyMenuItem");
-            this.selectBGSoundsKeyMenuItem.Tag = "OnlyMode";
+            this.selectBGSoundsKeyMenuItem.Tag = "OnlyMode DuringPlay";
             this.selectBGSoundsKeyMenuItem.Click += new System.EventHandler(this.toolStripMenuItem5_Click);
             // 
             // modeElementStartingToolStripMenuItem2
             // 
             resources.ApplyResources(this.modeElementStartingToolStripMenuItem2, "modeElementStartingToolStripMenuItem2");
             this.modeElementStartingToolStripMenuItem2.Name = "modeElementStartingToolStripMenuItem2";
-            this.modeElementStartingToolStripMenuItem2.Tag = "OnlyMode";
+            this.modeElementStartingToolStripMenuItem2.Tag = "OnlyMode DuringPlay";
             this.modeElementStartingToolStripMenuItem2.Click += new System.EventHandler(this.selectKeyToolStripMenuItem2_Click);
             // 
             // deleteToolStripMenuItem3

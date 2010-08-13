@@ -107,9 +107,10 @@ namespace Ares.Editor.Controls
                 elementsGrid.Rows.Add(new object[] { containerElements[i].Title, containerElements[i].FixedStartDelay.TotalMilliseconds, containerElements[i].MaximumRandomStartDelay.TotalMilliseconds });
                 if (containerElements[i].InnerElement is IFileElement)
                 {
-                    elementsGrid.Rows[index].Cells[0].ToolTipText = (containerElements[i].InnerElement as IFileElement).FilePath;
+                    elementsGrid.Rows[i].Cells[0].ToolTipText = (containerElements[i].InnerElement as IFileElement).FilePath;
                 }
-                m_ElementsToRows[containerElements[i].Id] = index;
+                m_ElementsToRows[containerElements[i].Id] = i;
+                Actions.ElementChanges.Instance.AddListener(containerElements[i].Id, Update);
             }
             listen = true;
         }

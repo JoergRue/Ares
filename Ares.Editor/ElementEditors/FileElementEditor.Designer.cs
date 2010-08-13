@@ -35,6 +35,9 @@ namespace Ares.Editor.ElementEditors
             if (disposing && (components != null))
             {
                 components.Dispose();
+            }
+            if (disposing)
+            {
                 if (m_Element != null)
                 {
                     Actions.ElementChanges.Instance.RemoveListener(ElementId, Update);

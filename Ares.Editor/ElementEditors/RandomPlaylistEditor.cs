@@ -48,6 +48,14 @@ namespace Ares.Editor.ElementEditors
             label1.Text = String.Format(label1.Text, String.Format(StringResources.FileExplorerTitle, StringResources.Music));
             Update(m_Element.Id, Actions.ElementChanges.ChangeType.Renamed);
             Actions.ElementChanges.Instance.AddListener(m_Element.Id, Update);
+            if (Actions.Playing.Instance.IsElementPlaying(playList))
+            {
+                DisableControls(true);
+            }
+            else if (Actions.Playing.Instance.IsElementOrSubElementPlaying(playList))
+            {
+                DisableControls(false);
+            }
         }
 
         public void SetBGSoundChoice(IBackgroundSoundChoice bgSoundChoice)
@@ -61,6 +69,14 @@ namespace Ares.Editor.ElementEditors
             label1.Text = String.Format(label1.Text, String.Format(StringResources.FileExplorerTitle, StringResources.Sounds));
             Update(m_Element.Id, Actions.ElementChanges.ChangeType.Renamed);
             Actions.ElementChanges.Instance.AddListener(m_Element.Id, Update);
+            if (Actions.Playing.Instance.IsElementPlaying(bgSoundChoice))
+            {
+                DisableControls(true);
+            }
+            else if (Actions.Playing.Instance.IsElementOrSubElementPlaying(bgSoundChoice))
+            {
+                DisableControls(false);
+            }
         }
 
         private bool listen = true;
