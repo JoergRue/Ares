@@ -68,6 +68,65 @@ namespace Ares.Editor
             }
         }
 
+        public void MoveToElement(Object element)
+        {
+            TreeNode result = DoMoveToElement(projectTree.Nodes[0], element);
+            if (result == null)
+            {
+                result = DoMoveToContainerElement(projectTree.Nodes[0], element);
+            }
+            if (result != null)
+            {
+                SelectedNode = result;
+                result.EnsureVisible();
+            }
+        }
+
+        private TreeNode DoMoveToContainerElement(TreeNode node, Object element)
+        {
+            if (node.Tag is IGeneralElementContainer)
+            {
+                foreach (IContainerElement containerElement in ((node.Tag as IGeneralElementContainer).GetGeneralElements()))
+                {
+                    if (containerElement == element || containerElement.InnerElement == element)
+                    {
+                        return node;
+                    }
+                }
+            }
+            foreach (TreeNode subNode in node.Nodes)
+            {
+                TreeNode result = DoMoveToContainerElement(subNode, element);
+                if (result != null)
+                {
+                    node.Expand();
+                    return result;
+                }
+            }
+            return null;
+        }
+
+        private TreeNode DoMoveToElement(TreeNode node, Object element)
+        {
+            if (node.Tag == element)
+            {
+                return node;
+            }
+            else
+            {
+                foreach (TreeNode subNode in node.Nodes)
+                {
+                    TreeNode result = DoMoveToElement(subNode, element);
+                    if (result != null)
+                    {
+                        node.Expand();
+                        return result;
+                    }
+                }
+            }
+            return null;
+        }
+
         private void RecreateTree()
         {
             projectTree.BeginUpdate();

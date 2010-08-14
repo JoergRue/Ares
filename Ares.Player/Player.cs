@@ -185,8 +185,20 @@ namespace Ares.Player
             projectNameLabel.Text = m_Project != null ? m_Project.Title : StringResources.NoOpenedProject;
             this.Text = String.Format(StringResources.AresPlayer, projectNameLabel.Text);
             PlayingModule.ProjectPlayer.SetProject(m_Project);
+            DoModelChecks();
             fileSystemWatcher1.Path = m_Project != null ? System.IO.Path.GetDirectoryName(m_Project.FileName) : String.Empty;
             m_Instance.SetLoadedProject(filePath);
+        }
+
+        private void DoModelChecks()
+        {
+            Ares.ModelInfo.ModelChecks.Instance.Project = m_Project;
+            Ares.ModelInfo.ModelChecks.Instance.CheckAll();
+            foreach (Ares.ModelInfo.ModelError error in Ares.ModelInfo.ModelChecks.Instance.GetAllErrors())
+            {
+                Messages.AddMessage(error.Severity == ModelInfo.ModelError.ErrorSeverity.Error ? MessageType.Error : MessageType.Warning,
+                    error.Message);
+            }
         }
 
         protected override bool ProcessCmdKey(ref System.Windows.Forms.Message msg, Keys keyData)
@@ -569,6 +581,7 @@ namespace Ares.Player
         {
             m_BasicSettings = new BasicSettings();
             ReadSettings();
+            Messages.Instance.MessageReceived += new MessageReceivedHandler(MessageReceived);
             if (Environment.GetCommandLineArgs().Length > 1)
             {
                 OpenProject(Environment.GetCommandLineArgs()[1]);
@@ -620,7 +633,6 @@ namespace Ares.Player
             updateTimer.Tick += new EventHandler(updateTimer_Tick);
             updateTimer.Start();
             fileSystemWatcher1.Changed += new System.IO.FileSystemEventHandler(fileSystemWatcher1_Changed);
-            Messages.Instance.MessageReceived += new MessageReceivedHandler(MessageReceived);
         }
 
         private void ipAddressBox_SelectedIndexChanged(object sender, EventArgs e)

@@ -59,14 +59,5 @@ namespace Ares.Editor.Controls {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die File not found ähnelt.
-        /// </summary>
-        internal static string FileNotFound {
-            get {
-                return ResourceManager.GetString("FileNotFound", resourceCulture);
-            }
-        }
     }
 }

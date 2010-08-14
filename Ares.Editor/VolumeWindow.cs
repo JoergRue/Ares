@@ -14,6 +14,7 @@ namespace Ares.Editor
         public VolumeWindow()
         {
             InitializeComponent();
+            HideOnClose = true;
         }
 
         protected override string GetPersistString()

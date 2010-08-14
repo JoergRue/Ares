@@ -407,12 +407,14 @@ namespace Ares.Editor.Actions
         {
             m_ModeElement.Trigger = m_NewTrigger;
             ElementChanges.Instance.ElementTriggerChanged(m_ModeElement.Id);
+            Ares.ModelInfo.ModelChecks.Instance.Check(ModelInfo.CheckType.Key);
         }
 
         public override void Undo()
         {
             m_ModeElement.Trigger = m_OldTrigger;
             ElementChanges.Instance.ElementTriggerChanged(m_ModeElement.Id);
+            Ares.ModelInfo.ModelChecks.Instance.Check(ModelInfo.CheckType.Key);
         }
 
         private IModeElement m_ModeElement;

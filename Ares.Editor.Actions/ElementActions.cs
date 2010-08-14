@@ -94,12 +94,14 @@ namespace Ares.Editor.Actions
             IModeElement element = (m_Node.Tag as IModeElement);
             (m_Parent.Tag as IMode).RemoveElement(element);
             ElementRemoval.NotifyRemoval(element);
+            Ares.ModelInfo.ModelChecks.Instance.CheckAll();
         }
 
         public override void Undo()
         {
             m_Parent.Nodes.Insert(m_Index, m_Node);
             (m_Parent.Tag as IMode).InsertElement(m_Index, (m_Node.Tag as IModeElement));
+            Ares.ModelInfo.ModelChecks.Instance.CheckAll();
         }
 
         private TreeNode m_Parent;
@@ -122,12 +124,14 @@ namespace Ares.Editor.Actions
             IBackgroundSoundChoice soundChoice = (m_Node.Tag as IBackgroundSoundChoice);
             (m_Parent.Tag as IBackgroundSounds).RemoveElement(soundChoice.Id);
             ElementRemoval.NotifyRemoval(soundChoice);
+            Ares.ModelInfo.ModelChecks.Instance.CheckAll();
         }
 
         public override void Undo()
         {
             m_Parent.Nodes.Insert(m_Index, m_Node);
             (m_Parent.Tag as IBackgroundSounds).InsertElement(m_Index, (m_Node.Tag as IBackgroundSoundChoice));
+            Ares.ModelInfo.ModelChecks.Instance.CheckAll();
         }
 
         private TreeNode m_Parent;
@@ -291,6 +295,7 @@ namespace Ares.Editor.Actions
             m_Container.RemoveElement((m_Node.Tag as IElement).Id);
             ElementRemoval.NotifyRemoval(m_Node.Tag as IElement);
             ElementChanges.Instance.ElementChanged(m_Container.Id);
+            Ares.ModelInfo.ModelChecks.Instance.CheckAll();
         }
 
         public override void Undo()
@@ -298,6 +303,7 @@ namespace Ares.Editor.Actions
             m_Parent.Nodes.Insert(m_Index, m_Node);
             m_Container.InsertGeneralElement(m_Index, m_Element);
             ElementChanges.Instance.ElementChanged(m_Container.Id);
+            Ares.ModelInfo.ModelChecks.Instance.CheckAll();
         }
 
         private TreeNode m_Parent;

@@ -28,7 +28,7 @@ using Ares.Settings;
 
 namespace Ares.Editor
 {
-    public partial class MainForm : Form
+    public partial class MainForm : Form, ErrorWindow.IErrorWindowClient
     {
         private Ares.Ipc.ApplicationInstance m_Instance;
 
@@ -110,6 +110,12 @@ namespace Ares.Editor
                 m_VolumeWindow = new VolumeWindow();
                 return m_VolumeWindow;
             }
+            else if (persistString == "ErrorWindow")
+            {
+                m_ErrorWindow = new ErrorWindow();
+                m_ErrorWindow.Client = this;
+                return m_ErrorWindow;
+            }
             else
             {
                 return null;
@@ -148,6 +154,8 @@ namespace Ares.Editor
         }
 
         private VolumeWindow m_VolumeWindow;
+
+        private ErrorWindow m_ErrorWindow;
 
         private void UpdateWindowState(WeifenLuo.WinFormsUI.Docking.DockContent window)
         {
@@ -192,6 +200,19 @@ namespace Ares.Editor
             }
             else UpdateWindowState(m_VolumeWindow);
             ActivateWindow(m_VolumeWindow);
+        }
+
+        private void ShowErrorWindow()
+        {
+            if (m_ErrorWindow == null)
+            {
+                m_ErrorWindow = new ErrorWindow();
+                m_ErrorWindow.Client = this;
+                m_ErrorWindow.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockBottom;
+                m_ErrorWindow.Show(dockPanel);
+            }
+            else UpdateWindowState(m_ErrorWindow);
+            ActivateWindow(m_ErrorWindow);
         }
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -266,6 +287,31 @@ namespace Ares.Editor
             NewProject();
         }
 
+        private void DoModelChecks()
+        {
+            Ares.ModelInfo.ModelChecks.Instance.Project = m_CurrentProject;
+            Ares.ModelInfo.ModelChecks.Instance.CheckAll();
+            if (Ares.ModelInfo.ModelChecks.Instance.GetErrorCount() > 0)
+            {
+                if (m_ErrorWindow == null)
+                {
+                    ShowErrorWindow();
+                }
+                else
+                {
+                    if (m_ErrorWindow.IsHidden)
+                    {
+                        UpdateWindowState(m_ErrorWindow);
+                    }
+                    m_ErrorWindow.Refill();
+                }
+            }
+            else if (m_ErrorWindow != null)
+            {
+                m_ErrorWindow.Refill();
+            }
+        }
+
         private void NewProject()
         {
             String title = StringResources.NewProject;
@@ -274,7 +320,7 @@ namespace Ares.Editor
                 return;
             
             m_CurrentProject = Ares.Data.DataModule.ProjectManager.CreateProject(title);
-            Ares.ModelInfo.ModelChecks.Instance.Project = m_CurrentProject;
+            DoModelChecks();
 
             m_ProjectExplorer.SetProject(m_CurrentProject);
 
@@ -317,7 +363,7 @@ namespace Ares.Editor
                 }
                 Ares.Data.DataModule.ProjectManager.UnloadProject(m_CurrentProject);
                 m_CurrentProject = null;
-                Ares.ModelInfo.ModelChecks.Instance.Project = m_CurrentProject;
+                DoModelChecks();
                 Actions.Actions.Instance.Clear();
                 m_Instance.SetLoadedProject("-");
             }
@@ -444,7 +490,7 @@ namespace Ares.Editor
             }
 
             m_ProjectExplorer.SetProject(m_CurrentProject);
-            Ares.ModelInfo.ModelChecks.Instance.Project = m_CurrentProject;
+            DoModelChecks();
             m_Instance.SetLoadedProject(filePath);
             UpdateGUI();
         }
@@ -510,6 +556,7 @@ namespace Ares.Editor
             fileExplorerToolStripMenuItem.Checked =  m_FileExplorers[0] != null && !m_FileExplorers[0].IsHidden;
             soundFileExplorerToolStripMenuItem.Checked = m_FileExplorers[1] != null && !m_FileExplorers[1].IsHidden;
             volumesToolStripMenuItem.Checked = m_VolumeWindow != null && !m_VolumeWindow.IsHidden;
+            projectErrorsToolStripMenuItem.Checked = m_ErrorWindow != null && !m_ErrorWindow.IsHidden;
         }
 
         private void recentMenuItem_DropDownOpening(object sender, EventArgs e)
@@ -631,6 +678,8 @@ namespace Ares.Editor
             fileExplorerToolStripMenuItem.Checked = !m_FileExplorers[0].IsHidden;
             soundFileExplorerToolStripMenuItem.Checked = !m_FileExplorers[1].IsHidden;
             projectExplorerToolStripMenuItem.Checked = !m_ProjectExplorer.IsHidden;
+            volumesToolStripMenuItem.Checked = m_VolumeWindow != null && !m_VolumeWindow.IsHidden;
+            projectErrorsToolStripMenuItem.Checked = m_ErrorWindow != null && !m_ErrorWindow.IsHidden;
             Actions.Actions.Instance.UpdateGUI = UpdateGUI;
             Actions.Playing.Instance.SetDirectories(Ares.Settings.Settings.Instance.MusicDirectory, Ares.Settings.Settings.Instance.SoundDirectory);
             Actions.FilesWatcher.Instance.SetDirectories(Ares.Settings.Settings.Instance.MusicDirectory, Ares.Settings.Settings.Instance.SoundDirectory);
@@ -672,8 +721,27 @@ namespace Ares.Editor
             {
                 ShowVolumeWindow();
             }
+            else if (e.KeyCode == Keys.F10)
+            {
+                ShowErrorWindow();
+            }
         }
 
+        private void projectErrorsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowErrorWindow();
+        }
+
+
+        public void MoveToElement(object element)
+        {
+            if (m_ProjectExplorer == null || m_ProjectExplorer.IsHidden)
+            {
+                ShowProjectExplorer();
+            }
+            m_ProjectExplorer.MoveToElement(element);
+            ActivateWindow(m_ProjectExplorer);
+        }
     }
 
     public static class ControlHelpers

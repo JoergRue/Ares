@@ -59,7 +59,7 @@ namespace Ares.Editor.ElementEditorControls
                 elementsGrid.Rows.Add(new object[] { element.Title, element.RandomChance });
                 m_ElementsToRows[element.Id] = row;
                 Actions.ElementChanges.Instance.AddListener(element.Id, Update);
-                SetFileElementAttributes(elementsGrid, element, row);
+                SetElementAttributes(elementsGrid, element, row);
                 ++row;
             }
             elementsGrid.ResumeLayout();
@@ -78,8 +78,7 @@ namespace Ares.Editor.ElementEditorControls
             {
                 if (changeType == Actions.ElementChanges.ChangeType.Removed)
                 {
-                    Actions.ElementChanges.Instance.RemoveListener(elementID, Update);
-                    elementsGrid.Rows.RemoveAt(m_ElementsToRows[elementID]);
+                    RefillGrid();
                 }
                 else if (changeType == Actions.ElementChanges.ChangeType.Renamed)
                 {
@@ -104,7 +103,7 @@ namespace Ares.Editor.ElementEditorControls
             for (int i = index; i < containerElements.Count; ++i)
             {
                 elementsGrid.Rows.Add(new object[] { containerElements[i].Title, containerElements[i].RandomChance });
-                SetFileElementAttributes(elementsGrid, containerElements[i], i);
+                SetElementAttributes(elementsGrid, containerElements[i], i);
                 m_ElementsToRows[containerElements[i].Id] = i;
                 Actions.ElementChanges.Instance.AddListener(containerElements[i].Id, Update);
             }

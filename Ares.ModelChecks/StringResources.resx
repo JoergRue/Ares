@@ -117,10 +117,37 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="DuplicateModeElementKey" xml:space="preserve">
+    <value>Key {0} is used for elements {1} and {2}</value>
+  </data>
+  <data name="DuplicateModeKey" xml:space="preserve">
+    <value>Key {0} is used for modes {1} and {2}</value>
+  </data>
+  <data name="FileNotFound" xml:space="preserve">
+    <value>File {0} not found</value>
+  </data>
+  <data name="KeyGloballyReserved" xml:space="preserve">
+    <value>This key is reserved for global control</value>
+  </data>
   <data name="KeyUsedByMode" xml:space="preserve">
     <value>This key is already used to select the mode "{0}"</value>
   </data>
   <data name="KeyUsedByModeElement" xml:space="preserve">
     <value>This key is already used to start "{0}"</value>
+  </data>
+  <data name="ModeElementKeyGloballyReserved" xml:space="preserve">
+    <value>Key {0} is reserved for global control</value>
+  </data>
+  <data name="ModeElementKeyUsedByMode" xml:space="preserve">
+    <value>Key {0} is used for element {1} and mode {2}</value>
+  </data>
+  <data name="ModeElementNoKey" xml:space="preserve">
+    <value>No key defined for element {0}</value>
+  </data>
+  <data name="ModeKeyGloballyReserved" xml:space="preserve">
+    <value>Key {0} is reserved for global control</value>
+  </data>
+  <data name="ModeNoKey" xml:space="preserve">
+    <value>No key defined for mode {0}</value>
   </data>
 </root>

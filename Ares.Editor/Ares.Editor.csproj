@@ -115,6 +115,12 @@
     <Compile Include="ElementEditors\TriggerEditor.Designer.cs">
       <DependentUpon>TriggerEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="ErrorWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ErrorWindow.Designer.cs">
+      <DependentUpon>ErrorWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="FileExplorer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -203,6 +209,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ElementEditors\TriggerEditor.resx">
       <DependentUpon>TriggerEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ErrorWindow.de.resx">
+      <DependentUpon>ErrorWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ErrorWindow.resx">
+      <DependentUpon>ErrorWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FileExplorer.de.resx">
       <DependentUpon>FileExplorer.cs</DependentUpon>
@@ -328,6 +340,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\interrogation.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\eventlogError.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\eventlogWarn.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

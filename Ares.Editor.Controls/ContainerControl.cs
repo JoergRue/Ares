@@ -80,19 +80,29 @@ namespace Ares.Editor.Controls
             ElementDoubleClick(this, new ElementDoubleClickEventArgs(element));
         }
 
-        protected void SetFileElementAttributes(DataGridView grid, Ares.Data.IContainerElement element, int row)
+        protected void SetElementAttributes(DataGridView grid, Ares.Data.IContainerElement element, int row)
         {
             if (element.InnerElement is Ares.Data.IFileElement)
             {
                 String path = (element.InnerElement as Ares.Data.IFileElement).FilePath;
                 grid.Rows[row].Cells[0].ToolTipText = path;
-                path = (element.InnerElement as Ares.Data.IFileElement).SoundFileType == Ares.Data.SoundFileType.Music ?
-                    System.IO.Path.Combine(Ares.Settings.Settings.Instance.MusicDirectory, path) :
-                    System.IO.Path.Combine(Ares.Settings.Settings.Instance.SoundDirectory, path);
-                if (!System.IO.File.Exists(path))
+            }
+            IList<Ares.ModelInfo.ModelError> errors = Ares.ModelInfo.ModelChecks.Instance.GetErrorsForElement(element.InnerElement);
+            if (errors.Count > 0)
+            {
+                bool onlyWarnings = true;
+                String errorTexts = String.Empty;
+                foreach (Ares.ModelInfo.ModelError error in errors)
                 {
-                    grid.Rows[row].Cells[0].Style.ForeColor = Color.DarkRed;
-                    grid.Rows[row].Cells[0].ErrorText = StringResources.FileNotFound;
+                    if (errorTexts.Length > 0)
+                        errorTexts += "\n";
+                    errorTexts += error.Message;
+                    if (error.Severity == ModelInfo.ModelError.ErrorSeverity.Error)
+                        onlyWarnings = false;
+                }
+                {
+                    grid.Rows[row].Cells[0].Style.ForeColor = onlyWarnings ? Color.Orange : Color.DarkRed;
+                    grid.Rows[row].Cells[0].ErrorText = errorTexts;
                 }
             }
         }

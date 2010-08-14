@@ -60,6 +60,20 @@ namespace Ares.Editor {
             }
         }
         
+        internal static System.Drawing.Icon eventlogError {
+            get {
+                object obj = ResourceManager.GetObject("eventlogError", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Icon eventlogWarn {
+            get {
+                object obj = ResourceManager.GetObject("eventlogWarn", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap interrogation {
             get {
                 object obj = ResourceManager.GetObject("interrogation", resourceCulture);

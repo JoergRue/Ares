@@ -149,12 +149,14 @@ namespace Ares.Editor.Actions
         {
             (m_ProjectNode.Tag as IProject).RemoveMode(m_Mode);
             m_ProjectNode.Nodes.Remove(m_ModeNode);
+            Ares.ModelInfo.ModelChecks.Instance.CheckAll();
         }
 
         public override void Undo()
         {
             (m_ProjectNode.Tag as IProject).InsertMode(m_Index, m_Mode);
             m_ProjectNode.Nodes.Insert(m_Index, m_ModeNode);
+            Ares.ModelInfo.ModelChecks.Instance.CheckAll();
         }
 
         private IMode m_Mode;
@@ -176,6 +178,7 @@ namespace Ares.Editor.Actions
             IMode mode = m_Node.Tag as IMode;
             mode.KeyCode = m_NewKey;
             m_Node.Text = mode.GetNodeTitle();
+            Ares.ModelInfo.ModelChecks.Instance.Check(ModelInfo.CheckType.Key);
         }
 
         public override void Undo()
@@ -183,6 +186,7 @@ namespace Ares.Editor.Actions
             IMode mode = m_Node.Tag as IMode;
             mode.KeyCode = m_OldKey;
             m_Node.Text = mode.GetNodeTitle();
+            Ares.ModelInfo.ModelChecks.Instance.Check(ModelInfo.CheckType.Key);
         }
 
         private TreeNode m_Node;

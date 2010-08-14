@@ -86,5 +86,13 @@ namespace Ares.Player
         {
             Instance.AddMessage(new Message(type, text));
         }
+
+        public void Clear()
+        {
+            lock (this)
+            {
+                mMessages.Clear();
+            }
+        }
     }
 }

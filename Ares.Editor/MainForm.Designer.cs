@@ -87,6 +87,7 @@ namespace Ares.Editor
             this.fileExplorerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.soundFileExplorerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.volumesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.projectErrorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.extrasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.startPlayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
@@ -225,7 +226,8 @@ namespace Ares.Editor
             this.projectExplorerToolStripMenuItem,
             this.fileExplorerToolStripMenuItem,
             this.soundFileExplorerToolStripMenuItem,
-            this.volumesToolStripMenuItem});
+            this.volumesToolStripMenuItem,
+            this.projectErrorsToolStripMenuItem});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             resources.ApplyResources(this.viewToolStripMenuItem, "viewToolStripMenuItem");
             this.viewToolStripMenuItem.DropDownOpened += new System.EventHandler(this.viewToolStripMenuItem_DropDownOpened);
@@ -252,6 +254,12 @@ namespace Ares.Editor
             this.volumesToolStripMenuItem.Name = "volumesToolStripMenuItem";
             resources.ApplyResources(this.volumesToolStripMenuItem, "volumesToolStripMenuItem");
             this.volumesToolStripMenuItem.Click += new System.EventHandler(this.volumesToolStripMenuItem_Click);
+            // 
+            // projectErrorsToolStripMenuItem
+            // 
+            this.projectErrorsToolStripMenuItem.Name = "projectErrorsToolStripMenuItem";
+            resources.ApplyResources(this.projectErrorsToolStripMenuItem, "projectErrorsToolStripMenuItem");
+            this.projectErrorsToolStripMenuItem.Click += new System.EventHandler(this.projectErrorsToolStripMenuItem_Click);
             // 
             // extrasToolStripMenuItem
             // 
@@ -512,6 +520,7 @@ namespace Ares.Editor
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.IO.FileSystemWatcher fileSystemWatcher1;
         private System.Windows.Forms.ToolStripMenuItem volumesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem projectErrorsToolStripMenuItem;
     }
 }
 

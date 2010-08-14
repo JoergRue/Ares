@@ -61,6 +61,42 @@ namespace Ares.ModelInfo {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Key {0} is used for elements {1} and {2} ähnelt.
+        /// </summary>
+        internal static string DuplicateModeElementKey {
+            get {
+                return ResourceManager.GetString("DuplicateModeElementKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Key {0} is used for modes {1} and {2} ähnelt.
+        /// </summary>
+        internal static string DuplicateModeKey {
+            get {
+                return ResourceManager.GetString("DuplicateModeKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die File {0} not found ähnelt.
+        /// </summary>
+        internal static string FileNotFound {
+            get {
+                return ResourceManager.GetString("FileNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die This key is reserved for global control ähnelt.
+        /// </summary>
+        internal static string KeyGloballyReserved {
+            get {
+                return ResourceManager.GetString("KeyGloballyReserved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die This key is already used to select the mode &quot;{0}&quot; ähnelt.
         /// </summary>
         internal static string KeyUsedByMode {
@@ -75,6 +111,51 @@ namespace Ares.ModelInfo {
         internal static string KeyUsedByModeElement {
             get {
                 return ResourceManager.GetString("KeyUsedByModeElement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Key {0} is reserved for global control ähnelt.
+        /// </summary>
+        internal static string ModeElementKeyGloballyReserved {
+            get {
+                return ResourceManager.GetString("ModeElementKeyGloballyReserved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Key {0} is used for element {1} and mode {2} ähnelt.
+        /// </summary>
+        internal static string ModeElementKeyUsedByMode {
+            get {
+                return ResourceManager.GetString("ModeElementKeyUsedByMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die No key defined for element {0} ähnelt.
+        /// </summary>
+        internal static string ModeElementNoKey {
+            get {
+                return ResourceManager.GetString("ModeElementNoKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Key {0} is reserved for global control ähnelt.
+        /// </summary>
+        internal static string ModeKeyGloballyReserved {
+            get {
+                return ResourceManager.GetString("ModeKeyGloballyReserved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die No key defined for mode {0} ähnelt.
+        /// </summary>
+        internal static string ModeNoKey {
+            get {
+                return ResourceManager.GetString("ModeNoKey", resourceCulture);
             }
         }
     }

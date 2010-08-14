@@ -132,6 +132,7 @@ namespace Ares.Editor
             // projectTree
             // 
             resources.ApplyResources(this.projectTree, "projectTree");
+            this.projectTree.HideSelection = false;
             this.projectTree.Name = "projectTree";
             this.projectTree.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.projectTree_AfterLabelEdit);
             this.projectTree.BeforeCollapse += new System.Windows.Forms.TreeViewCancelEventHandler(this.projectTree_BeforeCollapse);
@@ -459,7 +460,8 @@ namespace Ares.Editor
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.projectTree);
             this.Controls.Add(this.toolStrip1);
-            this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)((((WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)
+            this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft)
+                        | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)
                         | WeifenLuo.WinFormsUI.Docking.DockAreas.DockTop)
                         | WeifenLuo.WinFormsUI.Docking.DockAreas.DockBottom)));
             this.Name = "ProjectExplorer";

@@ -52,16 +52,18 @@ namespace Ares.Editor.Actions
         private void m_MusicWatcher_Changed(object sender, System.IO.FileSystemEventArgs e)
         {
             m_MusicWatcher.EnableRaisingEvents = false;
-            MusicDirChanges(this, new EventArgs());
-            AnyDirChanges(this, new EventArgs());
+            Ares.ModelInfo.ModelChecks.Instance.Check(Ares.ModelInfo.CheckType.File);
+            if (MusicDirChanges != null) MusicDirChanges(this, new EventArgs());
+            if (AnyDirChanges != null) AnyDirChanges(this, new EventArgs());
             m_MusicWatcher.EnableRaisingEvents = true;
         }
 
         private void m_SoundWatcher_Changed(object sender, System.IO.FileSystemEventArgs e)
         {
             m_SoundWatcher.EnableRaisingEvents = false;
-            SoundDirChanges(this, new EventArgs());
-            AnyDirChanges(this, new EventArgs());
+            Ares.ModelInfo.ModelChecks.Instance.Check(Ares.ModelInfo.CheckType.File);
+            if (SoundDirChanges != null) SoundDirChanges(this, new EventArgs());
+            if (AnyDirChanges != null) AnyDirChanges(this, new EventArgs());
             m_SoundWatcher.EnableRaisingEvents = false;
             throw new NotImplementedException();
         }
@@ -80,6 +82,7 @@ namespace Ares.Editor.Actions
             m_SoundWatcher.Path = soundsDir;
             if (!firstSet)
             {
+                Ares.ModelInfo.ModelChecks.Instance.Check(Ares.ModelInfo.CheckType.File);
                 if (oldMusicPath != musicDir && MusicDirChanges != null)
                 {
                     MusicDirChanges(this, new EventArgs());

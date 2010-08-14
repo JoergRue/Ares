@@ -251,6 +251,15 @@
   <data name="volumesToolStripMenuItem.Text" xml:space="preserve">
     <value>Volumes</value>
   </data>
+  <data name="projectErrorsToolStripMenuItem.ShortcutKeyDisplayString" xml:space="preserve">
+    <value>F10</value>
+  </data>
+  <data name="projectErrorsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>193, 22</value>
+  </data>
+  <data name="projectErrorsToolStripMenuItem.Text" xml:space="preserve">
+    <value>Project Errors</value>
+  </data>
   <data name="viewToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>44, 20</value>
   </data>
@@ -369,14 +378,14 @@
   <data name="newButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGgSURBVDhPjZJNSwJRFIaHoJW0ahv0A1q1qE3UvnLTumX9
-        CSHoB9SmQiGtCCuwAiENQqEvKsgkLNSYPkW0nFLTSnOar7c76lwnpiYvHM7lzn2fc897hmHqK5cb5UVx
-        hIWLAaIMRHE4wXFWQftummXW4hNsRAg7sE3yVW1fPSv1b/wLkVjLORUsE9EWUxMTSPG6D969GNYDEaz6
-        Q1jxh6YMQGGaXLaTmFFF6vLUXuIk4dHOgIXNA/QOjRsh3BUjchftCmZr/eOhFdgnme8GUh11KKmxGkDw
-        JFaFuH2n0/QlkmQN0xbUiqQ69QSTFDDn3qmKtWgASgOHVLBIAHctDRMxTwGiJEOFaKAfXii5rgn5ts0B
-        LwGkO4G8jUzARcWKoqBcEfCcL1cBPYNj+HU6S94jKtJvvgQJr28VJDNv5gDn+p4BIMkK3stfeMqWcJN8
-        NQc41oIGQIUXkS18IvFYRPQ2aw5Q+9Mv1bjiB4/U8zvYRB7heKZ5gN64u1QBl9cvOI6kmwfojYvf5xCK
-        PmH3LNkcQJv3X/nPMWozVi/8F+p/8A2yiDdw454EDAAAAABJRU5ErkJggg==
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGgSURBVDhPjZLPSgJRFMaHoFW0ahv0AK1a1CZqX7lp3bJe
+        Igh6gNxUKJQVYQZaIGRBJGRFBZlUhH/QskS0EXNMM02bGefrXm1uE1OTFw7ncud+v3PPd4bjvpYgTNQk
+        aTwKGwcEOUjSWILnTaL63TDXox0ecZoIYQH2SI40942z8tDWvxA52nHFBOtEtMM1xQRSjA3C7QvBdXAD
+        x64fG7v+OR1QNJPLFhLzVESXs/mSZRJO9QxY2T7GwOiUHsJHOIm/7lKw0Owfj+3AEcm1PiDV/QUlNRwH
+        8J6HGhC758LMXiLLpgBrgVYk1ZknmGWARft+Q6zGN6A8fMIEqwQQb/s2EUsMIMl1UIgK+uGFIvTO1O87
+        rXATQLoHyE+TCdiYWFEUVKoisvlKA9A/Molfp7PmPmUi7eZDlPHyWkUy82oMWHb5dAC5rqBU+QCfK+Mu
+        +WIMsG56dYBqTUKu8I7EUxHB+5wxgPanXdS44lsNqWwJ0UQegXCmdYDWuHiqgNvYM85u0q0DtMaFHwT4
+        gzwOL5OtAdR5/5X/HKM6Y3rhv6D/wSeQpjdmn8m1hwAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="newButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
@@ -675,6 +684,12 @@
     <value>volumesToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;volumesToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;projectErrorsToolStripMenuItem.Name" xml:space="preserve">
+    <value>projectErrorsToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;projectErrorsToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;extrasToolStripMenuItem.Name" xml:space="preserve">
