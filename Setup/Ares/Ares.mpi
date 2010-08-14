@@ -319,7 +319,7 @@ File ::AA68F733-4C4C-41A1-92A5-A8EA74DE556C -name D:/Projekte/Ares/trunk/build/A
 File ::65ECB07E-047F-4F7A-AA2D-F0127D49EFE1 -name D:/Projekte/Ares/trunk/build/Ares/ChangeLog_de.txt -location <%BaseDir%>/Ares -parent 7083DB58-DCBB-45E7-84F3-372716EE81BB
 Component ::9007BFE7-966A-4832-9DD3-CC572BE38EC3 -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows} -name Editor -parent Components
 Component ::1067F309-D8C3-41F5-A545-08D4EE16F22C -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows} -name Player -parent Components
-Component ::1D3073BA-AA49-466B-AF04-52B9B8B314C8 -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Solaris-sparc Solaris-x86 Windows} -name Controller -parent Components
+Component ::1D3073BA-AA49-466B-AF04-52B9B8B314C8 -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Solaris-sparc Solaris-x86 Windows} -name {Controller Windows} -parent Components
 Component ::AB9A6919-96BA-4794-9C53-5F070AAF63D9 -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86} -name {Controller Linux} -parent Components
 SetupType ::D8F1FC75-10B8-48A8-8D8A-5D779D6E4FFA -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Solaris-sparc Solaris-x86 Windows} -name {Player and Editor} -parent SetupTypes
 SetupType ::158A4D90-EE27-4556-9602-3CCC20CD084D -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows} -name Controller -parent SetupTypes
@@ -328,12 +328,12 @@ SetupType ::9C75F9C1-73C1-420A-B295-CF2C12C2C0DD -setup Install -active Yes -pla
 SetupType ::DA9512D1-8510-4BE4-9468-87A3E3CEC679 -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows} -name Custom -parent SetupTypes
 
 InstallComponent A2B2F26E-1743-4599-9647-63613D3D1EB6 -setup Install -type pane -title {Welcome Screen} -component Welcome -active Yes -parent StandardInstall
-InstallComponent C3E9F0A2-C973-4698-9022-FE7FA05A36CC -setup Install -type pane -conditions {9A97E88B-8CDE-4866-9462-56330FCD49DE 314A4D01-5C8F-443B-9E50-590C56276DCE} -title {Select Destination} -component SelectDestination -command insert -active Yes -parent StandardInstall
+InstallComponent C3E9F0A2-C973-4698-9022-FE7FA05A36CC -setup Install -type pane -conditions {9A97E88B-8CDE-4866-9462-56330FCD49DE 314A4D01-5C8F-443B-9E50-590C56276DCE} -title {Select Destination} -component SelectDestination -command reorder -active Yes -parent StandardInstall
 Condition 9A97E88B-8CDE-4866-9462-56330FCD49DE -active Yes -parent C3E9F0A2-C973-4698-9022-FE7FA05A36CC -title {Script Condition} -component ScriptCondition -TreeObject::id 9A97E88B-8CDE-4866-9462-56330FCD49DE
 Condition 314A4D01-5C8F-443B-9E50-590C56276DCE -active Yes -parent C3E9F0A2-C973-4698-9022-FE7FA05A36CC -title {File Permission Condition} -component FilePermissionCondition -TreeObject::id 314A4D01-5C8F-443B-9E50-590C56276DCE
-InstallComponent A4D4BCB1-76B0-484C-8C7D-7033F1900F8F -setup Install -type pane -conditions {27C7BA05-2D4F-4587-84B3-C02E0469C959 C60DD64B-6885-4FA3-8BD3-299223B9AF43} -title {Setup Type} -component SetupType -command insert -active Yes -parent StandardInstall
+InstallComponent A4D4BCB1-76B0-484C-8C7D-7033F1900F8F -setup Install -type pane -conditions {27C7BA05-2D4F-4587-84B3-C02E0469C959 8CEB5CD1-A841-4469-94AA-4E4E1629F6F3} -title {Setup Type} -component SetupType -command reorder -active Yes -parent StandardInstall
 Condition 27C7BA05-2D4F-4587-84B3-C02E0469C959 -active Yes -parent A4D4BCB1-76B0-484C-8C7D-7033F1900F8F -title {Script Condition} -component ScriptCondition -TreeObject::id 27C7BA05-2D4F-4587-84B3-C02E0469C959
-Condition C60DD64B-6885-4FA3-8BD3-299223B9AF43 -active Yes -parent A4D4BCB1-76B0-484C-8C7D-7033F1900F8F -title {String Is Condition} -component StringIsCondition -TreeObject::id C60DD64B-6885-4FA3-8BD3-299223B9AF43
+Condition 8CEB5CD1-A841-4469-94AA-4E4E1629F6F3 -active Yes -parent A4D4BCB1-76B0-484C-8C7D-7033F1900F8F -title {String Is Condition} -component StringIsCondition -TreeObject::id 8CEB5CD1-A841-4469-94AA-4E4E1629F6F3
 InstallComponent 7A445DB9-31D9-4A6E-AEF3-A87760357E8D -setup Install -type action -title {Populate Setup Types} -component PopulateSetupTypes -active Yes -parent A4D4BCB1-76B0-484C-8C7D-7033F1900F8F
 InstallComponent 3A19498E-3FA6-413E-A483-6615339EC8E9 -setup Install -type pane -conditions 34875D52-5905-4F12-BF9A-FEBCAEA9AD4B -title {Choose Components} -component ChooseComponents -command insert -active Yes -parent StandardInstall
 Condition 34875D52-5905-4F12-BF9A-FEBCAEA9AD4B -active Yes -parent 3A19498E-3FA6-413E-A483-6615339EC8E9 -title {String Equal Condition} -component StringEqualCondition -TreeObject::id 34875D52-5905-4F12-BF9A-FEBCAEA9AD4B
@@ -378,8 +378,8 @@ Condition 8D8AAD39-2928-42AB-8644-0EEBCDF4D596 -active Yes -parent 5E96A17D-9B6F
 InstallComponent BA2CF7E9-3DB3-4280-89BD-322C6770B612 -setup Install -type action -title {Check for Previous Install} -component CheckForPreviousInstall -active Yes -parent 5E96A17D-9B6F-46EC-941A-A92A33C92A92
 InstallComponent E1C130D4-0AB9-472F-98DB-4CCAB4446A64 -setup Install -type action -conditions 1990859C-26F7-433B-BC07-76A18285C712 -title {Set Virtual Text} -component SetVirtualText -command insert -active Yes -parent 5E96A17D-9B6F-46EC-941A-A92A33C92A92
 Condition 1990859C-26F7-433B-BC07-76A18285C712 -active Yes -parent E1C130D4-0AB9-472F-98DB-4CCAB4446A64 -title {String Equal Condition} -component StringEqualCondition -TreeObject::id 00CC7F80-D53B-4F63-B22F-C46DE75FC5E2
-InstallComponent 83D9B781-9448-4FF3-8BD2-D6FBDB3DBCDB -setup Install -type action -conditions E44DF945-167C-49DB-91F4-F9D11EE52F09 -title {Set Virtual Text} -component SetVirtualText -command insert -active Yes -parent 5E96A17D-9B6F-46EC-941A-A92A33C92A92
-Condition E44DF945-167C-49DB-91F4-F9D11EE52F09 -active Yes -parent 83D9B781-9448-4FF3-8BD2-D6FBDB3DBCDB -title {String Equal Condition} -component StringEqualCondition -TreeObject::id 00CC7F80-D53B-4F63-B22F-C46DE75FC5E2
+InstallComponent 172B1A79-1C93-4268-A79C-1D86E29C0AFF -setup Install -type action -conditions C8E240D0-B03E-46A2-B5C3-48846BC42AC8 -title {Execute Script} -component ExecuteScript -command reorder -active Yes -parent 5E96A17D-9B6F-46EC-941A-A92A33C92A92
+Condition C8E240D0-B03E-46A2-B5C3-48846BC42AC8 -active Yes -parent 172B1A79-1C93-4268-A79C-1D86E29C0AFF -title {String Is Condition} -component StringIsCondition -TreeObject::id C8E240D0-B03E-46A2-B5C3-48846BC42AC8
 InstallComponent 03DE2717-F9EF-4015-921B-B901BE680C09 -setup Install -type action -title {Create Install Panes} -component CreateInstallPanes -active Yes -parent 5E96A17D-9B6F-46EC-941A-A92A33C92A92
 InstallComponent 1B8DD5C0-1EB8-498D-97F3-11EE29D2E1CE -setup Install -type actiongroup -title {Install Actions} -alias {Install Actions} -active Yes -parent ActionGroupsInstall
 InstallComponent 94A981DE-DB4F-4B10-ADAB-33B82FD9BD70 -setup Install -type action -title {Install Selected Files} -component InstallSelectedFiles -active Yes -parent 1B8DD5C0-1EB8-498D-97F3-11EE29D2E1CE
@@ -606,6 +606,12 @@ array set Properties {
 158A4D90-EE27-4556-9602-3CCC20CD084D,Name
 {Controller}
 
+172B1A79-1C93-4268-A79C-1D86E29C0AFF,Conditions
+{1 condition}
+
+172B1A79-1C93-4268-A79C-1D86E29C0AFF,TclScript
+{::InstallAPI::SetActiveSetupType -setuptype <%PreviousInstallSetupType%>}
+
 1836E5CB-3960-4AE1-A7E7-9E19583B5AFD,CheckCondition
 {Before Action is Executed}
 
@@ -652,7 +658,10 @@ array set Properties {
 {<%InstallDir%>/Controller}
 
 1BEEB448-5AB6-4944-BCB9-691EC0289441,FileSize
-{123658}
+{123659}
+
+1BEEB448-5AB6-4944-BCB9-691EC0289441,FileUpdateMethod
+{Always overwrite files}
 
 1BEEB448-5AB6-4944-BCB9-691EC0289441,Name
 {Controller Linux}
@@ -814,7 +823,10 @@ array set Properties {
 {<%InstallDir%>}
 
 36904AC1-ABF2-4646-9ECF-2C0CBC0BB8C5,FileSize
-{893262}
+{905550}
+
+36904AC1-ABF2-4646-9ECF-2C0CBC0BB8C5,FileUpdateMethod
+{Always overwrite files}
 
 36904AC1-ABF2-4646-9ECF-2C0CBC0BB8C5,Name
 {Player And Editor}
@@ -982,7 +994,10 @@ array set Properties {
 {<%InstallDir%>/Player_Editor}
 
 5600FFDB-0F3C-4E9F-B311-0FACC5462967,FileSize
-{908811}
+{936459}
+
+5600FFDB-0F3C-4E9F-B311-0FACC5462967,FileUpdateMethod
+{Always overwrite files}
 
 5600FFDB-0F3C-4E9F-B311-0FACC5462967,Name
 {Editor}
@@ -1114,7 +1129,10 @@ array set Properties {
 {<%InstallDir%>/Player_Editor}
 
 68676E85-DEAC-451E-9016-59D1A2300E9B,FileSize
-{173186}
+{176258}
+
+68676E85-DEAC-451E-9016-59D1A2300E9B,FileUpdateMethod
+{Always overwrite files}
 
 68676E85-DEAC-451E-9016-59D1A2300E9B,Name
 {Player}
@@ -1135,7 +1153,10 @@ array set Properties {
 {<%InstallDir%>}
 
 7083DB58-DCBB-45E7-84F3-372716EE81BB,FileSize
-{28404}
+{31995}
+
+7083DB58-DCBB-45E7-84F3-372716EE81BB,FileUpdateMethod
+{Always overwrite files}
 
 7083DB58-DCBB-45E7-84F3-372716EE81BB,Name
 {Ares Common}
@@ -1245,18 +1266,6 @@ array set Properties {
 83582F70-2B90-417D-A3F5-07944D23FDD3,Title,subst
 {1}
 
-83D9B781-9448-4FF3-8BD2-D6FBDB3DBCDB,Conditions
-{1 condition}
-
-83D9B781-9448-4FF3-8BD2-D6FBDB3DBCDB,SubstituteValue
-{Yes}
-
-83D9B781-9448-4FF3-8BD2-D6FBDB3DBCDB,Value
-{<%PreviousInstallSetupType%>}
-
-83D9B781-9448-4FF3-8BD2-D6FBDB3DBCDB,VirtualText
-{InstallType}
-
 83F2AE4E-7E87-4B69-8AF7-5A0CBF0008CD,CheckCondition
 {Before Action is Executed}
 
@@ -1320,6 +1329,12 @@ array set Properties {
 8BAF8A69-0D37-4603-B648-088ACBBA53AB,Conditions
 {0 conditions}
 
+8CEB5CD1-A841-4469-94AA-4E4E1629F6F3,Operator
+{false}
+
+8CEB5CD1-A841-4469-94AA-4E4E1629F6F3,String
+{<%UpgradeInstall%>}
+
 8D8AAD39-2928-42AB-8644-0EEBCDF4D596,CheckCondition
 {Before Action is Executed}
 
@@ -1364,6 +1379,9 @@ array set Properties {
 
 953890EA-7233-446E-AF22-E9084BF13BF4,FileSize
 {4425316}
+
+953890EA-7233-446E-AF22-E9084BF13BF4,FileUpdateMethod
+{Always overwrite files}
 
 953890EA-7233-446E-AF22-E9084BF13BF4,Name
 {Controller Common}
@@ -1770,15 +1788,6 @@ C5A2C47B-73F3-4D11-9B52-42429C848B7F,TargetFileName
 C5A2C47B-73F3-4D11-9B52-42429C848B7F,WorkingDirectory
 {<%InstallDir%>\Controller}
 
-C60DD64B-6885-4FA3-8BD3-299223B9AF43,Comment
-{Don't display this pane in an upgrade install}
-
-C60DD64B-6885-4FA3-8BD3-299223B9AF43,Operator
-{false}
-
-C60DD64B-6885-4FA3-8BD3-299223B9AF43,String
-{<%UpgradeInstall%>}
-
 C67A4891-F64D-49CF-8624-CC7FA31A0BE6,CheckCondition
 {Before Action is Executed}
 
@@ -1790,6 +1799,12 @@ C73AC31F-41BB-4DD6-8966-2EA5BEBB643F,CheckCondition
 
 C73AC31F-41BB-4DD6-8966-2EA5BEBB643F,Filename
 {<%InstallDir%>/Player_Editor/Ares.Player.exe}
+
+C8E240D0-B03E-46A2-B5C3-48846BC42AC8,CheckCondition
+{Before Action is Executed}
+
+C8E240D0-B03E-46A2-B5C3-48846BC42AC8,String
+{<%UpgradeInstall%>}
 
 CDD9709A-517F-4514-9160-303EE159E740,CheckCondition
 {Before Action is Executed}
@@ -1947,15 +1962,6 @@ E1E6BF8A-E925-40ED-BD7D-925040416021,Alias
 E300FA1E-5048-4BAB-805A-936856C647B2,String
 {<%ErrorsOccurred%>}
 
-E44DF945-167C-49DB-91F4-F9D11EE52F09,CheckCondition
-{Before Action is Executed}
-
-E44DF945-167C-49DB-91F4-F9D11EE52F09,String1
-{<%PreviousInstallCount%>}
-
-E44DF945-167C-49DB-91F4-F9D11EE52F09,String2
-{1}
-
 E58B791B-46B2-4106-A525-BC9C9F71E09C,CheckCondition
 {Before Action is Executed}
 
@@ -2014,7 +2020,10 @@ F15BCB0E-1F11-4A72-9067-9D94B8381202,Destination
 {<%InstallDir%>/Controller}
 
 F15BCB0E-1F11-4A72-9067-9D94B8381202,FileSize
-{153479}
+{153480}
+
+F15BCB0E-1F11-4A72-9067-9D94B8381202,FileUpdateMethod
+{Always overwrite files}
 
 F15BCB0E-1F11-4A72-9067-9D94B8381202,Name
 {Controller Windows}

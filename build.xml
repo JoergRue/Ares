@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Ares" default="updateVersions">
+
+	<property name="ProductVersion" value="0.2.0" />
+
+	<target name="updateVersions">
+	   <replaceregexp match="AssemblyVersion\(&quot;.\..\..\..&quot;\)" replace="AssemblyVersion(&quot;${ProductVersion}.0&quot;)">
+	     <fileset dir=".">
+		   <include name="**/AssemblyInfo.cs"/>
+		 </fileset>
+	   </replaceregexp>
+	   <replaceregexp match="AssemblyFileVersion\(&quot;.\..\..\..&quot;\)" replace="AssemblyFileVersion(&quot;${ProductVersion}.0&quot;)">
+	     <fileset dir=".">
+		   <include name="**/AssemblyInfo.cs"/>
+		 </fileset>
+	   </replaceregexp>
+	   <replaceregexp match="Version\.parse\(&quot;.\..\..&quot;\)" replace="Version.parse(&quot;${ProductVersion}&quot;)">
+	     <fileset dir=".">
+		   <include name="**/Version.java"/>
+		 </fileset>
+	   </replaceregexp>
+	</target>
+	
+</project>
