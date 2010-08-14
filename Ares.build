@@ -1,6 +1,5 @@
 <project name="Ares" default="rebuild">
-  <property name="ProductVersion" value="0.2.0" />
-    
+
   <property name="configuration" value="Release"/>
   <property name="nant.settings.currentframework" value="net-3.5" />
 	
@@ -9,44 +8,20 @@
 	<property name="output.dir" value="${build.dir}/Ares/Player_Editor" />
 	<property name="libraries.dir" value="Libraries" />
 	
-	<target name="cleanVersions" description="Remove temporary assembly info files">
-        <delete>
-            <fileset>
-                <include name="${temp.dir}/**" />
-            </fileset>
-        </delete>
-	</target>
-    
-	<target name="updateVersions" description="Update version information" depends="cleanVersions">
-	  <copy todir="${temp.dir}">
-	    <fileset>
-		    <include name="**/AssemblyInfo.cs" />
-		  </fileset>
-		  <filterchain>
-		      <replacestring from="0.1.0" to="${ProductVersion}" />
-	    </filterchain>
-	  </copy>
-	  <copy todir="." >
-	    <fileset basedir="${temp.dir}" >
-	      <include name="**/AssemblyInfo.cs" />
-	    </fileset>
-	  </copy>
-	</target>
-	
-    <target name="clean" description="Delete all previously compiled binaries." depends="cleanVersions">
+    <target name="clean" description="Delete all previously compiled binaries.">
         <delete>
             <fileset>
                 <include name="bin/**" />
                 <include name="**/obj/**" />
-				<exclude name="bass.dll" />
-				<exclude name="bass_fx.dll" />
+				<exclude name="**/bass.dll" />
+				<exclude name="**/bass_fx.dll" />
             </fileset>
         </delete>
     </target>
     
     <property name="solutionFile" value="Ares.sln" />
     
-    <target name="build" description="Build all targets." depends="updateVersions">
+    <target name="build" description="Build all targets.">
 	    
 		<!--
 	      <msbuild project="${solutionFile}" >

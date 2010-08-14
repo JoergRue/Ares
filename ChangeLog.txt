@@ -1,3 +1,35 @@
+Version 0.3.0
+-------------
+- General: Added checks for consistent keys and file existence
+- Editor: Added project error window
+- Editor: Missing files are marked in lists
+- Player: Gapless loops if settings of a file allows them
+- Editor: Double-click on a file in explorer stops playing other files and starts 
+  playing that file
+- Editor: Renamed label for random delay
+- Editor: Default action for BG sounds is to select a key
+- Editor: Default action in explorers can be triggered with return key
+- Editor: Added keyboard shortcuts to open windows, to select keys, and to stop 
+  playing
+- Editor: File explorer reloads automatically after a change on disk in its 
+  file tree
+- Player: After file change of project, ask user whether it shall be reloaded
+- Player: Clearing messages not just clears the window, but the real message list
+- Editor: After loading a project, the project tree is expanded only up to the 
+  mode elements
+- Editor: After adding elements in the project tree, the editor is immediately 
+  opened
+- Editor: Double click on a chance doesn't open the element editor, but allows to 
+  edit the chance
+- Editor: File selection dialogs now have file types for selection
+- Editor: Controls are correctly disabled if an element is currenlty playing
+- Editor: Fixed a bug which lead to some errors in file lists when dropping multiple
+  files
+- Editor: Fixed a bug which lead to errors after a list was closed and its elements 
+  were changed later
+- Editor: Fixed handling of empty titles in file tags
+- Setup: Fixed wrong target directory for some resource files
+
 Version 0.2.0
 -------------
 - Added Ares Controller
