@@ -30,20 +30,34 @@ namespace Ares.Editor
 {
     partial class FileExplorer : WeifenLuo.WinFormsUI.Docking.DockContent
     {
+        private static ImageList sImageList = null;
+
+        static FileExplorer()
+        {
+            sImageList = new ImageList();
+            sImageList.Images.Add(ImageResources.Folder);
+            sImageList.Images.Add(ImageResources.sounds1);
+            sImageList.Images.Add(ImageResources.music1);
+            sImageList.Images.Add(ImageResources.eventlogError);
+        }
+
         public FileExplorer(FileType fileType)
         {
             InitializeComponent();
             this.Text = String.Format(StringResources.FileExplorerTitle, fileType == FileType.Music ? StringResources.Music : StringResources.Sounds);
             m_FileType = fileType;
             HideOnClose = true;
+            treeView1.ImageList = sImageList;
             ReFillTree();
             if (fileType == FileType.Music)
             {
                 Actions.FilesWatcher.Instance.MusicDirChanges += new EventHandler<EventArgs>(DirChanged);
+                this.Icon = ImageResources.music;
             }
             else
             {
                 Actions.FilesWatcher.Instance.SoundDirChanges += new EventHandler<EventArgs>(DirChanged);
+                this.Icon = ImageResources.sounds;
             }
         }
 
@@ -71,6 +85,7 @@ namespace Ares.Editor
             treeView1.BeginUpdate();
             treeView1.Nodes.Clear();
             m_Root = new TreeNode(m_FileType == FileType.Music ? StringResources.Music : StringResources.Sounds);
+            m_Root.SelectedImageIndex = m_Root.ImageIndex = 0;
             m_Root.Tag = new DraggedItem { NodeType = DraggedItemType.Directory, ItemType = m_FileType, RelativePath = String.Empty };
             String directory = m_FileType == FileType.Music ? Ares.Settings.Settings.Instance.MusicDirectory : Ares.Settings.Settings.Instance.SoundDirectory;
             FillTreeNode(m_Root, directory, directory, m_FileType);
@@ -89,6 +104,7 @@ namespace Ares.Editor
                 foreach (String subDir in subDirs)
                 {
                     TreeNode subNode = new TreeNode(subDir.Substring(subLength));
+                    subNode.ImageIndex = subNode.SelectedImageIndex = 0;
                     subNode.Tag = new DraggedItem { NodeType = DraggedItemType.Directory, ItemType = dirType, RelativePath = subDir.Substring(rootLength) };
                     FillTreeNode(subNode, subDir, root, dirType);
                     node.Nodes.Add(subNode);
@@ -100,6 +116,7 @@ namespace Ares.Editor
                 foreach (String file in files)
                 {
                     TreeNode subNode = new TreeNode(file.Substring(subLength));
+                    subNode.ImageIndex = subNode.SelectedImageIndex = (dirType == FileType.Sound ? 1 : 2);
                     subNode.Tag = new DraggedItem { NodeType = DraggedItemType.File, ItemType = dirType, RelativePath = file.Substring(rootLength) };
                     node.Nodes.Add(subNode);
                 }
@@ -107,6 +124,7 @@ namespace Ares.Editor
             catch (Exception e)
             {
                 TreeNode subNode = new TreeNode(e.Message);
+                subNode.SelectedImageIndex = subNode.ImageIndex = 3;
                 node.Nodes.Add(subNode);
             }
         }

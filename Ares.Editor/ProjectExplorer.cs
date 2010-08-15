@@ -32,12 +32,40 @@ namespace Ares.Editor
 {
     partial class ProjectExplorer : WeifenLuo.WinFormsUI.Docking.DockContent
     {
+        private static void ensureDefaultImageIndex(TreeView tree)
+        {
+            if (tree.ImageList != null)
+            {
+                tree.ImageIndex = tree.ImageList.Images.Count;
+                tree.SelectedImageIndex = tree.ImageList.Images.Count;
+            }
+        }
+
+        private static ImageList sImageList = null;
+
+        static ProjectExplorer()
+        {
+            sImageList = new ImageList();
+            sImageList.Images.Add(ImageResources.random_music_list);
+            sImageList.Images.Add(ImageResources.sequential_music_list);
+            sImageList.Images.Add(ImageResources.randomsounds);
+            sImageList.Images.Add(ImageResources.parallelsounds);
+            sImageList.Images.Add(ImageResources.aressmall);
+            sImageList.Images.Add(ImageResources.random);
+            sImageList.Images.Add(ImageResources.sequential);
+            sImageList.Images.Add(ImageResources.parallel);
+            sImageList.Images.Add(ImageResources.vierge);
+        }
+
         public ProjectExplorer()
         {
             InitializeComponent();
             HideOnClose = true;
+            projectTree.ImageList = sImageList;
+            ensureDefaultImageIndex(projectTree);
             RecreateTree();
             ElementChanges.Instance.AddListener(-1, ElementChanged);
+            
         }
 
         private System.Action m_AfterEditAction;
@@ -135,6 +163,7 @@ namespace Ares.Editor
             {
                 TreeNode projectNode = new TreeNode(m_Project.Title);
                 projectNode.Tag = m_Project;
+                projectNode.SelectedImageIndex = projectNode.ImageIndex = 4;
                 AddModeNodes(projectNode, m_Project);
                 projectNode.ContextMenuStrip = projectContextMenu;
                 projectTree.Nodes.Add(projectNode);
@@ -153,6 +182,7 @@ namespace Ares.Editor
             foreach (IMode mode in project.GetModes())
             {
                 TreeNode modeNode = new TreeNode(mode.GetNodeTitle());
+                modeNode.SelectedImageIndex = modeNode.ImageIndex = 8;
                 projectNode.Nodes.Add(modeNode);
                 modeNode.Tag = mode;
                 modeNode.ContextMenuStrip = modeContextMenu;
@@ -223,22 +253,40 @@ namespace Ares.Editor
             if (element is IBackgroundSounds)
             {
                 node.ContextMenuStrip = bgSoundsContextMenu;
+                node.ImageIndex = node.SelectedImageIndex = 3;
             }
             else if (element is IBackgroundSoundChoice)
             {
                 node.ContextMenuStrip = elementContextMenu;
+                node.ImageIndex = node.SelectedImageIndex = 2;
             }
             else if (element is IRandomBackgroundMusicList)
             {
                 node.ContextMenuStrip = elementContextMenu;
+                node.ImageIndex = node.SelectedImageIndex = 0;
+
             }
             else if (element is ISequentialBackgroundMusicList)
             {
                 node.ContextMenuStrip = elementContextMenu;
+                node.ImageIndex = node.SelectedImageIndex = 1;
+
             }
             else if (element is IGeneralElementContainer)
             {
                 node.ContextMenuStrip = containerContextMenu;
+                if (element is IElementContainer<IChoiceElement>)
+                {
+                    node.ImageIndex = node.SelectedImageIndex = 5;
+                }
+                else if (element is IElementContainer<ISequentialElement>)
+                {
+                    node.ImageIndex = node.SelectedImageIndex = 6;
+                }
+                else
+                {
+                    node.ImageIndex = node.SelectedImageIndex = 7;
+                }
             }
             return node;
         }
@@ -369,6 +417,7 @@ namespace Ares.Editor
             TreeNode modeNode;
             Actions.Actions.Instance.AddNew(new AddModeAction(SelectedNode, out modeNode));
             modeNode.ContextMenuStrip = modeContextMenu;
+            modeNode.ImageIndex = modeNode.SelectedImageIndex = 8;
             SelectedNode = modeNode;
             projectTree.SelectedNode = modeNode;
             if (immediateRename)

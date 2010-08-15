@@ -133,6 +133,7 @@ namespace Ares.Editor
             // 
             resources.ApplyResources(this.projectTree, "projectTree");
             this.projectTree.HideSelection = false;
+            this.projectTree.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.projectTree.Name = "projectTree";
             this.projectTree.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.projectTree_AfterLabelEdit);
             this.projectTree.BeforeCollapse += new System.Windows.Forms.TreeViewCancelEventHandler(this.projectTree_BeforeCollapse);

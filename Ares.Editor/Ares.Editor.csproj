@@ -347,6 +347,54 @@
   <ItemGroup>
     <None Include="Resources\eventlogWarn.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\music.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\random_music_list.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sequential_music_list.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sounds.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\randomsounds.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\parallelsounds.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\aressmall.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\volumes.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dice.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rightarrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\parallel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\random.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\vierge.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Folder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sounds.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\music.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

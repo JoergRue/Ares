@@ -120,19 +120,10 @@
   <metadata name="projectContextMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="projectContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>143, 48</value>
-  </data>
-  <data name="&gt;&gt;projectContextMenu.Name" xml:space="preserve">
-    <value>projectContextMenu</value>
-  </data>
-  <data name="&gt;&gt;projectContextMenu.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="renameToolStripMenuItem.ShortcutKeyDisplayString" xml:space="preserve">
     <value>F2</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="renameToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>142, 22</value>
   </data>
@@ -144,6 +135,15 @@
   </data>
   <data name="toolStripMenuItem1.Text" xml:space="preserve">
     <value>Add Mode ...</value>
+  </data>
+  <data name="projectContextMenu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>143, 48</value>
+  </data>
+  <data name="&gt;&gt;projectContextMenu.Name" xml:space="preserve">
+    <value>projectContextMenu</value>
+  </data>
+  <data name="&gt;&gt;projectContextMenu.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="projectTree.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
@@ -163,7 +163,7 @@
     <value>projectTree</value>
   </data>
   <data name="&gt;&gt;projectTree.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TreeView, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>Ares.Editor.Controls.GUIExtensions.ImageTreeView, Ares.Editor.Controls, Version=0.3.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
   </data>
   <data name="&gt;&gt;projectTree.Parent" xml:space="preserve">
     <value>$this</value>
@@ -174,15 +174,6 @@
   <metadata name="modeContextMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>181, 17</value>
   </metadata>
-  <data name="modeContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>223, 236</value>
-  </data>
-  <data name="&gt;&gt;modeContextMenu.Name" xml:space="preserve">
-    <value>modeContextMenu</value>
-  </data>
-  <data name="&gt;&gt;modeContextMenu.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="renameToolStripMenuItem1.ShortcutKeyDisplayString" xml:space="preserve">
     <value>F2</value>
   </data>
@@ -258,18 +249,18 @@
   <data name="addChoiceListToolStripMenuItem.Text" xml:space="preserve">
     <value>Add Random List ...</value>
   </data>
+  <data name="modeContextMenu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>223, 236</value>
+  </data>
+  <data name="&gt;&gt;modeContextMenu.Name" xml:space="preserve">
+    <value>modeContextMenu</value>
+  </data>
+  <data name="&gt;&gt;modeContextMenu.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <metadata name="containerContextMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>338, 17</value>
   </metadata>
-  <data name="containerContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>223, 258</value>
-  </data>
-  <data name="&gt;&gt;containerContextMenu.Name" xml:space="preserve">
-    <value>containerContextMenu</value>
-  </data>
-  <data name="&gt;&gt;containerContextMenu.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="editToolStripMenuItem.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 9pt, style=Bold</value>
   </data>
@@ -351,18 +342,18 @@
   <data name="addChoiceListToolStripMenuItem1.Text" xml:space="preserve">
     <value>Add Random List ...</value>
   </data>
+  <data name="containerContextMenu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>223, 258</value>
+  </data>
+  <data name="&gt;&gt;containerContextMenu.Name" xml:space="preserve">
+    <value>containerContextMenu</value>
+  </data>
+  <data name="&gt;&gt;containerContextMenu.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <metadata name="elementContextMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>515, 17</value>
   </metadata>
-  <data name="elementContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>159, 114</value>
-  </data>
-  <data name="&gt;&gt;elementContextMenu.Name" xml:space="preserve">
-    <value>elementContextMenu</value>
-  </data>
-  <data name="&gt;&gt;elementContextMenu.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="editToolStripMenuItem1.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 9pt, style=Bold</value>
   </data>
@@ -402,18 +393,18 @@
   <data name="deleteToolStripMenuItem2.Text" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="elementContextMenu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>159, 114</value>
+  </data>
+  <data name="&gt;&gt;elementContextMenu.Name" xml:space="preserve">
+    <value>elementContextMenu</value>
+  </data>
+  <data name="&gt;&gt;elementContextMenu.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <metadata name="bgSoundsContextMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>685, 17</value>
   </metadata>
-  <data name="bgSoundsContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>174, 136</value>
-  </data>
-  <data name="&gt;&gt;bgSoundsContextMenu.Name" xml:space="preserve">
-    <value>bgSoundsContextMenu</value>
-  </data>
-  <data name="&gt;&gt;bgSoundsContextMenu.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="renameToolStripMenuItem4.ShortcutKeyDisplayString" xml:space="preserve">
     <value>F2</value>
   </data>
@@ -453,33 +444,18 @@
   <data name="addSoundChoiceToolStripMenuItem.Text" xml:space="preserve">
     <value>Add Sound Choice</value>
   </data>
+  <data name="bgSoundsContextMenu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>174, 136</value>
+  </data>
+  <data name="&gt;&gt;bgSoundsContextMenu.Name" xml:space="preserve">
+    <value>bgSoundsContextMenu</value>
+  </data>
+  <data name="&gt;&gt;bgSoundsContextMenu.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>865, 17</value>
   </metadata>
-  <data name="toolStrip1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="toolStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>284, 25</value>
-  </data>
-  <data name="toolStrip1.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="toolStrip1.Text" xml:space="preserve">
-    <value>toolStrip1</value>
-  </data>
-  <data name="&gt;&gt;toolStrip1.Name" xml:space="preserve">
-    <value>toolStrip1</value>
-  </data>
-  <data name="&gt;&gt;toolStrip1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;toolStrip1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;toolStrip1.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
   <data name="playButton.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
@@ -516,6 +492,30 @@
   <data name="setKeyButton.Text" xml:space="preserve">
     <value>Select Key ...</value>
   </data>
+  <data name="toolStrip1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="toolStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>284, 25</value>
+  </data>
+  <data name="toolStrip1.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="toolStrip1.Text" xml:space="preserve">
+    <value>toolStrip1</value>
+  </data>
+  <data name="&gt;&gt;toolStrip1.Name" xml:space="preserve">
+    <value>toolStrip1</value>
+  </data>
+  <data name="&gt;&gt;toolStrip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStrip1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;toolStrip1.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -527,6 +527,48 @@
   </data>
   <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 8.25pt</value>
+  </data>
+  <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        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
+        AP//gAD//8AB///gA///+Af/
+</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Project Explorer</value>

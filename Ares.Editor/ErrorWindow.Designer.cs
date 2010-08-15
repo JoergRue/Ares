@@ -41,7 +41,6 @@
             // 
             // messagesGrid
             // 
-            resources.ApplyResources(this.messagesGrid, "messagesGrid");
             this.messagesGrid.AllowUserToAddRows = false;
             this.messagesGrid.AllowUserToDeleteRows = false;
             this.messagesGrid.AllowUserToResizeColumns = false;
@@ -51,6 +50,7 @@
             this.messagesGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.iconColumn,
             this.Message});
+            resources.ApplyResources(this.messagesGrid, "messagesGrid");
             this.messagesGrid.Name = "messagesGrid";
             this.messagesGrid.ReadOnly = true;
             this.messagesGrid.RowHeadersVisible = false;

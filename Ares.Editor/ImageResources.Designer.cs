@@ -60,6 +60,13 @@ namespace Ares.Editor {
             }
         }
         
+        internal static System.Drawing.Bitmap aressmall {
+            get {
+                object obj = ResourceManager.GetObject("aressmall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Icon eventlogError {
             get {
                 object obj = ResourceManager.GetObject("eventlogError", resourceCulture);
@@ -74,9 +81,30 @@ namespace Ares.Editor {
             }
         }
         
+        internal static System.Drawing.Bitmap Folder {
+            get {
+                object obj = ResourceManager.GetObject("Folder", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap interrogation {
             get {
                 object obj = ResourceManager.GetObject("interrogation", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Icon music {
+            get {
+                object obj = ResourceManager.GetObject("music", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap music1 {
+            get {
+                object obj = ResourceManager.GetObject("music1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -91,6 +119,41 @@ namespace Ares.Editor {
         internal static System.Drawing.Bitmap openHS {
             get {
                 object obj = ResourceManager.GetObject("openHS", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap parallel {
+            get {
+                object obj = ResourceManager.GetObject("parallel", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap parallelsounds {
+            get {
+                object obj = ResourceManager.GetObject("parallelsounds", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap random {
+            get {
+                object obj = ResourceManager.GetObject("random", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap random_music_list {
+            get {
+                object obj = ResourceManager.GetObject("random_music_list", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap randomsounds {
+            get {
+                object obj = ResourceManager.GetObject("randomsounds", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -116,6 +179,34 @@ namespace Ares.Editor {
             }
         }
         
+        internal static System.Drawing.Bitmap sequential {
+            get {
+                object obj = ResourceManager.GetObject("sequential", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap sequential_music_list {
+            get {
+                object obj = ResourceManager.GetObject("sequential_music_list", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Icon sounds {
+            get {
+                object obj = ResourceManager.GetObject("sounds", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap sounds1 {
+            get {
+                object obj = ResourceManager.GetObject("sounds1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap StopSmall {
             get {
                 object obj = ResourceManager.GetObject("StopSmall", resourceCulture);
@@ -127,6 +218,20 @@ namespace Ares.Editor {
             get {
                 object obj = ResourceManager.GetObject("undo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap vierge {
+            get {
+                object obj = ResourceManager.GetObject("vierge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Icon volumes {
+            get {
+                object obj = ResourceManager.GetObject("volumes", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
     }
