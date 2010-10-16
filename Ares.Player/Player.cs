@@ -208,6 +208,11 @@ namespace Ares.Player
             {
                 m_PlayingControl.KeyReceived(keyData);
             }
+            if (keyData == (Keys.F4 | Keys.Alt))
+            {
+                PlayingModule.ProjectPlayer.StopAll();
+                Close();
+            }
             return true;
         }
 

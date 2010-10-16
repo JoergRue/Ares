@@ -47,6 +47,8 @@ import javax.swing.SpringLayout;
 import javax.swing.SwingUtilities;
 
 import java.awt.BorderLayout;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -485,7 +487,7 @@ public final class MainFrame extends FrameController implements IMessageListener
 	  return slider;
   }
 
-  private JLabel projectLabel, modeLabel, elementsLabel, musicLabel;
+  private JLabel projectLabel, modeLabel, elementsLabel, musicLabel, elementsDescLabel;
   
   private JPanel getStatePanel() {
 	if (statePanel == null) {
@@ -498,7 +500,8 @@ public final class MainFrame extends FrameController implements IMessageListener
 	  inner.add(projectLabel);
 	  inner.add(new JLabel(Localization.getString("MainFrame.Mode"))); //$NON-NLS-1$
 	  inner.add(modeLabel);
-	  inner.add(new JLabel(Localization.getString("MainFrame.Elements"))); //$NON-NLS-1$
+	  elementsDescLabel = new JLabel(Localization.getString("MainFrame.Elements")); //$NON-NLS-1$ 
+	  inner.add(elementsDescLabel);
 	  inner.add(elementsLabel);
 	  inner.add(new JLabel(Localization.getString("MainFrame.Music"))); //$NON-NLS-1$
 	  inner.add(musicLabel);
@@ -782,7 +785,17 @@ public final class MainFrame extends FrameController implements IMessageListener
 			  text += ", "; //$NON-NLS-1$
 		  }
 	  }
-	  elementsLabel.setText(text);
+	  
+	String fit = compact(text, elementsLabel, getStatePanel().getWidth() - 25 - elementsDescLabel.getWidth());
+	elementsLabel.setText(fit);
+	if (!fit.equals(text))
+	{
+		elementsLabel.setToolTipText(text);
+	}
+	else
+	{
+		elementsLabel.setToolTipText("");
+	}
   }
 
 	@Override
@@ -846,11 +859,73 @@ public final class MainFrame extends FrameController implements IMessageListener
 		});
 	}
 	
+	private static String compact(String text, JLabel label, int labelMaxWidth)
+	{
+		Graphics g = label.getGraphics();
+		FontMetrics fm = g.getFontMetrics();
+		int width = fm.stringWidth(text);
+		
+		if (width <= labelMaxWidth)
+			return text;
+
+		int len = 0;
+		int seg = text.length();
+		String fit = "";
+		
+		final String ELLIPSIS = "...";
+
+		// find the longest string that fits into
+		// the control boundaries using bisection method 
+		while (seg > 1)
+		{
+			seg -= seg / 2;
+
+			int left = len + seg;
+			int right = text.length();
+
+			if (left > right)
+				continue;
+
+			right -= left;
+			left = 0;
+
+			// build and measure a candidate string with ellipsis
+			String tst = text.substring(0, left) + 
+				ELLIPSIS + text.substring(right);
+			
+		    int testWidth = fm.stringWidth(tst);
+				
+			// candidate string fits into control boundaries, 
+			// try a longer string
+			// stop when seg <= 1 
+			if (testWidth <= labelMaxWidth)
+			{
+				len += seg;
+				fit = tst;
+			}
+		}
+
+		if (len == 0) // string can't fit into control
+		{
+			return ELLIPSIS;
+		}
+		return fit;
+	}
+	
 	@Override
 	public void musicChanged(final String newMusic) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				musicLabel.setText(newMusic);
+				String fit = compact(newMusic, musicLabel, getStatePanel().getWidth() - 25 - elementsDescLabel.getWidth());
+				musicLabel.setText(fit);
+				if (!fit.equals(newMusic))
+				{
+					musicLabel.setToolTipText(newMusic);
+				}
+				else
+				{
+					musicLabel.setToolTipText("");
+				}
 			}
 		});
 	}
