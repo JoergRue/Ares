@@ -91,6 +91,19 @@ namespace Ares.Data
             m_Element.Visit(visitor);
         }
 
+        public IList<IElementReference> References
+        {
+            get
+            {
+                return m_Element.References;
+            }
+        }
+
+        public void AddReference(IElementReference reference)
+        {
+            m_Element.AddReference(reference);
+        }
+
         protected void DoWriteToXml(System.Xml.XmlWriter writer)
         {
             m_Element.WriteToXml(writer);

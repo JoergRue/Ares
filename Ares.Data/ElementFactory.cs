@@ -81,6 +81,15 @@ namespace Ares.Data
         /// Creates a mode.
         /// </summary>
         IModeElement CreateModeElement(String title, IElement firstElement);
+
+        /// <summary>
+        /// Creates a reference to a container.
+        /// </summary>
+        /// <typeparam name="T">Type of the container.</typeparam>
+        /// <typeparam name="T">Type of the container elements.</typeparam>
+        /// <param name="container">The container.</param>
+        /// <returns>New reference to the container.</returns>
+        IContainerReference<T, U> CreateContainerReference<T, U>(T container) where T : IElementContainer<U> where U : IContainerElement;
     }
 
     class ElementFactory : IElementFactory
@@ -145,6 +154,14 @@ namespace Ares.Data
         {
             return new ModeElement(GetNextID(), title, firstElement);
         }
+
+        public IContainerReference<T, U> CreateContainerReference<T, U>(T container) where T : IElementContainer<U> where U : IContainerElement
+        {
+            IContainerReference<T, U> result = new ContainerReference<T, U>(GetNextID(), container);
+            container.AddReference(result);
+            return result;
+        }
+
 
         internal ElementFactory()
         {
@@ -323,5 +340,22 @@ namespace Ares.Data
         }
 
         public abstract void WriteToXml(System.Xml.XmlWriter writer);
+
+        private List<IElementReference> m_References;
+
+        public IList<IElementReference> References
+        {
+            get
+            {
+                return m_References;
+            }
+        }
+
+        public void AddReference(IElementReference reference)
+        {
+            if (m_References == null)
+                m_References = new List<IElementReference>();
+            m_References.Add(reference);
+        }
     }
 }

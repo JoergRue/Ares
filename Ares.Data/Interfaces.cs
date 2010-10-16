@@ -102,6 +102,27 @@ namespace Ares.Data
         /// </summary>
         /// <param name="writer">Writer for the xml</param>
         void WriteToXml(System.Xml.XmlWriter writer);
+
+        /// <summary>
+        /// Returns the references to this element. The list may be null or empty.
+        /// </summary>
+        IList<IElementReference> References { get; }
+
+        /// <summary>
+        /// Adds a reference to the element.
+        /// </summary>
+        void AddReference(IElementReference reference);
+    }
+
+    /// <summary>
+    /// Contains a reference to another element.
+    /// </summary>
+    public interface IElementReference
+    {
+        /// <summary>
+        /// The referenced element
+        /// </summary>
+        IElement ReferencedElement { get; }
     }
 
     /// <summary>
@@ -309,6 +330,18 @@ namespace Ares.Data
     public interface ISequentialContainer : IElementContainer<ISequentialElement>
     {
         void MoveElements(int startIndex, int endIndex, int offset);
+    }
+
+    /// <summary>
+    /// Special element reference to a container.
+    /// </summary>
+    /// <typeparam name="T">Type of the container</typeparam>
+    public interface IContainerReference<T, U> : IElementReference, IElementContainer<U> where T : IElementContainer<U> where U : IContainerElement
+    {
+        /// <summary>
+        /// The referenced container.
+        /// </summary>
+        T ReferencedContainer { get; }
     }
 
     /// <summary>

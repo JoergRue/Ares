@@ -90,6 +90,7 @@
     <Compile Include="RandomMusicList.cs" />
     <Compile Include="HigherLevelInterfaces.cs" />
     <Compile Include="Interfaces.cs" />
+    <Compile Include="References.cs" />
     <Compile Include="SequentialBackgroundMusicList.cs" />
     <Compile Include="StringResources.Designer.cs">
       <AutoGen>True</AutoGen>
