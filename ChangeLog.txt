@@ -1,3 +1,10 @@
+Version 0.3.1
+-------------
+- Editor: Added icons to trees and sub-windows
+- Player: Can be closed with Alt+F4
+- Controller: Very long Element and Music texts are cut and a tooltip is 
+  displayed instead
+
 Version 0.3.0
 -------------
 - General: Added checks for consistent keys and file existence

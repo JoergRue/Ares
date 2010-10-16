@@ -1,3 +1,10 @@
+Version 0.3.1
+-------------
+- Editor: Icons zu den Explorern und Unterfenstern hinzugefügt
+- Player: Kann mit Alt+F4 geschlossen werden
+- Controller: Sehr lange Texte für Elemente / Musik werden abgeschnitten und 
+  statt dessen wird ein Tooltip angezeigt
+
 Version 0.3.0
 -------------
 - Allgemein: Projekte werden überprüft, ob die Dateien vorhanden und die Tasten 
