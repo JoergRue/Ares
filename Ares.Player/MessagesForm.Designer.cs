@@ -38,7 +38,7 @@ namespace Ares.Player
             }
             if (disposing)
             {
-                Messages.Instance.MessageReceived -= new MessageReceivedHandler(MessageReceived);
+                Ares.Players.Messages.Instance.MessageReceived -= new Ares.Players.MessageReceivedHandler(MessageReceived);
             }
             base.Dispose(disposing);
         }

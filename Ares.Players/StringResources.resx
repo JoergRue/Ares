@@ -117,64 +117,64 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Ares" xml:space="preserve">
-    <value>Ares</value>
+  <data name="ClientConnected" xml:space="preserve">
+    <value>Connected with client {0}</value>
   </data>
-  <data name="AresPlayer" xml:space="preserve">
-    <value>Ares Player - {0}</value>
+  <data name="ClientDisconnected" xml:space="preserve">
+    <value>Closed connection with client.</value>
   </data>
-  <data name="BassInitFail" xml:space="preserve">
-    <value>Fehler: Konnte BASS nicht initialisieren!</value>
+  <data name="ClientLengthReceived" xml:space="preserve">
+    <value>Got length from client: </value>
   </data>
-  <data name="Connected" xml:space="preserve">
-    <value>Verbunden</value>
+  <data name="ClientListenError" xml:space="preserve">
+    <value>Error listening for client: </value>
   </data>
-  <data name="ConnectedWith" xml:space="preserve">
-    <value>Verbunden mit </value>
+  <data name="CommandReceived" xml:space="preserve">
+    <value>Received command '{0}'</value>
   </data>
-  <data name="EditorStartError" xml:space="preserve">
-    <value>Konnte Editor nicht starten. Grund:
-{0}</value>
+  <data name="DisconnectingClient" xml:space="preserve">
+    <value>Disconnecting on client request.</value>
   </data>
-  <data name="LoadError" xml:space="preserve">
-    <value>Fehler beim Laden des Projektes: {0}</value>
+  <data name="InvalidKeyCode" xml:space="preserve">
+    <value>Invalid key code: {0}</value>
   </data>
-  <data name="NoOpenedProject" xml:space="preserve">
-    <value>Kein Projekt geladen</value>
+  <data name="KeyListenError" xml:space="preserve">
+    <value>Error while listening for keys: </value>
   </data>
-  <data name="NoSettings" xml:space="preserve">
-    <value>Dies scheint der erste Start des Players zu sein.
-Sie sollten zuerst ein paar Einstellungen vornehmen.</value>
+  <data name="KeyReceived" xml:space="preserve">
+    <value>Received key ids: {0} {1}</value>
   </data>
-  <data name="NoStatusInfoError" xml:space="preserve">
-    <value>Konnte keine Statusinformationen senden. Bitte überprüfen Sie die Netzwerkverbindung.</value>
+  <data name="LengthTooHigh" xml:space="preserve">
+    <value>Length is too high.</value>
   </data>
-  <data name="NotConnected" xml:space="preserve">
-    <value>Nicht verbunden</value>
+  <data name="NoClientID" xml:space="preserve">
+    <value>Client didn't send ID</value>
   </data>
-  <data name="OpenProject" xml:space="preserve">
-    <value>Projekt öffnen ...</value>
+  <data name="PingReceived" xml:space="preserve">
+    <value>Received ping.</value>
   </data>
-  <data name="OpenProjectQuestion" xml:space="preserve">
-    <value>Projekt {0} öffnen?</value>
+  <data name="PlayError" xml:space="preserve">
+    <value>At element {0}: {1}</value>
   </data>
-  <data name="ReloadProject" xml:space="preserve">
-    <value>Projektdatei wurde geändert. Abspielen stoppen und Datei neu laden?</value>
+  <data name="StartBroadcast" xml:space="preserve">
+    <value>Starting UDP broadcast</value>
   </data>
-  <data name="ShowInfo" xml:space="preserve">
-    <value>Über Ares ...</value>
+  <data name="StopBroadcast" xml:space="preserve">
+    <value>Stopping UDP broadcast</value>
   </data>
-  <data name="ShowMessages" xml:space="preserve">
-    <value>Nachrichten ...</value>
+  <data name="UDPError" xml:space="preserve">
+    <value>Error sending UDP packet: </value>
   </data>
-  <data name="ShowSettings" xml:space="preserve">
-    <value>Einstellungen ...</value>
+  <data name="UDPSending" xml:space="preserve">
+    <value>Sending UDP packet '{0}'</value>
   </data>
-  <data name="StartEditor" xml:space="preserve">
-    <value>Editor öffnen</value>
+  <data name="VolumeCommandReceived" xml:space="preserve">
+    <value>Received volume command: type {0}, volume {1}</value>
   </data>
-  <data name="WriteSettingsError" xml:space="preserve">
-    <value>Einstellungen konnten nicht gespeichert werden. Grund:
-{0}</value>
+  <data name="VolumeOutOfRange" xml:space="preserve">
+    <value>Received out-of-range volume command</value>
+  </data>
+  <data name="WrongClientLength" xml:space="preserve">
+    <value>Length is wrong.</value>
   </data>
 </root>

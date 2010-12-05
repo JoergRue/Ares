@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Ares.Player {
+namespace Ares.Plugin {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Ares.Player {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Ares.Player.StringResources", typeof(StringResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Ares.Plugin.StringResources", typeof(StringResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -70,11 +70,11 @@ namespace Ares.Player {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Ares Player - {0} ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Ares Player ähnelt.
         /// </summary>
-        internal static string AresPlayer {
+        internal static string AresTitle {
             get {
-                return ResourceManager.GetString("AresPlayer", resourceCulture);
+                return ResourceManager.GetString("AresTitle", resourceCulture);
             }
         }
         
@@ -88,15 +88,6 @@ namespace Ares.Player {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Connected ähnelt.
-        /// </summary>
-        internal static string Connected {
-            get {
-                return ResourceManager.GetString("Connected", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Connected with  ähnelt.
         /// </summary>
         internal static string ConnectedWith {
@@ -106,12 +97,11 @@ namespace Ares.Player {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Could not start editor. Reason:
-        ///{0} ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Elements: ähnelt.
         /// </summary>
-        internal static string EditorStartError {
+        internal static string Elements {
             get {
-                return ResourceManager.GetString("EditorStartError", resourceCulture);
+                return ResourceManager.GetString("Elements", resourceCulture);
             }
         }
         
@@ -125,21 +115,38 @@ namespace Ares.Player {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die No Project Loaded ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Mode: ähnelt.
         /// </summary>
-        internal static string NoOpenedProject {
+        internal static string Mode {
             get {
-                return ResourceManager.GetString("NoOpenedProject", resourceCulture);
+                return ResourceManager.GetString("Mode", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die This seems to be the first start of the player.
-        ///You should adapt some settings first. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Music: ähnelt.
         /// </summary>
-        internal static string NoSettings {
+        internal static string Music {
             get {
-                return ResourceManager.GetString("NoSettings", resourceCulture);
+                return ResourceManager.GetString("Music", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Music Volume: ähnelt.
+        /// </summary>
+        internal static string MusicVolume {
+            get {
+                return ResourceManager.GetString("MusicVolume", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Network State: ähnelt.
+        /// </summary>
+        internal static string NetworkState {
+            get {
+                return ResourceManager.GetString("NetworkState", resourceCulture);
             }
         }
         
@@ -162,75 +169,38 @@ namespace Ares.Player {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Open a project ... ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Overall Volume: ähnelt.
         /// </summary>
-        internal static string OpenProject {
+        internal static string OverallVolume {
             get {
-                return ResourceManager.GetString("OpenProject", resourceCulture);
+                return ResourceManager.GetString("OverallVolume", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Open project {0}? ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Error saving the settings: {0} ähnelt.
         /// </summary>
-        internal static string OpenProjectQuestion {
+        internal static string SettingsStoreError {
             get {
-                return ResourceManager.GetString("OpenProjectQuestion", resourceCulture);
+                return ResourceManager.GetString("SettingsStoreError", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Project file has changed. Stop playing and reload? ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Sounds: ähnelt.
         /// </summary>
-        internal static string ReloadProject {
+        internal static string Sounds {
             get {
-                return ResourceManager.GetString("ReloadProject", resourceCulture);
+                return ResourceManager.GetString("Sounds", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die About Ares ... ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Sounds Volume: ähnelt.
         /// </summary>
-        internal static string ShowInfo {
+        internal static string SoundsVolume {
             get {
-                return ResourceManager.GetString("ShowInfo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Messages ... ähnelt.
-        /// </summary>
-        internal static string ShowMessages {
-            get {
-                return ResourceManager.GetString("ShowMessages", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Settings ... ähnelt.
-        /// </summary>
-        internal static string ShowSettings {
-            get {
-                return ResourceManager.GetString("ShowSettings", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Open Editor ähnelt.
-        /// </summary>
-        internal static string StartEditor {
-            get {
-                return ResourceManager.GetString("StartEditor", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Settings could not be saved. Reason:
-        ///{0} ähnelt.
-        /// </summary>
-        internal static string WriteSettingsError {
-            get {
-                return ResourceManager.GetString("WriteSettingsError", resourceCulture);
+                return ResourceManager.GetString("SoundsVolume", resourceCulture);
             }
         }
     }

@@ -120,61 +120,49 @@
   <data name="Ares" xml:space="preserve">
     <value>Ares</value>
   </data>
-  <data name="AresPlayer" xml:space="preserve">
-    <value>Ares Player - {0}</value>
+  <data name="AresTitle" xml:space="preserve">
+    <value>Ares Player</value>
   </data>
   <data name="BassInitFail" xml:space="preserve">
-    <value>Fehler: Konnte BASS nicht initialisieren!</value>
-  </data>
-  <data name="Connected" xml:space="preserve">
-    <value>Verbunden</value>
+    <value>Fatal: Couldn't initialize BASS engine!</value>
   </data>
   <data name="ConnectedWith" xml:space="preserve">
-    <value>Verbunden mit </value>
+    <value>Connected with </value>
   </data>
-  <data name="EditorStartError" xml:space="preserve">
-    <value>Konnte Editor nicht starten. Grund:
-{0}</value>
+  <data name="Elements" xml:space="preserve">
+    <value>Elements:</value>
   </data>
   <data name="LoadError" xml:space="preserve">
-    <value>Fehler beim Laden des Projektes: {0}</value>
+    <value>Error opening the project: {0}</value>
   </data>
-  <data name="NoOpenedProject" xml:space="preserve">
-    <value>Kein Projekt geladen</value>
+  <data name="Mode" xml:space="preserve">
+    <value>Mode:</value>
   </data>
-  <data name="NoSettings" xml:space="preserve">
-    <value>Dies scheint der erste Start des Players zu sein.
-Sie sollten zuerst ein paar Einstellungen vornehmen.</value>
+  <data name="Music" xml:space="preserve">
+    <value>Music:</value>
+  </data>
+  <data name="MusicVolume" xml:space="preserve">
+    <value>Music Volume:</value>
+  </data>
+  <data name="NetworkState" xml:space="preserve">
+    <value>Network State:</value>
   </data>
   <data name="NoStatusInfoError" xml:space="preserve">
-    <value>Konnte keine Statusinformationen senden. Bitte überprüfen Sie die Netzwerkverbindung.</value>
+    <value>Couldn't send status info. Check network connection.</value>
   </data>
   <data name="NotConnected" xml:space="preserve">
-    <value>Nicht verbunden</value>
+    <value>Not connected</value>
   </data>
-  <data name="OpenProject" xml:space="preserve">
-    <value>Projekt öffnen ...</value>
+  <data name="OverallVolume" xml:space="preserve">
+    <value>Overall Volume:</value>
   </data>
-  <data name="OpenProjectQuestion" xml:space="preserve">
-    <value>Projekt {0} öffnen?</value>
+  <data name="SettingsStoreError" xml:space="preserve">
+    <value>Error saving the settings: {0}</value>
   </data>
-  <data name="ReloadProject" xml:space="preserve">
-    <value>Projektdatei wurde geändert. Abspielen stoppen und Datei neu laden?</value>
+  <data name="Sounds" xml:space="preserve">
+    <value>Sounds:</value>
   </data>
-  <data name="ShowInfo" xml:space="preserve">
-    <value>Über Ares ...</value>
-  </data>
-  <data name="ShowMessages" xml:space="preserve">
-    <value>Nachrichten ...</value>
-  </data>
-  <data name="ShowSettings" xml:space="preserve">
-    <value>Einstellungen ...</value>
-  </data>
-  <data name="StartEditor" xml:space="preserve">
-    <value>Editor öffnen</value>
-  </data>
-  <data name="WriteSettingsError" xml:space="preserve">
-    <value>Einstellungen konnten nicht gespeichert werden. Grund:
-{0}</value>
+  <data name="SoundsVolume" xml:space="preserve">
+    <value>Sounds Volume:</value>
   </data>
 </root>

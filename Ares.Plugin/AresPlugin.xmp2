@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PackageClass xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Version>2.0</Version>
+  <Groups>
+    <Items>
+      <GroupItem Name="Default">
+        <ParentGroup />
+        <DisplayName>Binaries</DisplayName>
+        <DefaulChecked>true</DefaulChecked>
+        <Description>Binaries for the Ares Plugin</Description>
+        <Files>
+          <Items>
+            <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
+              <Param1 />
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
+              <LocalFileName>..\bin\Release\Ares.Data.dll</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{7062dd25-918e-4ab6-8182-29b920f158eb}-Ares.Data.dll</ZipFileName>
+              <DestinationFilename>%Base%\plugins\Windows\Ares.Data.dll</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
+              <Param1 />
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
+              <LocalFileName>..\bin\Release\Ares.ModelInfo.dll</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{74c001ef-f6e0-43c1-bd75-294244d4f267}-Ares.ModelInfo.dll</ZipFileName>
+              <DestinationFilename>%Base%\plugins\Windows\Ares.ModelInfo.dll</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
+              <Param1 />
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
+              <LocalFileName>..\bin\Release\Ares.Players.dll</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{fd439b75-f3c6-4372-8110-49af04bb2056}-Ares.Players.dll</ZipFileName>
+              <DestinationFilename>%Base%\plugins\Windows\Ares.Players.dll</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
+              <Param1 />
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
+              <LocalFileName>..\bin\Release\Ares.Playing.dll</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{b1eef208-a6cd-42b3-a340-3babbe1e146f}-Ares.Playing.dll</ZipFileName>
+              <DestinationFilename>%Base%\plugins\Windows\Ares.Playing.dll</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
+              <Param1 />
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
+              <LocalFileName>..\bin\Release\Ares.Plugin.dll</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{4030f46f-f48e-45bb-9e85-22c606ef4d39}-Ares.Plugin.dll</ZipFileName>
+              <DestinationFilename>%Base%\plugins\Windows\Ares.Plugin.dll</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
+              <Param1 />
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
+              <LocalFileName>..\bin\Release\Ares.Settings.dll</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{93e419c1-e1cc-4363-bc5d-b3b42d320224}-Ares.Settings.dll</ZipFileName>
+              <DestinationFilename>%Base%\plugins\Windows\Ares.Settings.dll</DestinationFilename>
+            </FileItem>
+          </Items>
+        </Files>
+      </GroupItem>
+      <GroupItem Name="Skins">
+        <ParentGroup />
+        <DisplayName>Skin Files</DisplayName>
+        <DefaulChecked>true</DefaulChecked>
+        <Description>Skins</Description>
+        <Files>
+          <Items>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="true">
+              <Param1 />
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
+              <LocalFileName>Ares.xml</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{77e51643-5615-4801-ac30-3b71ef6547d1}-Ares.xml</ZipFileName>
+              <DestinationFilename>%Skin%\[DEFAULT]\Ares.xml</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="true">
+              <Param1 />
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
+              <LocalFileName>..\Images\Ares.png</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{93e9f113-c09d-4617-82ae-357be0ca0c99}-Ares.png</ZipFileName>
+              <DestinationFilename>%Skin%\[DEFAULT]\Media\Ares.png</DestinationFilename>
+            </FileItem>
+          </Items>
+        </Files>
+      </GroupItem>
+    </Items>
+  </Groups>
+  <Sections>
+    <Items>
+      <SectionItem Guid="abbcac02-427c-4e0d-8b21-e75b4e7867e7" Name="Welcome Screen" ConditionGroup="">
+        <Params>
+          <Items>
+            <SectionParam Name="Header text">
+              <Value>Welcome to the Extension Installer for [Name]</Value>
+              <ValueType>String</ValueType>
+              <Description />
+            </SectionParam>
+            <SectionParam Name="Description">
+              <Value>This will install [Name] version [Version] on your computer.
+It is recommended that you close all other applications before continuing.
+Click Next to continue or Cancel to exit Setup.</Value>
+              <ValueType>String</ValueType>
+              <Description />
+            </SectionParam>
+            <SectionParam Name="Left part image">
+              <Value />
+              <ValueType>File</ValueType>
+              <Description />
+            </SectionParam>
+            <SectionParam Name="Header image">
+              <Value />
+              <ValueType>File</ValueType>
+              <Description>Image in upper right part</Description>
+            </SectionParam>
+          </Items>
+        </Params>
+        <Actions>
+          <Items />
+        </Actions>
+        <IncludedGroups />
+        <PanelName>Welcome Screen</PanelName>
+        <WizardButtonsEnum>NextCancel</WizardButtonsEnum>
+      </SectionItem>
+      <SectionItem Guid="fe3a113c-fe70-400f-9320-d7a23c7bd253" Name="Install Section" ConditionGroup="">
+        <Params>
+          <Items>
+            <SectionParam Name="Header Title">
+              <Value />
+              <ValueType>String</ValueType>
+              <Description>Header title</Description>
+            </SectionParam>
+            <SectionParam Name="Header description">
+              <Value />
+              <ValueType>String</ValueType>
+              <Description>Description of section, shown in under section title</Description>
+            </SectionParam>
+            <SectionParam Name="Header image">
+              <Value />
+              <ValueType>File</ValueType>
+              <Description>Image in upper right part</Description>
+            </SectionParam>
+          </Items>
+        </Params>
+        <Actions>
+          <Items>
+            <ActionItem Name="InstallFiles" ActionType="InstallFiles" ConditionGroup="">
+              <Params>
+                <Items />
+              </Params>
+              <ExecuteLocation>AfterPanelShow</ExecuteLocation>
+            </ActionItem>
+          </Items>
+        </Actions>
+        <IncludedGroups />
+        <PanelName>Install Section</PanelName>
+        <WizardButtonsEnum>Next</WizardButtonsEnum>
+      </SectionItem>
+      <SectionItem Guid="f8828d36-4d14-495a-9e09-97a189c9257e" Name="Setup Complete" ConditionGroup="">
+        <Params>
+          <Items>
+            <SectionParam Name="Header text">
+              <Value>The Extension Installer Wizard has successfully installed [Name].</Value>
+              <ValueType>String</ValueType>
+              <Description />
+            </SectionParam>
+            <SectionParam Name="Left part image">
+              <Value />
+              <ValueType>File</ValueType>
+              <Description />
+            </SectionParam>
+            <SectionParam Name="Show radio buttons">
+              <Value />
+              <ValueType>Bool</ValueType>
+              <Description>Use radiobutton in place of combobox</Description>
+            </SectionParam>
+            <SectionParam Name="Header image">
+              <Value />
+              <ValueType>File</ValueType>
+              <Description>Image in upper right part</Description>
+            </SectionParam>
+          </Items>
+        </Params>
+        <Actions>
+          <Items />
+        </Actions>
+        <IncludedGroups />
+        <PanelName>Setup Complete</PanelName>
+        <WizardButtonsEnum>Finish</WizardButtonsEnum>
+      </SectionItem>
+    </Items>
+  </Sections>
+  <Dependencies>
+    <Items />
+  </Dependencies>
+  <GeneralInfo>
+    <Name>Ares Plugin</Name>
+    <Id>8e986ca3-5830-4429-9c8a-3e572b09060b</Id>
+    <Author>Jörg Rüdenauer</Author>
+    <HomePage />
+    <ForumPage />
+    <UpdateUrl />
+    <Version>
+      <Major>0</Major>
+      <Minor>1</Minor>
+      <Build>0</Build>
+      <Revision>0</Revision>
+    </Version>
+    <ExtensionDescription>Plugin for the Ares (Aureal RPG Experience System) program.
+
+Makes sense only in conjunction with the Ares Controller.</ExtensionDescription>
+    <VersionDescription />
+    <DevelopmentStatus>Alpha</DevelopmentStatus>
+    <OnlineLocation />
+    <ReleaseDate>2010-12-05T16:32:29.4020223+01:00</ReleaseDate>
+    <Tags />
+    <Location>D:\Projekte\Ares\trunk\bin\Release\Ares.mpe1</Location>
+    <Params>
+      <Items>
+        <SectionParam Name="Icon">
+          <Value>..\Images\Ares.png</Value>
+          <ValueType>File</ValueType>
+          <Description>The icon file of the package (jpg,png,bmp)</Description>
+        </SectionParam>
+        <SectionParam Name="Online Icon">
+          <Value />
+          <ValueType>String</ValueType>
+          <Description>The icon file of the package stored online (jpg,png,bmp)</Description>
+        </SectionParam>
+        <SectionParam Name="Configuration file">
+          <Value />
+          <ValueType>Template</ValueType>
+          <Description>The file used to configure the extension.
+ If have .exe extension the will be executed
+ If have .dll extension used like MP plugin configuration</Description>
+        </SectionParam>
+        <SectionParam Name="Online Screenshots">
+          <Value />
+          <ValueType>String</ValueType>
+          <Description>Online stored screenshot urls separated by ; </Description>
+        </SectionParam>
+        <SectionParam Name="Force to uninstall on update">
+          <Value>yes</Value>
+          <ValueType>Bool</ValueType>
+          <Description>Show dialog and force to uninstall previous version when updating an extension. Should only be disabled if you are using an NSIS/MSI installer.</Description>
+        </SectionParam>
+      </Items>
+    </Params>
+  </GeneralInfo>
+  <UniqueFileList>
+    <Items>
+      <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
+        <Param1 />
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
+        <LocalFileName>..\bin\Release\Ares.Data.dll</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{7062dd25-918e-4ab6-8182-29b920f158eb}-Ares.Data.dll</ZipFileName>
+        <DestinationFilename>%Base%\plugins\Windows\Ares.Data.dll</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
+        <Param1 />
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
+        <LocalFileName>..\bin\Release\Ares.ModelInfo.dll</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{74c001ef-f6e0-43c1-bd75-294244d4f267}-Ares.ModelInfo.dll</ZipFileName>
+        <DestinationFilename>%Base%\plugins\Windows\Ares.ModelInfo.dll</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
+        <Param1 />
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
+        <LocalFileName>..\bin\Release\Ares.Players.dll</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{fd439b75-f3c6-4372-8110-49af04bb2056}-Ares.Players.dll</ZipFileName>
+        <DestinationFilename>%Base%\plugins\Windows\Ares.Players.dll</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
+        <Param1 />
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
+        <LocalFileName>..\bin\Release\Ares.Playing.dll</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{b1eef208-a6cd-42b3-a340-3babbe1e146f}-Ares.Playing.dll</ZipFileName>
+        <DestinationFilename>%Base%\plugins\Windows\Ares.Playing.dll</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
+        <Param1 />
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
+        <LocalFileName>..\bin\Release\Ares.Plugin.dll</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{4030f46f-f48e-45bb-9e85-22c606ef4d39}-Ares.Plugin.dll</ZipFileName>
+        <DestinationFilename>%Base%\plugins\Windows\Ares.Plugin.dll</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
+        <Param1 />
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
+        <LocalFileName>..\bin\Release\Ares.Settings.dll</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{93e419c1-e1cc-4363-bc5d-b3b42d320224}-Ares.Settings.dll</ZipFileName>
+        <DestinationFilename>%Base%\plugins\Windows\Ares.Settings.dll</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="true">
+        <Param1 />
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
+        <LocalFileName>Ares.xml</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{77e51643-5615-4801-ac30-3b71ef6547d1}-Ares.xml</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\Ares.xml</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="true" Modified="true">
+        <Param1 />
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
+        <LocalFileName>..\Images\Ares.png</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{93e9f113-c09d-4617-82ae-357be0ca0c99}-Ares.png</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\Media\Ares.png</DestinationFilename>
+      </FileItem>
+    </Items>
+  </UniqueFileList>
+  <ProjectSettings>
+    <FolderGroups />
+    <ProjectFilename>D:\Projekte\Ares\trunk\Ares.Plugin\AresPlugin.xmp2</ProjectFilename>
+    <UpdatePath1 />
+    <UpdatePath2 />
+    <UpdatePath3 />
+  </ProjectSettings>
+</PackageClass>

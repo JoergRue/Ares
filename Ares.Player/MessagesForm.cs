@@ -26,6 +26,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
+using Ares.Players;
+
 namespace Ares.Player
 {
     partial class MessagesForm : Form
@@ -41,14 +43,14 @@ namespace Ares.Player
         {
             messagesGrid.SuspendLayout();
             messagesGrid.Rows.Clear();
-            foreach (Message m in Messages.Instance.GetAllMessages())
+            foreach (Ares.Players.Message m in Messages.Instance.GetAllMessages())
             {
                 AddMessage(m);
             }
             messagesGrid.ResumeLayout();
         }
 
-        private void MessageReceived(Message m)
+        private void MessageReceived(Ares.Players.Message m)
         {
             if (IsDisposed)
                 return;
@@ -62,7 +64,7 @@ namespace Ares.Player
             }
         }
 
-        private void AddMessage(Message m)
+        private void AddMessage(Ares.Players.Message m)
         {
             if (m.Type >= FilterLevel)
             {

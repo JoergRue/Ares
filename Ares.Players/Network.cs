@@ -22,16 +22,16 @@ using System.Text;
 using System.Net.Sockets;
 using System.Net;
 
-namespace Ares.Player
+namespace Ares.Players
 {
-    interface INetworkClient
+    public interface INetworkClient
     {
         void KeyReceived(System.Windows.Forms.Keys key);
         void VolumeReceived(Ares.Playing.VolumeTarget target, int value);
         void ClientDataChanged();
     }
 
-    class Network : Ares.Playing.IProjectPlayingCallbacks
+    public class Network : Ares.Playing.IProjectPlayingCallbacks
     {
         public Network(INetworkClient client)
         {
@@ -44,6 +44,7 @@ namespace Ares.Player
 
         public bool SendUdpPacket()
         {
+            int port = Settings.Settings.Instance.UdpPort;
             if (udpClient == null)
             {
                 return true;
@@ -55,8 +56,7 @@ namespace Ares.Player
                 {
                     Messages.AddMessage(MessageType.Debug, String.Format(StringResources.UDPSending, udpString));
                 }
-                udpClient.Send(udpPacket, udpPacket.Length, new IPEndPoint(IPAddress.Parse("255.255.255.255"), 
-                    Settings.Settings.Instance.UdpPort));
+                udpClient.Send(udpPacket, udpPacket.Length, new IPEndPoint(IPAddress.Parse("255.255.255.255"), port));
                 return true;
             }
             catch (SocketException e)
@@ -429,16 +429,18 @@ namespace Ares.Player
 
         public void InitConnectionData()
         {
+            int tcpPort = Settings.Settings.Instance.TcpPort;
+            String ipAddress = Settings.Settings.Instance.IPAddress;
             StringBuilder str = new StringBuilder();
             String machineName = Dns.GetHostName();
             str.Append(machineName);
             str.Append("|");
-            str.Append(Settings.Settings.Instance.TcpPort);
-            if (!String.IsNullOrEmpty(Settings.Settings.Instance.IPAddress))
+            str.Append(tcpPort);
+            if (!String.IsNullOrEmpty(ipAddress))
             {
                 str.Append("|");
-                str.Append(Settings.Settings.Instance.IPAddress);
-                tcpListenAddress = IPAddress.Parse(Settings.Settings.Instance.IPAddress);
+                str.Append(ipAddress);
+                tcpListenAddress = IPAddress.Parse(ipAddress);
             }
             udpString = str.ToString();
             udpPacket = System.Text.Encoding.UTF8.GetBytes(udpString);

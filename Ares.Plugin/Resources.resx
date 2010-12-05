@@ -117,64 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Ares" xml:space="preserve">
-    <value>Ares</value>
-  </data>
-  <data name="AresPlayer" xml:space="preserve">
-    <value>Ares Player - {0}</value>
-  </data>
-  <data name="BassInitFail" xml:space="preserve">
-    <value>Fehler: Konnte BASS nicht initialisieren!</value>
-  </data>
-  <data name="Connected" xml:space="preserve">
-    <value>Verbunden</value>
-  </data>
-  <data name="ConnectedWith" xml:space="preserve">
-    <value>Verbunden mit </value>
-  </data>
-  <data name="EditorStartError" xml:space="preserve">
-    <value>Konnte Editor nicht starten. Grund:
-{0}</value>
-  </data>
-  <data name="LoadError" xml:space="preserve">
-    <value>Fehler beim Laden des Projektes: {0}</value>
-  </data>
-  <data name="NoOpenedProject" xml:space="preserve">
-    <value>Kein Projekt geladen</value>
-  </data>
-  <data name="NoSettings" xml:space="preserve">
-    <value>Dies scheint der erste Start des Players zu sein.
-Sie sollten zuerst ein paar Einstellungen vornehmen.</value>
-  </data>
-  <data name="NoStatusInfoError" xml:space="preserve">
-    <value>Konnte keine Statusinformationen senden. Bitte überprüfen Sie die Netzwerkverbindung.</value>
-  </data>
-  <data name="NotConnected" xml:space="preserve">
-    <value>Nicht verbunden</value>
-  </data>
-  <data name="OpenProject" xml:space="preserve">
-    <value>Projekt öffnen ...</value>
-  </data>
-  <data name="OpenProjectQuestion" xml:space="preserve">
-    <value>Projekt {0} öffnen?</value>
-  </data>
-  <data name="ReloadProject" xml:space="preserve">
-    <value>Projektdatei wurde geändert. Abspielen stoppen und Datei neu laden?</value>
-  </data>
-  <data name="ShowInfo" xml:space="preserve">
-    <value>Über Ares ...</value>
-  </data>
-  <data name="ShowMessages" xml:space="preserve">
-    <value>Nachrichten ...</value>
-  </data>
-  <data name="ShowSettings" xml:space="preserve">
-    <value>Einstellungen ...</value>
-  </data>
-  <data name="StartEditor" xml:space="preserve">
-    <value>Editor öffnen</value>
-  </data>
-  <data name="WriteSettingsError" xml:space="preserve">
-    <value>Einstellungen konnten nicht gespeichert werden. Grund:
-{0}</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Ares" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Ares.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

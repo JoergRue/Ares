@@ -62,7 +62,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Libraries\Bass.Net.dll</HintPath>
     </Reference>
-    <Reference Include="BassRegistration">
+    <Reference Include="BassRegistration, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Libraries\BassRegistration.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -74,22 +75,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Messages.cs" />
     <Compile Include="MessagesForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MessagesForm.Designer.cs">
       <DependentUpon>MessagesForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MusicInfo.cs" />
-    <Compile Include="Network.cs" />
     <Compile Include="Player.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Player.Designer.cs">
       <DependentUpon>Player.cs</DependentUpon>
     </Compile>
-    <Compile Include="PlayingControl.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringResources.de.Designer.cs">
@@ -156,6 +153,10 @@
     <ProjectReference Include="..\Ares.ModelChecks\Ares.ModelInfo.csproj">
       <Project>{50EA19EE-5337-499C-8B7B-1B22EA9E24A6}</Project>
       <Name>Ares.ModelInfo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ares.Players\Ares.Players.csproj">
+      <Project>{87F61D82-5515-48C4-94F5-FC5EF8435DBF}</Project>
+      <Name>Ares.Players</Name>
     </ProjectReference>
     <ProjectReference Include="..\Ares.Playing\Ares.Playing.csproj">
       <Project>{6C55F933-0F49-489C-AFF4-E0E0A8581E42}</Project>

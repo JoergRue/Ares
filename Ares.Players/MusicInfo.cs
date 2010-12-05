@@ -22,9 +22,9 @@ using System.Collections.Generic;
 using System.Text;
 using Ares.Data;
 
-namespace Ares.Player
+namespace Ares.Players
 {
-    static class MusicInfo
+    public static class MusicInfo
     {
         public static String GetInfo(int musicElementId)
         {

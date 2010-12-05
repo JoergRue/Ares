@@ -47,7 +47,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Libraries\Bass.Net.dll</HintPath>
     </Reference>
-    <Reference Include="BassRegistration">
+    <Reference Include="BassRegistration, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Libraries\BassRegistration.dll</HintPath>
     </Reference>
     <Reference Include="System" />

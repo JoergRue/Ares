@@ -27,6 +27,7 @@ using System.Text;
 using System.Windows.Forms;
 
 using Ares.Data;
+using Ares.Players;
 using Ares.Playing;
 using Ares.Settings;
 
@@ -59,7 +60,7 @@ namespace Ares.Player
             m_PlayingControl = new PlayingControl();
         }
 
-        private void MessageReceived(Message m)
+        private void MessageReceived(Ares.Players.Message m)
         {
             if (m.Type >= MessageType.Warning)
             {
@@ -395,12 +396,12 @@ namespace Ares.Player
                 Invoke(new MethodInvoker(() => SettingsChanged(fundamentalChange)));
                 return;
             }
+            Ares.Settings.Settings settings = Ares.Settings.Settings.Instance;
             if (fundamentalChange)
             {
                 m_PlayingControl.KeyReceived(Keys.Escape);
                 m_PlayingControl.UpdateDirectories();
             }
-            Ares.Settings.Settings settings = Ares.Settings.Settings.Instance;
             listenForPorts = false;
             udpPortUpDown.Value = settings.UdpPort;
             tcpPortUpDown.Value = settings.TcpPort;

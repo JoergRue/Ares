@@ -25,9 +25,9 @@ using System.Text;
 using Ares.Playing;
 using Ares.Data;
 
-namespace Ares.Player
+namespace Ares.Players
 {
-    class PlayingControl : IProjectPlayingCallbacks, IDisposable
+    public class PlayingControl : IProjectPlayingCallbacks, IDisposable
     {
         public PlayingControl()
         {
@@ -41,8 +41,9 @@ namespace Ares.Player
 
         public void UpdateDirectories()
         {
-            PlayingModule.ProjectPlayer.SetMusicPath(Ares.Settings.Settings.Instance.MusicDirectory);
-            PlayingModule.ProjectPlayer.SetSoundPath(Ares.Settings.Settings.Instance.SoundDirectory);
+            Settings.Settings settings = Settings.Settings.Instance;
+            PlayingModule.ProjectPlayer.SetMusicPath(settings.MusicDirectory);
+            PlayingModule.ProjectPlayer.SetSoundPath(settings.SoundDirectory);
         }
 
         private int ModifyVolume(ref int volume, bool up)
@@ -307,8 +308,15 @@ namespace Ares.Player
         public void ErrorOccurred(int elementId, String errorMessage)
         {
             Ares.Data.IElement element = Ares.Data.DataModule.ElementRepository.GetElement(elementId);
-            String message = String.Format(StringResources.PlayError, element.Title, errorMessage);
-            Messages.AddMessage(MessageType.Error, message);
+            if (element != null)
+            {
+                String message = String.Format(StringResources.PlayError, element.Title, errorMessage);
+                Messages.AddMessage(MessageType.Error, message);
+            }
+            else
+            {
+                Messages.AddMessage(MessageType.Error, errorMessage);
+            }
         }
     }
 }

@@ -21,14 +21,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Ares.Player
+namespace Ares.Players
 {
-    enum MessageType
+    public enum MessageType
     {
         Debug = 0, Info = 1, Warning = 2, Error = 3
     }
 
-    struct Message
+    public struct Message
     {
         public MessageType Type { get; set; }
         public String Text { get; set; }
@@ -41,9 +41,9 @@ namespace Ares.Player
         }
     }
 
-    delegate void MessageReceivedHandler(Message m);
+    public delegate void MessageReceivedHandler(Message m);
 
-    sealed class Messages
+    public sealed class Messages
     {
         public static Messages Instance
         {
