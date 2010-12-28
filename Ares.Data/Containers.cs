@@ -123,6 +123,67 @@ namespace Ares.Data
         protected IElement m_Element;
     }
 
+    class FileElementSearcher : IElementVisitor
+    {
+        private List<IFileElement> mFileElements;
+
+        public FileElementSearcher()
+        {
+            mFileElements = new List<IFileElement>();
+        }
+
+        public IList<IFileElement> GetFoundElements()
+        {
+            return mFileElements;
+        }
+
+
+        public void VisitFileElement(IFileElement fileElement)
+        {
+            mFileElements.Add(fileElement);
+        }
+
+        public void VisitSequentialContainer(ISequentialContainer sequentialContainer)
+        {
+            foreach (ISequentialElement element in sequentialContainer.GetElements())
+            {
+                element.Visit(this);
+            }
+        }
+
+        public void VisitParallelContainer(IElementContainer<IParallelElement> parallelContainer)
+        {
+            foreach (IParallelElement element in parallelContainer.GetElements())
+            {
+                element.Visit(this);
+            }
+        }
+
+        public void VisitChoiceContainer(IElementContainer<IChoiceElement> choiceContainer)
+        {
+            foreach (IChoiceElement element in choiceContainer.GetElements())
+            {
+                element.Visit(this);
+            }
+        }
+
+        public void VisitSequentialMusicList(ISequentialBackgroundMusicList musicList)
+        {
+            foreach (IElement element in musicList.GetElements())
+            {
+                element.Visit(this);
+            }
+        }
+
+        public void VisitRandomMusicList(IRandomBackgroundMusicList musicList)
+        {
+            foreach (IElement element in musicList.GetElements())
+            {
+                element.Visit(this);
+            }
+        }
+    }
+
     [Serializable]
     abstract class Container<I, T> : ContainerBase where I : IContainerElement where T : ContainerElement, I, new()
     {
@@ -165,6 +226,13 @@ namespace Ares.Data
             List<I> result = new List<I>();
             m_Elements.ForEach(e => result.Add(e));
             return result;
+        }
+
+        public IList<IFileElement> GetFileElements()
+        {
+            FileElementSearcher searcher = new FileElementSearcher();
+            this.Visit(searcher);
+            return searcher.GetFoundElements();
         }
 
         public I GetElement(int id)

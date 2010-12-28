@@ -90,13 +90,105 @@ namespace Ares.Editor.Actions
         private int m_NewSound;
     }
 
+    public class AllFileElementsVolumeChangeAction : Action
+    {
+        private IList<IFileElement> m_FileElements;
+        private List<int> m_OldVolumes;
+        private int m_NewVolume;
+
+        public AllFileElementsVolumeChangeAction(IGeneralElementContainer container, int volume)
+        {
+            m_FileElements = container.GetFileElements();
+            m_OldVolumes = new List<int>();
+            foreach (IFileElement element in m_FileElements)
+            {
+                m_OldVolumes.Add(element.Effects.Volume);
+            }
+            m_NewVolume = volume;
+        }
+
+        public override void Do()
+        {
+            foreach (IFileElement element in m_FileElements)
+            {
+                element.Effects.Volume = m_NewVolume;
+                ElementChanges.Instance.ElementChanged(element.Id);
+            }
+        }
+
+        public override void Undo()
+        {
+            for (int i = 0; i < m_FileElements.Count; ++i)
+            {
+                m_FileElements[i].Effects.Volume = m_OldVolumes[i];
+                ElementChanges.Instance.ElementChanged(m_FileElements[i].Id);
+            }
+        }
+    }
+
+    public class AllFileElementsFadingChangeAction : Action
+    {
+        private IList<IFileElement> m_FileElements;
+        private List<int> m_OldTimes;
+        private int m_NewTime;
+        private bool m_FadeIn;
+
+        public AllFileElementsFadingChangeAction(IGeneralElementContainer container, int time, bool fadeIn)
+        {
+            m_FileElements = container.GetFileElements();
+            m_OldTimes = new List<int>();
+            foreach (IFileElement element in m_FileElements)
+            {
+                m_OldTimes.Add(fadeIn ? element.Effects.FadeInTime : element.Effects.FadeOutTime);
+            }
+            m_NewTime = time;
+            m_FadeIn = fadeIn;
+        }
+
+        public override void Do()
+        {
+            foreach (IFileElement element in m_FileElements)
+            {
+                if (m_FadeIn)
+                {
+                    element.Effects.FadeInTime = m_NewTime;
+                }
+                else
+                {
+                    element.Effects.FadeOutTime = m_NewTime;
+                }
+                ElementChanges.Instance.ElementChanged(element.Id);
+            }
+        }
+
+        public override void Undo()
+        {
+            for (int i = 0; i < m_FileElements.Count; ++i)
+            {
+                if (m_FadeIn)
+                {
+                    m_FileElements[i].Effects.FadeInTime = m_OldTimes[i];
+                }
+                else
+                {
+                    m_FileElements[i].Effects.FadeOutTime = m_OldTimes[i];
+                }
+                ElementChanges.Instance.ElementChanged(m_FileElements[i].Id);
+            }
+        }
+    }
+
     public class ElementEffectsChangeAction : Action
     {
-        public ElementEffectsChangeAction(IFileElement element, int volume)
+        public ElementEffectsChangeAction(IFileElement element, int volume, int fadeIn, int fadeOut)
         {
             m_Element = element;
             m_OldVolume = m_Element.Effects.Volume;
+            m_OldFadeIn = m_Element.Effects.FadeInTime;
+            m_OldFadeOut = m_Element.Effects.FadeOutTime;
             m_NewVolume = volume;
+            m_NewFadeIn = fadeIn;
+            m_NewFadeOut = fadeOut;
         }
 
         public IFileElement Element
@@ -107,26 +199,36 @@ namespace Ares.Editor.Actions
             }
         }
 
-        public void SetData(int volume)
+        public void SetData(int volume, int fadeIn, int fadeOut)
         {
             m_NewVolume = volume;
+            m_NewFadeIn = fadeIn;
+            m_NewFadeOut = fadeOut;
         }
 
         public override void Do()
         {
             m_Element.Effects.Volume = m_NewVolume;
+            m_Element.Effects.FadeInTime = m_NewFadeIn;
+            m_Element.Effects.FadeOutTime = m_NewFadeOut;
             ElementChanges.Instance.ElementChanged(m_Element.Id);
         }
 
         public override void Undo()
         {
             m_Element.Effects.Volume = m_OldVolume;
+            m_Element.Effects.FadeInTime = m_OldFadeIn;
+            m_Element.Effects.FadeOutTime = m_OldFadeOut;
             ElementChanges.Instance.ElementChanged(m_Element.Id);
         }
 
         private IFileElement m_Element;
         private int m_OldVolume;
+        private int m_OldFadeIn;
+        private int m_OldFadeOut;
         private int m_NewVolume;
+        private int m_NewFadeIn;
+        private int m_NewFadeOut;
     }
 
     public class ElementRenamedAction : Action

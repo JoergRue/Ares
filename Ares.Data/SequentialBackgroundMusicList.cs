@@ -97,6 +97,11 @@ namespace Ares.Data
             return m_SecondContainer.GetElements();
         }
 
+        public IList<IFileElement> GetFileElements()
+        {
+            return m_SecondContainer.GetFileElements();
+        }
+
         public ISequentialElement GetElement(int ID)
         {
             return m_SecondContainer.GetElement(ID);

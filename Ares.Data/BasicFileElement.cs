@@ -26,21 +26,31 @@ namespace Ares.Data
     {
         public int Volume { get; set; }
 
+        public int FadeInTime { get; set; }
+
+        public int FadeOutTime { get; set; }
+
         internal void WriteToXml(System.Xml.XmlWriter writer)
         {
             writer.WriteStartElement("Effects");
             writer.WriteAttributeString("Volume", Volume.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            writer.WriteAttributeString("FadeIn", FadeInTime.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            writer.WriteAttributeString("FadeOut", FadeOutTime.ToString(System.Globalization.CultureInfo.InvariantCulture));
             writer.WriteEndElement();
         }
 
         internal Effects()
         {
             Volume = 100;
+            FadeInTime = 0;
+            FadeOutTime = 0;
         }
 
         internal Effects(System.Xml.XmlReader reader)
         {
             Volume = reader.GetIntegerAttribute("Volume");
+            FadeInTime = reader.GetIntegerAttributeOrDefault("FadeIn", 0);
+            FadeOutTime = reader.GetIntegerAttributeOrDefault("FadeOut", 0);
             if (reader.IsEmptyElement)
             {
                 reader.Read();

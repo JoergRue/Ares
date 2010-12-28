@@ -125,10 +125,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="AresSkin.xml">
-      <SubType>Designer</SubType>
-    </Content>
     <None Include="Resources\Ares.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Ares.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

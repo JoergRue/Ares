@@ -39,11 +39,12 @@ namespace Ares.Editor.ElementEditors
         private IFileElement m_Element;
         private bool listen = true;
 
-        public void SetElement(IFileElement element)
+        public void SetElement(IFileElement element, IGeneralElementContainer container)
         {
             ElementId = element.Id;
             m_Element = element;
             fileEffectsControl.SetEffects(element);
+            fileEffectsControl.SetContainer(container);
             UpdateStaticInfo();
             Update(m_Element.Id, Actions.ElementChanges.ChangeType.Renamed);
             Actions.ElementChanges.Instance.AddListener(ElementId, Update);

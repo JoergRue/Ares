@@ -73,5 +73,12 @@ namespace Ares.Editor.Controls.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        internal static System.Drawing.Bitmap Multiple_Selection {
+            get {
+                object obj = ResourceManager.GetObject("Multiple_Selection", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

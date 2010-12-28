@@ -26,7 +26,7 @@ namespace Ares.Editor.ElementEditors
 {
     static class Editors
     {
-        public static void ShowEditor(Ares.Data.IElement element, WeifenLuo.WinFormsUI.Docking.DockPanel dockPanel)
+        public static void ShowEditor(Ares.Data.IElement element, Ares.Data.IGeneralElementContainer container, WeifenLuo.WinFormsUI.Docking.DockPanel dockPanel)
         {
             if (element == null)
                 return;
@@ -83,7 +83,7 @@ namespace Ares.Editor.ElementEditors
                 {
                     FileElementEditor editor = new FileElementEditor();
                     editor.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Document;
-                    editor.SetElement(element as Ares.Data.IFileElement);
+                    editor.SetElement(element as Ares.Data.IFileElement, container);
                     editor.Show(dockPanel);
                 }
             }

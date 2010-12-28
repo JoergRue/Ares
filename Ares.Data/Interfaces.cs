@@ -160,6 +160,16 @@ namespace Ares.Data
         /// Relative volume, in percent.
         /// </summary>
         int Volume { get; set; }
+
+        /// <summary>
+        /// Time for fade-in, in milliseconds.
+        /// </summary>
+        int FadeInTime { get; set; }
+
+        /// <summary>
+        /// Time for fade-out, in milliseconds.
+        /// </summary>
+        int FadeOutTime { get; set; }
     }
 
     /// <summary>
@@ -298,6 +308,11 @@ namespace Ares.Data
         /// Removes an element from the container. Has no effect if the element is not in the container.
         /// </summary>
         void RemoveElement(int id);
+
+        /// <summary>
+        /// Returns all file elements in the container or in sub-containers of the container.
+        /// </summary>
+        IList<IFileElement> GetFileElements();
     }
 
     /// <summary>

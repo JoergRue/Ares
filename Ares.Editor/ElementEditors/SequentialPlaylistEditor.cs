@@ -165,7 +165,7 @@ namespace Ares.Editor.ElementEditors
 
         private void sequentialContainerControl_ElementDoubleClick(object sender, Controls.ElementDoubleClickEventArgs e)
         {
-            Editors.ShowEditor(e.Element.InnerElement, this.DockPanel);
+            Editors.ShowEditor(e.Element.InnerElement, m_Element as IGeneralElementContainer, this.DockPanel);
         }
 
     

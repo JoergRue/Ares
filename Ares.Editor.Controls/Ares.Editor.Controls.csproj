@@ -102,6 +102,11 @@
     <Compile Include="SequentialContainerControl.Designer.cs">
       <DependentUpon>SequentialContainerControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="StringResources.de.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StringResources.de.resx</DependentUpon>
+    </Compile>
     <Compile Include="StringResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -173,7 +178,10 @@
     <EmbeddedResource Include="SequentialContainerControl.resx">
       <DependentUpon>SequentialContainerControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="StringResources.de.resx" />
+    <EmbeddedResource Include="StringResources.de.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>StringResources.de.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="StringResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>StringResources.Designer.cs</LastGenOutput>
@@ -193,6 +201,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\MoveDown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Multiple_Selection.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -58,6 +58,11 @@ namespace Ares.Data
             return m_Container.GetElements();
         }
 
+        public IList<IFileElement> GetFileElements()
+        {
+            return m_Container.GetFileElements();
+        }
+
         public IChoiceElement GetElement(int ID)
         {
             return m_Container.GetElement(ID);
@@ -230,6 +235,13 @@ namespace Ares.Data
             List<IContainerElement> elements = new List<IContainerElement>(m_Elements.Count);
             m_Elements.ForEach(e => elements.Add(e));
             return elements;
+        }
+
+        public IList<IFileElement> GetFileElements()
+        {
+            FileElementSearcher searcher = new FileElementSearcher();
+            this.Visit(searcher);
+            return searcher.GetFoundElements();            
         }
 
         public IBackgroundSoundChoice GetElement(int ID)

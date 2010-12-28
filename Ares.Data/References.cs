@@ -160,6 +160,10 @@ namespace Ares.Data
             m_Element.RemoveElement(id);
         }
 
+        public IList<IFileElement> GetFileElements()
+        {
+            return m_Element.GetFileElements();
+        }
 
         // IElementContainer<U>
 

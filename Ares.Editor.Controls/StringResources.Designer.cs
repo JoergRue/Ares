@@ -59,5 +59,14 @@ namespace Ares.Editor.Controls {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Set value for all files in container ähnelt.
+        /// </summary>
+        internal static string ForAllFileElements {
+            get {
+                return ResourceManager.GetString("ForAllFileElements", resourceCulture);
+            }
+        }
     }
 }

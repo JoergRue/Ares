@@ -814,7 +814,7 @@ namespace Ares.Editor
 
         private void EditElement(IElement element)
         {
-            ElementEditors.Editors.ShowEditor(element, DockPanel);
+            ElementEditors.Editors.ShowEditor(element, null, DockPanel);
         }
 
         private void deleteToolStripMenuItem2_Click(object sender, EventArgs e)

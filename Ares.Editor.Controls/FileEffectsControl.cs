@@ -33,6 +33,15 @@ namespace Ares.Editor.Controls
         public FileEffectsControl()
         {
             InitializeComponent();
+            ToolTip tt = new ToolTip();
+            tt.SetToolTip(allVolumeButton, StringResources.ForAllFileElements);
+            tt.SetToolTip(allFadeInButton, StringResources.ForAllFileElements);
+            tt.SetToolTip(allFadeOutButton, StringResources.ForAllFileElements);
+        }
+
+        public void SetContainer(Ares.Data.IGeneralElementContainer container)
+        {
+            m_Container = container;
         }
 
         public void SetEffects(Ares.Data.IFileElement element)
@@ -50,6 +59,8 @@ namespace Ares.Editor.Controls
             else
             {
                 volumeBar.Value = 100;
+                fadeInUpDown.Value = 0;
+                fadeOutUpDown.Value = 0;
             }
         }
 
@@ -59,6 +70,8 @@ namespace Ares.Editor.Controls
             {
                 listen = false;
                 volumeBar.Value = m_Element.Effects.Volume;
+                fadeInUpDown.Value = m_Element.Effects.FadeInTime;
+                fadeOutUpDown.Value = m_Element.Effects.FadeOutTime;
                 listen = true;
             }
         }
@@ -74,14 +87,14 @@ namespace Ares.Editor.Controls
                 Actions.ElementEffectsChangeAction eeca = action as Actions.ElementEffectsChangeAction;
                 if (eeca.Element == m_Element)
                 {
-                    eeca.SetData(volumeBar.Value);
+                    eeca.SetData(volumeBar.Value, (int)fadeInUpDown.Value, (int)fadeOutUpDown.Value);
                     eeca.Do();
                     listen = true;
                     return;
                 }
             }
             Actions.Actions.Instance.AddNew(new Actions.ElementEffectsChangeAction(m_Element,
-                volumeBar.Value));
+                volumeBar.Value, (int)fadeInUpDown.Value, (int)fadeOutUpDown.Value));
             listen = true;
         }
 
@@ -89,6 +102,49 @@ namespace Ares.Editor.Controls
         private bool listen = true;
 
         private void volumeBar_ValueChanged(object sender, EventArgs e)
+        {
+            if (!listen)
+                return;
+            Commit();
+        }
+
+        private void allVolumeButton_Click(object sender, EventArgs e)
+        {
+            if (m_Element == null || m_Container == null)
+                return;
+            listen = false;
+            Actions.Actions.Instance.AddNew(new Actions.AllFileElementsVolumeChangeAction(m_Container, volumeBar.Value));
+            listen = true;
+        }
+
+        private Ares.Data.IGeneralElementContainer m_Container;
+
+        private void allFadeInButton_Click(object sender, EventArgs e)
+        {
+            if (m_Element == null || m_Container == null)
+                return;
+            listen = false;
+            Actions.Actions.Instance.AddNew(new Actions.AllFileElementsFadingChangeAction(m_Container, (int)fadeInUpDown.Value, true));
+            listen = true;
+        }
+
+        private void allFadeOutButton_Click(object sender, EventArgs e)
+        {
+            if (m_Element == null || m_Container == null)
+                return;
+            listen = false;
+            Actions.Actions.Instance.AddNew(new Actions.AllFileElementsFadingChangeAction(m_Container, (int)fadeOutUpDown.Value, false));
+            listen = true;
+        }
+
+        private void fadeInUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            if (!listen)
+                return;
+            Commit();
+        }
+
+        private void fadeOutUpDown_ValueChanged(object sender, EventArgs e)
         {
             if (!listen)
                 return;

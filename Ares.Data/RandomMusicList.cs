@@ -125,6 +125,11 @@ namespace Ares.Data
             return m_ThirdContainer.GetElements();
         }
 
+        public IList<IFileElement> GetFileElements()
+        {
+            return m_ThirdContainer.GetFileElements();
+        }
+
         public IChoiceElement GetElement(int ID)
         {
             return m_ThirdContainer.GetElement(ID);
