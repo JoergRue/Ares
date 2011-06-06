@@ -207,14 +207,15 @@ namespace Ares.Player
             const int WM_KEYDOWN = 0x100;
             if (msg.Msg == WM_KEYDOWN)
             {
-                m_PlayingControl.KeyReceived(keyData);
+                return m_PlayingControl.KeyReceived(keyData);
             }
             if (keyData == (Keys.F4 | Keys.Alt))
             {
                 PlayingModule.ProjectPlayer.StopAll();
                 Close();
+                return true;
             }
-            return true;
+            return false;
         }
 
         private int lastMusicElementId = -1;
@@ -652,6 +653,18 @@ namespace Ares.Player
             m_Network.StopUdpBroadcast();
             m_Network.InitConnectionData();
             m_Network.StartUdpBroadcast();
+        }
+
+        private void helpOnlineToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                System.Diagnostics.Process.Start(StringResources.HelpPage);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, String.Format(StringResources.OpenHelpError, ex.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

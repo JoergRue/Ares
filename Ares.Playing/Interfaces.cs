@@ -198,12 +198,13 @@ namespace Ares.Playing
         /// <summary>
         /// Tells the player that a key has been received.
         /// </summary>
+        /// <returns>whether the key was handled</returns>
         /// <remarks>
         /// Only mode changes and mode element changes are
         /// handled here. Volume / full stop / next / previous
         /// must be handled by the client.
         /// </remarks>
-        void KeyReceived(Int32 keyCode);
+        bool KeyReceived(Int32 keyCode);
 
         /// <summary>
         /// Plays the next music title.

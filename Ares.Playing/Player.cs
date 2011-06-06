@@ -1116,10 +1116,10 @@ namespace Ares.Playing
             }
         }
 
-        public void KeyReceived(int keyCode)
+        public bool KeyReceived(int keyCode)
         {
             if (m_Project == null)
-                return;
+                return false;
             IMode mode = m_Project.GetMode(keyCode);
             if (mode != null)
             {
@@ -1128,10 +1128,15 @@ namespace Ares.Playing
                 {
                     ProjectCallbacks.ModeChanged(mode);
                 }
+                return true;
             }
             else if (m_ActiveMode != null)
             {
-                TriggerElement(keyCode);
+                return TriggerElement(keyCode);
+            }
+            else
+            {
+                return false;
             }
         }
 
@@ -1226,11 +1231,11 @@ namespace Ares.Playing
             SoundPath = path;
         }
 
-        private void TriggerElement(int keyCode)
+        private bool TriggerElement(int keyCode)
         {
             IModeElement element = m_ActiveMode.GetTriggeredElement(keyCode);
             if (element == null)
-                return;
+                return false;
             if (element.IsEndless() && element.IsPlaying)
             {
                 StopElement(element);
@@ -1239,6 +1244,7 @@ namespace Ares.Playing
             {
                 StartElement(element);
             }
+            return true;
         }
 
         private void DoStartElement(IElement element, StartElementPlayer player)

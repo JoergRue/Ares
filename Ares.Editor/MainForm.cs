@@ -742,6 +742,18 @@ namespace Ares.Editor
             m_ProjectExplorer.MoveToElement(element);
             ActivateWindow(m_ProjectExplorer);
         }
+
+        private void helpOnlineToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                System.Diagnostics.Process.Start(StringResources.HelpPage);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, String.Format(StringResources.OpenHelpError, ex.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 
     public static class ControlHelpers

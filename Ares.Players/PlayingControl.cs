@@ -62,53 +62,62 @@ namespace Ares.Players
             }
         }
 
-        public void KeyReceived(System.Windows.Forms.Keys key)
+        public bool KeyReceived(System.Windows.Forms.Keys key)
         {
             if (key == System.Windows.Forms.Keys.Escape)
             {
                 PlayingModule.ProjectPlayer.StopAll();
+                return true;
             }
             else if (key == System.Windows.Forms.Keys.Up)
             {
                 int value = ModifyVolume(ref m_GlobalVolume, true);
                 PlayingModule.ProjectPlayer.SetVolume(VolumeTarget.Both, value);
+                return true;
             }
             else if (key == System.Windows.Forms.Keys.Down)
             {
                 int value = ModifyVolume(ref m_GlobalVolume, false);
                 PlayingModule.ProjectPlayer.SetVolume(VolumeTarget.Both, value);
+                return true;
             }
             else if (key == System.Windows.Forms.Keys.PageUp)
             {
                 int value = ModifyVolume(ref m_SoundVolume, true);
                 PlayingModule.ProjectPlayer.SetVolume(VolumeTarget.Sounds, value);
+                return true;
             }
             else if (key == System.Windows.Forms.Keys.PageDown)
             {
                 int value = ModifyVolume(ref m_SoundVolume, false);
                 PlayingModule.ProjectPlayer.SetVolume(VolumeTarget.Sounds, value);
+                return true;
             }
             else if (key == System.Windows.Forms.Keys.Insert)
             {
                 int value = ModifyVolume(ref m_MusicVolume, true);
                 PlayingModule.ProjectPlayer.SetVolume(VolumeTarget.Music, value);
+                return true;
             }
             else if (key == System.Windows.Forms.Keys.Delete)
             {
                 int value = ModifyVolume(ref m_MusicVolume, false);
                 PlayingModule.ProjectPlayer.SetVolume(VolumeTarget.Music, value);
+                return true;
             }
             else if (key == System.Windows.Forms.Keys.Right)
             {
                 PlayingModule.ProjectPlayer.NextMusicTitle();
+                return true;
             }
             else if (key == System.Windows.Forms.Keys.Left)
             {
                 PlayingModule.ProjectPlayer.PreviousMusicTitle();
+                return true;
             }
             else
             {
-                PlayingModule.ProjectPlayer.KeyReceived((int)key);
+                return PlayingModule.ProjectPlayer.KeyReceived((int)key);
             }
         }
 

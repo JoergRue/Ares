@@ -138,6 +138,9 @@
   <data name="FilePlayed" xml:space="preserve">
     <value>Error at file: {0}</value>
   </data>
+  <data name="HelpPage" xml:space="preserve">
+    <value>http://aresrpg.sourceforge.net/en/hilfe/Editor.html</value>
+  </data>
   <data name="LoadError" xml:space="preserve">
     <value>Error opening the project: {0}</value>
   </data>
@@ -180,6 +183,10 @@
   <data name="NoSettings" xml:space="preserve">
     <value>This seems to be the first start of the editor.
 You should adapt some settings first.</value>
+  </data>
+  <data name="OpenHelpError" xml:space="preserve">
+    <value>Could not open help web page. Reason:
+{0}</value>
   </data>
   <data name="OpenProjectQuestion" xml:space="preserve">
     <value>Open project {0}?</value>

@@ -136,6 +136,9 @@
     <value>Konnte Editor nicht starten. Grund:
 {0}</value>
   </data>
+  <data name="HelpPage" xml:space="preserve">
+    <value>http://aresrpg.sourceforge.net/hilfe/Player.html</value>
+  </data>
   <data name="LoadError" xml:space="preserve">
     <value>Fehler beim Laden des Projektes: {0}</value>
   </data>
@@ -151,6 +154,10 @@ Sie sollten zuerst ein paar Einstellungen vornehmen.</value>
   </data>
   <data name="NotConnected" xml:space="preserve">
     <value>Nicht verbunden</value>
+  </data>
+  <data name="OpenHelpError" xml:space="preserve">
+    <value>Konnte Hilfeseite nicht öffnen. Grund:
+{0}</value>
   </data>
   <data name="OpenProject" xml:space="preserve">
     <value>Projekt öffnen ...</value>

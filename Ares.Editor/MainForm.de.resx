@@ -244,8 +244,8 @@
   <data name="settingsToolStripMenuItem.Text" xml:space="preserve">
     <value>Einstellungen ...</value>
   </data>
-  <data name="aboutToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>137, 22</value>
+  <data name="helpOnlineToolStripMenuItem.Text" xml:space="preserve">
+    <value>Hilfe (Online) ...</value>
   </data>
   <data name="aboutToolStripMenuItem.Text" xml:space="preserve">
     <value>Über Ares ...</value>
@@ -262,14 +262,14 @@
   <data name="newButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGgSURBVDhPjZLLSsNAFIaD4Kq4civ4AK5c6EZ0723h3p2+
-        hCD4ALpRacFWRbxAq1DwAlLBqqhgFRFpK9FWS6kXtPc6tTFJ8ztJmmklmnbgcIbJ/N+Z859wXGURMipI
-        0ggPFwcEOUjSYIyQYdH4bpnLvG1HnKBC2IE9mu/0vXZGejfrQmTeds0EK1S0zeliCsnd98DrD8Hju8H6
-        bgBru4FpE1CcoZftNGZVkbrc+kucNNzGGbC4dYzugXEzhNxxEom2KpjT+8dTM3BEs9AJJNoqUFpj3YeD
-        85AGWd25mGEvkeWhK9aCWpFWZ55gigHmV/c1sRFVAOk7YYIlCog2VU3EAgNIchkqxAD98kJJdUyWIy0O
-        eCnguR1IT9AJuJhYURQUSyLe00UN0NU/hj+ns+w9ZaLazbcoI5MvIf6WtwY4PX4TQC4rKBS/8ZokeIhn
-        rAGOjQMToCRISGa/EHvJIRhJWgPU/mqXalzuU0DivQA+lsZV+K1xQK1x0UQWt/cfOLt5bhxQa1z4MYVA
-        8BWHl/HGAMa8/8v/jtGYsXqhXqj/wQ/GQTe+x3h1GAAAAABJRU5ErkJggg==
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGgSURBVDhPjZJNSwJRFIaHoJW0ahv0A1q1qE3UvnLTumX9
+        iSDoB+SmQqGsCDOwAiENoiArKsgiIsyY0hLRFDNLHc1pvt7uzDS3icmPC4dzuXPf59zznmGYn8Vx47wo
+        jrFwM0CEgSiOJjjOLhjfG2aZtQWEKSKEE9gl+V7fa2eVwa2mEIm1XVPBGhHtMLqYQIoPA/CH7rC5fwNv
+        MIz1YHjWAhQc5LKTxJwqUpdPf8kSCZ9xBixvH6N/ZNIK4e4ZkYt1KpjX+8dzO3BEMt8LpLp+oKSGdx8H
+        53caxBO4cNCXSJL9iragViTVqSeYoYAFz54mNuIXUBk6oYIVAoi3/ZqIRQoQJRkqxAD98UJ565mWYx0u
+        +Akg3Q0UpsgE3FSsKAqqNQG5QlUD9A1P4N/prPpPqci8+RIkvJdqSGZLjQFLmyELQJIVlKtfyOQreEy+
+        Nwa4Ng4sgBovIv/xicRLEZFYvjFA7c+8VOOKHI9Urgw2UcBVNNs6wGxcPPWB24dXnN2kWweYjYs+vSEc
+        yeDwMtkawJh3vVx3jMaM1QvNQv0PvgGlTTe169dsNAAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="newButton.Text" xml:space="preserve">
@@ -323,13 +323,13 @@
   <data name="stopButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABUAAAAUCAYAAABiS3YzAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFVSURBVDhP7ZLNK4MBHMc/f8ouapvNSwstXNjbs81jNqUc
-        KJcdFKXkJXmiRiKyaS5ebivioNQclNtCHBgR8jZss+cgSdnJ8+w/eJSi9rv/Pn3foHj/PIHWfB/+j378
-        8hDiyyjuu3GcF5M4T6axH89hO5zX7lAFumQjgXQpvowVV9ZB06uXZjmA+NRFRfT0B1BFoSdVgjdXVYB5
-        X9twZ4KIqR5qtwcxha+0Q1XLLWkTQsaOkGtHeOxGSA3juAxh3YxgnnnQDlUztMs1+LJ+RW0Qd2oAx00I
-        WzKMZXkdfSirHaqWImZseOQOhOdeXPcT2M8WaTiIUR6NY5De/gpUmY4/50NMK1lej+FMRmhMxKjb2aJs
-        dhe99KldqbpFz20n9RsjVK+FqVpVbM/FMU/tYZT20Y3mtUPVcVtWEliWjqhcOKd0+q5QjkF6Rzfw9TOo
-        dhnFj19M4BugsY37STV0qQAAAABJRU5ErkJggg==
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFTSURBVDhP7ZLbK0MBHMc//4kntatLCy28sNvZ5phNKQ+U
+        Fw+KUq7JiRqJyKZ5cXlbEQ9KzYPythAPjAgZht3OgyTFk3P2HxylKL/336fvDf7vjyfQ/NmL/60PvzyE
+        +DyKOzmO82IS58k09uM5bIfz2h2qQJdsIJA24stYcWUdNOS8NMoBxMcOyiKn34AqCj2pYrz5igLMm2vB
+        nelETHVTvT2IKXSlHapabkqbEDJ2hHwrwkMXQmoYx2UQ62YY88y9dqiaoV2uwpf1K2o7cacGcNwEsSVC
+        WJbX0QWz2qFqKWLGhkduQ3jqwXU3gf1skbqDKKWRGHrp5bdAlen48z7EtJLl9RjORJj6eJSanS1KZnfR
+        Se/alapb9Ny2U7sxQuVaiIpVxfZcDPPUHgZpn6LRT+1QddyWlTiWpSPKF84xTicL5eilV4r6P74H1S7j
+        /+MHE/gCmUWN9+Ki2PsAAAAASUVORK5CYII=
 </value>
   </data>
   <data name="stopButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
