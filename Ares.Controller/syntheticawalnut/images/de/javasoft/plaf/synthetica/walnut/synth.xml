@@ -1137,12 +1137,12 @@ Menu
 *******************************************************************************
 -->
   <style id="menu">
-    <insets top="3" left="0" bottom="3" right="0"/>
+    <insets top="3" left="5" bottom="3" right="5"/>
     <property key="Menu.textIconGap" type="integer" value="4"/>
 
-    <imageIcon id="arrowIcon" path="standard/images/menuArrowIcon.png"/>
-    <imageIcon id="arrowIconSelected" path="standard/images/menuArrowIcon_selected.png"/>
-    <imageIcon id="arrowIconDisabled" path="standard/images/menuArrowIcon_disabled.png"/>
+    <imageIcon id="arrowIcon" path=""/>
+    <imageIcon id="arrowIconSelected" path=""/>
+    <imageIcon id="arrowIconDisabled" path=""/>
 
     <defaultsProperty key="Synthetica.menu.iconGap" type="integer" value="20"/>
       

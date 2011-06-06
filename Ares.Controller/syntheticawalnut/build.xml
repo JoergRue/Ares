@@ -8,7 +8,7 @@
      <fileset dir="../images/de" />
    </copy>
    <!-- Export File for jar -->
-   <jar jarfile="syntheticawalnut.jar" basedir=".">
+   <jar jarfile="../../Ares.Controller/libraries/syntheticawalnut.jar" basedir=".">
        <manifest>
        </manifest>
     </jar>

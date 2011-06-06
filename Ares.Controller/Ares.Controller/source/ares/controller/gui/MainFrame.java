@@ -39,6 +39,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JSlider;
 import javax.swing.JButton;
 import javax.swing.JToggleButton;
@@ -228,12 +229,20 @@ public final class MainFrame extends FrameController implements IMessageListener
   
   private JMenu getHelpMenu() {
 	  JMenu helpMenu = new JMenu(Localization.getString("MainFrame.Help")); //$NON-NLS-1$
+	  JMenuItem helpItem = new JMenuItem(Localization.getString("MainFrame.HelpMenuItem")); //$NON-NLS-1$
+	  helpItem.addActionListener(new ActionListener() {
+		  public void actionPerformed(ActionEvent e) {
+			  showHelpPage();
+		  }
+	  });
 	  JMenuItem aboutItem = new JMenuItem(Localization.getString("MainFrame.AboutMenu")); //$NON-NLS-1$
 	  aboutItem.addActionListener(new ActionListener() {
 		  public void actionPerformed(ActionEvent e) {
 			 showAboutDialog();
 		  }
 	  });
+	  helpMenu.add(helpItem);
+	  helpMenu.addSeparator();
 	  helpMenu.add(aboutItem);
 	  return helpMenu;
   }
@@ -702,6 +711,19 @@ public final class MainFrame extends FrameController implements IMessageListener
 	  AboutDialog dialog = new AboutDialog(this);
 	  dialog.setVisible(true);
   }
+  
+  private void showHelpPage() {
+	  if (java.awt.Desktop.isDesktopSupported()) {
+		  try {
+			java.awt.Desktop.getDesktop().browse(java.net.URI.create(Localization.getString("MainFrame.HelpLink"))); //$NON-NLS-1$
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(this, Localization.getString("MainFrame.BrowserOpenError") + "\n" + e.getLocalizedMessage(), Localization.getString("MainFrame.Ares"), JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$ //$NON-NLS-2$
+		}
+	  }
+	  else {
+		  JOptionPane.showMessageDialog(this, Localization.getString("MainFrame.BrowserNotSupported"), Localization.getString("MainFrame.Ares"), JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$ //$NON-NLS-2$
+	  }
+  }
 
   private JButton stopAllButton = null;
 
@@ -794,7 +816,7 @@ public final class MainFrame extends FrameController implements IMessageListener
 	}
 	else
 	{
-		elementsLabel.setToolTipText("");
+		elementsLabel.setToolTipText(""); //$NON-NLS-1$
 	}
   }
 
@@ -870,9 +892,9 @@ public final class MainFrame extends FrameController implements IMessageListener
 
 		int len = 0;
 		int seg = text.length();
-		String fit = "";
+		String fit = ""; //$NON-NLS-1$
 		
-		final String ELLIPSIS = "...";
+		final String ELLIPSIS = "..."; //$NON-NLS-1$
 
 		// find the longest string that fits into
 		// the control boundaries using bisection method 
@@ -924,7 +946,7 @@ public final class MainFrame extends FrameController implements IMessageListener
 				}
 				else
 				{
-					musicLabel.setToolTipText("");
+					musicLabel.setToolTipText(""); //$NON-NLS-1$
 				}
 			}
 		});
