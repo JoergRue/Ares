@@ -32,6 +32,16 @@ namespace Ares.Player
         [STAThread]
         static void Main()
         {
+            if (Environment.GetCommandLineArgs().Length > 1)
+            {
+                string arg = Environment.GetCommandLineArgs()[1];
+                string paramName = "Language=";
+                if (arg.StartsWith(paramName))
+                {
+                    arg = arg.Substring(paramName.Length);
+                    System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(arg);
+                }
+            }
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             try

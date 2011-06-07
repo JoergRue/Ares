@@ -35,6 +35,10 @@ namespace Ares.Editor
         public MainForm()
         {
             String projectName = Environment.GetCommandLineArgs().Length > 1 ? Environment.GetCommandLineArgs()[1] : String.Empty;
+            if (projectName.StartsWith("Language="))
+            {
+                projectName = Environment.GetCommandLineArgs().Length > 2 ? Environment.GetCommandLineArgs()[2] : String.Empty;
+            }
             if (String.IsNullOrEmpty(projectName))
             {
                 m_Instance = Ares.Ipc.ApplicationInstance.CreateOrActivate("Ares.Editor");

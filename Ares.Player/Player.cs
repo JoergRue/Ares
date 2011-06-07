@@ -42,6 +42,10 @@ namespace Ares.Player
         public Player()
         {
             String projectName = Environment.GetCommandLineArgs().Length > 1 ? Environment.GetCommandLineArgs()[1] : String.Empty;
+            if (projectName.StartsWith("Language="))
+            {
+                projectName = Environment.GetCommandLineArgs().Length > 2 ? Environment.GetCommandLineArgs()[2] : String.Empty;
+            }
             if (String.IsNullOrEmpty(projectName))
             {
                 m_Instance = Ares.Ipc.ApplicationInstance.CreateOrActivate("Ares.Player");
@@ -589,9 +593,14 @@ namespace Ares.Player
             m_BasicSettings = new BasicSettings();
             ReadSettings();
             Messages.Instance.MessageReceived += new MessageReceivedHandler(MessageReceived);
-            if (Environment.GetCommandLineArgs().Length > 1)
+            String projectName = Environment.GetCommandLineArgs().Length > 1 ? Environment.GetCommandLineArgs()[1] : String.Empty;
+            if (projectName.StartsWith("Language="))
             {
-                OpenProject(Environment.GetCommandLineArgs()[1]);
+                projectName = Environment.GetCommandLineArgs().Length > 2 ? Environment.GetCommandLineArgs()[2] : String.Empty;
+            }
+            if (!String.IsNullOrEmpty(projectName))
+            {
+                OpenProject(projectName);
             }
             else if (Ares.Settings.Settings.Instance.RecentFiles.GetFiles().Count > 0)
             {
