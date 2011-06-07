@@ -108,6 +108,8 @@ public final class OptionsDialog extends BGDialog {
   private JLabel jLabel5 = null;
 
   private JComboBox messageLevelBox = null;
+  
+  private JCheckBox updateCheckBox = null;
 
   /**
    * This method initializes
@@ -282,6 +284,7 @@ public final class OptionsDialog extends BGDialog {
     int udpPort = ((Number)udpSpinner.getValue()).intValue();
     prefs.putInt("UDPPort", udpPort); //$NON-NLS-1$
     prefs.putInt("MessageLevel", messageLevelBox.getSelectedIndex()); //$NON-NLS-1$
+    prefs.putBoolean("CheckForUpdate", updateCheckBox.isSelected()); //$NON-NLS-1$
 
     return true;
   }
@@ -313,6 +316,7 @@ public final class OptionsDialog extends BGDialog {
     }
     dataCustomDirBox.setText(prefs.get("CustomDataDir", "")); //$NON-NLS-1$ //$NON-NLS-2$
     messageLevelBox.setSelectedIndex(prefs.getInt("MessageLevel", 1)); //$NON-NLS-1$
+    updateCheckBox.setSelected(prefs.getBoolean("CheckForUpdate", true)); //$NON-NLS-1$
   }
 
   /**
@@ -523,6 +527,13 @@ public final class OptionsDialog extends BGDialog {
     }
 
   }
+  
+  private JCheckBox getUpdateCheckBox() {
+	  if (updateCheckBox == null) {
+		  updateCheckBox = new JCheckBox(Localization.getString("OptionsDialog.CheckForUpdate")); //$NON-NLS-1$
+	  }
+	  return updateCheckBox;
+  }
 
   /**
    * This method initializes programPanel	
@@ -537,7 +548,7 @@ public final class OptionsDialog extends BGDialog {
       jLabel3.setText(Localization.getString("OptionsDialog.SaveLayoutsIn")); //$NON-NLS-1$
       programPanel = new JPanel();
       programPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-      programPanel.setLayout(new GridLayout(5, 1, 5, 5));
+      programPanel.setLayout(new GridLayout(6, 1, 5, 5));
       JPanel udpPanel = new JPanel();
       udpPanel.setLayout(new BoxLayout(udpPanel, BoxLayout.LINE_AXIS));
       udpPanel.add(jLabel4);
@@ -547,6 +558,7 @@ public final class OptionsDialog extends BGDialog {
       JPanel p1 = new JPanel(new BorderLayout());
       p1.add(udpPanel, BorderLayout.NORTH);
       programPanel.add(p1);
+      programPanel.add(getUpdateCheckBox());
       programPanel.add(jLabel3);
       programPanel.add(getDataHomeDirButton());
       programPanel.add(getDataProgramDirButton());

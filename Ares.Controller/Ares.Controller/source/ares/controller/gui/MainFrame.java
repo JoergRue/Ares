@@ -39,7 +39,6 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JSlider;
 import javax.swing.JButton;
 import javax.swing.JToggleButton;
@@ -68,6 +67,7 @@ import javax.swing.JComboBox;
 
 import ares.controller.control.Control;
 import ares.controller.control.KeyAction;
+import ares.controller.control.OnlineOperations;
 import ares.controller.control.Version;
 import ares.controller.data.Command;
 import ares.controller.data.Configuration;
@@ -129,6 +129,14 @@ public final class MainFrame extends FrameController implements IMessageListener
   	serverSearch = new ServerSearch(this, Preferences.userNodeForPackage(MainFrame.class).getInt("UDPPort", 8009)); //$NON-NLS-1$
   	serverSearch.startSearch();
     Control.getInstance().addAlwaysAvailableKeys(getRootPane());
+    boolean checkForNewVersion = Preferences.userNodeForPackage(ares.controller.gui.OptionsDialog.class).getBoolean("CheckForUpdate", true); //$NON-NLS-1$
+    if (checkForNewVersion) {
+      javax.swing.SwingUtilities.invokeLater(new Runnable() {
+        public void run() {
+          OnlineOperations.checkForUpdate(MainFrame.this, false);
+        }
+      });
+    }
   }
   
   public void dispose() {
@@ -181,7 +189,7 @@ public final class MainFrame extends FrameController implements IMessageListener
 	  JMenuItem exitItem = new JMenuItem(Localization.getString("MainFrame.Exit")); //$NON-NLS-1$
 	  exitItem.addActionListener(new ActionListener() {
 		  public void actionPerformed(ActionEvent e) {
-			  dispose();
+			  exitProgram();
 		  }
 	  });
 	  fileMenu.add(openItem);
@@ -189,6 +197,11 @@ public final class MainFrame extends FrameController implements IMessageListener
 	  fileMenu.addSeparator();
 	  fileMenu.add(exitItem);
 	  return fileMenu;
+  }
+  
+  public void exitProgram()
+  {
+	  dispose();
   }
   
   private JMenu getPlayMenu() {
@@ -235,6 +248,12 @@ public final class MainFrame extends FrameController implements IMessageListener
 			  showHelpPage();
 		  }
 	  });
+	  JMenuItem updateItem = new JMenuItem(Localization.getString("MainFrame.CheckForUpdate")); //$NON-NLS-1$
+	  updateItem.addActionListener(new ActionListener() {
+		  public void actionPerformed(ActionEvent e) {
+			  OnlineOperations.checkForUpdate(MainFrame.this, true);
+		  }
+	  });
 	  JMenuItem aboutItem = new JMenuItem(Localization.getString("MainFrame.AboutMenu")); //$NON-NLS-1$
 	  aboutItem.addActionListener(new ActionListener() {
 		  public void actionPerformed(ActionEvent e) {
@@ -242,6 +261,7 @@ public final class MainFrame extends FrameController implements IMessageListener
 		  }
 	  });
 	  helpMenu.add(helpItem);
+	  helpMenu.add(updateItem);
 	  helpMenu.addSeparator();
 	  helpMenu.add(aboutItem);
 	  return helpMenu;
@@ -713,16 +733,7 @@ public final class MainFrame extends FrameController implements IMessageListener
   }
   
   private void showHelpPage() {
-	  if (java.awt.Desktop.isDesktopSupported()) {
-		  try {
-			java.awt.Desktop.getDesktop().browse(java.net.URI.create(Localization.getString("MainFrame.HelpLink"))); //$NON-NLS-1$
-		} catch (IOException e) {
-			JOptionPane.showMessageDialog(this, Localization.getString("MainFrame.BrowserOpenError") + "\n" + e.getLocalizedMessage(), Localization.getString("MainFrame.Ares"), JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$ //$NON-NLS-2$
-		}
-	  }
-	  else {
-		  JOptionPane.showMessageDialog(this, Localization.getString("MainFrame.BrowserNotSupported"), Localization.getString("MainFrame.Ares"), JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$ //$NON-NLS-2$
-	  }
+	  ares.controller.control.OnlineOperations.showHomepage(this);
   }
 
   private JButton stopAllButton = null;
