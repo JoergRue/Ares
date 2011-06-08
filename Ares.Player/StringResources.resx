@@ -155,10 +155,6 @@ You should adapt some settings first.</value>
   <data name="NotConnected" xml:space="preserve">
     <value>Not connected</value>
   </data>
-  <data name="OpenHelpError" xml:space="preserve">
-    <value>Could not open help web page. Reason:
-{0}</value>
-  </data>
   <data name="OpenProject" xml:space="preserve">
     <value>Open a project ...</value>
   </data>

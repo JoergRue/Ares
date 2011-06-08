@@ -244,8 +244,23 @@
   <data name="settingsToolStripMenuItem.Text" xml:space="preserve">
     <value>Einstellungen ...</value>
   </data>
+  <data name="helpOnlineToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>163, 22</value>
+  </data>
   <data name="helpOnlineToolStripMenuItem.Text" xml:space="preserve">
     <value>Hilfe (Online) ...</value>
+  </data>
+  <data name="checkForUpdateToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>163, 22</value>
+  </data>
+  <data name="checkForUpdateToolStripMenuItem.Text" xml:space="preserve">
+    <value>Prüfe auf Update</value>
+  </data>
+  <data name="toolStripSeparator8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>160, 6</value>
+  </data>
+  <data name="aboutToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>163, 22</value>
   </data>
   <data name="aboutToolStripMenuItem.Text" xml:space="preserve">
     <value>Über Ares ...</value>
@@ -262,14 +277,14 @@
   <data name="newButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGgSURBVDhPjZJNSwJRFIaHoJW0ahv0A1q1qE3UvnLTumX9
-        iSDoB+SmQqGsCDOwAiENoiArKsgiIsyY0hLRFDNLHc1pvt7uzDS3icmPC4dzuXPf59zznmGYn8Vx47wo
-        jrFwM0CEgSiOJjjOLhjfG2aZtQWEKSKEE9gl+V7fa2eVwa2mEIm1XVPBGhHtMLqYQIoPA/CH7rC5fwNv
-        MIz1YHjWAhQc5LKTxJwqUpdPf8kSCZ9xBixvH6N/ZNIK4e4ZkYt1KpjX+8dzO3BEMt8LpLp+oKSGdx8H
-        53caxBO4cNCXSJL9iragViTVqSeYoYAFz54mNuIXUBk6oYIVAoi3/ZqIRQoQJRkqxAD98UJ565mWYx0u
-        +Akg3Q0UpsgE3FSsKAqqNQG5QlUD9A1P4N/prPpPqci8+RIkvJdqSGZLjQFLmyELQJIVlKtfyOQreEy+
-        Nwa4Ng4sgBovIv/xicRLEZFYvjFA7c+8VOOKHI9Urgw2UcBVNNs6wGxcPPWB24dXnN2kWweYjYs+vSEc
-        yeDwMtkawJh3vVx3jMaM1QvNQv0PvgGlTTe169dsNAAAAABJRU5ErkJggg==
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGgSURBVDhPjZJLSwJRFMeHoJW0ahv0AVq1qE3Uvsemdcv6
+        EkLQB6hNhUL2IHqAFQhlEAq9qCCTkLBi1ErESkxNmzTHef274zjXicnRC4dzuXP/v3PP/wzD1BbHTfCi
+        OM5imQHCDERxNM5xY4L+3TLLrO1AsBMhHMAhyY/avnpWHNxtCpFY2y0VrBPRPqOJCaQQGYDn5B47vhC2
+        vAFsegOzJqAwRy47SMyrInW5tZe4SLj1M2Bl7wz9I1NmCPfIiFy0U8GC1j9e2oFTkvleINlVg5IaWz74
+        r+6rkI2D6zn6EkkaC9IW1IqkOvUEMxSwuHFUFetRBxSHzqlglQCe2uomYokCREmGCtFBf7xQsj3TcqzD
+        CQ8BvHYDOTuZwDIVK4qCUllAOleqAvqGJ/HvdNY8F1Rk3FQECZ9fZSRSX9YA186JCSDJCrhSBe+ZIqKJ
+        T2uAc9tvApR5EZn8D+JvBYRjGWuA2p9xqcYVvnkk0xzYeA7Bh1TrAKNxT8k87iIfuAy9tg4wGvfwnEUg
+        /I7jm0RrAH3ejXLDMeozVi80C/U/+AWMTzeu4NiT1wAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="newButton.Text" xml:space="preserve">
@@ -323,13 +338,13 @@
   <data name="stopButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABUAAAAUCAYAAABiS3YzAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFTSURBVDhP7ZLbK0MBHMc//4kntatLCy28sNvZ5phNKQ+U
-        Fw+KUq7JiRqJyKZ5cXlbEQ9KzYPythAPjAgZht3OgyTFk3P2HxylKL/336fvDf7vjyfQ/NmL/60PvzyE
-        +DyKOzmO82IS58k09uM5bIfz2h2qQJdsIJA24stYcWUdNOS8NMoBxMcOyiKn34AqCj2pYrz5igLMm2vB
-        nelETHVTvT2IKXSlHapabkqbEDJ2hHwrwkMXQmoYx2UQ62YY88y9dqiaoV2uwpf1K2o7cacGcNwEsSVC
-        WJbX0QWz2qFqKWLGhkduQ3jqwXU3gf1skbqDKKWRGHrp5bdAlen48z7EtJLl9RjORJj6eJSanS1KZnfR
-        Se/alapb9Ny2U7sxQuVaiIpVxfZcDPPUHgZpn6LRT+1QddyWlTiWpSPKF84xTicL5eilV4r6P74H1S7j
-        /+MHE/gCmUWN9+Ki2PsAAAAASUVORK5CYII=
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFVSURBVDhP7ZLNK4MBHMc/f8luypi3FhIu7Nn2bPOYh1IO
+        lMsOilLykvZEjTRZNnHxclPEQSkOyk2IAyNC3h7s2fYcJClOnsd/8ChF+d1/n75v8H9/PIGmj27k1x5k
+        vR/pKYzvZhjP2SieoyjCYQzX/qR1hybQq+fRmMonqFXgTbupywSo1xuRHtopnj7+BtRQ6FdzCGRLv2CB
+        TDM+LYSkdlK53ocjfmEdalpuSDkQNQEx24J434GoDuA+j1CxmqBg/M461MxQ0MsJpmVDbQif2ov7KoIr
+        Gcc5t0xuJG0dapYiaS78eiviYxfe2xGEkxlq9hYpmt7Arjz/FqgxHTkbREoZWV4O4UkmqN1ZpGpzjcKJ
+        LXKVN+tKzS36r9uoXhmkbClO6YJhO7ZBwdg2ecoutvCHdag5buf8Ds7ZA0qmTsmP3nyVY1desPW8fw9q
+        Xcb/xw8m8AmR2Y3zdSRW8gAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="stopButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">

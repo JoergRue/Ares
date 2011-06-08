@@ -171,16 +171,6 @@ namespace Ares.Player {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Could not open help web page. Reason:
-        ///{0} ähnelt.
-        /// </summary>
-        internal static string OpenHelpError {
-            get {
-                return ResourceManager.GetString("OpenHelpError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Open a project ... ähnelt.
         /// </summary>
         internal static string OpenProject {

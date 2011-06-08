@@ -51,6 +51,7 @@ namespace Ares.Settings
             userDirLabel.Text = basicSettings.GetSettingsDir(BasicSettings.SettingsLocation.AppDataDir);
             appDirLabel.Text = basicSettings.GetSettingsDir(BasicSettings.SettingsLocation.AppDir);
             appDirButton.Enabled = BasicSettings.IsAppDirAllowed();
+            updateCheckBox.Checked = settings.CheckForUpdate;
             m_Settings = settings;
             m_BasicSettings = basicSettings;
         }
@@ -77,6 +78,7 @@ namespace Ares.Settings
             }
             m_Settings.MusicDirectory = musicDirLabel.Text;
             m_Settings.SoundDirectory = soundDirLabel.Text;
+            m_Settings.CheckForUpdate = updateCheckBox.Checked;
             m_BasicSettings.CustomSettingsDirectory = otherDirLabel.Text;
             m_Settings.Commit();
         }

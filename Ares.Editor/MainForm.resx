@@ -120,6 +120,9 @@
   <data name="&gt;&gt;helpOnlineToolStripMenuItem.Name" xml:space="preserve">
     <value>helpOnlineToolStripMenuItem</value>
   </data>
+  <data name="&gt;&gt;checkForUpdateToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="toolStripSeparator3.Size" type="System.Drawing.Size, System.Drawing">
     <value>136, 6</value>
@@ -157,7 +160,7 @@
     <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="helpOnlineToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 22</value>
+    <value>166, 22</value>
   </data>
   <data name="&gt;&gt;saveToolStripMenuItem.Name" xml:space="preserve">
     <value>saveToolStripMenuItem</value>
@@ -252,8 +255,8 @@
   <data name="editMenu.Size" type="System.Drawing.Size, System.Drawing">
     <value>39, 20</value>
   </data>
-  <data name="&gt;&gt;redoButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="checkForUpdateToolStripMenuItem.Text" xml:space="preserve">
+    <value>Check for Update</value>
   </data>
   <data name="&gt;&gt;dockPanel.Type" xml:space="preserve">
     <value>WeifenLuo.WinFormsUI.Docking.DockPanel, WeifenLuo.WinFormsUI.Docking, Version=2.3.2.18742, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
@@ -446,6 +449,9 @@
   <data name="&gt;&gt;fileToolStripMenuItem.Name" xml:space="preserve">
     <value>fileToolStripMenuItem</value>
   </data>
+  <data name="&gt;&gt;checkForUpdateToolStripMenuItem.Name" xml:space="preserve">
+    <value>checkForUpdateToolStripMenuItem</value>
+  </data>
   <data name="&gt;&gt;viewToolStripMenuItem.Name" xml:space="preserve">
     <value>viewToolStripMenuItem</value>
   </data>
@@ -575,7 +581,7 @@
     <value>44, 20</value>
   </data>
   <data name="aboutToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 22</value>
+    <value>166, 22</value>
   </data>
   <data name="&gt;&gt;startPlayerToolStripMenuItem.Name" xml:space="preserve">
     <value>startPlayerToolStripMenuItem</value>
@@ -620,13 +626,13 @@
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAADsIAAA7CARUoSoAAAAGfSURBVDhPjZJNSwJRFIaHoJW0ahv0A1q1qE3UvnLTumX9
-        CSHoB+SmQiGtCDPQAiENQiErKsgsJPxA0xLxC/PbNHVmnLc76lwNS71wOJc7933OPe8ZhmmvTGa1xnEr
-        fmgZwM2A45bD8biclb73zQ2/zMwqiBAq4IJkX2vfPCvPnw6E8H7ZCxUcEdE50xITSCEwB5PdA6PVBb3F
-        gWOLY6sHyCrJZRWJbVEkLkPrJRoSBukM2D+7wezSei8k5mO42PO4gJ1W//gYBa5Jrk0D0Yk2lNTQW2F7
-        8DQhOvOjkr6E5+VO2oJYkVSnnmCTAnZ1l02xFB1AeeGWCg4IIDTSMRF7FMDxDYgQCfTLCyEztdEIjqlh
-        IoDYJJBVkAloqVgQBFSqLFLZShMws7iGP6dzaLqjou5NneWRK1YRSRb7AzRGew+AbwgoVepIpMt4i+T6
-        A9Qnth5AtcYhnf9GOF6AO5juDxD7616icYWvGqKpEvzhLJze5PCAbuNC0TxeA5+4d8WGB3Qb533PwOFO
-        4OopMhxAmvd/+d8xSjMWLwwK8T/4AXapN1619Oa8AAAAAElFTkSuQmCC
+        CSHoB+SmQiGtCDPQAiENIiErKkglJPxA0xK/MT8rzWlmnLc76lwNS71wOJc7933OPe8ZhmmtfH6Z5fml
+        IPQM4GXA84vRVErJyd975npQYeVURAgNcEZyoLlvnFVmj/tChKDikQoOiOiUaYoJpByagcXhg/nCA6PN
+        iUObc6MLyKnJZQ2JTUkkLVPzJToSJvkM2D25xvTCajckHmD4uGtUxFazf7wOA1cks5NAYqwFJTWMF7Df
+        +xoQg/VBTV8iCEo3bUGqSKpTT7BOAduG84ZYjjagMndDBXsEEBlqm4gdCuCFOiSIDPrlhZifWKuHR7Sw
+        EEByHCioyAT0VCyKIqo1DtlCtQGYml/Bn9PZt9xSUefmmxNQfK8hlnnvDdCZHV0AoS7io/qNdK6C51ix
+        N0B7ZO8C1FgeudIXoqkyvOFcb4DUX+eSjCt/skhkPxCMFuD2ZwYHdBoXSZTwFHrDnSc5OKDTOP9LHk5v
+        Gpeu2GAAed7/5X/HKM9YutAvpP/gB2SRN1hJe+BfAAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="newButton.Size" type="System.Drawing.Size, System.Drawing">
@@ -722,6 +728,12 @@
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>1008, 662</value>
   </data>
+  <data name="&gt;&gt;redoButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="checkForUpdateToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>166, 22</value>
+  </data>
   <data name="&gt;&gt;hilfeToolStripMenuItem.Name" xml:space="preserve">
     <value>hilfeToolStripMenuItem</value>
   </data>
@@ -750,7 +762,7 @@
     <value>139, 22</value>
   </data>
   <data name="toolStripSeparator8.Size" type="System.Drawing.Size, System.Drawing">
-    <value>154, 6</value>
+    <value>163, 6</value>
   </data>
   <data name="startPlayerToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>139, 22</value>

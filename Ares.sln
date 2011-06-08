@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ares.MediaPortalPlugin", "A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ares.Players", "Ares.Players\Ares.Players.csproj", "{87F61D82-5515-48C4-94F5-FC5EF8435DBF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ares.Online", "Ares.Online\Ares.Online.csproj", "{7550AD48-17A5-45BF-A632-B75EB82123DD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug English|Any CPU = Debug English|Any CPU
@@ -205,6 +207,21 @@ Global
 		{87F61D82-5515-48C4-94F5-FC5EF8435DBF}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{87F61D82-5515-48C4-94F5-FC5EF8435DBF}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{87F61D82-5515-48C4-94F5-FC5EF8435DBF}.Release|x86.ActiveCfg = Release|Any CPU
+		{7550AD48-17A5-45BF-A632-B75EB82123DD}.Debug English|Any CPU.ActiveCfg = Debug|Any CPU
+		{7550AD48-17A5-45BF-A632-B75EB82123DD}.Debug English|Any CPU.Build.0 = Debug|Any CPU
+		{7550AD48-17A5-45BF-A632-B75EB82123DD}.Debug English|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{7550AD48-17A5-45BF-A632-B75EB82123DD}.Debug English|Mixed Platforms.Build.0 = Debug|Any CPU
+		{7550AD48-17A5-45BF-A632-B75EB82123DD}.Debug English|x86.ActiveCfg = Debug|Any CPU
+		{7550AD48-17A5-45BF-A632-B75EB82123DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7550AD48-17A5-45BF-A632-B75EB82123DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7550AD48-17A5-45BF-A632-B75EB82123DD}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{7550AD48-17A5-45BF-A632-B75EB82123DD}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{7550AD48-17A5-45BF-A632-B75EB82123DD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7550AD48-17A5-45BF-A632-B75EB82123DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7550AD48-17A5-45BF-A632-B75EB82123DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7550AD48-17A5-45BF-A632-B75EB82123DD}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{7550AD48-17A5-45BF-A632-B75EB82123DD}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{7550AD48-17A5-45BF-A632-B75EB82123DD}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

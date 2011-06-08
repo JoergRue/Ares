@@ -697,6 +697,10 @@ namespace Ares.Editor
             {
                 OpenProject(Ares.Settings.Settings.Instance.RecentFiles.GetFiles()[0].FilePath);
             }
+            if (Settings.Settings.Instance.CheckForUpdate)
+            {
+                Ares.Online.OnlineOperations.CheckForUpdate(this, false);
+            }
         }
 
         private void MainForm_KeyDown(object sender, KeyEventArgs e)
@@ -749,14 +753,12 @@ namespace Ares.Editor
 
         private void helpOnlineToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            try
-            {
-                System.Diagnostics.Process.Start(StringResources.HelpPage);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(this, String.Format(StringResources.OpenHelpError, ex.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            Ares.Online.OnlineOperations.ShowHelppage(StringResources.HelpPage, this);
+        }
+
+        private void checkForUpdateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Ares.Online.OnlineOperations.CheckForUpdate(this, true);
         }
     }
 

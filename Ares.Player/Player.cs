@@ -649,6 +649,10 @@ namespace Ares.Player
             updateTimer.Tick += new EventHandler(updateTimer_Tick);
             updateTimer.Start();
             fileSystemWatcher1.Changed += new System.IO.FileSystemEventHandler(fileSystemWatcher1_Changed);
+            if (Settings.Settings.Instance.CheckForUpdate)
+            {
+                Ares.Online.OnlineOperations.CheckForUpdate(this, false);
+            }
         }
 
         private void ipAddressBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -666,14 +670,12 @@ namespace Ares.Player
 
         private void helpOnlineToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            try
-            {
-                System.Diagnostics.Process.Start(StringResources.HelpPage);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(this, String.Format(StringResources.OpenHelpError, ex.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            Ares.Online.OnlineOperations.ShowHelppage(StringResources.HelpPage, this);
+        }
+
+        private void checkForUpdateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Ares.Online.OnlineOperations.CheckForUpdate(this, true);
         }
     }
 }

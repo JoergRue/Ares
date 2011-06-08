@@ -44,6 +44,9 @@ namespace Ares.Settings
         public String IPAddress { get; set; }
 
         public int Version { get; set; }
+
+        public bool CheckForUpdate { get; set; }
+
     }
 
     public class Settings
@@ -65,6 +68,8 @@ namespace Ares.Settings
         public int TcpPort { get { return Data.TcpPort; } set { Data.TcpPort = value; } }
 
         public String IPAddress { get { return Data.IPAddress; } set { Data.IPAddress = value; } }
+
+        public bool CheckForUpdate { get { return Data.CheckForUpdate; } set { Data.CheckForUpdate = value; } }
 
         public int Version { get { return Data.Version; } private set { Data.Version = value; } }
 
@@ -229,6 +234,7 @@ namespace Ares.Settings
             TcpPort = 11112;
             UdpPort = 8009;
             IPAddress = String.Empty;
+            CheckForUpdate = true;
         }
 
         private void WriteSettings(XmlWriter writer)
@@ -249,6 +255,7 @@ namespace Ares.Settings
             writer.WriteAttributeString("TcpPort", TcpPort.ToString(System.Globalization.CultureInfo.InvariantCulture));
             writer.WriteAttributeString("UdpPort", UdpPort.ToString(System.Globalization.CultureInfo.InvariantCulture));
             writer.WriteAttributeString("IPAddress", IPAddress);
+            writer.WriteAttributeString("CheckForUpdate", CheckForUpdate ? "true" : "false");
             writer.WriteEndElement();
             RecentFiles.WriteFiles(writer);
             writer.WriteEndElement();
@@ -313,6 +320,7 @@ namespace Ares.Settings
                     UdpPort = reader.GetIntegerAttribute("UdpPort");
                     TcpPort = reader.GetIntegerAttribute("TcpPort");
                     IPAddress = reader.GetAttribute("IPAddress");
+                    CheckForUpdate = reader.GetBooleanAttributeOrDefault("CheckForUpdate", true);
                     if (IPAddress == null) IPAddress = String.Empty;
                     if (reader.IsEmptyElement)
                         reader.Read();

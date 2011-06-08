@@ -66,8 +66,11 @@ namespace Ares.Settings
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.cancelButton = new System.Windows.Forms.Button();
             this.okButton = new System.Windows.Forms.Button();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.updateCheckBox = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -209,19 +212,39 @@ namespace Ares.Settings
             this.okButton.UseVisualStyleBackColor = true;
             this.okButton.Click += new System.EventHandler(this.okButton_Click);
             // 
+            // groupBox3
+            // 
+            resources.ApplyResources(this.groupBox3, "groupBox3");
+            this.groupBox3.Controls.Add(this.updateCheckBox);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.TabStop = false;
+            this.groupBox3.UseCompatibleTextRendering = true;
+            // 
+            // updateCheckBox
+            // 
+            resources.ApplyResources(this.updateCheckBox, "updateCheckBox");
+            this.updateCheckBox.Name = "updateCheckBox";
+            this.updateCheckBox.UseCompatibleTextRendering = true;
+            this.updateCheckBox.UseVisualStyleBackColor = true;
+            // 
             // SettingsDialog
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.okButton);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "SettingsDialog";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -246,5 +269,7 @@ namespace Ares.Settings
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.Button okButton;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.CheckBox updateCheckBox;
     }
 }
