@@ -117,12 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="newToolStripMenuItem.ShortcutKeyDisplayString" xml:space="preserve">
+    <value>Strg+N</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="newToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>169, 22</value>
   </data>
   <data name="newToolStripMenuItem.Text" xml:space="preserve">
     <value>Neu ...</value>
+  </data>
+  <data name="openToolStripMenuItem.ShortcutKeyDisplayString" xml:space="preserve">
+    <value>Strg+O</value>
   </data>
   <data name="openToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>169, 22</value>
@@ -132,6 +138,9 @@
   </data>
   <data name="toolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
     <value>166, 6</value>
+  </data>
+  <data name="saveToolStripMenuItem.ShortcutKeyDisplayString" xml:space="preserve">
+    <value>Strg+S</value>
   </data>
   <data name="saveToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>169, 22</value>
@@ -166,11 +175,17 @@
   <data name="fileToolStripMenuItem.Text" xml:space="preserve">
     <value>Projekt</value>
   </data>
+  <data name="undoToolStripMenuItem.ShortcutKeyDisplayString" xml:space="preserve">
+    <value>Strg+Z</value>
+  </data>
   <data name="undoToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>184, 22</value>
   </data>
   <data name="undoToolStripMenuItem.Text" xml:space="preserve">
     <value>Rückgängig</value>
+  </data>
+  <data name="redoToolStripMenuItem.ShortcutKeyDisplayString" xml:space="preserve">
+    <value>Strg+Y</value>
   </data>
   <data name="redoToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>184, 22</value>
@@ -277,14 +292,14 @@
   <data name="newButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGgSURBVDhPjZJLSwJRFMeHoJW0ahv0AVq1qE3Uvsemdcv6
-        EkLQB6hNhUL2IHqAFQhlEAq9qCCTkLBi1ErESkxNmzTHef274zjXicnRC4dzuXP/v3PP/wzD1BbHTfCi
-        OM5imQHCDERxNM5xY4L+3TLLrO1AsBMhHMAhyY/avnpWHNxtCpFY2y0VrBPRPqOJCaQQGYDn5B47vhC2
-        vAFsegOzJqAwRy47SMyrInW5tZe4SLj1M2Bl7wz9I1NmCPfIiFy0U8GC1j9e2oFTkvleINlVg5IaWz74
-        r+6rkI2D6zn6EkkaC9IW1IqkOvUEMxSwuHFUFetRBxSHzqlglQCe2uomYokCREmGCtFBf7xQsj3TcqzD
-        CQ8BvHYDOTuZwDIVK4qCUllAOleqAvqGJ/HvdNY8F1Rk3FQECZ9fZSRSX9YA186JCSDJCrhSBe+ZIqKJ
-        T2uAc9tvApR5EZn8D+JvBYRjGWuA2p9xqcYVvnkk0xzYeA7Bh1TrAKNxT8k87iIfuAy9tg4wGvfwnEUg
-        /I7jm0RrAH3ejXLDMeozVi80C/U/+AWMTzeu4NiT1wAAAABJRU5ErkJggg==
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGeSURBVDhPjZJNSwJRFIaHoJW0ahv0A1q1qE3UvnLTumX9
+        CSHoB+SmQiGtCDPQAiENQiErKsgkJPxA0xLRFPNzTFNnxnm7o87VMM0Lh3O5c9/n3POeYZj2YtnVGs+v
+        BKFnAC8Dnl+OsqySk78PzI2gwsqpiBAa4ILkQGvfPCvPn/4LEYKKZyo4IqJzpiUmkGJoDhanD2a7B0ab
+        C8c211YPkFOTyxoS25JIWqbWS3QkTPIZsH92g9ml9V4IG2B4NjQuYqfVP95HgWuSa9NAfKINJTWMdjge
+        fE2Iwfqopi8RBKWbtiBVJNWpJ9ikgF3DZVMsRwdQXrilggMCiIx0TMQeBfBCAxJEBv3yQsxObTTCY1pY
+        CCAxCeRUZAJ6KhZFEZUqh3Su0gTMLK7hz+kcWu6oqHtT5wTk2SpiKXYwQGd29gCEhohSpY5kpozXWH4w
+        QHvi6AFUazwyhW9EP4rwhjODAVJ/3UsyrvhVQzxdQjCag9ufGh7QbVwkXsBL6BP3nsTwgG7j/G9ZuLxJ
+        XD3FhgPI8+6X+45RnrF04b+Q/oMfc1E3p9dQ8T0AAAAASUVORK5CYII=
 </value>
   </data>
   <data name="newButton.Text" xml:space="preserve">
@@ -338,13 +353,13 @@
   <data name="stopButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABUAAAAUCAYAAABiS3YzAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFVSURBVDhP7ZLNK4MBHMc/f8luypi3FhIu7Nn2bPOYh1IO
-        lMsOilLykvZEjTRZNnHxclPEQSkOyk2IAyNC3h7s2fYcJClOnsd/8ChF+d1/n75v8H9/PIGmj27k1x5k
-        vR/pKYzvZhjP2SieoyjCYQzX/qR1hybQq+fRmMonqFXgTbupywSo1xuRHtopnj7+BtRQ6FdzCGRLv2CB
-        TDM+LYSkdlK53ocjfmEdalpuSDkQNQEx24J434GoDuA+j1CxmqBg/M461MxQ0MsJpmVDbQif2ov7KoIr
-        Gcc5t0xuJG0dapYiaS78eiviYxfe2xGEkxlq9hYpmt7Arjz/FqgxHTkbREoZWV4O4UkmqN1ZpGpzjcKJ
-        LXKVN+tKzS36r9uoXhmkbClO6YJhO7ZBwdg2ecoutvCHdag5buf8Ds7ZA0qmTsmP3nyVY1desPW8fw9q
-        Xcb/xw8m8AmR2Y3zdSRW8gAAAABJRU5ErkJggg==
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFTSURBVDhP7ZLbK0MBHMc//4hHtatLCy28sNvZ5phNKQ+U
+        Fw+KErkkJ2okIpvmxeVtRTwoNQ/K20I8MCJkGHY7D5IUT87Zf3CUovzef5++N/i/P55A82cv/rd+/PIQ
+        4vMo7uQ4zotJnCfT2I/nsB3Oa3eoAl2ygUDaiC9jxZV10JDz0igHEB87KIucfgOqKPSkivHmKwowb64F
+        d6YTMdVN9fYgptCVdqhquSltQsjYEfKtCA9dCKlhHJdBrJthzDP32qFqhna5Cl/Wr6jtxJ0awHETxJYI
+        YVleRxfMaoeqpYgZGx65DeGpB9fdBPazReoOopRGYuill98CVabjz/sQ00qW12M4E2Hq41FqdrYomd1F
+        J71rV6pu0XPbTu3GCJVrISpWFdtzMcxTexikfYpGP7VD1XFbVuJYlo4oXzjHOJ0slKOXXinq+/geVLuM
+        /48fTOALim2N71a9EhkAAAAASUVORK5CYII=
 </value>
   </data>
   <data name="stopButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">

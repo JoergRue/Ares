@@ -1,12 +1,21 @@
+Version 0.3.2
+----------------------------------------------------------------------------------
+- Allgemein: Fade-in und Fade-out Effekte hinzugefügt
+- Allgemein: Hilfe-Links in die Menüs eingefügt
+- Allgemein: Online-Update Prüfungen hinzugefügt
+- Editor: Effekte können für alle Dateien in einer Liste gesetzt werden
+- Controller: Menü-Abstände für Walnut-L&F korrigiert
+- Player: Mehrere "Projekt wurde geändert"-Dialoge auf einmal verhindert
+
 Version 0.3.1
--------------
+----------------------------------------------------------------------------------
 - Editor: Icons zu den Explorern und Unterfenstern hinzugefügt
 - Player: Kann mit Alt+F4 geschlossen werden
 - Controller: Sehr lange Texte für Elemente / Musik werden abgeschnitten und 
   statt dessen wird ein Tooltip angezeigt
 
 Version 0.3.0
--------------
+----------------------------------------------------------------------------------
 - Allgemein: Projekte werden überprüft, ob die Dateien vorhanden und die Tasten 
   konsistent sind
 - Editor: Projektfehler-Fenster hinzugefügt
@@ -42,7 +51,7 @@ Version 0.3.0
 - Setup: Falsches Zielverzeichnis für manche Ressourcen-Dateien korrigiert
 
 Version 0.2.0
--------------
+----------------------------------------------------------------------------------
 - Ares Controller hinzugefügt
 - Player: Toolbar / Menübar Redesign
 - Player: komplett auf Deutsch lokalisiert
@@ -54,5 +63,5 @@ Version 0.2.0
 - Setup-Programm geändert (jetzt InstallJammer)
 
 Version 0.1.0
--------------
+----------------------------------------------------------------------------------
 Erste veröffentlichte Version
