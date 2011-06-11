@@ -102,11 +102,13 @@ namespace Ares.Player
             listen = true;
         }
 
+        bool m_InFileSystemWatcherHandler = false;
+
         private void fileSystemWatcher1_Changed(object sender, System.IO.FileSystemEventArgs e)
         {
-            if (m_Project == null)
+            if (m_Project == null || m_InFileSystemWatcherHandler)
                 return;
-            fileSystemWatcher1.EnableRaisingEvents = false;
+            m_InFileSystemWatcherHandler = true;
             String path = m_Project.FileName;
             if (e.FullPath == path)
             {
@@ -116,7 +118,7 @@ namespace Ares.Player
                     OpenProject(path);
                 }
             }
-            fileSystemWatcher1.EnableRaisingEvents = true;
+            m_InFileSystemWatcherHandler = false;
         }
 
         void updateTimer_Tick(object sender, EventArgs e)

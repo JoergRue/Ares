@@ -184,8 +184,9 @@ namespace Ares.Playing
         public abstract void SetSoundVolume(int volume);
 
         protected int CurrentPlayedHandle { get; set; }
+        protected int CurrentFadeOut { get; set; }
 
-        protected void StopCurrentFile()
+        protected void StopCurrentFile(bool allowFadeOut)
         {
             lock (syncObject)
             {
@@ -193,7 +194,7 @@ namespace Ares.Playing
                 {
                     int handle = CurrentPlayedHandle;
                     CurrentPlayedHandle = 0;
-                    PlayingModule.FilePlayer.StopFile(handle);
+                    PlayingModule.FilePlayer.StopFile(handle, allowFadeOut, CurrentFadeOut);
                 }
             }
         }
@@ -299,6 +300,7 @@ namespace Ares.Playing
                     lock (syncObject)
                     {
                         CurrentPlayedHandle = 0;
+                        CurrentFadeOut = 0;
                         stop = shallStop;
                     }
                     if (stop || !success)
@@ -310,6 +312,7 @@ namespace Ares.Playing
                         PlayNext();
                     }
                 }, false);
+            CurrentFadeOut = fileElement.Effects.FadeOutTime;
             PlayingModule.ThePlayer.ActiveMusicPlayer = this;
         }
 
@@ -321,7 +324,7 @@ namespace Ares.Playing
             {
                 shallStop = true;
             }
-            StopCurrentFile();
+            StopCurrentFile(false);
         }
 
         public override void StopMusic()
@@ -350,7 +353,7 @@ namespace Ares.Playing
 
         public void Next()
         {
-            StopCurrentFile(); // will automatically start the next file
+            StopCurrentFile(true); // will automatically start the next file
         }
 
         public abstract void Previous();
@@ -373,7 +376,7 @@ namespace Ares.Playing
                 if (m_Index < -1) 
                     m_Index = -1;
             }
-            StopCurrentFile(); // will automatically start the next file
+            StopCurrentFile(true); // will automatically start the next file
         }
 
         public override void PlayNext()
@@ -578,7 +581,7 @@ namespace Ares.Playing
             {
                 m_StopSounds = true;
             }
-            StopCurrentFile();
+            StopCurrentFile(false);
         }
 
         public override void SetSoundVolume(int volume)
@@ -619,6 +622,7 @@ namespace Ares.Playing
                         lock (syncObject)
                         {
                             CurrentPlayedHandle = 0;
+                            CurrentFadeOut = 0;
                             if (!success)
                                 m_ElementQueue.Clear();
                         }
@@ -627,6 +631,7 @@ namespace Ares.Playing
                 lock (syncObject)
                 {
                     CurrentPlayedHandle = handle;
+                    CurrentFadeOut = fileElement.Effects.FadeOutTime;
                 }
             }
         }

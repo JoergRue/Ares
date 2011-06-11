@@ -62,6 +62,7 @@ namespace Ares.Playing
     {
         int PlayFile(ISoundFile file, PlayingFinished callback, bool loop);
         void StopFile(int handle);
+        void StopFile(int handle, bool fadeOut, int fadeOutTime);
     }
 
     /// <summary>

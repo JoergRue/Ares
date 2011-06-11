@@ -128,8 +128,42 @@ namespace Ares.Playing
 
         public void StopFile(int handle)
         {
-            Bass.BASS_ChannelStop(handle); // no error handling, unimportant
-            FileFinished(handle);
+            StopFile(handle, false, 0);
+        }
+
+        public void StopFile(int handle, bool fadeOut, int fadeOutTime)
+        {
+            if (!fadeOut || fadeOutTime == 0)
+            {
+                Bass.BASS_ChannelStop(handle); // no error handling, unimportant
+                FileFinished(handle);
+            }
+            else
+            {
+                long pos = Bass.BASS_ChannelGetPosition(handle);
+                long length = Bass.BASS_ChannelGetLength(handle);
+                long remaining = length - pos;
+                long fadeOutLength = Bass.BASS_ChannelSeconds2Bytes(handle, 0.001 * fadeOutTime);
+                if (pos == -1 || length == -1 || fadeOutLength == -1 || remaining <= 0)
+                {
+                    // on error, just stop the file
+                    Bass.BASS_ChannelStop(handle);
+                    FileFinished(handle);
+                    return;
+                }
+                if (fadeOutLength > remaining)
+                {
+                    fadeOutLength = remaining;
+                }
+                if (Bass.BASS_ChannelSetSync(handle, BASSSync.BASS_SYNC_POS, pos + fadeOutLength, m_StopSync, new IntPtr(0)) == 0)
+                {
+                    // on error, just stop the file
+                    Bass.BASS_ChannelStop(handle);
+                    FileFinished(handle);
+                    return;
+                }
+                FadeOut(handle, fadeOutTime);
+            }
         }
 
         public void SetVolume(int handle, int volume)
@@ -154,6 +188,7 @@ namespace Ares.Playing
         {
             m_EndSync = new SYNCPROC(EndSync);
             m_FadeOutSync = new SYNCPROC(FadeOutSync);
+            m_StopSync = new SYNCPROC(StopSync);
             m_RunningStreams = new Dictionary<int, Action>();
         }
 
@@ -163,6 +198,12 @@ namespace Ares.Playing
 
         private void EndSync(int handle, int channel, int data, IntPtr user)
         {
+            FileFinished(channel);
+        }
+
+        private void StopSync(int handle, int channel, int data, IntPtr user)
+        {
+            Bass.BASS_ChannelStop(channel);
             FileFinished(channel);
         }
 
@@ -195,6 +236,7 @@ namespace Ares.Playing
 
         private SYNCPROC m_EndSync;
         private SYNCPROC m_FadeOutSync;
+        private SYNCPROC m_StopSync;
 
         private Dictionary<int, Action> m_RunningStreams;
         private Object m_Mutex = new Int16();
