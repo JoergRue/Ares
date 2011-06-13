@@ -17,7 +17,7 @@
  along with Ares; if not, write to the Free Software
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package ares.controller.network;
+package ares.controllers.network;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -34,9 +34,9 @@ import java.util.HashMap;
 import javax.swing.KeyStroke;
 import javax.swing.Timer;
 
-import ares.controller.messages.Messages;
-import ares.controller.messages.Message.MessageType;
-import ares.controller.util.Localization;
+import ares.controllers.messages.Messages;
+import ares.controllers.messages.Message.MessageType;
+import ares.controllers.util.Localization;
 
 public final class ControlConnection {
 
@@ -168,7 +168,7 @@ public final class ControlConnection {
 				  }
 				  case 3:
 				  {
-					  ares.controller.messages.Messages.addMessage(MessageType.Error, readString(stream));
+					  ares.controllers.messages.Messages.addMessage(MessageType.Error, readString(stream));
 					  break;
 				  }
 				  case 4:
@@ -190,7 +190,7 @@ public final class ControlConnection {
 			  }
 		  }
 		  catch (IOException e) {
-			  ares.controller.messages.Messages.addMessage(MessageType.Error, e.getLocalizedMessage());
+			  ares.controllers.messages.Messages.addMessage(MessageType.Error, e.getLocalizedMessage());
 		      networkClient.connectionFailed();
 			  break;
 		  }

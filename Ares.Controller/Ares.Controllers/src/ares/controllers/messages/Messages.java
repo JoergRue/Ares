@@ -17,12 +17,12 @@
  along with Ares; if not, write to the Free Software
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package ares.controller.messages;
+package ares.controllers.messages;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import ares.controller.util.AbstractObservable;
+import ares.controllers.util.AbstractObservable;
 
 public final class Messages extends AbstractObservable<IMessageListener> {
   

@@ -17,22 +17,31 @@
  along with Ares; if not, write to the Free Software
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package ares.controller.control;
+package ares.controllers.network;
 
-import java.awt.event.ActionEvent;
+import java.net.InetAddress;
 
-import javax.swing.AbstractAction;
-import javax.swing.KeyStroke;
+public final class ServerInfo {
 
-
-public class KeyAction extends AbstractAction {
-  public KeyAction(KeyStroke key) {
-    this.key = key;
+  private InetAddress address;
+  private int port;
+  private String name;
+  
+  public ServerInfo(InetAddress address, int port, String name) {
+    this.address = address;
+    this.port = port;
+    this.name = name;
   }
   
-  public void actionPerformed(ActionEvent e) {
-    Control.getInstance().sendKey(key);
+  public InetAddress getAddress() {
+    return address;
   }
   
-  private KeyStroke key; 
+  public int getPort() {
+    return port;
+  }
+  
+  public String getName() { 
+    return name;
+  }
 }

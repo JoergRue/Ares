@@ -32,7 +32,7 @@ import javax.swing.JPanel;
 import javax.swing.JRootPane;
 import javax.swing.JToggleButton;
 
-import ares.controller.data.Command;
+import ares.controllers.data.Command;
 
 class CommandsPanelCreator {
   

@@ -20,7 +20,7 @@
 package ares.controller.gui;
 
 import ares.controller.control.OnlineOperations;
-import ares.controller.control.Version;
+import ares.controllers.control.Version;
 import ares.controller.gui.lf.BGDialog;
 import ares.controller.util.Localization;
 

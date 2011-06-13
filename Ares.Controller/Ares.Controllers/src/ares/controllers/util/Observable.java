@@ -17,32 +17,11 @@
  along with Ares; if not, write to the Free Software
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package ares.controller.data;
+package ares.controllers.util;
 
-import javax.swing.KeyStroke;
+public interface Observable<T extends Observer> {
+  
+  void addObserver(T observer);
+  void removeObserver(T observer);
 
-public class Command {
-
-  private String title;
-  private KeyStroke keyStroke;
-  private int id;
-  
-  public Command(String title, int id, KeyStroke keyStroke) {
-    this.title = title;
-    this.keyStroke = keyStroke;
-    this.id = id;
-  }
-  
-  public int getId() {
-	  return id;
-  }
-  
-  public String getTitle() {
-    return title;
-  }
-  
-  public KeyStroke getKeyStroke() {
-    return keyStroke;
-  }
-  
 }

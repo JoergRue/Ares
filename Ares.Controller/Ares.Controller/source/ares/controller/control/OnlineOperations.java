@@ -27,6 +27,8 @@ import java.net.URL;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import ares.controllers.control.Version;
+
 import ares.controller.util.Localization;
 import ares.controller.gui.ChangeLogDialog;
 

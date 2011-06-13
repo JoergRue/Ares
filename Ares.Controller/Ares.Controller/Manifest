@@ -1,5 +1,7 @@
 Main-Class: ares.controller.control.Main
 Class-Path: 
+  Ares.Controllers.jar
+  controllers_res.jar
   resources.jar 
   libraries/synthetica.jar 
   libraries/syntheticawalnut.jar

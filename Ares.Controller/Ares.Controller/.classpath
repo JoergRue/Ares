@@ -11,5 +11,6 @@
 	<classpathentry kind="lib" path="libraries/syntheticaGreenDream.jar"/>
 	<classpathentry kind="lib" path="libraries/syntheticaSilverMoon.jar"/>
 	<classpathentry kind="lib" path="libraries/syntheticawalnut.jar"/>
+	<classpathentry kind="lib" path="D:/Projekte/Ares/trunk/build/Ares/Controller/Ares.Controllers.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

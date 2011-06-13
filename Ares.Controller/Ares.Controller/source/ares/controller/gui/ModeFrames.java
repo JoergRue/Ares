@@ -23,9 +23,9 @@ import java.awt.Rectangle;
 import java.util.HashMap;
 import java.util.Map;
 
-import ares.controller.control.Control;
-import ares.controller.data.Configuration;
-import ares.controller.data.Mode;
+import ares.controllers.control.Control;
+import ares.controllers.data.Configuration;
+import ares.controllers.data.Mode;
 
 public final class ModeFrames implements FrameStateChanger {
 

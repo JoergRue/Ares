@@ -22,7 +22,7 @@ package ares.controller.gui;
 import ares.controller.gui.lf.BGDialog;
 import ares.controller.gui.lf.LookAndFeels;
 import ares.controller.gui.util.ExampleFileFilter;
-import ares.controller.messages.Message;
+import ares.controllers.messages.Message;
 import ares.controller.util.Directories;
 import ares.controller.util.Localization;
 

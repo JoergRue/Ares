@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Ares Controllers" default="jar" basedir="../">
+
+	<property name="ProductVersion" value="0.4.0" />
+	
+	<property name="src.dir"     value="src" />
+	
+	<property name="resource_src.dir" value="${src.dir}/ares/controllers/util" />
+	<property name="resources.dir" value="resources" />
+	<property name="resource_target.dir" value="${resources.dir}/ares/controllers/util" />
+	<property name="release.dir" value="release" />
+	<property name="libraries.dir" value="libraries" />
+	
+	<property name="build.dir"   value="../../build" />
+	<property name="classes.dir" value="${build.dir}/javaclasses" />
+	<property name="jar.dir"     value="${build.dir}/Ares/Controller" />
+
+	<target name="resources" description="Update resources">
+	  <native2ascii encoding="ISO-8859-1" src="${resource_src.dir}" dest="${resource_target.dir}" includes="*.properties" />
+	</target>
+
+	<target name="clean">
+	    <delete dir="${build.dir}"/>
+	</target>
+
+	<target name="compile" description="Compile java files">
+	    <mkdir dir="${classes.dir}"/>
+		<replace file="${src.dir}/ares/controllers/control/Version.java" token="1.0.0" value="${ProductVersion}" />
+	    <javac srcdir="${src.dir}" destdir="${classes.dir}" source="1.6" target="1.6" 
+	        classpath="" />
+	</target>
+
+	<target name="jar" description="Build jar file" depends="resources, compile">
+	    <mkdir dir="${jar.dir}"/>
+		<jar destfile="${jar.dir}/controllers_res.jar" basedir="${resources.dir}" />
+	    <jar destfile="${jar.dir}/Ares.Controllers.jar" basedir="${classes.dir}" manifest="Manifest" />
+	</target>
+	
+</project>

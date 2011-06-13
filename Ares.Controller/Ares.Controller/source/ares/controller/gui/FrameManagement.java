@@ -36,7 +36,7 @@ import java.util.prefs.Preferences;
 
 import javax.swing.Timer;
 
-import ares.controller.util.AbstractObservable;
+import ares.controllers.util.AbstractObservable;
 
 /*
 import dsa.gui.util.Help;

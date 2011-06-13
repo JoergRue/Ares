@@ -48,7 +48,7 @@ public class AboutDialog extends BGDialog {
 		content.add(p2);
 		content.add(Box.createVerticalStrut(10));
 		JPanel p3 = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		p3.add(new JLabel(Localization.getString("AboutDialog.Version") + ares.controller.control.Version.getCurrentVersionString())); //$NON-NLS-1$
+		p3.add(new JLabel(Localization.getString("AboutDialog.Version") + ares.controllers.control.Version.getCurrentVersionString())); //$NON-NLS-1$
 		content.add(p3);
 		JPanel p4 = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		p4.add(new JLabel(Localization.getString("AboutDialog.Copyright"))); //$NON-NLS-1$

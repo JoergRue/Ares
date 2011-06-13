@@ -26,10 +26,10 @@ import javax.swing.AbstractAction;
 import javax.swing.AbstractButton;
 import javax.swing.KeyStroke;
 
-import ares.controller.control.Control;
-import ares.controller.control.ModeCommandAction;
-import ares.controller.data.Command;
-import ares.controller.data.Mode;
+import ares.controllers.control.Control;
+import ares.controllers.control.ModeCommandAction;
+import ares.controllers.data.Command;
+import ares.controllers.data.Mode;
 
 final class ModeFrame extends FrameController implements CommandsPanelCreator.IActionCreator {
   

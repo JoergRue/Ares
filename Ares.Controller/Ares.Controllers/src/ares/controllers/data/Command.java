@@ -17,31 +17,32 @@
  along with Ares; if not, write to the Free Software
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package ares.controller.network;
+package ares.controllers.data;
 
-import java.net.InetAddress;
+import javax.swing.KeyStroke;
 
-public final class ServerInfo {
+public class Command {
 
-  private InetAddress address;
-  private int port;
-  private String name;
+  private String title;
+  private KeyStroke keyStroke;
+  private int id;
   
-  public ServerInfo(InetAddress address, int port, String name) {
-    this.address = address;
-    this.port = port;
-    this.name = name;
+  public Command(String title, int id, KeyStroke keyStroke) {
+    this.title = title;
+    this.keyStroke = keyStroke;
+    this.id = id;
   }
   
-  public InetAddress getAddress() {
-    return address;
+  public int getId() {
+	  return id;
   }
   
-  public int getPort() {
-    return port;
+  public String getTitle() {
+    return title;
   }
   
-  public String getName() { 
-    return name;
+  public KeyStroke getKeyStroke() {
+    return keyStroke;
   }
+  
 }

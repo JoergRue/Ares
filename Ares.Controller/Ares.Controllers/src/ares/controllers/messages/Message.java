@@ -17,14 +17,26 @@
  along with Ares; if not, write to the Free Software
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package ares.controller.gui;
+package ares.controllers.messages;
 
-import java.awt.Rectangle;
+public final class Message {
 
-import ares.controllers.util.Observer;
-
-public interface FrameStateChanger extends Observer {
-  void openFrame(String name, Rectangle bounds);
-  void closeFrame(SubFrame frame);
-  void frameStateChanged(SubFrame frame, boolean isOpen);
+  public enum MessageType { Error, Warning, Info, Debug }
+  
+  private MessageType type;
+  private String message;
+  
+  public Message(MessageType messageType, String aMessage) {
+    type = messageType;
+    message = aMessage;
+  }
+  
+  public MessageType getType() {
+    return type;
+  }
+  
+  public String getMessage() {
+    return message;
+  }
+  
 }

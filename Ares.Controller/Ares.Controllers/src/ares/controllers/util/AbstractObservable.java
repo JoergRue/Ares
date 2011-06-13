@@ -17,7 +17,7 @@
  along with Ares; if not, write to the Free Software
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package ares.controller.util;
+package ares.controllers.util;
 
 public abstract class AbstractObservable<T extends Observer> implements Observable<T> {
 

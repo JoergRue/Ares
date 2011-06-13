@@ -65,22 +65,22 @@ import java.util.prefs.Preferences;
 
 import javax.swing.JComboBox;
 
-import ares.controller.control.Control;
-import ares.controller.control.KeyAction;
+import ares.controllers.control.Control;
+import ares.controllers.control.KeyAction;
 import ares.controller.control.OnlineOperations;
-import ares.controller.control.Version;
-import ares.controller.data.Command;
-import ares.controller.data.Configuration;
-import ares.controller.data.Mode;
+import ares.controllers.control.Version;
+import ares.controllers.data.Command;
+import ares.controllers.data.Configuration;
+import ares.controllers.data.Mode;
 import ares.controller.gui.util.ExampleFileFilter;
-import ares.controller.messages.IMessageListener;
-import ares.controller.messages.Message;
-import ares.controller.messages.Messages;
-import ares.controller.messages.Message.MessageType;
-import ares.controller.network.INetworkClient;
-import ares.controller.network.IServerListener;
-import ares.controller.network.ServerInfo;
-import ares.controller.network.ServerSearch;
+import ares.controllers.messages.IMessageListener;
+import ares.controllers.messages.Message;
+import ares.controllers.messages.Messages;
+import ares.controllers.messages.Message.MessageType;
+import ares.controllers.network.INetworkClient;
+import ares.controllers.network.IServerListener;
+import ares.controllers.network.ServerInfo;
+import ares.controllers.network.ServerSearch;
 import ares.controller.util.Directories;
 import ares.controller.util.Localization;
 

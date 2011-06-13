@@ -17,7 +17,7 @@
  along with Ares; if not, write to the Free Software
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package ares.controller.network;
+package ares.controllers.network;
 
 public interface IServerListener {
 

@@ -17,7 +17,7 @@
  along with Ares; if not, write to the Free Software
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package ares.controller.network;
+package ares.controllers.network;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -29,9 +29,9 @@ import java.net.UnknownHostException;
 import java.nio.charset.Charset;
 import java.util.StringTokenizer;
 
-import ares.controller.messages.Messages;
-import ares.controller.messages.Message.MessageType;
-import ares.controller.util.Localization;
+import ares.controllers.messages.Messages;
+import ares.controllers.messages.Message.MessageType;
+import ares.controllers.util.Localization;
 
 
 public final class ServerSearch {

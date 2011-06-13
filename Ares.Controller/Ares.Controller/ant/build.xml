@@ -2,7 +2,7 @@
 
 <project name="Ares Controller" default="resources" basedir="../">
 
-	<property name="ProductVersion" value="0.2.0" />
+	<property name="ProductVersion" value="0.4.0" />
 	
 	<property name="src.dir"     value="source" />
 	
@@ -28,7 +28,6 @@
 
 	<target name="compile" description="Compile java files">
 	    <mkdir dir="${classes.dir}"/>
-		<replace file="${src.dir}/ares/controller/control/Version.java" token="1.0.0" value="${ProductVersion}" />
 	    <javac srcdir="${src.dir}" destdir="${classes.dir}" source="1.6" target="1.6" 
 	        classpath="${libraries.dir}/skinlf.jar:${libraries.dir}/synthetica.jar:${libraries.dir}/syntheticaBlueIce.jar:${libraries.dir}/syntheticaBlueSteel.jar:${libraries.dir}/syntheticaGreenDream.jar:${libraries.dir}/syntheticaSilverMoon.jar:${libraries.dir}/syntheticawalnut.jar:${libraries.dir}/l2fprod-common-fontchooser.jar:${libraries.dir}/l2fprod-common-directorychooser.jar" />
 	</target>

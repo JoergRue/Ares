@@ -17,46 +17,52 @@
  along with Ares; if not, write to the Free Software
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package ares.controller.data;
+package ares.controllers.data;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.swing.KeyStroke;
 
-public final class Mode extends Command {
-  
-  private Map<Integer, Command> commands;
+public final class Configuration {
 
-  public Mode(String title, int id, KeyStroke keyStroke) {
-    super(title, id, keyStroke);
-    commands = new HashMap<Integer, Command>();
+  private List<Mode> modes;
+  private String title;
+  
+  public Configuration() {
+    modes = new ArrayList<Mode>();
   }
   
-  public void addCommand(Command command) {
-    commands.put(command.getId(), command);
+  public void setTitle(String title) {
+	  this.title = title;
   }
   
-  public String getTitle(int id) {
-	  if (commands.containsKey(id)) {
-		  return commands.get(id).getTitle();
+  public String getTitle() {
+	  return title;
+  }
+  
+  public void addMode(Mode mode) {
+    modes.add(mode);
+  }
+  
+  public List<Mode> getModes() {
+    return java.util.Collections.unmodifiableList(modes);
+  }
+  
+  public String getCommandTitle(int commandId) {
+	  for (Mode mode : modes) {
+		  String title = mode.getTitle(commandId);
+		  if (title != null) {
+			  return title;
+		  }
 	  }
-	  else {
-		  return null;
-	  }
-  }
-  
-  public List<Command> getCommands() {
-	  return new ArrayList<Command>(commands.values());
+	  return null;
   }
   
   public boolean containsKeyStroke(KeyStroke keyStroke) {
-    for(Command command : commands.values()) {
+    for(Command command : modes) {
       if (command.getKeyStroke().equals(keyStroke)) return true;
     }
     return false;
   }
-  
 }

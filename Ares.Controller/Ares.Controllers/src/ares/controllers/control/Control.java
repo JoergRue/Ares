@@ -17,21 +17,21 @@
  along with Ares; if not, write to the Free Software
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
- package ares.controller.control;
+ package ares.controllers.control;
 
 import java.awt.event.KeyEvent;
 
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
-import ares.controller.data.Configuration;
-import ares.controller.data.FileParser;
-import ares.controller.messages.Messages;
-import ares.controller.messages.Message.MessageType;
-import ares.controller.network.ControlConnection;
-import ares.controller.network.INetworkClient;
-import ares.controller.network.ServerInfo;
-import ares.controller.util.Localization;
+import ares.controllers.data.Configuration;
+import ares.controllers.data.FileParser;
+import ares.controllers.messages.Messages;
+import ares.controllers.messages.Message.MessageType;
+import ares.controllers.network.ControlConnection;
+import ares.controllers.network.INetworkClient;
+import ares.controllers.network.ServerInfo;
+import ares.controllers.util.Localization;
 
 public final class Control {
   

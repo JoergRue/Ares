@@ -17,11 +17,11 @@
  along with Ares; if not, write to the Free Software
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package ares.controller.util;
+package ares.controllers.messages;
 
-public interface Observable<T extends Observer> {
-  
-  void addObserver(T observer);
-  void removeObserver(T observer);
+import ares.controllers.util.Observer;
 
+public interface IMessageListener extends Observer {
+
+  void messageAdded(Message message);
 }

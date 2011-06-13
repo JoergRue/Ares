@@ -17,12 +17,12 @@
  along with Ares; if not, write to the Free Software
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package ares.controller.control;
+package ares.controllers.control;
 
 import java.text.ParseException;
 import java.util.StringTokenizer;
 
-import ares.controller.util.Localization;
+import ares.controllers.util.Localization;
 
 public class Version implements Comparable<Version> {
 
@@ -30,7 +30,7 @@ public class Version implements Comparable<Version> {
 
   private static Version createCurrentVersion() {
     try {
-      return Version.parse("0.3.2"); //$NON-NLS-1$
+      return Version.parse("0.4.0"); //$NON-NLS-1$
     }
     catch (ParseException e) {
       return createVersion(1, 0, 0);

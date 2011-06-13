@@ -17,7 +17,7 @@
  along with Ares; if not, write to the Free Software
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package ares.controller.data;
+package ares.controllers.data;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,9 +32,9 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import ares.controller.messages.Messages;
-import ares.controller.messages.Message.MessageType;
-import ares.controller.util.Localization;
+import ares.controllers.messages.Messages;
+import ares.controllers.messages.Message.MessageType;
+import ares.controllers.util.Localization;
 
 public final class FileParser {
 

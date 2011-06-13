@@ -17,11 +17,22 @@
  along with Ares; if not, write to the Free Software
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package ares.controller.messages;
+package ares.controllers.control;
 
-import ares.controller.util.Observer;
+import java.awt.event.ActionEvent;
 
-public interface IMessageListener extends Observer {
+import javax.swing.AbstractAction;
+import javax.swing.KeyStroke;
 
-  void messageAdded(Message message);
+
+public class KeyAction extends AbstractAction {
+  public KeyAction(KeyStroke key) {
+    this.key = key;
+  }
+  
+  public void actionPerformed(ActionEvent e) {
+    Control.getInstance().sendKey(key);
+  }
+  
+  private KeyStroke key; 
 }

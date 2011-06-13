@@ -46,9 +46,9 @@ import ares.controller.gui.lf.BGTableCellRenderer;
 import ares.controller.gui.lf.Colors;
 import ares.controller.gui.util.CellRenderers;
 import ares.controller.gui.util.TableSorter;
-import ares.controller.messages.IMessageListener;
-import ares.controller.messages.Message;
-import ares.controller.messages.Messages;
+import ares.controllers.messages.IMessageListener;
+import ares.controllers.messages.Message;
+import ares.controllers.messages.Messages;
 import ares.controller.util.Localization;
 
 class MessageFrame extends SubFrame implements IMessageListener {

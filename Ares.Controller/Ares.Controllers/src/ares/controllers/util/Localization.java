@@ -17,26 +17,26 @@
  along with Ares; if not, write to the Free Software
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package ares.controller.messages;
+package ares.controllers.util;
 
-public final class Message {
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
 
-  public enum MessageType { Error, Warning, Info, Debug }
-  
-  private MessageType type;
-  private String message;
-  
-  public Message(MessageType messageType, String aMessage) {
-    type = messageType;
-    message = aMessage;
+public class Localization {
+  private static final String BUNDLE_NAME = "ares.controller.util.localization"; //$NON-NLS-1$
+
+  private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle
+      .getBundle(BUNDLE_NAME);
+
+  private Localization() {
   }
-  
-  public MessageType getType() {
-    return type;
+
+  public static String getString(String key) {
+    try {
+      return RESOURCE_BUNDLE.getString(key);
+    }
+    catch (MissingResourceException e) {
+      return '!' + key + '!';
+    }
   }
-  
-  public String getMessage() {
-    return message;
-  }
-  
 }
