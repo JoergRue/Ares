@@ -49,6 +49,7 @@ using System.Threading;
 
 namespace Ares.Ipc
 {
+#if !MONO
     /// <summary>
     /// Bietet verschiedene Methoden zu Zugriff auf benannte System Mutexe.
     /// Es kann auf vorhandene Mutexe zugegriffen, oder ein neuer Mutex erzeugt werden.
@@ -313,4 +314,5 @@ namespace Ares.Ipc
 
         #endregion
     }
+#endif
 }

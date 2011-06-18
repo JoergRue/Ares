@@ -62,9 +62,17 @@ namespace Ares.Editor.ElementEditorControls
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.elementsGrid = new System.Windows.Forms.DataGridView();
             this.NameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+#if !MONO
             this.ChanceColumn = new DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn();
+#else
+            this.ChanceColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+#endif
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+#if !MONO
             this.dataGridViewNumericUpDownColumn1 = new DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn();
+#else
+            this.dataGridViewNumericUpDownColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+#endif
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.elementsGrid)).BeginInit();
             this.SuspendLayout();
@@ -122,12 +130,14 @@ namespace Ares.Editor.ElementEditorControls
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.ControlDark;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             this.ChanceColumn.DefaultCellStyle = dataGridViewCellStyle1;
+#if !MONO
             resources.ApplyResources(this.ChanceColumn, "ChanceColumn");
             this.ChanceColumn.Maximum = new decimal(new int[] {
             1000,
             0,
             0,
             0});
+#endif
             this.ChanceColumn.Name = "ChanceColumn";
             this.ChanceColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.ChanceColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
@@ -142,12 +152,14 @@ namespace Ares.Editor.ElementEditorControls
             // dataGridViewNumericUpDownColumn1
             // 
             this.dataGridViewNumericUpDownColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+#if !MONO
             resources.ApplyResources(this.dataGridViewNumericUpDownColumn1, "dataGridViewNumericUpDownColumn1");
             this.dataGridViewNumericUpDownColumn1.Maximum = new decimal(new int[] {
             1000,
             0,
             0,
             0});
+#endif
             this.dataGridViewNumericUpDownColumn1.Name = "dataGridViewNumericUpDownColumn1";
             this.dataGridViewNumericUpDownColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridViewNumericUpDownColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
@@ -169,8 +181,13 @@ namespace Ares.Editor.ElementEditorControls
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DataGridView elementsGrid;
         private System.Windows.Forms.DataGridViewTextBoxColumn NameColumn;
+#if !MONO
         private DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn ChanceColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn dataGridViewNumericUpDownColumn1;
+#else
+        private System.Windows.Forms.DataGridViewTextBoxColumn ChanceColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewNumericUpDownColumn1;
+#endif
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
     }
 }

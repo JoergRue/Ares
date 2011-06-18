@@ -461,10 +461,12 @@ namespace Ares.Editor
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.projectTree);
             this.Controls.Add(this.toolStrip1);
+#if !MONO
             this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft)
                         | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)
                         | WeifenLuo.WinFormsUI.Docking.DockAreas.DockTop)
                         | WeifenLuo.WinFormsUI.Docking.DockAreas.DockBottom)));
+#endif
             this.Name = "ProjectExplorer";
             this.projectContextMenu.ResumeLayout(false);
             this.modeContextMenu.ResumeLayout(false);

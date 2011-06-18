@@ -47,20 +47,30 @@ namespace Ares.Player
             try
             {
                 BassRegistration.Registration.RegisterBass();
+#if !MONO
+                if (!Un4seen.Bass.Bass.LoadMe())
+                {
+                    MessageBox.Show("Konnte BASS nicht laden!");
+                    return;
+                }
+#endif
                 if (!Un4seen.Bass.Bass.BASS_Init(-1, 44100, Un4seen.Bass.BASSInit.BASS_DEVICE_DEFAULT, IntPtr.Zero))
                 {
                     MessageBox.Show(StringResources.BassInitFail, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Stop);
                     return;
                 }
+#if !MONO
                 if (!Un4seen.Bass.AddOn.Fx.BassFx.LoadMe())
                 {
-                    MessageBox.Show(StringResources.BassInitFail, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    MessageBox.Show(StringResources.BassInitFail + "\n Error: " + Un4seen.Bass.Bass.BASS_ErrorGetCode(), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Stop);
                     return;
                 }
+#endif
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 MessageBox.Show(StringResources.BassInitFail, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                MessageBox.Show("Fehler: " + ex.Message + "(" + ex.GetType().FullName + ")\n" + ex.StackTrace, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return;
             }
             try

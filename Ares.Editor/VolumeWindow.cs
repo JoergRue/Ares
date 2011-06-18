@@ -9,18 +9,19 @@ using System.Windows.Forms;
 
 namespace Ares.Editor
 {
-    public partial class VolumeWindow : WeifenLuo.WinFormsUI.Docking.DockContent
+    partial class VolumeWindow : ToolWindow
     {
         public VolumeWindow()
         {
             InitializeComponent();
-            HideOnClose = true;
         }
 
+#if !MONO
         protected override string GetPersistString()
         {
             return "VolumeWindow";
         }
+#endif
 
         private void VolumeWindow_Load(object sender, EventArgs e)
         {

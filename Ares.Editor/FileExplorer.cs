@@ -28,7 +28,7 @@ using System.Windows.Forms;
 
 namespace Ares.Editor
 {
-    partial class FileExplorer : WeifenLuo.WinFormsUI.Docking.DockContent
+    partial class FileExplorer : ToolWindow
     {
         private static ImageList sImageList = null;
 
@@ -46,7 +46,6 @@ namespace Ares.Editor
             InitializeComponent();
             this.Text = String.Format(StringResources.FileExplorerTitle, fileType == FileType.Music ? StringResources.Music : StringResources.Sounds);
             m_FileType = fileType;
-            HideOnClose = true;
             treeView1.ImageList = sImageList;
             ReFillTree();
             if (fileType == FileType.Music)
@@ -75,10 +74,12 @@ namespace Ares.Editor
         
         FileType m_FileType;
 
+#if !MONO
         protected override string GetPersistString()
         {
             return "FileExplorer_" + (int) m_FileType;
         }
+#endif
 
         public void ReFillTree()
         {

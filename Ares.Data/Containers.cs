@@ -200,7 +200,7 @@ namespace Ares.Data
         public I AddElement(IElement element)
         {
             T wrapper = new T();
-            wrapper.InnerElement = element;
+            ((ContainerElement)wrapper).InnerElement = element;
             m_Elements.Add(wrapper);
             return wrapper;
         }
@@ -250,7 +250,7 @@ namespace Ares.Data
         {
             base.DoWriteToXml(writer);
             writer.WriteStartElement("SubElements");
-            m_Elements.ForEach(e => e.WriteToXml(writer));
+            m_Elements.ForEach(e => ((IElement)e).WriteToXml(writer));
             writer.WriteEndElement();
         }
 

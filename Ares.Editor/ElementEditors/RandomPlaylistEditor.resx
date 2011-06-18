@@ -250,7 +250,7 @@
     <value>volumeControl</value>
   </data>
   <data name="&gt;&gt;volumeControl.Type" xml:space="preserve">
-    <value>Ares.Editor.Controls.VolumeControl, Ares.Editor.Controls, Version=0.2.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
+    <value>Ares.Editor.Controls.VolumeControl, Ares.Editor.Controls, Version=0.3.2.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
   </data>
   <data name="&gt;&gt;volumeControl.Parent" xml:space="preserve">
     <value>$this</value>
@@ -271,7 +271,7 @@
     <value>delayableControl</value>
   </data>
   <data name="&gt;&gt;delayableControl.Type" xml:space="preserve">
-    <value>Ares.Editor.ElementEditors.DelayableControl, Ares.Editor.Controls, Version=0.2.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
+    <value>Ares.Editor.ElementEditors.DelayableControl, Ares.Editor.Controls, Version=0.3.2.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
   </data>
   <data name="&gt;&gt;delayableControl.Parent" xml:space="preserve">
     <value>$this</value>
@@ -292,7 +292,7 @@
     <value>repeatableControl</value>
   </data>
   <data name="&gt;&gt;repeatableControl.Type" xml:space="preserve">
-    <value>Ares.Editor.ElementEditors.RepeatableControl, Ares.Editor.Controls, Version=0.2.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
+    <value>Ares.Editor.ElementEditors.RepeatableControl, Ares.Editor.Controls, Version=0.3.2.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
   </data>
   <data name="&gt;&gt;repeatableControl.Parent" xml:space="preserve">
     <value>$this</value>
@@ -316,7 +316,7 @@
     <value>choiceContainerControl</value>
   </data>
   <data name="&gt;&gt;choiceContainerControl.Type" xml:space="preserve">
-    <value>Ares.Editor.ElementEditorControls.ChoiceContainerControl, Ares.Editor.Controls, Version=0.2.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
+    <value>Ares.Editor.ElementEditorControls.ChoiceContainerControl, Ares.Editor.Controls, Version=0.3.2.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
   </data>
   <data name="&gt;&gt;choiceContainerControl.Parent" xml:space="preserve">
     <value>$this</value>
@@ -343,6 +343,6 @@
     <value>RandomPlaylistOrBGSoundChoiceEditor</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>Ares.Editor.ElementEditors.EditorBase, Ares.Editor, Version=0.2.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
+    <value>Ares.Editor.ElementEditors.EditorBase, Ares.Editor, Version=0.3.2.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
   </data>
 </root>

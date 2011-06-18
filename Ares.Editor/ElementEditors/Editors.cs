@@ -26,7 +26,26 @@ namespace Ares.Editor.ElementEditors
 {
     static class Editors
     {
-        public static void ShowEditor(Ares.Data.IElement element, Ares.Data.IGeneralElementContainer container, WeifenLuo.WinFormsUI.Docking.DockPanel dockPanel)
+
+#if !MONO
+        private static void ShowEditor(EditorBase editor, WeifenLuo.WinFormsUI.Docking.DockPanel parent)
+        {
+            editor.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Document;
+            editor.Show(parent);
+        }
+#else
+        private static void ShowEditor(EditorBase editor, System.Windows.Forms.Form parent)
+        {
+            editor.MdiParent = parent;
+            editor.Show();
+        }
+#endif
+
+#if !MONO
+        public static void ShowEditor(Ares.Data.IElement element, Ares.Data.IGeneralElementContainer container, WeifenLuo.WinFormsUI.Docking.DockPanel parent)
+#else
+        public static void ShowEditor(Ares.Data.IElement element, Ares.Data.IGeneralElementContainer container, System.Windows.Forms.Form parent)
+#endif
         {
             if (element == null)
                 return;
@@ -40,56 +59,53 @@ namespace Ares.Editor.ElementEditors
                 if (element is Ares.Data.IRandomBackgroundMusicList)
                 {
                     RandomPlaylistOrBGSoundChoiceEditor editor = new RandomPlaylistOrBGSoundChoiceEditor();
-                    editor.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Document;
                     editor.SetPlaylist(element as Ares.Data.IRandomBackgroundMusicList);
-                    editor.Show(dockPanel);
+                    ShowEditor(editor, parent);
                 }
                 else if (element is Ares.Data.IBackgroundSoundChoice)
                 {
                     RandomPlaylistOrBGSoundChoiceEditor editor = new RandomPlaylistOrBGSoundChoiceEditor();
-                    editor.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Document;
                     editor.SetBGSoundChoice(element as Ares.Data.IBackgroundSoundChoice);
-                    editor.Show(dockPanel);
+                    ShowEditor(editor, parent);
                 }
                 else if (element is Ares.Data.ISequentialBackgroundMusicList)
                 {
                     SequentialPlaylistEditor editor = new SequentialPlaylistEditor();
-                    editor.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Document;
                     editor.SetPlaylist(element as Ares.Data.ISequentialBackgroundMusicList);
-                    editor.Show(dockPanel);
+                    ShowEditor(editor, parent);
                 }
                 else if (element is Ares.Data.IElementContainer<Ares.Data.IChoiceElement>)
                 {
                     ChoiceContainerEditor editor = new ChoiceContainerEditor();
-                    editor.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Document;
                     editor.SetContainer(element as Ares.Data.IElementContainer<Ares.Data.IChoiceElement>);
-                    editor.Show(dockPanel);
+                    ShowEditor(editor, parent);
                 }
                 else if (element is Ares.Data.ISequentialContainer)
                 {
                     SequentialContainerEditor editor = new SequentialContainerEditor();
-                    editor.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Document;
                     editor.SetContainer(element as Ares.Data.ISequentialContainer);
-                    editor.Show(dockPanel);
+                    ShowEditor(editor, parent);
                 }
                 else if (element is Ares.Data.IElementContainer<Ares.Data.IParallelElement>)
                 {
                     ParallelContainerEditor editor = new ParallelContainerEditor();
-                    editor.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Document;
                     editor.SetContainer(element as Ares.Data.IElementContainer<Ares.Data.IParallelElement>);
-                    editor.Show(dockPanel);
+                    ShowEditor(editor, parent);
                 }
                 else if (element is Ares.Data.IFileElement)
                 {
                     FileElementEditor editor = new FileElementEditor();
-                    editor.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Document;
                     editor.SetElement(element as Ares.Data.IFileElement, container);
-                    editor.Show(dockPanel);
+                    ShowEditor(editor, parent);
                 }
             }
         }
 
-        public static void ShowTriggerEditor(Ares.Data.IModeElement element, WeifenLuo.WinFormsUI.Docking.DockPanel dockPanel)
+#if !MONO
+        public static void ShowTriggerEditor(Ares.Data.IModeElement element, WeifenLuo.WinFormsUI.Docking.DockPanel parent)
+#else
+        public static void ShowTriggerEditor(Ares.Data.IModeElement element, System.Windows.Forms.Form parent)
+#endif
         {
             EditorBase existing = EditorRegistry.Instance.GetEditor(element.Id);
             if (existing != null)
@@ -99,9 +115,8 @@ namespace Ares.Editor.ElementEditors
             else
             {
                 TriggerEditor editor = new TriggerEditor();
-                editor.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Document;
                 editor.SetElement(element);
-                editor.Show(dockPanel);
+                ShowEditor(editor, parent);
             }
         }
 

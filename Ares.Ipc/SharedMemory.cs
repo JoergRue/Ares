@@ -102,11 +102,13 @@ namespace Ares.Ipc
 		/// <remarks>n/a</remarks>
 		private int currentSize;
 
+#if !MONO
 		/// <summary>
 		/// Gibt an ob die Dispose Methode ausgeführt wurde. wurde.
 		/// </summary>
 		/// <remarks>n/a</remarks>
 		private bool disposed;
+#endif
 
 		#endregion
 
@@ -241,6 +243,7 @@ namespace Ares.Ipc
 		/// </remarks>
 		public SharedMemory(string name, SharedMemoryProcedure creationProcedure, int size)
 		{
+#if !MONO
 			if (string.IsNullOrEmpty(name))
 			{
 				throw new SharedMemoryException();
@@ -307,6 +310,9 @@ namespace Ares.Ipc
 
 			this.currentSize = size;
 			this._segmentName = name;
+#else
+            throw new SharedMemoryException("Not available on Mono");
+#endif
 		}
 
 		#endregion
@@ -458,6 +464,7 @@ namespace Ares.Ipc
         /// <param name="size">Neue Groesse</param>
         private void resize(int size)
         {
+#if !MONO
             if (nativePointer != IntPtr.Zero)
             {
                 NativeMethods.UnmapViewOfFile(nativePointer);
@@ -499,6 +506,7 @@ namespace Ares.Ipc
                 this.nativeHandle = IntPtr.Zero;
                 throw new SharedMemoryException();
             }
+#endif
 
             this.currentSize = size;
         }
@@ -631,6 +639,7 @@ namespace Ares.Ipc
 		/// <remarks>n/a</remarks>
 		private void Dispose(bool disposing)
 		{
+#if !MONO
 			if (!this.disposed)
 			{
 				// die managed Resourcen nur freigeben
@@ -651,8 +660,9 @@ namespace Ares.Ipc
 					NativeMethods.CloseHandle(nativeHandle);
 				}
 			}
-			this.disposed = true;
-		}
+            this.disposed = true;
+#endif
+        }
 
 		#endregion
 	}

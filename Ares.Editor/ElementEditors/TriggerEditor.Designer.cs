@@ -145,7 +145,9 @@ namespace Ares.Editor.ElementEditors
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+#if !MONO
             this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.Document)));
+#endif
             this.Name = "TriggerEditor";
             this.ShowInTaskbar = false;
             this.groupBox1.ResumeLayout(false);

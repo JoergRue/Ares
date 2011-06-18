@@ -79,11 +79,11 @@ namespace Ares.Player
                 case MessageType.Debug:
                     return Properties.Resources.gear;
                 case MessageType.Info:
-                    return Properties.Resources.eventlogInfo;
+                    return Properties.Resources.eventlogInfo.ToBitmap();
                 case MessageType.Warning:
-                    return Properties.Resources.eventlogWarn;
+                    return Properties.Resources.eventlogWarn.ToBitmap();
                 case MessageType.Error:
-                    return Properties.Resources.eventlogError;
+                    return Properties.Resources.eventlogError.ToBitmap();
                 default:
                     return null;
             }

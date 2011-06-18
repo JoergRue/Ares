@@ -32,9 +32,11 @@ namespace DataGridViewNumericUpDownElements
     /// </summary>
     public class DataGridViewNumericUpDownCell : DataGridViewTextBoxCell
     {
+#if !MONO
         // Used in KeyEntersEditMode function
         [System.Runtime.InteropServices.DllImport("USER32.DLL", CharSet = System.Runtime.InteropServices.CharSet.Auto)]
         private static extern short VkKeyScan(char key);
+#endif
 
         // Used in TranslateAlignment function
         private static readonly DataGridViewContentAlignment anyRight = DataGridViewContentAlignment.TopRight | 
@@ -464,17 +466,23 @@ namespace DataGridViewNumericUpDownElements
         /// </summary>
         public override bool KeyEntersEditMode(KeyEventArgs e)
         {
+#if !MONO
             NumberFormatInfo numberFormatInfo = System.Globalization.CultureInfo.CurrentCulture.NumberFormat;
-            Keys negativeSignKey = Keys.None;
             string negativeSignStr = numberFormatInfo.NegativeSign;
+            Keys negativeSignKey = Keys.None;
             if (!string.IsNullOrEmpty(negativeSignStr) && negativeSignStr.Length == 1)
             {
+
                 negativeSignKey = (Keys)(VkKeyScan(negativeSignStr[0]));
+                negativeSignKey = (Keys)(new System.Windows.Forms.KeysConverter()).ConvertFromString(negativeSignStr.Substring(0, 1));
             }
+#endif
 
             if ((char.IsDigit((char)e.KeyCode) ||
                  (e.KeyCode >= Keys.NumPad0 && e.KeyCode <= Keys.NumPad9) ||
+#if !MONO
                  negativeSignKey == e.KeyCode ||
+#endif
                  Keys.Subtract == e.KeyCode) &&
                 !e.Shift && !e.Alt && !e.Control)
             {
@@ -663,6 +671,7 @@ namespace DataGridViewNumericUpDownElements
                                             bool isFirstDisplayedColumn,
                                             bool isFirstDisplayedRow)
         {
+#if !MONO
             Rectangle editingControlBounds = PositionEditingPanel(cellBounds,
                                                         cellClip,
                                                         cellStyle,
@@ -670,6 +679,11 @@ namespace DataGridViewNumericUpDownElements
                                                         singleHorizontalBorderAdded,
                                                         isFirstDisplayedColumn,
                                                         isFirstDisplayedRow);
+#else
+            base.PositionEditingControl(setLocation, setSize, cellBounds, cellClip,
+                cellStyle, singleVerticalBorderAdded, singleHorizontalBorderAdded, isFirstDisplayedColumn, isFirstDisplayedRow);
+            Rectangle editingControlBounds = new Rectangle(this.DataGridView.EditingControl.Location, this.DataGridView.EditingControl.Size);
+#endif
             editingControlBounds = GetAdjustedEditingControlBounds(editingControlBounds, cellStyle);
             this.DataGridView.EditingControl.Location = new Point(editingControlBounds.X, editingControlBounds.Y);
             this.DataGridView.EditingControl.Size = new Size(editingControlBounds.Width, editingControlBounds.Height);

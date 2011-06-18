@@ -127,6 +127,7 @@ namespace Ares.Ipc
         /// </summary>
         private static bool Activate(String appName)
         {
+#if !MONO
             ApplicationInfo info = GetApplicationInfo(appName);
             if (info != null)
             {
@@ -134,6 +135,7 @@ namespace Ares.Ipc
                 return true;
             }
             else
+#endif
             {
                 return false;
             }
@@ -172,6 +174,7 @@ namespace Ares.Ipc
         /// </summary>
         private static bool Activate(String appName, String projectName, string projectPath)
         {
+#if !MONO
             ApplicationInfo info = GetApplicationInfo(appName);
             if (info == null)
                 return false;
@@ -182,6 +185,9 @@ namespace Ares.Ipc
             }
             NativeWindowMethods.SwitchToThisWindow(info.WindowHandle, false);
             return true;
+#else
+            return false;
+#endif
         }
 
         /// <summary>
@@ -214,8 +220,10 @@ namespace Ares.Ipc
         #region Giving info to other process
 
         private SharedMemory m_Memory;
+#if !MONO
         private System.IO.Pipes.NamedPipeServerStream m_PipeStream;
         private IAsyncResult m_AsyncResult;
+#endif
 
         private readonly String m_Appname;
         private ApplicationInfo m_Info;
@@ -224,16 +232,20 @@ namespace Ares.Ipc
         {
             m_Info = new ApplicationInfo(IntPtr.Zero, String.Empty);
             m_Appname = appName;
+#if !MONO
             m_Memory = new SharedMemory(appName, m_Info);
             CreatePipe();
+#endif
         }
 
+#if !MONO
         private void CreatePipe()
         {
             m_PipeStream = new System.IO.Pipes.NamedPipeServerStream(m_Appname + "_Pipe", System.IO.Pipes.PipeDirection.In,
                 1, System.IO.Pipes.PipeTransmissionMode.Byte, System.IO.Pipes.PipeOptions.Asynchronous);
             m_AsyncResult = m_PipeStream.BeginWaitForConnection(new AsyncCallback(result => HandleConnection(result)), null);
         }
+#endif
 
         /// <summary>
         /// Sets the window handle of the application
@@ -319,6 +331,7 @@ namespace Ares.Ipc
 
         public Action<String, String> ProjectOpenAction { get; set; }
 
+#if !MONO
         private void HandleConnection(IAsyncResult result)
         {
             String projectName = String.Empty;
@@ -351,6 +364,7 @@ namespace Ares.Ipc
                 ProjectOpenAction(projectName, projectPath);
             }
         }
+#endif
 
         #endregion
 
@@ -371,6 +385,7 @@ namespace Ares.Ipc
 
         protected virtual void Dispose(bool disposing)
         {
+#if !MONO
             if (disposing)
             {
                 if (m_PipeStream != null)
@@ -399,6 +414,7 @@ namespace Ares.Ipc
                     m_Memory = null;
                 }
             }
+#endif
             m_Disposed = true;
         }
 

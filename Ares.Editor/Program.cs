@@ -53,11 +53,13 @@ namespace Ares.Editor
                     MessageBox.Show(StringResources.BassInitFail, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Stop);
                     return;
                 }
+#if !MONO
                 if (!Un4seen.Bass.AddOn.Fx.BassFx.LoadMe())
                 {
                     MessageBox.Show(StringResources.BassInitFail, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Stop);
                     return;
                 }
+#endif
             }
             catch (Exception)
             {

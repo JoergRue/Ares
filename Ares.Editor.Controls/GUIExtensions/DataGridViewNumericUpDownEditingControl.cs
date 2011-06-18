@@ -29,9 +29,11 @@ namespace DataGridViewNumericUpDownElements
     /// </summary>
     class DataGridViewNumericUpDownEditingControl : NumericUpDown, IDataGridViewEditingControl
     {
+#if !MONO
         // Needed to forward keyboard messages to the child TextBox control.
         [System.Runtime.InteropServices.DllImport("USER32.DLL", CharSet = System.Runtime.InteropServices.CharSet.Auto)]
         private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam);
+#endif
 
         // The grid that owns this editing control
         private DataGridView dataGridView;
@@ -147,7 +149,11 @@ namespace DataGridViewNumericUpDownElements
                 // The NumericUpDown control does not support transparent back colors
                 Color opaqueBackColor = Color.FromArgb(255, dataGridViewCellStyle.BackColor);
                 this.BackColor = opaqueBackColor;
+#if !MONO
                 this.dataGridView.EditingPanel.BackColor = opaqueBackColor;
+#else
+                this.dataGridView.EditingControl.BackColor = opaqueBackColor;
+#endif
             }
             else
             {
@@ -368,7 +374,14 @@ namespace DataGridViewNumericUpDownElements
             TextBox textBox = this.Controls[1] as TextBox;
             if (textBox != null)
             {
+#if !MONO
                 SendMessage(textBox.Handle, m.Msg, m.WParam, m.LParam);
+#else
+                NativeWindow wnd = new NativeWindow();
+                wnd.AssignHandle(textBox.Handle);
+                wnd.DefWndProc(ref m);
+                wnd.ReleaseHandle();
+#endif
                 return true;
             }
             else

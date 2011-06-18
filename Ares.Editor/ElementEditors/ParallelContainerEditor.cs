@@ -191,7 +191,11 @@ namespace Ares.Editor.ElementEditors
 
         private void parallelContainerControl_ElementDoubleClick(object sender, Controls.ElementDoubleClickEventArgs e)
         {
+#if !MONO
             Editors.ShowEditor(e.Element.InnerElement, m_Element, this.DockPanel);
+#else
+            Editors.ShowEditor(e.Element.InnerElement, m_Element, this.MdiParent);
+#endif
         }
     }
 }

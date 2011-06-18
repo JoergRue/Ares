@@ -66,6 +66,11 @@ namespace Ares.Editor.ElementEditors
             }
         }
 
+        public IEnumerable<EditorBase> GetAllEditors()
+        {
+            return new List<EditorBase>(m_Editors.Values);
+        }
+
         private Dictionary<int, EditorBase> m_Editors = new Dictionary<int, EditorBase>();
     }
 }

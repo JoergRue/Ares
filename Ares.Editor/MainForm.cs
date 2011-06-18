@@ -52,6 +52,9 @@ namespace Ares.Editor
                 throw new Ares.Ipc.ApplicationAlreadyStartedException();
             }
             InitializeComponent();
+#if MONO
+            IsMdiContainer = true;
+#endif
             m_Instance.SetWindowHandle(Handle);
             m_Instance.ProjectOpenAction = (projectName2, projectPath) => OpenProjectFromRequest(projectName2, projectPath);
             m_ProjectName = projectName;
@@ -91,6 +94,7 @@ namespace Ares.Editor
             MessageBox.Show(this, errorMessage, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
+#if !MONO
         private WeifenLuo.WinFormsUI.Docking.IDockContent DeserializeDockContent(string persistString)
         {
             if (persistString.StartsWith("FileExplorer_"))
@@ -125,6 +129,7 @@ namespace Ares.Editor
                 return null;
             }
         }
+#endif
 
 
         private void ShowSettingsDialog()
@@ -145,13 +150,38 @@ namespace Ares.Editor
 
         private ProjectExplorer m_ProjectExplorer;
 
+#if MONO
+        private Control MdiClientControl
+        {
+            get
+            {
+                foreach (Control ctrl in Controls)
+                {
+                    MdiClient client = ctrl as MdiClient;
+                    if (client != null)
+                        return ctrl;
+                }
+                return null;
+            }
+        
+        }
+#endif
+
         private void ShowProjectExplorer()
         {
             if (m_ProjectExplorer == null)
             {
                 m_ProjectExplorer = new ProjectExplorer();
+#if !MONO
                 m_ProjectExplorer.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockLeft;
                 m_ProjectExplorer.Show(dockPanel);
+#else
+                m_ProjectExplorer.Dock = DockStyle.Left;
+                m_ProjectExplorer.MdiParent = this;
+                m_ProjectExplorer.Location = new Point(0, 0);
+                m_ProjectExplorer.Height = MdiClientControl.Height - 10;
+                m_ProjectExplorer.Show();
+#endif
             }
             else UpdateWindowState(m_ProjectExplorer);
             ActivateWindow(m_ProjectExplorer);
@@ -161,6 +191,7 @@ namespace Ares.Editor
 
         private ErrorWindow m_ErrorWindow;
 
+#if !MONO
         private void UpdateWindowState(WeifenLuo.WinFormsUI.Docking.DockContent window)
         {
             if (window.VisibleState == WeifenLuo.WinFormsUI.Docking.DockState.DockBottomAutoHide)
@@ -193,14 +224,35 @@ namespace Ares.Editor
                 window.Focus();
             }
         }
+#else
+        private void UpdateWindowState(System.Windows.Forms.Form window)
+        {
+            window.Visible = !window.Visible;
+        }
+
+        private void ActivateWindow(System.Windows.Forms.Form window)
+        {
+            if (window.Visible)
+            {
+                window.Activate();
+                window.Focus();
+            }
+        }
+#endif
 
         private void ShowVolumeWindow()
         {
             if (m_VolumeWindow == null)
             {
                 m_VolumeWindow = new VolumeWindow();
+#if !MONO
                 m_VolumeWindow.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Float;
                 m_VolumeWindow.Show(dockPanel);
+#else
+                m_VolumeWindow.MdiParent = this;
+                m_VolumeWindow.Show();
+                m_VolumeWindow.Location = new Point(m_ProjectExplorer.Width + 5, MdiClientControl.Height - m_VolumeWindow.Height - 10);
+#endif
             }
             else UpdateWindowState(m_VolumeWindow);
             ActivateWindow(m_VolumeWindow);
@@ -212,8 +264,14 @@ namespace Ares.Editor
             {
                 m_ErrorWindow = new ErrorWindow();
                 m_ErrorWindow.Client = this;
+#if !MONO
                 m_ErrorWindow.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockBottom;
                 m_ErrorWindow.Show(dockPanel);
+#else
+                m_ErrorWindow.MdiParent = this;
+                m_ErrorWindow.Dock = DockStyle.Bottom;
+                m_ErrorWindow.Show();
+#endif
             }
             else UpdateWindowState(m_ErrorWindow);
             ActivateWindow(m_ErrorWindow);
@@ -251,7 +309,9 @@ namespace Ares.Editor
             {
                 using (System.IO.MemoryStream stream = new System.IO.MemoryStream())
                 {
+#if !MONO
                     dockPanel.SaveAsXml(stream, System.Text.Encoding.UTF8, true);
+#endif
                     string layout = System.Text.Encoding.UTF8.GetString(stream.GetBuffer(), 0, (int)stream.Length);
                     Ares.Settings.Settings.Instance.WindowLayout = layout;
                 }
@@ -277,8 +337,18 @@ namespace Ares.Editor
             if (m_FileExplorers[index] == null)
             {
                 m_FileExplorers[index] = new FileExplorer(fileType);
+#if !MONO
                 m_FileExplorers[index].ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockRight;
                 m_FileExplorers[index].Show(dockPanel);
+#else
+                m_FileExplorers[index].MdiParent = this;
+                m_FileExplorers[index].Height = this.MdiClientControl.Height - 10;
+                int x = this.MdiClientControl.Width - m_FileExplorers[index].Width - 5;
+                if (index == 1)
+                    x -= m_FileExplorers[index].Width;
+                m_FileExplorers[index].Show();
+                m_FileExplorers[index].Location = new Point(x, 0);
+#endif
             }
             else UpdateWindowState(m_FileExplorers[index]);
             ActivateWindow(m_FileExplorers[index]);
@@ -303,7 +373,11 @@ namespace Ares.Editor
                 }
                 else
                 {
+#if !MONO
                     if (m_ErrorWindow.IsHidden)
+#else
+                    if (!m_ErrorWindow.Visible)
+#endif
                     {
                         UpdateWindowState(m_ErrorWindow);
                     }
@@ -328,7 +402,11 @@ namespace Ares.Editor
 
             m_ProjectExplorer.SetProject(m_CurrentProject);
 
+#if !MONO
             if (m_ProjectExplorer.IsHidden)
+#else
+            if (!m_ProjectExplorer.Visible)
+#endif
                 ShowProjectExplorer();
             UpdateGUI();
 
@@ -359,9 +437,13 @@ namespace Ares.Editor
 
             if (m_CurrentProject != null)
             {
+#if !MONO
                 List<WeifenLuo.WinFormsUI.Docking.IDockContent> documents =
                     new List<WeifenLuo.WinFormsUI.Docking.IDockContent>(dockPanel.Documents);
                 foreach (WeifenLuo.WinFormsUI.Docking.IDockContent document in documents)
+#else
+                foreach (ElementEditors.EditorBase document in ElementEditors.EditorRegistry.Instance.GetAllEditors())
+#endif
                 {
                     (document as Form).Close();
                 }
@@ -556,11 +638,19 @@ namespace Ares.Editor
 
         private void viewToolStripMenuItem_DropDownOpened(object sender, EventArgs e)
         {
+#if !MONO
             projectExplorerToolStripMenuItem.Checked = m_ProjectExplorer != null && !m_ProjectExplorer.IsHidden;
             fileExplorerToolStripMenuItem.Checked =  m_FileExplorers[0] != null && !m_FileExplorers[0].IsHidden;
             soundFileExplorerToolStripMenuItem.Checked = m_FileExplorers[1] != null && !m_FileExplorers[1].IsHidden;
             volumesToolStripMenuItem.Checked = m_VolumeWindow != null && !m_VolumeWindow.IsHidden;
             projectErrorsToolStripMenuItem.Checked = m_ErrorWindow != null && !m_ErrorWindow.IsHidden;
+#else
+            projectExplorerToolStripMenuItem.Checked = m_ProjectExplorer != null && m_ProjectExplorer.Visible;
+            fileExplorerToolStripMenuItem.Checked = m_FileExplorers[0] != null && m_FileExplorers[0].Visible;
+            soundFileExplorerToolStripMenuItem.Checked = m_FileExplorers[1] != null && m_FileExplorers[1].Visible;
+            volumesToolStripMenuItem.Checked = m_VolumeWindow != null && m_VolumeWindow.Visible;
+            projectErrorsToolStripMenuItem.Checked = m_ErrorWindow != null && m_ErrorWindow.Visible;
+#endif
         }
 
         private void recentMenuItem_DropDownOpening(object sender, EventArgs e)
@@ -665,7 +755,14 @@ namespace Ares.Editor
             {
                 System.IO.MemoryStream stream = new System.IO.MemoryStream(
                     System.Text.Encoding.UTF8.GetBytes(Ares.Settings.Settings.Instance.WindowLayout));
+#if !MONO
                 dockPanel.LoadFromXml(stream, new WeifenLuo.WinFormsUI.Docking.DeserializeDockContent(DeserializeDockContent));
+#else
+                ShowProjectExplorer();
+                ShowFileExplorer(FileType.Music);
+                ShowFileExplorer(FileType.Sound);
+                ShowVolumeWindow();
+#endif
                 if (Settings.Settings.Instance.Version < 1)
                 {
                     ShowVolumeWindow();
@@ -679,11 +776,19 @@ namespace Ares.Editor
                 ShowFileExplorer(FileType.Sound);
             }
             Settings.Settings.Instance.SettingsChanged += new EventHandler<Settings.Settings.SettingsEventArgs>(SettingsChanged);
+#if !MONO
             fileExplorerToolStripMenuItem.Checked = !m_FileExplorers[0].IsHidden;
             soundFileExplorerToolStripMenuItem.Checked = !m_FileExplorers[1].IsHidden;
             projectExplorerToolStripMenuItem.Checked = !m_ProjectExplorer.IsHidden;
             volumesToolStripMenuItem.Checked = m_VolumeWindow != null && !m_VolumeWindow.IsHidden;
             projectErrorsToolStripMenuItem.Checked = m_ErrorWindow != null && !m_ErrorWindow.IsHidden;
+#else
+            fileExplorerToolStripMenuItem.Checked = true;
+            soundFileExplorerToolStripMenuItem.Checked = true;
+            projectExplorerToolStripMenuItem.Checked = true;
+            volumesToolStripMenuItem.Checked = true;
+            projectErrorsToolStripMenuItem.Checked = false;
+#endif
             Actions.Actions.Instance.UpdateGUI = UpdateGUI;
             Actions.Playing.Instance.SetDirectories(Ares.Settings.Settings.Instance.MusicDirectory, Ares.Settings.Settings.Instance.SoundDirectory);
             Actions.FilesWatcher.Instance.SetDirectories(Ares.Settings.Settings.Instance.MusicDirectory, Ares.Settings.Settings.Instance.SoundDirectory);
@@ -743,7 +848,11 @@ namespace Ares.Editor
 
         public void MoveToElement(object element)
         {
+#if !MONO
             if (m_ProjectExplorer == null || m_ProjectExplorer.IsHidden)
+#else
+            if (m_ProjectExplorer == null || !m_ProjectExplorer.Visible)
+#endif
             {
                 ShowProjectExplorer();
             }
@@ -759,6 +868,11 @@ namespace Ares.Editor
         private void checkForUpdateToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Ares.Online.OnlineOperations.CheckForUpdate(this, true);
+        }
+
+        private void soundFileExplorerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowFileExplorer(FileType.Sound);
         }
     }
 

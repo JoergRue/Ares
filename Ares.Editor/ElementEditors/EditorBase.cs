@@ -24,7 +24,11 @@ using System.Text;
 
 namespace Ares.Editor.ElementEditors
 {
+#if !MONO
     class EditorBase : WeifenLuo.WinFormsUI.Docking.DockContent
+#else
+    class EditorBase : System.Windows.Forms.Form
+#endif
     {
         protected int ElementId 
         {
@@ -46,7 +50,10 @@ namespace Ares.Editor.ElementEditors
             }
         }
 
-        protected EditorBase() { ElementId = -1; }
+        protected EditorBase() 
+        { 
+            ElementId = -1; 
+        }
 
         protected override void Dispose(bool disposing)
         {

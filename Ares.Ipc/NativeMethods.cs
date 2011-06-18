@@ -47,6 +47,7 @@ using System.Runtime.InteropServices;
 
 namespace Ares.Ipc
 {
+#if !MONO
     /// <summary>
     /// Stellt die nativen Methoden der win32 API für das Filemapping und SharedMemory
     /// als statische managed Methoden bereit.
@@ -210,4 +211,5 @@ namespace Ares.Ipc
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool CloseHandle(IntPtr handle);
     }
+#endif
 }

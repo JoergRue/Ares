@@ -18,15 +18,21 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 using System;
-using System.Runtime.InteropServices;
 
-namespace Ares.Ipc
+namespace Ares.Editor
 {
 #if !MONO
-    public static class NativeWindowMethods
-    {
-        [DllImport("user32.dll", SetLastError = true)]
-        public static extern void SwitchToThisWindow(IntPtr hWnd, bool fAltTab);
-    }
+    class ToolWindow : WeifenLuo.WinFormsUI.Docking.DockContent
+#else
+    class ToolWindow : System.Windows.Forms.Form
 #endif
+    {
+
+#if !MONO
+        public ToolWindow()
+        {
+            HideOnClose = true;
+        }
+#endif
+    }
 }
