@@ -23,7 +23,7 @@ import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 public class Localization {
-  private static final String BUNDLE_NAME = "ares.controller.util.localization"; //$NON-NLS-1$
+  private static final String BUNDLE_NAME = "ares.controllers.util.localization"; //$NON-NLS-1$
 
   private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle
       .getBundle(BUNDLE_NAME);

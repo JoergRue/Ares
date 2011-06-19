@@ -26,11 +26,11 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
-import java.nio.charset.Charset;
 import java.util.StringTokenizer;
 
 import ares.controllers.messages.Messages;
 import ares.controllers.messages.Message.MessageType;
+import ares.controllers.util.UIThreadDispatcher;
 import ares.controllers.util.Localization;
 
 
@@ -133,7 +133,11 @@ public final class ServerSearch {
       byte[] bytes = new byte[600];
       DatagramPacket packet = new DatagramPacket(bytes, 600);
       socket.receive(packet);
-      String receivedData = new String(bytes, 0, packet.getLength(), Charset.forName("UTF8")); //$NON-NLS-1$
+      byte[] receivedBytes = new byte[packet.getLength()];
+      for (int i = 0; i < packet.getLength(); ++i) {
+    	  receivedBytes[i] = bytes[i];
+      }
+      String receivedData = new String(receivedBytes, "UTF8"); //$NON-NLS-1$
       Messages.addMessage(MessageType.Debug, Localization.getString("ServerSearch.UDPReceived") + receivedData); //$NON-NLS-1$
       StringTokenizer tokenizer = new StringTokenizer(receivedData, "|"); //$NON-NLS-1$
       if (tokenizer.countTokens() < 3) {
@@ -157,7 +161,7 @@ public final class ServerSearch {
         Messages.addMessage(MessageType.Warning, Localization.getString("ServerSearch.InvalidAddress")); //$NON-NLS-1$
       }
       final ServerInfo server = new ServerInfo(address, port, name);
-      javax.swing.SwingUtilities.invokeLater(new Runnable() {
+      UIThreadDispatcher.dispatchToUIThread(new Runnable() {
         public void run() {
           if (callback != null) {
             callback.serverFound(server);

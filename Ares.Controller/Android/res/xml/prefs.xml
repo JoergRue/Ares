@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditTextPreference android:title="@string/udp_port" android:key="udp_port" android:defaultValue="8009"></EditTextPreference>
+    <ListPreference android:summary="@string/volume_keys_summary" android:entries="@array/volume_keys_entries" android:key="volume_keys" android:entryValues="@array/volume_keys_values" android:title="@string/volume_keys" android:defaultValue="Overall"></ListPreference>
+    <ListPreference android:summary="@string/message_level_summary" android:entries="@array/message_level_entries" android:key="message_level" android:entryValues="@array/message_level_values" android:title="@string/message_level" android:defaultValue="Error"></ListPreference>
+    
+</PreferenceScreen>

@@ -19,8 +19,6 @@
  */
 package ares.controllers.data;
 
-import javax.swing.KeyStroke;
-
 public class Command {
 
   private String title;

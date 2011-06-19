@@ -28,7 +28,7 @@
 	    <mkdir dir="${classes.dir}"/>
 		<replace file="${src.dir}/ares/controllers/control/Version.java" token="1.0.0" value="${ProductVersion}" />
 	    <javac srcdir="${src.dir}" destdir="${classes.dir}" source="1.6" target="1.6" 
-	        classpath="" />
+	        classpath="" debug="true" debuglevel="lines,vars,source" />
 	</target>
 
 	<target name="jar" description="Build jar file" depends="resources, compile">

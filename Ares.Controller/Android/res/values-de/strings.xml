@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Ares Controller</string>
+    <string name="Volumes">Lautstärke</string>
+    <string name="Overall">Gesamt: </string>
+    <string name="Music">Musik: </string>
+    <string name="Sounds">Geräusche: </string>
+    <string name="Status">Status</string>
+    <string name="Project">Projekt: </string>
+    <string name="Empty"></string>
+    <string name="Mode">Modus:</string>
+    <string name="Elements">Elemente: </string>
+    <string name="Network">Netzwerk</string>
+    <string name="Server">Server: </string>
+    <string name="NetworkLabel">Netzwerk: </string>
+    <string name="ShowModes">Modi</string>
+    <string name="Connect">Mit Player verbinden</string>
+    <string name="Disconnect">Verbindung trennen</string>
+    <string name="About">Über</string>
+    <string name="OpenProject">Projekt öffnen</string>
+    <string name="open">Öffnen</string>
+    <string name="connected_with">Verbunden mit %s</string>
+    <string name="disconnected">Nicht verbunden</string>
+    <string name="aboutInfo">ARES Controller\nVersion %s</string>
+    <string name="no_player">Kein Player gefunden. Netzwerkproblem?</string>
+    <string name="select_player">Player auswählen</string>
+    <string name="show_main">Hauptsteuerung</string>
+    <string name="points">...</string>
+    <string name="udp_port">Player UDP-Port</string>
+    <string name="volume_keys">Lautstärketasten</string>
+    <string name="volume_keys_summary">Aktion für Lautstärketasten</string>
+    <string-array name="volume_keys_values">
+        <item>None</item>
+        <item>Overall</item>
+        <item>Music</item>
+        <item>Sounds</item>
+    </string-array>
+    <string-array name="volume_keys_entries">
+        <item>Keine (Lautstärke auf dem Gerät ändern)</item>
+        <item>Gesamtlautstärke ändern</item>
+        <item>Musiklautstärke ändern</item>
+        <item>Geräuschlautstärke ändern</item>
+    </string-array>
+    <string name="invalid_udp_port">%s ist kein gültiger UDP port.</string>
+    <string name="preferences">Einstellungen</string>
+    <string-array name="message_level_values">
+        <item>Error</item>
+        <item>Warning</item>
+        <item>Info</item>
+        <item>Debug</item>
+    </string-array>
+    <string-array name="message_level_entries">
+        <item>Fehler</item>
+        <item>Warnung</item>
+        <item>Info</item>
+        <item>Debug</item>
+    </string-array>
+    <string name="message_level">Meldungsfilter</string>
+    <string name="message_level_summary">Filter für Meldungen</string>
+    <string name="modes">Modi</string>
+</resources>

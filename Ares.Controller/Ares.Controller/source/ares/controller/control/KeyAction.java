@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2010 [Joerg Ruedenauer]
+ Copyright (c) 2011 [Joerg Ruedenauer]
  
  This file is part of Ares.
 
@@ -17,34 +17,23 @@
  along with Ares; if not, write to the Free Software
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package ares.controllers.control;
+package ares.controller.control;
 
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
-import javax.swing.KeyStroke;
 
-public final class ModeCommandAction extends AbstractAction {
-  
-  public ModeCommandAction(KeyStroke modeKey, KeyStroke commandKey) {
-    this.modeKey = modeKey;
-    this.commandKey = commandKey;
+import ares.controllers.data.KeyStroke;
+import ares.controllers.control.Control;
+
+public class KeyAction extends AbstractAction {
+  public KeyAction(KeyStroke key) {
+    this.key = key;
   }
   
-  private KeyStroke modeKey;
-  private KeyStroke commandKey;
-  
-  private static boolean listen = true;
-  
-  public static void setCommandsActive(boolean active) {
-	  listen = active;
-  }
-
   public void actionPerformed(ActionEvent e) {
-	  if (!listen)
-		  return;
-	  Control.getInstance().sendKey(modeKey);
-	  Control.getInstance().sendKey(commandKey);
+    Control.getInstance().sendKey(key);
   }
-
+  
+  private KeyStroke key; 
 }

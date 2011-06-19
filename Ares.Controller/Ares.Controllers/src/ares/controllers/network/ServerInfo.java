@@ -19,9 +19,10 @@
  */
 package ares.controllers.network;
 
+import java.io.Serializable;
 import java.net.InetAddress;
 
-public final class ServerInfo {
+public final class ServerInfo implements Serializable {
 
   private InetAddress address;
   private int port;

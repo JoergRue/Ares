@@ -22,8 +22,6 @@ package ares.controllers.data;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.KeyStroke;
-
 public final class Configuration {
 
   private List<Mode> modes;

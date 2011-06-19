@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="location">Ort</string>
+    <string name="cant_read_folder">Verzeichnis kann nicht gelesen werden!</string>
+    <string name="nnew">Neu</string>
+    <string name="select">Auswählen</string>
+    <string name="file_name">Dateiname:</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="create">Erzeugen</string>
+    <string name="no_data">Keine Daten</string>
+	<color name="gray">#ffff0000</color>
+</resources>

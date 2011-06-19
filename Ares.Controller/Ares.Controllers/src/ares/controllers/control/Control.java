@@ -19,13 +19,9 @@
  */
  package ares.controllers.control;
 
-import java.awt.event.KeyEvent;
-
-import javax.swing.JComponent;
-import javax.swing.KeyStroke;
-
 import ares.controllers.data.Configuration;
 import ares.controllers.data.FileParser;
+import ares.controllers.data.KeyStroke;
 import ares.controllers.messages.Messages;
 import ares.controllers.messages.Message.MessageType;
 import ares.controllers.network.ControlConnection;
@@ -77,12 +73,15 @@ public final class Control {
     }
   }
   
+  private String serverName = "";
+  
   public void connect(ServerInfo server, INetworkClient client) {
     if (connection != null) {
       disconnect(true);
     }
     connection = new ControlConnection(server, client);
     connection.connect();
+    serverName = server.getName();
   }
   
   public void disconnect(boolean informServer) {
@@ -92,7 +91,21 @@ public final class Control {
       }
       connection.dispose();
       connection = null;
+      serverName = "";
     }
+  }
+  
+  public String getServerName() {
+	  return serverName;
+  }
+  
+  public void sendPing() {
+	    if (connection == null || !connection.isConnected()) {
+	        Messages.addMessage(MessageType.Warning, Localization.getString("Control.noConnection")); //$NON-NLS-1$
+	      }
+	      else {
+	        connection.sendPing();
+	      }
   }
   
   public void sendKey(KeyStroke keyStroke) {
@@ -115,29 +128,6 @@ public final class Control {
   
   public boolean isConnected() {
     return connection != null;
-  }
-  
-  private void addKeyAction(JComponent component, KeyStroke key) {
-    component.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(key, key.toString());
-    component.getActionMap().put(key.toString(), new KeyAction(key));
-  }
-  
-  private static KeyStroke getKeyStroke(int keyCode) {
-    return KeyStroke.getKeyStroke(keyCode, 0);
-  }
-  
-  public void addAlwaysAvailableKeys(JComponent component) {
-    addKeyAction(component, getKeyStroke(KeyEvent.VK_UP));
-    addKeyAction(component, getKeyStroke(KeyEvent.VK_DOWN));
-    addKeyAction(component, getKeyStroke(KeyEvent.VK_LEFT));
-    addKeyAction(component, getKeyStroke(KeyEvent.VK_RIGHT));
-    addKeyAction(component, getKeyStroke(KeyEvent.VK_PAGE_UP));
-    addKeyAction(component, getKeyStroke(KeyEvent.VK_PAGE_DOWN));
-    addKeyAction(component, getKeyStroke(KeyEvent.VK_INSERT));
-    addKeyAction(component, getKeyStroke(KeyEvent.VK_DELETE));    
-    KeyStroke escapeStroke = getKeyStroke(KeyEvent.VK_ESCAPE);
-    component.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(escapeStroke, escapeStroke.toString());
-    component.getActionMap().put(escapeStroke.toString(), new KeyAction(escapeStroke));
   }
   
   private String fileName;

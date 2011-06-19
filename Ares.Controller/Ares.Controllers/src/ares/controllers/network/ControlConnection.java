@@ -19,24 +19,24 @@
  */
 package ares.controllers.network;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.nio.charset.Charset;
+import java.net.SocketTimeoutException;
 import java.text.NumberFormat;
 import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
-import javax.swing.KeyStroke;
-import javax.swing.Timer;
-
+import ares.controllers.data.KeyStroke;
 import ares.controllers.messages.Messages;
 import ares.controllers.messages.Message.MessageType;
 import ares.controllers.util.Localization;
+import ares.controllers.util.UIThreadDispatcher;
 
 public final class ControlConnection {
 
@@ -45,9 +45,9 @@ public final class ControlConnection {
   
   private Socket socket;
   
-  private Timer pingTimer;
-  
   private INetworkClient networkClient;
+  
+  private Timer timer;
   
   public ControlConnection(ServerInfo server, INetworkClient client) {
     address = server.getAddress();
@@ -61,6 +61,8 @@ public final class ControlConnection {
     }
   }
   
+  private Thread listenThread;
+  
   public void connect() {
     if (socket != null) return;
     try {
@@ -71,23 +73,32 @@ public final class ControlConnection {
       format.setGroupingUsed(false);
       String nameLength = format.format(hostName.length());
       String textToSend = nameLength + hostName;
-      socket = new Socket(address, port);
+      socket = new Socket();
+      socket.connect(new InetSocketAddress(address, port), 5000);
       Messages.addMessage(MessageType.Debug, Localization.getString("ControlConnection.SendingInfo") + textToSend); //$NON-NLS-1$
       socket.getOutputStream().write(textToSend.getBytes("UTF8")); //$NON-NLS-1$
-      Thread listenThread = new Thread(new Runnable() {
+      listenThread = new Thread(new Runnable() {
 		public void run() {
 			listenForStatusUpdates();
 		}
       });
       continueListen = true;
       listenThread.start();
+      timer = new Timer("PingTimer");
+      timer.scheduleAtFixedRate(new TimerTask() {
+		public void run() {
+			UIThreadDispatcher.dispatchToUIThread(new Runnable() {
+				public void run() {
+					sendPing();
+				}
+			});
+		}
+      }, 5000, 5000);
       Messages.addMessage(MessageType.Info, Localization.getString("ControlConnection.ConnectedWith") + address + ":" + port); //$NON-NLS-1$ //$NON-NLS-2$
-      pingTimer = new Timer(5000, new ActionListener() {
-        public void actionPerformed(ActionEvent e) {
-          sendPing();
-        }
-      });
-      pingTimer.start();
+    }
+    catch (SocketTimeoutException e) {
+        Messages.addMessage(MessageType.Error, e.getLocalizedMessage());
+        networkClient.connectionFailed();    	
     }
     catch (IOException e) {
       Messages.addMessage(MessageType.Error, e.getLocalizedMessage());
@@ -96,10 +107,20 @@ public final class ControlConnection {
   }
   
   public void disconnect(boolean informServer) {
+	if (timer != null) {
+		timer.cancel();
+		timer = null;
+	}
+	synchronized(this) {
+		continueListen = false;
+	}
+	try {
+		listenThread.join();
+	}
+	catch (InterruptedException e) {
+	}
     if (socket != null) {
       Messages.addMessage(MessageType.Info, Localization.getString("ControlConnection.ClosingConnection")); //$NON-NLS-1$
-      pingTimer.stop();
-      pingTimer = null;
       try {
         if (socket != null && !socket.isClosed()) {
           if (socket.isConnected() && informServer) {
@@ -124,7 +145,7 @@ public final class ControlConnection {
 	  length += stream.read();
 	  byte[] bytes = new byte[length];
 	  stream.read(bytes);
-	  return new String(bytes, 0, length, Charset.forName("UTF8")); //$NON-NLS-1$
+	  return new String(bytes, "UTF8"); //$NON-NLS-1$
   }
   
   private void listenForStatusUpdates()
@@ -248,7 +269,7 @@ public final class ControlConnection {
       }	  
   }
   
-  private void sendPing() {
+  public void sendPing() {
     if (socket == null) {
       return;
     }

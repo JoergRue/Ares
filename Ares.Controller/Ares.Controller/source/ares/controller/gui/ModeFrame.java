@@ -24,11 +24,11 @@ import java.util.Map;
 
 import javax.swing.AbstractAction;
 import javax.swing.AbstractButton;
-import javax.swing.KeyStroke;
 
-import ares.controllers.control.Control;
-import ares.controllers.control.ModeCommandAction;
+import ares.controller.control.ComponentKeys;
+import ares.controller.control.ModeCommandAction;
 import ares.controllers.data.Command;
+import ares.controllers.data.KeyStroke;
 import ares.controllers.data.Mode;
 
 final class ModeFrame extends FrameController implements CommandsPanelCreator.IActionCreator {
@@ -40,7 +40,7 @@ final class ModeFrame extends FrameController implements CommandsPanelCreator.IA
   public ModeFrame(Mode mode) {
     super(mode.getTitle());
     modeKey = mode.getKeyStroke();
-    Control.getInstance().addAlwaysAvailableKeys(getRootPane());
+    ComponentKeys.addAlwaysAvailableKeys(getRootPane());
     initialize(mode);
   }
   

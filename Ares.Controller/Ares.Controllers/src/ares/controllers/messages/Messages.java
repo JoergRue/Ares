@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ares.controllers.util.AbstractObservable;
+import ares.controllers.util.UIThreadDispatcher;
 
 public final class Messages extends AbstractObservable<IMessageListener> {
   
@@ -60,7 +61,7 @@ public final class Messages extends AbstractObservable<IMessageListener> {
   }
   
   public void addMessage(final Message message) {
-    javax.swing.SwingUtilities.invokeLater(new Runnable() {
+    UIThreadDispatcher.dispatchToUIThread(new Runnable() {
       public void run() {
         messages.add(message);
         fireMessageAdded(message);

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Ares Controller</string>
+    <string name="Volumes">Volumes</string>
+    <string name="Overall">Overall:</string>
+    <string name="Music">Music:</string>
+    <string name="Sounds">Sounds:</string>
+    <string name="Status">Status</string>
+    <string name="Project">Project:</string>
+    <string name="Empty"></string>
+    <string name="Mode">Mode:</string>
+    <string name="Elements">Elements:</string>
+    <string name="Network">Network</string>
+    <string name="Server">Server:</string>
+    <string name="NetworkLabel">Network:</string>
+    <string name="ShowModes">Modes...</string>
+    <string name="Connect">Connect With Player...</string>
+    <string name="Disconnect">Disconnect</string>
+    <string name="About">About...</string>
+    <string name="OpenProject">Open Project...</string>
+    <string name="open">Open</string>
+    <string name="connected_with">Connected with %s</string>
+    <string name="disconnected">Not connected</string>
+    <string name="aboutInfo">ARES Controller\nVersion %s</string>
+    <string name="no_player">No Player found. Is there a network problem?</string>
+    <string name="select_player">Select a Player</string>
+    <string name="show_main">Main Control</string>
+    <string name="points">...</string>
+    <string name="udp_port">Player UDP Port</string>
+    <string name="volume_keys">Volume Keys</string>
+    <string name="volume_keys_summary">Action to take for volume keys</string>
+    <string-array name="volume_keys_values">
+        <item>None</item>
+        <item>Overall</item>
+        <item>Music</item>
+        <item>Sounds</item>
+    </string-array>
+    <string-array name="volume_keys_entries">
+        <item>None (change volume on device)</item>
+        <item>Change overall volume</item>
+        <item>Change music volume</item>
+        <item>Change sounds volume</item>
+    </string-array>
+    <string name="invalid_udp_port">%s is not a valid UDP port number.</string>
+    <string name="preferences">Settings</string>
+    <string-array name="message_level_values">
+        <item>Error</item>
+        <item>Warning</item>
+        <item>Info</item>
+        <item>Debug</item>
+    </string-array>
+    <string-array name="message_level_entries">
+        <item>Error</item>
+        <item>Warning</item>
+        <item>Info</item>
+        <item>Debug</item>
+    </string-array>
+    <string name="message_level">Message Level</string>
+    <string name="message_level_summary">Message popup filter</string>
+    <string name="modes">Modes</string>
+</resources>

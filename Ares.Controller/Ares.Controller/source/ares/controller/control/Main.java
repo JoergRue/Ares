@@ -37,6 +37,11 @@ public class Main {
   private static java.util.List<String> startFiles = null;
   
   public static void main(String[] args) {
+	ares.controllers.util.UIThreadDispatcher.setDispatcher(new ares.controllers.util.IUIThreadDispatcher() {
+		public void dispatchToUIThread(Runnable runnable) {
+			SwingUtilities.invokeLater(runnable);
+		}
+	});
     SubFrame.setSaveLocations(false);
     if (args.length > 0) {
       startFiles = java.util.Arrays.asList(args);

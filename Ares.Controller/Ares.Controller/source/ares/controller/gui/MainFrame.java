@@ -67,6 +67,7 @@ import javax.swing.JComboBox;
 
 import ares.controllers.control.Control;
 import ares.controllers.control.KeyAction;
+import ares.controller.control.ComponentKeys;
 import ares.controller.control.OnlineOperations;
 import ares.controllers.control.Version;
 import ares.controllers.data.Command;
@@ -128,7 +129,7 @@ public final class MainFrame extends FrameController implements IMessageListener
   	enableProjectSpecificControls(false);
   	serverSearch = new ServerSearch(this, Preferences.userNodeForPackage(MainFrame.class).getInt("UDPPort", 8009)); //$NON-NLS-1$
   	serverSearch.startSearch();
-    Control.getInstance().addAlwaysAvailableKeys(getRootPane());
+    ComponentKeys.addAlwaysAvailableKeys(getRootPane());
     boolean checkForNewVersion = Preferences.userNodeForPackage(ares.controller.gui.OptionsDialog.class).getBoolean("CheckForUpdate", true); //$NON-NLS-1$
     if (checkForNewVersion) {
       javax.swing.SwingUtilities.invokeLater(new Runnable() {
