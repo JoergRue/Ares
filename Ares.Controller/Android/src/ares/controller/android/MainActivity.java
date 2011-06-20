@@ -19,6 +19,7 @@
  */
 package ares.controller.android;
 
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -202,11 +203,30 @@ public class MainActivity extends ControllerActivity implements INetworkClient, 
         setMessageFilter();
     }
     
+    private void tryConnect() {
+    	String connectMode = PreferenceManager.getDefaultSharedPreferences(getBaseContext()).getString("player_connection", "auto");
+    	if (connectMode.equals("auto")) {
+    		serverSearch.startSearch();
+    	}
+    	else {
+    		try {
+    			ServerInfo info = ServerSearch.getServerInfo(connectMode, ",");
+    			doConnect(info);
+    		}
+    		catch (UnknownHostException e) {
+    			Toast.makeText(getApplicationContext(), getString(R.string.invalid_player_connection_format), Toast.LENGTH_LONG).show();
+    		}
+    		catch (IllegalArgumentException e) {
+    			Toast.makeText(getApplicationContext(), getString(R.string.invalid_player_connection_format), Toast.LENGTH_LONG).show();
+    		}
+    	}
+    }
+    
     public void onStart() {
     	super.onStart();
     	PlayingState.getInstance().setClient(this);
     	if (!Control.getInstance().isConnected()) {
-    		serverSearch.startSearch();
+    		tryConnect();
     	}
     	updateAll();
     }
@@ -220,9 +240,6 @@ public class MainActivity extends ControllerActivity implements INetworkClient, 
     }
     
     public void onDestroy() {
-    	if (Control.getInstance().isConnected()) {
-    		doDisconnect(false, true);
-    	}
     	super.onDestroy();
     }
     
@@ -296,7 +313,7 @@ public class MainActivity extends ControllerActivity implements INetworkClient, 
     		serverSearch = new ServerSearch(this, getServerSearchPort());
     		if (!Control.getInstance().isConnected()) 
     		{
-    			serverSearch.startSearch();
+    			tryConnect();
     		}
     	}
     }
@@ -369,15 +386,21 @@ public class MainActivity extends ControllerActivity implements INetworkClient, 
 	}
 
 	private void connectWithPlayer() {
-		if (servers.size() == 0) {
-			Toast.makeText(this, R.string.no_player, Toast.LENGTH_SHORT).show();
-		}
-		else if (servers.size() == 1){
-			doConnect(servers.get(serverNames.get(0)));
-		}
-		else {
-			showDialog(CONNECT);
-		}
+    	String connectMode = PreferenceManager.getDefaultSharedPreferences(getBaseContext()).getString("player_connection", "auto");
+    	if (connectMode.equals("auto")) {
+			if (servers.size() == 0) {
+				Toast.makeText(this, R.string.no_player, Toast.LENGTH_SHORT).show();
+			}
+			else if (servers.size() == 1){
+				doConnect(servers.get(serverNames.get(0)));
+			}
+			else {
+				showDialog(CONNECT);
+			}
+    	}
+    	else {
+    		tryConnect();
+    	}
 	}
 
 	private Dialog showAboutDialog() {
@@ -456,6 +479,7 @@ public class MainActivity extends ControllerActivity implements INetworkClient, 
 	
 	private void doDisconnect(boolean startServerSearch, boolean informServer) {
 		Control.getInstance().disconnect(informServer);
+		PlayingState.getInstance().clearState();
 		onDisconnect(startServerSearch);
 	}
 	
@@ -466,6 +490,7 @@ public class MainActivity extends ControllerActivity implements INetworkClient, 
 		forwardButton.setEnabled(false);
 		if (startServerSearch)
 			serverSearch.startSearch();
+		updateAll();
 	}
 
 	@Override

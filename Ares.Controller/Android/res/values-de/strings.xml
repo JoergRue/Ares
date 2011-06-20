@@ -3,7 +3,7 @@
     <string name="app_name">Ares Controller</string>
     <string name="Volumes">Lautstärke</string>
     <string name="Overall">Gesamt: </string>
-    <string name="Music">Musik: </string>
+    <string name="Music">Musik:        </string>
     <string name="Sounds">Geräusche: </string>
     <string name="Status">Status</string>
     <string name="Project">Projekt: </string>
@@ -58,4 +58,6 @@
     <string name="message_level">Meldungsfilter</string>
     <string name="message_level_summary">Filter für Meldungen</string>
     <string name="modes">Modi</string>
+    <string name="player_connection">Verbindung zum Player</string>
+    <string name="invalid_player_connection_format">Ungültiges Format für Player-Verbindung!\nMuss Name,Port,IP-Adresse sein (oder auto).</string>
 </resources>

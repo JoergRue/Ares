@@ -77,6 +77,11 @@ public class PlayingState implements INetworkClient {
 	public void setClient(INetworkClient client) {
 		this.client = client;
 	}
+	
+	public void clearState() {
+		musicPlayed = "";
+		modeElements.clear();
+	}
 
 	public void modeChanged(String newMode) {
 		final String m = newMode;
@@ -186,6 +191,7 @@ public class PlayingState implements INetworkClient {
 	public void disconnect() {
 		handler.post(new Runnable() {
 			public void run() {
+				clearState();
 				Control.getInstance().disconnect(false);
 				if (getClient() != null)
 					getClient().disconnect();
@@ -197,6 +203,7 @@ public class PlayingState implements INetworkClient {
 	public void connectionFailed() {
 		handler.post(new Runnable() {
 			public void run() {
+				clearState();
 				Control.getInstance().disconnect(false);
 				if (getClient() != null) 
 					getClient().connectionFailed();

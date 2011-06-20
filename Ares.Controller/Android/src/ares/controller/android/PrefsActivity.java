@@ -19,11 +19,13 @@
  */
 package ares.controller.android;
 
+
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceActivity;
 import android.widget.Toast;
+import ares.controllers.network.ServerSearch;
 
 public class PrefsActivity extends PreferenceActivity {
 
@@ -32,6 +34,8 @@ public class PrefsActivity extends PreferenceActivity {
 		addPreferencesFromResource(R.xml.prefs);
 		Preference udpPortPreference = getPreferenceScreen().findPreference("udp_port");
 		udpPortPreference.setOnPreferenceChangeListener(numberCheckListener);
+		Preference playerConnectionPreference = getPreferenceScreen().findPreference("player_connection");
+		playerConnectionPreference.setOnPreferenceChangeListener(connectionCheckListener);
 	}
 
 	Preference.OnPreferenceChangeListener numberCheckListener = new OnPreferenceChangeListener() {
@@ -42,13 +46,28 @@ public class PrefsActivity extends PreferenceActivity {
 	        return numberCheck(newValue);
 	    }
 	};
+	
+	Preference.OnPreferenceChangeListener connectionCheckListener = new OnPreferenceChangeListener() {
+		public boolean onPreferenceChange(Preference preference, Object newValue) {
+			if (newValue.equals("auto"))
+				return true;
+			try {
+				ServerSearch.getServerInfo(newValue.toString(), ",");
+				return true;
+			}
+			catch (Exception e) {
+				Toast.makeText(getApplicationContext(), getString(R.string.invalid_player_connection_format), Toast.LENGTH_LONG).show();
+				return false;
+			}
+		}
+	};
 
 	private boolean numberCheck(Object newValue) {
 	    if( !newValue.toString().equals("")  &&  newValue.toString().matches("\\d\\d\\d?\\d?") ) {
 	        return true;
 	    }
 	    else {
-	    	Toast.makeText(this, String.format(getString(R.string.invalid_udp_port), newValue.toString()), Toast.LENGTH_SHORT).show();
+	    	Toast.makeText(this, String.format(getString(R.string.invalid_udp_port), newValue.toString()), Toast.LENGTH_LONG).show();
 	        return false;
 	    }
 	}}

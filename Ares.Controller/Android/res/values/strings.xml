@@ -3,7 +3,7 @@
     <string name="app_name">Ares Controller</string>
     <string name="Volumes">Volumes</string>
     <string name="Overall">Overall:</string>
-    <string name="Music">Music:</string>
+    <string name="Music">Music:       </string>
     <string name="Sounds">Sounds:</string>
     <string name="Status">Status</string>
     <string name="Project">Project:</string>
@@ -58,4 +58,6 @@
     <string name="message_level">Message Level</string>
     <string name="message_level_summary">Message popup filter</string>
     <string name="modes">Modes</string>
+    <string name="player_connection">Player Connection</string>
+    <string name="invalid_player_connection_format">Invalid format for Player connection!\nMust be name,port,ipaddress (or auto).</string>
 </resources>

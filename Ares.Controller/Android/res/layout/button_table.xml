@@ -4,7 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" android:id="@+id/rootLayout">
     
-    <LinearLayout android:layout_height="fill_parent" android:layout_width="fill_parent" android:id="@+id/mainLayout" android:orientation="vertical">
+    <LinearLayout android:layout_height="fill_parent" android:layout_width="fill_parent" android:id="@+id/mainLayout" android:orientation="vertical" android:background="@drawable/backarea">
         <TextView android:textAppearance="?android:attr/textAppearanceLarge" android:text="TextView" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/title"></TextView>
     
 <GridView xmlns:android="http://schemas.android.com/apk/res/android" 
