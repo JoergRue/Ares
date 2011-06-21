@@ -62,9 +62,10 @@ namespace Ares.Editor.ElementEditors
             this.lastLabel = new System.Windows.Forms.Label();
             this.maxDelayUpDown = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.fixedDelayUpDown = new System.Windows.Forms.NumericUpDown();
             this.fixedLabel = new System.Windows.Forms.Label();
+            this.fixedUnitBox = new System.Windows.Forms.ComboBox();
+            this.randomUnitBox = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.repeatCountUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.maxDelayUpDown)).BeginInit();
@@ -73,7 +74,8 @@ namespace Ares.Editor.ElementEditors
             // 
             // groupBox1
             // 
-            resources.ApplyResources(this.groupBox1, "groupBox1");
+            this.groupBox1.Controls.Add(this.randomUnitBox);
+            this.groupBox1.Controls.Add(this.fixedUnitBox);
             this.groupBox1.Controls.Add(this.loopButton);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.repeatCountUpDown);
@@ -82,9 +84,9 @@ namespace Ares.Editor.ElementEditors
             this.groupBox1.Controls.Add(this.lastLabel);
             this.groupBox1.Controls.Add(this.maxDelayUpDown);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.fixedDelayUpDown);
             this.groupBox1.Controls.Add(this.fixedLabel);
+            resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
             this.groupBox1.UseCompatibleTextRendering = true;
@@ -148,12 +150,12 @@ namespace Ares.Editor.ElementEditors
             // 
             // maxDelayUpDown
             // 
-            resources.ApplyResources(this.maxDelayUpDown, "maxDelayUpDown");
             this.maxDelayUpDown.Increment = new decimal(new int[] {
             10,
             0,
             0,
             0});
+            resources.ApplyResources(this.maxDelayUpDown, "maxDelayUpDown");
             this.maxDelayUpDown.Maximum = new decimal(new int[] {
             100000000,
             0,
@@ -168,20 +170,14 @@ namespace Ares.Editor.ElementEditors
             this.label3.Name = "label3";
             this.label3.UseCompatibleTextRendering = true;
             // 
-            // label2
-            // 
-            resources.ApplyResources(this.label2, "label2");
-            this.label2.Name = "label2";
-            this.label2.UseCompatibleTextRendering = true;
-            // 
             // fixedDelayUpDown
             // 
-            resources.ApplyResources(this.fixedDelayUpDown, "fixedDelayUpDown");
             this.fixedDelayUpDown.Increment = new decimal(new int[] {
             10,
             0,
             0,
             0});
+            resources.ApplyResources(this.fixedDelayUpDown, "fixedDelayUpDown");
             this.fixedDelayUpDown.Maximum = new decimal(new int[] {
             100000000,
             0,
@@ -195,6 +191,30 @@ namespace Ares.Editor.ElementEditors
             resources.ApplyResources(this.fixedLabel, "fixedLabel");
             this.fixedLabel.Name = "fixedLabel";
             this.fixedLabel.UseCompatibleTextRendering = true;
+            // 
+            // fixedUnitBox
+            // 
+            this.fixedUnitBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.fixedUnitBox.FormattingEnabled = true;
+            this.fixedUnitBox.Items.AddRange(new object[] {
+            resources.GetString("fixedUnitBox.Items"),
+            resources.GetString("fixedUnitBox.Items1"),
+            resources.GetString("fixedUnitBox.Items2")});
+            resources.ApplyResources(this.fixedUnitBox, "fixedUnitBox");
+            this.fixedUnitBox.Name = "fixedUnitBox";
+            this.fixedUnitBox.SelectedIndexChanged += new System.EventHandler(this.fixedUnitBox_SelectedIndexChanged);
+            // 
+            // randomUnitBox
+            // 
+            this.randomUnitBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.randomUnitBox.FormattingEnabled = true;
+            this.randomUnitBox.Items.AddRange(new object[] {
+            resources.GetString("randomUnitBox.Items"),
+            resources.GetString("randomUnitBox.Items1"),
+            resources.GetString("randomUnitBox.Items2")});
+            resources.ApplyResources(this.randomUnitBox, "randomUnitBox");
+            this.randomUnitBox.Name = "randomUnitBox";
+            this.randomUnitBox.SelectedIndexChanged += new System.EventHandler(this.randomUnitBox_SelectedIndexChanged);
             // 
             // RepeatableControl
             // 
@@ -217,7 +237,6 @@ namespace Ares.Editor.ElementEditors
         private System.Windows.Forms.Label lastLabel;
         private System.Windows.Forms.NumericUpDown maxDelayUpDown;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.NumericUpDown fixedDelayUpDown;
         private System.Windows.Forms.Label fixedLabel;
         private System.Windows.Forms.Label label1;
@@ -225,5 +244,7 @@ namespace Ares.Editor.ElementEditors
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.NumericUpDown repeatCountUpDown;
         private System.Windows.Forms.RadioButton noLoopButton;
+        private System.Windows.Forms.ComboBox randomUnitBox;
+        private System.Windows.Forms.ComboBox fixedUnitBox;
     }
 }

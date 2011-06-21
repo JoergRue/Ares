@@ -118,11 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="&gt;&gt;maxDelayUpDown.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="label2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+    <value>3</value>
   </data>
   <data name="&gt;&gt;fixedLabel.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -137,18 +133,20 @@
   <data name="fixedLabel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="lastLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>316, 25</value>
+  <data name="randomUnitBox.Items" xml:space="preserve">
+    <value>ms</value>
   </data>
-  <data name="&gt;&gt;fixedDelayUpDown.Name" xml:space="preserve">
-    <value>fixedDelayUpDown</value>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.UserControl, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="fixedLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 25</value>
+  <data name="&gt;&gt;fixedUnitBox.Name" xml:space="preserve">
+    <value>fixedUnitBox</value>
   </data>
-  <data name="lastLabel.Text" xml:space="preserve">
-    <value>ms max.</value>
+  <data name="fixedUnitBox.Items2" xml:space="preserve">
+    <value>min</value>
+  </data>
+  <data name="&gt;&gt;fixedUnitBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>DelayableControl</value>
@@ -159,26 +157,34 @@
   <data name="&gt;&gt;maxDelayUpDown.Parent" xml:space="preserve">
     <value>groupBox1</value>
   </data>
-  <data name="&gt;&gt;fixedDelayUpDown.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="fixedDelayUpDown.Size" type="System.Drawing.Size, System.Drawing">
-    <value>79, 20</value>
+    <value>54, 20</value>
   </data>
   <data name="maxDelayUpDown.ThousandsSeparator" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="fixedDelayUpDown.Location" type="System.Drawing.Point, System.Drawing">
-    <value>47, 23</value>
+  <data name="maxDelayUpDown.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="lastLabel.Text" xml:space="preserve">
+    <value>max.</value>
   </data>
   <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
     <value>60, 17</value>
   </data>
-  <data name="fixedLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>35, 17</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="groupBox1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="randomUnitBox.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
   </data>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>6, 13</value>
+  </data>
+  <data name="fixedUnitBox.Items" xml:space="preserve">
+    <value>ms</value>
   </data>
   <data name="&gt;&gt;label3.Name" xml:space="preserve">
     <value>label3</value>
@@ -190,7 +196,7 @@
     <value>368, 57</value>
   </data>
   <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>165, 26</value>
+    <value>153, 26</value>
   </data>
   <data name="lastLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -201,43 +207,61 @@
   <data name="&gt;&gt;lastLabel.Name" xml:space="preserve">
     <value>lastLabel</value>
   </data>
-  <data name="&gt;&gt;fixedLabel.Name" xml:space="preserve">
-    <value>fixedLabel</value>
+  <data name="fixedUnitBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>107, 22</value>
   </data>
-  <data name="label2.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
+  <data name="&gt;&gt;fixedUnitBox.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
-  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
+  <data name="fixedUnitBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>40, 21</value>
+  </data>
+  <data name="&gt;&gt;fixedDelayUpDown.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="fixedUnitBox.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="label3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="&gt;&gt;randomUnitBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;randomUnitBox.Parent" xml:space="preserve">
     <value>groupBox1</value>
   </data>
   <data name="lastLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>47, 17</value>
+    <value>29, 17</value>
   </data>
-  <data name="fixedDelayUpDown.ThousandsSeparator" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;label2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="lastLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>333, 25</value>
   </data>
   <data name="maxDelayUpDown.Location" type="System.Drawing.Point, System.Drawing">
-    <value>231, 23</value>
+    <value>219, 23</value>
   </data>
-  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>3</value>
+  <data name="fixedLabel.Text" xml:space="preserve">
+    <value>Fixed:</value>
   </data>
-  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>19, 17</value>
+  <data name="&gt;&gt;fixedLabel.Name" xml:space="preserve">
+    <value>fixedLabel</value>
   </data>
-  <data name="groupBox1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
+  <data name="randomUnitBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>40, 21</value>
   </data>
-  <data name="maxDelayUpDown.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
+  <data name="randomUnitBox.Items2" xml:space="preserve">
+    <value>min</value>
   </data>
   <data name="&gt;&gt;label3.Parent" xml:space="preserve">
     <value>groupBox1</value>
   </data>
+  <data name="&gt;&gt;randomUnitBox.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="fixedLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="fixedDelayUpDown.ThousandsSeparator" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="fixedLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
@@ -246,20 +270,23 @@
   <data name="label3.Text" xml:space="preserve">
     <value>+ Random:</value>
   </data>
+  <data name="&gt;&gt;fixedUnitBox.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
   <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
-  <data name="&gt;&gt;label2.Name" xml:space="preserve">
-    <value>label2</value>
-  </data>
   <data name="&gt;&gt;lastLabel.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>2</value>
   </data>
   <data name="lastLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
+  <data name="fixedDelayUpDown.Location" type="System.Drawing.Point, System.Drawing">
+    <value>47, 23</value>
+  </data>
   <data name="&gt;&gt;fixedLabel.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="&gt;&gt;fixedDelayUpDown.Type" xml:space="preserve">
     <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -267,11 +294,8 @@
   <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="label2.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="&gt;&gt;randomUnitBox.Name" xml:space="preserve">
+    <value>randomUnitBox</value>
   </data>
   <data name="&gt;&gt;groupBox1.Type" xml:space="preserve">
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -279,17 +303,11 @@
   <data name="&gt;&gt;maxDelayUpDown.Name" xml:space="preserve">
     <value>maxDelayUpDown</value>
   </data>
-  <data name="fixedLabel.Text" xml:space="preserve">
-    <value>Fixed:</value>
-  </data>
   <data name="maxDelayUpDown.Size" type="System.Drawing.Size, System.Drawing">
-    <value>79, 20</value>
+    <value>59, 20</value>
   </data>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
     <value>368, 57</value>
-  </data>
-  <data name="label2.Text" xml:space="preserve">
-    <value>ms</value>
   </data>
   <data name="label3.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -297,8 +315,8 @@
   <data name="&gt;&gt;fixedLabel.Parent" xml:space="preserve">
     <value>groupBox1</value>
   </data>
-  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>132, 25</value>
+  <data name="randomUnitBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>287, 22</value>
   </data>
   <data name="&gt;&gt;fixedDelayUpDown.Parent" xml:space="preserve">
     <value>groupBox1</value>
@@ -306,8 +324,14 @@
   <data name="&gt;&gt;maxDelayUpDown.Type" xml:space="preserve">
     <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="randomUnitBox.Items1" xml:space="preserve">
+    <value>s</value>
+  </data>
   <data name="&gt;&gt;groupBox1.Name" xml:space="preserve">
     <value>groupBox1</value>
+  </data>
+  <data name="fixedLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 25</value>
   </data>
   <data name="&gt;&gt;groupBox1.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -319,13 +343,19 @@
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>4</value>
+  </data>
+  <data name="fixedUnitBox.Items1" xml:space="preserve">
+    <value>s</value>
+  </data>
+  <data name="fixedLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>35, 17</value>
   </data>
   <data name="&gt;&gt;label3.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.UserControl, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;fixedDelayUpDown.Name" xml:space="preserve">
+    <value>fixedDelayUpDown</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>

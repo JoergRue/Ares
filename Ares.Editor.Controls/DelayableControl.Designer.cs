@@ -54,10 +54,11 @@ namespace Ares.Editor.ElementEditors
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DelayableControl));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.randomUnitBox = new System.Windows.Forms.ComboBox();
+            this.fixedUnitBox = new System.Windows.Forms.ComboBox();
             this.lastLabel = new System.Windows.Forms.Label();
             this.maxDelayUpDown = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.fixedDelayUpDown = new System.Windows.Forms.NumericUpDown();
             this.fixedLabel = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
@@ -68,15 +69,40 @@ namespace Ares.Editor.ElementEditors
             // groupBox1
             // 
             resources.ApplyResources(this.groupBox1, "groupBox1");
+            this.groupBox1.Controls.Add(this.randomUnitBox);
+            this.groupBox1.Controls.Add(this.fixedUnitBox);
             this.groupBox1.Controls.Add(this.lastLabel);
             this.groupBox1.Controls.Add(this.maxDelayUpDown);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.fixedDelayUpDown);
             this.groupBox1.Controls.Add(this.fixedLabel);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
             this.groupBox1.UseCompatibleTextRendering = true;
+            // 
+            // randomUnitBox
+            // 
+            resources.ApplyResources(this.randomUnitBox, "randomUnitBox");
+            this.randomUnitBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.randomUnitBox.FormattingEnabled = true;
+            this.randomUnitBox.Items.AddRange(new object[] {
+            resources.GetString("randomUnitBox.Items"),
+            resources.GetString("randomUnitBox.Items1"),
+            resources.GetString("randomUnitBox.Items2")});
+            this.randomUnitBox.Name = "randomUnitBox";
+            this.randomUnitBox.SelectedIndexChanged += new System.EventHandler(this.randomUnitBox_SelectedIndexChanged);
+            // 
+            // fixedUnitBox
+            // 
+            resources.ApplyResources(this.fixedUnitBox, "fixedUnitBox");
+            this.fixedUnitBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.fixedUnitBox.FormattingEnabled = true;
+            this.fixedUnitBox.Items.AddRange(new object[] {
+            resources.GetString("fixedUnitBox.Items"),
+            resources.GetString("fixedUnitBox.Items1"),
+            resources.GetString("fixedUnitBox.Items2")});
+            this.fixedUnitBox.Name = "fixedUnitBox";
+            this.fixedUnitBox.SelectedIndexChanged += new System.EventHandler(this.fixedUnitBox_SelectedIndexChanged);
             // 
             // lastLabel
             // 
@@ -105,12 +131,6 @@ namespace Ares.Editor.ElementEditors
             resources.ApplyResources(this.label3, "label3");
             this.label3.Name = "label3";
             this.label3.UseCompatibleTextRendering = true;
-            // 
-            // label2
-            // 
-            resources.ApplyResources(this.label2, "label2");
-            this.label2.Name = "label2";
-            this.label2.UseCompatibleTextRendering = true;
             // 
             // fixedDelayUpDown
             // 
@@ -155,8 +175,9 @@ namespace Ares.Editor.ElementEditors
         private System.Windows.Forms.Label lastLabel;
         private System.Windows.Forms.NumericUpDown maxDelayUpDown;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.NumericUpDown fixedDelayUpDown;
         private System.Windows.Forms.Label fixedLabel;
+        private System.Windows.Forms.ComboBox randomUnitBox;
+        private System.Windows.Forms.ComboBox fixedUnitBox;
     }
 }

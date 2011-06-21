@@ -25,6 +25,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Ares.Editor.Controls;
 
 namespace Ares.Editor.ElementEditors
 {
@@ -33,6 +34,8 @@ namespace Ares.Editor.ElementEditors
         public DelayableControl()
         {
             InitializeComponent();
+            fixedUnitBox.SelectedIndex = 0;
+            randomUnitBox.SelectedIndex = 0;
         }
 
         public void SetElement(Ares.Data.IDelayableElement element)
@@ -59,8 +62,8 @@ namespace Ares.Editor.ElementEditors
             if (listen && changeType == Actions.ElementChanges.ChangeType.Changed)
             {
                 listen = false;
-                fixedDelayUpDown.Value = (int)m_Element.FixedStartDelay.TotalMilliseconds;
-                maxDelayUpDown.Value = (int)m_Element.MaximumRandomStartDelay.TotalMilliseconds;
+                fixedDelayUpDown.Value = TimeConversion.GetTimeInUnit(m_Element.FixedStartDelay, fixedUnitBox);
+                maxDelayUpDown.Value = TimeConversion.GetTimeInUnit(m_Element.MaximumRandomStartDelay, randomUnitBox);
                 listen = true;
             }
         }
@@ -76,14 +79,17 @@ namespace Ares.Editor.ElementEditors
                 Actions.DelayableElementChangeAction deca = action as Actions.DelayableElementChangeAction;
                 if (deca.Element == m_Element)
                 {
-                    deca.SetData((int)fixedDelayUpDown.Value, (int)maxDelayUpDown.Value);
+                    deca.SetData(
+                        TimeConversion.GetTimeInMillis(fixedDelayUpDown, fixedUnitBox),
+                        TimeConversion.GetTimeInMillis(maxDelayUpDown, randomUnitBox));
                     deca.Do();
                     listen = true;
                     return;
                 }
             }
             Actions.Actions.Instance.AddNew(new Actions.DelayableElementChangeAction(m_Element, 
-                (int)fixedDelayUpDown.Value, (int)maxDelayUpDown.Value));
+                TimeConversion.GetTimeInMillis(fixedDelayUpDown, fixedUnitBox),
+                TimeConversion.GetTimeInMillis(maxDelayUpDown, randomUnitBox)));
             listen = true;
         }
 
@@ -102,6 +108,24 @@ namespace Ares.Editor.ElementEditors
             if (!listen)
                 return;
             Commit();
+        }
+
+        private void fixedUnitBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (m_Element == null)
+                return;
+            listen = false;
+            fixedDelayUpDown.Value = TimeConversion.GetTimeInUnit(m_Element.FixedStartDelay, fixedUnitBox);
+            listen = true;
+        }
+
+        private void randomUnitBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (m_Element == null)
+                return;
+            listen = false;
+            maxDelayUpDown.Value = TimeConversion.GetTimeInUnit(m_Element.MaximumRandomStartDelay, randomUnitBox);
+            listen = true;
         }
 
     }

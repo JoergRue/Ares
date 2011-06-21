@@ -27,6 +27,7 @@ using System.Text;
 using System.Windows.Forms;
 
 using Ares.Data;
+using Ares.Editor.Controls;
 
 namespace Ares.Editor.ElementEditors
 {
@@ -35,6 +36,8 @@ namespace Ares.Editor.ElementEditors
         public RepeatableControl()
         {
             InitializeComponent();
+            fixedUnitBox.SelectedIndex = 0;
+            randomUnitBox.SelectedIndex = 0;
         }
 
         public void SetElement(IRepeatableElement element)
@@ -67,8 +70,8 @@ namespace Ares.Editor.ElementEditors
                 loopButton.Checked = m_Element.RepeatCount == -1;
                 noLoopButton.Checked = m_Element.RepeatCount != -1;
                 repeatCountUpDown.Value = m_Element.RepeatCount == -1 ? 1 : m_Element.RepeatCount;
-                fixedDelayUpDown.Value = (int)m_Element.FixedIntermediateDelay.TotalMilliseconds;
-                maxDelayUpDown.Value = (int)m_Element.MaximumRandomIntermediateDelay.TotalMilliseconds;
+                fixedDelayUpDown.Value = TimeConversion.GetTimeInUnit(m_Element.FixedIntermediateDelay, fixedUnitBox);
+                maxDelayUpDown.Value = TimeConversion.GetTimeInUnit(m_Element.MaximumRandomIntermediateDelay, randomUnitBox);
                 UpdateControlActivation();
                 this.Refresh();
                 listen = true;
@@ -87,14 +90,18 @@ namespace Ares.Editor.ElementEditors
                 Actions.RepeatableElementChangeAction reca = action as Actions.RepeatableElementChangeAction;
                 if (reca.Element == m_Element)
                 {
-                    reca.SetData(repeatCount, (int)fixedDelayUpDown.Value, (int)maxDelayUpDown.Value);
+                    reca.SetData(repeatCount, 
+                        TimeConversion.GetTimeInMillis(fixedDelayUpDown, fixedUnitBox),
+                        TimeConversion.GetTimeInMillis(maxDelayUpDown, randomUnitBox));
                     reca.Do();
                     listen = true;
                     return;
                 }
             }
             Actions.Actions.Instance.AddNew(new Actions.RepeatableElementChangeAction(m_Element,
-                repeatCount, (int)fixedDelayUpDown.Value, (int)maxDelayUpDown.Value));
+                repeatCount,
+                TimeConversion.GetTimeInMillis(fixedDelayUpDown, fixedUnitBox),
+                TimeConversion.GetTimeInMillis(maxDelayUpDown, randomUnitBox)));
             listen = true;
         }
 
@@ -140,6 +147,24 @@ namespace Ares.Editor.ElementEditors
             if (!listen) return;
             UpdateControlActivation();
             Commit();
+        }
+
+        private void fixedUnitBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (m_Element == null)
+                return;
+            listen = false;
+            fixedDelayUpDown.Value = TimeConversion.GetTimeInUnit(m_Element.FixedIntermediateDelay, fixedUnitBox);
+            listen = true;
+        }
+
+        private void randomUnitBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (m_Element == null)
+                return;
+            listen = false;
+            maxDelayUpDown.Value = TimeConversion.GetTimeInUnit(m_Element.MaximumRandomIntermediateDelay, randomUnitBox);
+            listen = true;
         }
 
     }

@@ -37,6 +37,8 @@ namespace Ares.Editor.Controls
             tt.SetToolTip(allVolumeButton, StringResources.ForAllFileElements);
             tt.SetToolTip(allFadeInButton, StringResources.ForAllFileElements);
             tt.SetToolTip(allFadeOutButton, StringResources.ForAllFileElements);
+            fadeInUnitBox.SelectedIndex = 0;
+            fadeOutUnitBox.SelectedIndex = 0;
         }
 
         public void SetContainer(Ares.Data.IGeneralElementContainer container)
@@ -70,8 +72,8 @@ namespace Ares.Editor.Controls
             {
                 listen = false;
                 volumeBar.Value = m_Element.Effects.Volume;
-                fadeInUpDown.Value = m_Element.Effects.FadeInTime;
-                fadeOutUpDown.Value = m_Element.Effects.FadeOutTime;
+                fadeInUpDown.Value = TimeConversion.GetTimeInUnit(m_Element.Effects.FadeInTime, fadeInUnitBox);
+                fadeOutUpDown.Value = TimeConversion.GetTimeInUnit(m_Element.Effects.FadeOutTime, fadeOutUnitBox);
                 listen = true;
             }
         }
@@ -87,14 +89,18 @@ namespace Ares.Editor.Controls
                 Actions.ElementEffectsChangeAction eeca = action as Actions.ElementEffectsChangeAction;
                 if (eeca.Element == m_Element)
                 {
-                    eeca.SetData(volumeBar.Value, (int)fadeInUpDown.Value, (int)fadeOutUpDown.Value);
+                    eeca.SetData(volumeBar.Value, 
+                        TimeConversion.GetTimeInMillis(fadeInUpDown, fadeInUnitBox), 
+                        TimeConversion.GetTimeInMillis(fadeOutUpDown, fadeOutUnitBox));
                     eeca.Do();
                     listen = true;
                     return;
                 }
             }
             Actions.Actions.Instance.AddNew(new Actions.ElementEffectsChangeAction(m_Element,
-                volumeBar.Value, (int)fadeInUpDown.Value, (int)fadeOutUpDown.Value));
+                volumeBar.Value,
+                TimeConversion.GetTimeInMillis(fadeInUpDown, fadeInUnitBox),
+                TimeConversion.GetTimeInMillis(fadeOutUpDown, fadeOutUnitBox)));
             listen = true;
         }
 
@@ -124,7 +130,8 @@ namespace Ares.Editor.Controls
             if (m_Element == null || m_Container == null)
                 return;
             listen = false;
-            Actions.Actions.Instance.AddNew(new Actions.AllFileElementsFadingChangeAction(m_Container, (int)fadeInUpDown.Value, true));
+            Actions.Actions.Instance.AddNew(new Actions.AllFileElementsFadingChangeAction(m_Container,
+                TimeConversion.GetTimeInMillis(fadeInUpDown, fadeInUnitBox), true));
             listen = true;
         }
 
@@ -133,7 +140,8 @@ namespace Ares.Editor.Controls
             if (m_Element == null || m_Container == null)
                 return;
             listen = false;
-            Actions.Actions.Instance.AddNew(new Actions.AllFileElementsFadingChangeAction(m_Container, (int)fadeOutUpDown.Value, false));
+            Actions.Actions.Instance.AddNew(new Actions.AllFileElementsFadingChangeAction(m_Container,
+                TimeConversion.GetTimeInMillis(fadeOutUpDown, fadeOutUnitBox), false));
             listen = true;
         }
 
@@ -149,6 +157,24 @@ namespace Ares.Editor.Controls
             if (!listen)
                 return;
             Commit();
+        }
+
+        private void fadeInUnitBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (m_Element == null)
+                return;
+            listen = false;
+            fadeInUpDown.Value = TimeConversion.GetTimeInUnit(m_Element.Effects.FadeInTime, fadeInUnitBox);
+            listen = true;
+        }
+
+        private void fadeOutUnitBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (m_Element == null)
+                return;
+            listen = false;
+            fadeOutUpDown.Value = TimeConversion.GetTimeInUnit(m_Element.Effects.FadeOutTime, fadeOutUnitBox);
+            listen = true;
         }
     }
 }

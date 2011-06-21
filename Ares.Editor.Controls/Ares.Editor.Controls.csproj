@@ -137,6 +137,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>StringResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="TimeConversion.cs" />
     <Compile Include="VolumeControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
