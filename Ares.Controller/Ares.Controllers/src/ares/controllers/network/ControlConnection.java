@@ -115,7 +115,8 @@ public final class ControlConnection {
 		continueListen = false;
 	}
 	try {
-		listenThread.join();
+		if (listenThread != null) 
+			listenThread.join();
 	}
 	catch (InterruptedException e) {
 	}

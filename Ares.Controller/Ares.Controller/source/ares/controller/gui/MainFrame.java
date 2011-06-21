@@ -39,12 +39,13 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JSlider;
 import javax.swing.JButton;
 import javax.swing.JToggleButton;
-import javax.swing.KeyStroke;
 import javax.swing.SpringLayout;
 import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 
 import java.awt.BorderLayout;
 import java.awt.FontMetrics;
@@ -57,6 +58,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -66,12 +69,13 @@ import java.util.prefs.Preferences;
 import javax.swing.JComboBox;
 
 import ares.controllers.control.Control;
-import ares.controllers.control.KeyAction;
+import ares.controller.control.KeyAction;
 import ares.controller.control.ComponentKeys;
 import ares.controller.control.OnlineOperations;
 import ares.controllers.control.Version;
 import ares.controllers.data.Command;
 import ares.controllers.data.Configuration;
+import ares.controllers.data.KeyStroke;
 import ares.controllers.data.Mode;
 import ares.controller.gui.util.ExampleFileFilter;
 import ares.controllers.messages.IMessageListener;
@@ -113,6 +117,34 @@ public final class MainFrame extends FrameController implements IMessageListener
     }
 
   }
+  
+  private boolean connectWithFirstServer = true;
+  
+  private File findLocalPlayer() {
+	  URL myPath = MainFrame.class.getProtectionDomain().getCodeSource().getLocation();
+	  File file;
+	  try {
+		  file = new File(myPath.toURI()); // .../Ares/Controller/Ares.Controller.jar (or without jar!)
+		  File myDir = file.isFile() ? file.getParentFile() : file;
+		  if (myDir == null) {
+			  return null;
+		  }
+		  File baseDir = file.getParentFile(); // .../Ares/Controller/
+		  if (baseDir == null)
+			  return null;
+		  baseDir = file.getParentFile(); // .../Ares/
+		  if (baseDir == null)
+			  return null;
+		  File playerExe = new File(baseDir.toString(), "Player_Editor" + File.separator + "Ares.Player.exe"); //$NON-NLS-1$ //$NON-NLS-2$
+		  return playerExe.exists() ? playerExe : null;
+  	  } 
+	  catch (URISyntaxException e) {
+		return null;
+	  }
+  }
+  
+  private Timer firstTimer;
+  private boolean hasLocalPlayer;
 
   /**
    * This method initializes 
@@ -130,14 +162,23 @@ public final class MainFrame extends FrameController implements IMessageListener
   	serverSearch = new ServerSearch(this, Preferences.userNodeForPackage(MainFrame.class).getInt("UDPPort", 8009)); //$NON-NLS-1$
   	serverSearch.startSearch();
     ComponentKeys.addAlwaysAvailableKeys(getRootPane());
-    boolean checkForNewVersion = Preferences.userNodeForPackage(ares.controller.gui.OptionsDialog.class).getBoolean("CheckForUpdate", true); //$NON-NLS-1$
-    if (checkForNewVersion) {
-      javax.swing.SwingUtilities.invokeLater(new Runnable() {
-        public void run() {
-          OnlineOperations.checkForUpdate(MainFrame.this, false);
-        }
-      });
-    }
+    hasLocalPlayer = findLocalPlayer() != null;
+    final boolean checkForNewVersion = Preferences.userNodeForPackage(ares.controller.gui.OptionsDialog.class).getBoolean("CheckForUpdate", true); //$NON-NLS-1$
+  	final boolean startLocalPlayer = hasLocalPlayer && Preferences.userNodeForPackage(ares.controller.gui.OptionsDialog.class).getBoolean("StartLocalPlayer", true); //$NON-NLS-1$
+  	if (checkForNewVersion || startLocalPlayer) {
+  		firstTimer = new Timer(2000, new ActionListener() {
+  			public void actionPerformed(ActionEvent e) {
+  				if (startLocalPlayer) {
+  					maybeStartPlayer();
+  				}
+  				if (checkForNewVersion) {
+  					OnlineOperations.checkForUpdate(MainFrame.this, false);
+  				}
+  			}
+  		});
+  		firstTimer.setRepeats(false);
+  		firstTimer.start();
+  	}
   }
   
   public void dispose() {
@@ -620,7 +661,7 @@ public final class MainFrame extends FrameController implements IMessageListener
   private JButton getConnectButton() {
     if (connectButton == null) {
       connectButton = new JButton();
-      connectButton.setEnabled(false);
+      connectButton.setEnabled(hasLocalPlayer);
       connectButton.setText(Localization.getString("MainFrame.Connect")); //$NON-NLS-1$
       connectButton.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -631,11 +672,52 @@ public final class MainFrame extends FrameController implements IMessageListener
     return connectButton;
   }
   
+  private void startLocalPlayer() {
+		String commandLine = findLocalPlayer().getAbsolutePath();
+		commandLine += " --minimized"; //$NON-NLS-1$
+		if (Control.getInstance().getConfiguration() != null) {
+			commandLine += " " + Control.getInstance().getFilePath(); //$NON-NLS-1$
+		}
+		try {
+    		connectWithFirstServer = true;
+			Runtime.getRuntime().exec(commandLine);
+		} 
+		catch (IOException e) {
+			JOptionPane.showMessageDialog(this, Localization.getString("MainFrame.CouldNotStartPlayer") + e.getLocalizedMessage(), Localization.getString("MainFrame.Ares"), JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$ //$NON-NLS-2$
+		}	  
+  }
+  
+  private void maybeStartPlayer() {
+	if (Control.getInstance().isConnected())
+		return;
+	boolean askBeforeStart = Preferences.userNodeForPackage(ares.controller.gui.OptionsDialog.class).getBoolean("AskForPlayerStart", true); //$NON-NLS-1$
+  	if (!askBeforeStart || JOptionPane.showConfirmDialog(this, Localization.getString("MainFrame.AutoStartLocalPlayer"), Localization.getString("MainFrame.Ares"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) { //$NON-NLS-1$ //$NON-NLS-2$
+  		startLocalPlayer();
+		if (askBeforeStart)
+		{
+			Preferences.userNodeForPackage(ares.controller.gui.OptionsDialog.class).putBoolean("StartLocalPlayer", true); //$NON-NLS-1$
+			Preferences.userNodeForPackage(ares.controller.gui.OptionsDialog.class).putBoolean("AskForPlayerStart", false); //$NON-NLS-1$
+		}
+	}
+  	else if (askBeforeStart) {
+		if (askBeforeStart)
+		{
+			Preferences.userNodeForPackage(ares.controller.gui.OptionsDialog.class).putBoolean("StartLocalPlayer", false); //$NON-NLS-1$
+			Preferences.userNodeForPackage(ares.controller.gui.OptionsDialog.class).putBoolean("AskForPlayerStart", false); //$NON-NLS-1$
+		}
+  	}
+  }
+  
   private void connectOrDisconnect() {
     if (Control.getInstance().isConnected()) {
-      Control.getInstance().disconnect(true);
+    	Control.getInstance().disconnect(true);
     }
-    else {
+    else if (getServerBox().getItemCount() == 0 && hasLocalPlayer) {
+    	if (JOptionPane.showConfirmDialog(this, Localization.getString("MainFrame.ManualStartLocalPlayer"), Localization.getString("MainFrame.Ares"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) { //$NON-NLS-1$ //$NON-NLS-2$
+    		startLocalPlayer();
+    	}
+    }
+    else if (getServerBox().getItemCount() > 0) {
       String server = getServerBox().getSelectedItem().toString();
       ServerInfo serverInfo = servers.get(server);
       if (serverInfo != null) {
@@ -653,7 +735,7 @@ public final class MainFrame extends FrameController implements IMessageListener
     else {
       servers.clear();
       getServerBox().removeAllItems();
-      getConnectButton().setEnabled(false);
+      getConnectButton().setEnabled(hasLocalPlayer);
       getConnectButton().setText(Localization.getString("MainFrame.Connect")); //$NON-NLS-1$
       serverSearch.startSearch();
     }
@@ -804,6 +886,10 @@ public final class MainFrame extends FrameController implements IMessageListener
     getServerBox().addItem(server.getName());
     getConnectButton().setEnabled(true);
     servers.put(server.getName(), server);
+    if (connectWithFirstServer) {
+    	connectOrDisconnect();
+    	connectWithFirstServer = false;
+    }
   }
   
   private Map<String, ServerInfo> servers = new HashMap<String, ServerInfo>();

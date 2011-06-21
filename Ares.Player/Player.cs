@@ -39,12 +39,20 @@ namespace Ares.Player
 
         private Network m_Network;
 
+        private bool m_HideToTray = false;
+        private bool m_FirstShow = true;
+
         public Player()
         {
             String projectName = Environment.GetCommandLineArgs().Length > 1 ? Environment.GetCommandLineArgs()[1] : String.Empty;
             if (projectName.StartsWith("Language="))
             {
                 projectName = Environment.GetCommandLineArgs().Length > 2 ? Environment.GetCommandLineArgs()[2] : String.Empty;
+            }
+            if (projectName.StartsWith("--minimized"))
+            {
+                m_HideToTray = true;
+                projectName = Environment.GetCommandLineArgs().Length > 3 ? Environment.GetCommandLineArgs()[3] : String.Empty;
             }
             if (String.IsNullOrEmpty(projectName))
             {
@@ -59,6 +67,15 @@ namespace Ares.Player
                 throw new Ares.Ipc.ApplicationAlreadyStartedException();
             }
             InitializeComponent();
+            if (!m_HideToTray)
+            {
+                notifyIcon.Visible = false;
+            }
+            else
+            {
+                Visible = false;
+                WindowState = FormWindowState.Minimized;
+            }
             m_Instance.SetWindowHandle(Handle);
             m_Instance.ProjectOpenAction = (projectName2, projectPath) => OpenProjectFromRequest(projectName2, projectPath);
             m_PlayingControl = new PlayingControl();
@@ -84,6 +101,8 @@ namespace Ares.Player
         private void ShowMessagesForm()
         {
             if (!listen)
+                return;
+            if (WindowState == FormWindowState.Minimized && m_HideToTray)
                 return;
             if (m_MessagesForm == null)
             {
@@ -341,6 +360,7 @@ namespace Ares.Player
             }
             broadCastTimer.Enabled = false;
             m_Network.StopUdpBroadcast();
+            m_Network.Shutdown();
             m_PlayingControl.Dispose();
             WriteSettings();
             Settings.Settings.Instance.Shutdown();
@@ -508,6 +528,8 @@ namespace Ares.Player
             this.Invoke(new MethodInvoker(UpdateClientData));
         }
 
+        private bool m_WasConnected = false;
+
         private void UpdateClientData()
         {
             if (m_Network.ClientConnected)
@@ -518,12 +540,17 @@ namespace Ares.Player
                 m_Network.InformClientOfVolume(VolumeTarget.Music, m_PlayingControl.MusicVolume);
                 m_Network.InformClientOfVolume(VolumeTarget.Sounds, m_PlayingControl.SoundVolume);
                 disconnectButton.Enabled = true;
+                m_WasConnected = true;
             }
             else
             {
                 clientStateLabel.Text = StringResources.NotConnected;
                 clientStateLabel.ForeColor = System.Drawing.Color.Red;
                 disconnectButton.Enabled = false;
+                if (m_HideToTray && m_WasConnected)
+                {
+                    Close();
+                }
             }
         }
 
@@ -599,6 +626,11 @@ namespace Ares.Player
             if (projectName.StartsWith("Language="))
             {
                 projectName = Environment.GetCommandLineArgs().Length > 2 ? Environment.GetCommandLineArgs()[2] : String.Empty;
+            }
+            if (projectName.StartsWith("--minimized"))
+            {
+                m_HideToTray = true;
+                projectName = Environment.GetCommandLineArgs().Length > 3 ? Environment.GetCommandLineArgs()[3] : String.Empty;
             }
             if (!String.IsNullOrEmpty(projectName))
             {
@@ -678,6 +710,30 @@ namespace Ares.Player
         private void checkForUpdateToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Ares.Online.OnlineOperations.CheckForUpdate(this, true);
+        }
+
+        private void notifyIcon_DoubleClick(object sender, EventArgs e)
+        {
+            Show();
+            WindowState = FormWindowState.Normal;
+        }
+
+        private void Player_Resize(object sender, EventArgs e)
+        {
+            if (m_HideToTray && WindowState == FormWindowState.Minimized)
+            {
+                Hide();
+            }
+        }
+
+        private void Player_Shown(object sender, EventArgs e)
+        {
+            if (m_HideToTray && m_FirstShow)
+            {
+                Visible = false;
+                WindowState = FormWindowState.Minimized;
+            }
+            m_FirstShow = false;
         }
     }
 }

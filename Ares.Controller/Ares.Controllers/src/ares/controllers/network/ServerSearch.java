@@ -128,6 +128,17 @@ public final class ServerSearch {
     }
   }
   
+  public static ServerInfo getServerInfo(String text, String token) throws UnknownHostException {
+      StringTokenizer tokenizer = new StringTokenizer(text, token); //$NON-NLS-1$
+      if (tokenizer.countTokens() < 3) {
+    	  throw new IllegalArgumentException("Wrong format");
+      }
+      String name = tokenizer.nextToken();
+      int port = Integer.parseInt(tokenizer.nextToken());
+      InetAddress address = InetAddress.getByName(tokenizer.nextToken());
+      return new ServerInfo(address, port, name);
+  }
+  
   private void lookForDatagram(DatagramSocket socket) {
     try {
       byte[] bytes = new byte[600];
@@ -139,28 +150,22 @@ public final class ServerSearch {
       }
       String receivedData = new String(receivedBytes, "UTF8"); //$NON-NLS-1$
       Messages.addMessage(MessageType.Debug, Localization.getString("ServerSearch.UDPReceived") + receivedData); //$NON-NLS-1$
-      StringTokenizer tokenizer = new StringTokenizer(receivedData, "|"); //$NON-NLS-1$
-      if (tokenizer.countTokens() < 3) {
-        Messages.addMessage(MessageType.Warning, Localization.getString("ServerSearch.WrongUDPReceived")); //$NON-NLS-1$
-        return;
-      }
-      String name = tokenizer.nextToken();
-      int port = 0;
+      ServerInfo server1 = null;
       try {
-        port = Integer.parseInt(tokenizer.nextToken());
+    	  server1 = getServerInfo(receivedData, "|");
       }
       catch (NumberFormatException e) {
-        Messages.addMessage(MessageType.Warning, Localization.getString("ServerSearch.InvalidPort")); //$NON-NLS-1$
+          Messages.addMessage(MessageType.Warning, Localization.getString("ServerSearch.InvalidPort")); //$NON-NLS-1$
+          return;
+        }
+      catch (IllegalArgumentException e) {
+        Messages.addMessage(MessageType.Warning, Localization.getString("ServerSearch.WrongUDPReceived")); //$NON-NLS-1$
         return;
-      }
-      InetAddress address = null;
-      try {
-        address = InetAddress.getByName(tokenizer.nextToken());
       }
       catch (UnknownHostException e) {
         Messages.addMessage(MessageType.Warning, Localization.getString("ServerSearch.InvalidAddress")); //$NON-NLS-1$
       }
-      final ServerInfo server = new ServerInfo(address, port, name);
+      final ServerInfo server = server1;
       UIThreadDispatcher.dispatchToUIThread(new Runnable() {
         public void run() {
           if (callback != null) {

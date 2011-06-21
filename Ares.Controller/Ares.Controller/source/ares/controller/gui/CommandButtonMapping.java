@@ -26,7 +26,7 @@ import java.util.Set;
 
 import javax.swing.AbstractButton;
 
-import ares.controllers.control.ModeCommandAction;
+import ares.controller.control.ModeCommandAction;
 
 class CommandButtonMapping {
 	

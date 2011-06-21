@@ -71,7 +71,7 @@ public abstract class SubFrame extends JFrame {
     try {
       File file = new File(Directories.getApplicationPath() + "daten" //$NON-NLS-1$
           + File.separator + "allframebounds_" //$NON-NLS-1$
-          + ares.controller.control.Version.getCurrentVersionString() + ".dat"); //$NON-NLS-1$
+          + ares.controllers.control.Version.getCurrentVersionString() + ".dat"); //$NON-NLS-1$
       if (file.exists()) {
         out = new PrintWriter(new BufferedWriter(new FileWriter(file, true)));
       }
@@ -95,7 +95,7 @@ public abstract class SubFrame extends JFrame {
   public static void loadAllBounds(boolean update) throws IOException {
     File file = new File(update ? Directories.getApplicationPath() + "daten" //$NON-NLS-1$
         + File.separator + "allframebounds_" //$NON-NLS-1$
-        + ares.controller.control.Version.getCurrentVersionString() + ".dat" : Directories //$NON-NLS-1$
+        + ares.controllers.control.Version.getCurrentVersionString() + ".dat" : Directories //$NON-NLS-1$
         .getApplicationPath()
         + "daten" + File.separator + "allframebounds.dat"); //$NON-NLS-1$ //$NON-NLS-2$
     if (!file.exists()) return;

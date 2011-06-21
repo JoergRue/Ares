@@ -285,6 +285,8 @@ public final class OptionsDialog extends BGDialog {
     prefs.putInt("UDPPort", udpPort); //$NON-NLS-1$
     prefs.putInt("MessageLevel", messageLevelBox.getSelectedIndex()); //$NON-NLS-1$
     prefs.putBoolean("CheckForUpdate", updateCheckBox.isSelected()); //$NON-NLS-1$
+    prefs.putBoolean("StartLocalPlayer", startPlayerBox.isSelected()); //$NON-NLS-1$
+    prefs.putBoolean("AskForPlayerStart", askBeforePlayerStartBox.isSelected()); //$NON-NLS-1$
 
     return true;
   }
@@ -317,6 +319,8 @@ public final class OptionsDialog extends BGDialog {
     dataCustomDirBox.setText(prefs.get("CustomDataDir", "")); //$NON-NLS-1$ //$NON-NLS-2$
     messageLevelBox.setSelectedIndex(prefs.getInt("MessageLevel", 1)); //$NON-NLS-1$
     updateCheckBox.setSelected(prefs.getBoolean("CheckForUpdate", true)); //$NON-NLS-1$
+    askBeforePlayerStartBox.setSelected(prefs.getBoolean("AskForPlayerStart", true)); //$NON-NLS-1$
+    startPlayerBox.setSelected(prefs.getBoolean("StartLocalPlayer", true)); //$NON-NLS-1$
   }
 
   /**
@@ -345,10 +349,52 @@ public final class OptionsDialog extends BGDialog {
   private JTabbedPane getJTabbedPane() {
     if (jTabbedPane == null) {
       jTabbedPane = new JTabbedPane();
+      jTabbedPane.addTab(Localization.getString("OptionsDialog.Connection"), null, getConnectionPanel(), null); //$NON-NLS-1$
       jTabbedPane.addTab(Localization.getString("OptionsDialog.Program"), null, getProgramPanel(), null); //$NON-NLS-1$
       jTabbedPane.addTab(Localization.getString("OptionsDialog.Display"), null, getJPanel1(), null); //$NON-NLS-1$
     }
     return jTabbedPane;
+  }
+  
+  private JPanel connectionPanel;
+  
+  private JCheckBox askBeforePlayerStartBox;
+  private JCheckBox startPlayerBox;
+  
+  private JCheckBox getAskBeforePlayerStartBox() {
+	  if (askBeforePlayerStartBox == null) {
+		  askBeforePlayerStartBox = new JCheckBox(Localization.getString("OptionsDialog.AskBeforePlayerStart")); //$NON-NLS-1$
+	  }
+	  return askBeforePlayerStartBox;
+  }
+  
+  private JCheckBox getStartPlayerBox() {
+	  if (startPlayerBox == null) {
+		  startPlayerBox = new JCheckBox(Localization.getString("OptionsDialog.StartLocalPlayer")); //$NON-NLS-1$
+	  }
+	  return startPlayerBox;
+  }
+  
+  private JPanel getConnectionPanel() {
+	  if (connectionPanel == null) {
+		  connectionPanel = new JPanel();
+		  connectionPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+		  connectionPanel.setLayout(new GridLayout(6, 1, 5, 5));
+	      jLabel4 = new JLabel();
+	      jLabel4.setText(Localization.getString("OptionsDialog.UDPPort")); //$NON-NLS-1$
+	      JPanel udpPanel = new JPanel();
+	      udpPanel.setLayout(new BoxLayout(udpPanel, BoxLayout.LINE_AXIS));
+	      udpPanel.add(jLabel4);
+	      udpPanel.add(Box.createHorizontalStrut(5));
+	      udpPanel.add(getUdpSpinner());
+	      udpPanel.add(Box.createHorizontalGlue());
+	      JPanel p1 = new JPanel(new BorderLayout());
+	      p1.add(udpPanel, BorderLayout.NORTH);
+	      connectionPanel.add(p1);
+	      connectionPanel.add(getStartPlayerBox());
+	      connectionPanel.add(getAskBeforePlayerStartBox());
+	  }
+	  return connectionPanel;
   }
 
   /**
@@ -542,22 +588,11 @@ public final class OptionsDialog extends BGDialog {
    */
   private JPanel getProgramPanel() {
     if (programPanel == null) {
-      jLabel4 = new JLabel();
-      jLabel4.setText(Localization.getString("OptionsDialog.UDPPort")); //$NON-NLS-1$
       jLabel3 = new JLabel();
       jLabel3.setText(Localization.getString("OptionsDialog.SaveLayoutsIn")); //$NON-NLS-1$
       programPanel = new JPanel();
       programPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-      programPanel.setLayout(new GridLayout(6, 1, 5, 5));
-      JPanel udpPanel = new JPanel();
-      udpPanel.setLayout(new BoxLayout(udpPanel, BoxLayout.LINE_AXIS));
-      udpPanel.add(jLabel4);
-      udpPanel.add(Box.createHorizontalStrut(5));
-      udpPanel.add(getUdpSpinner());
-      udpPanel.add(Box.createHorizontalGlue());
-      JPanel p1 = new JPanel(new BorderLayout());
-      p1.add(udpPanel, BorderLayout.NORTH);
-      programPanel.add(p1);
+      programPanel.setLayout(new GridLayout(5, 1, 5, 5));
       programPanel.add(getUpdateCheckBox());
       programPanel.add(jLabel3);
       programPanel.add(getDataHomeDirButton());

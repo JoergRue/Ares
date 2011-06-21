@@ -89,6 +89,8 @@ namespace Ares.Players
         {
             lock (syncObject)
             {
+                if (forceShutdown)
+                    return;
                 continueListenForClients = true;
             }
             System.Threading.Thread listenThread = new System.Threading.Thread(new System.Threading.ThreadStart(ListenInThread));
@@ -100,6 +102,15 @@ namespace Ares.Players
             lock (syncObject)
             {
                 continueListenForClients = false;
+            }
+        }
+
+        public void Shutdown()
+        {
+            lock (syncObject)
+            {
+                continueListenForClients = false;
+                forceShutdown = true;
             }
         }
 
@@ -552,6 +563,8 @@ namespace Ares.Players
         private bool continueListenForClients = true;
 
         private bool continueListenForKeys = true;
+
+        private bool forceShutdown = false;
 
         public bool ClientConnected { get; set; }
 
