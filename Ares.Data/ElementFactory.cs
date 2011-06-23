@@ -250,6 +250,17 @@ namespace Ares.Data
             {
                 return new BasicFileElement(reader);
             }
+            else if (reader.IsStartElement("BackgroundSoundChoice"))
+            {
+                BackgroundSoundChoice choice =  new BackgroundSoundChoice(reader);
+                if (reader.IsStartElement("ParallelElementData"))
+                {
+                    BackgroundSounds.AdditionalChoiceData data = BackgroundSounds.ReadAdditionalData(reader);
+                    return new BackgroundSounds.ImportedChoice(choice, data);
+                }
+                else
+                    return null;
+            }
             else
             {
                 reader.ReadOuterXml();
@@ -272,7 +283,7 @@ namespace Ares.Data
     [Serializable]
     abstract class ElementBase : IElement, System.Runtime.Serialization.IDeserializationCallback
     {
-        public int Id { get { return m_ID; } }
+        public int Id { get { return m_ID; } set { m_ID = Id; } }
 
         public String Title { get; set; }
 

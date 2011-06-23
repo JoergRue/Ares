@@ -91,6 +91,7 @@ namespace Ares.Editor
                 if (menu != null)
                 {
                     UpdateContextMenuDueToPlaying(menu);
+                    UpdateContextMenuDueToSelection(menu);
                     UpdateVisiblityDueToModeElement(menu);
                 }
                 return menu;
@@ -200,15 +201,20 @@ namespace Ares.Editor
             TreeNode node = CreateModeElementNode(modeElement);
             modeNode.Nodes.Add(node);
             IElement startElement = modeElement.StartElement;
-            if (startElement is IGeneralElementContainer)
-            {
-                AddSubElements(node, (startElement as IGeneralElementContainer).GetGeneralElements());
-            }
-            else if (startElement is IBackgroundSounds)
-            {
-                AddSubElements(node, (startElement as IBackgroundSounds).GetElements());
-            }
+            AddSubElements(node, startElement);
             node.Collapse();
+        }
+
+        private void AddSubElements(TreeNode node, IElement element)
+        {
+            if (element is IGeneralElementContainer)
+            {
+                AddSubElements(node, (element as IGeneralElementContainer).GetGeneralElements());
+            }
+            else if (element is IBackgroundSounds)
+            {
+                AddSubElements(node, (element as IBackgroundSounds).GetElements());
+            }
         }
 
         private void AddSubElements(TreeNode parent, IList<IContainerElement> subElements)
@@ -325,8 +331,8 @@ namespace Ares.Editor
 
         private void projectTree_MouseDown(object sender, MouseEventArgs e)
         {
-            SelectedNode = projectTree.GetNodeAt(e.X, e.Y);
             cancelExpand = e.Clicks > 1;
+            setKeyButton.Enabled = (SelectedNode != null) && ((SelectedNode.Tag is IMode) || (SelectedNode.Tag is IModeElement));
         }
 
         private void renameToolStripMenuItem_Click(object sender, EventArgs e)
@@ -667,15 +673,57 @@ namespace Ares.Editor
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DeleteMode();
+            DeleteElements();
         }
 
-        private void DeleteMode()
+        private void WithSelectedRoots(Action<TreeNode> action)
         {
-            IMode mode = SelectedNode as IMode;
-            if (SelectedNode != null)
+            Dictionary<TreeNode, object> rootElements = new Dictionary<TreeNode, object>();
+            // first add all selected to a set for quick search
+            Dictionary<TreeNode, object> selectedElements = new Dictionary<TreeNode, object>();
+            foreach (TreeNode node in projectTree.SelectedNodes)
+                selectedElements.Add(node, null);
+            foreach (TreeNode node in projectTree.SelectedNodes)
             {
-                Actions.Actions.Instance.AddNew(new DeleteModeAction(SelectedNode));
+                // walk to the roots; find the topmost root which is selected
+                TreeNode root = node;
+                TreeNode selRoot = node;
+                while (root != null && root.Parent != null)
+                {
+                    if (selectedElements.ContainsKey(root.Parent))
+                        selRoot = root.Parent;
+                    root = root.Parent;
+                }
+                // if it wasn't already added from another element, add it
+                if (!rootElements.ContainsKey(selRoot))
+                    rootElements.Add(selRoot, null);
+            }
+            // now take the action on all selected roots
+            foreach (TreeNode rootElement in rootElements.Keys)
+            {
+                action(rootElement);
+            }
+        }
+
+        private void DeleteElements()
+        {
+            // find for each node the topmost root which is also selected
+            // only those nodes will be deleted
+            WithSelectedRoots((TreeNode rootElement) =>
+            {
+                if (rootElement.Tag is IMode)
+                    DeleteMode(rootElement);
+                else
+                    DeleteElement(rootElement);
+            });
+
+        }
+
+        private void DeleteMode(TreeNode node)
+        {
+            if (node != null)
+            {
+                Actions.Actions.Instance.AddNew(new DeleteModeAction(node));
             }
         }
 
@@ -746,6 +794,11 @@ namespace Ares.Editor
                     node.Nodes.Clear();
                     AddSubElements(node, (GetElement(node) as IGeneralElementContainer).GetGeneralElements());
                 }
+                else if (node != null && GetElement(node) is IBackgroundSounds)
+                {
+                    node.Nodes.Clear();
+                    AddSubElements(node, (GetElement(node) as IBackgroundSounds).GetElements());
+                }
             }
         }
 
@@ -785,6 +838,7 @@ namespace Ares.Editor
         private void elementContextMenu_Opening(object sender, CancelEventArgs e)
         {
             UpdateContextMenuDueToPlaying(sender as ContextMenuStrip);
+            UpdateContextMenuDueToSelection(sender as ContextMenuStrip);
             UpdateVisiblityDueToModeElement(sender as ContextMenuStrip);
         }
 
@@ -795,24 +849,24 @@ namespace Ares.Editor
 
         private void deleteToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            DeleteElement();
+            DeleteElements();
         }
 
-        private void DeleteElement()
+        private void DeleteElement(TreeNode node)
         {
             bool oldListen = listenForContainerChanges;
             listenForContainerChanges = false;
-            if (SelectedNode.Parent.Tag is IMode)
+            if (node.Parent.Tag is IMode)
             {
-                Actions.Actions.Instance.AddNew(new DeleteModeElementAction(SelectedNode));
+                Actions.Actions.Instance.AddNew(new DeleteModeElementAction(node));
             }
-            else if (SelectedNode.Parent.Tag is IBackgroundSounds)
+            else if (node.Parent.Tag is IBackgroundSounds)
             {
-                Actions.Actions.Instance.AddNew(new DeleteBackgroundSoundChoiceAction(SelectedNode));
+                Actions.Actions.Instance.AddNew(new DeleteBackgroundSoundChoiceAction(node));
             }
             else
             {
-                Actions.Actions.Instance.AddNew(new DeleteElementAction(SelectedNode));
+                Actions.Actions.Instance.AddNew(new DeleteElementAction(node));
             }
             listenForContainerChanges = oldListen;
         }
@@ -828,7 +882,7 @@ namespace Ares.Editor
 
         private void deleteToolStripMenuItem2_Click(object sender, EventArgs e)
         {
-            DeleteElement();
+            DeleteElements();
         }
 
         private void renameToolStripMenuItem3_Click(object sender, EventArgs e)
@@ -965,7 +1019,7 @@ namespace Ares.Editor
 
         private void deleteToolStripMenuItem3_Click(object sender, EventArgs e)
         {
-            DeleteElement();
+            DeleteElements();
         }
 
         private void addSoundChoiceToolStripMenuItem_Click(object sender, EventArgs e)
@@ -976,6 +1030,7 @@ namespace Ares.Editor
         private void bgSoundsContextMenu_Opening(object sender, CancelEventArgs e)
         {
             UpdateContextMenuDueToPlaying(sender as ContextMenuStrip);
+            UpdateContextMenuDueToSelection(sender as ContextMenuStrip);
             UpdateVisiblityDueToModeElement(sender as ContextMenuStrip);
         }
 
@@ -1008,6 +1063,8 @@ namespace Ares.Editor
             get
             {
                 if (m_PlayedElement != null)
+                    return false;
+                if (projectTree.SelectedNodes.Count != 1)
                     return false;
                 if (SelectedNode == null)
                     return false;
@@ -1082,6 +1139,7 @@ namespace Ares.Editor
         private void modeContextMenu_Opening(object sender, CancelEventArgs e)
         {
             UpdateContextMenuDueToPlaying(sender as ContextMenuStrip);
+            UpdateContextMenuDueToSelection(sender as ContextMenuStrip);
         }
 
         private static bool IsNodePlaying(TreeNode node)
@@ -1110,6 +1168,26 @@ namespace Ares.Editor
                 if (item is ToolStripMenuItem)
                     item.Enabled = !disable || 
                         ((item.Tag != null) && item.Tag.ToString().Contains("DuringPlay"));
+            }
+        }
+
+        private void UpdateContextMenuDueToSelection(ContextMenuStrip contextMenu)
+        {
+            bool disable = projectTree.SelectedNodes.Count > 1;
+            bool disableAll = false;
+            if (disable) foreach (TreeNode node in projectTree.SelectedNodes)
+            {
+                if (node.Parent == null) // project node
+                {
+                    disableAll = true;
+                    break;
+                }
+            }
+            foreach (ToolStripItem item in contextMenu.Items)
+            {
+                if (item is ToolStripMenuItem)
+                    item.Enabled = !disableAll && (!disable ||
+                        ((item.Tag != null) && item.Tag.ToString().Contains("MultipleNodes")));
             }
         }
 
@@ -1185,5 +1263,212 @@ namespace Ares.Editor
                 SelectModeElementKey();
             }
         }
+
+        private void ExportElements()
+        {
+            List<IXmlWritable> exportItems = new List<IXmlWritable>();
+            // export only root nodes
+            WithSelectedRoots((TreeNode rootElement) =>
+            {
+                if (rootElement.Tag is IXmlWritable)
+                    exportItems.Add(rootElement.Tag as IXmlWritable);
+            });
+            if (exportItems.Count == 0)
+                return;
+            if (exportDialog.ShowDialog(Parent) == System.Windows.Forms.DialogResult.OK)
+            {
+                try
+                {
+                    Data.DataModule.ProjectManager.ExportElements(exportItems, exportDialog.FileName);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(this, String.Format(StringResources.SaveError, ex.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private bool IsImportPossible(object parentElement, IXmlWritable element)
+        {
+            if (parentElement is IProject)
+            {
+                return element is IMode;
+            }
+            else if (parentElement is IMode)
+            {
+                if (element is IModeElement || element is IGeneralElementContainer)
+                {
+                    // not individual sound choices
+                    return !(element is IBackgroundSoundChoice);
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else if (parentElement is IModeElement)
+            {
+                return IsImportPossible((parentElement as IModeElement).StartElement, element);
+            }
+            else if (parentElement is IBackgroundSounds)
+            {
+                return element is IBackgroundSoundChoice;
+            }
+            else if (parentElement is IGeneralElementContainer)
+            {
+                return !(element is IMode) && !(element is IBackgroundSoundChoice);
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private void AddImportedElement(TreeNode parent, object parentElement, IXmlWritable element)
+        {
+            if (parentElement is IProject)
+            {
+                TreeNode modeNode;
+                IMode mode = element as IMode;
+                Actions.Actions.Instance.AddNew(new AddModeAction(SelectedNode, mode, out modeNode));
+                modeNode.ContextMenuStrip = modeContextMenu;
+                modeNode.ImageIndex = modeNode.SelectedImageIndex = 8;
+                foreach (IModeElement modeElement in mode.GetElements())
+                {
+                    AddModeElement(modeNode, modeElement);
+                }
+            }
+            else if (parentElement is IMode)
+            {
+                if (element is IModeElement)
+                {
+                    IModeElement modeElement = element as IModeElement;
+                    TreeNode newNode = CreateModeElementNode(modeElement);
+                    Actions.Actions.Instance.AddNew(new AddModeElementAction(parent, modeElement, newNode));
+                    AddSubElements(newNode, modeElement.StartElement);
+                }
+                else
+                {
+                    IModeElement modeElement = DataModule.ElementFactory.CreateModeElement(element.Title, element as IElement);
+                    TreeNode node = CreateModeElementNode(modeElement);
+                    Actions.Actions.Instance.AddNew(new AddModeElementAction(SelectedNode, modeElement, node));
+                    AddSubElements(node, modeElement.StartElement);
+                }
+            }
+            else if (parentElement is IModeElement)
+            {
+                AddImportedElement(parent, (parentElement as IModeElement).StartElement, element);
+            }
+            else if (parentElement is IBackgroundSounds)
+            {
+                bool oldListen = listenForContainerChanges;
+                listenForContainerChanges = false;
+                TreeNode newNode;
+                Actions.Actions.Instance.AddNew(new AddSoundChoiceAction(parent, parentElement as IBackgroundSounds, element,
+                    CreateElementNode, out newNode));
+                listenForContainerChanges = oldListen;
+            }
+            else if (parentElement is IGeneralElementContainer)
+            {
+                IElement elem = element is IModeElement ? (element as IModeElement).StartElement : element as IElement;
+                bool oldListen = listenForContainerChanges;
+                listenForContainerChanges = false;
+                TreeNode newNode;
+                Actions.Actions.Instance.AddNew(new AddElementAction(parent, parentElement as IGeneralElementContainer, elem,
+                    CreateElementNode, out newNode));
+                AddSubElements(newNode, elem);
+                listenForContainerChanges = oldListen;
+            }
+        }
+
+        private void Import()
+        {
+            if (importDialog.ShowDialog(Parent) == System.Windows.Forms.DialogResult.OK)
+            {
+                try
+                {
+                    IList<IXmlWritable> elements = Data.DataModule.ProjectManager.ImportElements(importDialog.FileName);
+                    TreeNode parentNode = SelectedNode;
+                    List<Dialogs.ImportElement> importElements = new List<Dialogs.ImportElement>();
+                    bool hasEnabledElements = false;
+                    foreach (IXmlWritable element in elements)
+                    {
+                        bool enabled = IsImportPossible(parentNode.Tag, element);
+                        importElements.Add(new Dialogs.ImportElement(element, enabled));
+                        if (enabled)
+                        {
+                            hasEnabledElements = true;
+                        }
+                    }
+                    if (!hasEnabledElements)
+                    {
+                        MessageBox.Show(this, StringResources.NoImportableElements, StringResources.Ares, MessageBoxButtons.OK);
+                        return;
+                    }
+                    Dialogs.ImportDialog dialog = new Dialogs.ImportDialog();
+                    dialog.SetElements(importElements);
+                    if (dialog.ShowDialog(Parent) == System.Windows.Forms.DialogResult.OK)
+                    {
+                        foreach (Dialogs.ImportElement importElement in importElements)
+                        {
+                            if (importElement.Selected)
+                            {
+                                AddImportedElement(parentNode, parentNode.Tag, importElement.Element);
+                            }
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(this, String.Format(StringResources.LoadError, e.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void exportToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ExportElements();
+        }
+
+        private void importToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Import();
+        }
+
+        private void exportToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            ExportElements();
+        }
+
+        private void importToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            Import();
+        }
+
+        private void exportToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            ExportElements();
+        }
+
+        private void importToolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+            Import();
+        }
+
+        private void exportToolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+            ExportElements();
+        }
+
+        private void importToolStripMenuItem4_Click(object sender, EventArgs e)
+        {
+            Import();
+        }
+
+        private void importToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Import();
+        }
+
     }
 }

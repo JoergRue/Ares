@@ -100,5 +100,10 @@ namespace Ares.Data
         /// Inserts an existing sound choice to the library.
         /// </summary>
         void InsertElement(int index, IBackgroundSoundChoice element);
+
+        /// <summary>
+        /// Adds an imported sound choice to the library.
+        /// </summary>
+        IBackgroundSoundChoice AddImportedElement(IXmlWritable element);
     }
 }

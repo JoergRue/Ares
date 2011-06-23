@@ -117,6 +117,16 @@ namespace Ares.Editor.Actions
             Undo();
         }
 
+        public AddModeAction(TreeNode projectNode, IMode importedMode, out TreeNode modeNode)
+        {
+            String name = importedMode.Title;
+            m_ProjectNode = projectNode;
+            m_ModeNode = new TreeNode(name);
+            m_ModeNode.Tag = importedMode;
+            m_Index = m_ProjectNode.Nodes.Count;
+            modeNode = m_ModeNode;
+        }
+
         public override void Do()
         {
             (m_ProjectNode.Tag as IProject).InsertMode(m_Index, m_ModeNode.Tag as IMode);

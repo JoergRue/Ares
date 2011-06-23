@@ -22,17 +22,28 @@ using System.Collections.Generic;
 
 namespace Ares.Data
 {
+    /// <summary>
+    /// An object which can be serialized to an XML stream.
+    /// </summary>
+    public interface IXmlWritable
+    {
+        /// <summary>
+        /// Title of the object.
+        /// </summary>
+        String Title { get; set; }
+
+        /// <summary>
+        /// Serializes to an xml stream.
+        /// </summary>
+        /// <param name="writer">Writer for the xml</param>
+        void WriteToXml(System.Xml.XmlWriter writer);
+    }
 
     /// <summary>
     /// A mode in the project.
     /// </summary>
-    public interface IMode
+    public interface IMode : IXmlWritable
     {
-        /// <summary>
-        /// Title of the mode.
-        /// </summary>
-        String Title { get; set; }
-
         /// <summary>
         /// Key which switches to the mode.
         /// </summary>
@@ -67,24 +78,13 @@ namespace Ares.Data
         /// Returns the element which is triggered by a certain key.
         /// </summary>
         IModeElement GetTriggeredElement(Int32 keyCode);
-
-        /// <summary>
-        /// Serializes to an xml stream.
-        /// </summary>
-        /// <param name="writer">Writer for the xml</param>
-        void WriteToXml(System.Xml.XmlWriter writer);
     }
 
     /// <summary>
     /// Represents an ARES project.
     /// </summary>
-    public interface IProject
+    public interface IProject : IXmlWritable
     {
-        /// <summary>
-        /// Title of the project.
-        /// </summary>
-        String Title { get; set; }
-
         /// <summary>
         /// File where the project is stored.
         /// </summary>
@@ -124,11 +124,5 @@ namespace Ares.Data
         /// Returns the mode for a certain key.
         /// </summary>
         IMode GetMode(Int32 keyCode);
-
-        /// <summary>
-        /// Serializes to an xml stream.
-        /// </summary>
-        /// <param name="writer">Writer for the xml</param>
-        void WriteToXml(System.Xml.XmlWriter writer);
     }
 }

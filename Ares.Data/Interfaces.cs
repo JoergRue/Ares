@@ -56,16 +56,12 @@ namespace Ares.Data
     /// <summary>
     /// Basic interface for an audio element.
     /// </summary>
-    public interface IElement
+    public interface IElement : IXmlWritable
     {
         /// <summary>
         /// Unique ID with which the element can be referenced.
         /// </summary>
-        int Id { get; }
-        /// <summary>
-        /// Title of the element.
-        /// </summary>
-        String Title { get; set; }
+        int Id { get; set;  }
 
         /// <summary>
         /// Whether the start of the element changes the global music volume
@@ -96,12 +92,6 @@ namespace Ares.Data
         /// Visitor pattern.
         /// </summary>
         void Visit(IElementVisitor visitor);
-
-        /// <summary>
-        /// Serializes to an xml stream.
-        /// </summary>
-        /// <param name="writer">Writer for the xml</param>
-        void WriteToXml(System.Xml.XmlWriter writer);
 
         /// <summary>
         /// Returns the references to this element. The list may be null or empty.

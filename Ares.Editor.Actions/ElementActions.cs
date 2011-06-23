@@ -122,15 +122,19 @@ namespace Ares.Editor.Actions
         {
             m_Parent.Nodes.Remove(m_Node);
             IBackgroundSoundChoice soundChoice = (m_Node.Tag as IBackgroundSoundChoice);
-            (m_Parent.Tag as IBackgroundSounds).RemoveElement(soundChoice.Id);
+            IBackgroundSounds bgSounds = m_Parent.Tag as IBackgroundSounds;
+            bgSounds.RemoveElement(soundChoice.Id);
             ElementRemoval.NotifyRemoval(soundChoice);
+            ElementChanges.Instance.ElementChanged(bgSounds.Id);
             Ares.ModelInfo.ModelChecks.Instance.CheckAll();
         }
 
         public override void Undo()
         {
             m_Parent.Nodes.Insert(m_Index, m_Node);
-            (m_Parent.Tag as IBackgroundSounds).InsertElement(m_Index, (m_Node.Tag as IBackgroundSoundChoice));
+            IBackgroundSounds bgSounds = m_Parent.Tag as IBackgroundSounds;
+            bgSounds.InsertElement(m_Index, (m_Node.Tag as IBackgroundSoundChoice));
+            ElementChanges.Instance.ElementChanged(bgSounds.Id);
             Ares.ModelInfo.ModelChecks.Instance.CheckAll();
         }
 
@@ -249,6 +253,17 @@ namespace Ares.Editor.Actions
         {
             m_Parent = parent;
             m_Element = bgSounds.AddElement(name);
+            m_Node = nodeCreator(m_Element);
+            m_Index = m_Parent.Nodes.Count;
+            bgSounds.RemoveElement(m_Element.Id);
+            node = m_Node;
+            m_BGSounds = bgSounds;
+        }
+
+        public AddSoundChoiceAction(TreeNode parent, IBackgroundSounds bgSounds, IXmlWritable importedElement, NodeCreator nodeCreator, out TreeNode node)
+        {
+            m_Parent = parent;
+            m_Element = bgSounds.AddImportedElement(importedElement);
             m_Node = nodeCreator(m_Element);
             m_Index = m_Parent.Nodes.Count;
             bgSounds.RemoveElement(m_Element.Id);

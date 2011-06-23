@@ -193,6 +193,23 @@ namespace Ares.Data
             return choice;
         }
 
+        public IBackgroundSoundChoice AddImportedElement(IXmlWritable writable)
+        {
+            ImportedChoice choice = writable as ImportedChoice;
+            if (choice == null)
+                return null;
+            BackgroundSoundChoice bgChoice = choice.SoundChoice;
+            IParallelElement parallelElement = m_Container.AddElement(bgChoice);
+            parallelElement.FixedStartDelay = choice.ChoiceData.FixedStartDelay;
+            parallelElement.FixedIntermediateDelay = choice.ChoiceData.FixedIntermediateDelay;
+            parallelElement.MaximumRandomStartDelay = choice.ChoiceData.MaximumRandomStartDelay;
+            parallelElement.MaximumRandomIntermediateDelay = choice.ChoiceData.MaximumRandomIntermediateDelay;
+            parallelElement.RepeatCount = choice.ChoiceData.RepeatCount;
+            bgChoice.ParallelElement = parallelElement;
+            m_Elements.Add(bgChoice);
+            return bgChoice;
+        }
+
         public IBackgroundSoundChoice AddElement(IElement element)
         {
             throw new InvalidOperationException();
@@ -264,6 +281,17 @@ namespace Ares.Data
             m_Container = DataModule.ElementFactory.CreateParallelContainer(title + "_Parallel");
         }
 
+        internal static void WriteAdditionalData(System.Xml.XmlWriter writer, IBackgroundSoundChoice choice)
+        {
+            writer.WriteStartElement("ParallelElementData");
+            writer.WriteAttributeString("FixedStartDelay", choice.FixedStartDelay.TotalMilliseconds.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            writer.WriteAttributeString("RandomStartDelay", choice.MaximumRandomStartDelay.TotalMilliseconds.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            writer.WriteAttributeString("FixedInterDelay", choice.FixedIntermediateDelay.TotalMilliseconds.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            writer.WriteAttributeString("RandomInterDelay", choice.MaximumRandomIntermediateDelay.TotalMilliseconds.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            writer.WriteAttributeString("RepeatCount", choice.RepeatCount.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            writer.WriteEndElement();
+        }
+
         public override void WriteToXml(System.Xml.XmlWriter writer)
         {
             writer.WriteStartElement("BackgroundSounds");
@@ -273,16 +301,258 @@ namespace Ares.Data
             foreach (IBackgroundSoundChoice choice in m_Elements)
             {
                 choice.WriteToXml(writer);
-                writer.WriteStartElement("ParallelElementData");
-                writer.WriteAttributeString("FixedStartDelay", choice.FixedStartDelay.TotalMilliseconds.ToString(System.Globalization.CultureInfo.InvariantCulture));
-                writer.WriteAttributeString("RandomStartDelay", choice.MaximumRandomStartDelay.TotalMilliseconds.ToString(System.Globalization.CultureInfo.InvariantCulture));
-                writer.WriteAttributeString("FixedInterDelay", choice.FixedIntermediateDelay.TotalMilliseconds.ToString(System.Globalization.CultureInfo.InvariantCulture));
-                writer.WriteAttributeString("RandomInterDelay", choice.MaximumRandomIntermediateDelay.TotalMilliseconds.ToString(System.Globalization.CultureInfo.InvariantCulture));
-                writer.WriteAttributeString("RepeatCount", choice.RepeatCount.ToString(System.Globalization.CultureInfo.InvariantCulture));
-                writer.WriteEndElement();
+                WriteAdditionalData(writer, choice);
             }
             writer.WriteEndElement();
             writer.WriteEndElement();
+        }
+
+        internal class AdditionalChoiceData
+        {
+           public TimeSpan FixedStartDelay;
+           public TimeSpan MaximumRandomStartDelay;
+           public TimeSpan FixedIntermediateDelay;
+           public TimeSpan MaximumRandomIntermediateDelay;
+           public Int32 RepeatCount;
+        }
+
+        internal class ImportedChoice : IBackgroundSoundChoice
+        {
+            public BackgroundSoundChoice SoundChoice;
+            public AdditionalChoiceData ChoiceData;
+
+            public ImportedChoice(BackgroundSoundChoice soundChoice, AdditionalChoiceData choiceData)
+            {
+                SoundChoice = soundChoice;
+                ChoiceData = choiceData;
+            }
+
+            public string Title
+            {
+                get
+                {
+                    return SoundChoice.Title;
+                }
+                set
+                {
+                    SoundChoice.Title = value;
+                }
+            }
+
+            #region Not Implemented Members of IBackgroundSoundChoice
+
+            public void WriteToXml(System.Xml.XmlWriter writer)
+            {
+                throw new NotImplementedException();
+            }
+
+            public IChoiceElement AddElement(IElement element)
+            {
+                throw new NotImplementedException();
+            }
+
+            public IList<IChoiceElement> GetElements()
+            {
+                throw new NotImplementedException();
+            }
+
+            public IChoiceElement GetElement(int id)
+            {
+                throw new NotImplementedException();
+            }
+
+            public IList<IContainerElement> GetGeneralElements()
+            {
+                throw new NotImplementedException();
+            }
+
+            public IElement AddGeneralElement(IElement element)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void InsertGeneralElement(int index, IElement element)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void RemoveElement(int id)
+            {
+                throw new NotImplementedException();
+            }
+
+            public IList<IFileElement> GetFileElements()
+            {
+                throw new NotImplementedException();
+            }
+
+            public int Id
+            {
+                get
+                {
+                    throw new NotImplementedException();
+                }
+                set
+                {
+                    throw new NotImplementedException();
+                }
+            }
+
+            public bool SetsMusicVolume
+            {
+                get
+                {
+                    throw new NotImplementedException();
+                }
+                set
+                {
+                    throw new NotImplementedException();
+                }
+            }
+
+            public int MusicVolume
+            {
+                get
+                {
+                    throw new NotImplementedException();
+                }
+                set
+                {
+                    throw new NotImplementedException();
+                }
+            }
+
+            public bool SetsSoundVolume
+            {
+                get
+                {
+                    throw new NotImplementedException();
+                }
+                set
+                {
+                    throw new NotImplementedException();
+                }
+            }
+
+            public int SoundVolume
+            {
+                get
+                {
+                    throw new NotImplementedException();
+                }
+                set
+                {
+                    throw new NotImplementedException();
+                }
+            }
+
+            public IElement Clone()
+            {
+                throw new NotImplementedException();
+            }
+
+            public void Visit(IElementVisitor visitor)
+            {
+                throw new NotImplementedException();
+            }
+
+            public IList<IElementReference> References
+            {
+                get { throw new NotImplementedException(); }
+            }
+
+            public void AddReference(IElementReference reference)
+            {
+                throw new NotImplementedException();
+            }
+
+            public IElement InnerElement
+            {
+                get { throw new NotImplementedException(); }
+            }
+
+            public TimeSpan FixedStartDelay
+            {
+                get
+                {
+                    throw new NotImplementedException();
+                }
+                set
+                {
+                    throw new NotImplementedException();
+                }
+            }
+
+            public TimeSpan MaximumRandomStartDelay
+            {
+                get
+                {
+                    throw new NotImplementedException();
+                }
+                set
+                {
+                    throw new NotImplementedException();
+                }
+            }
+
+            public int RepeatCount
+            {
+                get
+                {
+                    throw new NotImplementedException();
+                }
+                set
+                {
+                    throw new NotImplementedException();
+                }
+            }
+
+            public TimeSpan FixedIntermediateDelay
+            {
+                get
+                {
+                    throw new NotImplementedException();
+                }
+                set
+                {
+                    throw new NotImplementedException();
+                }
+            }
+
+            public TimeSpan MaximumRandomIntermediateDelay
+            {
+                get
+                {
+                    throw new NotImplementedException();
+                }
+                set
+                {
+                    throw new NotImplementedException();
+                }
+            }
+
+            #endregion
+        }
+
+        internal static AdditionalChoiceData ReadAdditionalData(System.Xml.XmlReader reader)
+        {
+            AdditionalChoiceData data = new AdditionalChoiceData();
+            data.FixedStartDelay = TimeSpan.FromMilliseconds(reader.GetIntegerAttribute("FixedStartDelay"));
+            data.MaximumRandomStartDelay = TimeSpan.FromMilliseconds(reader.GetIntegerAttribute("RandomStartDelay"));
+            data.FixedIntermediateDelay = TimeSpan.FromMilliseconds(reader.GetIntegerAttribute("FixedInterDelay"));
+            data.MaximumRandomIntermediateDelay = TimeSpan.FromMilliseconds(reader.GetIntegerAttribute("RandomInterDelay"));
+            data.RepeatCount = reader.GetIntegerAttribute("RepeatCount");
+            if (reader.IsEmptyElement)
+            {
+                reader.Read();
+            }
+            else
+            {
+                reader.Read();
+                reader.ReadInnerXml();
+                reader.ReadEndElement();
+            }
+            return data;
         }
 
         internal BackgroundSounds(System.Xml.XmlReader reader)
@@ -312,21 +582,12 @@ namespace Ares.Data
                             choice.ParallelElement = parallelElement;
                             if (reader.IsStartElement("ParallelElementData"))
                             {
-                                parallelElement.FixedStartDelay = TimeSpan.FromMilliseconds(reader.GetIntegerAttribute("FixedStartDelay"));
-                                parallelElement.MaximumRandomStartDelay = TimeSpan.FromMilliseconds(reader.GetIntegerAttribute("RandomStartDelay"));
-                                parallelElement.FixedIntermediateDelay = TimeSpan.FromMilliseconds(reader.GetIntegerAttribute("FixedInterDelay"));
-                                parallelElement.MaximumRandomIntermediateDelay = TimeSpan.FromMilliseconds(reader.GetIntegerAttribute("RandomInterDelay"));
-                                parallelElement.RepeatCount = reader.GetIntegerAttribute("RepeatCount");
-                                if (reader.IsEmptyElement)
-                                {
-                                    reader.Read();
-                                }
-                                else
-                                {
-                                    reader.Read();
-                                    reader.ReadInnerXml();
-                                    reader.ReadEndElement();
-                                }
+                                AdditionalChoiceData data = ReadAdditionalData(reader);
+                                parallelElement.FixedStartDelay = data.FixedStartDelay;
+                                parallelElement.MaximumRandomStartDelay = data.MaximumRandomStartDelay;
+                                parallelElement.FixedIntermediateDelay = data.FixedIntermediateDelay;
+                                parallelElement.MaximumRandomIntermediateDelay = data.MaximumRandomIntermediateDelay;
+                                parallelElement.RepeatCount = data.RepeatCount;
                             }
                             m_Elements.Add(choice);
                         }

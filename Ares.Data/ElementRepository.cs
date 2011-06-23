@@ -55,6 +55,11 @@ namespace Ares.Data
 
         public void AddElement(int id, IElement element)
         {
+            if (m_Elements.ContainsKey(id))
+            {
+                id = Data.DataModule.TheElementFactory.GetNextID();
+                element.Id = id;
+            }
             m_Elements.Add(id, element);
         }
 

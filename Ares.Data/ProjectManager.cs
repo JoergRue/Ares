@@ -53,6 +53,19 @@ namespace Ares.Data
         /// </summary>
         void UnloadProject(IProject project);
 
+        /// <summary>
+        /// Exports something to an XML file
+        /// </summary>
+        /// <param name="element">The element</param>
+        /// <param name="fileName">the file</param>
+        void ExportElements(IList<IXmlWritable> elements, String fileName);
+
+        /// <summary>
+        /// Reads something from an XML file
+        /// </summary>
+        /// <param name="fileName">the file</param>
+        /// <returns>the read element, or null</returns>
+        IList<IXmlWritable> ImportElements(String fileName);
     }
 
     class ProjectManager : IProjectManager
@@ -66,17 +79,14 @@ namespace Ares.Data
 
         public IProject LoadProject(String fileName)
         {
-            XmlReaderSettings settings = new XmlReaderSettings();
-            settings.IgnoreComments = true;
-            settings.ProhibitDtd = false;
-            using (System.IO.FileStream stream = new System.IO.FileStream(fileName, System.IO.FileMode.Open))
+            IList<IXmlWritable> elements = DoImportElements(fileName, true);
+            if (elements.Count > 0 && elements[0] is IProject)
             {
-                using (XmlReader reader = XmlReader.Create(stream, settings))
-                {
-                    reader.Read();
-                    reader.MoveToElement();
-                    return new Project(reader, fileName);
-                }
+                return (IProject)elements[0];
+            }
+            else
+            {
+                throw new XmlException(String.Format(StringResources.ExpectedElement, "Project"));
             }
         }
 
@@ -97,7 +107,24 @@ namespace Ares.Data
             project.Changed = false;
         }
 
-        private static void DoSaveProject(IProject project, String fileName)
+        private void DoSaveProject(IProject project, String fileName)
+        {
+            List<IXmlWritable> elements = new List<IXmlWritable>();
+            elements.Add(project);
+            DoExportElements(elements, fileName, true);
+        }
+
+        public void UnloadProject(IProject project)
+        {
+            DataModule.TheElementRepository.Clear();
+        }
+
+        public void ExportElements(IList<IXmlWritable> elements, String fileName)
+        {
+            DoExportElements(elements, fileName, false);
+        }
+
+        private void DoExportElements(IList<IXmlWritable> elements, String fileName, bool isProject)
         {
             String tempFileName = System.IO.Path.GetTempFileName();
             XmlWriterSettings settings = new XmlWriterSettings();
@@ -107,7 +134,22 @@ namespace Ares.Data
             using (XmlWriter writer = XmlWriter.Create(tempFileName, settings))
             {
                 writer.WriteStartDocument();
-                project.WriteToXml(writer);
+                if (!isProject)
+                {
+                    writer.WriteStartElement("ExportedElements");
+                }
+                foreach (IXmlWritable element in elements)
+                {
+                    element.WriteToXml(writer);
+                    if (element is IBackgroundSoundChoice)
+                    {
+                        BackgroundSounds.WriteAdditionalData(writer, element as IBackgroundSoundChoice);
+                    }
+                }
+                if (!isProject)
+                {
+                    writer.WriteEndElement();
+                }
                 writer.WriteEndDocument();
                 writer.Flush();
             }
@@ -115,9 +157,97 @@ namespace Ares.Data
             System.IO.File.Delete(tempFileName);
         }
 
-        public void UnloadProject(IProject project)
+        public IList<IXmlWritable> ImportElements(String fileName)
         {
-            DataModule.TheElementRepository.Clear();
+            return DoImportElements(fileName, false);
+        }
+
+        private IList<IXmlWritable> DoImportElements(String fileName, bool isProject)
+        {
+            List<IXmlWritable> elements = new List<IXmlWritable>();
+            XmlReaderSettings settings = new XmlReaderSettings();
+            settings.IgnoreComments = true;
+            settings.ProhibitDtd = false;
+            using (System.IO.FileStream stream = new System.IO.FileStream(fileName, System.IO.FileMode.Open))
+            {
+                using (XmlReader reader = XmlReader.Create(stream, settings))
+                {
+                    reader.Read();
+                    reader.MoveToElement();
+                    if (!reader.IsStartElement("ExportedElements") && !reader.IsStartElement("Project"))
+                    {
+                        XmlHelpers.ThrowException(String.Format(StringResources.ExpectedElement, "ExportedElements"), reader);
+                    }
+                    if (reader.IsEmptyElement)
+                    {
+                        reader.Read();
+                    }
+                    else
+                    {
+                        if (!isProject)
+                        {
+                            reader.Read(); // ExportedElements or Project
+                            while (reader.IsStartElement())
+                            {
+                                if (reader.IsStartElement("Modes")) // in project files
+                                {
+                                    if (!reader.IsEmptyElement)
+                                    {
+                                        reader.Read();
+                                        ReadElements(elements, reader, fileName);
+                                        reader.ReadEndElement();
+                                    }
+                                    else
+                                        reader.Read();
+                                }
+                                else
+                                {
+                                    ReadElements(elements, reader, fileName);
+                                }
+                            }
+                            reader.ReadEndElement();
+                        }
+                        else
+                        {
+                            ReadElements(elements, reader, fileName);
+                        }
+                    }
+                }
+            }
+
+            return elements;
+        }
+
+        private void ReadElements(IList<IXmlWritable> elements, XmlReader reader, String fileName)
+        {
+            while (reader.IsStartElement())
+            {
+                IXmlWritable element = ReadElement(reader, fileName);
+                if (element != null)
+                {
+                    elements.Add(element);
+                }
+            }
+        }
+
+        private IXmlWritable ReadElement(XmlReader reader, String fileName)
+        {
+            if (reader.IsStartElement("Project"))
+            {
+                return new Project(reader, fileName);
+            }
+            else if (reader.IsStartElement("Mode"))
+            {
+                return new Mode(reader);
+            }
+            else if (reader.IsStartElement("ModeElement"))
+            {
+                return new ModeElement(reader);
+            }
+            else
+            {
+                return DataModule.TheElementFactory.CreateElement(reader);
+            }
         }
 
         #endregion

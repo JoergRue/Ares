@@ -57,7 +57,8 @@ namespace Ares.Editor
             this.projectContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.projectTree = new System.Windows.Forms.TreeView();
+            this.importToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.projectTree = new MultiSelectTreeview.MultiSelectTreeview();
             this.modeContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.renameToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
@@ -71,6 +72,9 @@ namespace Ares.Editor
             this.addParallelElementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addSequentialElementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addChoiceListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.containerContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.renameToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
@@ -85,22 +89,32 @@ namespace Ares.Editor
             this.addParallelElementToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.addSequentialElementToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.addChoiceListToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.importToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.elementContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.editToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.renameToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.selectElementKeyMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.modeElementStartingToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.exportToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.bgSoundsContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.renameToolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
             this.selectBGSoundsKeyMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.modeElementStartingToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.addSoundChoiceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.importToolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.playButton = new System.Windows.Forms.ToolStripButton();
             this.stopButton = new System.Windows.Forms.ToolStripButton();
             this.setKeyButton = new System.Windows.Forms.ToolStripButton();
+            this.exportDialog = new System.Windows.Forms.SaveFileDialog();
+            this.importDialog = new System.Windows.Forms.OpenFileDialog();
             this.projectContextMenu.SuspendLayout();
             this.modeContextMenu.SuspendLayout();
             this.containerContextMenu.SuspendLayout();
@@ -113,7 +127,8 @@ namespace Ares.Editor
             // 
             this.projectContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.renameToolStripMenuItem,
-            this.toolStripMenuItem1});
+            this.toolStripMenuItem1,
+            this.importToolStripMenuItem1});
             this.projectContextMenu.Name = "projectContextMenu";
             resources.ApplyResources(this.projectContextMenu, "projectContextMenu");
             // 
@@ -129,12 +144,19 @@ namespace Ares.Editor
             resources.ApplyResources(this.toolStripMenuItem1, "toolStripMenuItem1");
             this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
+            // importToolStripMenuItem1
+            // 
+            this.importToolStripMenuItem1.Name = "importToolStripMenuItem1";
+            resources.ApplyResources(this.importToolStripMenuItem1, "importToolStripMenuItem1");
+            this.importToolStripMenuItem1.Click += new System.EventHandler(this.importToolStripMenuItem1_Click);
+            // 
             // projectTree
             // 
             resources.ApplyResources(this.projectTree, "projectTree");
             this.projectTree.HideSelection = false;
             this.projectTree.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.projectTree.Name = "projectTree";
+            this.projectTree.SelectedNodes = ((System.Collections.Generic.List<System.Windows.Forms.TreeNode>)(resources.GetObject("projectTree.SelectedNodes")));
             this.projectTree.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.projectTree_AfterLabelEdit);
             this.projectTree.BeforeCollapse += new System.Windows.Forms.TreeViewCancelEventHandler(this.projectTree_BeforeCollapse);
             this.projectTree.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.projectTree_BeforeExpand);
@@ -158,7 +180,10 @@ namespace Ares.Editor
             this.toolStripSeparator2,
             this.addParallelElementToolStripMenuItem,
             this.addSequentialElementToolStripMenuItem,
-            this.addChoiceListToolStripMenuItem});
+            this.addChoiceListToolStripMenuItem,
+            this.toolStripSeparator5,
+            this.importToolStripMenuItem,
+            this.exportToolStripMenuItem});
             this.modeContextMenu.Name = "modeContextMenu";
             resources.ApplyResources(this.modeContextMenu, "modeContextMenu");
             this.modeContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.modeContextMenu_Opening);
@@ -180,6 +205,7 @@ namespace Ares.Editor
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
             resources.ApplyResources(this.deleteToolStripMenuItem, "deleteToolStripMenuItem");
+            this.deleteToolStripMenuItem.Tag = "MultipleNodes";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
@@ -234,6 +260,25 @@ namespace Ares.Editor
             resources.ApplyResources(this.addChoiceListToolStripMenuItem, "addChoiceListToolStripMenuItem");
             this.addChoiceListToolStripMenuItem.Click += new System.EventHandler(this.addChoiceListToolStripMenuItem_Click);
             // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            resources.ApplyResources(this.toolStripSeparator5, "toolStripSeparator5");
+            // 
+            // importToolStripMenuItem
+            // 
+            this.importToolStripMenuItem.Name = "importToolStripMenuItem";
+            resources.ApplyResources(this.importToolStripMenuItem, "importToolStripMenuItem");
+            this.importToolStripMenuItem.Tag = "";
+            this.importToolStripMenuItem.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
+            // 
+            // exportToolStripMenuItem
+            // 
+            this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
+            resources.ApplyResources(this.exportToolStripMenuItem, "exportToolStripMenuItem");
+            this.exportToolStripMenuItem.Tag = "MultipleNodes";
+            this.exportToolStripMenuItem.Click += new System.EventHandler(this.exportToolStripMenuItem_Click);
+            // 
             // containerContextMenu
             // 
             this.containerContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -249,7 +294,10 @@ namespace Ares.Editor
             this.toolStripSeparator4,
             this.addParallelElementToolStripMenuItem1,
             this.addSequentialElementToolStripMenuItem1,
-            this.addChoiceListToolStripMenuItem1});
+            this.addChoiceListToolStripMenuItem1,
+            this.toolStripSeparator6,
+            this.importToolStripMenuItem2,
+            this.exportToolStripMenuItem1});
             this.containerContextMenu.Name = "containerContextMenu";
             resources.ApplyResources(this.containerContextMenu, "containerContextMenu");
             this.containerContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.containerContextMenu_Opening);
@@ -285,6 +333,7 @@ namespace Ares.Editor
             // 
             this.deleteToolStripMenuItem1.Name = "deleteToolStripMenuItem1";
             resources.ApplyResources(this.deleteToolStripMenuItem1, "deleteToolStripMenuItem1");
+            this.deleteToolStripMenuItem1.Tag = "MultipleNodes";
             this.deleteToolStripMenuItem1.Click += new System.EventHandler(this.deleteToolStripMenuItem1_Click);
             // 
             // toolStripSeparator3
@@ -333,6 +382,24 @@ namespace Ares.Editor
             resources.ApplyResources(this.addChoiceListToolStripMenuItem1, "addChoiceListToolStripMenuItem1");
             this.addChoiceListToolStripMenuItem1.Click += new System.EventHandler(this.addChoiceListToolStripMenuItem1_Click);
             // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            resources.ApplyResources(this.toolStripSeparator6, "toolStripSeparator6");
+            // 
+            // importToolStripMenuItem2
+            // 
+            this.importToolStripMenuItem2.Name = "importToolStripMenuItem2";
+            resources.ApplyResources(this.importToolStripMenuItem2, "importToolStripMenuItem2");
+            this.importToolStripMenuItem2.Click += new System.EventHandler(this.importToolStripMenuItem2_Click);
+            // 
+            // exportToolStripMenuItem1
+            // 
+            this.exportToolStripMenuItem1.Name = "exportToolStripMenuItem1";
+            resources.ApplyResources(this.exportToolStripMenuItem1, "exportToolStripMenuItem1");
+            this.exportToolStripMenuItem1.Tag = "MultipleNodes";
+            this.exportToolStripMenuItem1.Click += new System.EventHandler(this.exportToolStripMenuItem1_Click);
+            // 
             // elementContextMenu
             // 
             this.elementContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -340,7 +407,9 @@ namespace Ares.Editor
             this.renameToolStripMenuItem3,
             this.selectElementKeyMenuItem,
             this.modeElementStartingToolStripMenuItem1,
-            this.deleteToolStripMenuItem2});
+            this.deleteToolStripMenuItem2,
+            this.toolStripSeparator7,
+            this.exportToolStripMenuItem2});
             this.elementContextMenu.Name = "elementContextMenu";
             resources.ApplyResources(this.elementContextMenu, "elementContextMenu");
             this.elementContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.elementContextMenu_Opening);
@@ -376,7 +445,20 @@ namespace Ares.Editor
             // 
             this.deleteToolStripMenuItem2.Name = "deleteToolStripMenuItem2";
             resources.ApplyResources(this.deleteToolStripMenuItem2, "deleteToolStripMenuItem2");
+            this.deleteToolStripMenuItem2.Tag = "MultipleNodes";
             this.deleteToolStripMenuItem2.Click += new System.EventHandler(this.deleteToolStripMenuItem2_Click);
+            // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            resources.ApplyResources(this.toolStripSeparator7, "toolStripSeparator7");
+            // 
+            // exportToolStripMenuItem2
+            // 
+            this.exportToolStripMenuItem2.Name = "exportToolStripMenuItem2";
+            resources.ApplyResources(this.exportToolStripMenuItem2, "exportToolStripMenuItem2");
+            this.exportToolStripMenuItem2.Tag = "MultipleNodes";
+            this.exportToolStripMenuItem2.Click += new System.EventHandler(this.exportToolStripMenuItem2_Click);
             // 
             // bgSoundsContextMenu
             // 
@@ -385,7 +467,10 @@ namespace Ares.Editor
             this.selectBGSoundsKeyMenuItem,
             this.modeElementStartingToolStripMenuItem2,
             this.deleteToolStripMenuItem3,
-            this.addSoundChoiceToolStripMenuItem});
+            this.addSoundChoiceToolStripMenuItem,
+            this.toolStripSeparator8,
+            this.importToolStripMenuItem4,
+            this.exportToolStripMenuItem3});
             this.bgSoundsContextMenu.Name = "bgSoundsContextMenu";
             resources.ApplyResources(this.bgSoundsContextMenu, "bgSoundsContextMenu");
             this.bgSoundsContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.bgSoundsContextMenu_Opening);
@@ -414,6 +499,7 @@ namespace Ares.Editor
             // 
             this.deleteToolStripMenuItem3.Name = "deleteToolStripMenuItem3";
             resources.ApplyResources(this.deleteToolStripMenuItem3, "deleteToolStripMenuItem3");
+            this.deleteToolStripMenuItem3.Tag = "MultipleNodes";
             this.deleteToolStripMenuItem3.Click += new System.EventHandler(this.deleteToolStripMenuItem3_Click);
             // 
             // addSoundChoiceToolStripMenuItem
@@ -421,6 +507,24 @@ namespace Ares.Editor
             this.addSoundChoiceToolStripMenuItem.Name = "addSoundChoiceToolStripMenuItem";
             resources.ApplyResources(this.addSoundChoiceToolStripMenuItem, "addSoundChoiceToolStripMenuItem");
             this.addSoundChoiceToolStripMenuItem.Click += new System.EventHandler(this.addSoundChoiceToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            resources.ApplyResources(this.toolStripSeparator8, "toolStripSeparator8");
+            // 
+            // importToolStripMenuItem4
+            // 
+            this.importToolStripMenuItem4.Name = "importToolStripMenuItem4";
+            resources.ApplyResources(this.importToolStripMenuItem4, "importToolStripMenuItem4");
+            this.importToolStripMenuItem4.Click += new System.EventHandler(this.importToolStripMenuItem4_Click);
+            // 
+            // exportToolStripMenuItem3
+            // 
+            this.exportToolStripMenuItem3.Name = "exportToolStripMenuItem3";
+            resources.ApplyResources(this.exportToolStripMenuItem3, "exportToolStripMenuItem3");
+            this.exportToolStripMenuItem3.Tag = "MultipleNodes";
+            this.exportToolStripMenuItem3.Click += new System.EventHandler(this.exportToolStripMenuItem3_Click);
             // 
             // toolStrip1
             // 
@@ -455,18 +559,26 @@ namespace Ares.Editor
             this.setKeyButton.Name = "setKeyButton";
             this.setKeyButton.Click += new System.EventHandler(this.setKeyButton_Click);
             // 
+            // exportDialog
+            // 
+            this.exportDialog.DefaultExt = "ares";
+            resources.ApplyResources(this.exportDialog, "exportDialog");
+            // 
+            // importDialog
+            // 
+            this.importDialog.DefaultExt = "ares";
+            resources.ApplyResources(this.importDialog, "importDialog");
+            // 
             // ProjectExplorer
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.projectTree);
             this.Controls.Add(this.toolStrip1);
-#if !MONO
-            this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft)
-                        | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)
-                        | WeifenLuo.WinFormsUI.Docking.DockAreas.DockTop)
-                        | WeifenLuo.WinFormsUI.Docking.DockAreas.DockBottom)));
-#endif
+            this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft) 
+            | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight) 
+            | WeifenLuo.WinFormsUI.Docking.DockAreas.DockTop) 
+            | WeifenLuo.WinFormsUI.Docking.DockAreas.DockBottom)));
             this.Name = "ProjectExplorer";
             this.projectContextMenu.ResumeLayout(false);
             this.modeContextMenu.ResumeLayout(false);
@@ -483,7 +595,7 @@ namespace Ares.Editor
         #endregion
 
         private System.Windows.Forms.ContextMenuStrip projectContextMenu;
-        private System.Windows.Forms.TreeView projectTree;
+        private MultiSelectTreeview.MultiSelectTreeview projectTree;
         private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ContextMenuStrip modeContextMenu;
@@ -529,5 +641,19 @@ namespace Ares.Editor
         private System.Windows.Forms.ToolStripMenuItem selectElementKeyMenuItem;
         private System.Windows.Forms.ToolStripMenuItem selectBGSoundsKeyMenuItem;
         private System.Windows.Forms.ToolStripButton setKeyButton;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
+        private System.Windows.Forms.SaveFileDialog exportDialog;
+        private System.Windows.Forms.OpenFileDialog importDialog;
+        private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+        private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem2;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+        private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem4;
+        private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem3;
     }
 }

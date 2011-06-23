@@ -136,8 +136,14 @@
   <data name="toolStripMenuItem1.Text" xml:space="preserve">
     <value>Add Mode ...</value>
   </data>
+  <data name="importToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>142, 22</value>
+  </data>
+  <data name="importToolStripMenuItem1.Text" xml:space="preserve">
+    <value>Import ...</value>
+  </data>
   <data name="projectContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>143, 48</value>
+    <value>143, 70</value>
   </data>
   <data name="&gt;&gt;projectContextMenu.Name" xml:space="preserve">
     <value>projectContextMenu</value>
@@ -163,7 +169,7 @@
     <value>projectTree</value>
   </data>
   <data name="&gt;&gt;projectTree.Type" xml:space="preserve">
-    <value>Ares.Editor.Controls.GUIExtensions.ImageTreeView, Ares.Editor.Controls, Version=0.3.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
+    <value>MultiSelectTreeview.MultiSelectTreeview, Ares.Editor.Controls, Version=0.3.2.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
   </data>
   <data name="&gt;&gt;projectTree.Parent" xml:space="preserve">
     <value>$this</value>
@@ -249,8 +255,23 @@
   <data name="addChoiceListToolStripMenuItem.Text" xml:space="preserve">
     <value>Add Random List ...</value>
   </data>
+  <data name="toolStripSeparator5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>219, 6</value>
+  </data>
+  <data name="importToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>222, 22</value>
+  </data>
+  <data name="importToolStripMenuItem.Text" xml:space="preserve">
+    <value>Import ...</value>
+  </data>
+  <data name="exportToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>222, 22</value>
+  </data>
+  <data name="exportToolStripMenuItem.Text" xml:space="preserve">
+    <value>Export ...</value>
+  </data>
   <data name="modeContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>223, 236</value>
+    <value>223, 308</value>
   </data>
   <data name="&gt;&gt;modeContextMenu.Name" xml:space="preserve">
     <value>modeContextMenu</value>
@@ -342,8 +363,23 @@
   <data name="addChoiceListToolStripMenuItem1.Text" xml:space="preserve">
     <value>Add Random List ...</value>
   </data>
+  <data name="toolStripSeparator6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>219, 6</value>
+  </data>
+  <data name="importToolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>222, 22</value>
+  </data>
+  <data name="importToolStripMenuItem2.Text" xml:space="preserve">
+    <value>Import ...</value>
+  </data>
+  <data name="exportToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>222, 22</value>
+  </data>
+  <data name="exportToolStripMenuItem1.Text" xml:space="preserve">
+    <value>Export ...</value>
+  </data>
   <data name="containerContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>223, 258</value>
+    <value>223, 308</value>
   </data>
   <data name="&gt;&gt;containerContextMenu.Name" xml:space="preserve">
     <value>containerContextMenu</value>
@@ -393,8 +429,17 @@
   <data name="deleteToolStripMenuItem2.Text" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="toolStripSeparator7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>155, 6</value>
+  </data>
+  <data name="exportToolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>158, 22</value>
+  </data>
+  <data name="exportToolStripMenuItem2.Text" xml:space="preserve">
+    <value>Export ...</value>
+  </data>
   <data name="elementContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>159, 114</value>
+    <value>159, 164</value>
   </data>
   <data name="&gt;&gt;elementContextMenu.Name" xml:space="preserve">
     <value>elementContextMenu</value>
@@ -444,8 +489,23 @@
   <data name="addSoundChoiceToolStripMenuItem.Text" xml:space="preserve">
     <value>Add Sound Choice</value>
   </data>
+  <data name="toolStripSeparator8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>170, 6</value>
+  </data>
+  <data name="importToolStripMenuItem4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>173, 22</value>
+  </data>
+  <data name="importToolStripMenuItem4.Text" xml:space="preserve">
+    <value>Import ...</value>
+  </data>
+  <data name="exportToolStripMenuItem3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>173, 22</value>
+  </data>
+  <data name="exportToolStripMenuItem3.Text" xml:space="preserve">
+    <value>Export ...</value>
+  </data>
   <data name="bgSoundsContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>174, 136</value>
+    <value>174, 164</value>
   </data>
   <data name="&gt;&gt;bgSoundsContextMenu.Name" xml:space="preserve">
     <value>bgSoundsContextMenu</value>
@@ -516,6 +576,18 @@
   <data name="&gt;&gt;toolStrip1.ZOrder" xml:space="preserve">
     <value>6</value>
   </data>
+  <metadata name="exportDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 56</value>
+  </metadata>
+  <data name="exportDialog.Filter" xml:space="preserve">
+    <value>Ares projects|*.ares|All files|*.*</value>
+  </data>
+  <metadata name="importDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>139, 56</value>
+  </metadata>
+  <data name="importDialog.Filter" xml:space="preserve">
+    <value>Ares projects|*.ares|All files|*.*</value>
+  </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -583,6 +655,12 @@
     <value>toolStripMenuItem1</value>
   </data>
   <data name="&gt;&gt;toolStripMenuItem1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;importToolStripMenuItem1.Name" xml:space="preserve">
+    <value>importToolStripMenuItem1</value>
+  </data>
+  <data name="&gt;&gt;importToolStripMenuItem1.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;renameToolStripMenuItem1.Name" xml:space="preserve">
@@ -655,6 +733,24 @@
     <value>addChoiceListToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;addChoiceListToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator5.Name" xml:space="preserve">
+    <value>toolStripSeparator5</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator5.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;importToolStripMenuItem.Name" xml:space="preserve">
+    <value>importToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;importToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;exportToolStripMenuItem.Name" xml:space="preserve">
+    <value>exportToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;exportToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;editToolStripMenuItem.Name" xml:space="preserve">
@@ -735,6 +831,24 @@
   <data name="&gt;&gt;addChoiceListToolStripMenuItem1.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;toolStripSeparator6.Name" xml:space="preserve">
+    <value>toolStripSeparator6</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator6.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;importToolStripMenuItem2.Name" xml:space="preserve">
+    <value>importToolStripMenuItem2</value>
+  </data>
+  <data name="&gt;&gt;importToolStripMenuItem2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;exportToolStripMenuItem1.Name" xml:space="preserve">
+    <value>exportToolStripMenuItem1</value>
+  </data>
+  <data name="&gt;&gt;exportToolStripMenuItem1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;editToolStripMenuItem1.Name" xml:space="preserve">
     <value>editToolStripMenuItem1</value>
   </data>
@@ -763,6 +877,18 @@
     <value>deleteToolStripMenuItem2</value>
   </data>
   <data name="&gt;&gt;deleteToolStripMenuItem2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator7.Name" xml:space="preserve">
+    <value>toolStripSeparator7</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator7.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;exportToolStripMenuItem2.Name" xml:space="preserve">
+    <value>exportToolStripMenuItem2</value>
+  </data>
+  <data name="&gt;&gt;exportToolStripMenuItem2.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;renameToolStripMenuItem4.Name" xml:space="preserve">
@@ -795,6 +921,24 @@
   <data name="&gt;&gt;addSoundChoiceToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;toolStripSeparator8.Name" xml:space="preserve">
+    <value>toolStripSeparator8</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator8.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;importToolStripMenuItem4.Name" xml:space="preserve">
+    <value>importToolStripMenuItem4</value>
+  </data>
+  <data name="&gt;&gt;importToolStripMenuItem4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;exportToolStripMenuItem3.Name" xml:space="preserve">
+    <value>exportToolStripMenuItem3</value>
+  </data>
+  <data name="&gt;&gt;exportToolStripMenuItem3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;playButton.Name" xml:space="preserve">
     <value>playButton</value>
   </data>
@@ -813,10 +957,22 @@
   <data name="&gt;&gt;setKeyButton.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;exportDialog.Name" xml:space="preserve">
+    <value>exportDialog</value>
+  </data>
+  <data name="&gt;&gt;exportDialog.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SaveFileDialog, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;importDialog.Name" xml:space="preserve">
+    <value>importDialog</value>
+  </data>
+  <data name="&gt;&gt;importDialog.Type" xml:space="preserve">
+    <value>System.Windows.Forms.OpenFileDialog, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>ProjectExplorer</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>WeifenLuo.WinFormsUI.Docking.DockContent, WeifenLuo.WinFormsUI.Docking, Version=2.3.2.18742, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
+    <value>Ares.Editor.ToolWindow, Ares.Editor, Version=0.3.2.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
   </data>
 </root>

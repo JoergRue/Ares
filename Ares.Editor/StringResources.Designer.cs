@@ -223,6 +223,15 @@ namespace Ares.Editor {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die No elements found in the file which could be imported here. ähnelt.
+        /// </summary>
+        internal static string NoImportableElements {
+            get {
+                return ResourceManager.GetString("NoImportableElements", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die &lt;No Key&gt; ähnelt.
         /// </summary>
         internal static string NoKey {

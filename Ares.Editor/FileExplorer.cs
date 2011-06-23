@@ -132,13 +132,11 @@ namespace Ares.Editor
 
         TreeNode m_Root;
 
-        TreeNode m_SelectedNode;
         Point m_DragPoint;
         bool m_InDrag;
 
         private void treeView1_MouseDown(object sender, MouseEventArgs e)
         {
-            m_SelectedNode = treeView1.GetNodeAt(e.X, e.Y);
             if (e.Button == System.Windows.Forms.MouseButtons.Left)
             {
                 m_DragPoint = new Point(e.X, e.Y);

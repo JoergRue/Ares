@@ -46,7 +46,7 @@ namespace Ares.Data
 
         // IElement
 
-        public int Id { get { return m_Id; } }
+        public int Id { get { return m_Id; } set { m_Id = Id; }  }
 
         public String Title 
         {

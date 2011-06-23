@@ -43,6 +43,7 @@ namespace Ares.Data
         public int Id
         {
             get { return m_Element.Id; }
+            set { m_Element.Id = value; }
         }
 
         public string Title
