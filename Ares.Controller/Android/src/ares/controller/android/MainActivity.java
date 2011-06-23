@@ -326,11 +326,16 @@ public class MainActivity extends ControllerActivity implements INetworkClient, 
     
     private void updateProjectTitle() {
 		TextView projectView = (TextView)this.findViewById(R.id.projectTextView);
-		String title = Control.getInstance().getConfiguration().getTitle();
-		if (Control.getInstance().isConnected() && !title.equals(PlayingState.getInstance().getPlayerProject())) {
-			title += getString(R.string.projectsDifferent);
+		if (Control.getInstance().getConfiguration() != null) {
+			String title = Control.getInstance().getConfiguration().getTitle();
+			if (Control.getInstance().isConnected() && !title.equals(PlayingState.getInstance().getPlayerProject())) {
+				title += getString(R.string.projectsDifferent);
+			}
+			projectView.setText(title);
 		}
-		projectView.setText(title);
+		else {
+			projectView.setText("");
+		}
     }
     
     public Dialog onCreateDialog(int id) {

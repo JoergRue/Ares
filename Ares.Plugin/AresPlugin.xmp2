@@ -13,44 +13,51 @@
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
               <Param1 />
               <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>..\bin\Release\Ares.Data.dll</LocalFileName>
+              <LocalFileName>..\bin\Release_MediaPortal\Ares.Data.dll</LocalFileName>
               <ZipFileName>Installer{CopyFile}\{7062dd25-918e-4ab6-8182-29b920f158eb}-Ares.Data.dll</ZipFileName>
               <DestinationFilename>%Base%\plugins\Windows\Ares.Data.dll</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
               <Param1 />
               <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>..\bin\Release\Ares.ModelInfo.dll</LocalFileName>
+              <LocalFileName>..\bin\Release_MediaPortal\Ares.ModelInfo.dll</LocalFileName>
               <ZipFileName>Installer{CopyFile}\{74c001ef-f6e0-43c1-bd75-294244d4f267}-Ares.ModelInfo.dll</ZipFileName>
               <DestinationFilename>%Base%\plugins\Windows\Ares.ModelInfo.dll</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
               <Param1 />
               <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>..\bin\Release\Ares.Players.dll</LocalFileName>
+              <LocalFileName>..\bin\Release_MediaPortal\Ares.Players.dll</LocalFileName>
               <ZipFileName>Installer{CopyFile}\{fd439b75-f3c6-4372-8110-49af04bb2056}-Ares.Players.dll</ZipFileName>
               <DestinationFilename>%Base%\plugins\Windows\Ares.Players.dll</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
               <Param1 />
               <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>..\bin\Release\Ares.Playing.dll</LocalFileName>
+              <LocalFileName>..\bin\Release_MediaPortal\Ares.Playing.dll</LocalFileName>
               <ZipFileName>Installer{CopyFile}\{b1eef208-a6cd-42b3-a340-3babbe1e146f}-Ares.Playing.dll</ZipFileName>
               <DestinationFilename>%Base%\plugins\Windows\Ares.Playing.dll</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
               <Param1 />
               <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>..\bin\Release\Ares.Plugin.dll</LocalFileName>
+              <LocalFileName>..\bin\Release_MediaPortal\Ares.Plugin.dll</LocalFileName>
               <ZipFileName>Installer{CopyFile}\{4030f46f-f48e-45bb-9e85-22c606ef4d39}-Ares.Plugin.dll</ZipFileName>
               <DestinationFilename>%Base%\plugins\Windows\Ares.Plugin.dll</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
               <Param1 />
               <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>..\bin\Release\Ares.Settings.dll</LocalFileName>
+              <LocalFileName>..\bin\Release_MediaPortal\Ares.Settings.dll</LocalFileName>
               <ZipFileName>Installer{CopyFile}\{93e419c1-e1cc-4363-bc5d-b3b42d320224}-Ares.Settings.dll</ZipFileName>
               <DestinationFilename>%Base%\plugins\Windows\Ares.Settings.dll</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
+              <Param1 />
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
+              <LocalFileName>..\bin\Release_MediaPortal\Ares.Ipc.dll</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{b0e8e0f0-2f4b-44a3-aaae-d4b653583b76}-Ares.Ipc.dll</ZipFileName>
+              <DestinationFilename>%Base%\plugins\Windows\Ares.Ipc.dll</DestinationFilename>
             </FileItem>
           </Items>
         </Files>
@@ -192,12 +199,12 @@ Click Next to continue or Cancel to exit Setup.</Value>
     <Name>Ares Plugin</Name>
     <Id>8e986ca3-5830-4429-9c8a-3e572b09060b</Id>
     <Author>Jörg Rüdenauer</Author>
-    <HomePage />
+    <HomePage>http://aresrpg.sourceforge.net/</HomePage>
     <ForumPage />
     <UpdateUrl />
     <Version>
       <Major>0</Major>
-      <Minor>1</Minor>
+      <Minor>4</Minor>
       <Build>0</Build>
       <Revision>0</Revision>
     </Version>
@@ -205,9 +212,9 @@ Click Next to continue or Cancel to exit Setup.</Value>
 
 Makes sense only in conjunction with the Ares Controller.</ExtensionDescription>
     <VersionDescription />
-    <DevelopmentStatus>Alpha</DevelopmentStatus>
+    <DevelopmentStatus>Beta</DevelopmentStatus>
     <OnlineLocation />
-    <ReleaseDate>2010-12-05T16:32:29.4020223+01:00</ReleaseDate>
+    <ReleaseDate>2011-06-23T16:32:29</ReleaseDate>
     <Tags />
     <Location>D:\Projekte\Ares\trunk\bin\Release\Ares.mpe1</Location>
     <Params>
@@ -247,44 +254,51 @@ Makes sense only in conjunction with the Ares Controller.</ExtensionDescription>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
         <Param1 />
         <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>..\bin\Release\Ares.Data.dll</LocalFileName>
+        <LocalFileName>..\bin\Release_MediaPortal\Ares.Data.dll</LocalFileName>
         <ZipFileName>Installer{CopyFile}\{7062dd25-918e-4ab6-8182-29b920f158eb}-Ares.Data.dll</ZipFileName>
         <DestinationFilename>%Base%\plugins\Windows\Ares.Data.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
         <Param1 />
         <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>..\bin\Release\Ares.ModelInfo.dll</LocalFileName>
+        <LocalFileName>..\bin\Release_MediaPortal\Ares.ModelInfo.dll</LocalFileName>
         <ZipFileName>Installer{CopyFile}\{74c001ef-f6e0-43c1-bd75-294244d4f267}-Ares.ModelInfo.dll</ZipFileName>
         <DestinationFilename>%Base%\plugins\Windows\Ares.ModelInfo.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
         <Param1 />
         <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>..\bin\Release\Ares.Players.dll</LocalFileName>
+        <LocalFileName>..\bin\Release_MediaPortal\Ares.Players.dll</LocalFileName>
         <ZipFileName>Installer{CopyFile}\{fd439b75-f3c6-4372-8110-49af04bb2056}-Ares.Players.dll</ZipFileName>
         <DestinationFilename>%Base%\plugins\Windows\Ares.Players.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
         <Param1 />
         <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>..\bin\Release\Ares.Playing.dll</LocalFileName>
+        <LocalFileName>..\bin\Release_MediaPortal\Ares.Playing.dll</LocalFileName>
         <ZipFileName>Installer{CopyFile}\{b1eef208-a6cd-42b3-a340-3babbe1e146f}-Ares.Playing.dll</ZipFileName>
         <DestinationFilename>%Base%\plugins\Windows\Ares.Playing.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
         <Param1 />
         <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>..\bin\Release\Ares.Plugin.dll</LocalFileName>
+        <LocalFileName>..\bin\Release_MediaPortal\Ares.Plugin.dll</LocalFileName>
         <ZipFileName>Installer{CopyFile}\{4030f46f-f48e-45bb-9e85-22c606ef4d39}-Ares.Plugin.dll</ZipFileName>
         <DestinationFilename>%Base%\plugins\Windows\Ares.Plugin.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
         <Param1 />
         <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>..\bin\Release\Ares.Settings.dll</LocalFileName>
+        <LocalFileName>..\bin\Release_MediaPortal\Ares.Settings.dll</LocalFileName>
         <ZipFileName>Installer{CopyFile}\{93e419c1-e1cc-4363-bc5d-b3b42d320224}-Ares.Settings.dll</ZipFileName>
         <DestinationFilename>%Base%\plugins\Windows\Ares.Settings.dll</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
+        <Param1 />
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
+        <LocalFileName>..\bin\Release_MediaPortal\Ares.Ipc.dll</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{b0e8e0f0-2f4b-44a3-aaae-d4b653583b76}-Ares.Ipc.dll</ZipFileName>
+        <DestinationFilename>%Base%\plugins\Windows\Ares.Ipc.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="true">
         <Param1 />

@@ -107,6 +107,16 @@ namespace Ares.Plugin
         public override void Process()
         {
             base.Process();
+            String projectTest = String.Empty;
+            lock (syncObject)
+            {
+                projectTest = controllerFileName;
+                controllerFileName = String.Empty;
+            }
+            if (!String.IsNullOrEmpty(projectTest))
+            {
+                OpenProjectFromController(projectTest);
+            }
             UpdateStatus();
             if (m_NeedsClientDataUpdate)
             {
@@ -211,7 +221,29 @@ namespace Ares.Plugin
         private Network m_Network;
         private PlayingControl m_PlayingControl;
 
-        private void OpenProject(String filePath)
+        private String controllerFileName = String.Empty;
+
+        private Object syncObject = new Object();
+
+        private void OpenProjectFromController(String fileName)
+        {
+            String path = fileName;
+            if (!System.IO.Path.IsPathRooted(path))
+            {
+                String oldPath = m_Project != null ? m_Project.FileName : System.Environment.CurrentDirectory;
+                if (m_Project != null)
+                {
+                    oldPath = System.IO.Directory.GetParent(oldPath).FullName;
+                }
+                path = oldPath + System.IO.Path.DirectorySeparatorChar + fileName;
+            }
+            if (System.IO.File.Exists(path))
+            {
+                OpenProject(path, true);
+            }
+        }
+
+        private void OpenProject(String filePath, bool fromController)
         {
             if (m_Project != null)
             {
@@ -224,11 +256,22 @@ namespace Ares.Plugin
             }
             catch (Exception e)
             {
-                ShowErrorDialog(String.Format(StringResources.LoadError, e.Message));
+                if (fromController)
+                {
+                    m_Network.ErrorOccurred(-1, String.Format(StringResources.LoadError, e.Message));
+                }
+                else
+                {
+                    ShowErrorDialog(String.Format(StringResources.LoadError, e.Message));
+                }
                 m_Project = null;
             }
             PlayingModule.ProjectPlayer.SetProject(m_Project);
             DoModelChecks();
+            if (m_Network != null)
+            {
+                m_Network.InformClientOfProject(m_Project != null ? m_Project.Title : String.Empty);
+            }
         }
 
         private void DoModelChecks()
@@ -275,11 +318,17 @@ namespace Ares.Plugin
                     soundElementsText.Append(", ");
                 soundElementsText.Append(Ares.Data.DataModule.ElementRepository.GetElement(element).Title);
             }
-            soundsLabel.Label = soundElementsText.ToString();
+            String sounds = soundElementsText.ToString();
+            if (sounds.Length == 0)
+                sounds = "  ";
+            soundsLabel.Label = sounds;
             int musicElementId = control.CurrentMusicElement;
             if (musicElementId != lastMusicElementId)
             {
-                musicLabel.Label = MusicInfo.GetInfo(musicElementId);
+                String test = MusicInfo.GetInfo(musicElementId);
+                if (test.Length == 0)
+                    test = "  ";
+                musicLabel.Label = test;
                 lastMusicElementId = musicElementId;
             }
             if (overallVolumeBar.IntValue != control.GlobalVolume)
@@ -304,9 +353,9 @@ namespace Ares.Plugin
             if (m_Network.ClientConnected)
             {
                 networkLabel.Label = StringResources.ConnectedWith + m_Network.ClientName;
-                m_Network.InformClientOfVolume(VolumeTarget.Both, m_PlayingControl.GlobalVolume);
-                m_Network.InformClientOfVolume(VolumeTarget.Music, m_PlayingControl.MusicVolume);
-                m_Network.InformClientOfVolume(VolumeTarget.Sounds, m_PlayingControl.SoundVolume);
+                m_Network.InformClientOfEverything(m_PlayingControl.GlobalVolume, m_PlayingControl.MusicVolume,
+                    m_PlayingControl.SoundVolume, m_PlayingControl.CurrentMode, MusicInfo.GetInfo(m_PlayingControl.CurrentMusicElement),
+                    m_PlayingControl.CurrentModeElements, m_Project != null ? m_Project.Title : String.Empty);
                 disconnectButton.IsEnabled = true;
             }
             else
@@ -378,7 +427,7 @@ namespace Ares.Plugin
             broadCastTimer.Enabled = true;
             if (Settings.Settings.Instance.RecentFiles.GetFiles().Count > 0)
             {
-                OpenProject(Settings.Settings.Instance.RecentFiles.GetFiles()[0].FilePath);
+                OpenProject(Settings.Settings.Instance.RecentFiles.GetFiles()[0].FilePath, false);
             }
             m_Network.ListenForClient();
         }
@@ -553,6 +602,14 @@ namespace Ares.Plugin
         public void ClientDataChanged()
         {
             m_NeedsClientDataUpdate = true;
+        }
+
+        public void ProjectShallChange(string newProjectFile)
+        {
+            lock (syncObject)
+            {
+                controllerFileName = newProjectFile;
+            }
         }
     }
 }
