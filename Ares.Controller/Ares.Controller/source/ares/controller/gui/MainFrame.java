@@ -124,15 +124,16 @@ public final class MainFrame extends FrameController implements IMessageListener
 	  URL myPath = MainFrame.class.getProtectionDomain().getCodeSource().getLocation();
 	  File file;
 	  try {
-		  file = new File(myPath.toURI()); // .../Ares/Controller/Ares.Controller.jar (or without jar!)
+		  file = new File(myPath.toURI());
 		  File myDir = file.isFile() ? file.getParentFile() : file; // ..../Ares/Controller
 		  if (myDir == null) {
 			  return null;
 		  }
-		  File baseDir = file.getParentFile(); // .../Ares/
+		  File baseDir = myDir.getParentFile(); // .../Ares
 		  if (baseDir == null)
 			  return null;
-		  File playerExe = new File(baseDir.toString(), "Player_Editor" + File.separator + "Ares.Player.exe"); //$NON-NLS-1$ //$NON-NLS-2$
+		  String playerFileName = baseDir.toString() + File.separator +  "Player_Editor" + File.separator + "Ares.Player.exe";
+		  File playerExe = new File(playerFileName); //$NON-NLS-1$ //$NON-NLS-2$
 		  return playerExe.exists() ? playerExe : null;
   	  } 
 	  catch (URISyntaxException e) {
