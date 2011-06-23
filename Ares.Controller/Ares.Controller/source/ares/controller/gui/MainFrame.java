@@ -125,14 +125,11 @@ public final class MainFrame extends FrameController implements IMessageListener
 	  File file;
 	  try {
 		  file = new File(myPath.toURI()); // .../Ares/Controller/Ares.Controller.jar (or without jar!)
-		  File myDir = file.isFile() ? file.getParentFile() : file;
+		  File myDir = file.isFile() ? file.getParentFile() : file; // ..../Ares/Controller
 		  if (myDir == null) {
 			  return null;
 		  }
-		  File baseDir = file.getParentFile(); // .../Ares/Controller/
-		  if (baseDir == null)
-			  return null;
-		  baseDir = file.getParentFile(); // .../Ares/
+		  File baseDir = file.getParentFile(); // .../Ares/
 		  if (baseDir == null)
 			  return null;
 		  File playerExe = new File(baseDir.toString(), "Player_Editor" + File.separator + "Ares.Player.exe"); //$NON-NLS-1$ //$NON-NLS-2$
