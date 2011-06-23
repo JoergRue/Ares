@@ -6,8 +6,10 @@ set zip="C:\Program Files (x86)\7-Zip\7z.exe"
 
 call %ant% -DProductVersion=%1
 
-cd Ares.Controller\Ares.Controller\ant
-call %ant% -DProductVersion=%1 clean prepareSetup
+cd Ares.Controller\Ares.Controllers\ant
+call %ant% -DProductVersion=%1 clean jar
+cd ..\..\Ares.Controller\ant
+call %ant% -DProductVersion=%1 prepareSetup
 cd ..\..\..
 
 %nant% clean prepareSetup

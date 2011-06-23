@@ -1,3 +1,14 @@
+Version 0.4.0
+----------------------------------------------------------------------------------
+- General: Controller for Android available
+- General: Controller can start a local Player in background
+- General: When a project is opened in the Controller, the connected Player tries
+  to open the same project
+- Editor: Import and export of elements is now possible
+- Editor: Times can be entered in seconds or minutes, too
+- Controller: Automatically connects with the first found Player
+- Controller: Communication with the Player improved
+
 Version 0.3.2
 ----------------------------------------------------------------------------------
 - General: Added fade-in and fade-out effects
@@ -6,7 +17,6 @@ Version 0.3.2
 - Editor: Effects can be set for all files in a list
 - Controller: Corrected menu insets for Walnut L&F
 - Player: Prevented multiple "project changed" dialogs
-
 
 Version 0.3.1
 ----------------------------------------------------------------------------------

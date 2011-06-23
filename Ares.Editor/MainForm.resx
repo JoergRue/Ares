@@ -353,7 +353,7 @@
     <value>Ctrl+Y</value>
   </data>
   <data name="undoToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Strg+Z</value>
+    <value>Ctrl+Z</value>
   </data>
   <data name="&gt;&gt;newButton.Name" xml:space="preserve">
     <value>newButton</value>
@@ -369,7 +369,7 @@
     <value>extrasToolStripMenuItem</value>
   </data>
   <data name="newToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Strg+N</value>
+    <value>Ctrl+N</value>
   </data>
   <data name="&gt;&gt;toolStrip1.Parent" xml:space="preserve">
     <value>$this</value>
@@ -654,7 +654,7 @@
     <value>23, 22</value>
   </data>
   <data name="openToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Strg+O</value>
+    <value>Ctrl+O</value>
   </data>
   <data name="toolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
     <value>155, 6</value>
@@ -732,7 +732,7 @@
     <value>Save As ...</value>
   </data>
   <data name="redoToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Strg+Y</value>
+    <value>Ctrl+Y</value>
   </data>
   <data name="&gt;&gt;dockPanel.ZOrder" xml:space="preserve">
     <value>2</value>
@@ -819,7 +819,7 @@
     <value>Extras</value>
   </data>
   <data name="saveToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Strg+S</value>
+    <value>Ctrl+S</value>
   </data>
   <data name="toolStripSeparator5.Size" type="System.Drawing.Size, System.Drawing">
     <value>155, 6</value>

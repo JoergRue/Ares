@@ -1,3 +1,14 @@
+Version 0.4.0
+----------------------------------------------------------------------------------
+- Allgemein: Controller für Android verfügbar
+- Allgemein: Controller kann einen lokalen Player im Hintergrund starten
+- Allgemein: Beim Laden eines Projektes im Controller wird versucht, es auch
+  im verbunden Player zu laden.
+- Editor: Import / Export von Elementen möglich
+- Editor: Zeiten können auch in Sekunden und Minuten angegeben werden
+- Controller: Verbindet sich automatisch mit dem ersten gefundenen Player
+- Controller: Verbesserung der Kommunikation mit dem Player
+
 Version 0.3.2
 ----------------------------------------------------------------------------------
 - Allgemein: Fade-in und Fade-out Effekte hinzugefügt
