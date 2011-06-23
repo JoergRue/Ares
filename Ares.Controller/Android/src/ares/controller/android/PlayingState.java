@@ -36,6 +36,8 @@ public class PlayingState implements INetworkClient {
 	private String musicPlayed = "";
 	
 	private ArrayList<String> modeElements = new ArrayList<String>();
+	
+	private String playerProject = "";
 
 	public int getOverallVolume() {
 		return overallVolume;
@@ -55,6 +57,10 @@ public class PlayingState implements INetworkClient {
 
 	public String getMusicPlayed() {
 		return musicPlayed;
+	}
+	
+	public String getPlayerProject() {
+		return playerProject;
 	}
 	
 	private static PlayingState sInstance = null;
@@ -149,6 +155,22 @@ public class PlayingState implements INetworkClient {
 	}
 
 	@Override
+	public void allModeElementsStopped() {
+		handler.post(new Runnable() {
+			public void run() {
+				Configuration config = Control.getInstance().getConfiguration();
+				if (config != null) {
+					CommandButtonMapping.getInstance().allCommandsInactive();
+				}				
+				modeElements.clear();
+				if (getClient() != null) {
+					getClient().allModeElementsStopped();
+				}
+			}
+		});
+	}
+
+	@Override
 	public void volumeChanged(int index, int value) {
 		final int i = index;
 		final int v = value;
@@ -207,6 +229,19 @@ public class PlayingState implements INetworkClient {
 				Control.getInstance().disconnect(false);
 				if (getClient() != null) 
 					getClient().connectionFailed();
+			}
+		});
+	}
+
+	@Override
+	public void projectChanged(String newTitle) {
+		final String t = newTitle; 
+		handler.post(new Runnable() {
+			public void run() {
+				playerProject = t;
+				if (getClient() != null) {
+					getClient().projectChanged(t);
+				}
 			}
 		});
 	}

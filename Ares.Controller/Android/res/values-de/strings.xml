@@ -60,4 +60,5 @@
     <string name="modes">Modi</string>
     <string name="player_connection">Verbindung zum Player</string>
     <string name="invalid_player_connection_format">Ungültiges Format für Player-Verbindung!\nMuss Name,Port,IP-Adresse sein (oder auto).</string>
+    <string name="projectsDifferent"> (anders im Player!)</string>
 </resources>

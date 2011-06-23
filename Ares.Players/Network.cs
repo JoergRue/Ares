@@ -29,6 +29,7 @@ namespace Ares.Players
         void KeyReceived(System.Windows.Forms.Keys key);
         void VolumeReceived(Ares.Playing.VolumeTarget target, int value);
         void ClientDataChanged();
+        void ProjectShallChange(String newProjectFile);
     }
 
     public class Network : Ares.Playing.IProjectPlayingCallbacks
@@ -117,6 +118,26 @@ namespace Ares.Players
         public void InformClientOfVolume(Ares.Playing.VolumeTarget target, int value)
         {
             InformVolume(target, value);
+        }
+
+        public void InformClientOfProject(String newProject)
+        {
+            InformProjectChange(newProject);
+        }
+
+        public void InformClientOfEverything(int overallVolume, int musicVolume, int soundVolume, Ares.Data.IMode mode, String music,
+            System.Collections.Generic.IList<Ares.Data.IModeElement> elements, String projectName)
+        {
+            InformProjectChange(projectName);
+            InformVolume(Playing.VolumeTarget.Both, overallVolume);
+            InformVolume(Playing.VolumeTarget.Music, musicVolume);
+            InformVolume(Playing.VolumeTarget.Sounds, soundVolume);
+            InformMusicChange(music);
+            InformModeChange(mode);
+            InformAllElementsStopped();
+            foreach (Ares.Data.IModeElement element in elements) {
+                InformModeElementChange(element, true);
+            }
         }
 
         public void ListenInThread()
@@ -417,6 +438,31 @@ namespace Ares.Players
                         // this is ping
                         Messages.AddMessage(MessageType.Debug, StringResources.PingReceived);
                     }
+                    else if (command == 6)
+                    {
+                        Byte[] data = new Byte[2];
+                        String projectName = String.Empty;
+                        bool success = false;
+                        lock (syncObject)
+                        {
+                            success = client != null && ReadFromStream(client.GetStream(), data, 2, 500);
+                            if (success)
+                            {
+                                int length = data[0] * (1 << 8);
+                                length += data[1];
+                                Byte[] bytes = new Byte[length];
+                                success = client != null && ReadFromStream(client.GetStream(), bytes, length, 500);
+                                if (success)
+                                {
+                                    projectName = System.Text.Encoding.UTF8.GetString(bytes);
+                                }
+                            }
+                        }
+                        if (success && !String.IsNullOrEmpty(projectName) && networkClient != null)
+                        {
+                            networkClient.ProjectShallChange(projectName);
+                        }
+                    }
                     lock (syncObject)
                     {
                         goOn = continueListenForKeys;
@@ -551,6 +597,38 @@ namespace Ares.Players
                 {
                     client.GetStream().Write(bytes, 0, bytes.Length);
                 }                
+            }
+        }
+
+        private void InformProjectChange(String newProject)
+        {
+            if (ClientConnected)
+            {
+                byte[] bytes = System.Text.Encoding.UTF8.GetBytes(newProject);
+                byte[] package = new byte[3 + bytes.Length];
+                package[0] = 6;
+                package[1] = (byte)(bytes.Length / (1 << 8));
+                package[2] = (byte)(bytes.Length % (1 << 8));
+                Array.Copy(bytes, 0, package, 3, bytes.Length);
+                lock (syncObject)
+                {
+                    client.GetStream().Write(package, 0, package.Length);
+                }
+            }
+        }
+
+        private void InformAllElementsStopped()
+        {
+            if (ClientConnected)
+            {
+                byte[] package = new byte[3];
+                package[0] = 7;
+                package[1] = 0;
+                package[2] = 0;
+                lock (syncObject)
+                {
+                    client.GetStream().Write(package, 0, package.Length);
+                }
             }
         }
 

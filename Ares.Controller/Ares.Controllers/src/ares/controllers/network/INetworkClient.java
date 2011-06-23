@@ -24,8 +24,10 @@ public interface INetworkClient {
 	void modeChanged(String newMode);
 	void modeElementStarted(int element);
 	void modeElementStopped(int element);
+	void allModeElementsStopped();
 	void volumeChanged(int index, int value);
 	void musicChanged(String newMusic);
+	void projectChanged(String newTitle);
 
 	void disconnect();
 	void connectionFailed();

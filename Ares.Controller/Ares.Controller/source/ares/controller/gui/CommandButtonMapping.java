@@ -71,6 +71,17 @@ class CommandButtonMapping {
 			ModeCommandAction.setCommandsActive(true);
 		}
 	}
+	
+	public void allCommandsInactive() {
+		ModeCommandAction.setCommandsActive(false);
+		for (int id : mActiveCommands) {
+			if (mButtons.containsKey(id)) {
+				mButtons.get(id).setSelected(false);
+			}
+		}
+		ModeCommandAction.setCommandsActive(true);
+		mActiveCommands.clear();
+	}
 
 	private Map<Integer, AbstractButton> mButtons = new HashMap<Integer, AbstractButton>();
 	private Set<Integer> mActiveCommands = new HashSet<Integer>();

@@ -45,7 +45,10 @@ class CommandButtonMapping {
 	public void registerButton(int id, ToggleButton button) {
 		mButtons.put(id, button);
 		if (mActiveCommands.contains(id)) {
+			ModeActivity.setCommandsActive(false);
+			button.setChecked(true);
 			button.setSelected(true);
+			ModeActivity.setCommandsActive(true);
 		}
 	}
 	
@@ -65,8 +68,26 @@ class CommandButtonMapping {
 			mActiveCommands.add(id);
 		}
 		if (mButtons.containsKey(id)) {
-			mButtons.get(id).setChecked(active);
+			ModeActivity.setCommandsActive(false);
+			ToggleButton button = mButtons.get(id);
+			if (button.isChecked() != active) {
+				button.setChecked(active);
+				button.setSelected(active);
+				button.invalidate();
+			}
+			ModeActivity.setCommandsActive(true);
 		}
+	}
+	
+	public void allCommandsInactive() {
+		ModeActivity.setCommandsActive(false);
+		for (int id : mActiveCommands) {
+			if (mButtons.containsKey(id)) {
+				mButtons.get(id).setChecked(false);
+			}
+		}
+		ModeActivity.setCommandsActive(true);
+		mActiveCommands.clear();
 	}
 
 	private Map<Integer, ToggleButton> mButtons = new HashMap<Integer, ToggleButton>();

@@ -20,6 +20,7 @@
 package ares.controllers.network;
 
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -84,7 +85,7 @@ public final class ControlConnection {
       });
       continueListen = true;
       listenThread.start();
-      timer = new Timer("PingTimer");
+      timer = new Timer("PingTimer"); //$NON-NLS-1$
       timer.scheduleAtFixedRate(new TimerTask() {
 		public void run() {
 			UIThreadDispatcher.dispatchToUIThread(new Runnable() {
@@ -206,6 +207,17 @@ public final class ControlConnection {
 						  continueListen = false;
 					  }
 					  break;
+				  case 6:
+				  {
+					  networkClient.projectChanged(readString(stream));
+					  break;
+				  }
+				  case 7:
+				  {
+					  stream.read();
+					  stream.read();
+					  networkClient.allModeElementsStopped();
+				  }
 				  default:
 					  break;
 				  }
@@ -282,6 +294,31 @@ public final class ControlConnection {
       Messages.addMessage(MessageType.Error, e.getLocalizedMessage());
       networkClient.connectionFailed();
     }
+  }
+  
+  public void sendProjectOpenRequest(String projectName, boolean stripPath) {
+	  if (socket == null) {
+		  return;
+	  }
+	  if (stripPath) {
+		  File file = new File(projectName);
+		  projectName = file.getName();
+	  }
+	  try {
+		  byte[] utf8Name = projectName.getBytes("UTF8"); //$NON-NLS-1$
+		  byte[] bytes = new byte[3 + utf8Name.length];
+		  bytes[0] = 6;
+		  bytes[1] = (byte)(utf8Name.length / (1 << 8));
+		  bytes[2] = (byte)(utf8Name.length % (1 << 8));
+		  for (int i = 0; i < utf8Name.length; ++i) {
+			  bytes[3 + i] = utf8Name[i];
+		  }
+		  socket.getOutputStream().write(bytes);
+	  }
+      catch (IOException e) {
+          Messages.addMessage(MessageType.Error, e.getLocalizedMessage());
+          networkClient.connectionFailed();
+      }	  	  
   }
   
   private HashMap<KeyStroke, byte[]> commandMap = null;

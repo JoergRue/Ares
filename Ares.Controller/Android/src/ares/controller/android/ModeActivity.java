@@ -20,6 +20,7 @@
 package ares.controller.android;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import android.content.Context;
 import android.content.Intent;
@@ -34,8 +35,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -168,19 +170,34 @@ public class ModeActivity extends ControllerActivity {
     private int mMode;
     private ButtonAdapter mAdapter;
     
-    private class CommandSender implements OnClickListener {
-		public void onClick(View v) {
+    private static boolean sCommandsActive = true;
+    
+    public static void setCommandsActive(boolean active) {
+    	sCommandsActive = active;
+    }
+    
+    private class CommandSender implements OnCheckedChangeListener {
+		public void onCheckedChanged(CompoundButton button, boolean checked) {
+			boolean active = CommandButtonMapping.getInstance().isCommandActive(mId);
+			if (button.isChecked() != active) {
+				button.setChecked(active);
+				button.setSelected(active);
+			}
+			if (!sCommandsActive)
+				return;
 			Control.getInstance().sendKey(mModeKey);
 			Control.getInstance().sendKey(mCommandKey);
 		}
 		
-		public CommandSender(Mode mode, int index) {
+		public CommandSender(Mode mode, int index, int id) {
 			mModeKey = mode.getKeyStroke();
 			mCommandKey = mode.getCommands().get(index).getKeyStroke();
+			mId = id;
 		}
 
 		private KeyStroke mModeKey;
 		private KeyStroke mCommandKey;
+		private int mId;
     }
     
     private class ButtonAdapter extends BaseAdapter {
@@ -204,25 +221,32 @@ public class ModeActivity extends ControllerActivity {
 		public long getItemId(int position) {
 			return 0;
 		}
+		
+		private HashMap<Integer, ToggleButton> mButtons = new HashMap<Integer, ToggleButton>(); 
 
 		public View getView(int position, View convertView, ViewGroup parent) {
 			ToggleButton button;
 			if (convertView == null) {
-				button = new ToggleButton(mContext);
-				Command command = mMode.getCommands().get(position);
-				//button.setLayoutParams(new GridView.LayoutParams(80, 20));
-				button.setPadding(5, 5, 5, 5);
-				button.setText(command.getTitle());
-				button.setTextOn(command.getTitle());
-				button.setTextOff(command.getTitle());
-				button.setChecked(CommandButtonMapping.getInstance().isCommandActive(command.getId()));
-				CommandButtonMapping.getInstance().registerButton(command.getId(), button);
-				button.setOnClickListener(new CommandSender(mMode, position));
+				if (mButtons.containsKey(position)) {
+					return mButtons.get(position);
+				}
+				else {
+					button = new ToggleButton(mContext);
+					Command command = mMode.getCommands().get(position);
+					//button.setLayoutParams(new GridView.LayoutParams(80, 20));
+					button.setPadding(5, 5, 5, 5);
+					button.setText(command.getTitle());
+					button.setTextOn(command.getTitle());
+					button.setTextOff(command.getTitle());
+					CommandButtonMapping.getInstance().registerButton(command.getId(), button);
+					button.setOnCheckedChangeListener(new CommandSender(mMode, position, command.getId()));
+					mButtons.put(position, button);
+					return button;
+				}
 			}
 			else {
-				button = (ToggleButton)convertView;
+				return (ToggleButton)convertView;
 			}
-			return button;
 		}
     	
     }

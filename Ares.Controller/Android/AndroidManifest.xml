@@ -13,7 +13,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="FileDialog" android:theme="@style/walnut"></activity>
+        <activity android:name="FileDialog"></activity>
         <activity android:name="ModesActivity" android:theme="@style/walnut"></activity>
         <activity android:name="ModeActivity" android:theme="@style/walnut"></activity>
         <activity android:name="PrefsActivity"></activity>

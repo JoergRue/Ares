@@ -70,18 +70,26 @@ public final class Control {
       else {
         fileName = filePath.substring(pos + 1);
       }
+      if (isConnected()) {
+    	  connection.sendProjectOpenRequest(filePath, !isLocalPlayer);
+      }
     }
   }
   
-  private String serverName = "";
+  private String serverName = ""; //$NON-NLS-1$
+  private boolean isLocalPlayer = false;
   
-  public void connect(ServerInfo server, INetworkClient client) {
+  public void connect(ServerInfo server, INetworkClient client, boolean isLocalPlayer) {
     if (connection != null) {
       disconnect(true);
     }
     connection = new ControlConnection(server, client);
     connection.connect();
     serverName = server.getName();
+    this.isLocalPlayer = isLocalPlayer;
+    if (getConfiguration() != null) {
+    	connection.sendProjectOpenRequest(getFilePath(), !isLocalPlayer);
+    }
   }
   
   public void disconnect(boolean informServer) {
@@ -91,7 +99,8 @@ public final class Control {
       }
       connection.dispose();
       connection = null;
-      serverName = "";
+      serverName = ""; //$NON-NLS-1$
+      isLocalPlayer = false;
     }
   }
   

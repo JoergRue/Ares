@@ -134,7 +134,7 @@ namespace Ares.Player
                 if (MessageBox.Show(this, StringResources.ReloadProject, StringResources.Ares, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
                 {
                     PlayingModule.ProjectPlayer.StopAll();
-                    OpenProject(path);
+                    OpenProject(path, false);
                 }
             }
             m_InFileSystemWatcherHandler = false;
@@ -172,7 +172,7 @@ namespace Ares.Player
             DialogResult result = openFileDialog1.ShowDialog(this);
             if (result != System.Windows.Forms.DialogResult.OK)
                 return;
-            OpenProject(openFileDialog1.FileName);
+            OpenProject(openFileDialog1.FileName, false);
         }
 
         private void OpenProjectFromRequest(String projectName, String projectPath)
@@ -185,12 +185,35 @@ namespace Ares.Player
             {
                 if (MessageBox.Show(this, String.Format(StringResources.OpenProjectQuestion, projectName), StringResources.Ares, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
                 {
-                    OpenProject(projectPath);
+                    OpenProject(projectPath, false);
                 }
             }
         }
 
-        private void OpenProject(String filePath)
+        private void OpenProjectFromController(String fileName)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new MethodInvoker(() => OpenProjectFromController(fileName)));
+                return;
+            }
+            String path = fileName;
+            if (!System.IO.Path.IsPathRooted(path))
+            {
+                String oldPath = m_Project != null ? m_Project.FileName : System.Environment.CurrentDirectory;
+                if (m_Project != null)
+                {
+                    oldPath = System.IO.Directory.GetParent(oldPath).FullName;
+                }
+                path = oldPath + System.IO.Path.DirectorySeparatorChar + fileName;
+            }
+            if (System.IO.File.Exists(path))
+            {
+                OpenProject(path, true);
+            }
+        }
+
+        private void OpenProject(String filePath, bool onControllerRequest)
         {
             if (m_Project != null)
             {
@@ -205,7 +228,14 @@ namespace Ares.Player
             }
             catch (Exception e)
             {
-                MessageBox.Show(this, String.Format(StringResources.LoadError, e.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (!onControllerRequest)
+                {
+                    MessageBox.Show(this, String.Format(StringResources.LoadError, e.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    m_Network.ErrorOccurred(-1, String.Format(StringResources.LoadError, e.Message));
+                }
                 m_Project = null;
             }
             projectNameLabel.Text = m_Project != null ? m_Project.Title : StringResources.NoOpenedProject;
@@ -214,6 +244,10 @@ namespace Ares.Player
             DoModelChecks();
             fileSystemWatcher1.Path = m_Project != null ? System.IO.Path.GetDirectoryName(m_Project.FileName) : String.Empty;
             m_Instance.SetLoadedProject(filePath);
+            if (m_Network != null)
+            {
+                m_Network.InformClientOfProject(m_Project != null ? m_Project.Title : String.Empty);
+            }
         }
 
         private void DoModelChecks()
@@ -528,6 +562,11 @@ namespace Ares.Player
             this.Invoke(new MethodInvoker(UpdateClientData));
         }
 
+        public void ProjectShallChange(String newProjectPath)
+        {
+            OpenProjectFromController(newProjectPath);
+        }
+
         private bool m_WasConnected = false;
 
         private void UpdateClientData()
@@ -536,9 +575,9 @@ namespace Ares.Player
             {
                 clientStateLabel.Text = StringResources.ConnectedWith + m_Network.ClientName;
                 clientStateLabel.ForeColor = System.Drawing.Color.DarkGreen;
-                m_Network.InformClientOfVolume(VolumeTarget.Both, m_PlayingControl.GlobalVolume);
-                m_Network.InformClientOfVolume(VolumeTarget.Music, m_PlayingControl.MusicVolume);
-                m_Network.InformClientOfVolume(VolumeTarget.Sounds, m_PlayingControl.SoundVolume);
+                m_Network.InformClientOfEverything(m_PlayingControl.GlobalVolume, m_PlayingControl.MusicVolume,
+                    m_PlayingControl.SoundVolume, m_PlayingControl.CurrentMode, MusicInfo.GetInfo(m_PlayingControl.CurrentMusicElement),
+                    m_PlayingControl.CurrentModeElements, m_Project != null ? m_Project.Title : String.Empty);
                 disconnectButton.Enabled = true;
                 m_WasConnected = true;
             }
@@ -614,7 +653,7 @@ namespace Ares.Player
 
         void recentItem_Click(object sender, EventArgs e)
         {
-            OpenProject(((sender as ToolStripMenuItem).Tag as RecentFiles.ProjectEntry).FilePath);
+            OpenProject(((sender as ToolStripMenuItem).Tag as RecentFiles.ProjectEntry).FilePath, false);
         }
 
         private void Player_Load(object sender, EventArgs e)
@@ -634,11 +673,11 @@ namespace Ares.Player
             }
             if (!String.IsNullOrEmpty(projectName))
             {
-                OpenProject(projectName);
+                OpenProject(projectName, false);
             }
             else if (Ares.Settings.Settings.Instance.RecentFiles.GetFiles().Count > 0)
             {
-                OpenProject(Ares.Settings.Settings.Instance.RecentFiles.GetFiles()[0].FilePath);
+                OpenProject(Ares.Settings.Settings.Instance.RecentFiles.GetFiles()[0].FilePath, false);
             }
             else
             {

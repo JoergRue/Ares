@@ -320,9 +320,17 @@ public class MainActivity extends ControllerActivity implements INetworkClient, 
     
     private void openProject(String path) {
 		Control.getInstance().openFile(new java.io.File(path));
-		TextView projectView = (TextView)this.findViewById(R.id.projectTextView);
-		projectView.setText(Control.getInstance().getConfiguration().getTitle());
 		getPreferences(MODE_PRIVATE).edit().putString(LAST_PROJECT, path).commit();
+		updateProjectTitle();
+    }
+    
+    private void updateProjectTitle() {
+		TextView projectView = (TextView)this.findViewById(R.id.projectTextView);
+		String title = Control.getInstance().getConfiguration().getTitle();
+		if (Control.getInstance().isConnected() && !title.equals(PlayingState.getInstance().getPlayerProject())) {
+			title += getString(R.string.projectsDifferent);
+		}
+		projectView.setText(title);
     }
     
     public Dialog onCreateDialog(int id) {
@@ -465,12 +473,13 @@ public class MainActivity extends ControllerActivity implements INetworkClient, 
 		if (Control.getInstance().getConfiguration() != null) {
 			setText(R.id.projectTextView, Control.getInstance().getConfiguration().getTitle());
 		}
+		updateProjectTitle();
 	}
 
 	
 	private void doConnect(ServerInfo info) {
 		serverSearch.stopSearch();
-		Control.getInstance().connect(info, PlayingState.getInstance());
+		Control.getInstance().connect(info, PlayingState.getInstance(), false);
 		setText(R.id.networkTextView, String.format(getString(R.string.connected_with), info.getName()));
 		stopButton.setEnabled(true);
 		backButton.setEnabled(true);
@@ -554,5 +563,15 @@ public class MainActivity extends ControllerActivity implements INetworkClient, 
 	@Override
 	public void musicChanged(String newMusic) {
 		setText(R.id.musicTextView, newMusic);		
+	}
+
+	@Override
+	public void allModeElementsStopped() {
+		setText(R.id.elementsTextView, PlayingState.getInstance().getElements());
+	}
+
+	@Override
+	public void projectChanged(String newTitle) {
+		updateProjectTitle();
 	}
 }

@@ -20,6 +20,7 @@
 package ares.controller.android;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import android.content.Context;
 import android.content.Intent;
@@ -165,20 +166,28 @@ public class ModesActivity extends ControllerActivity {
 		public long getItemId(int position) {
 			return 0;
 		}
+		
+		private HashMap<Integer, Button> mButtons = new HashMap<Integer, Button>();
 
 		public View getView(int position, View convertView, ViewGroup parent) {
 			Button button;
 			if (convertView == null) {
-				button = new Button(mContext);
-				//button.setLayoutParams(new GridView.LayoutParams(80, 20));
-				button.setPadding(5, 5, 5, 5);
-				button.setText(Control.getInstance().getConfiguration().getModes().get(position).getTitle());
-				button.setOnClickListener(new ModeSwitcher(position));
+				if (mButtons.containsKey(position)) {
+					return mButtons.get(position);
+				}
+				else {
+					button = new Button(mContext);
+					//button.setLayoutParams(new GridView.LayoutParams(80, 20));
+					button.setPadding(5, 5, 5, 5);
+					button.setText(Control.getInstance().getConfiguration().getModes().get(position).getTitle());
+					button.setOnClickListener(new ModeSwitcher(position));
+					mButtons.put(position, button);
+					return button;
+				}
 			}
 			else {
-				button = (Button)convertView;
+				return (Button)convertView;
 			}
-			return button;
 		}    	
     }
 }

@@ -405,7 +405,6 @@ public final class MainFrame extends FrameController implements IMessageListener
     Control.getInstance().openFile(file);
     if (Control.getInstance().getConfiguration() != null) {
       enableProjectSpecificControls(true);
-      projectLabel.setText(Control.getInstance().getConfiguration().getTitle());
       
       File layoutsFile = new File(Directories.getUserDataPath() + file.getName() + ".layout"); //$NON-NLS-1$
       if (layoutsFile.exists()) try {
@@ -422,8 +421,21 @@ public final class MainFrame extends FrameController implements IMessageListener
     }
     else {
       enableProjectSpecificControls(false);
-      projectLabel.setText("-"); //$NON-NLS-1$
     }
+    updateProjectTitle();
+  }
+  
+  private void updateProjectTitle() {
+	    if (Control.getInstance().getConfiguration() != null) {
+	    	String text = Control.getInstance().getConfiguration().getTitle();
+	    	if (!text.equals(playerProject) && Control.getInstance().isConnected()) {
+	    		text += Localization.getString("MainFrame.projectsDifferent"); //$NON-NLS-1$
+	    	}
+	        projectLabel.setText(text);
+	    }
+	    else {
+	        projectLabel.setText("-"); //$NON-NLS-1$	    	
+	    }
   }
 
   /**
@@ -672,14 +684,14 @@ public final class MainFrame extends FrameController implements IMessageListener
     return connectButton;
   }
   
+  boolean isLocalPlayer = false;
+  
   private void startLocalPlayer() {
 		String commandLine = findLocalPlayer().getAbsolutePath();
 		commandLine += " --minimized"; //$NON-NLS-1$
-		if (Control.getInstance().getConfiguration() != null) {
-			commandLine += " " + Control.getInstance().getFilePath(); //$NON-NLS-1$
-		}
 		try {
     		connectWithFirstServer = true;
+    		isLocalPlayer = true;
 			Runtime.getRuntime().exec(commandLine);
 		} 
 		catch (IOException e) {
@@ -721,7 +733,7 @@ public final class MainFrame extends FrameController implements IMessageListener
       String server = getServerBox().getSelectedItem().toString();
       ServerInfo serverInfo = servers.get(server);
       if (serverInfo != null) {
-        Control.getInstance().connect(serverInfo, this);
+        Control.getInstance().connect(serverInfo, this, isLocalPlayer);
       }
     }
     updateNetworkState();
@@ -956,6 +968,26 @@ public final class MainFrame extends FrameController implements IMessageListener
 		});
 	}
 	
+	@Override
+	public void allModeElementsStopped() {
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				CommandButtonMapping.getInstance().allCommandsInactive();
+				modeElements.clear();
+				updateModeElements();
+			}
+		});
+	}
+	
+	String playerProject = ""; //$NON-NLS-1$
+
+	@Override
+	public void projectChanged(String newTitle) {
+		playerProject = newTitle;
+		updateProjectTitle();
+	}
+
+
 	@Override
 	public void volumeChanged(final int index, final int value) {
 		SwingUtilities.invokeLater(new Runnable() {
