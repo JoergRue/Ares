@@ -39,12 +39,16 @@ namespace Ares.Editor.Controls
                 Actions.ElementChanges.Instance.AddListener(m_Element.Id, Update);
                 pitchButton.Enabled = true;
                 allPitchButton.Enabled = true;
+                balanceButton.Enabled = true;
+                allBalanceButton.Enabled = true;
             }
             else
             {
                 pitchBox.Checked = false;
                 pitchButton.Enabled = false;
                 allPitchButton.Enabled = false;
+                balanceButton.Enabled = false;
+                allBalanceButton.Enabled = false;
             }
         }
 
@@ -54,6 +58,7 @@ namespace Ares.Editor.Controls
             {
                 listen = false;
                 pitchBox.Checked = m_Element.Effects.Pitch.Active;
+                balanceBox.Checked = m_Element.Effects.Balance.Active;
                 listen = true;
             }
         }
@@ -82,6 +87,32 @@ namespace Ares.Editor.Controls
             IIntEffect effect = m_Element.Effects.Pitch;
             Actions.Actions.Instance.AddNew(new Actions.AllFileElementsPitchChangeAction(m_Container,
                 pitchBox.Checked, effect.Random, effect.FixValue, effect.MinRandomValue, effect.MaxRandomValue));
+        }
+
+        private void balanceBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!listen)
+                return;
+            IIntEffect effect = m_Element.Effects.Balance;
+            Actions.Actions.Instance.AddNew(new Actions.IntEffectChangeAction(m_Element, effect,
+                balanceBox.Checked, effect.Random, effect.FixValue, effect.MinRandomValue, effect.MaxRandomValue));
+        }
+
+        private void balanceButton_Click(object sender, EventArgs e)
+        {
+            BalanceDialog dialog = new BalanceDialog(m_Element);
+            if (dialog.ShowDialog(Parent) == DialogResult.OK)
+            {
+                dialog.UpdateAction();
+                Actions.Actions.Instance.AddNew(dialog.Action);
+            }
+        }
+
+        private void allBalanceButton_Click(object sender, EventArgs e)
+        {
+            IIntEffect effect = m_Element.Effects.Balance;
+            Actions.Actions.Instance.AddNew(new Actions.AllFileElementsBalanceChangeAction(m_Container,
+                balanceBox.Checked, effect.Random, effect.FixValue, effect.MinRandomValue, effect.MaxRandomValue));
         }
 
 

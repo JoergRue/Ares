@@ -40,15 +40,21 @@
             this.allPitchButton = new System.Windows.Forms.Button();
             this.pitchButton = new System.Windows.Forms.Button();
             this.pitchBox = new System.Windows.Forms.CheckBox();
+            this.allBalanceButton = new System.Windows.Forms.Button();
+            this.balanceButton = new System.Windows.Forms.Button();
+            this.balanceBox = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
-            resources.ApplyResources(this.groupBox1, "groupBox1");
+            this.groupBox1.Controls.Add(this.allBalanceButton);
+            this.groupBox1.Controls.Add(this.balanceButton);
+            this.groupBox1.Controls.Add(this.balanceBox);
             this.groupBox1.Controls.Add(this.allPitchButton);
             this.groupBox1.Controls.Add(this.pitchButton);
             this.groupBox1.Controls.Add(this.pitchBox);
+            resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
             this.groupBox1.UseCompatibleTextRendering = true;
@@ -78,6 +84,31 @@
             this.pitchBox.UseVisualStyleBackColor = true;
             this.pitchBox.CheckedChanged += new System.EventHandler(this.pitchBox_CheckedChanged);
             // 
+            // allBalanceButton
+            // 
+            resources.ApplyResources(this.allBalanceButton, "allBalanceButton");
+            this.allBalanceButton.Image = global::Ares.Editor.Controls.Properties.Resources.Multiple_Selection;
+            this.allBalanceButton.Name = "allBalanceButton";
+            this.allBalanceButton.UseCompatibleTextRendering = true;
+            this.allBalanceButton.UseVisualStyleBackColor = true;
+            this.allBalanceButton.Click += new System.EventHandler(this.allBalanceButton_Click);
+            // 
+            // balanceButton
+            // 
+            resources.ApplyResources(this.balanceButton, "balanceButton");
+            this.balanceButton.Name = "balanceButton";
+            this.balanceButton.UseCompatibleTextRendering = true;
+            this.balanceButton.UseVisualStyleBackColor = true;
+            this.balanceButton.Click += new System.EventHandler(this.balanceButton_Click);
+            // 
+            // balanceBox
+            // 
+            resources.ApplyResources(this.balanceBox, "balanceBox");
+            this.balanceBox.Name = "balanceBox";
+            this.balanceBox.UseCompatibleTextRendering = true;
+            this.balanceBox.UseVisualStyleBackColor = true;
+            this.balanceBox.CheckedChanged += new System.EventHandler(this.balanceBox_CheckedChanged);
+            // 
             // FileEffectsControl
             // 
             resources.ApplyResources(this, "$this");
@@ -96,5 +127,8 @@
         private System.Windows.Forms.CheckBox pitchBox;
         private System.Windows.Forms.Button pitchButton;
         private System.Windows.Forms.Button allPitchButton;
+        private System.Windows.Forms.Button allBalanceButton;
+        private System.Windows.Forms.Button balanceButton;
+        private System.Windows.Forms.CheckBox balanceBox;
     }
 }

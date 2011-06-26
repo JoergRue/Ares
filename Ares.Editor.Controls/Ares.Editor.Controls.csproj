@@ -106,6 +106,12 @@
     <Compile Include="GUIExtensions\MultiSelectTreeview.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="BalanceDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BalanceDialog.Designer.cs">
+      <DependentUpon>BalanceDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="ParallelContainerControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -204,6 +210,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FileVolumeControl.resx">
       <DependentUpon>FileVolumeControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BalanceDialog.de.resx">
+      <DependentUpon>BalanceDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BalanceDialog.resx">
+      <DependentUpon>BalanceDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ParallelContainerControl.de.resx">
       <DependentUpon>ParallelContainerControl.cs</DependentUpon>

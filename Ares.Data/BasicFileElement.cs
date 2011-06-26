@@ -99,7 +99,10 @@ namespace Ares.Data
 
         public IIntEffect Pitch { get { return m_Pitch; } }
 
+        public IIntEffect Balance { get { return m_Balance; } }
+
         private IntEffect m_Pitch;
+        private IntEffect m_Balance;
 
         internal void WriteToXml(System.Xml.XmlWriter writer)
         {
@@ -111,6 +114,7 @@ namespace Ares.Data
             writer.WriteAttributeString("MinRandomVolume", MinRandomVolume.ToString(System.Globalization.CultureInfo.InvariantCulture));
             writer.WriteAttributeString("MaxRandomVolume", MaxRandomVolume.ToString(System.Globalization.CultureInfo.InvariantCulture));
             m_Pitch.WriteToXml(writer);
+            m_Balance.WriteToXml(writer);
             writer.WriteEndElement();
         }
 
@@ -123,6 +127,7 @@ namespace Ares.Data
             MinRandomVolume = 50;
             MaxRandomVolume = 100;
             m_Pitch = new IntEffect("Pitch", 0);
+            m_Balance = new IntEffect("Balance", 0);
         }
 
         internal Effects(System.Xml.XmlReader reader)
@@ -134,6 +139,7 @@ namespace Ares.Data
             MinRandomVolume = reader.GetIntegerAttributeOrDefault("MinRandomVolume", 50);
             MaxRandomVolume = reader.GetIntegerAttributeOrDefault("MaxRandomVolume", 100);
             m_Pitch = new IntEffect("Pitch", reader, 0);
+            m_Balance = new IntEffect("Balance", reader, 0);
             if (reader.IsEmptyElement)
             {
                 reader.Read();

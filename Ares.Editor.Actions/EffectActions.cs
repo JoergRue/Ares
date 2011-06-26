@@ -155,4 +155,17 @@ namespace Ares.Editor.Actions
             return element.Effects.Pitch;
         }
     }
+
+    public class AllFileElementsBalanceChangeAction : AllFileElementsIntEffectChangeAction
+    {
+        public AllFileElementsBalanceChangeAction(IGeneralElementContainer container, bool active, bool random, int fixValue, int minRandomValue, int maxRandomValue)
+        {
+            SetValues(container, active, random, fixValue, minRandomValue, maxRandomValue);
+        }
+
+        protected override IIntEffect GetEffect(IFileElement element)
+        {
+            return element.Effects.Balance;
+        }
+    }
 }

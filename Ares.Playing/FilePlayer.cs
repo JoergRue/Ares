@@ -121,6 +121,16 @@ namespace Ares.Playing
                         return 0;
                     }
                 }
+                if (file.Effects != null && file.Effects.Balance.Active)
+                {
+                    float balanceValue = DetermineIntEffectValue(file.Effects.Balance);
+                    // balance is stored as [-10..10], but must be set as [-1..1]
+                    if (!Bass.BASS_ChannelSetAttribute(channel, BASSAttribute.BASS_ATTRIB_PAN, balanceValue / 10.0f))
+                    {
+                        ErrorHandling.BassErrorOccurred(file.Id, StringResources.SetEffectError);
+                        return 0;
+                    }
+                }
                 if (loop)
                 {
                     Bass.BASS_ChannelFlags(channel, BASSFlag.BASS_SAMPLE_LOOP, BASSFlag.BASS_SAMPLE_LOOP);

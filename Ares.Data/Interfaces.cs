@@ -208,7 +208,7 @@ namespace Ares.Data
         int MinRandomVolume { get; set; }
 
         /// <summary>
-        /// Maximum randrom volume.
+        /// Maximum random volume.
         /// </summary>
         int MaxRandomVolume { get; set; }
 
@@ -216,6 +216,11 @@ namespace Ares.Data
         /// Pitch effect
         /// </summary>
         IIntEffect Pitch { get; }
+
+        /// <summary>
+        /// Balance effect
+        /// </summary>
+        IIntEffect Balance { get; }
     }
 
     /// <summary>
