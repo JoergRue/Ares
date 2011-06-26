@@ -168,4 +168,17 @@ namespace Ares.Editor.Actions
             return element.Effects.Balance;
         }
     }
+
+    public class AllFileElementsVolumeDBChangeAction : AllFileElementsIntEffectChangeAction
+    {
+        public AllFileElementsVolumeDBChangeAction(IGeneralElementContainer container, bool active, bool random, int fixValue, int minRandomValue, int maxRandomValue)
+        {
+            SetValues(container, active, random, fixValue, minRandomValue, maxRandomValue);
+        }
+
+        protected override IIntEffect GetEffect(IFileElement element)
+        {
+            return element.Effects.VolumeDB;
+        }
+    }
 }

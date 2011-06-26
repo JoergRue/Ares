@@ -37,17 +37,23 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FileEffectsControl));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.allPitchButton = new System.Windows.Forms.Button();
-            this.pitchButton = new System.Windows.Forms.Button();
-            this.pitchBox = new System.Windows.Forms.CheckBox();
+            this.allVolumeButton = new System.Windows.Forms.Button();
+            this.volumeButton = new System.Windows.Forms.Button();
+            this.volumeBox = new System.Windows.Forms.CheckBox();
             this.allBalanceButton = new System.Windows.Forms.Button();
             this.balanceButton = new System.Windows.Forms.Button();
             this.balanceBox = new System.Windows.Forms.CheckBox();
+            this.allPitchButton = new System.Windows.Forms.Button();
+            this.pitchButton = new System.Windows.Forms.Button();
+            this.pitchBox = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.allVolumeButton);
+            this.groupBox1.Controls.Add(this.volumeButton);
+            this.groupBox1.Controls.Add(this.volumeBox);
             this.groupBox1.Controls.Add(this.allBalanceButton);
             this.groupBox1.Controls.Add(this.balanceButton);
             this.groupBox1.Controls.Add(this.balanceBox);
@@ -59,30 +65,30 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.UseCompatibleTextRendering = true;
             // 
-            // allPitchButton
+            // allVolumeButton
             // 
-            resources.ApplyResources(this.allPitchButton, "allPitchButton");
-            this.allPitchButton.Image = global::Ares.Editor.Controls.Properties.Resources.Multiple_Selection;
-            this.allPitchButton.Name = "allPitchButton";
-            this.allPitchButton.UseCompatibleTextRendering = true;
-            this.allPitchButton.UseVisualStyleBackColor = true;
-            this.allPitchButton.Click += new System.EventHandler(this.allPitchButton_Click);
+            resources.ApplyResources(this.allVolumeButton, "allVolumeButton");
+            this.allVolumeButton.Image = global::Ares.Editor.Controls.Properties.Resources.Multiple_Selection;
+            this.allVolumeButton.Name = "allVolumeButton";
+            this.allVolumeButton.UseCompatibleTextRendering = true;
+            this.allVolumeButton.UseVisualStyleBackColor = true;
+            this.allVolumeButton.Click += new System.EventHandler(this.allVolumeButton_Click);
             // 
-            // pitchButton
+            // volumeButton
             // 
-            resources.ApplyResources(this.pitchButton, "pitchButton");
-            this.pitchButton.Name = "pitchButton";
-            this.pitchButton.UseCompatibleTextRendering = true;
-            this.pitchButton.UseVisualStyleBackColor = true;
-            this.pitchButton.Click += new System.EventHandler(this.pitchButton_Click);
+            resources.ApplyResources(this.volumeButton, "volumeButton");
+            this.volumeButton.Name = "volumeButton";
+            this.volumeButton.UseCompatibleTextRendering = true;
+            this.volumeButton.UseVisualStyleBackColor = true;
+            this.volumeButton.Click += new System.EventHandler(this.volumeButton_Click);
             // 
-            // pitchBox
+            // volumeBox
             // 
-            resources.ApplyResources(this.pitchBox, "pitchBox");
-            this.pitchBox.Name = "pitchBox";
-            this.pitchBox.UseCompatibleTextRendering = true;
-            this.pitchBox.UseVisualStyleBackColor = true;
-            this.pitchBox.CheckedChanged += new System.EventHandler(this.pitchBox_CheckedChanged);
+            resources.ApplyResources(this.volumeBox, "volumeBox");
+            this.volumeBox.Name = "volumeBox";
+            this.volumeBox.UseCompatibleTextRendering = true;
+            this.volumeBox.UseVisualStyleBackColor = true;
+            this.volumeBox.CheckedChanged += new System.EventHandler(this.volumeBox_CheckedChanged);
             // 
             // allBalanceButton
             // 
@@ -109,6 +115,31 @@
             this.balanceBox.UseVisualStyleBackColor = true;
             this.balanceBox.CheckedChanged += new System.EventHandler(this.balanceBox_CheckedChanged);
             // 
+            // allPitchButton
+            // 
+            resources.ApplyResources(this.allPitchButton, "allPitchButton");
+            this.allPitchButton.Image = global::Ares.Editor.Controls.Properties.Resources.Multiple_Selection;
+            this.allPitchButton.Name = "allPitchButton";
+            this.allPitchButton.UseCompatibleTextRendering = true;
+            this.allPitchButton.UseVisualStyleBackColor = true;
+            this.allPitchButton.Click += new System.EventHandler(this.allPitchButton_Click);
+            // 
+            // pitchButton
+            // 
+            resources.ApplyResources(this.pitchButton, "pitchButton");
+            this.pitchButton.Name = "pitchButton";
+            this.pitchButton.UseCompatibleTextRendering = true;
+            this.pitchButton.UseVisualStyleBackColor = true;
+            this.pitchButton.Click += new System.EventHandler(this.pitchButton_Click);
+            // 
+            // pitchBox
+            // 
+            resources.ApplyResources(this.pitchBox, "pitchBox");
+            this.pitchBox.Name = "pitchBox";
+            this.pitchBox.UseCompatibleTextRendering = true;
+            this.pitchBox.UseVisualStyleBackColor = true;
+            this.pitchBox.CheckedChanged += new System.EventHandler(this.pitchBox_CheckedChanged);
+            // 
             // FileEffectsControl
             // 
             resources.ApplyResources(this, "$this");
@@ -130,5 +161,8 @@
         private System.Windows.Forms.Button allBalanceButton;
         private System.Windows.Forms.Button balanceButton;
         private System.Windows.Forms.CheckBox balanceBox;
+        private System.Windows.Forms.Button allVolumeButton;
+        private System.Windows.Forms.Button volumeButton;
+        private System.Windows.Forms.CheckBox volumeBox;
     }
 }

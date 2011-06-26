@@ -131,6 +131,23 @@ namespace Ares.Playing
                         return 0;
                     }
                 }
+                if (file.Effects != null && file.Effects.VolumeDB.Active)
+                {
+                    float volumeDB = DetermineIntEffectValue(file.Effects.VolumeDB);
+                    float linear = (float)Math.Pow(10d, volumeDB / 20);
+                    int volFx = Bass.BASS_ChannelSetFX(channel, BASSFXType.BASS_FX_BFX_VOLUME, 1);
+                    if (volFx == 0)
+                    {
+                        ErrorHandling.BassErrorOccurred(file.Id, StringResources.SetEffectError);
+                        return 0;
+                    }
+                    Un4seen.Bass.AddOn.Fx.BASS_BFX_VOLUME fxVol = new Un4seen.Bass.AddOn.Fx.BASS_BFX_VOLUME(linear, Un4seen.Bass.AddOn.Fx.BASSFXChan.BASS_BFX_CHANALL);
+                    if (!Bass.BASS_FXSetParameters(volFx, fxVol))
+                    {
+                        ErrorHandling.BassErrorOccurred(file.Id, StringResources.SetEffectError);
+                        return 0;
+                    }
+                }
                 if (loop)
                 {
                     Bass.BASS_ChannelFlags(channel, BASSFlag.BASS_SAMPLE_LOOP, BASSFlag.BASS_SAMPLE_LOOP);

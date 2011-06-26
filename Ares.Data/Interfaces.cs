@@ -221,6 +221,11 @@ namespace Ares.Data
         /// Balance effect
         /// </summary>
         IIntEffect Balance { get; }
+
+        /// <summary>
+        /// Volume in Dezibel
+        /// </summary>
+        IIntEffect VolumeDB { get; }
     }
 
     /// <summary>

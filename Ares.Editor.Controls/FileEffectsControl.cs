@@ -41,6 +41,8 @@ namespace Ares.Editor.Controls
                 allPitchButton.Enabled = true;
                 balanceButton.Enabled = true;
                 allBalanceButton.Enabled = true;
+                volumeButton.Enabled = true;
+                allVolumeButton.Enabled = true;
             }
             else
             {
@@ -49,6 +51,8 @@ namespace Ares.Editor.Controls
                 allPitchButton.Enabled = false;
                 balanceButton.Enabled = false;
                 allBalanceButton.Enabled = false;
+                volumeButton.Enabled = false;
+                allVolumeButton.Enabled = false;
             }
         }
 
@@ -59,6 +63,7 @@ namespace Ares.Editor.Controls
                 listen = false;
                 pitchBox.Checked = m_Element.Effects.Pitch.Active;
                 balanceBox.Checked = m_Element.Effects.Balance.Active;
+                volumeBox.Checked = m_Element.Effects.VolumeDB.Active;
                 listen = true;
             }
         }
@@ -113,6 +118,32 @@ namespace Ares.Editor.Controls
             IIntEffect effect = m_Element.Effects.Balance;
             Actions.Actions.Instance.AddNew(new Actions.AllFileElementsBalanceChangeAction(m_Container,
                 balanceBox.Checked, effect.Random, effect.FixValue, effect.MinRandomValue, effect.MaxRandomValue));
+        }
+
+        private void volumeBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!listen)
+                return;
+            IIntEffect effect = m_Element.Effects.VolumeDB;
+            Actions.Actions.Instance.AddNew(new Actions.IntEffectChangeAction(m_Element, effect,
+                volumeBox.Checked, effect.Random, effect.FixValue, effect.MinRandomValue, effect.MaxRandomValue));
+        }
+
+        private void volumeButton_Click(object sender, EventArgs e)
+        {
+            VolumeDBDialog dialog = new VolumeDBDialog(m_Element);
+            if (dialog.ShowDialog(Parent) == DialogResult.OK)
+            {
+                dialog.UpdateAction();
+                Actions.Actions.Instance.AddNew(dialog.Action);
+            }
+        }
+
+        private void allVolumeButton_Click(object sender, EventArgs e)
+        {
+            IIntEffect effect = m_Element.Effects.VolumeDB;
+            Actions.Actions.Instance.AddNew(new Actions.AllFileElementsVolumeDBChangeAction(m_Container,
+                volumeBox.Checked, effect.Random, effect.FixValue, effect.MinRandomValue, effect.MaxRandomValue));
         }
 
 

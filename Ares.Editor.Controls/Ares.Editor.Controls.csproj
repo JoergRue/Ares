@@ -112,6 +112,12 @@
     <Compile Include="BalanceDialog.Designer.cs">
       <DependentUpon>BalanceDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="VolumeDBDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VolumeDBDialog.Designer.cs">
+      <DependentUpon>VolumeDBDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="ParallelContainerControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -216,6 +222,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BalanceDialog.resx">
       <DependentUpon>BalanceDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VolumeDBDialog.de.resx">
+      <DependentUpon>VolumeDBDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VolumeDBDialog.resx">
+      <DependentUpon>VolumeDBDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ParallelContainerControl.de.resx">
       <DependentUpon>ParallelContainerControl.cs</DependentUpon>

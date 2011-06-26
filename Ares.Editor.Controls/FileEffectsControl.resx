@@ -118,20 +118,107 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="allVolumeButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="allVolumeButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="allVolumeButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>174, 77</value>
+  </data>
+  <data name="allVolumeButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>36, 23</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="allVolumeButton.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;allVolumeButton.Name" xml:space="preserve">
+    <value>allVolumeButton</value>
+  </data>
+  <data name="&gt;&gt;allVolumeButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;allVolumeButton.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;allVolumeButton.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="volumeButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="volumeButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="volumeButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>130, 77</value>
+  </data>
+  <data name="volumeButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>38, 23</value>
+  </data>
+  <data name="volumeButton.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="volumeButton.Text" xml:space="preserve">
+    <value>...</value>
+  </data>
+  <data name="&gt;&gt;volumeButton.Name" xml:space="preserve">
+    <value>volumeButton</value>
+  </data>
+  <data name="&gt;&gt;volumeButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;volumeButton.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;volumeButton.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="volumeBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="volumeBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="volumeBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 80</value>
+  </data>
+  <data name="volumeBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>86, 18</value>
+  </data>
+  <data name="volumeBox.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="volumeBox.Text" xml:space="preserve">
+    <value>Volume (dB)</value>
+  </data>
+  <data name="&gt;&gt;volumeBox.Name" xml:space="preserve">
+    <value>volumeBox</value>
+  </data>
+  <data name="&gt;&gt;volumeBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;volumeBox.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;volumeBox.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
   <data name="allBalanceButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
   <data name="allBalanceButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="allBalanceButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>143, 19</value>
+    <value>174, 19</value>
   </data>
   <data name="allBalanceButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>36, 23</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="allBalanceButton.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
   </data>
@@ -145,7 +232,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;allBalanceButton.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>3</value>
   </data>
   <data name="balanceButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -154,7 +241,7 @@
     <value>NoControl</value>
   </data>
   <data name="balanceButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>99, 19</value>
+    <value>130, 19</value>
   </data>
   <data name="balanceButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>38, 23</value>
@@ -175,7 +262,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;balanceButton.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>4</value>
   </data>
   <data name="balanceBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -205,7 +292,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;balanceBox.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>5</value>
   </data>
   <data name="allPitchButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -214,7 +301,7 @@
     <value>NoControl</value>
   </data>
   <data name="allPitchButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>143, 48</value>
+    <value>174, 48</value>
   </data>
   <data name="allPitchButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>36, 23</value>
@@ -232,13 +319,13 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;allPitchButton.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>6</value>
   </data>
   <data name="pitchButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
   <data name="pitchButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>99, 48</value>
+    <value>130, 48</value>
   </data>
   <data name="pitchButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>38, 23</value>
@@ -259,7 +346,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;pitchButton.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>7</value>
   </data>
   <data name="pitchBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -286,7 +373,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;pitchBox.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>8</value>
   </data>
   <data name="groupBox1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -295,7 +382,7 @@
     <value>0, 0</value>
   </data>
   <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>185, 91</value>
+    <value>216, 116</value>
   </data>
   <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -322,7 +409,7 @@
     <value>6, 13</value>
   </data>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>185, 91</value>
+    <value>216, 116</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>FileEffectsControl</value>
