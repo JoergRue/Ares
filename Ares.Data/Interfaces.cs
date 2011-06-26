@@ -142,6 +142,42 @@ namespace Ares.Data
     }
 
     /// <summary>
+    /// Base interface for a special effect
+    /// </summary>
+    public interface IEffect
+    {
+        /// <summary>
+        /// Is the effect activated?
+        /// </summary>
+        bool Active { get; set; }
+        /// <summary>
+        /// Has the effect random settings?
+        /// </summary>
+        bool Random { get; set; }
+    }
+
+    /// <summary>
+    /// Interface for an effect based on an integer
+    /// </summary>
+    public interface IIntEffect : IEffect
+    {
+        /// <summary>
+        /// Value if the value is fix.
+        /// </summary>
+        int FixValue { get; set; }
+
+        /// <summary>
+        /// Minimum random value
+        /// </summary>
+        int MinRandomValue { get; set; }
+
+        /// <summary>
+        /// Maximum random value
+        /// </summary>
+        int MaxRandomValue { get; set; }
+    }
+
+    /// <summary>
     /// Optional effects when playing.
     /// </summary>
     public interface IEffects
@@ -175,6 +211,11 @@ namespace Ares.Data
         /// Maximum randrom volume.
         /// </summary>
         int MaxRandomVolume { get; set; }
+
+        /// <summary>
+        /// Pitch effect
+        /// </summary>
+        IIntEffect Pitch { get; }
     }
 
     /// <summary>

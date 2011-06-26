@@ -62,7 +62,7 @@ namespace Ares.Editor.ElementEditors
             this.label2 = new System.Windows.Forms.Label();
             this.nameBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.fileEffectsControl = new Ares.Editor.Controls.FileVolumeControl();
+            this.fileVolumeControl = new Ares.Editor.Controls.FileVolumeControl();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.LengthLabel = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -75,6 +75,7 @@ namespace Ares.Editor.ElementEditors
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.stopButton = new System.Windows.Forms.Button();
             this.playButton = new System.Windows.Forms.Button();
+            this.fileEffectsControl = new Ares.Editor.Controls.FileEffectsControl();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -129,10 +130,10 @@ namespace Ares.Editor.ElementEditors
             this.label1.Name = "label1";
             this.label1.UseCompatibleTextRendering = true;
             // 
-            // fileEffectsControl
+            // fileVolumeControl
             // 
-            resources.ApplyResources(this.fileEffectsControl, "fileEffectsControl");
-            this.fileEffectsControl.Name = "fileEffectsControl";
+            resources.ApplyResources(this.fileVolumeControl, "fileVolumeControl");
+            this.fileVolumeControl.Name = "fileVolumeControl";
             // 
             // groupBox2
             // 
@@ -224,13 +225,19 @@ namespace Ares.Editor.ElementEditors
             this.playButton.UseVisualStyleBackColor = true;
             this.playButton.Click += new System.EventHandler(this.playButton_Click);
             // 
+            // fileEffectsControl
+            // 
+            resources.ApplyResources(this.fileEffectsControl, "fileEffectsControl");
+            this.fileEffectsControl.Name = "fileEffectsControl";
+            // 
             // FileElementEditor
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.fileEffectsControl);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.fileEffectsControl);
+            this.Controls.Add(this.fileVolumeControl);
             this.Controls.Add(this.groupBox1);
             this.Name = "FileElementEditor";
             this.groupBox1.ResumeLayout(false);
@@ -251,7 +258,7 @@ namespace Ares.Editor.ElementEditors
         private System.Windows.Forms.TextBox nameBox;
         private System.Windows.Forms.Label label1;
         private Settings.PathLabel filePathLabel;
-        private Controls.FileVolumeControl fileEffectsControl;
+        private Controls.FileVolumeControl fileVolumeControl;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label LengthLabel;
         private System.Windows.Forms.Label label7;
@@ -264,5 +271,6 @@ namespace Ares.Editor.ElementEditors
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Button stopButton;
         private System.Windows.Forms.Button playButton;
+        private Controls.FileEffectsControl fileEffectsControl;
     }
 }

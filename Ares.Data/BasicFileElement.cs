@@ -22,6 +22,67 @@ using System;
 namespace Ares.Data
 {
     [Serializable]
+    class Effect : IEffect
+    {
+        public bool Active { get; set; }
+        public bool Random { get; set; }
+
+        public String Name { get; private set; }
+
+        protected Effect(String name)
+        {
+            Name = name;
+            Active = false;
+            Random = false;
+        }
+
+        protected Effect(String name, System.Xml.XmlReader reader)
+        {
+            Name = name;
+            Active = reader.GetBooleanAttributeOrDefault(Name + "_Active", false);
+            Random = reader.GetBooleanAttributeOrDefault(Name + "_Random", false);
+        }
+
+        public virtual void WriteToXml(System.Xml.XmlWriter writer)
+        {
+            writer.WriteAttributeString(Name + "_Active", Active ? "true" : "false");
+            writer.WriteAttributeString(Name + "_Random", Random ? "true" : "false");
+        }
+    }
+
+    [Serializable]
+    class IntEffect : Effect, IIntEffect
+    {
+        public int FixValue { get; set; }
+        public int MinRandomValue { get; set; }
+        public int MaxRandomValue { get; set; }
+
+        public IntEffect(String name, int defaultValue)
+            : base(name)
+        {
+            FixValue = defaultValue;
+            MinRandomValue = defaultValue;
+            MaxRandomValue = defaultValue;
+        }
+
+        public IntEffect(String name, System.Xml.XmlReader reader, int defaultValue)
+            : base(name, reader)
+        {
+            FixValue = reader.GetIntegerAttributeOrDefault(Name + "_FixValue", defaultValue);
+            MinRandomValue = reader.GetIntegerAttributeOrDefault(Name + "_MinRandom", defaultValue);
+            MaxRandomValue = reader.GetIntegerAttributeOrDefault(Name + "_MaxRandom", defaultValue);
+        }
+
+        public override void WriteToXml(System.Xml.XmlWriter writer)
+        {
+            base.WriteToXml(writer);
+            writer.WriteAttributeString(Name + "_FixValue", FixValue.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            writer.WriteAttributeString(Name + "_MinRandom", MinRandomValue.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            writer.WriteAttributeString(Name + "_MaxRandom", MaxRandomValue.ToString(System.Globalization.CultureInfo.InvariantCulture));
+        }
+    }
+
+    [Serializable]
     class Effects : IEffects
     {
         public int Volume { get; set; }
@@ -36,6 +97,10 @@ namespace Ares.Data
 
         public int MaxRandomVolume { get; set; }
 
+        public IIntEffect Pitch { get { return m_Pitch; } }
+
+        private IntEffect m_Pitch;
+
         internal void WriteToXml(System.Xml.XmlWriter writer)
         {
             writer.WriteStartElement("Effects");
@@ -45,6 +110,7 @@ namespace Ares.Data
             writer.WriteAttributeString("HasRandomVolume", HasRandomVolume ? "true" : "false");
             writer.WriteAttributeString("MinRandomVolume", MinRandomVolume.ToString(System.Globalization.CultureInfo.InvariantCulture));
             writer.WriteAttributeString("MaxRandomVolume", MaxRandomVolume.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            m_Pitch.WriteToXml(writer);
             writer.WriteEndElement();
         }
 
@@ -56,6 +122,7 @@ namespace Ares.Data
             HasRandomVolume = false;
             MinRandomVolume = 50;
             MaxRandomVolume = 100;
+            m_Pitch = new IntEffect("Pitch", 0);
         }
 
         internal Effects(System.Xml.XmlReader reader)
@@ -66,6 +133,7 @@ namespace Ares.Data
             HasRandomVolume = reader.GetBooleanAttributeOrDefault("HasRandomVolume", false);
             MinRandomVolume = reader.GetIntegerAttributeOrDefault("MinRandomVolume", 50);
             MaxRandomVolume = reader.GetIntegerAttributeOrDefault("MaxRandomVolume", 100);
+            m_Pitch = new IntEffect("Pitch", reader, 0);
             if (reader.IsEmptyElement)
             {
                 reader.Read();

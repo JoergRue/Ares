@@ -36,6 +36,13 @@ namespace Ares.Editor.Controls
             {
                 components.Dispose();
             }
+            if (disposing)
+            {
+                if (m_Element != null)
+                {
+                    Actions.ElementChanges.Instance.RemoveListener(m_Element.Id, Update);
+                }
+            }
             base.Dispose(disposing);
         }
 

@@ -199,9 +199,9 @@ namespace Ares.Editor.Actions
         }
     }
 
-    public class ElementEffectsChangeAction : Action
+    public class ElementVolumeEffectsChangeAction : Action
     {
-        public ElementEffectsChangeAction(IFileElement element, bool randomVolume, int volume, int minRandomVolume, int maxRandomVolume, int fadeIn, int fadeOut)
+        public ElementVolumeEffectsChangeAction(IFileElement element, bool randomVolume, int volume, int minRandomVolume, int maxRandomVolume, int fadeIn, int fadeOut)
         {
             m_Element = element;
             m_OldVolume = m_Element.Effects.Volume;

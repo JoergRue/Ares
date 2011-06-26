@@ -43,6 +43,8 @@ namespace Ares.Editor.ElementEditors
         {
             ElementId = element.Id;
             m_Element = element;
+            fileVolumeControl.SetEffects(element);
+            fileVolumeControl.SetContainer(container);
             fileEffectsControl.SetEffects(element);
             fileEffectsControl.SetContainer(container);
             UpdateStaticInfo();
@@ -106,6 +108,7 @@ namespace Ares.Editor.ElementEditors
         {
             playButton.Enabled = false;
             stopButton.Enabled = allowStop;
+            fileVolumeControl.Enabled = false;
             fileEffectsControl.Enabled = false;
             nameBox.Enabled = false;
         }
@@ -114,6 +117,7 @@ namespace Ares.Editor.ElementEditors
         {
             playButton.Enabled = true;
             stopButton.Enabled = false;
+            fileVolumeControl.Enabled = true;
             fileEffectsControl.Enabled = true;
             nameBox.Enabled = true;
         }

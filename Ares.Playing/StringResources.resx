@@ -204,4 +204,7 @@
   <data name="SetVolumeError" xml:space="preserve">
     <value>Error setting the volume: {0}</value>
   </data>
+  <data name="SetEffectError" xml:space="preserve">
+    <value>Error setting an effect: {0}</value>
+  </data>
 </root>

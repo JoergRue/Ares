@@ -301,31 +301,31 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;groupBox1.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
-  <data name="fileEffectsControl.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+  <data name="fileVolumeControl.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
-  <data name="fileEffectsControl.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="fileVolumeControl.Location" type="System.Drawing.Point, System.Drawing">
     <value>342, 102</value>
   </data>
-  <data name="fileEffectsControl.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="fileVolumeControl.Size" type="System.Drawing.Size, System.Drawing">
     <value>275, 198</value>
   </data>
-  <data name="fileEffectsControl.TabIndex" type="System.Int32, mscorlib">
+  <data name="fileVolumeControl.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
-  <data name="&gt;&gt;fileEffectsControl.Name" xml:space="preserve">
-    <value>fileEffectsControl</value>
+  <data name="&gt;&gt;fileVolumeControl.Name" xml:space="preserve">
+    <value>fileVolumeControl</value>
   </data>
-  <data name="&gt;&gt;fileEffectsControl.Type" xml:space="preserve">
+  <data name="&gt;&gt;fileVolumeControl.Type" xml:space="preserve">
     <value>Ares.Editor.Controls.FileVolumeControl, Ares.Editor.Controls, Version=0.4.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
   </data>
-  <data name="&gt;&gt;fileEffectsControl.Parent" xml:space="preserve">
+  <data name="&gt;&gt;fileVolumeControl.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;fileEffectsControl.ZOrder" xml:space="preserve">
-    <value>2</value>
+  <data name="&gt;&gt;fileVolumeControl.ZOrder" xml:space="preserve">
+    <value>3</value>
   </data>
   <data name="groupBox2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -568,7 +568,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;groupBox2.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="groupBox3.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -646,6 +646,30 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;groupBox3.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="fileEffectsControl.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="fileEffectsControl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 214</value>
+  </data>
+  <data name="fileEffectsControl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>324, 86</value>
+  </data>
+  <data name="fileEffectsControl.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;fileEffectsControl.Name" xml:space="preserve">
+    <value>fileEffectsControl</value>
+  </data>
+  <data name="&gt;&gt;fileEffectsControl.Type" xml:space="preserve">
+    <value>Ares.Editor.Controls.FileEffectsControl, Ares.Editor.Controls, Version=0.4.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
+  </data>
+  <data name="&gt;&gt;fileEffectsControl.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;fileEffectsControl.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
@@ -655,7 +679,7 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>629, 308</value>
+    <value>629, 315</value>
   </data>
   <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 8.25pt</value>

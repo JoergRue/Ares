@@ -88,9 +88,9 @@ namespace Ares.Editor.Controls
                 return;
             listen = false;
             Actions.Action action = Actions.Actions.Instance.LastAction;
-            if (action != null && action is Actions.ElementEffectsChangeAction)
+            if (action != null && action is Actions.ElementVolumeEffectsChangeAction)
             {
-                Actions.ElementEffectsChangeAction eeca = action as Actions.ElementEffectsChangeAction;
+                Actions.ElementVolumeEffectsChangeAction eeca = action as Actions.ElementVolumeEffectsChangeAction;
                 if (eeca.Element == m_Element)
                 {
                     eeca.SetData(
@@ -105,7 +105,7 @@ namespace Ares.Editor.Controls
                     return;
                 }
             }
-            Actions.Actions.Instance.AddNew(new Actions.ElementEffectsChangeAction(m_Element,
+            Actions.Actions.Instance.AddNew(new Actions.ElementVolumeEffectsChangeAction(m_Element,
                 randomButton.Checked,
                 volumeBar.Value,
                 (int)minRandomUpDown.Value,

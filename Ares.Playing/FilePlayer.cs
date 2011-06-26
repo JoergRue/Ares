@@ -28,7 +28,13 @@ namespace Ares.Playing
         public int PlayFile(ISoundFile file, PlayingFinished callback, bool loop)
         {
             int channel = 0;
-            channel = Bass.BASS_StreamCreateFile(file.Path, 0, 0, BASSFlag.BASS_DEFAULT);
+            channel = Bass.BASS_StreamCreateFile(file.Path, 0, 0, BASSFlag.BASS_STREAM_DECODE);
+            if (channel == 0)
+            {
+                ErrorHandling.BassErrorOccurred(file.Id, StringResources.FilePlayingError);
+                return 0;
+            }
+            channel = Un4seen.Bass.AddOn.Fx.BassFx.BASS_FX_TempoCreate(channel, BASSFlag.BASS_STREAM_AUTOFREE);
             if (channel == 0)
             {
                 ErrorHandling.BassErrorOccurred(file.Id, StringResources.FilePlayingError);
@@ -40,7 +46,6 @@ namespace Ares.Playing
                 {
                     m_RunningStreams[channel] = new Action(() =>
                     {
-                        Bass.BASS_StreamFree(channel); // no error handling, unimportant
                         callback(file.Id, channel);
                     });
                 }
@@ -51,7 +56,6 @@ namespace Ares.Playing
                         ErrorHandling.BassErrorOccurred(file.Id, StringResources.FilePlayingError);
                         lock (m_Mutex)
                         {
-                            Bass.BASS_StreamFree(channel);
                             m_RunningStreams.Remove(channel);
                         }
                         return 0;
@@ -105,6 +109,15 @@ namespace Ares.Playing
                     if (Bass.BASS_ChannelSetSync(channel, BASSSync.BASS_SYNC_POS, totalLength - fadeOutLength, m_FadeOutSync, new IntPtr(file.Effects.FadeOutTime)) == 0)
                     {
                         ErrorHandling.BassErrorOccurred(file.Id, StringResources.FilePlayingError);
+                        return 0;
+                    }
+                }
+                if (file.Effects != null && file.Effects.Pitch.Active)
+                {
+                    float pitchValue = DetermineIntEffectValue(file.Effects.Pitch);
+                    if (!Bass.BASS_ChannelSetAttribute(channel, BASSAttribute.BASS_ATTRIB_TEMPO_PITCH, pitchValue))
+                    {
+                        ErrorHandling.BassErrorOccurred(file.Id, StringResources.SetEffectError);
                         return 0;
                     }
                 }
@@ -175,6 +188,18 @@ namespace Ares.Playing
             else
             {
                 return (float)(baseVolume * 0.01 * ((PlayingModule.Randomizer.NextDouble() * (effects.MaxRandomVolume - effects.MinRandomVolume) + effects.MinRandomVolume)));
+            }
+        }
+
+        private static float DetermineIntEffectValue(Data.IIntEffect effect)
+        {
+            if (!effect.Random)
+            {
+                return effect.FixValue;
+            }
+            else
+            {
+                return (float)(PlayingModule.Randomizer.NextDouble() * (effect.MaxRandomValue - effect.MinRandomValue) + effect.MinRandomValue);
             }
         }
 
