@@ -193,6 +193,9 @@
     <EmbeddedResource Include="DelayableControl.resx">
       <DependentUpon>DelayableControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FileEffectsControl.de.resx">
+      <DependentUpon>FileEffectsControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FileEffectsControl.resx">
       <DependentUpon>FileEffectsControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -207,6 +210,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ParallelContainerControl.resx">
       <DependentUpon>ParallelContainerControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PitchDialog.de.resx">
+      <DependentUpon>PitchDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PitchDialog.resx">
       <DependentUpon>PitchDialog.cs</DependentUpon>

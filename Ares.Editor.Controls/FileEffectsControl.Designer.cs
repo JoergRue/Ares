@@ -35,6 +35,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FileEffectsControl));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.allPitchButton = new System.Windows.Forms.Button();
             this.pitchButton = new System.Windows.Forms.Button();
@@ -44,62 +45,45 @@
             // 
             // groupBox1
             // 
+            resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Controls.Add(this.allPitchButton);
             this.groupBox1.Controls.Add(this.pitchButton);
             this.groupBox1.Controls.Add(this.pitchBox);
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(185, 91);
-            this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Special Effects";
             this.groupBox1.UseCompatibleTextRendering = true;
             // 
             // allPitchButton
             // 
-            this.allPitchButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            resources.ApplyResources(this.allPitchButton, "allPitchButton");
             this.allPitchButton.Image = global::Ares.Editor.Controls.Properties.Resources.Multiple_Selection;
-            this.allPitchButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.allPitchButton.Location = new System.Drawing.Point(143, 16);
             this.allPitchButton.Name = "allPitchButton";
-            this.allPitchButton.Size = new System.Drawing.Size(36, 23);
-            this.allPitchButton.TabIndex = 3;
             this.allPitchButton.UseCompatibleTextRendering = true;
             this.allPitchButton.UseVisualStyleBackColor = true;
             this.allPitchButton.Click += new System.EventHandler(this.allPitchButton_Click);
             // 
             // pitchButton
             // 
-            this.pitchButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pitchButton.Location = new System.Drawing.Point(99, 16);
+            resources.ApplyResources(this.pitchButton, "pitchButton");
             this.pitchButton.Name = "pitchButton";
-            this.pitchButton.Size = new System.Drawing.Size(38, 23);
-            this.pitchButton.TabIndex = 1;
-            this.pitchButton.Text = "...";
             this.pitchButton.UseCompatibleTextRendering = true;
             this.pitchButton.UseVisualStyleBackColor = true;
             this.pitchButton.Click += new System.EventHandler(this.pitchButton_Click);
             // 
             // pitchBox
             // 
-            this.pitchBox.AutoSize = true;
-            this.pitchBox.Location = new System.Drawing.Point(6, 19);
+            resources.ApplyResources(this.pitchBox, "pitchBox");
             this.pitchBox.Name = "pitchBox";
-            this.pitchBox.Size = new System.Drawing.Size(48, 18);
-            this.pitchBox.TabIndex = 0;
-            this.pitchBox.Text = "Pitch";
             this.pitchBox.UseCompatibleTextRendering = true;
             this.pitchBox.UseVisualStyleBackColor = true;
             this.pitchBox.CheckedChanged += new System.EventHandler(this.pitchBox_CheckedChanged);
             // 
             // FileEffectsControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.groupBox1);
             this.Name = "FileEffectsControl";
-            this.Size = new System.Drawing.Size(185, 91);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
