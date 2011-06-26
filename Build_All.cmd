@@ -14,11 +14,15 @@ cd ..\..\..
 
 %nant% clean prepareSetup
 
-
 %installjammer% -DProductVersion %1 --build-dir build\temp --build-log-file build\setup.log --output-dir build\output --build-for-release --build Setup\Ares\Ares.mpi
 
 %svn% export file:///D:/Repositories/Ares/trunk build\Ares_%1_Source
 cd build
 %zip% a output\Ares_%1_Source.7z Ares_%1_Source
+
+xcopy /S /E /I Ares Ares_Portable
+xcopy /S /E ..\Ares_Portable Ares_Portable
+del Ares_Portable\buildlog.txt
+%zip% a output\Ares_Portable_%1.zip Ares_Portable
 
 cd ..

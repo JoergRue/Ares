@@ -507,7 +507,8 @@ namespace Ares.Players
         {
             if (ClientConnected)
             {
-                byte[] bytes = System.Text.Encoding.UTF8.GetBytes(mode.Title);
+                String title = mode != null ? mode.Title : String.Empty;
+                byte[] bytes = System.Text.Encoding.UTF8.GetBytes(title);
                 byte[] package = new byte[3 + bytes.Length];
                 package[0] = 0;
                 package[1] = (byte)(bytes.Length / (1 << 8));
@@ -604,6 +605,8 @@ namespace Ares.Players
         {
             if (ClientConnected)
             {
+                if (newProject == null)
+                    newProject = String.Empty;
                 byte[] bytes = System.Text.Encoding.UTF8.GetBytes(newProject);
                 byte[] package = new byte[3 + bytes.Length];
                 package[0] = 6;
