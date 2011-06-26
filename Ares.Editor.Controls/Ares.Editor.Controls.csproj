@@ -86,11 +86,11 @@
     <Compile Include="DelayableControl.Designer.cs">
       <DependentUpon>DelayableControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="FileEffectsControl.cs">
+    <Compile Include="FileVolumeControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="FileEffectsControl.Designer.cs">
-      <DependentUpon>FileEffectsControl.cs</DependentUpon>
+    <Compile Include="FileVolumeControl.Designer.cs">
+      <DependentUpon>FileVolumeControl.cs</DependentUpon>
     </Compile>
     <Compile Include="GUIExtensions\DataGridViewNumericUpDownCell.cs" />
     <Compile Include="GUIExtensions\DataGridViewNumericUpDownColumn.cs" />
@@ -177,11 +177,11 @@
     <EmbeddedResource Include="DelayableControl.resx">
       <DependentUpon>DelayableControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FileEffectsControl.de.resx">
-      <DependentUpon>FileEffectsControl.cs</DependentUpon>
+    <EmbeddedResource Include="FileVolumeControl.de.resx">
+      <DependentUpon>FileVolumeControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FileEffectsControl.resx">
-      <DependentUpon>FileEffectsControl.cs</DependentUpon>
+    <EmbeddedResource Include="FileVolumeControl.resx">
+      <DependentUpon>FileVolumeControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ParallelContainerControl.de.resx">
       <DependentUpon>ParallelContainerControl.cs</DependentUpon>

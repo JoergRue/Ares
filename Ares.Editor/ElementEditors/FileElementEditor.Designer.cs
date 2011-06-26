@@ -62,7 +62,7 @@ namespace Ares.Editor.ElementEditors
             this.label2 = new System.Windows.Forms.Label();
             this.nameBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.fileEffectsControl = new Ares.Editor.Controls.FileEffectsControl();
+            this.fileEffectsControl = new Ares.Editor.Controls.FileVolumeControl();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.LengthLabel = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -251,7 +251,7 @@ namespace Ares.Editor.ElementEditors
         private System.Windows.Forms.TextBox nameBox;
         private System.Windows.Forms.Label label1;
         private Settings.PathLabel filePathLabel;
-        private Controls.FileEffectsControl fileEffectsControl;
+        private Controls.FileVolumeControl fileEffectsControl;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label LengthLabel;
         private System.Windows.Forms.Label label7;

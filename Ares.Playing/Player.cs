@@ -244,7 +244,7 @@ namespace Ares.Playing
             }
             if (element.SetsSoundVolume)
             {
-                PlayingModule.ThePlayer.SetVolume(VolumeTarget.Sounds, element.MusicVolume);
+                PlayingModule.ThePlayer.SetVolume(VolumeTarget.Sounds, element.SoundVolume);
                 PlayingModule.ThePlayer.ProjectCallbacks.VolumeChanged(VolumeTarget.Sounds, element.SoundVolume);
             }
             element.Visit(this);

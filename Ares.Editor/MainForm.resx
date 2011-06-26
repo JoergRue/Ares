@@ -350,10 +350,10 @@
     <value>saveButton</value>
   </data>
   <data name="redoToolStripMenuItem.ShortcutKeyDisplayString" xml:space="preserve">
-    <value>Ctrl+Y</value>
+    <value>Strg+Y</value>
   </data>
   <data name="undoToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Ctrl+Z</value>
+    <value>Strg+Z</value>
   </data>
   <data name="&gt;&gt;newButton.Name" xml:space="preserve">
     <value>newButton</value>
@@ -369,7 +369,7 @@
     <value>extrasToolStripMenuItem</value>
   </data>
   <data name="newToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Ctrl+N</value>
+    <value>Strg+N</value>
   </data>
   <data name="&gt;&gt;toolStrip1.Parent" xml:space="preserve">
     <value>$this</value>
@@ -429,7 +429,7 @@
     <value>Recent</value>
   </data>
   <data name="saveToolStripMenuItem.ShortcutKeyDisplayString" xml:space="preserve">
-    <value>Ctrl+S</value>
+    <value>Strg+S</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>MainForm</value>
@@ -471,7 +471,7 @@
     <value>saveFileDialog</value>
   </data>
   <data name="openToolStripMenuItem.ShortcutKeyDisplayString" xml:space="preserve">
-    <value>Ctrl+O</value>
+    <value>Strg+O</value>
   </data>
   <data name="openButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
     <value>Magenta</value>
@@ -629,7 +629,7 @@
     <value>Magenta</value>
   </data>
   <data name="undoToolStripMenuItem.ShortcutKeyDisplayString" xml:space="preserve">
-    <value>Ctrl+Z</value>
+    <value>Strg+Z</value>
   </data>
   <data name="&gt;&gt;recentMenuItem.Name" xml:space="preserve">
     <value>recentMenuItem</value>
@@ -654,7 +654,7 @@
     <value>23, 22</value>
   </data>
   <data name="openToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Ctrl+O</value>
+    <value>Strg+O</value>
   </data>
   <data name="toolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
     <value>155, 6</value>
@@ -732,7 +732,7 @@
     <value>Save As ...</value>
   </data>
   <data name="redoToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Ctrl+Y</value>
+    <value>Strg+Y</value>
   </data>
   <data name="&gt;&gt;dockPanel.ZOrder" xml:space="preserve">
     <value>2</value>
@@ -783,7 +783,7 @@
     <value>139, 22</value>
   </data>
   <data name="newToolStripMenuItem.ShortcutKeyDisplayString" xml:space="preserve">
-    <value>Ctrl+N</value>
+    <value>Strg+N</value>
   </data>
   <data name="newButton.Text" xml:space="preserve">
     <value>New Project</value>
@@ -819,7 +819,7 @@
     <value>Extras</value>
   </data>
   <data name="saveToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Ctrl+S</value>
+    <value>Strg+S</value>
   </data>
   <data name="toolStripSeparator5.Size" type="System.Drawing.Size, System.Drawing">
     <value>155, 6</value>

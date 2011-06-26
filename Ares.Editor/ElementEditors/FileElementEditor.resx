@@ -142,7 +142,7 @@
     <value>filePathLabel</value>
   </data>
   <data name="&gt;&gt;filePathLabel.Type" xml:space="preserve">
-    <value>Ares.Settings.PathLabel, Ares.Editor.Controls, Version=0.3.1.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
+    <value>Ares.Settings.PathLabel, Ares.Editor.Controls, Version=0.4.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
   </data>
   <data name="&gt;&gt;filePathLabel.Parent" xml:space="preserve">
     <value>groupBox1</value>
@@ -310,7 +310,7 @@
     <value>342, 102</value>
   </data>
   <data name="fileEffectsControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>275, 106</value>
+    <value>275, 198</value>
   </data>
   <data name="fileEffectsControl.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -319,7 +319,7 @@
     <value>fileEffectsControl</value>
   </data>
   <data name="&gt;&gt;fileEffectsControl.Type" xml:space="preserve">
-    <value>Ares.Editor.Controls.FileEffectsControl, Ares.Editor.Controls, Version=0.3.1.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
+    <value>Ares.Editor.Controls.FileVolumeControl, Ares.Editor.Controls, Version=0.4.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
   </data>
   <data name="&gt;&gt;fileEffectsControl.Parent" xml:space="preserve">
     <value>$this</value>
@@ -655,7 +655,7 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>629, 220</value>
+    <value>629, 308</value>
   </data>
   <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 8.25pt</value>
@@ -667,6 +667,6 @@
     <value>FileElementEditor</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>Ares.Editor.ElementEditors.EditorBase, Ares.Editor, Version=0.3.1.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
+    <value>Ares.Editor.ElementEditors.EditorBase, Ares.Editor, Version=0.4.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
   </data>
 </root>

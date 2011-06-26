@@ -160,6 +160,21 @@ namespace Ares.Data
         /// Time for fade-out, in milliseconds.
         /// </summary>
         int FadeOutTime { get; set; }
+
+        /// <summary>
+        /// Whether the volume is determined randomly.
+        /// </summary>
+        bool HasRandomVolume { get; set; }
+
+        /// <summary>
+        /// Minimum random volume.
+        /// </summary>
+        int MinRandomVolume { get; set; }
+
+        /// <summary>
+        /// Maximum randrom volume.
+        /// </summary>
+        int MaxRandomVolume { get; set; }
     }
 
     /// <summary>

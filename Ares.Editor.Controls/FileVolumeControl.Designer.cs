@@ -19,7 +19,7 @@
  */
 namespace Ares.Editor.Controls
 {
-    partial class FileEffectsControl
+    partial class FileVolumeControl
     {
         /// <summary> 
         /// Erforderliche Designervariable.
@@ -47,8 +47,15 @@ namespace Ares.Editor.Controls
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FileEffectsControl));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FileVolumeControl));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.maxRandomUpDown = new System.Windows.Forms.NumericUpDown();
+            this.label3 = new System.Windows.Forms.Label();
+            this.minRandomUpDown = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
+            this.randomButton = new System.Windows.Forms.RadioButton();
+            this.fixedVolumeButton = new System.Windows.Forms.RadioButton();
             this.fadeOutUnitBox = new System.Windows.Forms.ComboBox();
             this.fadeInUnitBox = new System.Windows.Forms.ComboBox();
             this.allFadeOutButton = new System.Windows.Forms.Button();
@@ -59,8 +66,9 @@ namespace Ares.Editor.Controls
             this.label2 = new System.Windows.Forms.Label();
             this.allVolumeButton = new System.Windows.Forms.Button();
             this.volumeBar = new System.Windows.Forms.TrackBar();
-            this.label1 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.maxRandomUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.minRandomUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fadeOutUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fadeInUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.volumeBar)).BeginInit();
@@ -69,6 +77,13 @@ namespace Ares.Editor.Controls
             // groupBox1
             // 
             resources.ApplyResources(this.groupBox1, "groupBox1");
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.maxRandomUpDown);
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.minRandomUpDown);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.randomButton);
+            this.groupBox1.Controls.Add(this.fixedVolumeButton);
             this.groupBox1.Controls.Add(this.fadeOutUnitBox);
             this.groupBox1.Controls.Add(this.fadeInUnitBox);
             this.groupBox1.Controls.Add(this.allFadeOutButton);
@@ -79,10 +94,57 @@ namespace Ares.Editor.Controls
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.allVolumeButton);
             this.groupBox1.Controls.Add(this.volumeBar);
-            this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
             this.groupBox1.UseCompatibleTextRendering = true;
+            // 
+            // label4
+            // 
+            resources.ApplyResources(this.label4, "label4");
+            this.label4.Name = "label4";
+            this.label4.UseCompatibleTextRendering = true;
+            // 
+            // maxRandomUpDown
+            // 
+            resources.ApplyResources(this.maxRandomUpDown, "maxRandomUpDown");
+            this.maxRandomUpDown.Name = "maxRandomUpDown";
+            this.maxRandomUpDown.ValueChanged += new System.EventHandler(this.maxRandomUpDown_ValueChanged);
+            // 
+            // label3
+            // 
+            resources.ApplyResources(this.label3, "label3");
+            this.label3.Name = "label3";
+            this.label3.UseCompatibleTextRendering = true;
+            // 
+            // minRandomUpDown
+            // 
+            resources.ApplyResources(this.minRandomUpDown, "minRandomUpDown");
+            this.minRandomUpDown.Name = "minRandomUpDown";
+            this.minRandomUpDown.ValueChanged += new System.EventHandler(this.minRandomUpDown_ValueChanged);
+            // 
+            // label1
+            // 
+            resources.ApplyResources(this.label1, "label1");
+            this.label1.Name = "label1";
+            this.label1.UseCompatibleTextRendering = true;
+            // 
+            // randomButton
+            // 
+            resources.ApplyResources(this.randomButton, "randomButton");
+            this.randomButton.Name = "randomButton";
+            this.randomButton.TabStop = true;
+            this.randomButton.UseCompatibleTextRendering = true;
+            this.randomButton.UseVisualStyleBackColor = true;
+            this.randomButton.CheckedChanged += new System.EventHandler(this.randomButton_CheckedChanged);
+            // 
+            // fixedVolumeButton
+            // 
+            resources.ApplyResources(this.fixedVolumeButton, "fixedVolumeButton");
+            this.fixedVolumeButton.Name = "fixedVolumeButton";
+            this.fixedVolumeButton.TabStop = true;
+            this.fixedVolumeButton.UseCompatibleTextRendering = true;
+            this.fixedVolumeButton.UseVisualStyleBackColor = true;
+            this.fixedVolumeButton.CheckedChanged += new System.EventHandler(this.fixedVolumeButton_CheckedChanged);
             // 
             // fadeOutUnitBox
             // 
@@ -178,20 +240,16 @@ namespace Ares.Editor.Controls
             this.volumeBar.TickFrequency = 10;
             this.volumeBar.ValueChanged += new System.EventHandler(this.volumeBar_ValueChanged);
             // 
-            // label1
-            // 
-            resources.ApplyResources(this.label1, "label1");
-            this.label1.Name = "label1";
-            this.label1.UseCompatibleTextRendering = true;
-            // 
-            // FileEffectsControl
+            // FileVolumeControl
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.groupBox1);
-            this.Name = "FileEffectsControl";
+            this.Name = "FileVolumeControl";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.maxRandomUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.minRandomUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fadeOutUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fadeInUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.volumeBar)).EndInit();
@@ -203,7 +261,6 @@ namespace Ares.Editor.Controls
 
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TrackBar volumeBar;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button allVolumeButton;
         private System.Windows.Forms.Button allFadeOutButton;
         private System.Windows.Forms.NumericUpDown fadeOutUpDown;
@@ -213,5 +270,12 @@ namespace Ares.Editor.Controls
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox fadeInUnitBox;
         private System.Windows.Forms.ComboBox fadeOutUnitBox;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.NumericUpDown maxRandomUpDown;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.NumericUpDown minRandomUpDown;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.RadioButton randomButton;
+        private System.Windows.Forms.RadioButton fixedVolumeButton;
     }
 }

@@ -28,9 +28,9 @@ using System.Windows.Forms;
 
 namespace Ares.Editor.Controls
 {
-    public partial class FileEffectsControl : UserControl
+    public partial class FileVolumeControl : UserControl
     {
-        public FileEffectsControl()
+        public FileVolumeControl()
         {
             InitializeComponent();
             ToolTip tt = new ToolTip();
@@ -71,7 +71,11 @@ namespace Ares.Editor.Controls
             if (listen && changeType == Actions.ElementChanges.ChangeType.Changed)
             {
                 listen = false;
+                fixedVolumeButton.Checked = !m_Element.Effects.HasRandomVolume;
+                randomButton.Checked = m_Element.Effects.HasRandomVolume;
                 volumeBar.Value = m_Element.Effects.Volume;
+                minRandomUpDown.Value = m_Element.Effects.MinRandomVolume;
+                maxRandomUpDown.Value = m_Element.Effects.MaxRandomVolume;
                 fadeInUpDown.Value = TimeConversion.GetTimeInUnit(m_Element.Effects.FadeInTime, fadeInUnitBox);
                 fadeOutUpDown.Value = TimeConversion.GetTimeInUnit(m_Element.Effects.FadeOutTime, fadeOutUnitBox);
                 listen = true;
@@ -89,7 +93,11 @@ namespace Ares.Editor.Controls
                 Actions.ElementEffectsChangeAction eeca = action as Actions.ElementEffectsChangeAction;
                 if (eeca.Element == m_Element)
                 {
-                    eeca.SetData(volumeBar.Value, 
+                    eeca.SetData(
+                        randomButton.Checked,
+                        volumeBar.Value, 
+                        (int)minRandomUpDown.Value,
+                        (int)maxRandomUpDown.Value,
                         TimeConversion.GetTimeInMillis(fadeInUpDown, fadeInUnitBox), 
                         TimeConversion.GetTimeInMillis(fadeOutUpDown, fadeOutUnitBox));
                     eeca.Do();
@@ -98,7 +106,10 @@ namespace Ares.Editor.Controls
                 }
             }
             Actions.Actions.Instance.AddNew(new Actions.ElementEffectsChangeAction(m_Element,
+                randomButton.Checked,
                 volumeBar.Value,
+                (int)minRandomUpDown.Value,
+                (int)maxRandomUpDown.Value,
                 TimeConversion.GetTimeInMillis(fadeInUpDown, fadeInUnitBox),
                 TimeConversion.GetTimeInMillis(fadeOutUpDown, fadeOutUnitBox)));
             listen = true;
@@ -119,7 +130,11 @@ namespace Ares.Editor.Controls
             if (m_Element == null || m_Container == null)
                 return;
             listen = false;
-            Actions.Actions.Instance.AddNew(new Actions.AllFileElementsVolumeChangeAction(m_Container, volumeBar.Value));
+            Actions.Actions.Instance.AddNew(new Actions.AllFileElementsVolumeChangeAction(m_Container, 
+                randomButton.Checked,
+                volumeBar.Value,
+                (int)minRandomUpDown.Value,
+                (int)maxRandomUpDown.Value));
             listen = true;
         }
 
@@ -175,6 +190,46 @@ namespace Ares.Editor.Controls
             listen = false;
             fadeOutUpDown.Value = TimeConversion.GetTimeInUnit(m_Element.Effects.FadeOutTime, fadeOutUnitBox);
             listen = true;
+        }
+
+        private void fixedVolumeButton_CheckedChanged(object sender, EventArgs e)
+        {
+            ChangeRandom();
+        }
+
+        private void ChangeRandom()
+        {
+            bool fixedVol = fixedVolumeButton.Checked;
+            volumeBar.Enabled = fixedVol;
+            minRandomUpDown.Enabled = !fixedVol;
+            maxRandomUpDown.Enabled = !fixedVol;
+            if (listen)
+                Commit();
+        }
+
+        private void minRandomUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            if (minRandomUpDown.Value > maxRandomUpDown.Value)
+            {
+                maxRandomUpDown.Value = minRandomUpDown.Value;
+            }
+            if (listen)
+                Commit();
+        }
+
+        private void maxRandomUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            if (maxRandomUpDown.Value < minRandomUpDown.Value)
+            {
+                minRandomUpDown.Value = maxRandomUpDown.Value;
+            }
+            if (listen)
+                Commit();
+        }
+
+        private void randomButton_CheckedChanged(object sender, EventArgs e)
+        {
+            ChangeRandom();
         }
     }
 }

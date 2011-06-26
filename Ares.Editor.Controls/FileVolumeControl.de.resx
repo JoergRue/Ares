@@ -118,16 +118,34 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="volumeBar.Location" type="System.Drawing.Point, System.Drawing">
-    <value>71, 16</value>
+  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>43, 17</value>
+  </data>
+  <data name="label4.Text" xml:space="preserve">
+    <value>Prozent</value>
+  </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>und</value>
   </data>
   <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 17</value>
+    <value>52, 17</value>
   </data>
   <data name="label1.Text" xml:space="preserve">
-    <value>Lautstärke:</value>
+    <value>Zwischen</value>
+  </data>
+  <data name="randomButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>59, 18</value>
+  </data>
+  <data name="randomButton.Text" xml:space="preserve">
+    <value>Zufällig</value>
+  </data>
+  <data name="fixedVolumeButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>44, 18</value>
+  </data>
+  <data name="fixedVolumeButton.Text" xml:space="preserve">
+    <value>Fest</value>
   </data>
   <data name="groupBox1.Text" xml:space="preserve">
-    <value>Effekte</value>
+    <value>Lautstärke</value>
   </data>
 </root>

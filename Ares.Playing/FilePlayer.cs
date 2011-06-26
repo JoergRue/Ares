@@ -60,7 +60,7 @@ namespace Ares.Playing
                 float volume = file.Volume / 100.0f;
                 if (file.Effects != null)
                 {
-                    volume = volume * file.Effects.Volume / 100.0f;
+                    volume = DetermineVolume(file.Effects, volume);
                 }
                 if (file.Effects != null && file.Effects.FadeInTime != 0)
                 {
@@ -163,6 +163,18 @@ namespace Ares.Playing
                     return;
                 }
                 FadeOut(handle, fadeOutTime);
+            }
+        }
+
+        private static float DetermineVolume(Data.IEffects effects, float baseVolume)
+        {
+            if (!effects.HasRandomVolume)
+            {
+                return baseVolume * effects.Volume / 100.0f;
+            }
+            else
+            {
+                return (float)(baseVolume * 0.01 * ((PlayingModule.Randomizer.NextDouble() * (effects.MaxRandomVolume - effects.MinRandomVolume) + effects.MinRandomVolume)));
             }
         }
 
