@@ -37,6 +37,9 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FileEffectsControl));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.allSpeakerButton = new System.Windows.Forms.Button();
+            this.speakerButton = new System.Windows.Forms.Button();
+            this.speakerBox = new System.Windows.Forms.CheckBox();
             this.allVolumeButton = new System.Windows.Forms.Button();
             this.volumeButton = new System.Windows.Forms.Button();
             this.volumeBox = new System.Windows.Forms.CheckBox();
@@ -51,6 +54,10 @@
             // 
             // groupBox1
             // 
+            resources.ApplyResources(this.groupBox1, "groupBox1");
+            this.groupBox1.Controls.Add(this.allSpeakerButton);
+            this.groupBox1.Controls.Add(this.speakerButton);
+            this.groupBox1.Controls.Add(this.speakerBox);
             this.groupBox1.Controls.Add(this.allVolumeButton);
             this.groupBox1.Controls.Add(this.volumeButton);
             this.groupBox1.Controls.Add(this.volumeBox);
@@ -60,10 +67,34 @@
             this.groupBox1.Controls.Add(this.allPitchButton);
             this.groupBox1.Controls.Add(this.pitchButton);
             this.groupBox1.Controls.Add(this.pitchBox);
-            resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
             this.groupBox1.UseCompatibleTextRendering = true;
+            // 
+            // allSpeakerButton
+            // 
+            resources.ApplyResources(this.allSpeakerButton, "allSpeakerButton");
+            this.allSpeakerButton.Image = global::Ares.Editor.Controls.Properties.Resources.Multiple_Selection;
+            this.allSpeakerButton.Name = "allSpeakerButton";
+            this.allSpeakerButton.UseCompatibleTextRendering = true;
+            this.allSpeakerButton.UseVisualStyleBackColor = true;
+            this.allSpeakerButton.Click += new System.EventHandler(this.allSpeakerButton_Click);
+            // 
+            // speakerButton
+            // 
+            resources.ApplyResources(this.speakerButton, "speakerButton");
+            this.speakerButton.Name = "speakerButton";
+            this.speakerButton.UseCompatibleTextRendering = true;
+            this.speakerButton.UseVisualStyleBackColor = true;
+            this.speakerButton.Click += new System.EventHandler(this.speakerButton_Click);
+            // 
+            // speakerBox
+            // 
+            resources.ApplyResources(this.speakerBox, "speakerBox");
+            this.speakerBox.Name = "speakerBox";
+            this.speakerBox.UseCompatibleTextRendering = true;
+            this.speakerBox.UseVisualStyleBackColor = true;
+            this.speakerBox.CheckedChanged += new System.EventHandler(this.speakerBox_CheckedChanged);
             // 
             // allVolumeButton
             // 
@@ -164,5 +195,8 @@
         private System.Windows.Forms.Button allVolumeButton;
         private System.Windows.Forms.Button volumeButton;
         private System.Windows.Forms.CheckBox volumeBox;
+        private System.Windows.Forms.Button allSpeakerButton;
+        private System.Windows.Forms.Button speakerButton;
+        private System.Windows.Forms.CheckBox speakerBox;
     }
 }

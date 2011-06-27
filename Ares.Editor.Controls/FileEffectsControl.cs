@@ -43,6 +43,8 @@ namespace Ares.Editor.Controls
                 allBalanceButton.Enabled = true;
                 volumeButton.Enabled = true;
                 allVolumeButton.Enabled = true;
+                speakerButton.Enabled = true;
+                allSpeakerButton.Enabled = true;
             }
             else
             {
@@ -53,6 +55,8 @@ namespace Ares.Editor.Controls
                 allBalanceButton.Enabled = false;
                 volumeButton.Enabled = false;
                 allVolumeButton.Enabled = false;
+                speakerButton.Enabled = false;
+                allSpeakerButton.Enabled = false;
             }
         }
 
@@ -64,6 +68,7 @@ namespace Ares.Editor.Controls
                 pitchBox.Checked = m_Element.Effects.Pitch.Active;
                 balanceBox.Checked = m_Element.Effects.Balance.Active;
                 volumeBox.Checked = m_Element.Effects.VolumeDB.Active;
+                speakerBox.Checked = m_Element.Effects.SpeakerAssignment.Active;
                 listen = true;
             }
         }
@@ -99,8 +104,8 @@ namespace Ares.Editor.Controls
             if (!listen)
                 return;
             IIntEffect effect = m_Element.Effects.Balance;
-            Actions.Actions.Instance.AddNew(new Actions.IntEffectChangeAction(m_Element, effect,
-                balanceBox.Checked, effect.Random, effect.FixValue, effect.MinRandomValue, effect.MaxRandomValue));
+            Actions.Actions.Instance.AddNew(new Actions.BalanceChangeAction(m_Element, balanceBox.Checked, 
+                effect.Random, effect.FixValue, effect.MinRandomValue, effect.MaxRandomValue));
         }
 
         private void balanceButton_Click(object sender, EventArgs e)
@@ -144,6 +149,32 @@ namespace Ares.Editor.Controls
             IIntEffect effect = m_Element.Effects.VolumeDB;
             Actions.Actions.Instance.AddNew(new Actions.AllFileElementsVolumeDBChangeAction(m_Container,
                 volumeBox.Checked, effect.Random, effect.FixValue, effect.MinRandomValue, effect.MaxRandomValue));
+        }
+
+        private void speakerBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!listen)
+                return;
+            ISpeakerAssignmentEffect effect = m_Element.Effects.SpeakerAssignment;
+            Actions.Actions.Instance.AddNew(new Actions.SpeakerChangeAction(m_Element, speakerBox.Checked,
+                effect.Random, effect.Assignment));
+        }
+
+        private void speakerButton_Click(object sender, EventArgs e)
+        {
+            SpeakersDialog dialog = new SpeakersDialog(m_Element);
+            if (dialog.ShowDialog(Parent) == DialogResult.OK)
+            {
+                dialog.UpdateAction();
+                Actions.Actions.Instance.AddNew(dialog.Action);
+            }
+        }
+
+        private void allSpeakerButton_Click(object sender, EventArgs e)
+        {
+            ISpeakerAssignmentEffect effect = m_Element.Effects.SpeakerAssignment;
+            Actions.Actions.Instance.AddNew(new Actions.AllFileElementsSpeakerChangeAction(m_Container,
+                speakerBox.Checked, effect.Random, effect.Assignment));
         }
 
 

@@ -322,6 +322,15 @@ namespace Ares.Playing {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The configured speaker is not available. ähnelt.
+        /// </summary>
+        internal static string SpeakerNotAvailable {
+            get {
+                return ResourceManager.GetString("SpeakerNotAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Unexpected error: {0} ähnelt.
         /// </summary>
         internal static string UnexpectedError {

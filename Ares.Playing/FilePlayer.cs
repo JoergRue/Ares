@@ -28,13 +28,14 @@ namespace Ares.Playing
         public int PlayFile(ISoundFile file, PlayingFinished callback, bool loop)
         {
             int channel = 0;
+            BASSFlag speakerFlag = GetSpeakerFlag(file);
             channel = Bass.BASS_StreamCreateFile(file.Path, 0, 0, BASSFlag.BASS_STREAM_DECODE);
             if (channel == 0)
             {
                 ErrorHandling.BassErrorOccurred(file.Id, StringResources.FilePlayingError);
                 return 0;
             }
-            channel = Un4seen.Bass.AddOn.Fx.BassFx.BASS_FX_TempoCreate(channel, BASSFlag.BASS_STREAM_AUTOFREE);
+            channel = Un4seen.Bass.AddOn.Fx.BassFx.BASS_FX_TempoCreate(channel, BASSFlag.BASS_STREAM_AUTOFREE | speakerFlag);
             if (channel == 0)
             {
                 ErrorHandling.BassErrorOccurred(file.Id, StringResources.FilePlayingError);
@@ -227,6 +228,81 @@ namespace Ares.Playing
             else
             {
                 return (float)(PlayingModule.Randomizer.NextDouble() * (effect.MaxRandomValue - effect.MinRandomValue) + effect.MinRandomValue);
+            }
+        }
+
+        private static BASSFlag GetSpeakerFlag(ISoundFile file)
+        {
+            if (file.Effects == null || !file.Effects.SpeakerAssignment.Active)
+                return BASSFlag.BASS_DEFAULT;
+            Data.SpeakerAssignment assignment = file.Effects.SpeakerAssignment.Assignment;
+            int speakers = Bass.BASS_GetInfo().speakers;
+            if (file.Effects.SpeakerAssignment.Random)
+            {
+                assignment = (Data.SpeakerAssignment)(PlayingModule.Randomizer.Next(1, speakers + 1));
+            }
+            BASSFlag flag = BASSFlag.BASS_DEFAULT;
+            int neededNrOfSpeakers = 2;
+            switch (assignment)
+            {
+                case Data.SpeakerAssignment.LeftFront:
+                    flag = BASSFlag.BASS_SPEAKER_FRONTLEFT;
+                    break;
+                case Data.SpeakerAssignment.RightFront:
+                    flag = BASSFlag.BASS_SPEAKER_FRONTRIGHT;
+                    break;
+                case Data.SpeakerAssignment.LeftBack:
+                    flag = BASSFlag.BASS_SPEAKER_REARLEFT;
+                    neededNrOfSpeakers = 5;
+                    break;
+                case Data.SpeakerAssignment.RightBack:
+                    flag = BASSFlag.BASS_SPEAKER_REARRIGHT;
+                    neededNrOfSpeakers = 5;
+                    break;
+                case Data.SpeakerAssignment.Center:
+                    flag = BASSFlag.BASS_SPEAKER_CENTER;
+                    neededNrOfSpeakers = 5;
+                    break;
+                case Data.SpeakerAssignment.LeftCenterBack:
+                    flag = BASSFlag.BASS_SPEAKER_REAR2LEFT;
+                    neededNrOfSpeakers = 7;
+                    break;
+                case Data.SpeakerAssignment.RightCenterBack:
+                    flag = BASSFlag.BASS_SPEAKER_REAR2RIGHT;
+                    neededNrOfSpeakers = 7;
+                    break;
+                case Data.SpeakerAssignment.Subwoofer:
+                    flag = BASSFlag.BASS_SPEAKER_LFE;
+                    neededNrOfSpeakers = 5;
+                    break;
+                case Data.SpeakerAssignment.BothFronts:
+                    flag = BASSFlag.BASS_SPEAKER_FRONT;
+                    break;
+                case Data.SpeakerAssignment.BothRears:
+                    flag = BASSFlag.BASS_SPEAKER_REAR;
+                    neededNrOfSpeakers = 5;
+                    break;
+                case Data.SpeakerAssignment.BothCenterRears:
+                    flag = BASSFlag.BASS_SPEAKER_REAR2;
+                    neededNrOfSpeakers = 7;
+                    break;
+                case Data.SpeakerAssignment.CenterAndSubwoofer:
+                    flag = BASSFlag.BASS_SPEAKER_CENLFE;
+                    neededNrOfSpeakers = 5;
+                    break;
+                default:
+                    break;
+            }
+            if (flag == BASSFlag.BASS_DEFAULT)
+                return BASSFlag.BASS_DEFAULT;
+            if (neededNrOfSpeakers > speakers)
+            {
+                ErrorHandling.BassErrorOccurred(file.Id, StringResources.SpeakerNotAvailable);
+                return BASSFlag.BASS_DEFAULT;
+            }
+            else
+            {
+                return flag;
             }
         }
 

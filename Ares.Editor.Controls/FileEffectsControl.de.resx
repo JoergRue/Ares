@@ -118,6 +118,12 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="speakerBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>89, 18</value>
+  </data>
+  <data name="speakerBox.Text" xml:space="preserve">
+    <value>Lautsprecher</value>
+  </data>
   <data name="volumeBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>100, 18</value>
   </data>

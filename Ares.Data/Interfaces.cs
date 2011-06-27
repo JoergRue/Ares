@@ -178,6 +178,37 @@ namespace Ares.Data
     }
 
     /// <summary>
+    /// Speaker assignment enumeration.
+    /// </summary>
+    public enum SpeakerAssignment
+    {
+        Default = 0,
+        LeftFront,
+        RightFront,
+        Center,
+        LeftBack,
+        RightBack,
+        LeftCenterBack,
+        RightCenterBack,
+        Subwoofer,
+        BothFronts,
+        BothRears,
+        BothCenterRears,
+        CenterAndSubwoofer
+    }
+
+    /// <summary>
+    /// Speaker assignment effect.
+    /// </summary>
+    public interface ISpeakerAssignmentEffect : IEffect
+    {
+        /// <summary>
+        /// The assignment.
+        /// </summary>
+        SpeakerAssignment Assignment { get; set; }
+    }
+
+    /// <summary>
     /// Optional effects when playing.
     /// </summary>
     public interface IEffects
@@ -218,7 +249,7 @@ namespace Ares.Data
         IIntEffect Pitch { get; }
 
         /// <summary>
-        /// Balance effect
+        /// Balance effect. Mutually exclusive with Speaker Assignment.
         /// </summary>
         IIntEffect Balance { get; }
 
@@ -226,6 +257,11 @@ namespace Ares.Data
         /// Volume in Dezibel
         /// </summary>
         IIntEffect VolumeDB { get; }
+
+        /// <summary>
+        /// Speaker assignment. Mutally exclusive with Balance.
+        /// </summary>
+        ISpeakerAssignmentEffect SpeakerAssignment { get; }
     }
 
     /// <summary>

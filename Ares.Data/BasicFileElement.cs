@@ -83,6 +83,30 @@ namespace Ares.Data
     }
 
     [Serializable]
+    class SpeakerAssignmentEffect : Effect, ISpeakerAssignmentEffect
+    {
+        public SpeakerAssignment Assignment { get; set; }
+
+        public SpeakerAssignmentEffect()
+            : base("Speakers")
+        {
+            Assignment = SpeakerAssignment.Default;
+        }
+
+        public SpeakerAssignmentEffect(System.Xml.XmlReader reader)
+            : base("Speakers", reader)
+        {
+            Assignment = (SpeakerAssignment)reader.GetIntegerAttributeOrDefault("Speakers_Assignment", (int)SpeakerAssignment.Default);
+        }
+
+        public override void WriteToXml(System.Xml.XmlWriter writer)
+        {
+            base.WriteToXml(writer);
+            writer.WriteAttributeString("Speakers_Assignment", ((int)Assignment).ToString(System.Globalization.CultureInfo.InvariantCulture));
+        }
+    }
+
+    [Serializable]
     class Effects : IEffects
     {
         public int Volume { get; set; }
@@ -103,9 +127,12 @@ namespace Ares.Data
 
         public IIntEffect VolumeDB { get { return m_Volume; } }
 
+        public ISpeakerAssignmentEffect SpeakerAssignment { get { return m_Speakers; } }
+
         private IntEffect m_Pitch;
         private IntEffect m_Balance;
         private IntEffect m_Volume;
+        private SpeakerAssignmentEffect m_Speakers;
 
         internal void WriteToXml(System.Xml.XmlWriter writer)
         {
@@ -119,6 +146,7 @@ namespace Ares.Data
             m_Pitch.WriteToXml(writer);
             m_Balance.WriteToXml(writer);
             m_Volume.WriteToXml(writer);
+            m_Speakers.WriteToXml(writer);
             writer.WriteEndElement();
         }
 
@@ -133,6 +161,7 @@ namespace Ares.Data
             m_Pitch = new IntEffect("Pitch", 0);
             m_Balance = new IntEffect("Balance", 0);
             m_Volume = new IntEffect("Volume", 0);
+            m_Speakers = new SpeakerAssignmentEffect();
         }
 
         internal Effects(System.Xml.XmlReader reader)
@@ -146,6 +175,7 @@ namespace Ares.Data
             m_Pitch = new IntEffect("Pitch", reader, 0);
             m_Balance = new IntEffect("Balance", reader, 0);
             m_Volume = new IntEffect("Volume", reader, 0);
+            m_Speakers = new SpeakerAssignmentEffect(reader);
             if (reader.IsEmptyElement)
             {
                 reader.Read();

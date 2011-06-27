@@ -14,14 +14,14 @@ namespace Ares.Editor.Controls
     public partial class BalanceDialog : Form
     {
 
-        public IntEffectChangeAction Action { get; set; }
+        public BalanceChangeAction Action { get; set; }
 
         public BalanceDialog(IFileElement element)
         {
             InitializeComponent();
             Element = element;
             IIntEffect effect = element.Effects.Balance;
-            Action = new IntEffectChangeAction(element, effect, true, effect.Random, effect.FixValue, effect.MinRandomValue, effect.MaxRandomValue);
+            Action = new BalanceChangeAction(element, true, effect.Random, effect.FixValue, effect.MinRandomValue, effect.MaxRandomValue);
             fixedButton.Checked = !effect.Random;
             randomButton.Checked = effect.Random;
             fixedBar.Value = effect.FixValue * 10;

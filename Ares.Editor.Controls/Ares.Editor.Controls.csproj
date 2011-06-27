@@ -112,6 +112,12 @@
     <Compile Include="BalanceDialog.Designer.cs">
       <DependentUpon>BalanceDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="SpeakersDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SpeakersDialog.Designer.cs">
+      <DependentUpon>SpeakersDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="VolumeDBDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -222,6 +228,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BalanceDialog.resx">
       <DependentUpon>BalanceDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SpeakersDialog.de.resx">
+      <DependentUpon>SpeakersDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SpeakersDialog.resx">
+      <DependentUpon>SpeakersDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="VolumeDBDialog.de.resx">
       <DependentUpon>VolumeDBDialog.cs</DependentUpon>

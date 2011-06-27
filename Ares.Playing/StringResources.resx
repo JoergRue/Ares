@@ -207,4 +207,7 @@
   <data name="SetEffectError" xml:space="preserve">
     <value>Error setting an effect: {0}</value>
   </data>
+  <data name="SpeakerNotAvailable" xml:space="preserve">
+    <value>The configured speaker is not available.</value>
+  </data>
 </root>

@@ -85,6 +85,18 @@ namespace Ares.Playing
             }
         }
 
+        public static void ErrorOccurred(int elementID, String message)
+        {
+            if (PlayingModule.ThePlayer.ElementCallbacks != null)
+            {
+                PlayingModule.ThePlayer.ElementCallbacks.ErrorOccurred(elementID, message);
+            }
+            else if (PlayingModule.ThePlayer.ProjectCallbacks != null)
+            {
+                PlayingModule.ThePlayer.ProjectCallbacks.ErrorOccurred(elementID, message);
+            }
+        }
+
         private static String GetMsgForError(Un4seen.Bass.BASSError error)
         {
             switch (error)
