@@ -688,14 +688,14 @@ namespace Ares.Editor
                 // walk to the roots; find the topmost root which is selected
                 TreeNode root = node;
                 TreeNode selRoot = node;
-                while (root != null && root.Parent != null)
+                while (root != null && root.Parent != null && root.Parent.Parent != null) // do not include the topmost root node
                 {
                     if (selectedElements.ContainsKey(root.Parent))
                         selRoot = root.Parent;
                     root = root.Parent;
                 }
                 // if it wasn't already added from another element, add it
-                if (!rootElements.ContainsKey(selRoot))
+                if (!rootElements.ContainsKey(selRoot) && root.Parent != null)
                     rootElements.Add(selRoot, null);
             }
             // now take the action on all selected roots
@@ -1234,6 +1234,15 @@ namespace Ares.Editor
             else if (e.KeyCode == Keys.Return)
             {
                 DefaultNodeAction();
+            }
+            else if (e.KeyCode == Keys.Delete)
+            {
+                TreeNode parent = SelectedNode.Parent;
+                DeleteElements();
+                if (parent != null)
+                {
+                    SelectedNode = parent;
+                }
             }
         }
 
