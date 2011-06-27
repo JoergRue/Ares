@@ -208,6 +208,24 @@ namespace Ares.Data
         SpeakerAssignment Assignment { get; set; }
     }
 
+    public interface IBalanceEffect : IIntEffect
+    {
+        /// <summary>
+        /// Whether the balance is being panned
+        /// </summary>
+        bool IsPanning { get; set; }
+
+        /// <summary>
+        /// Start value for panning
+        /// </summary>
+        int PanningStart { get; set; }
+
+        /// <summary>
+        /// End value for panning
+        /// </summary>
+        int PanningEnd { get; set; }
+    }
+
     /// <summary>
     /// Optional effects when playing.
     /// </summary>
@@ -251,7 +269,7 @@ namespace Ares.Data
         /// <summary>
         /// Balance effect. Mutually exclusive with Speaker Assignment.
         /// </summary>
-        IIntEffect Balance { get; }
+        IBalanceEffect Balance { get; }
 
         /// <summary>
         /// Volume in Dezibel

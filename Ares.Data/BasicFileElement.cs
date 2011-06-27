@@ -83,6 +83,38 @@ namespace Ares.Data
     }
 
     [Serializable]
+    class BalanceEffect : IntEffect, IBalanceEffect
+    {
+        public bool IsPanning { get; set; }
+        public int PanningStart { get; set; }
+        public int PanningEnd { get; set; }
+
+        public BalanceEffect()
+            : base("Balance", 0)
+        {
+            IsPanning = false;
+            PanningStart = 0;
+            PanningEnd = 0;
+        }
+
+        public BalanceEffect(System.Xml.XmlReader reader)
+            : base("Balance", reader, 0)
+        {
+            IsPanning = reader.GetBooleanAttributeOrDefault("Balance_Panning", false);
+            PanningStart = reader.GetIntegerAttributeOrDefault("Balance_PanStart", 0);
+            PanningEnd = reader.GetIntegerAttributeOrDefault("Balance_PanEnd", 0);
+        }
+
+        public override void WriteToXml(System.Xml.XmlWriter writer)
+        {
+            base.WriteToXml(writer);
+            writer.WriteAttributeString("Balance_Panning", IsPanning ? "true" : "false");
+            writer.WriteAttributeString("Balance_PanStart", PanningStart.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            writer.WriteAttributeString("Balance_PanEnd", PanningEnd.ToString(System.Globalization.CultureInfo.InvariantCulture));
+        }
+    }
+
+    [Serializable]
     class SpeakerAssignmentEffect : Effect, ISpeakerAssignmentEffect
     {
         public SpeakerAssignment Assignment { get; set; }
@@ -123,14 +155,14 @@ namespace Ares.Data
 
         public IIntEffect Pitch { get { return m_Pitch; } }
 
-        public IIntEffect Balance { get { return m_Balance; } }
+        public IBalanceEffect Balance { get { return m_Balance; } }
 
         public IIntEffect VolumeDB { get { return m_Volume; } }
 
         public ISpeakerAssignmentEffect SpeakerAssignment { get { return m_Speakers; } }
 
         private IntEffect m_Pitch;
-        private IntEffect m_Balance;
+        private BalanceEffect m_Balance;
         private IntEffect m_Volume;
         private SpeakerAssignmentEffect m_Speakers;
 
@@ -159,7 +191,7 @@ namespace Ares.Data
             MinRandomVolume = 50;
             MaxRandomVolume = 100;
             m_Pitch = new IntEffect("Pitch", 0);
-            m_Balance = new IntEffect("Balance", 0);
+            m_Balance = new BalanceEffect();
             m_Volume = new IntEffect("Volume", 0);
             m_Speakers = new SpeakerAssignmentEffect();
         }
@@ -173,7 +205,7 @@ namespace Ares.Data
             MinRandomVolume = reader.GetIntegerAttributeOrDefault("MinRandomVolume", 50);
             MaxRandomVolume = reader.GetIntegerAttributeOrDefault("MaxRandomVolume", 100);
             m_Pitch = new IntEffect("Pitch", reader, 0);
-            m_Balance = new IntEffect("Balance", reader, 0);
+            m_Balance = new BalanceEffect(reader);
             m_Volume = new IntEffect("Volume", reader, 0);
             m_Speakers = new SpeakerAssignmentEffect(reader);
             if (reader.IsEmptyElement)

@@ -103,9 +103,7 @@ namespace Ares.Editor.Controls
         {
             if (!listen)
                 return;
-            IIntEffect effect = m_Element.Effects.Balance;
-            Actions.Actions.Instance.AddNew(new Actions.BalanceChangeAction(m_Element, balanceBox.Checked, 
-                effect.Random, effect.FixValue, effect.MinRandomValue, effect.MaxRandomValue));
+            Actions.Actions.Instance.AddNew(new Actions.BalanceChangeAction(m_Element, balanceBox.Checked));
         }
 
         private void balanceButton_Click(object sender, EventArgs e)
@@ -120,9 +118,8 @@ namespace Ares.Editor.Controls
 
         private void allBalanceButton_Click(object sender, EventArgs e)
         {
-            IIntEffect effect = m_Element.Effects.Balance;
-            Actions.Actions.Instance.AddNew(new Actions.AllFileElementsBalanceChangeAction(m_Container,
-                balanceBox.Checked, effect.Random, effect.FixValue, effect.MinRandomValue, effect.MaxRandomValue));
+            IBalanceEffect effect = m_Element.Effects.Balance;
+            Actions.Actions.Instance.AddNew(new Actions.AllFileElementsBalanceChangeAction(m_Container, effect));
         }
 
         private void volumeBox_CheckedChanged(object sender, EventArgs e)

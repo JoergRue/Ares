@@ -30,11 +30,16 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BalanceDialog));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.moveToUpDown = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
+            this.moveFromUpDown = new System.Windows.Forms.NumericUpDown();
+            this.movingButton = new System.Windows.Forms.RadioButton();
             this.label3 = new System.Windows.Forms.Label();
             this.maxRandomUpDown = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             this.minRandomUpDown = new System.Windows.Forms.NumericUpDown();
-            this.label1 = new System.Windows.Forms.Label();
             this.randomButton = new System.Windows.Forms.RadioButton();
             this.fixedBar = new System.Windows.Forms.TrackBar();
             this.fixedButton = new System.Windows.Forms.RadioButton();
@@ -44,6 +49,8 @@
             this.cancelButton = new System.Windows.Forms.Button();
             this.okButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.moveToUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.moveFromUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.maxRandomUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.minRandomUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fixedBar)).BeginInit();
@@ -53,17 +60,79 @@
             // groupBox1
             // 
             resources.ApplyResources(this.groupBox1, "groupBox1");
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.moveToUpDown);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.moveFromUpDown);
+            this.groupBox1.Controls.Add(this.movingButton);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.maxRandomUpDown);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.minRandomUpDown);
-            this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.randomButton);
             this.groupBox1.Controls.Add(this.fixedBar);
             this.groupBox1.Controls.Add(this.fixedButton);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
             this.groupBox1.UseCompatibleTextRendering = true;
+            // 
+            // label5
+            // 
+            resources.ApplyResources(this.label5, "label5");
+            this.label5.Name = "label5";
+            this.label5.UseCompatibleTextRendering = true;
+            // 
+            // label4
+            // 
+            resources.ApplyResources(this.label4, "label4");
+            this.label4.Name = "label4";
+            this.label4.UseCompatibleTextRendering = true;
+            // 
+            // moveToUpDown
+            // 
+            resources.ApplyResources(this.moveToUpDown, "moveToUpDown");
+            this.moveToUpDown.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.moveToUpDown.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            -2147483648});
+            this.moveToUpDown.Name = "moveToUpDown";
+            // 
+            // label1
+            // 
+            resources.ApplyResources(this.label1, "label1");
+            this.label1.Name = "label1";
+            this.label1.UseCompatibleTextRendering = true;
+            // 
+            // moveFromUpDown
+            // 
+            resources.ApplyResources(this.moveFromUpDown, "moveFromUpDown");
+            this.moveFromUpDown.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.moveFromUpDown.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            -2147483648});
+            this.moveFromUpDown.Name = "moveFromUpDown";
+            // 
+            // movingButton
+            // 
+            resources.ApplyResources(this.movingButton, "movingButton");
+            this.movingButton.Name = "movingButton";
+            this.movingButton.TabStop = true;
+            this.movingButton.UseCompatibleTextRendering = true;
+            this.movingButton.UseVisualStyleBackColor = true;
+            this.movingButton.CheckedChanged += new System.EventHandler(this.movingButton_CheckedChanged);
             // 
             // label3
             // 
@@ -108,12 +177,6 @@
             -2147483648});
             this.minRandomUpDown.Name = "minRandomUpDown";
             this.minRandomUpDown.ValueChanged += new System.EventHandler(this.minRandomUpDown_ValueChanged);
-            // 
-            // label1
-            // 
-            resources.ApplyResources(this.label1, "label1");
-            this.label1.Name = "label1";
-            this.label1.UseCompatibleTextRendering = true;
             // 
             // randomButton
             // 
@@ -185,7 +248,7 @@
             this.okButton.UseCompatibleTextRendering = true;
             this.okButton.UseVisualStyleBackColor = true;
             // 
-            // PitchDialog
+            // BalanceDialog
             // 
             this.AcceptButton = this.okButton;
             resources.ApplyResources(this, "$this");
@@ -195,10 +258,12 @@
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
-            this.Name = "PitchDialog";
+            this.Name = "BalanceDialog";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PitchDialog_FormClosing);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.moveToUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.moveFromUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.maxRandomUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.minRandomUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fixedBar)).EndInit();
@@ -213,7 +278,6 @@
         private System.Windows.Forms.NumericUpDown maxRandomUpDown;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.NumericUpDown minRandomUpDown;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.RadioButton randomButton;
         private System.Windows.Forms.TrackBar fixedBar;
         private System.Windows.Forms.RadioButton fixedButton;
@@ -223,6 +287,12 @@
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.NumericUpDown moveToUpDown;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.NumericUpDown moveFromUpDown;
+        private System.Windows.Forms.RadioButton movingButton;
 
     }
 }

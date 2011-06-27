@@ -124,13 +124,7 @@ namespace Ares.Playing
                 }
                 if (file.Effects != null && file.Effects.Balance.Active)
                 {
-                    float balanceValue = DetermineIntEffectValue(file.Effects.Balance);
-                    // balance is stored as [-10..10], but must be set as [-1..1]
-                    if (!Bass.BASS_ChannelSetAttribute(channel, BASSAttribute.BASS_ATTRIB_PAN, balanceValue / 10.0f))
-                    {
-                        ErrorHandling.BassErrorOccurred(file.Id, StringResources.SetEffectError);
-                        return 0;
-                    }
+                    SetBalanceEffect(channel, file.Id, file.Effects.Balance);
                 }
                 if (file.Effects != null && file.Effects.VolumeDB.Active)
                 {
@@ -303,6 +297,53 @@ namespace Ares.Playing
             else
             {
                 return flag;
+            }
+        }
+
+        private static bool SetBalanceEffect(int channel, int id, Data.IBalanceEffect effect)
+        {
+            if (!effect.IsPanning)
+            {
+                float balanceValue = DetermineIntEffectValue(effect);
+                // balance is stored as [-10..10], but must be set as [-1..1]
+                if (!Bass.BASS_ChannelSetAttribute(channel, BASSAttribute.BASS_ATTRIB_PAN, balanceValue / 10.0f))
+                {
+                    ErrorHandling.BassErrorOccurred(id, StringResources.SetEffectError);
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                long totalLength = Bass.BASS_ChannelGetLength(channel);
+                if (totalLength == -1)
+                {
+                    ErrorHandling.BassErrorOccurred(id, StringResources.SetEffectError);
+                    return false;
+                }
+                double totalLengthSeconds = Bass.BASS_ChannelBytes2Seconds(channel, totalLength);
+                if (totalLengthSeconds < 0)
+                {
+                    ErrorHandling.BassErrorOccurred(id, StringResources.SetEffectError);
+                    return false;
+                }
+                // first set to start value
+                // balance is stored as [-10..10], but must be set as [-1..1]
+                if (!Bass.BASS_ChannelSetAttribute(channel, BASSAttribute.BASS_ATTRIB_PAN, effect.PanningStart / 10.0f))
+                {
+                    ErrorHandling.BassErrorOccurred(id, StringResources.SetEffectError);
+                    return false;
+                }
+                // now slide over all time to end value
+                if (!Bass.BASS_ChannelSlideAttribute(channel, BASSAttribute.BASS_ATTRIB_PAN, effect.PanningEnd / 10.0f, (int)(totalLengthSeconds * 1000)))
+                {
+                    ErrorHandling.BassErrorOccurred(id, StringResources.SetEffectError);
+                    return false;
+                }
+                return true;
             }
         }
 

@@ -20,31 +20,38 @@ namespace Ares.Editor.Controls
         {
             InitializeComponent();
             Element = element;
-            IIntEffect effect = element.Effects.Balance;
-            Action = new BalanceChangeAction(element, true, effect.Random, effect.FixValue, effect.MinRandomValue, effect.MaxRandomValue);
-            fixedButton.Checked = !effect.Random;
+            IBalanceEffect effect = element.Effects.Balance;
+            Action = new BalanceChangeAction(element, true);
+            fixedButton.Checked = !effect.Random && !effect.IsPanning;
             randomButton.Checked = effect.Random;
+            movingButton.Checked = effect.IsPanning;
             fixedBar.Value = effect.FixValue * 10;
             minRandomUpDown.Value = effect.MinRandomValue;
             maxRandomUpDown.Value = effect.MaxRandomValue;
+            moveFromUpDown.Value = effect.PanningStart;
+            moveToUpDown.Value = effect.PanningEnd;
+            UpdateState();
         }
 
         private void fixedButton_CheckedChanged(object sender, EventArgs e)
         {
-            UpdateFixed();
+            UpdateState();
         }
 
-        private void UpdateFixed()
+        private void UpdateState()
         {
             bool fix = fixedButton.Checked;
+            bool move = movingButton.Checked;
             fixedBar.Enabled = fix;
-            minRandomUpDown.Enabled = !fix;
-            maxRandomUpDown.Enabled = !fix;
+            minRandomUpDown.Enabled = !fix && !move;
+            maxRandomUpDown.Enabled = !fix && !move;
+            moveFromUpDown.Enabled = move;
+            moveToUpDown.Enabled = move;
         }
 
         private void randomButton_CheckedChanged(object sender, EventArgs e)
         {
-            UpdateFixed();
+            UpdateState();
         }
 
         private void minRandomUpDown_ValueChanged(object sender, EventArgs e)
@@ -68,10 +75,13 @@ namespace Ares.Editor.Controls
         public void UpdateAction()
         {
             bool random = randomButton.Checked;
+            bool panning = movingButton.Checked;
             int fixValue = fixedBar.Value / 10;
             int minRandomValue = (int)minRandomUpDown.Value;
             int maxRandomValue = (int)maxRandomUpDown.Value;
-            Action.SetData(true, random, fixValue, minRandomValue, maxRandomValue);
+            int moveFromValue = (int)moveFromUpDown.Value;
+            int moveToValue = (int)moveToUpDown.Value;
+            Action.SetData(true, random, fixValue, minRandomValue, maxRandomValue, panning, moveFromValue, moveToValue);
         }
 
         private bool m_InPlay = false;
@@ -113,6 +123,11 @@ namespace Ares.Editor.Controls
         private void stopButton_Click(object sender, EventArgs e)
         {
             Actions.Playing.Instance.StopElement(Element);
+        }
+
+        private void movingButton_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateState();
         }
     }
 }

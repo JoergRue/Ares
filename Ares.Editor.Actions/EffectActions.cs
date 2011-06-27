@@ -137,25 +137,54 @@ namespace Ares.Editor.Actions
     public class BalanceChangeAction : IntEffectChangeAction
     {
         private bool m_OldSpeakers;
+        private bool m_OldPanning;
+        private int m_OldPanningStart;
+        private int m_OldPanningEnd;
+        private bool m_NewPanning;
+        private int m_NewPanningStart;
+        private int m_NewPanningEnd;
 
-        public BalanceChangeAction(IFileElement element, 
-            bool active, bool random, int fixValue, int minRandomValue, int maxRandomValue)
-            : base(element, element.Effects.Balance, active, random, fixValue, minRandomValue, maxRandomValue)
+        public BalanceChangeAction(IFileElement element, bool active)
+            : base(element, element.Effects.Balance, active, element.Effects.Balance.Random,
+            element.Effects.Balance.FixValue, element.Effects.Balance.MinRandomValue, element.Effects.Balance.MaxRandomValue)
         {
             m_OldSpeakers = element.Effects.SpeakerAssignment.Active;
+            IBalanceEffect effect = element.Effects.Balance;
+            m_OldPanning = effect.IsPanning;
+            m_OldPanningStart = effect.PanningStart;
+            m_OldPanningEnd = effect.PanningEnd;
+            m_NewPanning = m_OldPanning;
+            m_NewPanningStart = m_OldPanningStart;
+            m_NewPanningEnd = m_OldPanningEnd;
         }
 
         public override void Do()
         {
             if (m_Element.Effects.SpeakerAssignment.Active && m_NewActive)
                 m_Element.Effects.SpeakerAssignment.Active = false;
+            IBalanceEffect effect = m_Element.Effects.Balance;
+            effect.IsPanning = m_NewPanning;
+            effect.PanningStart = m_NewPanningStart;
+            effect.PanningEnd = m_NewPanningEnd;
             base.Do();
         }
 
         public override void Undo()
         {
             m_Element.Effects.SpeakerAssignment.Active = m_OldSpeakers;
+            IBalanceEffect effect = m_Element.Effects.Balance;
+            effect.IsPanning = m_OldPanning;
+            effect.PanningStart = m_OldPanningStart;
+            effect.PanningEnd = m_OldPanningEnd;
             base.Undo();
+        }
+
+        public void SetData(bool active, bool random, int fixValue, int minRandomValue, int maxRandomValue, bool pan, int panStart, int panEnd)
+        {
+            base.SetData(active, random, fixValue, minRandomValue, maxRandomValue);
+            m_NewPanning = pan;
+            m_NewPanningStart = panStart;
+            m_NewPanningEnd = panEnd;
         }
     }
 
@@ -303,14 +332,29 @@ namespace Ares.Editor.Actions
     public class AllFileElementsBalanceChangeAction : AllFileElementsIntEffectChangeAction
     {
         private List<bool> m_OldSpeakers;
+        private List<bool> m_OldPanning;
+        private List<int> m_OldPanningStarts;
+        private List<int> m_OldPanningEnds;
+        private bool m_NewPanning;
+        private int m_NewPanningStart;
+        private int m_NewPanningEnd;
 
-        public AllFileElementsBalanceChangeAction(IGeneralElementContainer container, bool active, bool random, int fixValue, int minRandomValue, int maxRandomValue)
+        public AllFileElementsBalanceChangeAction(IGeneralElementContainer container, IBalanceEffect newValues)
         {
             m_OldSpeakers = new List<bool>();
-            SetValues(container, active, random, fixValue, minRandomValue, maxRandomValue);
+            m_OldPanning = new List<bool>();
+            m_OldPanningStarts = new List<int>();
+            m_OldPanningEnds = new List<int>();
+            SetValues(container, newValues.Active, newValues.Random, newValues.FixValue, newValues.MinRandomValue, newValues.MaxRandomValue);
+            m_NewPanning = newValues.IsPanning;
+            m_NewPanningStart = newValues.PanningStart;
+            m_NewPanningEnd = newValues.PanningEnd;
             foreach (IFileElement element in m_FileElements)
             {
                 m_OldSpeakers.Add(element.Effects.SpeakerAssignment.Active);
+                m_OldPanning.Add(element.Effects.Balance.IsPanning);
+                m_OldPanningStarts.Add(element.Effects.Balance.PanningStart);
+                m_OldPanningEnds.Add(element.Effects.Balance.PanningEnd);
             }
         }
 
@@ -327,6 +371,10 @@ namespace Ares.Editor.Actions
                 {
                     element.Effects.SpeakerAssignment.Active = false;
                 }
+                IBalanceEffect effect = element.Effects.Balance;
+                effect.IsPanning = m_NewPanning;
+                effect.PanningStart = m_NewPanningStart;
+                effect.PanningEnd = m_NewPanningEnd;
             }
             base.Do();
         }
@@ -336,6 +384,10 @@ namespace Ares.Editor.Actions
             for (int i = 0; i < m_FileElements.Count; ++i)
             {
                 m_FileElements[i].Effects.SpeakerAssignment.Active = m_OldSpeakers[i];
+                IBalanceEffect effect = m_FileElements[i].Effects.Balance;
+                effect.IsPanning = m_OldPanning[i];
+                effect.PanningStart = m_OldPanningStarts[i];
+                effect.PanningEnd = m_OldPanningEnds[i];
             }
             base.Undo();
         }
