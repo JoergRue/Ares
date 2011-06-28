@@ -874,6 +874,62 @@ namespace Ares.Editor
         {
             ShowFileExplorer(FileType.Sound);
         }
+
+        private void usedFilesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ModelInfo.FileLists lists = new ModelInfo.FileLists();
+            try
+            {
+                String tempFileName = System.IO.Path.GetTempFileName() + ".txt";
+                using (System.IO.StreamWriter writer = new System.IO.StreamWriter(tempFileName))
+                {
+                    foreach (String path in lists.GetAllFilePaths(m_CurrentProject).OrderBy(x => x))
+                    {
+                        writer.WriteLine(path);
+                    }
+                    writer.Flush();
+                }
+                System.Diagnostics.Process.Start(tempFileName);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, String.Format(StringResources.WriteFileListError, ex.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void usedKeysToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                KeysConverter converter = new KeysConverter();
+                String tempFileName = System.IO.Path.GetTempFileName() + ".txt";
+                using (System.IO.StreamWriter writer = new System.IO.StreamWriter(tempFileName))
+                {
+                    foreach (Data.IMode mode in m_CurrentProject.GetModes())
+                    {
+                        String modeKey = mode.KeyCode != 0 ? converter.ConvertToString((System.Windows.Forms.Keys)mode.KeyCode) : StringResources.NoKey;
+                        String line = modeKey + " - " + mode.Title;
+                        writer.WriteLine(line);
+                        writer.WriteLine(new String('=', line.Length));
+                        foreach (Data.IModeElement element in mode.GetElements())
+                        {
+                            String keyString = element.Trigger != null && element.Trigger.TriggerType == Data.TriggerType.Key ?
+                                converter.ConvertToString((System.Windows.Forms.Keys)((Data.IKeyTrigger)element.Trigger).KeyCode) : StringResources.NoKey;
+                            writer.WriteLine(keyString + " - " + element.Title);
+                        }
+                        writer.WriteLine();
+                    }
+                    writer.WriteLine(StringResources.General);
+                    writer.WriteLine();
+                    writer.Flush();
+                }
+                System.Diagnostics.Process.Start(tempFileName);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, String.Format(StringResources.WriteFileListError, ex.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 
     public static class ControlHelpers

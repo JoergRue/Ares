@@ -138,6 +138,19 @@
   <data name="FlePlayed" xml:space="preserve">
     <value>Fehler bei Datei: {0}</value>
   </data>
+  <data name="General" xml:space="preserve">
+    <value>Allgemein
+=========
+Esc               - Stoppt alle Geräusche und Musik
+Pfeil nach oben   - Erhöht die Gesamtlautstärke
+Pfeil nach unten  - Verringert die Gesamtlautstärke
+Bild hoch         - Erhöht die Geräuschlautstärke
+Bild runter       - Verringert die Geräuschlautstärke
+Einfg             - Erhöht die Musiklautstärke
+Entf              - Verrringert die Musiklautstärke
+Pfeil nach rechts - Nächstes Musikstück
+Pfeil nach links  - Vorheriges Musikstück</value>
+  </data>
   <data name="HelpPage" xml:space="preserve">
     <value>http://aresrpg.sourceforge.net/hilfe/Editor.html</value>
   </data>
@@ -213,6 +226,14 @@ Soll es jetzt gespeichert werden?</value>
   </data>
   <data name="Unknown" xml:space="preserve">
     <value>Unbekannt</value>
+  </data>
+  <data name="WriteFileListError" xml:space="preserve">
+    <value>Dateiliste konnte nicht geschrieben werden. Grund:
+{0}</value>
+  </data>
+  <data name="WriteKeyListError" xml:space="preserve">
+    <value>Tasten konnten nicht geschrieben werden. Grund:
+{0}</value>
   </data>
   <data name="WriteSettingsError" xml:space="preserve">
     <value>Einstellungen konnten nicht gespeichert werden. Grund:

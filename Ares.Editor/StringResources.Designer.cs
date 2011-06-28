@@ -124,6 +124,25 @@ namespace Ares.Editor {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die General
+        ///=======
+        ///Esc       - Stop all sounds and music
+        ///Up        - Increase overall volume
+        ///Down      - Decrease overall volume
+        ///Page Up   - Increase sound volume
+        ///Page Down - Decrease sound volume
+        ///Ins       - Increase music volume
+        ///Del       - Decrease music volume
+        ///Right     - Next music title
+        ///Left      - Previous music title ähnelt.
+        /// </summary>
+        internal static string General {
+            get {
+                return ResourceManager.GetString("General", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die http://aresrpg.sourceforge.net/en/hilfe/Editor.html ähnelt.
         /// </summary>
         internal static string HelpPage {
@@ -339,6 +358,26 @@ namespace Ares.Editor {
         internal static string Unknown {
             get {
                 return ResourceManager.GetString("Unknown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die File list could not be written. Reason:
+        ///{0} ähnelt.
+        /// </summary>
+        internal static string WriteFileListError {
+            get {
+                return ResourceManager.GetString("WriteFileListError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Keys could not be written. Reason:
+        ///{0} ähnelt.
+        /// </summary>
+        internal static string WriteKeyListError {
+            get {
+                return ResourceManager.GetString("WriteKeyListError", resourceCulture);
             }
         }
         

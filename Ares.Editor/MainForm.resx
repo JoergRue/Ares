@@ -120,8 +120,8 @@
   <data name="&gt;&gt;helpOnlineToolStripMenuItem.Name" xml:space="preserve">
     <value>helpOnlineToolStripMenuItem</value>
   </data>
-  <data name="&gt;&gt;checkForUpdateToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="usedFilesToolStripMenuItem.Text" xml:space="preserve">
+    <value>Used Files ...</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="toolStripSeparator3.Size" type="System.Drawing.Size, System.Drawing">
@@ -129,6 +129,9 @@
   </data>
   <data name="&gt;&gt;stopButton.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="usedKeysToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>193, 22</value>
   </data>
   <data name="openButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -180,6 +183,9 @@
   <data name="redoButton.Text" xml:space="preserve">
     <value>Redo</value>
   </data>
+  <data name="&gt;&gt;checkForUpdateToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;fileToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -203,6 +209,12 @@
   </data>
   <data name="editMenu.Text" xml:space="preserve">
     <value>Edit</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator9.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;saveAsToolStripMenuItem.Name" xml:space="preserve">
+    <value>saveAsToolStripMenuItem</value>
   </data>
   <data name="menuStrip1.Size" type="System.Drawing.Size, System.Drawing">
     <value>1008, 24</value>
@@ -265,7 +277,7 @@
     <value>F9</value>
   </data>
   <data name="recentMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>158, 22</value>
+    <value>160, 22</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="dockPanel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
@@ -275,10 +287,10 @@
     <value>$this</value>
   </data>
   <data name="openToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>158, 22</value>
+    <value>160, 22</value>
   </data>
   <data name="toolStripSeparator2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>155, 6</value>
+    <value>157, 6</value>
   </data>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>6, 13</value>
@@ -337,8 +349,11 @@
   <data name="redoToolStripMenuItem.Text" xml:space="preserve">
     <value>Redo</value>
   </data>
+  <data name="&gt;&gt;usedFilesToolStripMenuItem.Name" xml:space="preserve">
+    <value>usedFilesToolStripMenuItem</value>
+  </data>
   <data name="newToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>158, 22</value>
+    <value>160, 22</value>
   </data>
   <data name="exitToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
     <value>Alt+F4</value>
@@ -414,7 +429,7 @@
     <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="saveToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>158, 22</value>
+    <value>160, 22</value>
   </data>
   <data name="&gt;&gt;projectErrorsToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -452,6 +467,9 @@
   <data name="&gt;&gt;openFileDialog.Type" xml:space="preserve">
     <value>System.Windows.Forms.OpenFileDialog, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;usedFilesToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;fileToolStripMenuItem.Name" xml:space="preserve">
     <value>fileToolStripMenuItem</value>
   </data>
@@ -482,6 +500,9 @@
   <data name="dummyToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>117, 22</value>
   </data>
+  <data name="&gt;&gt;usedKeysToolStripMenuItem.Name" xml:space="preserve">
+    <value>usedKeysToolStripMenuItem</value>
+  </data>
   <data name="saveButton.Text" xml:space="preserve">
     <value>Save Project</value>
   </data>
@@ -499,6 +520,9 @@
   </data>
   <data name="&gt;&gt;openButton.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="stopButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -525,11 +549,14 @@
   <data name="&gt;&gt;editMenu.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="extrasToolStripMenuItem.Text" xml:space="preserve">
+    <value>Extras</value>
+  </data>
   <data name="&gt;&gt;fileSystemWatcher1.Type" xml:space="preserve">
     <value>System.IO.FileSystemWatcher, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="redoToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>144, 22</value>
+    <value>146, 22</value>
   </data>
   <data name="projectErrorsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>193, 22</value>
@@ -547,7 +574,7 @@
     <value>0, 0</value>
   </data>
   <data name="saveAsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>158, 22</value>
+    <value>160, 22</value>
   </data>
   <data name="openFileDialog.Filter" xml:space="preserve">
     <value>Ares projects|*.ares|All files|*.*</value>
@@ -579,6 +606,9 @@
   </data>
   <data name="toolStrip1.Size" type="System.Drawing.Size, System.Drawing">
     <value>1008, 25</value>
+  </data>
+  <data name="&gt;&gt;usedKeysToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;editMenu.Name" xml:space="preserve">
     <value>editMenu</value>
@@ -641,13 +671,13 @@
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAADsIAAA7CARUoSoAAAAGfSURBVDhPjZJNSwJRFIaHoJW0ahv0A1q1qE3UvnLTumX9
-        iSDoB+SmQiGtCDOwAiENQqEvKsokJPxA0xrEL8xv0xxnxnm7o83VsNQLh3O5c9/n3POeYZiflckscoKw
-        EICBATwMBGGejcfVvPK9a64HVFZ+hQihBc5I9jf3jbPy9HFPiBhQPVPBPhGdMk0xgRSCU7BcenFkd8Nk
-        c+LA5lzvAPIacllLYkMWycvcfImehFk5A3ZOrjE5t9wJYf2MwD4MS9hs9o/3QeCKZG4ciI78QEkNkx2O
-        e28DYrQ+auhLRFHtoi3IFUl16gnWKGDLeN4QK9EClGduqGCXAMIDLROxTQGCWIcMUUC/vJAyY6v10JAO
-        FgKIjQLZFTIBAxVLkoRKlUcqW2kAJmaX8Od09iy3VNS+qfEicsUqIslid4D+6LIDINYllCo1JNJlvEZy
-        3QG6Q0cHoMoJSOe/wMYL8ITS3QFyf+1LNq7wySGaKiHAZuHyJfsHtBsXjubxEvzAnTvWP6DdON9bBk5P
-        AhdPkf4Ayrz/y/+OUZmxfKFXyP/BN0ltN09Hr6SzAAAAAElFTkSuQmCC
+        CSHoB+SmQiGtCDPQAiENQiErLMgkJPxA0xLxC/PbNHVmnLc76lwNS71wOJc7933OPe8ZhumsbHa9znFr
+        AWgZwMOA41YjiYSclb4PzM2AzMwqiBAq4Ipkf3vfOqssng+F8AHZCxWcENEl0xYTSDG4AJPdC6PVDb3F
+        iVOLc6cPyCrJZRWJXVEkLkP7JRoSBukMOLy4w/zKZj8k4me4kGNSwF67f3yMA7ck12eB2FQHSmrorbA9
+        elsQnflJSV/C83IXbUGsSKpTT7BNAfu665ZYii6gsnRPBUcEEB7rmogDCuD4JkSIBPrlhZCd2WqGJtQw
+        EUB8GsgpyAS0VCwIAqo1FulctQWYW97An9M5NjmoqHfTYHnkSzVEU6XBAI3R3gfgmwLK1QaSmQreovnB
+        APWZrQ9Qq3PIFL4RSRThCWUGA8T+epdoXPGrjli6jEAkB5cvNTqg17hwrIDX4Cce3PHRAb3G+d6zcHqS
+        uHmOjgaQ5v1f/neM0ozFC8NC/A9+ADFZN0dQUWg8AAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="newButton.Size" type="System.Drawing.Size, System.Drawing">
@@ -657,7 +687,7 @@
     <value>Strg+O</value>
   </data>
   <data name="toolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>155, 6</value>
+    <value>157, 6</value>
   </data>
   <data name="projectErrorsToolStripMenuItem.Text" xml:space="preserve">
     <value>Project Errors</value>
@@ -665,8 +695,8 @@
   <data name="projectExplorerToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>193, 22</value>
   </data>
-  <data name="&gt;&gt;saveAsToolStripMenuItem.Name" xml:space="preserve">
-    <value>saveAsToolStripMenuItem</value>
+  <data name="usedFilesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>193, 22</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>System.Windows.Forms.Form, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -719,8 +749,8 @@
   <data name="toolStripSeparator4.Size" type="System.Drawing.Size, System.Drawing">
     <value>136, 6</value>
   </data>
-  <data name="&gt;&gt;toolStripSeparator3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="usedKeysToolStripMenuItem.Text" xml:space="preserve">
+    <value>Used Keys ...</value>
   </data>
   <data name="toolStripSeparator7.Size" type="System.Drawing.Size, System.Drawing">
     <value>6, 25</value>
@@ -756,13 +786,13 @@
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="undoToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>144, 22</value>
+    <value>146, 22</value>
   </data>
   <data name="exitToolStripMenuItem.Text" xml:space="preserve">
     <value>Exit</value>
   </data>
   <data name="exitToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>158, 22</value>
+    <value>160, 22</value>
   </data>
   <data name="&gt;&gt;undoToolStripMenuItem.Name" xml:space="preserve">
     <value>undoToolStripMenuItem</value>
@@ -787,6 +817,9 @@
   </data>
   <data name="newButton.Text" xml:space="preserve">
     <value>New Project</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator9.Name" xml:space="preserve">
+    <value>toolStripSeparator9</value>
   </data>
   <data name="&gt;&gt;openFileDialog.Name" xml:space="preserve">
     <value>openFileDialog</value>
@@ -815,14 +848,14 @@
   <data name="&gt;&gt;menuStrip1.Name" xml:space="preserve">
     <value>menuStrip1</value>
   </data>
-  <data name="extrasToolStripMenuItem.Text" xml:space="preserve">
-    <value>Extras</value>
+  <data name="toolStripSeparator9.Size" type="System.Drawing.Size, System.Drawing">
+    <value>190, 6</value>
   </data>
   <data name="saveToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
     <value>Strg+S</value>
   </data>
   <data name="toolStripSeparator5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>155, 6</value>
+    <value>157, 6</value>
   </data>
   <data name="stopAllToolStipMenuItem.ShortcutKeyDisplayString" xml:space="preserve">
     <value>Esc</value>

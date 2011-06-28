@@ -138,6 +138,19 @@
   <data name="FilePlayed" xml:space="preserve">
     <value>Error at file: {0}</value>
   </data>
+  <data name="General" xml:space="preserve">
+    <value>General
+=======
+Esc       - Stop all sounds and music
+Up        - Increase overall volume
+Down      - Decrease overall volume
+Page Up   - Increase sound volume
+Page Down - Decrease sound volume
+Ins       - Increase music volume
+Del       - Decrease music volume
+Right     - Next music title
+Left      - Previous music title</value>
+  </data>
   <data name="HelpPage" xml:space="preserve">
     <value>http://aresrpg.sourceforge.net/en/hilfe/Editor.html</value>
   </data>
@@ -212,6 +225,14 @@ You should adapt some settings first.</value>
   </data>
   <data name="Unknown" xml:space="preserve">
     <value>Unknown</value>
+  </data>
+  <data name="WriteFileListError" xml:space="preserve">
+    <value>File list could not be written. Reason:
+{0}</value>
+  </data>
+  <data name="WriteKeyListError" xml:space="preserve">
+    <value>Keys could not be written. Reason:
+{0}</value>
   </data>
   <data name="WriteSettingsError" xml:space="preserve">
     <value>Settings could not be saved. Reason:
