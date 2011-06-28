@@ -143,6 +143,22 @@ namespace Ares.Playing
                         return 0;
                     }
                 }
+                if (file.Effects != null && file.Effects.Reverb.Active)
+                {
+                    float linearLevel = (float)Math.Pow(10d, file.Effects.Reverb.Level / 20);
+                    int reverbFx = Bass.BASS_ChannelSetFX(channel, BASSFXType.BASS_FX_BFX_REVERB, 1);
+                    if (reverbFx == 0)
+                    {
+                        ErrorHandling.BassErrorOccurred(file.Id, StringResources.SetEffectError);
+                        return 0;
+                    }
+                    Un4seen.Bass.AddOn.Fx.BASS_BFX_REVERB fxReverb = new Un4seen.Bass.AddOn.Fx.BASS_BFX_REVERB(linearLevel, file.Effects.Reverb.Delay);
+                    if (!Bass.BASS_FXSetParameters(reverbFx, fxReverb))
+                    {
+                        ErrorHandling.BassErrorOccurred(file.Id, StringResources.SetEffectError);
+                        return 0;
+                    }
+                }
                 if (loop)
                 {
                     Bass.BASS_ChannelFlags(channel, BASSFlag.BASS_SAMPLE_LOOP, BASSFlag.BASS_SAMPLE_LOOP);

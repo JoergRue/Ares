@@ -139,6 +139,34 @@ namespace Ares.Data
     }
 
     [Serializable]
+    class ReverbEffect : Effect, IReverbEffect
+    {
+        public int Delay { get; set; }
+        public int Level { get; set; }
+
+        public ReverbEffect()
+            : base("Reverb")
+        {
+            Delay = 1200;
+            Level = 0;
+        }
+
+        public ReverbEffect(System.Xml.XmlReader reader)
+            : base("Reverb", reader)
+        {
+            Delay = reader.GetIntegerAttributeOrDefault("Reverb_Delay", 1200);
+            Level = reader.GetIntegerAttributeOrDefault("Reverb_Level", 0);
+        }
+
+        public override void WriteToXml(System.Xml.XmlWriter writer)
+        {
+            base.WriteToXml(writer);
+            writer.WriteAttributeString("Reverb_Delay", Delay.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            writer.WriteAttributeString("Reverb_Level", Level.ToString(System.Globalization.CultureInfo.InvariantCulture));
+        }
+    }
+
+    [Serializable]
     class Effects : IEffects
     {
         public int Volume { get; set; }
@@ -161,10 +189,13 @@ namespace Ares.Data
 
         public ISpeakerAssignmentEffect SpeakerAssignment { get { return m_Speakers; } }
 
+        public IReverbEffect Reverb { get { return m_Reverb; } }
+
         private IntEffect m_Pitch;
         private BalanceEffect m_Balance;
         private IntEffect m_Volume;
         private SpeakerAssignmentEffect m_Speakers;
+        private ReverbEffect m_Reverb;
 
         internal void WriteToXml(System.Xml.XmlWriter writer)
         {
@@ -179,6 +210,7 @@ namespace Ares.Data
             m_Balance.WriteToXml(writer);
             m_Volume.WriteToXml(writer);
             m_Speakers.WriteToXml(writer);
+            m_Reverb.WriteToXml(writer);
             writer.WriteEndElement();
         }
 
@@ -194,6 +226,7 @@ namespace Ares.Data
             m_Balance = new BalanceEffect();
             m_Volume = new IntEffect("Volume", 0);
             m_Speakers = new SpeakerAssignmentEffect();
+            m_Reverb = new ReverbEffect();
         }
 
         internal Effects(System.Xml.XmlReader reader)
@@ -208,6 +241,7 @@ namespace Ares.Data
             m_Balance = new BalanceEffect(reader);
             m_Volume = new IntEffect("Volume", reader, 0);
             m_Speakers = new SpeakerAssignmentEffect(reader);
+            m_Reverb = new ReverbEffect(reader);
             if (reader.IsEmptyElement)
             {
                 reader.Read();

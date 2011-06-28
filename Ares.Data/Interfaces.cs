@@ -226,6 +226,19 @@ namespace Ares.Data
         int PanningEnd { get; set; }
     }
 
+    public interface IReverbEffect : IEffect
+    {
+        /// <summary>
+        /// Delay of the reverb
+        /// </summary>
+        int Delay { get; set; }
+
+        /// <summary>
+        /// Level (volume) of the reverb
+        /// </summary>
+        int Level { get; set; }
+    }
+
     /// <summary>
     /// Optional effects when playing.
     /// </summary>
@@ -280,6 +293,11 @@ namespace Ares.Data
         /// Speaker assignment. Mutally exclusive with Balance.
         /// </summary>
         ISpeakerAssignmentEffect SpeakerAssignment { get; }
+
+        /// <summary>
+        /// Reverb effect
+        /// </summary>
+        IReverbEffect Reverb { get; }
     }
 
     /// <summary>

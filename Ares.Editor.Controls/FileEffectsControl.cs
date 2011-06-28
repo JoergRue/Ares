@@ -45,6 +45,8 @@ namespace Ares.Editor.Controls
                 allVolumeButton.Enabled = true;
                 speakerButton.Enabled = true;
                 allSpeakerButton.Enabled = true;
+                reverbButton.Enabled = true;
+                allReverbButton.Enabled = true;
             }
             else
             {
@@ -57,6 +59,8 @@ namespace Ares.Editor.Controls
                 allVolumeButton.Enabled = false;
                 speakerButton.Enabled = false;
                 allSpeakerButton.Enabled = false;
+                reverbButton.Enabled = false;
+                allReverbButton.Enabled = false;
             }
         }
 
@@ -69,6 +73,7 @@ namespace Ares.Editor.Controls
                 balanceBox.Checked = m_Element.Effects.Balance.Active;
                 volumeBox.Checked = m_Element.Effects.VolumeDB.Active;
                 speakerBox.Checked = m_Element.Effects.SpeakerAssignment.Active;
+                reverbBox.Checked = m_Element.Effects.Reverb.Active;
                 listen = true;
             }
         }
@@ -172,6 +177,29 @@ namespace Ares.Editor.Controls
             ISpeakerAssignmentEffect effect = m_Element.Effects.SpeakerAssignment;
             Actions.Actions.Instance.AddNew(new Actions.AllFileElementsSpeakerChangeAction(m_Container,
                 speakerBox.Checked, effect.Random, effect.Assignment));
+        }
+
+        private void reverbBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!listen)
+                return;
+            Actions.Actions.Instance.AddNew(new Actions.ReverbEffectChangeAction(m_Element, reverbBox.Checked));
+        }
+
+        private void reverbButton_Click(object sender, EventArgs e)
+        {
+            ReverbDialog dialog = new ReverbDialog(m_Element);
+            if (dialog.ShowDialog(Parent) == DialogResult.OK)
+            {
+                dialog.UpdateAction();
+                Actions.Actions.Instance.AddNew(dialog.Action);
+            }
+        }
+
+        private void allReverbButton_Click(object sender, EventArgs e)
+        {
+            Actions.Actions.Instance.AddNew(new Actions.AllFileElementsReverbChangeAction(m_Container,
+                m_Element.Effects.Reverb));
         }
 
 

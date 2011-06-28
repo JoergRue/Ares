@@ -64,6 +64,61 @@ namespace Ares.Editor.Actions
         private SpeakerAssignment m_NewAssignment;
     }
 
+    public class ReverbEffectChangeAction : Action
+    {
+        private IFileElement m_Element;
+        private bool m_OldActive;
+        private int m_OldLevel;
+        private int m_OldDelay;
+        private bool m_NewActive;
+        private int m_NewLevel;
+        private int m_NewDelay;
+
+        public ReverbEffectChangeAction(IFileElement element, bool active)
+        {
+            m_Element = element;
+            m_OldActive = element.Effects.Reverb.Active;
+            m_OldLevel = element.Effects.Reverb.Level;
+            m_OldDelay = element.Effects.Reverb.Delay;
+            m_NewActive = active;
+            m_NewDelay = m_OldDelay;
+            m_NewLevel = m_OldLevel;
+        }
+
+        public void SetData(bool active, int level, int delay)
+        {
+            m_NewActive = active;
+            m_NewLevel = level;
+            m_NewDelay = delay;
+        }
+
+        public override void Do()
+        {
+            IReverbEffect effect = m_Element.Effects.Reverb;
+            effect.Active = m_NewActive;
+            effect.Delay = m_NewDelay;
+            effect.Level = m_NewLevel;
+            ElementChanges.Instance.ElementChanged(m_Element.Id);
+        }
+
+        public override void Undo()
+        {
+            IReverbEffect effect = m_Element.Effects.Reverb;
+            effect.Active = m_OldActive;
+            effect.Delay = m_OldDelay;
+            effect.Level = m_OldLevel;
+            ElementChanges.Instance.ElementChanged(m_Element.Id);
+        }
+
+        public IFileElement Element
+        {
+            get
+            {
+                return m_Element;
+            }
+        }
+    }
+
     public class IntEffectChangeAction : Action
     {
         public IntEffectChangeAction(IFileElement element, IIntEffect effect, 
@@ -242,6 +297,59 @@ namespace Ares.Editor.Actions
                 effect.Random = m_OldRandoms[i];
                 effect.Assignment = m_OldAssignments[i];
                 m_FileElements[i].Effects.Balance.Active = m_OldBalances[i];
+                ElementChanges.Instance.ElementChanged(m_FileElements[i].Id);
+            }
+        }
+    }
+
+    public class AllFileElementsReverbChangeAction : Action
+    {
+        private IList<IFileElement> m_FileElements;
+        private List<bool> m_OldActives;
+        private List<int> m_OldLevels;
+        private List<int> m_OldDelays;
+        private bool m_NewActive;
+        private int m_NewLevel;
+        private int m_NewDelay;
+
+        public AllFileElementsReverbChangeAction(IGeneralElementContainer container, IReverbEffect effect)
+        {
+            m_FileElements = container.GetFileElements();
+            m_OldActives = new List<bool>();
+            m_OldDelays = new List<int>();
+            m_OldLevels = new List<int>();
+            m_NewActive = effect.Active;
+            m_NewDelay = effect.Delay;
+            m_NewLevel = effect.Level;
+            foreach (IFileElement element in m_FileElements)
+            {
+                IReverbEffect effect2 = element.Effects.Reverb;
+                m_OldActives.Add(effect2.Active);
+                m_OldDelays.Add(effect2.Delay);
+                m_OldLevels.Add(effect2.Level);
+            }
+        }
+
+        public override void Do()
+        {
+            foreach (IFileElement element in m_FileElements)
+            {
+                IReverbEffect effect = element.Effects.Reverb;
+                effect.Active = m_NewActive;
+                effect.Level = m_NewLevel;
+                effect.Delay = m_NewDelay;
+                ElementChanges.Instance.ElementChanged(element.Id);
+            }
+        }
+
+        public override void Undo()
+        {
+            for (int i = 0; i < m_FileElements.Count; ++i)
+            {
+                IReverbEffect effect = m_FileElements[i].Effects.Reverb;
+                effect.Active = m_OldActives[i];
+                effect.Level = m_OldLevels[i];
+                effect.Delay = m_OldDelays[i];
                 ElementChanges.Instance.ElementChanged(m_FileElements[i].Id);
             }
         }

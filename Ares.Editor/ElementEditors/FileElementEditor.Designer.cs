@@ -257,7 +257,7 @@ namespace Ares.Editor.ElementEditors
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox nameBox;
         private System.Windows.Forms.Label label1;
-        private Settings.PathLabel filePathLabel;
+        private Ares.Settings.PathLabel filePathLabel;
         private Controls.FileVolumeControl fileVolumeControl;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label LengthLabel;

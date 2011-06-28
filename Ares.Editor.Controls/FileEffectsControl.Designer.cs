@@ -37,6 +37,9 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FileEffectsControl));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.allReverbButton = new System.Windows.Forms.Button();
+            this.reverbButton = new System.Windows.Forms.Button();
+            this.reverbBox = new System.Windows.Forms.CheckBox();
             this.allSpeakerButton = new System.Windows.Forms.Button();
             this.speakerButton = new System.Windows.Forms.Button();
             this.speakerBox = new System.Windows.Forms.CheckBox();
@@ -55,6 +58,9 @@
             // groupBox1
             // 
             resources.ApplyResources(this.groupBox1, "groupBox1");
+            this.groupBox1.Controls.Add(this.allReverbButton);
+            this.groupBox1.Controls.Add(this.reverbButton);
+            this.groupBox1.Controls.Add(this.reverbBox);
             this.groupBox1.Controls.Add(this.allSpeakerButton);
             this.groupBox1.Controls.Add(this.speakerButton);
             this.groupBox1.Controls.Add(this.speakerBox);
@@ -70,6 +76,31 @@
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
             this.groupBox1.UseCompatibleTextRendering = true;
+            // 
+            // allReverbButton
+            // 
+            resources.ApplyResources(this.allReverbButton, "allReverbButton");
+            this.allReverbButton.Image = global::Ares.Editor.Controls.Properties.Resources.Multiple_Selection;
+            this.allReverbButton.Name = "allReverbButton";
+            this.allReverbButton.UseCompatibleTextRendering = true;
+            this.allReverbButton.UseVisualStyleBackColor = true;
+            this.allReverbButton.Click += new System.EventHandler(this.allReverbButton_Click);
+            // 
+            // reverbButton
+            // 
+            resources.ApplyResources(this.reverbButton, "reverbButton");
+            this.reverbButton.Name = "reverbButton";
+            this.reverbButton.UseCompatibleTextRendering = true;
+            this.reverbButton.UseVisualStyleBackColor = true;
+            this.reverbButton.Click += new System.EventHandler(this.reverbButton_Click);
+            // 
+            // reverbBox
+            // 
+            resources.ApplyResources(this.reverbBox, "reverbBox");
+            this.reverbBox.Name = "reverbBox";
+            this.reverbBox.UseCompatibleTextRendering = true;
+            this.reverbBox.UseVisualStyleBackColor = true;
+            this.reverbBox.CheckedChanged += new System.EventHandler(this.reverbBox_CheckedChanged);
             // 
             // allSpeakerButton
             // 
@@ -198,5 +229,8 @@
         private System.Windows.Forms.Button allSpeakerButton;
         private System.Windows.Forms.Button speakerButton;
         private System.Windows.Forms.CheckBox speakerBox;
+        private System.Windows.Forms.Button allReverbButton;
+        private System.Windows.Forms.Button reverbButton;
+        private System.Windows.Forms.CheckBox reverbBox;
     }
 }
