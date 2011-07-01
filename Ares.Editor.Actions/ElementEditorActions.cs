@@ -487,6 +487,7 @@ namespace Ares.Editor.Actions
                 ++index;
             }
             ElementChanges.Instance.ElementChanged(m_Container.Id);
+            Ares.ModelInfo.ModelChecks.Instance.CheckAll();
         }
 
         public override void Undo()
@@ -497,6 +498,7 @@ namespace Ares.Editor.Actions
                 ElementRemoval.NotifyRemoval(element);
             }
             ElementChanges.Instance.ElementChanged(m_Container.Id);
+            Ares.ModelInfo.ModelChecks.Instance.CheckAll();
         }
 
         private IGeneralElementContainer m_Container;
@@ -520,6 +522,7 @@ namespace Ares.Editor.Actions
                 ElementRemoval.NotifyRemoval(element);
             }
             ElementChanges.Instance.ElementChanged(m_Container.Id);
+            Ares.ModelInfo.ModelChecks.Instance.CheckAll();
         }
 
         public override void Undo()
@@ -531,6 +534,7 @@ namespace Ares.Editor.Actions
                 ++index;
             }
             ElementChanges.Instance.ElementChanged(m_Container.Id);
+            Ares.ModelInfo.ModelChecks.Instance.CheckAll();
         }
 
         private IGeneralElementContainer m_Container;

@@ -64,8 +64,7 @@ namespace Ares.Editor.Actions
             Ares.ModelInfo.ModelChecks.Instance.Check(Ares.ModelInfo.CheckType.File);
             if (SoundDirChanges != null) SoundDirChanges(this, new EventArgs());
             if (AnyDirChanges != null) AnyDirChanges(this, new EventArgs());
-            m_SoundWatcher.EnableRaisingEvents = false;
-            throw new NotImplementedException();
+            m_SoundWatcher.EnableRaisingEvents = true;
         }
 
         public void SetDirectories(String musicDir, String soundsDir)

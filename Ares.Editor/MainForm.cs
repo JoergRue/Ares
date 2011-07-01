@@ -930,6 +930,49 @@ namespace Ares.Editor
                 MessageBox.Show(this, String.Format(StringResources.WriteFileListError, ex.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void exportToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (m_CurrentProject == null)
+                return;
+            if (m_CurrentProject.Changed && !SaveProject())
+                return;
+
+            String exportFileName = m_CurrentProject.FileName;
+            if (exportFileName.EndsWith(".ares", StringComparison.InvariantCultureIgnoreCase))
+            {
+                exportFileName = exportFileName.Substring(0, exportFileName.Length - 5);
+            }
+            exportFileName = exportFileName + ".apkg";
+            exportFileDialog.FileName = exportFileName;
+
+            DialogResult result = exportFileDialog.ShowDialog(this);
+            if (result != System.Windows.Forms.DialogResult.OK)
+                return;
+
+            Ares.ModelInfo.ProjectExporter.Export(this, m_CurrentProject, exportFileDialog.FileName);
+        }
+
+        private void importToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult result = importFileDialog.ShowDialog(this);
+            if (result != System.Windows.Forms.DialogResult.OK)
+                return;
+            if (!UnloadProject())
+                return;
+            String defaultProjectName = importFileDialog.FileName;
+            if (defaultProjectName.EndsWith(".apkg"))
+            {
+                defaultProjectName = defaultProjectName.Substring(0, defaultProjectName.Length - 5);
+            }
+            defaultProjectName = defaultProjectName + ".ares";
+            saveFileDialog.FileName = defaultProjectName;
+            result = saveFileDialog.ShowDialog(this);
+            if (result != System.Windows.Forms.DialogResult.OK)
+                return;
+
+            Ares.ModelInfo.ProjectImporter.Import(this, importFileDialog.FileName, saveFileDialog.FileName, () => OpenProject(saveFileDialog.FileName));
+        }
     }
 
     public static class ControlHelpers

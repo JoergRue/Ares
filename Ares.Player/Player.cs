@@ -242,7 +242,10 @@ namespace Ares.Player
             this.Text = String.Format(StringResources.AresPlayer, projectNameLabel.Text);
             PlayingModule.ProjectPlayer.SetProject(m_Project);
             DoModelChecks();
-            fileSystemWatcher1.Path = m_Project != null ? System.IO.Path.GetDirectoryName(m_Project.FileName) : String.Empty;
+            if (m_Project != null)
+            {
+                fileSystemWatcher1.Path = System.IO.Path.GetDirectoryName(m_Project.FileName);
+            }
             m_Instance.SetLoadedProject(filePath);
             if (m_Network != null)
             {
@@ -773,6 +776,29 @@ namespace Ares.Player
                 WindowState = FormWindowState.Minimized;
             }
             m_FirstShow = false;
+        }
+
+        private void importToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PlayingModule.ProjectPlayer.StopAll();
+
+            DialogResult result = importFileDialog.ShowDialog(this);
+            if (result != System.Windows.Forms.DialogResult.OK)
+                return;
+
+            String defaultProjectName = importFileDialog.FileName;
+            if (defaultProjectName.EndsWith(".apkg"))
+            {
+                defaultProjectName = defaultProjectName.Substring(0, defaultProjectName.Length - 5);
+            }
+            defaultProjectName = defaultProjectName + ".ares";
+            saveFileDialog.FileName = defaultProjectName;
+            result = saveFileDialog.ShowDialog(this);
+            if (result != System.Windows.Forms.DialogResult.OK)
+                return;
+
+            Ares.ModelInfo.ProjectImporter.Import(this, importFileDialog.FileName, saveFileDialog.FileName, 
+                () => OpenProject(saveFileDialog.FileName, false));
         }
     }
 }

@@ -114,9 +114,14 @@ namespace Ares.Editor
 
         private TreeNode DoMoveToContainerElement(TreeNode node, Object element)
         {
-            if (node.Tag is IGeneralElementContainer)
+            Object tag = node.Tag;
+            if (tag is IModeElement)
             {
-                foreach (IContainerElement containerElement in ((node.Tag as IGeneralElementContainer).GetGeneralElements()))
+                tag = ((IModeElement)tag).StartElement;
+            }
+            if (tag is IGeneralElementContainer)
+            {
+                foreach (IContainerElement containerElement in ((tag as IGeneralElementContainer).GetGeneralElements()))
                 {
                     if (containerElement == element || containerElement.InnerElement == element)
                     {
@@ -139,6 +144,10 @@ namespace Ares.Editor
         private TreeNode DoMoveToElement(TreeNode node, Object element)
         {
             if (node.Tag == element)
+            {
+                return node;
+            }
+            else if (node.Tag is IModeElement && ((node.Tag as IModeElement).StartElement == element))
             {
                 return node;
             }

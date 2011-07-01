@@ -117,14 +117,35 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Ares" xml:space="preserve">
+    <value>Ares</value>
+  </data>
   <data name="DuplicateModeElementKey" xml:space="preserve">
     <value>Taste {0} wird für Elemente {1} und {2} benutzt</value>
   </data>
   <data name="DuplicateModeKey" xml:space="preserve">
     <value>Taste {0} wird für die Modi {1} und {2} benutzt</value>
   </data>
+  <data name="ExportError" xml:space="preserve">
+    <value>Fehler beim Exportieren des Projektes: {0}</value>
+  </data>
+  <data name="Exporting" xml:space="preserve">
+    <value>Exportiere ...</value>
+  </data>
   <data name="FileNotFound" xml:space="preserve">
     <value>Datei {0} nicht gefunden</value>
+  </data>
+  <data name="ImportError" xml:space="preserve">
+    <value>Fehler beim Importieren des Projektes: {0}</value>
+  </data>
+  <data name="Importing" xml:space="preserve">
+    <value>Importiere ...</value>
+  </data>
+  <data name="ImportOverwrite" xml:space="preserve">
+    <value>Einige importierte Dateien sind bereits vorhanden. Sollen die vorhandenen Dateien überschrieben werden?</value>
+  </data>
+  <data name="InvalidImportFile" xml:space="preserve">
+    <value>Die importierte Datei ist ungültig.</value>
   </data>
   <data name="KeyGloballyReserved" xml:space="preserve">
     <value>Diese Taste ist für die globale Steuerung reserviert</value>

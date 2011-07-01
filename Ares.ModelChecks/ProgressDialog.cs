@@ -19,11 +19,10 @@
  */
 using System;
 using System.ComponentModel;
-using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Ares.Online
+namespace Ares.ModelInfo
 {
     partial class ProgressDialog : Form
     {
@@ -33,9 +32,10 @@ namespace Ares.Online
             descriptionLabel.Text = text;
         }
 
-        public void SetProgress(int percent)
+        public void SetProgress(int percent, String text)
         {
             progressBar.Value = percent;
+            descriptionLabel.Text = text;
         }
     }
 }
