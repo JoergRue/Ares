@@ -96,8 +96,14 @@ namespace Ares.Editor.Actions
             }
             String oldMusicPath = m_MusicWatcher.Path;
             String oldSoundPath = m_SoundWatcher.Path;
-            m_MusicWatcher.Path = musicDir;
-            m_SoundWatcher.Path = soundsDir;
+            if (System.IO.Directory.Exists(musicDir))
+            {
+                m_MusicWatcher.Path = musicDir;
+            }
+            if (System.IO.Directory.Exists(soundsDir))
+            {
+                m_SoundWatcher.Path = soundsDir;
+            }
             if (!firstSet)
             {
                 Ares.ModelInfo.ModelChecks.Instance.Check(Ares.ModelInfo.CheckType.File);
@@ -114,8 +120,14 @@ namespace Ares.Editor.Actions
                     AnyDirChanges(this, new EventArgs());
                 }
             }
-            m_MusicWatcher.EnableRaisingEvents = true;
-            m_SoundWatcher.EnableRaisingEvents = true;
+            if (System.IO.Directory.Exists(musicDir))
+            {
+                m_MusicWatcher.EnableRaisingEvents = true;
+            }
+            if (System.IO.Directory.Exists(soundsDir))
+            {
+                m_SoundWatcher.EnableRaisingEvents = true;
+            }
         }
 
         public void DeInit()

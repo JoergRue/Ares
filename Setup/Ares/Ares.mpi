@@ -269,6 +269,7 @@ File ::B754C52E-D4ED-49D5-B1EA-28B53877CE49 -name Ares.Players.resources.dll -pa
 File ::DD19DA72-FCDA-48BB-8153-39F0F80A6E43 -name Ares.ico -parent 85519505-B2E6-4155-96D6-3C0D6C533801
 File ::D6D0615E-A3C4-46AC-8369-6A5D5B117CD3 -name Ares.Online.dll -parent 85519505-B2E6-4155-96D6-3C0D6C533801
 File ::E4F6631B-95CA-4742-A864-435B4E519E5E -name Ares.Players.dll -parent 85519505-B2E6-4155-96D6-3C0D6C533801
+File ::7F2E8A3D-AC51-4E7B-8008-BC7442368F0B -name ICSharpCode.SharpZipLib.dll -parent 85519505-B2E6-4155-96D6-3C0D6C533801
 FileGroup ::68676E85-DEAC-451E-9016-59D1A2300E9B -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows TarArchive ZipArchive} -name Player -parent FileGroups
 File ::47DFEC14-D002-4E55-8F13-B613310C042C -name D:/Projekte/Ares/trunk/build/Ares/Player_Editor/Ares.Player.exe -location <%BaseDir%>/Ares/Player_Editor -parent 68676E85-DEAC-451E-9016-59D1A2300E9B
 File ::183D5336-C3DB-4D10-A1C9-893B83D8B44F -name D:/Projekte/Ares/trunk/build/Ares/Player_Editor/Ares.Player.exe.config -location <%BaseDir%>/Ares/Player_Editor -parent 68676E85-DEAC-451E-9016-59D1A2300E9B
@@ -446,12 +447,16 @@ Condition 53E5D942-92D1-4038-B212-8E5B3A571E43 -active Yes -parent AF343576-C8EF
 InstallComponent DBD24E16-6A8F-4916-A9C6-F1321A12373C -setup Install -type actiongroup -title {Cancel Actions} -alias {Cancel Actions} -active Yes -parent ActionGroupsInstall
 InstallComponent EC0D4848-DFFB-4440-8DC7-9B22E882770C -setup Install -type actiongroup -conditions 7F0728A8-EE32-42B3-9E1A-91F8B7948240 -title {File Type Actions} -command insert -alias {File Type Actions} -active Yes -parent ActionGroupsInstall
 Condition 7F0728A8-EE32-42B3-9E1A-91F8B7948240 -active Yes -parent EC0D4848-DFFB-4440-8DC7-9B22E882770C -title {Platform Condition} -component PlatformCondition -TreeObject::id 7F0728A8-EE32-42B3-9E1A-91F8B7948240
-InstallComponent 42BEFFB7-3B19-44C8-88C2-5F9186545DFB -setup Install -type action -conditions FA190CDE-F0ED-4E00-8AA3-393029D65C4F -title {Add Ares Type (PlayerEditor)} -component AddWindowsFileType -command insert -active Yes -parent EC0D4848-DFFB-4440-8DC7-9B22E882770C
+InstallComponent CFFE7DB4-7592-4903-A136-9C0D6121A1EC -setup Install -type action -conditions 22E0F43D-F42B-491D-83A1-C2CBA8D7566B -title {Add Ares Packed Type} -component AddWindowsFileType -command reorder -active Yes -parent EC0D4848-DFFB-4440-8DC7-9B22E882770C
+Condition 22E0F43D-F42B-491D-83A1-C2CBA8D7566B -active Yes -parent CFFE7DB4-7592-4903-A136-9C0D6121A1EC -title {File Exists Condition} -component FileExistsCondition -TreeObject::id 22E0F43D-F42B-491D-83A1-C2CBA8D7566B
+InstallComponent 42BEFFB7-3B19-44C8-88C2-5F9186545DFB -setup Install -type action -conditions FA190CDE-F0ED-4E00-8AA3-393029D65C4F -title {Add Ares Type (PlayerEditor)} -component AddWindowsFileType -command reorder -active Yes -parent EC0D4848-DFFB-4440-8DC7-9B22E882770C
 Condition FA190CDE-F0ED-4E00-8AA3-393029D65C4F -active Yes -parent 42BEFFB7-3B19-44C8-88C2-5F9186545DFB -title {File Exists Condition} -component FileExistsCondition -TreeObject::id FA190CDE-F0ED-4E00-8AA3-393029D65C4F
-InstallComponent 50F92469-FC82-4C65-99A1-AE7796564A77 -setup Install -type action -conditions {05D58B84-228B-4B93-AC09-B8C88B81197C 57F373DE-9445-4616-BAB7-59EAB93BB6C5} -title {Add Ares Type (Controller)} -component AddWindowsFileType -command insert -active Yes -parent EC0D4848-DFFB-4440-8DC7-9B22E882770C
+InstallComponent 50F92469-FC82-4C65-99A1-AE7796564A77 -setup Install -type action -conditions {05D58B84-228B-4B93-AC09-B8C88B81197C 57F373DE-9445-4616-BAB7-59EAB93BB6C5} -title {Add Ares Type (Controller)} -component AddWindowsFileType -command reorder -active Yes -parent EC0D4848-DFFB-4440-8DC7-9B22E882770C
 Condition 05D58B84-228B-4B93-AC09-B8C88B81197C -active Yes -parent 50F92469-FC82-4C65-99A1-AE7796564A77 -title {File Exists Condition} -component FileExistsCondition -TreeObject::id 05D58B84-228B-4B93-AC09-B8C88B81197C
 Condition 57F373DE-9445-4616-BAB7-59EAB93BB6C5 -active Yes -parent 50F92469-FC82-4C65-99A1-AE7796564A77 -title {File Exists Condition} -component FileExistsCondition -TreeObject::id 57F373DE-9445-4616-BAB7-59EAB93BB6C5
-InstallComponent 0F16B257-C9F3-43E1-A3B3-511A7DB62522 -setup Install -type action -conditions 19F59640-748F-4161-B82E-90E0E03C8C87 -title {Add Ares File Extension} -component AddWindowsFileExtension -command insert -active Yes -parent EC0D4848-DFFB-4440-8DC7-9B22E882770C
+InstallComponent 8AA4D5F4-881E-44EC-B22A-4994E036940B -setup Install -type action -conditions D139410E-400E-4AB9-8E6B-C86FFA41931C -title {Add Ares Packed Extension} -component AddWindowsFileExtension -command reorder -active Yes -parent EC0D4848-DFFB-4440-8DC7-9B22E882770C
+Condition D139410E-400E-4AB9-8E6B-C86FFA41931C -active Yes -parent 8AA4D5F4-881E-44EC-B22A-4994E036940B -title {File Type Test Condition} -component FileTypeTestCondition -TreeObject::id D139410E-400E-4AB9-8E6B-C86FFA41931C
+InstallComponent 0F16B257-C9F3-43E1-A3B3-511A7DB62522 -setup Install -type action -conditions 19F59640-748F-4161-B82E-90E0E03C8C87 -title {Add Ares File Extension} -component AddWindowsFileExtension -command reorder -active Yes -parent EC0D4848-DFFB-4440-8DC7-9B22E882770C
 Condition 19F59640-748F-4161-B82E-90E0E03C8C87 -active Yes -parent 0F16B257-C9F3-43E1-A3B3-511A7DB62522 -title {File Type Test Condition} -component FileTypeTestCondition -TreeObject::id 19F59640-748F-4161-B82E-90E0E03C8C87
 InstallComponent 2A63C403-C6E6-4902-B80A-E010776C072C -setup Install -type action -conditions {FEB49C57-D60E-447F-8EAB-A8B94317B8F1 E97F3F93-EFF1-4F9A-B227-ED34B1927CE8} -title {Add Controller File Command} -component AddWindowsFileCommand -command insert -active Yes -parent EC0D4848-DFFB-4440-8DC7-9B22E882770C
 Condition FEB49C57-D60E-447F-8EAB-A8B94317B8F1 -active Yes -parent 2A63C403-C6E6-4902-B80A-E010776C072C -title {File Type Test Condition} -component FileTypeTestCondition -TreeObject::id 85E43BA5-8F31-4559-9300-DBD30F803F8D
@@ -462,6 +467,12 @@ Condition 742EA771-2D06-4431-BBC6-7D25264E438B -active Yes -parent E08DFA20-60F7
 InstallComponent 0E3D8DE5-545F-4678-83C4-BFDACA7C1580 -setup Install -type action -conditions {85E43BA5-8F31-4559-9300-DBD30F803F8D 6FA14EDB-8361-45C3-A0D3-7C618B4FD3E4} -title {Add Editor File Command} -component AddWindowsFileCommand -command insert -active Yes -parent EC0D4848-DFFB-4440-8DC7-9B22E882770C
 Condition 85E43BA5-8F31-4559-9300-DBD30F803F8D -active Yes -parent 0E3D8DE5-545F-4678-83C4-BFDACA7C1580 -title {File Type Test Condition} -component FileTypeTestCondition -TreeObject::id 85E43BA5-8F31-4559-9300-DBD30F803F8D
 Condition 6FA14EDB-8361-45C3-A0D3-7C618B4FD3E4 -active Yes -parent 0E3D8DE5-545F-4678-83C4-BFDACA7C1580 -title {File Exists Condition} -component FileExistsCondition -TreeObject::id 6FA14EDB-8361-45C3-A0D3-7C618B4FD3E4
+InstallComponent B68AE00E-0797-4518-9AEF-223CC26BE9E1 -setup Install -type action -conditions {EF5D791B-E5DF-4318-A4E2-7E7F26869427 4898B68D-B460-40C1-ABFA-4226CBB9D62F} -title {Add Editor Packed File Command} -component AddWindowsFileCommand -command reorder -active Yes -parent EC0D4848-DFFB-4440-8DC7-9B22E882770C
+Condition EF5D791B-E5DF-4318-A4E2-7E7F26869427 -active Yes -parent B68AE00E-0797-4518-9AEF-223CC26BE9E1 -title {File Type Test Condition} -component FileTypeTestCondition -TreeObject::id 85E43BA5-8F31-4559-9300-DBD30F803F8D
+Condition 4898B68D-B460-40C1-ABFA-4226CBB9D62F -active Yes -parent B68AE00E-0797-4518-9AEF-223CC26BE9E1 -title {File Exists Condition} -component FileExistsCondition -TreeObject::id 6FA14EDB-8361-45C3-A0D3-7C618B4FD3E4
+InstallComponent 0271B265-EA0A-4562-9FD2-83243ECAD808 -setup Install -type action -conditions {2C23AE6E-3629-4636-8DCD-B76DD187B24F D409A82C-7D91-4A5C-9E13-0C7DC10B2CE3} -title {Add Player Packed File Command} -component AddWindowsFileCommand -command reorder -active Yes -parent EC0D4848-DFFB-4440-8DC7-9B22E882770C
+Condition 2C23AE6E-3629-4636-8DCD-B76DD187B24F -active Yes -parent 0271B265-EA0A-4562-9FD2-83243ECAD808 -title {File Type Test Condition} -component FileTypeTestCondition -TreeObject::id 85E43BA5-8F31-4559-9300-DBD30F803F8D
+Condition D409A82C-7D91-4A5C-9E13-0C7DC10B2CE3 -active Yes -parent 0271B265-EA0A-4562-9FD2-83243ECAD808 -title {File Exists Condition} -component FileExistsCondition -TreeObject::id 6FA14EDB-8361-45C3-A0D3-7C618B4FD3E4
 InstallComponent 8B073A74-2CFC-49B9-AC1F-4974654D790A -setup Uninstall -type pane -title Uninstall -component Uninstall -active Yes -parent StandardUninstall
 InstallComponent BCF24C40-D7F5-4772-8BE4-CBF158AF01B6 -setup Uninstall -type action -title {Modify Widget} -component ModifyWidget -active Yes -parent 8B073A74-2CFC-49B9-AC1F-4974654D790A
 InstallComponent C3BD8297-EA8B-41AC-BED9-1493CCC2C1A7 -setup Uninstall -type action -title {Execute Action} -component ExecuteAction -active Yes -parent 8B073A74-2CFC-49B9-AC1F-4974654D790A
@@ -494,6 +505,18 @@ array set Properties {
 
 021D84A3-6BB3-468D-B46F-9F083122E304,Filename
 {<%InstallDir%>/Player_Editor/Ares.Player.exe}
+
+0271B265-EA0A-4562-9FD2-83243ECAD808,Command
+{<%InstallDir%>\Player_Editor\Ares.Player.exe "%1"}
+
+0271B265-EA0A-4562-9FD2-83243ECAD808,CommandName
+{Play}
+
+0271B265-EA0A-4562-9FD2-83243ECAD808,Conditions
+{2 conditions}
+
+0271B265-EA0A-4562-9FD2-83243ECAD808,FileType
+{AresPackedProject}
 
 02FF6855-241F-4354-BC04-BDBCB8FAFC7E,CheckCondition
 {Before Action is Executed}
@@ -720,6 +743,12 @@ array set Properties {
 22B1C1FB-87FF-4325-850C-4020476C6F86,Platform
 {Linux-x86}
 
+22E0F43D-F42B-491D-83A1-C2CBA8D7566B,CheckCondition
+{Before Action is Executed}
+
+22E0F43D-F42B-491D-83A1-C2CBA8D7566B,Filename
+{<%InstallDir%>/Player_Editor/Ares.ico}
+
 249E99D6-04D3-4835-9D4F-353C578C74F3,CheckCondition
 {Before Action is Executed}
 
@@ -767,6 +796,12 @@ array set Properties {
 
 2A63C403-C6E6-4902-B80A-E010776C072C,MenuName
 {Open in Ares Controller}
+
+2C23AE6E-3629-4636-8DCD-B76DD187B24F,CheckCondition
+{Before Action is Executed}
+
+2C23AE6E-3629-4636-8DCD-B76DD187B24F,FileType
+{AresPackedProject}
 
 2D01B0FC-25AA-4C4C-A5A0-9B5FF3F04E87,BackButton,subst
 {1}
@@ -920,6 +955,12 @@ array set Properties {
 
 47DEDAE0-28B8-4876-A859-32281E78389F,Filename
 {<%InstallDir%>/Controller/Ares.Controller.sh}
+
+4898B68D-B460-40C1-ABFA-4226CBB9D62F,CheckCondition
+{Before Action is Executed}
+
+4898B68D-B460-40C1-ABFA-4226CBB9D62F,Filename
+{<%InstallDir%>/Player_Editor/Ares.Editor.exe}
 
 4F28A32F-E0D8-496B-AEE2-81C6C0EFD2D4,Background
 {white}
@@ -1302,6 +1343,15 @@ array set Properties {
 898DC5AF-94F1-40F5-A2EE-1246E903D553,Message,subst
 {1}
 
+8AA4D5F4-881E-44EC-B22A-4994E036940B,Conditions
+{1 condition}
+
+8AA4D5F4-881E-44EC-B22A-4994E036940B,FileExtension
+{.apkg}
+
+8AA4D5F4-881E-44EC-B22A-4994E036940B,FileType
+{AresPackedProject}
+
 8B073A74-2CFC-49B9-AC1F-4974654D790A,BackButton,subst
 {1}
 
@@ -1671,6 +1721,18 @@ B2F17E44-DC82-4C36-B904-3FFE460BF15A,CheckCondition
 B2F17E44-DC82-4C36-B904-3FFE460BF15A,String
 {<%GuiMode%>}
 
+B68AE00E-0797-4518-9AEF-223CC26BE9E1,Command
+{<%InstallDir%>\Player_Editor\Ares.Editor.exe "%1"}
+
+B68AE00E-0797-4518-9AEF-223CC26BE9E1,CommandName
+{Edit}
+
+B68AE00E-0797-4518-9AEF-223CC26BE9E1,Conditions
+{2 conditions}
+
+B68AE00E-0797-4518-9AEF-223CC26BE9E1,FileType
+{AresPackedProject}
+
 B6C4672E-1722-4E03-A7D3-13EBA5C08079,ExecuteAction
 {Before Pane is Displayed}
 
@@ -1824,8 +1886,26 @@ CF3ADFA0-F09D-4456-8BE0-88731CA7EE1E,CheckCondition
 CF3ADFA0-F09D-4456-8BE0-88731CA7EE1E,String
 {<%CreateDesktopShortcut%>}
 
+CFFE7DB4-7592-4903-A136-9C0D6121A1EC,Conditions
+{1 condition}
+
+CFFE7DB4-7592-4903-A136-9C0D6121A1EC,FileType
+{AresPackedProject}
+
+CFFE7DB4-7592-4903-A136-9C0D6121A1EC,IconPath
+{<%InstallDir%>/Player_Editor/Ares.ico}
+
+CFFE7DB4-7592-4903-A136-9C0D6121A1EC,Title
+{Ares Packed Project}
+
 D07BE9DD-955B-4DAF-A106-0DD65C5A721F,Message,subst
 {1}
+
+D139410E-400E-4AB9-8E6B-C86FFA41931C,CheckCondition
+{Before Action is Executed}
+
+D139410E-400E-4AB9-8E6B-C86FFA41931C,FileType
+{AresPackedProject}
 
 D28F8CFF-123F-4E9F-8762-27D7E2C7D77B,Alias
 {Uninstall Actions}
@@ -1838,6 +1918,12 @@ D345DF22-47B1-4010-856D-B0E53DB96562,CheckCondition
 
 D345DF22-47B1-4010-856D-B0E53DB96562,Filename
 {<%InstallDir%>/Controller/Ares.Controller.exe}
+
+D409A82C-7D91-4A5C-9E13-0C7DC10B2CE3,CheckCondition
+{Before Action is Executed}
+
+D409A82C-7D91-4A5C-9E13-0C7DC10B2CE3,Filename
+{<%InstallDir%>/Player_Editor/Ares.Player.exe}
 
 D70046D8-2EB2-4153-9D6B-04C1B805CF29,Components
 {1067F309-D8C3-41F5-A545-08D4EE16F22C}
@@ -2021,6 +2107,12 @@ ED98D459-2E6D-48C8-8412-1A54547E6680,CheckCondition
 
 ED98D459-2E6D-48C8-8412-1A54547E6680,Filename
 {<%InstallDir%>/Player_Editor/Ares.Player.exe}
+
+EF5D791B-E5DF-4318-A4E2-7E7F26869427,CheckCondition
+{Before Action is Executed}
+
+EF5D791B-E5DF-4318-A4E2-7E7F26869427,FileType
+{AresPackedProject}
 
 F15BCB0E-1F11-4A72-9067-9D94B8381202,Destination
 {<%InstallDir%>/Controller}

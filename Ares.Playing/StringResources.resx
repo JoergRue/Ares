@@ -193,7 +193,7 @@
     <value>Invalid playback position</value>
   </data>
   <data name="SpeakerError" xml:space="preserve">
-    <value>Unavailable speaker</value>
+    <value>Unavailable speaker, or file is stereo.</value>
   </data>
   <data name="UnexpectedError" xml:space="preserve">
     <value>Unexpected error: {0}</value>

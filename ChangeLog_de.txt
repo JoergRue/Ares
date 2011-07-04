@@ -1,3 +1,23 @@
+Version 0.5.0
+----------------------------------------------------------------------------------
+- Allgemein: Portable Version verfügbar
+- Allgemein: Lautstärke für Dateien kann zufällig bestimmt werden
+- Allgemein: Effekte für Dateien hinzugefügt: Tonhöhe, Balance (auch wandernd), 
+  Lautstärke in dB, Lautsprecherzuordnung, Hall / Echo
+- Editor: Import / Export von Projekten in gepackter Form mit allen Dateien möglich
+- Editor: Löschen von Elementen mit Tastatur (Entf) möglich
+- Editor: Bugfix: Absturz beim Löschen mehrerer Elemente, wenn auch das Projekt 
+  selbst mit ausgewählt war
+- Editor: Bugfix: Navigation vom Fehlerfenster zum fehlerhaften Element funktionierte
+  nicht, wenn der Fehler in einer Datei lag und das Element ein oberstes im Modus war
+- Editor: Bugfix für Crash beim Start, wenn das Musik- oder Soundsverzeichnis gelöscht
+  worden war
+- Player: Kann gepackte Projekte importieren
+- Player: Bugfix: Verbindung mit Controller schlug fehl, wenn kein Projekt geöffnet
+  war
+- Player: Bugfix: Fade-out funktionierte nicht richtig in Verbindung mit 
+  Endlosschleifen ohne Zwischenverzögerung
+
 Version 0.4.0
 ----------------------------------------------------------------------------------
 - Allgemein: Controller für Android verfügbar

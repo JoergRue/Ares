@@ -1,3 +1,20 @@
+Version 0.5.0
+----------------------------------------------------------------------------------
+- General: Portable version available
+- General: Volume for a file can be set by random
+- General: Added effects for files: pitch, balance (also panning), volume in dB,
+  speaker assignment, reverb / echo
+- Editor: Import / export of projects packed together with all files possible
+- Editor: Deleting of elements with keyboard (Del) possible
+- Editor: Bugfix: Crash when deleting several elements and the project itself was
+  also selected
+- Editor: Bugfix: Navigation from Error Window to the erroneous element didn't work
+  if the error was in a file and the element was a top-level one of a mode
+- Editor: Bugfix for crash on start if music or sounds directory had been deleted
+- Player: Can import packed projects
+- Player: Bugfix: Connection to Controller failed if no project was opened
+- Player: Bugfix: Fade out didn't work correctly with endless loops without delay
+
 Version 0.4.0
 ----------------------------------------------------------------------------------
 - General: Controller for Android available

@@ -193,7 +193,7 @@
     <value>Ungültige Abspielposition</value>
   </data>
   <data name="SpeakerError" xml:space="preserve">
-    <value>Lautsprecher nicht verfügbar</value>
+    <value>Lautsprecher nicht verfügbar oder Datei ist Stereo.</value>
   </data>
   <data name="UnexpectedError" xml:space="preserve">
     <value>Unerwarteter Fehler: {0}</value>
