@@ -5,6 +5,7 @@ Version 0.5.0
 - Allgemein: Effekte für Dateien hinzugefügt: Tonhöhe, Balance (auch wandernd), 
   Lautstärke in dB, Lautsprecherzuordnung, Hall / Echo
 - Editor: Import / Export von Projekten in gepackter Form mit allen Dateien möglich
+- Editor: Kann eine Liste der Tasten und eine Liste der Dateien im Projekt ausgeben
 - Editor: Löschen von Elementen mit Tastatur (Entf) möglich
 - Editor: Bugfix: Absturz beim Löschen mehrerer Elemente, wenn auch das Projekt 
   selbst mit ausgewählt war

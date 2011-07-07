@@ -5,6 +5,7 @@ Version 0.5.0
 - General: Added effects for files: pitch, balance (also panning), volume in dB,
   speaker assignment, reverb / echo
 - Editor: Import / export of projects packed together with all files possible
+- Editor: Can show a list of keys and a list of used files in the project
 - Editor: Deleting of elements with keyboard (Del) possible
 - Editor: Bugfix: Crash when deleting several elements and the project itself was
   also selected
