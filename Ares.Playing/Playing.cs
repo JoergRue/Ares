@@ -165,6 +165,32 @@ namespace Ares.Playing
             }
         }
 
+        public void MusicPlaylistStarted(int elementId)
+        {
+            List<IProjectPlayingCallbacks> copy = null;
+            lock (syncObject)
+            {
+                copy = new List<IProjectPlayingCallbacks>(m_Clients);
+            }
+            foreach (IProjectPlayingCallbacks callback in copy)
+            {
+                callback.MusicPlaylistStarted(elementId);
+            }
+        }
+
+        public void MusicPlaylistFinished()
+        {
+            List<IProjectPlayingCallbacks> copy = null;
+            lock (syncObject)
+            {
+                copy = new List<IProjectPlayingCallbacks>(m_Clients);
+            }
+            foreach (IProjectPlayingCallbacks callback in copy)
+            {
+                callback.MusicPlaylistFinished();
+            }
+        }
+
         public void ErrorOccurred(int elementId, string errorMessage)
         {
             List<IProjectPlayingCallbacks> copy = null;

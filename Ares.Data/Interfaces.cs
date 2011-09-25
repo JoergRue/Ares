@@ -124,6 +124,11 @@ namespace Ares.Data
         /// Visitor pattern; put through to the elements
         /// </summary>
         void VisitElements(IElementVisitor visitor);
+
+        /// <summary>
+        /// Gets all files in the music list.
+        /// </summary>
+        IList<IFileElement> GetFileElements();
     }
 
     /// <summary>

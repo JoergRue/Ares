@@ -135,6 +135,15 @@ public final class Control {
 	      }
   }
   
+  public void setMusicTitle(int id) {
+	  if (connection == null || !connection.isConnected()) {
+		  Messages.addMessage(MessageType.Warning, Localization.getString("Control.noConnection")); //$NON-NLS-1$
+	  }
+	  else {
+		  connection.selectMusicElement(id);
+	  }
+  }
+  
   public boolean isConnected() {
     return connection != null;
   }

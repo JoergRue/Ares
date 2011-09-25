@@ -121,6 +121,11 @@ namespace Ares.Players
             }
         }
 
+        public void SelectMusicElement(Int32 elementId)
+        {
+            PlayingModule.ProjectPlayer.SetMusicTitle(elementId);
+        }
+
         private Object syncObject = new Int16();
 
         private IMode m_CurrentMode;
@@ -311,6 +316,35 @@ namespace Ares.Players
                 {
                     m_SoundVolume = newValue;
                 }
+            }
+        }
+
+        private Int32 m_CurrentMusicList = -1;
+
+        public Int32 CurrentMusicList
+        {
+            get
+            {
+                lock (syncObject)
+                {
+                    return m_CurrentMusicList;
+                }
+            }
+        }
+
+        public void MusicPlaylistStarted(int elementId)
+        {
+            lock (syncObject)
+            {
+                m_CurrentMusicList = elementId;
+            }
+        }
+
+        public void MusicPlaylistFinished()
+        {
+            lock (syncObject)
+            {
+                m_CurrentMusicList = -1;
             }
         }
 

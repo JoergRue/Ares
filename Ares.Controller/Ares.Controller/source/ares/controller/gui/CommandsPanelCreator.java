@@ -63,7 +63,7 @@ class CommandsPanelCreator {
    *  
    * @return javax.swing.JPanel 
    */
-  public static JPanel createPanel(List<Command> commands, IActionCreator actionCreator, JRootPane rootPane, int nrOfColumns) {
+  public static JPanel createPanel(List<Command> commands, IActionCreator actionCreator, JRootPane rootPane, int nrOfColumns, JToggleButton musicListButton) {
       JPanel panel = new JPanel();
       panel.setLayout(new BorderLayout());
       JLabel label1 = new JLabel();
@@ -80,6 +80,9 @@ class CommandsPanelCreator {
       panel.add(label4, BorderLayout.WEST);
       JPanel buttonPane = new JPanel();
       buttonPane.setLayout(new GridLayout((int)Math.ceil(commands.size() / (float)nrOfColumns), nrOfColumns, 10, 10));
+      if (musicListButton != null) {
+    	  buttonPane.add(musicListButton);
+      }
       for (Command command : commands) {
         AbstractButton button = new JToggleButton();
         AbstractAction action = actionCreator.createAction(command, button); 

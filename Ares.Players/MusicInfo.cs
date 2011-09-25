@@ -24,14 +24,25 @@ using Ares.Data;
 
 namespace Ares.Players
 {
-    public static class MusicInfo
+    public class MusicInfo
     {
-        public static String GetInfo(int musicElementId)
+        public String LongTitle { get; private set; }
+        public String ShortTitle { get; private set; }
+
+        private MusicInfo(String longTitle, String shortTitle)
+        {
+            LongTitle = longTitle;
+            ShortTitle = shortTitle;
+        }
+
+        public static MusicInfo GetInfo(int musicElementId)
         {
             if (musicElementId != -1)
             {
                 IElement musicElement = Ares.Data.DataModule.ElementRepository.GetElement(musicElementId);
                 IFileElement fileElement = musicElement as IFileElement;
+                String shortTitle = musicElement.Title;
+                String longTitle = musicElement.Title;
                 if (fileElement != null)
                 {
                     String path = Settings.Settings.Instance.MusicDirectory;
@@ -47,21 +58,14 @@ namespace Ares.Players
                         if (musicInfoBuilder.Length > 0)
                             musicInfoBuilder.Append(" - ");
                         musicInfoBuilder.Append(tag.title);
-                        return musicInfoBuilder.ToString();
-                    }
-                    else
-                    {
-                        return musicElement.Title;
+                        longTitle = musicInfoBuilder.ToString();
                     }
                 }
-                else
-                {
-                    return musicElement.Title;
-                }
+                return new MusicInfo(longTitle, shortTitle);
             }
             else
             {
-                return String.Empty;
+                return new MusicInfo(String.Empty, String.Empty);
             }
         }
     }

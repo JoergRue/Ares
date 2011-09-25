@@ -162,14 +162,18 @@ public abstract class SubFrame extends JFrame {
   }
 
   public SubFrame(String title) {
+	  this(title, new Rectangle(50, 50, 420, 100));
+  }
+  
+  public SubFrame(String title, Rectangle defaultBounds) {
     super(title);
     this.addWindowListener(new MyWindowListener());
     setTitle(title);
     Preferences prefs = Preferences.userNodeForPackage(SubFrame.class);
-    int x = prefs.getInt(title + "x", 50); //$NON-NLS-1$
-    int y = prefs.getInt(title + "y", 50); //$NON-NLS-1$
-    int w = prefs.getInt(title + "w", 420); //$NON-NLS-1$
-    int h = prefs.getInt(title + "h", 100); //$NON-NLS-1$
+    int x = prefs.getInt(title + "x", defaultBounds.x); //$NON-NLS-1$
+    int y = prefs.getInt(title + "y", defaultBounds.y); //$NON-NLS-1$
+    int w = prefs.getInt(title + "w", defaultBounds.width); //$NON-NLS-1$
+    int h = prefs.getInt(title + "h", defaultBounds.height); //$NON-NLS-1$
     java.awt.Dimension screen = java.awt.Toolkit.getDefaultToolkit()
         .getScreenSize();
     if (w > screen.width) w = screen.width;

@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2010 [Joerg Ruedenauer]
+ Copyright (c) 2011 [Joerg Ruedenauer]
  
  This file is part of Ares.
 
@@ -17,23 +17,26 @@
  along with Ares; if not, write to the Free Software
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package ares.controllers.network;
+package ares.controllers.data;
 
-import java.util.List;
+public class MusicElement {
 
-import ares.controllers.data.MusicElement;
-
-public interface INetworkClient {
+	private String title;
+	private int id;
 	
-	void modeChanged(String newMode);
-	void modeElementStarted(int element);
-	void modeElementStopped(int element);
-	void allModeElementsStopped();
-	void volumeChanged(int index, int value);
-	void musicChanged(String newMusic, String shortTitle);
-	void projectChanged(String newTitle);
-	void musicListChanged(List<MusicElement> newList);
-
-	void disconnect();
-	void connectionFailed();
+	public MusicElement(String title, int id)
+	{
+		this.title = title;
+		this.id = id;
+	}
+	
+	public String getTitle()
+	{
+		return title;
+	}
+	
+	public int getId()
+	{
+		return id;
+	}
 }

@@ -306,7 +306,7 @@ namespace Ares.Player
             int musicElementId = control.CurrentMusicElement;
             if (musicElementId != lastMusicElementId)
             {
-                musicLabel.Text = MusicInfo.GetInfo(musicElementId);
+                musicLabel.Text = MusicInfo.GetInfo(musicElementId).LongTitle;
                 lastMusicElementId = musicElementId;
             }
             bool settingsChanged = false;
@@ -570,6 +570,11 @@ namespace Ares.Player
             OpenProjectFromController(newProjectPath);
         }
 
+        public void PlayOtherMusic(Int32 id)
+        {
+            m_PlayingControl.SelectMusicElement(id);
+        }
+
         private bool m_WasConnected = false;
 
         private void UpdateClientData()
@@ -580,7 +585,8 @@ namespace Ares.Player
                 clientStateLabel.ForeColor = System.Drawing.Color.DarkGreen;
                 m_Network.InformClientOfEverything(m_PlayingControl.GlobalVolume, m_PlayingControl.MusicVolume,
                     m_PlayingControl.SoundVolume, m_PlayingControl.CurrentMode, MusicInfo.GetInfo(m_PlayingControl.CurrentMusicElement),
-                    m_PlayingControl.CurrentModeElements, m_Project != null ? m_Project.Title : String.Empty);
+                    m_PlayingControl.CurrentModeElements, m_Project != null ? m_Project.Title : String.Empty, 
+                    m_PlayingControl.CurrentMusicList);
                 disconnectButton.Enabled = true;
                 m_WasConnected = true;
             }

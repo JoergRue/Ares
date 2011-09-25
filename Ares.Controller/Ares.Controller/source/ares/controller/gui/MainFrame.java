@@ -77,6 +77,7 @@ import ares.controllers.data.Command;
 import ares.controllers.data.Configuration;
 import ares.controllers.data.KeyStroke;
 import ares.controllers.data.Mode;
+import ares.controllers.data.MusicElement;
 import ares.controller.gui.util.ExampleFileFilter;
 import ares.controllers.messages.IMessageListener;
 import ares.controllers.messages.Message;
@@ -342,6 +343,7 @@ public final class MainFrame extends FrameController implements IMessageListener
 			  getModesPanel().remove(modeCommandsPanel);
 			  modeCommandsPanel = null;
 		  }
+		  getMusicListButton().setEnabled(false);
 	  }
 	  else {
           Configuration config = Control.getInstance().getConfiguration();
@@ -354,12 +356,44 @@ public final class MainFrame extends FrameController implements IMessageListener
 		  {
         	  getModesPanel().remove(modeCommandsPanel);
 		  }
-          modeCommandsPanel = CommandsPanelCreator.createPanel(commands, this, getRootPane(), 3);
+          modeCommandsPanel = CommandsPanelCreator.createPanel(commands, this, getRootPane(), 3, getMusicListButton());
+          getMusicListButton().setEnabled(true);
           getModesPanel().add(modeCommandsPanel, BorderLayout.CENTER);
           getModesPanel().setVisible(true);
 	  }
 	  refillContentPane(getJContentPane());
 	  pack();
+  }
+  
+  private JToggleButton musicListButton;
+  private MusicListFrame musicListFrame;
+  
+  private JToggleButton getMusicListButton() {
+	  if (musicListButton == null) {
+		  musicListButton = new JToggleButton();
+		  musicListButton.setAction(new AbstractAction() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (musicListFrame != null) {
+					musicListFrame.dispose();
+					musicListFrame = null;
+				}
+				else {
+					musicListFrame = new MusicListFrame("Musikliste");
+					musicListFrame.setTitles(currentMusicList);
+					musicListFrame.setActiveTitle(currentShortTitle);
+					musicListFrame.addWindowListener(new WindowAdapter() {
+		                public void windowClosing(java.awt.event.WindowEvent e) {
+		                	musicListFrame = null;
+		                }
+		              });
+					musicListFrame.setVisible(true);
+				}
+			} 
+		  });
+		  musicListButton.setText("Musikliste");
+		  addButton("Musikliste", musicListButton);
+	  }
+	  return musicListButton;
   }
   
   private static void updateLastProjects(String path, String name) {
@@ -1062,8 +1096,10 @@ public final class MainFrame extends FrameController implements IMessageListener
 		return fit;
 	}
 	
+	private String currentShortTitle = "";
+	
 	@Override
-	public void musicChanged(final String newMusic) {
+	public void musicChanged(final String newMusic, final String shortTitle) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				String fit = compact(newMusic, musicLabel, getStatePanel().getWidth() - 25 - elementsDescLabel.getWidth());
@@ -1075,6 +1111,24 @@ public final class MainFrame extends FrameController implements IMessageListener
 				else
 				{
 					musicLabel.setToolTipText(""); //$NON-NLS-1$
+				}
+				if (musicListFrame != null) {
+					musicListFrame.setActiveTitle(shortTitle);
+				}
+				currentShortTitle = shortTitle;
+			}
+		});
+	}
+	
+	private List<MusicElement> currentMusicList = null;
+	
+	@Override
+	public void musicListChanged(final List<MusicElement> newList) {
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				currentMusicList = newList;
+				if (musicListFrame != null) {
+					musicListFrame.setTitles(newList);
 				}
 			}
 		});

@@ -29,11 +29,13 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import ares.controllers.data.KeyStroke;
+import ares.controllers.data.MusicElement;
 import ares.controllers.messages.Messages;
 import ares.controllers.messages.Message.MessageType;
 import ares.controllers.util.Localization;
@@ -186,7 +188,7 @@ public final class ControlConnection {
 				  }
 				  case 2:
 				  {
-					  networkClient.musicChanged(readString(stream));
+					  networkClient.musicChanged(readString(stream), readString(stream));
 					  break;
 				  }
 				  case 3:
@@ -217,6 +219,24 @@ public final class ControlConnection {
 					  stream.read();
 					  stream.read();
 					  networkClient.allModeElementsStopped();
+					  break;
+				  }
+				  case 8:
+				  {
+					  int subcommand = stream.read();
+					  stream.read();
+					  if (subcommand == 0) {
+						  currentMusicList.clear();
+					  }
+					  else if (subcommand == 1) {
+						  java.nio.ByteBuffer buffer = java.nio.ByteBuffer.allocate(4);
+						  stream.read(buffer.array());
+						  currentMusicList.add(new MusicElement(readString(stream), buffer.getInt(0)));
+					  }
+					  else if (subcommand == 2) {
+						  networkClient.musicListChanged(currentMusicList);
+					  }
+					  break;
 				  }
 				  default:
 					  break;
@@ -233,6 +253,8 @@ public final class ControlConnection {
 		  }
 	  }
   }
+  
+  private ArrayList<MusicElement> currentMusicList = new ArrayList<MusicElement>();
   
   public boolean isConnected() {
     return socket != null;
@@ -319,6 +341,23 @@ public final class ControlConnection {
           Messages.addMessage(MessageType.Error, e.getLocalizedMessage());
           networkClient.connectionFailed();
       }	  	  
+  }
+  
+  public void selectMusicElement(int elementId) {
+	  if (socket == null) {
+		  return;
+	  }
+	  try {
+		  byte[] bytes = new byte[1 + 4];
+		  bytes[0] = 7;
+		  java.nio.ByteBuffer buffer = java.nio.ByteBuffer.wrap(bytes);
+		  buffer.putInt(1, elementId);
+		  socket.getOutputStream().write(bytes);
+	  }
+	  catch (IOException e) {
+		  Messages.addMessage(MessageType.Error, e.getLocalizedMessage());
+		  networkClient.connectionFailed();
+	  }
   }
   
   private HashMap<KeyStroke, byte[]> commandMap = null;

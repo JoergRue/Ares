@@ -125,6 +125,16 @@ namespace Ares.Playing
         /// <param name="target">volume which changed</param>
         /// <param name="newValue">new volume value</param>
         void VolumeChanged(VolumeTarget target, int newValue);
+
+        /// <summary>
+        /// A music playlist was started.
+        /// </summary>
+        void MusicPlaylistStarted(Int32 elementId);
+
+        /// <summary>
+        /// The current music playlist was stopped.
+        /// </summary>
+        void MusicPlaylistFinished();
     }
 
     /// <summary>
@@ -215,6 +225,12 @@ namespace Ares.Playing
         /// Plays the previous music title again.
         /// </summary>
         void PreviousMusicTitle();
+        /// <summary>
+        /// Plays a defined music title from the current list.
+        /// No effect if the title isn't found in the list, since that 
+        /// could happen by accident (request sent, but music list already finished).
+        /// </summary>
+        void SetMusicTitle(Int32 elementId);
     }
 
     /// <summary>

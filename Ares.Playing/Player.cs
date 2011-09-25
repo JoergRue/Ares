@@ -175,6 +175,7 @@ namespace Ares.Playing
         void Previous();
         void Stop();
         void SetMusicVolume(int volume);
+        void PlayMusicTitle(Int32 elementId);
     }
 
     abstract class ElementPlayerBase : IElementVisitor
@@ -317,6 +318,10 @@ namespace Ares.Playing
                     }
                     if (stop || !success)
                     {
+                        if (PlayingModule.ThePlayer.ProjectCallbacks != null)
+                        {
+                            PlayingModule.ThePlayer.ProjectCallbacks.MusicPlaylistFinished();
+                        }
                         Client.SubPlayerFinished(this);
                     }
                     else
@@ -363,6 +368,8 @@ namespace Ares.Playing
             }
         }
 
+        public abstract void PlayMusicTitle(Int32 elementId);
+
         public void Next()
         {
             StopCurrentFile(true); // will automatically start the next file
@@ -380,6 +387,23 @@ namespace Ares.Playing
 
     class SequentialMusicPlayer : MusicPlayer, IMusicPlayer
     {
+        public override void PlayMusicTitle(Int32 elementID)
+        {
+            IList<ISequentialElement> elements = m_Container.GetElements();
+            for (int i = 0; i < elements.Count; ++i )
+            {
+                if (elements[i].InnerElement.Id == elementID)
+                {
+                    lock (syncObject)
+                    {
+                        m_Index = i - 1;
+                    }
+                    StopCurrentFile(true); // will automatically start the next file
+                    break;
+                }
+            }
+        }
+
         public override void Previous()
         {
             lock(syncObject)
@@ -397,6 +421,10 @@ namespace Ares.Playing
             if (Client.Stopped || shallStop)
             {
                 Monitor.Exit(syncObject);
+                if (PlayingModule.ThePlayer.ProjectCallbacks != null)
+                {
+                    PlayingModule.ThePlayer.ProjectCallbacks.MusicPlaylistFinished();
+                }
                 Client.SubPlayerFinished(this);
                 return;
             }
@@ -412,6 +440,10 @@ namespace Ares.Playing
                 else
                 {
                     Monitor.Exit(syncObject);
+                    if (PlayingModule.ThePlayer.ProjectCallbacks != null)
+                    {
+                        PlayingModule.ThePlayer.ProjectCallbacks.MusicPlaylistFinished();
+                    }
                     Client.SubPlayerFinished(this);
                 }
             }
@@ -444,6 +476,11 @@ namespace Ares.Playing
         {
             if (m_Container.GetElements().Count > 0)
             {
+                PlayingModule.ThePlayer.ActiveMusicPlayer = this; // once early to stop previous music player
+                if (PlayingModule.ThePlayer.ProjectCallbacks != null)
+                {
+                    PlayingModule.ThePlayer.ProjectCallbacks.MusicPlaylistStarted(m_Container.Id);
+                }
                 ThreadPool.QueueUserWorkItem(state => Process(m_Container));
             }
             else
@@ -459,6 +496,24 @@ namespace Ares.Playing
 
     class RandomMusicPlayer : MusicPlayer, IMusicPlayer
     {
+        public override void PlayMusicTitle(Int32 elementId)
+        {
+            IList<IChoiceElement> elements = m_Container.GetElements();
+            for (int i = 0; i < elements.Count; ++i)
+            {
+                if (elements[i].InnerElement.Id == elementId)
+                {
+                    lock (syncObject)
+                    {
+                        m_FixedNext = i;
+                        m_GoBack = false;
+                    }
+                    Next();
+                    break;
+                }
+            }
+        }
+
         public override void Previous()
         {
             m_GoBack = true;
@@ -471,13 +526,27 @@ namespace Ares.Playing
             if (Client.Stopped || shallStop || (m_Container.RepeatCount != -1 && m_Container.RepeatCount <= ++m_RepeatCount))
             {
                 Monitor.Exit(syncObject);
+                if (PlayingModule.ThePlayer.ProjectCallbacks != null)
+                {
+                    PlayingModule.ThePlayer.ProjectCallbacks.MusicPlaylistFinished();
+                }
                 Client.SubPlayerFinished(this);
+            }
+            else if (m_FixedNext != -1)
+            {
+                IChoiceElement element = m_Container.GetElements()[m_FixedNext];
+                m_LastElementsStack.Add(element);
+                m_GoBack = false;
+                m_FixedNext = -1;
+                Monitor.Exit(syncObject);
+                Repeat(m_Container, element);
             }
             else if (m_GoBack && m_LastElementsStack.Count > 1)
             {
                 IChoiceElement element = m_LastElementsStack[m_LastElementsStack.Count - 2];
                 m_LastElementsStack.RemoveAt(m_LastElementsStack.Count - 1);
                 m_GoBack = false;
+                m_FixedNext = -1;
                 Monitor.Exit(syncObject);
                 Repeat(m_Container, element);
             }
@@ -486,6 +555,7 @@ namespace Ares.Playing
                 IChoiceElement element = SelectRandomElement(m_Container);
                 m_LastElementsStack.Add(element);
                 m_GoBack = false;
+                m_FixedNext = -1;
                 Monitor.Exit(syncObject);
                 Repeat(m_Container, element);
             }
@@ -499,6 +569,16 @@ namespace Ares.Playing
 
         public void Start()
         {
+            if (m_Container.GetElements().Count == 0)
+            {
+                Client.SubPlayerFinished(this);
+                return;
+            }
+            PlayingModule.ThePlayer.ActiveMusicPlayer = this; // once early to stop previous music player
+            if (PlayingModule.ThePlayer.ProjectCallbacks != null)
+            {
+                PlayingModule.ThePlayer.ProjectCallbacks.MusicPlaylistStarted(m_Container.Id);
+            }
             Monitor.Enter(syncObject);
             // Don't delay, start immediately (start delay was already processed by calling player)
             IChoiceElement element = SelectRandomElement(m_Container);
@@ -514,12 +594,14 @@ namespace Ares.Playing
             m_Container = list;
             m_LastElementsStack = new List<IChoiceElement>();
             m_GoBack = false;
+            m_FixedNext = -1;
             m_RepeatCount = 0;
         }
 
         private IRandomBackgroundMusicList m_Container;
         private List<IChoiceElement> m_LastElementsStack;
         private bool m_GoBack;
+        private int m_FixedNext;
         private int m_RepeatCount;
     }
 
@@ -543,6 +625,10 @@ namespace Ares.Playing
             : base(stoppedEvent, client)
         {
             m_Element = musicFile;
+        }
+
+        public override void PlayMusicTitle(int elementId)
+        {
         }
 
         private IFileElement m_Element;
@@ -1170,6 +1256,14 @@ namespace Ares.Playing
             if (ActiveMusicPlayer != null)
             {
                 ActiveMusicPlayer.Previous();
+            }
+        }
+
+        public void SetMusicTitle(Int32 elementId)
+        {
+            if (ActiveMusicPlayer != null)
+            {
+                ActiveMusicPlayer.PlayMusicTitle(elementId);
             }
         }
 

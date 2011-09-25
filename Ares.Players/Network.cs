@@ -30,6 +30,7 @@ namespace Ares.Players
         void VolumeReceived(Ares.Playing.VolumeTarget target, int value);
         void ClientDataChanged();
         void ProjectShallChange(String newProjectFile);
+        void PlayOtherMusic(Int32 elementId);
     }
 
     public class Network : Ares.Playing.IProjectPlayingCallbacks
@@ -125,8 +126,13 @@ namespace Ares.Players
             InformProjectChange(newProject);
         }
 
-        public void InformClientOfEverything(int overallVolume, int musicVolume, int soundVolume, Ares.Data.IMode mode, String music,
-            System.Collections.Generic.IList<Ares.Data.IModeElement> elements, String projectName)
+        public void InformClientOfMusicList(Int32 musicListId)
+        {
+            InformMusicList(musicListId);
+        }
+
+        public void InformClientOfEverything(int overallVolume, int musicVolume, int soundVolume, Ares.Data.IMode mode, MusicInfo music,
+            System.Collections.Generic.IList<Ares.Data.IModeElement> elements, String projectName, Int32 musicListId)
         {
             InformProjectChange(projectName);
             InformVolume(Playing.VolumeTarget.Both, overallVolume);
@@ -138,6 +144,7 @@ namespace Ares.Players
             foreach (Ares.Data.IModeElement element in elements) {
                 InformModeElementChange(element, true);
             }
+            InformMusicList(musicListId);
         }
 
         public void ListenInThread()
@@ -463,6 +470,26 @@ namespace Ares.Players
                             networkClient.ProjectShallChange(projectName);
                         }
                     }
+                    else if (command == 7)
+                    {
+                        Byte[] data = new Byte[4];
+                        bool success = false;
+                        Int32 newMusicId = -1;
+                        lock (syncObject)
+                        {
+                            success = client != null && ReadFromStream(client.GetStream(), data, 4, 500);
+                            if (success)
+                            {
+                                if (BitConverter.IsLittleEndian)
+                                    Array.Reverse(data);
+                                newMusicId = BitConverter.ToInt32(data, 0);
+                            }
+                        }
+                        if (success && newMusicId != -1)
+                        {
+                            networkClient.PlayOtherMusic(newMusicId);
+                        }
+                    }
                     lock (syncObject)
                     {
                         goOn = continueListenForKeys;
@@ -537,16 +564,67 @@ namespace Ares.Players
             }
         }
 
-        private void InformMusicChange(String newMusicTitle)
+        private void InformMusicChange(MusicInfo music)
         {
             if (ClientConnected)
             {
-                byte[] bytes = System.Text.Encoding.UTF8.GetBytes(newMusicTitle);
-                byte[] package = new byte[3 + bytes.Length];
+                byte[] bytes1 = System.Text.Encoding.UTF8.GetBytes(music.LongTitle);
+                byte[] bytes2 = System.Text.Encoding.UTF8.GetBytes(music.ShortTitle);
+                byte[] package = new byte[5 + bytes1.Length + bytes2.Length];
                 package[0] = 2;
-                package[1] = (byte)(bytes.Length / (1 << 8));
-                package[2] = (byte)(bytes.Length % (1 << 8));
-                Array.Copy(bytes, 0, package, 3, bytes.Length);
+                package[1] = (byte)(bytes1.Length / (1 << 8));
+                package[2] = (byte)(bytes1.Length % (1 << 8));
+                Array.Copy(bytes1, 0, package, 3, bytes1.Length);
+                package[3 + bytes1.Length] = (byte)(bytes2.Length / (1 << 8));
+                package[3 + bytes1.Length + 1] = (byte)(bytes2.Length % (1 << 8));
+                Array.Copy(bytes2, 0, package, 3 + bytes1.Length + 2, bytes2.Length);
+                lock (syncObject)
+                {
+                    client.GetStream().Write(package, 0, package.Length);
+                }
+            }
+        }
+
+        private void InformMusicList(Int32 musicListId)
+        {
+            if (ClientConnected)
+            {
+                // start packet
+                byte[] package = new byte[3];
+                package[0] = 8;
+                package[1] = 0;
+                package[2] = 0;
+                lock (syncObject)
+                {
+                    client.GetStream().Write(package, 0, package.Length);
+                }
+                Ares.Data.IElement element = musicListId != -1 ? Ares.Data.DataModule.ElementRepository.GetElement(musicListId) : null;
+                Ares.Data.IMusicList musicList = (element != null && element is Ares.Data.IMusicList) ? element as Ares.Data.IMusicList : null;
+                // one packet each for each music title
+                if (musicList != null)
+                {
+                    foreach (Ares.Data.IFileElement fileElement in musicList.GetFileElements())
+                    {
+                        byte[] title = System.Text.Encoding.UTF8.GetBytes(fileElement.Title);
+                        byte[] elementId = BitConverter.GetBytes(fileElement.Id);
+                        if (BitConverter.IsLittleEndian)
+                            Array.Reverse(elementId);
+                        byte[] elementPackage = new byte[3 + elementId.Length + 2 + title.Length];
+                        elementPackage[0] = 8;
+                        elementPackage[1] = 1;
+                        elementPackage[2] = 0;
+                        Array.Copy(elementId, 0, elementPackage, 3, elementId.Length);
+                        elementPackage[3 + elementId.Length] = (byte)(title.Length / (1 << 8));
+                        elementPackage[3 + elementId.Length + 1] = (byte)(title.Length % (1 << 8));
+                        Array.Copy(title, 0, elementPackage, 3 + elementId.Length + 2, title.Length);
+                        lock (syncObject)
+                        {
+                            client.GetStream().Write(elementPackage, 0, elementPackage.Length);
+                        }
+                    }
+                }
+                // end packet
+                package[1] = 2;
                 lock (syncObject)
                 {
                     client.GetStream().Write(package, 0, package.Length);
@@ -723,13 +801,23 @@ namespace Ares.Players
         {
             try
             {
-                InformMusicChange(String.Empty);
+                InformMusicChange(MusicInfo.GetInfo(-1));
             }
             catch (System.IO.IOException e)
             {
                 Messages.AddMessage(MessageType.Error, e.Message);
                 DoDisconnect(true);
             }
+        }
+
+        public void MusicPlaylistStarted(int elementId)
+        {
+            InformMusicList(elementId);
+        }
+
+        public void MusicPlaylistFinished()
+        {
+            InformMusicList(-1);
         }
 
         public void VolumeChanged(Ares.Playing.VolumeTarget target, int newValue)
