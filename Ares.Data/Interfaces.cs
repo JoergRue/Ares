@@ -303,6 +303,11 @@ namespace Ares.Data
         /// Reverb effect
         /// </summary>
         IReverbEffect Reverb { get; }
+
+        /// <summary>
+        /// Tempo effect
+        /// </summary>
+        IIntEffect Tempo { get; }
     }
 
     /// <summary>

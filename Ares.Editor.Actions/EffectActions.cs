@@ -456,6 +456,19 @@ namespace Ares.Editor.Actions
         }
     }
 
+    public class AllFileElementsTempoChangeAction : AllFileElementsIntEffectChangeAction
+    {
+        public AllFileElementsTempoChangeAction(IGeneralElementContainer container, bool active, bool random, int fixValue, int minRandomValue, int maxRandomValue)
+        {
+            SetValues(container, active, random, fixValue, minRandomValue, maxRandomValue);
+        }
+
+        protected override IIntEffect GetEffect(IFileElement element)
+        {
+            return element.Effects.Tempo;
+        }
+    }
+
     public class AllFileElementsBalanceChangeAction : AllFileElementsIntEffectChangeAction
     {
         private List<bool> m_OldSpeakers;

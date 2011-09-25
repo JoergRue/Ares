@@ -56,6 +56,9 @@ namespace Ares.Editor.Controls
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FileEffectsControl));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.allTempoButton = new System.Windows.Forms.Button();
+            this.tempoButton = new System.Windows.Forms.Button();
+            this.tempoBox = new System.Windows.Forms.CheckBox();
             this.allReverbButton = new System.Windows.Forms.Button();
             this.reverbButton = new System.Windows.Forms.Button();
             this.reverbBox = new System.Windows.Forms.CheckBox();
@@ -76,7 +79,9 @@ namespace Ares.Editor.Controls
             // 
             // groupBox1
             // 
-            resources.ApplyResources(this.groupBox1, "groupBox1");
+            this.groupBox1.Controls.Add(this.allTempoButton);
+            this.groupBox1.Controls.Add(this.tempoButton);
+            this.groupBox1.Controls.Add(this.tempoBox);
             this.groupBox1.Controls.Add(this.allReverbButton);
             this.groupBox1.Controls.Add(this.reverbButton);
             this.groupBox1.Controls.Add(this.reverbBox);
@@ -92,9 +97,35 @@ namespace Ares.Editor.Controls
             this.groupBox1.Controls.Add(this.allPitchButton);
             this.groupBox1.Controls.Add(this.pitchButton);
             this.groupBox1.Controls.Add(this.pitchBox);
+            resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
             this.groupBox1.UseCompatibleTextRendering = true;
+            // 
+            // allTempoButton
+            // 
+            resources.ApplyResources(this.allTempoButton, "allTempoButton");
+            this.allTempoButton.Image = global::Ares.Editor.Controls.Properties.Resources.Multiple_Selection;
+            this.allTempoButton.Name = "allTempoButton";
+            this.allTempoButton.UseCompatibleTextRendering = true;
+            this.allTempoButton.UseVisualStyleBackColor = true;
+            this.allTempoButton.Click += new System.EventHandler(this.allTempoButton_Click);
+            // 
+            // tempoButton
+            // 
+            resources.ApplyResources(this.tempoButton, "tempoButton");
+            this.tempoButton.Name = "tempoButton";
+            this.tempoButton.UseCompatibleTextRendering = true;
+            this.tempoButton.UseVisualStyleBackColor = true;
+            this.tempoButton.Click += new System.EventHandler(this.tempoButton_Click);
+            // 
+            // tempoBox
+            // 
+            resources.ApplyResources(this.tempoBox, "tempoBox");
+            this.tempoBox.Name = "tempoBox";
+            this.tempoBox.UseCompatibleTextRendering = true;
+            this.tempoBox.UseVisualStyleBackColor = true;
+            this.tempoBox.CheckedChanged += new System.EventHandler(this.tempoBox_CheckedChanged);
             // 
             // allReverbButton
             // 
@@ -251,5 +282,8 @@ namespace Ares.Editor.Controls
         private System.Windows.Forms.Button allReverbButton;
         private System.Windows.Forms.Button reverbButton;
         private System.Windows.Forms.CheckBox reverbBox;
+        private System.Windows.Forms.Button allTempoButton;
+        private System.Windows.Forms.Button tempoButton;
+        private System.Windows.Forms.CheckBox tempoBox;
     }
 }

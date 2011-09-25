@@ -113,6 +113,15 @@ namespace Ares.Playing
                         return 0;
                     }
                 }
+                if (file.Effects != null && file.Effects.Tempo.Active)
+                {
+                    float tempoValue = DetermineIntEffectValue(file.Effects.Tempo);
+                    if (!Bass.BASS_ChannelSetAttribute(channel, BASSAttribute.BASS_ATTRIB_TEMPO, tempoValue))
+                    {
+                        ErrorHandling.BassErrorOccurred(file.Id, StringResources.SetEffectError);
+                        return 0;
+                    }
+                }
                 if (file.Effects != null && file.Effects.Balance.Active)
                 {
                     SetBalanceEffect(channel, file.Id, file.Effects.Balance);

@@ -191,11 +191,14 @@ namespace Ares.Data
 
         public IReverbEffect Reverb { get { return m_Reverb; } }
 
+        public IIntEffect Tempo { get { return m_Tempo; } }
+
         private IntEffect m_Pitch;
         private BalanceEffect m_Balance;
         private IntEffect m_Volume;
         private SpeakerAssignmentEffect m_Speakers;
         private ReverbEffect m_Reverb;
+        private IntEffect m_Tempo;
 
         internal void WriteToXml(System.Xml.XmlWriter writer)
         {
@@ -211,6 +214,7 @@ namespace Ares.Data
             m_Volume.WriteToXml(writer);
             m_Speakers.WriteToXml(writer);
             m_Reverb.WriteToXml(writer);
+            m_Tempo.WriteToXml(writer);
             writer.WriteEndElement();
         }
 
@@ -227,6 +231,7 @@ namespace Ares.Data
             m_Volume = new IntEffect("Volume", 0);
             m_Speakers = new SpeakerAssignmentEffect();
             m_Reverb = new ReverbEffect();
+            m_Tempo = new IntEffect("Tempo", 0);
         }
 
         internal Effects(System.Xml.XmlReader reader)
@@ -242,6 +247,7 @@ namespace Ares.Data
             m_Volume = new IntEffect("Volume", reader, 0);
             m_Speakers = new SpeakerAssignmentEffect(reader);
             m_Reverb = new ReverbEffect(reader);
+            m_Tempo = new IntEffect("Tempo", reader, 0);
             if (reader.IsEmptyElement)
             {
                 reader.Read();

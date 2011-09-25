@@ -66,6 +66,8 @@ namespace Ares.Editor.Controls
                 allSpeakerButton.Enabled = true;
                 reverbButton.Enabled = true;
                 allReverbButton.Enabled = true;
+                tempoButton.Enabled = true;
+                allTempoButton.Enabled = true;
             }
             else
             {
@@ -80,6 +82,8 @@ namespace Ares.Editor.Controls
                 allSpeakerButton.Enabled = false;
                 reverbButton.Enabled = false;
                 allReverbButton.Enabled = false;
+                tempoButton.Enabled = false;
+                allTempoButton.Enabled = false;
             }
         }
 
@@ -93,6 +97,7 @@ namespace Ares.Editor.Controls
                 volumeBox.Checked = m_Element.Effects.VolumeDB.Active;
                 speakerBox.Checked = m_Element.Effects.SpeakerAssignment.Active;
                 reverbBox.Checked = m_Element.Effects.Reverb.Active;
+                tempoBox.Checked = m_Element.Effects.Tempo.Active;
                 listen = true;
             }
         }
@@ -221,6 +226,30 @@ namespace Ares.Editor.Controls
                 m_Element.Effects.Reverb));
         }
 
+        private void tempoButton_Click(object sender, EventArgs e)
+        {
+            TempoDialog dialog = new TempoDialog(m_Element);
+            if (dialog.ShowDialog(Parent) == DialogResult.OK)
+            {
+                dialog.UpdateAction();
+                Actions.Actions.Instance.AddNew(dialog.Action);
+            }
+        }
 
+        private void allTempoButton_Click(object sender, EventArgs e)
+        {
+            IIntEffect effect = m_Element.Effects.Tempo;
+            Actions.Actions.Instance.AddNew(new Actions.AllFileElementsTempoChangeAction(m_Container,
+                pitchBox.Checked, effect.Random, effect.FixValue, effect.MinRandomValue, effect.MaxRandomValue));
+        }
+
+        private void tempoBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!listen)
+                return;
+            IIntEffect effect = m_Element.Effects.Tempo;
+            Actions.Actions.Instance.AddNew(new Actions.IntEffectChangeAction(m_Element, effect,
+                tempoBox.Checked, effect.Random, effect.FixValue, effect.MinRandomValue, effect.MaxRandomValue));
+        }
     }
 }

@@ -218,8 +218,8 @@ namespace Ares.Editor.ElementEditors
             // 
             // playButton
             // 
-            this.playButton.Image = global::Ares.Editor.ImageResources.RunSmall;
             resources.ApplyResources(this.playButton, "playButton");
+            this.playButton.Image = global::Ares.Editor.ImageResources.RunSmall;
             this.playButton.Name = "playButton";
             this.playButton.UseCompatibleTextRendering = true;
             this.playButton.UseVisualStyleBackColor = true;

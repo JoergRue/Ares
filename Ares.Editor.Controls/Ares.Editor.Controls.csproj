@@ -112,6 +112,12 @@
     <Compile Include="BalanceDialog.Designer.cs">
       <DependentUpon>BalanceDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="TempoDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TempoDialog.Designer.cs">
+      <DependentUpon>TempoDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="ReverbDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -234,6 +240,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BalanceDialog.resx">
       <DependentUpon>BalanceDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TempoDialog.de.resx">
+      <DependentUpon>TempoDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TempoDialog.resx">
+      <DependentUpon>TempoDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ReverbDialog.de.resx">
       <DependentUpon>ReverbDialog.cs</DependentUpon>
