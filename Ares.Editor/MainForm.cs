@@ -28,7 +28,7 @@ using Ares.Settings;
 
 namespace Ares.Editor
 {
-    public partial class MainForm : Form, ErrorWindow.IErrorWindowClient
+    public partial class MainForm : Form, ErrorWindow.IErrorWindowClient, IFileExplorerParent
     {
         private Ares.Ipc.ApplicationInstance m_Instance;
 
@@ -105,7 +105,7 @@ namespace Ares.Editor
                     return null;
                 if (index < 0 || index > 1)
                     return null;
-                m_FileExplorers[index] = new FileExplorer((FileType)index);
+                m_FileExplorers[index] = new FileExplorer((FileType)index, this);
                 return m_FileExplorers[index];
             }
             else if (persistString == "ProjectExplorer")
@@ -336,7 +336,7 @@ namespace Ares.Editor
             int index = (int)fileType;
             if (m_FileExplorers[index] == null)
             {
-                m_FileExplorers[index] = new FileExplorer(fileType);
+                m_FileExplorers[index] = new FileExplorer(fileType, this);
 #if !MONO
                 m_FileExplorers[index].ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockRight;
                 m_FileExplorers[index].Show(dockPanel);
@@ -984,6 +984,22 @@ namespace Ares.Editor
                 return;
 
             Ares.ModelInfo.ProjectImporter.Import(this, fileName, saveFileDialog.FileName, () => OpenProject(saveFileDialog.FileName));
+        }
+
+        private void toolsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowToolsDialog();
+        }
+
+        private void ShowToolsDialog()
+        {
+            Dialogs.ToolsDialog dialog = new Dialogs.ToolsDialog();
+            dialog.ShowDialog(this);
+        }
+
+        public void SetEditor()
+        {
+            ShowToolsDialog();
         }
     }
 

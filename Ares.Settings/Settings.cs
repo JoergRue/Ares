@@ -47,6 +47,8 @@ namespace Ares.Settings
 
         public bool CheckForUpdate { get; set; }
 
+        public String SoundFileEditor { get; set; }
+
     }
 
     public class Settings
@@ -71,7 +73,9 @@ namespace Ares.Settings
 
         public bool CheckForUpdate { get { return Data.CheckForUpdate; } set { Data.CheckForUpdate = value; } }
 
-        public int Version { get { return Data.Version; } private set { Data.Version = value; } }
+        public int Version { get { return Data.Version; } set { Data.Version = value; } }
+
+        public String SoundFileEditor { get { return Data.SoundFileEditor; } set { Data.SoundFileEditor = value; } }
 
         public static Settings Instance
         {
@@ -235,6 +239,7 @@ namespace Ares.Settings
             UdpPort = 8009;
             IPAddress = String.Empty;
             CheckForUpdate = true;
+            SoundFileEditor = String.Empty;
         }
 
         private void WriteSettings(XmlWriter writer)
@@ -258,6 +263,9 @@ namespace Ares.Settings
             writer.WriteAttributeString("CheckForUpdate", CheckForUpdate ? "true" : "false");
             writer.WriteEndElement();
             RecentFiles.WriteFiles(writer);
+            writer.WriteStartElement("Tools");
+            writer.WriteElementString("SoundFileEditor", SoundFileEditor);
+            writer.WriteEndElement();
             writer.WriteEndElement();
         }
 
@@ -330,6 +338,22 @@ namespace Ares.Settings
                         reader.ReadInnerXml();
                         reader.ReadEndElement();
                     }
+                }
+                else if (reader.IsStartElement("Tools"))
+                {
+                    reader.Read();
+                    while (reader.IsStartElement())
+                    {
+                        if (reader.IsStartElement("SoundFileEditor"))
+                        {
+                            SoundFileEditor = reader.ReadElementString();
+                        }
+                        else
+                        {
+                            reader.ReadOuterXml();
+                        }
+                    }
+                    reader.ReadEndElement();
                 }
                 else
                 {

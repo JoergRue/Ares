@@ -41,9 +41,12 @@ namespace Ares.Editor
             sImageList.Images.Add(ImageResources.eventlogError);
         }
 
-        public FileExplorer(FileType fileType)
+        private IFileExplorerParent m_Parent;
+
+        public FileExplorer(FileType fileType, IFileExplorerParent parent)
         {
             InitializeComponent();
+            m_Parent = parent;
             this.Text = String.Format(StringResources.FileExplorerTitle, fileType == FileType.Music ? StringResources.Music : StringResources.Sounds);
             m_FileType = fileType;
             treeView1.ImageList = sImageList;
@@ -95,7 +98,7 @@ namespace Ares.Editor
             treeView1.EndUpdate();
         }
 
-        private static void FillTreeNode(TreeNode node, String directory, String root, FileType dirType)
+        private void FillTreeNode(TreeNode node, String directory, String root, FileType dirType)
         {
             try
             {
@@ -119,6 +122,7 @@ namespace Ares.Editor
                     TreeNode subNode = new TreeNode(file.Substring(subLength));
                     subNode.ImageIndex = subNode.SelectedImageIndex = (dirType == FileType.Sound ? 1 : 2);
                     subNode.Tag = new DraggedItem { NodeType = DraggedItemType.File, ItemType = dirType, RelativePath = file.Substring(rootLength) };
+                    subNode.ContextMenuStrip = fileNodeContextMenu;
                     node.Nodes.Add(subNode);
                 }
             }
@@ -239,6 +243,59 @@ namespace Ares.Editor
                 DefaultNodeAction();
             }
         }
+
+        private void playToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PlaySelectedFile();
+        }
+
+        private void stopToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (m_PlayedElement != null)
+            {
+                Actions.Playing.Instance.StopElement(m_PlayedElement);
+            }
+        }
+
+        private void editToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TreeNode node = treeView1.SelectedNode;
+            if (node == null || node.Tag == null)
+                return;
+            DraggedItem item = (DraggedItem)node.Tag;
+            if (item.NodeType != DraggedItemType.File)
+                return;
+            String editor = Ares.Settings.Settings.Instance.SoundFileEditor;
+            if (String.IsNullOrEmpty(editor))
+            {
+                if (MessageBox.Show(this, StringResources.NoSoundFileEditor, StringResources.Ares, MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
+                {
+                    m_Parent.SetEditor();
+                }
+                editor = Ares.Settings.Settings.Instance.SoundFileEditor;
+            }
+            if (!String.IsNullOrEmpty(editor))
+            {
+                String basePath = item.ItemType == FileType.Music ? Settings.Settings.Instance.MusicDirectory : Settings.Settings.Instance.SoundDirectory;
+                String filePath = System.IO.Path.Combine(basePath, item.RelativePath);
+                try
+                {
+                    System.Diagnostics.Process.Start(editor, filePath);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(this, String.Format(StringResources.SoundFileEditorStartFail, ex.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void fileNodeContextMenu_Opening(object sender, CancelEventArgs e)
+        {
+            stopToolStripMenuItem.Enabled = m_PlayedElement != null;
+            playToolStripMenuItem.Enabled = PlayingPossible;
+            editToolStripMenuItem.Enabled = m_Parent != null && treeView1.SelectedNode != null && treeView1.SelectedNode.Tag != null &&
+                treeView1.SelectedNode.Tag is DraggedItem && ((DraggedItem)treeView1.SelectedNode.Tag).NodeType == DraggedItemType.File;
+        }
     }
 
     public enum DraggedItemType
@@ -281,5 +338,10 @@ namespace Ares.Editor
                 }
             }
         }
+    }
+
+    public interface IFileExplorerParent
+    {
+        void SetEditor();
     }
 }

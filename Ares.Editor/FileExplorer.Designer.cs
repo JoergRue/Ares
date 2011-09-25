@@ -60,44 +60,50 @@ namespace Ares.Editor
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FileExplorer));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.playButton = new System.Windows.Forms.ToolStripButton();
             this.stopButton = new System.Windows.Forms.ToolStripButton();
             this.refreshButton = new System.Windows.Forms.ToolStripButton();
             this.treeView1 = new MultiSelectTreeview.MultiSelectTreeview();
+            this.fileNodeContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.playToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1.SuspendLayout();
+            this.fileNodeContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
             // 
+            resources.ApplyResources(this.toolStrip1, "toolStrip1");
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.playButton,
             this.stopButton,
             this.refreshButton});
-            resources.ApplyResources(this.toolStrip1, "toolStrip1");
             this.toolStrip1.Name = "toolStrip1";
             // 
             // playButton
             // 
-            this.playButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             resources.ApplyResources(this.playButton, "playButton");
+            this.playButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.playButton.Image = global::Ares.Editor.ImageResources.RunSmall;
             this.playButton.Name = "playButton";
             this.playButton.Click += new System.EventHandler(this.playButton_Click);
             // 
             // stopButton
             // 
-            this.stopButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             resources.ApplyResources(this.stopButton, "stopButton");
+            this.stopButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.stopButton.Image = global::Ares.Editor.ImageResources.StopSmall;
             this.stopButton.Name = "stopButton";
             this.stopButton.Click += new System.EventHandler(this.stopButton_Click);
             // 
             // refreshButton
             // 
-            this.refreshButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             resources.ApplyResources(this.refreshButton, "refreshButton");
+            this.refreshButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.refreshButton.Name = "refreshButton";
             this.refreshButton.Click += new System.EventHandler(this.refreshButton_Click);
             // 
@@ -113,6 +119,34 @@ namespace Ares.Editor
             this.treeView1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.treeView1_MouseMove);
             this.treeView1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.treeView1_MouseUp);
             // 
+            // fileNodeContextMenu
+            // 
+            resources.ApplyResources(this.fileNodeContextMenu, "fileNodeContextMenu");
+            this.fileNodeContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.playToolStripMenuItem,
+            this.stopToolStripMenuItem,
+            this.editToolStripMenuItem});
+            this.fileNodeContextMenu.Name = "contextMenuStrip1";
+            this.fileNodeContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.fileNodeContextMenu_Opening);
+            // 
+            // playToolStripMenuItem
+            // 
+            resources.ApplyResources(this.playToolStripMenuItem, "playToolStripMenuItem");
+            this.playToolStripMenuItem.Name = "playToolStripMenuItem";
+            this.playToolStripMenuItem.Click += new System.EventHandler(this.playToolStripMenuItem_Click);
+            // 
+            // stopToolStripMenuItem
+            // 
+            resources.ApplyResources(this.stopToolStripMenuItem, "stopToolStripMenuItem");
+            this.stopToolStripMenuItem.Name = "stopToolStripMenuItem";
+            this.stopToolStripMenuItem.Click += new System.EventHandler(this.stopToolStripMenuItem_Click);
+            // 
+            // editToolStripMenuItem
+            // 
+            resources.ApplyResources(this.editToolStripMenuItem, "editToolStripMenuItem");
+            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+            this.editToolStripMenuItem.Click += new System.EventHandler(this.editToolStripMenuItem_Click);
+            // 
             // FileExplorer
             // 
             resources.ApplyResources(this, "$this");
@@ -122,6 +156,7 @@ namespace Ares.Editor
             this.Name = "FileExplorer";
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.fileNodeContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -134,5 +169,9 @@ namespace Ares.Editor
         private System.Windows.Forms.ToolStripButton stopButton;
         private MultiSelectTreeview.MultiSelectTreeview treeView1;
         private System.Windows.Forms.ToolStripButton refreshButton;
+        private System.Windows.Forms.ContextMenuStrip fileNodeContextMenu;
+        private System.Windows.Forms.ToolStripMenuItem playToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem stopToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
     }
 }
