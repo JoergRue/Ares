@@ -133,7 +133,7 @@ public final class MainFrame extends FrameController implements IMessageListener
 		  File baseDir = myDir.getParentFile(); // .../Ares
 		  if (baseDir == null)
 			  return null;
-		  String playerFileName = baseDir.toString() + File.separator +  "Player_Editor" + File.separator + "Ares.Player.exe";
+		  String playerFileName = baseDir.toString() + File.separator +  "Player_Editor" + File.separator + "Ares.Player.exe"; //$NON-NLS-1$ //$NON-NLS-2$
 		  File playerExe = new File(playerFileName); //$NON-NLS-1$ //$NON-NLS-2$
 		  return playerExe.exists() ? playerExe : null;
   	  } 
@@ -378,7 +378,7 @@ public final class MainFrame extends FrameController implements IMessageListener
 					musicListFrame = null;
 				}
 				else {
-					musicListFrame = new MusicListFrame("Musikliste");
+					musicListFrame = new MusicListFrame(Localization.getString("MainFrame.MusicList")); //$NON-NLS-1$
 					musicListFrame.setTitles(currentMusicList);
 					musicListFrame.setActiveTitle(currentShortTitle);
 					musicListFrame.addWindowListener(new WindowAdapter() {
@@ -390,8 +390,8 @@ public final class MainFrame extends FrameController implements IMessageListener
 				}
 			} 
 		  });
-		  musicListButton.setText("Musikliste");
-		  addButton("Musikliste", musicListButton);
+		  musicListButton.setText(Localization.getString("MainFrame.MusicList")); //$NON-NLS-1$
+		  addButton(Localization.getString("MainFrame.MusicList"), musicListButton); //$NON-NLS-1$
 	  }
 	  return musicListButton;
   }
@@ -1096,7 +1096,7 @@ public final class MainFrame extends FrameController implements IMessageListener
 		return fit;
 	}
 	
-	private String currentShortTitle = "";
+	private String currentShortTitle = ""; //$NON-NLS-1$
 	
 	@Override
 	public void musicChanged(final String newMusic, final String shortTitle) {

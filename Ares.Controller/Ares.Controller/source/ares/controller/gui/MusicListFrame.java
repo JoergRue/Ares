@@ -37,6 +37,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import ares.controller.control.ComponentKeys;
+import ares.controller.util.Localization;
 import ares.controllers.control.Control;
 import ares.controllers.data.MusicElement;
 
@@ -53,7 +54,7 @@ public class MusicListFrame extends SubFrame {
 		mainPanel = new JPanel(new BorderLayout());
 		mainPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 		noTitlesLabel = new JLabel();
-		noTitlesLabel.setText("No music list playing.");
+		noTitlesLabel.setText(Localization.getString("MusicListFrame.NoMusicListPlaying")); //$NON-NLS-1$
 		noTitlesLabel.setForeground(Color.DARK_GRAY);
 		mainPanel.add(noTitlesLabel, BorderLayout.CENTER);
 		setContentPane(mainPanel);
@@ -77,7 +78,7 @@ public class MusicListFrame extends SubFrame {
 				mainPanel.validate();
 				mainPanel.repaint();
 				listShown = true;
-				if (!"".equals(activeTitle))
+				if (!"".equals(activeTitle)) //$NON-NLS-1$
 					setActiveTitle(activeTitle);
 			}
 		}
@@ -92,7 +93,7 @@ public class MusicListFrame extends SubFrame {
 		listenForSelection = true;
 	}
 	
-	private String activeTitle = "";
+	private String activeTitle = ""; //$NON-NLS-1$
 	
 	public void setActiveTitle(String title) {
 		activeTitle = title;
