@@ -514,7 +514,7 @@ public class MainActivity extends ControllerActivity implements INetworkClient, 
 
 	@Override
 	public void connectionFailed() {
-		onDisconnect(true);
+		// onDisconnect(true);
 	}
 	
 	private HashMap<String, ServerInfo> servers = new HashMap<String, ServerInfo>();

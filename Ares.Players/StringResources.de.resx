@@ -153,6 +153,9 @@
   <data name="PingReceived" xml:space="preserve">
     <value>Ping empfangen.</value>
   </data>
+  <data name="PingTimeout" xml:space="preserve">
+    <value>Kein Ping empfangen; nehme Netzwerkfehler an.</value>
+  </data>
   <data name="PlayError" xml:space="preserve">
     <value>Bei Element {0}: {1}</value>
   </data>

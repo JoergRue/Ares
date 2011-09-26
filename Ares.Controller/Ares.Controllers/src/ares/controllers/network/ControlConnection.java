@@ -52,10 +52,17 @@ public final class ControlConnection {
   
   private Timer timer;
   
+  private Timer reconnectTimer;
+  
+  private enum State { NotConnected, Connected, ConnectionFailure };
+  
+  private State state;
+  
   public ControlConnection(ServerInfo server, INetworkClient client) {
     address = server.getAddress();
     port = server.getPort();
     networkClient = client;
+    state = State.NotConnected;
   }
   
   public void dispose() {
@@ -66,9 +73,7 @@ public final class ControlConnection {
   
   private Thread listenThread;
   
-  public void connect() {
-    if (socket != null) return;
-    try {
+  private void doConnect(int timeout) throws SocketTimeoutException, IOException {
       String hostName = InetAddress.getLocalHost().getHostName();
       NumberFormat format = NumberFormat.getIntegerInstance();
       format.setMinimumIntegerDigits(4);
@@ -77,27 +82,34 @@ public final class ControlConnection {
       String nameLength = format.format(hostName.length());
       String textToSend = nameLength + hostName;
       socket = new Socket();
-      socket.connect(new InetSocketAddress(address, port), 5000);
+      socket.connect(new InetSocketAddress(address, port), timeout);
       Messages.addMessage(MessageType.Debug, Localization.getString("ControlConnection.SendingInfo") + textToSend); //$NON-NLS-1$
-      socket.getOutputStream().write(textToSend.getBytes("UTF8")); //$NON-NLS-1$
+      socket.getOutputStream().write(textToSend.getBytes("UTF8")); //$NON-NLS-1$	  
       listenThread = new Thread(new Runnable() {
-		public void run() {
-			listenForStatusUpdates();
-		}
-      });
-      continueListen = true;
-      listenThread.start();
-      timer = new Timer("PingTimer"); //$NON-NLS-1$
-      timer.scheduleAtFixedRate(new TimerTask() {
-		public void run() {
-			UIThreadDispatcher.dispatchToUIThread(new Runnable() {
-				public void run() {
-					sendPing();
-				}
-			});
-		}
-      }, 5000, 5000);
+  		public void run() {
+  			listenForStatusUpdates();
+  		}
+	  });
+	  continueListen = true;
+	  listenThread.start();
+	  timer = new Timer("PingTimer"); //$NON-NLS-1$
+	  timer.scheduleAtFixedRate(new TimerTask() {
+	    public void run() {
+		  UIThreadDispatcher.dispatchToUIThread(new Runnable() {
+			public void run() {
+				sendPing();
+			}
+		  });
+	    }
+	  }, 5000, 5000);
+	  state = State.Connected;
       Messages.addMessage(MessageType.Info, Localization.getString("ControlConnection.ConnectedWith") + address + ":" + port); //$NON-NLS-1$ //$NON-NLS-2$
+  }
+  
+  public void connect() {
+    if (socket != null) return;
+    try {
+      doConnect(5000);
     }
     catch (SocketTimeoutException e) {
         Messages.addMessage(MessageType.Error, e.getLocalizedMessage());
@@ -109,20 +121,58 @@ public final class ControlConnection {
     }
   }
   
-  public void disconnect(boolean informServer) {
+  private boolean tryReconnect() {
+	  if (state != State.ConnectionFailure)
+		  return false;
+	  try {
+		  doConnect(2000);
+		  if (reconnectTimer != null) {
+			  reconnectTimer.cancel();
+			  reconnectTimer = null;
+		  }
+		  return true;
+	  }
+	  catch (SocketTimeoutException e) {
+		  return false;
+	  }
+	  catch (IOException e) {
+		  return false;
+	  }
+  }
+  
+  private void doDisconnect(boolean stopListenThread) {
 	if (timer != null) {
 		timer.cancel();
 		timer = null;
 	}
-	synchronized(this) {
-		continueListen = false;
+	if (stopListenThread) {
+		synchronized(this) {
+			continueListen = false;
+		}
+		try {
+			if (listenThread != null) 
+				listenThread.join();
+			listenThread = null;
+		}
+		catch (InterruptedException e) {
+		}
 	}
-	try {
-		if (listenThread != null) 
-			listenThread.join();
+  }
+  
+  public void disconnect(boolean informServer) {
+	if (state == State.ConnectionFailure)
+	{
+		if (reconnectTimer != null) {
+			reconnectTimer.cancel();
+			reconnectTimer = null;
+		}
+		return;
 	}
-	catch (InterruptedException e) {
+	else if (state == State.NotConnected)
+	{
+		return;
 	}
+	doDisconnect(true);
     if (socket != null) {
       Messages.addMessage(MessageType.Info, Localization.getString("ControlConnection.ClosingConnection")); //$NON-NLS-1$
       try {
@@ -139,6 +189,24 @@ public final class ControlConnection {
       }
       socket = null;
     }
+    state = State.NotConnected;
+  }
+  
+  private void handleConnectionFailure(boolean stopListenThread) {
+	doDisconnect(stopListenThread);
+	try {
+		socket.close();
+	}
+	catch (IOException e) {
+	}
+	socket = null;
+    reconnectTimer = new Timer("ReconnectTimer"); //$NON-NLS-1$
+	reconnectTimer.scheduleAtFixedRate(new TimerTask() {
+       public void run() {
+			tryReconnect();
+	    }
+	}, 200, 3000);
+	state = State.ConnectionFailure;
   }
   
   private boolean continueListen = true;
@@ -244,7 +312,8 @@ public final class ControlConnection {
 			  }
 		  }
 		  catch (IOException e) {
-			  ares.controllers.messages.Messages.addMessage(MessageType.Error, e.getLocalizedMessage());
+			  ares.controllers.messages.Messages.addMessage(MessageType.Warning, e.getLocalizedMessage());
+			  handleConnectionFailure(false);
 		      networkClient.connectionFailed();
 			  break;
 		  }
@@ -257,13 +326,19 @@ public final class ControlConnection {
   private ArrayList<MusicElement> currentMusicList = new ArrayList<MusicElement>();
   
   public boolean isConnected() {
-    return socket != null;
+    return state != State.NotConnected;
   }
   
   public void sendKey(KeyStroke keyStroke) {
-    if (socket == null) {
+    if (!isConnected()) {
       Messages.addMessage(MessageType.Warning, Localization.getString("ControlConnection.NoConnection")); //$NON-NLS-1$
       return;
+    }
+    if (state == State.ConnectionFailure) {
+    	if (!tryReconnect()) {
+    	      Messages.addMessage(MessageType.Warning, Localization.getString("ControlConnection.NoConnection")); //$NON-NLS-1$
+    	      return;    		
+    	}
     }
     byte[] bytes = new byte[3];
     bytes[0] = 0;
@@ -275,7 +350,8 @@ public final class ControlConnection {
         socket.getOutputStream().write(bytes);
       }
       catch (IOException e) {
-        Messages.addMessage(MessageType.Error, e.getLocalizedMessage());
+        Messages.addMessage(MessageType.Warning, e.getLocalizedMessage());
+        handleConnectionFailure(true);
         networkClient.connectionFailed();
       }
     }
@@ -286,10 +362,16 @@ public final class ControlConnection {
   }
   
   public void setVolume(int index, int value) {
-	  if (socket == null) {
-		  Messages.addMessage(MessageType.Warning, Localization.getString("ControlConnection.NoConnection")); //$NON-NLS-1$
-		  return;
-	  }
+	    if (!isConnected()) {
+	        Messages.addMessage(MessageType.Warning, Localization.getString("ControlConnection.NoConnection")); //$NON-NLS-1$
+	        return;
+	      }
+	      if (state == State.ConnectionFailure) {
+	      	if (!tryReconnect()) {
+	      	      Messages.addMessage(MessageType.Warning, Localization.getString("ControlConnection.NoConnection")); //$NON-NLS-1$
+	      	      return;    		
+	      	}
+	      }
 	  byte[] bytes = new byte[3];
 	  bytes[0] = 2;
 	  bytes[1] = (byte)index;
@@ -299,13 +381,14 @@ public final class ControlConnection {
 		  socket.getOutputStream().write(bytes);
 	  }
       catch (IOException e) {
-          Messages.addMessage(MessageType.Error, e.getLocalizedMessage());
+          Messages.addMessage(MessageType.Warning, e.getLocalizedMessage());
+          handleConnectionFailure(true);
           networkClient.connectionFailed();
       }	  
   }
   
   public void sendPing() {
-    if (socket == null) {
+    if (state != State.Connected) {
       return;
     }
     try {
@@ -313,13 +396,14 @@ public final class ControlConnection {
       socket.getOutputStream().write(5);
     }
     catch (IOException e) {
-      Messages.addMessage(MessageType.Error, e.getLocalizedMessage());
+      Messages.addMessage(MessageType.Warning, e.getLocalizedMessage());
+      handleConnectionFailure(true);
       networkClient.connectionFailed();
     }
   }
   
   public void sendProjectOpenRequest(String projectName, boolean stripPath) {
-	  if (socket == null) {
+	  if (state != State.Connected) {
 		  return;
 	  }
 	  if (stripPath) {
@@ -338,15 +422,23 @@ public final class ControlConnection {
 		  socket.getOutputStream().write(bytes);
 	  }
       catch (IOException e) {
-          Messages.addMessage(MessageType.Error, e.getLocalizedMessage());
+          Messages.addMessage(MessageType.Warning, e.getLocalizedMessage());
+          handleConnectionFailure(true);
           networkClient.connectionFailed();
       }	  	  
   }
   
   public void selectMusicElement(int elementId) {
-	  if (socket == null) {
-		  return;
-	  }
+	    if (!isConnected()) {
+	        Messages.addMessage(MessageType.Warning, Localization.getString("ControlConnection.NoConnection")); //$NON-NLS-1$
+	        return;
+	      }
+	      if (state == State.ConnectionFailure) {
+	      	if (!tryReconnect()) {
+	      	      Messages.addMessage(MessageType.Warning, Localization.getString("ControlConnection.NoConnection")); //$NON-NLS-1$
+	      	      return;    		
+	      	}
+	      }
 	  try {
 		  byte[] bytes = new byte[1 + 4];
 		  bytes[0] = 7;
@@ -355,8 +447,9 @@ public final class ControlConnection {
 		  socket.getOutputStream().write(bytes);
 	  }
 	  catch (IOException e) {
-		  Messages.addMessage(MessageType.Error, e.getLocalizedMessage());
+		  Messages.addMessage(MessageType.Warning, e.getLocalizedMessage());
 		  networkClient.connectionFailed();
+          handleConnectionFailure(true);
 	  }
   }
   

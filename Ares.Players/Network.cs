@@ -174,7 +174,7 @@ namespace Ares.Players
             }
             catch (Exception e)
             {
-                Messages.AddMessage(MessageType.Error, StringResources.ClientListenError + e.Message);
+                Messages.AddMessage(MessageType.Warning, StringResources.ClientListenError + e.Message);
             }
             finally
             {
@@ -198,6 +198,8 @@ namespace Ares.Players
             }
             return true;
         }
+
+        private System.Timers.Timer m_WatchdogTimer;
 
         private bool InitConnection(TcpClient aClient)
         {
@@ -238,7 +240,16 @@ namespace Ares.Players
             System.Threading.Thread commandThread = new System.Threading.Thread(ListenForKeys);
             commandThread.Start();
             StopUdpBroadcast();
+            m_WatchdogTimer = new System.Timers.Timer(7000);
+            m_WatchdogTimer.Elapsed += new System.Timers.ElapsedEventHandler(watchdogTimer_Elapsed);
+            m_WatchdogTimer.Start();
             return true;
+        }
+
+        void watchdogTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            Messages.AddMessage(MessageType.Warning, StringResources.PingTimeout);
+            DoDisconnect(true);
         }
 
         public void DisconnectClient(bool listenAgain)
@@ -265,6 +276,12 @@ namespace Ares.Players
         {
             lock (syncObject)
             {
+                if (m_WatchdogTimer != null)
+                {
+                    m_WatchdogTimer.Stop();
+                    m_WatchdogTimer.Dispose();
+                    m_WatchdogTimer = null;
+                }
                 continueListenForKeys = false;
                 if (client != null)
                 {
@@ -444,6 +461,11 @@ namespace Ares.Players
                     {
                         // this is ping
                         Messages.AddMessage(MessageType.Debug, StringResources.PingReceived);
+                        if (m_WatchdogTimer != null)
+                        {
+                            m_WatchdogTimer.Stop();
+                            m_WatchdogTimer.Start();
+                        }
                     }
                     else if (command == 6)
                     {
@@ -506,7 +528,7 @@ namespace Ares.Players
             }
             catch (Exception e)
             {
-                Messages.AddMessage(MessageType.Error, StringResources.KeyListenError + e.Message);
+                Messages.AddMessage(MessageType.Warning, StringResources.KeyListenError + e.Message);
                 DoDisconnect(true);
             }
         }
@@ -745,7 +767,7 @@ namespace Ares.Players
             }
             catch (System.IO.IOException e)
             {
-                Messages.AddMessage(MessageType.Error, e.Message);
+                Messages.AddMessage(MessageType.Warning, e.Message);
                 DoDisconnect(true);
             }
         }
@@ -758,7 +780,7 @@ namespace Ares.Players
             }
             catch (System.IO.IOException e)
             {
-                Messages.AddMessage(MessageType.Error, e.Message);
+                Messages.AddMessage(MessageType.Warning, e.Message);
                 DoDisconnect(true);
             }
         }
@@ -771,7 +793,7 @@ namespace Ares.Players
             }
             catch (System.IO.IOException e)
             {
-                Messages.AddMessage(MessageType.Error, e.Message);
+                Messages.AddMessage(MessageType.Warning, e.Message);
                 DoDisconnect(true);
             }
         }
@@ -792,7 +814,7 @@ namespace Ares.Players
             }
             catch (System.IO.IOException e)
             {
-                Messages.AddMessage(MessageType.Error, e.Message);
+                Messages.AddMessage(MessageType.Warning, e.Message);
                 DoDisconnect(true);
             }
         }
@@ -805,7 +827,7 @@ namespace Ares.Players
             }
             catch (System.IO.IOException e)
             {
-                Messages.AddMessage(MessageType.Error, e.Message);
+                Messages.AddMessage(MessageType.Warning, e.Message);
                 DoDisconnect(true);
             }
         }
@@ -846,7 +868,7 @@ namespace Ares.Players
             }
             catch (System.IO.IOException e)
             {
-                Messages.AddMessage(MessageType.Error, e.Message);
+                Messages.AddMessage(MessageType.Warning, e.Message);
                 DoDisconnect(true);
             }
         }
