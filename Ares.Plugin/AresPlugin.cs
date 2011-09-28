@@ -205,15 +205,28 @@ namespace Ares.Plugin
 
         #region Main Control code
 
-        private void ShowErrorDialog(string message)
+        private void ShowErrorDialog(string message, bool waitForOK)
         {
-            GUIDialogOK dlgOK = (GUIDialogOK)GUIWindowManager.GetWindow((int)GUIWindow.Window.WINDOW_DIALOG_OK);
-            if (dlgOK != null)
+            if (waitForOK)
             {
-                dlgOK.SetHeading("Error" /* or Message */);
-                dlgOK.SetLine(1, message);
-                dlgOK.SetLine(2, "");
-                dlgOK.DoModal(PLUGIN_ID);
+                GUIDialogOK dlgOK = (GUIDialogOK)GUIWindowManager.GetWindow((int)GUIWindow.Window.WINDOW_DIALOG_OK);
+                if (dlgOK != null)
+                {
+                    dlgOK.SetHeading("Error" /* or Message */);
+                    dlgOK.SetLine(1, message);
+                    dlgOK.SetLine(2, "");
+                    dlgOK.DoModal(PLUGIN_ID);
+                }
+            }
+            else
+            {
+                GUIDialogNotify dlgNotify = (GUIDialogNotify)GUIWindowManager.GetWindow((int)GUIWindow.Window.WINDOW_DIALOG_NOTIFY);
+                if (dlgNotify != null)
+                {
+                    dlgNotify.SetHeading("Error");
+                    dlgNotify.SetText(message);
+                    dlgNotify.DoModal(PLUGIN_ID);
+                }
             }
         }
         
@@ -243,6 +256,11 @@ namespace Ares.Plugin
             }
         }
 
+        public void PlayOtherMusic(int musicId)
+        {
+            m_PlayingControl.SelectMusicElement(musicId);
+        }
+
         private void OpenProject(String filePath, bool fromController)
         {
             if (m_Project != null)
@@ -262,7 +280,7 @@ namespace Ares.Plugin
                 }
                 else
                 {
-                    ShowErrorDialog(String.Format(StringResources.LoadError, e.Message));
+                    ShowErrorDialog(String.Format(StringResources.LoadError, e.Message), true);
                 }
                 m_Project = null;
             }
@@ -292,7 +310,7 @@ namespace Ares.Plugin
             }
             if (modelErrors.Length > 0)
             {
-                ShowErrorDialog(modelErrors);
+                ShowErrorDialog(modelErrors, false);
             }
         }
 
@@ -325,7 +343,7 @@ namespace Ares.Plugin
             int musicElementId = control.CurrentMusicElement;
             if (musicElementId != lastMusicElementId)
             {
-                String test = MusicInfo.GetInfo(musicElementId);
+                String test = MusicInfo.GetInfo(musicElementId).LongTitle;
                 if (test.Length == 0)
                     test = "  ";
                 musicLabel.Label = test;
@@ -355,7 +373,8 @@ namespace Ares.Plugin
                 networkLabel.Label = StringResources.ConnectedWith + m_Network.ClientName;
                 m_Network.InformClientOfEverything(m_PlayingControl.GlobalVolume, m_PlayingControl.MusicVolume,
                     m_PlayingControl.SoundVolume, m_PlayingControl.CurrentMode, MusicInfo.GetInfo(m_PlayingControl.CurrentMusicElement),
-                    m_PlayingControl.CurrentModeElements, m_Project != null ? m_Project.Title : String.Empty);
+                    m_PlayingControl.CurrentModeElements, m_Project != null ? m_Project.Title : String.Empty,
+                    m_PlayingControl.CurrentMusicList);
                 disconnectButton.IsEnabled = true;
             }
             else
@@ -377,7 +396,7 @@ namespace Ares.Plugin
                     break;
                 case MessageType.Error:
                     Log.Error(m.Text);
-                    ShowErrorDialog(m.Text);
+                    ShowErrorDialog(m.Text, false);
                     break;
                 case MessageType.Info:
                     Log.Info(m.Text);
@@ -472,7 +491,7 @@ namespace Ares.Plugin
                 if (warnOnNetworkFail)
                 {
                     warnOnNetworkFail = false;
-                    ShowErrorDialog(StringResources.NoStatusInfoError);
+                    ShowErrorDialog(StringResources.NoStatusInfoError, true);
                 }
             }
         }
