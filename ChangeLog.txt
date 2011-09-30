@@ -1,3 +1,11 @@
+Version 0.6.0
+----------------------------------------------------------------------------------
+- General: Added tempo effect
+- General: Controller / Player reconnect automatically after temporary failure
+- Editor: Call of external sound file editor possible
+- Controller: Added special Music List mode for direct title selection
+- Player: Bugfix: random speaker assignment was sometimes faulty
+
 Version 0.5.0
 ----------------------------------------------------------------------------------
 - General: Portable version available

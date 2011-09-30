@@ -1,3 +1,12 @@
+Version 0.6.0
+----------------------------------------------------------------------------------
+- Allgemein: Geschwindigkeits-Effekt hinzugefügt
+- Allgemein: Verbindung zwischen Controller und Player wird nach temporärem Verlust
+  automatisch wiederhergestellt
+- Editor: Aufruf eines externen Audiodatei-Editors möglich
+- Controller: Speziellen Musiklisten-Modus zur Direktwahl eines Musikstücks hinzugefügt
+- Player: Bugfix: zufällige Lautsprecherwahl war manchmal fehlerhaft
+
 Version 0.5.0
 ----------------------------------------------------------------------------------
 - Allgemein: Portable Version verfügbar
