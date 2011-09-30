@@ -19,155 +19,43 @@
  */
 package ares.controller.android;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.content.Context;
-import android.content.Intent;
-import android.gesture.Gesture;
-import android.gesture.GestureLibraries;
-import android.gesture.GestureLibrary;
-import android.gesture.GestureOverlayView;
-import android.gesture.Prediction;
-import android.gesture.GestureOverlayView.OnGesturePerformedListener;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 import android.widget.GridView;
-import android.widget.LinearLayout.LayoutParams;
 import ares.controllers.control.Control;
 import ares.controllers.data.Command;
 import ares.controllers.data.KeyStroke;
 import ares.controllers.data.Mode;
 
-public class ModeActivity extends ControllerActivity {
+public class ModeActivity extends ModeLikeActivity {
 	
-	public static final String MODE_INDEX = "ModeIndex";
-
-	private void registerGestures()	{
-		final GestureLibrary gesturelib = GestureLibraries.fromRawResource(this, R.raw.gestures);
-		gesturelib.load();
-		LinearLayout layout = (LinearLayout) findViewById(R.id.rootLayout);
-		GestureOverlayView gestureOverlay = new GestureOverlayView(this);
-		gestureOverlay.setUncertainGestureColor(Color.TRANSPARENT);
-		gestureOverlay.setGestureColor(Color.TRANSPARENT);
-		layout.addView(gestureOverlay, new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT, 1));
-		ViewGroup mainViewGroup = (ViewGroup) findViewById(R.id.mainLayout);
-		layout.removeView(mainViewGroup);
-		gestureOverlay.addView(mainViewGroup);
-		gestureOverlay.addOnGesturePerformedListener(new OnGesturePerformedListener() {			
-			@Override
-			public void onGesturePerformed(GestureOverlayView overlay, Gesture gesture) {
-				ArrayList<Prediction> predictions = gesturelib.recognize(gesture);
-				for (Prediction prediction : predictions) {
-					if (prediction.score > 1.0) {
-						if (prediction.name.equals("point_up")) {
-							showMainControls();
-						}
-						else if (prediction.name.equals("point_down")) {
-							showModes();
-						}
-						else if (prediction.name.equals("swipe_left")) {
-							showNextMode();
-						}
-						else if (prediction.name.equals("swipe_right")) {
-							showPreviousMode();
-						}
-						break;
-					}
-				}
-			}
-		});
-	}
-
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.button_table);
         registerGestures();
     	GridView buttonGrid = (GridView)findViewById(R.id.buttonGrid);
-    	mMode = getIntent().getIntExtra(MODE_INDEX, 0);
-    	mAdapter = new ButtonAdapter(this, mMode);
+    	mAdapter = new ButtonAdapter(this, getMode());
     	buttonGrid.setAdapter(mAdapter);
         TextView title = ((TextView)findViewById(R.id.title));
-        title.setText(Control.getInstance().getConfiguration().getModes().get(mMode).getTitle());
-    }
-    
-    private static final int SHOW_MODES = 0;
-    private static final int SHOW_MAIN = 1;
-    
-    public boolean onCreateOptionsMenu(android.view.Menu menu) {
-    	menu.add(Menu.NONE, SHOW_MAIN, Menu.NONE, R.string.show_main);
-    	menu.add(Menu.NONE, SHOW_MODES, Menu.NONE, R.string.ShowModes);
-    	return super.onCreateOptionsMenu(menu);
-    }
-
-    public boolean onOptionsItemSelected(android.view.MenuItem menuItem) {
-    	switch (menuItem.getItemId())
-    	{
-    	case SHOW_MODES:
-    		showModes();
-    		break;
-    	case SHOW_MAIN:
-    		showMainControls();
-        }
-    	return super.onOptionsItemSelected(menuItem);
+        title.setText(Control.getInstance().getConfiguration().getModes().get(getMode()).getTitle());
     }
     
     protected void onDestroy() {
-    	for (Command command : Control.getInstance().getConfiguration().getModes().get(mMode).getCommands()) {
+    	for (Command command : Control.getInstance().getConfiguration().getModes().get(getMode()).getCommands()) {
     		CommandButtonMapping.getInstance().unregisterButton(command.getId());
     	}
     	super.onDestroy();
     }
     
-    private void showPreviousMode() {
-    	int mode = mMode - 1;
-    	if (mode == -1) {
-    		mode = Control.getInstance().getConfiguration().getModes().size() - 1;
-    	}
-    	showMode(mode, ControllerActivity.ANIM_MOVE_LEFT);
-    	overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
-    }
-    
-    private void showNextMode() {
-    	int mode = mMode + 1;
-    	if (mode == Control.getInstance().getConfiguration().getModes().size()) {
-    		mode = 0;
-    	}
-    	showMode(mode, ControllerActivity.ANIM_MOVE_RIGHT);
-    	overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
-    }
-    
-    private void showModes() {
-		Intent intent = new Intent(getBaseContext(), ModesActivity.class);
-		intent.putExtra(ControllerActivity.ANIMATION_TYPE, ControllerActivity.ANIM_MOVE_DOWN);
-		startActivity(intent);
-		overridePendingTransition(R.anim.slide_from_bottom, R.anim.slide_to_top);
-    }
-    
-    private void showMainControls() {
-    	Intent intent = new Intent(getBaseContext(), MainActivity.class);
-    	intent.putExtra(ControllerActivity.ANIMATION_TYPE, ControllerActivity.ANIM_MOVE_UP);
-    	startActivity(intent);    	
-    	overridePendingTransition(R.anim.slide_from_top, R.anim.slide_to_bottom);
-    }
-    
-    private void showMode(int mode, int backAnimation) {
-		Intent intent = new Intent(getBaseContext(), ModeActivity.class);
-		intent.putExtra(ModeActivity.MODE_INDEX, mode);
-		intent.putExtra(ControllerActivity.ANIMATION_TYPE, backAnimation);
-		startActivity(intent);		    	
-    }
-    
-    private int mMode;
     private ButtonAdapter mAdapter;
     
     private static boolean sCommandsActive = true;

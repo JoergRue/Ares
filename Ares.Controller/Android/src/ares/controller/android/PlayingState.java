@@ -20,10 +20,12 @@
 package ares.controller.android;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.os.Handler;
 import ares.controllers.control.Control;
 import ares.controllers.data.Configuration;
+import ares.controllers.data.MusicElement;
 import ares.controllers.network.INetworkClient;
 
 public class PlayingState implements INetworkClient {
@@ -32,8 +34,11 @@ public class PlayingState implements INetworkClient {
 	private int musicVolume = 100;
 	private int soundVolume = 100;
 	
+	private List<MusicElement> musicList = null;
+		
 	private String mode = "";
 	private String musicPlayed = "";
+	private String shortMusicPlayed = "";
 	
 	private ArrayList<String> modeElements = new ArrayList<String>();
 	
@@ -59,8 +64,17 @@ public class PlayingState implements INetworkClient {
 		return musicPlayed;
 	}
 	
+	public String getShortMusicPlayed() {
+		return shortMusicPlayed;
+	}
+	
 	public String getPlayerProject() {
 		return playerProject;
+	}
+	
+	public List<MusicElement> getMusicList()
+	{
+		return musicList;
 	}
 	
 	private static PlayingState sInstance = null;
@@ -197,14 +211,16 @@ public class PlayingState implements INetworkClient {
 	}
 
 	@Override
-	public void musicChanged(String newMusic) {
+	public void musicChanged(String newMusic, String shortTitle) {
 		final String m = newMusic;
+		final String s = shortTitle;
 		handler.post(new Runnable() {
 			public void run() {
 				musicPlayed = m;
+				shortMusicPlayed = s;
 				if (getClient() == null)
 					return;
-				getClient().musicChanged(m);
+				getClient().musicChanged(m, s);
 			}
 		});
 	}
@@ -246,5 +262,19 @@ public class PlayingState implements INetworkClient {
 				}
 			}
 		});
+	}
+
+	@Override
+	public void musicListChanged(List<MusicElement> newList) {
+		final List<MusicElement> l = newList;
+		handler.post(new Runnable() {
+			public void run() {
+				musicList = l;
+				if (getClient() != null) {
+					getClient().musicListChanged(l);
+				}
+			}
+		});
+		
 	}
 }

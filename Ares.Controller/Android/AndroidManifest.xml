@@ -17,6 +17,7 @@
         <activity android:name="ModesActivity" android:theme="@style/walnut"></activity>
         <activity android:name="ModeActivity" android:theme="@style/walnut"></activity>
         <activity android:name="PrefsActivity"></activity>
+        <activity android:theme="@style/walnut" android:name="MusicListActivity"></activity>
 
     </application>
 </manifest>

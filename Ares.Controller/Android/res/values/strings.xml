@@ -61,4 +61,6 @@
     <string name="player_connection">Player Connection</string>
     <string name="invalid_player_connection_format">Invalid format for Player connection!\nMust be name,port,ipaddress (or auto).</string>
     <string name="projectsDifferent"> (different in Player!)</string>
+    <string name="no_music_list">No Music List Playing</string>
+    <string name="musicList">Music List</string>
 </resources>

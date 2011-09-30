@@ -109,15 +109,24 @@ public class ModesActivity extends ControllerActivity {
 	private void showFirstMode() {
 		if (Control.getInstance().getConfiguration() == null)
 			return;
-		showMode(0, ControllerActivity.ANIM_MOVE_RIGHT);
+		showMode(-1, ControllerActivity.ANIM_MOVE_RIGHT);
 		overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
 	}
 	
 	private void showMode(int index, int animation) {
-		Intent intent = new Intent(getBaseContext(), ModeActivity.class);
-		intent.putExtra(ModeActivity.MODE_INDEX, index);
-		intent.putExtra(ControllerActivity.ANIMATION_TYPE, animation);
-		startActivity(intent);		
+    	if (index == -1) {
+    		// special case: music list
+			Intent intent = new Intent(getBaseContext(), MusicListActivity.class);
+			intent.putExtra(ModeLikeActivity.MODE_INDEX, index);
+			intent.putExtra(ControllerActivity.ANIMATION_TYPE, animation);
+			startActivity(intent);		    	    		
+    	}
+    	else {
+			Intent intent = new Intent(getBaseContext(), ModeActivity.class);
+			intent.putExtra(ModeLikeActivity.MODE_INDEX, index);
+			intent.putExtra(ControllerActivity.ANIMATION_TYPE, animation);
+			startActivity(intent);		
+    	}
 	}
 
 	private void showMainControls(boolean moveUp) {
@@ -140,9 +149,17 @@ public class ModesActivity extends ControllerActivity {
     	}
     	
 		public void onClick(View v) {
-			Intent intent = new Intent(getBaseContext(), ModeActivity.class);
-			intent.putExtra(ModeActivity.MODE_INDEX, mMode);
-			startActivity(intent);
+	    	if (mMode == -1) {
+	    		// special case: music list
+				Intent intent = new Intent(getBaseContext(), MusicListActivity.class);
+				intent.putExtra(ModeLikeActivity.MODE_INDEX, mMode);
+				startActivity(intent);		    	    		
+	    	}
+	    	else {
+				Intent intent = new Intent(getBaseContext(), ModeActivity.class);
+				intent.putExtra(ModeLikeActivity.MODE_INDEX, mMode);
+				startActivity(intent);
+	    	}
 		}
 
     }
@@ -156,7 +173,7 @@ public class ModesActivity extends ControllerActivity {
     	}
     	
 		public int getCount() {
-			return Control.getInstance().getConfiguration().getModes().size();
+			return Control.getInstance().getConfiguration().getModes().size() + 1;
 		}
 
 		public Object getItem(int position) {
@@ -179,8 +196,13 @@ public class ModesActivity extends ControllerActivity {
 					button = new Button(mContext);
 					//button.setLayoutParams(new GridView.LayoutParams(80, 20));
 					button.setPadding(5, 5, 5, 5);
-					button.setText(Control.getInstance().getConfiguration().getModes().get(position).getTitle());
-					button.setOnClickListener(new ModeSwitcher(position));
+					if (position == 0) {
+						button.setText(R.string.musicList);
+					}
+					else {
+						button.setText(Control.getInstance().getConfiguration().getModes().get(position - 1).getTitle());
+					}
+					button.setOnClickListener(new ModeSwitcher(position - 1));
 					mButtons.put(position, button);
 					return button;
 				}

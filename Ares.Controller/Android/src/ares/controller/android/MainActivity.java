@@ -566,7 +566,7 @@ public class MainActivity extends ControllerActivity implements INetworkClient, 
 	}
 
 	@Override
-	public void musicChanged(String newMusic) {
+	public void musicChanged(String newMusic, String shortTitle) {
 		setText(R.id.musicTextView, newMusic);		
 	}
 
@@ -578,5 +578,10 @@ public class MainActivity extends ControllerActivity implements INetworkClient, 
 	@Override
 	public void projectChanged(String newTitle) {
 		updateProjectTitle();
+	}
+	
+	@Override
+	public void musicListChanged(java.util.List<ares.controllers.data.MusicElement> newList) {
+		// nothing here
 	}
 }

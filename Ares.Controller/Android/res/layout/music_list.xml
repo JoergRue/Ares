@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="fill_parent" android:orientation="vertical" android:layout_height="fill_parent" android:id="@+id/rootLayout">
+        <LinearLayout android:layout_width="fill_parent" android:orientation="vertical" android:layout_height="fill_parent" android:id="@+id/mainLayout">
+<ViewSwitcher 
+    android:id="@+id/musicListSwitcher"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent" android:background="@drawable/backarea" android:id="@+id/musicListLayout">
+    <TextView android:layout_height="wrap_content" android:text="@string/musicList" android:textAppearance="?android:attr/textAppearanceLarge" android:layout_width="wrap_content"></TextView>
+    <ListView android:layout_height="fill_parent" android:id="@+id/musicList" android:layout_width="fill_parent"></ListView>
+    
+</LinearLayout>
+
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent" android:id="@+id/noMusicList" android:background="@drawable/backarea" android:gravity="center">
+    <TextView android:layout_height="wrap_content" android:textColor="@color/black" android:text="@string/no_music_list" android:id="@+id/textView1" android:password="false" android:textAppearance="?android:attr/textAppearanceLarge" android:layout_width="wrap_content"></TextView>
+    
+</RelativeLayout>
+
+</ViewSwitcher>
+
+        </LinearLayout>
+    </LinearLayout>

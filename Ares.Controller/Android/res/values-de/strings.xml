@@ -61,4 +61,6 @@
     <string name="player_connection">Verbindung zum Player</string>
     <string name="invalid_player_connection_format">Ungültiges Format für Player-Verbindung!\nMuss Name,Port,IP-Adresse sein (oder auto).</string>
     <string name="projectsDifferent"> (anders im Player!)</string>
+    <string name="no_music_list">Keine Musikliste wird gespielt.</string>
+    <string name="musicList">Musikliste</string>
 </resources>

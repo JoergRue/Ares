@@ -53,6 +53,7 @@ public final class ControlConnection {
   private Timer timer;
   
   private Timer reconnectTimer;
+  private int reconnectionTries = 0;
   
   private enum State { NotConnected, Connected, ConnectionFailure };
   
@@ -125,10 +126,12 @@ public final class ControlConnection {
 	  if (state != State.ConnectionFailure)
 		  return false;
 	  try {
+		  ++reconnectionTries;
 		  doConnect(2000);
 		  if (reconnectTimer != null) {
 			  reconnectTimer.cancel();
 			  reconnectTimer = null;
+			  reconnectionTries = 0;
 		  }
 		  return true;
 	  }
@@ -165,6 +168,7 @@ public final class ControlConnection {
 		if (reconnectTimer != null) {
 			reconnectTimer.cancel();
 			reconnectTimer = null;
+			reconnectionTries = 0;
 		}
 		return;
 	}
