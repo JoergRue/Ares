@@ -240,7 +240,7 @@ namespace Ares.Players
             System.Threading.Thread commandThread = new System.Threading.Thread(ListenForKeys);
             commandThread.Start();
             StopUdpBroadcast();
-            m_WatchdogTimer = new System.Timers.Timer(7000);
+            m_WatchdogTimer = new System.Timers.Timer(25000);
             m_WatchdogTimer.Elapsed += new System.Timers.ElapsedEventHandler(watchdogTimer_Elapsed);
             m_WatchdogTimer.Start();
             return true;
@@ -464,6 +464,7 @@ namespace Ares.Players
                         if (m_WatchdogTimer != null)
                         {
                             m_WatchdogTimer.Stop();
+                            m_WatchdogTimer.Interval = 7000;
                             m_WatchdogTimer.Start();
                         }
                     }

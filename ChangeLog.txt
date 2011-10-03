@@ -5,6 +5,7 @@ Version 0.6.0
 - Editor: Call of external sound file editor possible
 - Controller: Added special Music List mode for direct title selection
 - Player: Bugfix: random speaker assignment was sometimes faulty
+- Player: Remember last message filter setting
 
 Version 0.5.0
 ----------------------------------------------------------------------------------

@@ -49,6 +49,8 @@ namespace Ares.Settings
 
         public String SoundFileEditor { get; set; }
 
+        public int MessageFilterLevel { get; set; }
+
     }
 
     public class Settings
@@ -76,6 +78,8 @@ namespace Ares.Settings
         public int Version { get { return Data.Version; } set { Data.Version = value; } }
 
         public String SoundFileEditor { get { return Data.SoundFileEditor; } set { Data.SoundFileEditor = value; } }
+
+        public int MessageFilterLevel { get { return Data.MessageFilterLevel; } set { Data.MessageFilterLevel = value; } }
 
         public static Settings Instance
         {
@@ -240,6 +244,7 @@ namespace Ares.Settings
             IPAddress = String.Empty;
             CheckForUpdate = true;
             SoundFileEditor = String.Empty;
+            MessageFilterLevel = 2; // warning
         }
 
         private void WriteSettings(XmlWriter writer)
@@ -265,6 +270,9 @@ namespace Ares.Settings
             RecentFiles.WriteFiles(writer);
             writer.WriteStartElement("Tools");
             writer.WriteElementString("SoundFileEditor", SoundFileEditor);
+            writer.WriteEndElement();
+            writer.WriteStartElement("Options");
+            writer.WriteAttributeString("MessageFilterLevel", MessageFilterLevel.ToString(System.Globalization.CultureInfo.InvariantCulture));
             writer.WriteEndElement();
             writer.WriteEndElement();
         }
@@ -354,6 +362,18 @@ namespace Ares.Settings
                         }
                     }
                     reader.ReadEndElement();
+                }
+                else if (reader.IsStartElement("Options"))
+                {
+                    MessageFilterLevel = reader.GetIntegerAttribute("MessageFilterLevel");
+                    if (reader.IsEmptyElement)
+                        reader.Read();
+                    else
+                    {
+                        reader.Read();
+                        reader.ReadInnerXml();
+                        reader.ReadEndElement();
+                    }
                 }
                 else
                 {

@@ -83,7 +83,7 @@ namespace Ares.Player
 
         private void MessageReceived(Ares.Players.Message m)
         {
-            if (m.Type >= MessageType.Warning)
+            if (m.Type >= MessageType.Warning && (int)m.Type >= Ares.Settings.Settings.Instance.MessageFilterLevel)
             {
                 if (InvokeRequired)
                 {

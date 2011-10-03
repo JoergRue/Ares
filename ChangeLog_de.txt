@@ -6,6 +6,7 @@ Version 0.6.0
 - Editor: Aufruf eines externen Audiodatei-Editors möglich
 - Controller: Speziellen Musiklisten-Modus zur Direktwahl eines Musikstücks hinzugefügt
 - Player: Bugfix: zufällige Lautsprecherwahl war manchmal fehlerhaft
+- Player: Letzte Meldungsfilter-Einstellung wird gespeichert
 
 Version 0.5.0
 ----------------------------------------------------------------------------------

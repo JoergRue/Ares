@@ -36,7 +36,7 @@ namespace Ares.Player
         {
             InitializeComponent();
             Messages.Instance.MessageReceived += new MessageReceivedHandler(MessageReceived);
-            filterBox.SelectedIndex = (int)MessageType.Warning;            
+            filterBox.SelectedIndex = Ares.Settings.Settings.Instance.MessageFilterLevel;
         }
 
         private void RefillGrid()
@@ -94,6 +94,7 @@ namespace Ares.Player
         private void filterBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             FilterLevel = (MessageType)filterBox.SelectedIndex;
+            Ares.Settings.Settings.Instance.MessageFilterLevel = filterBox.SelectedIndex;
             RefillGrid();
         }
 
