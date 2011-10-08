@@ -241,10 +241,8 @@ public class PlayingState implements INetworkClient {
 	public void connectionFailed() {
 		handler.post(new Runnable() {
 			public void run() {
-				/*
 				clearState();
 				Control.getInstance().disconnect(false);
-				*/
 				if (getClient() != null) 
 					getClient().connectionFailed();
 			}

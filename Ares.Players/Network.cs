@@ -58,7 +58,12 @@ namespace Ares.Players
                 {
                     Messages.AddMessage(MessageType.Debug, String.Format(StringResources.UDPSending, udpString));
                 }
-                udpClient.Send(udpPacket, udpPacket.Length, new IPEndPoint(IPAddress.Parse("255.255.255.255"), port));
+                lock (syncObject)
+                {
+                    if (udpClient == null)
+                        return true;
+                    udpClient.Send(udpPacket, udpPacket.Length, new IPEndPoint(IPAddress.Parse("255.255.255.255"), port));
+                }
                 return true;
             }
             catch (SocketException e)
@@ -70,21 +75,27 @@ namespace Ares.Players
 
         public void StartUdpBroadcast()
         {
+            Messages.AddMessage(MessageType.Info, StringResources.StartBroadcast);
             if (udpClient != null)
                 StopUdpBroadcast();
-            Messages.AddMessage(MessageType.Info, StringResources.StartBroadcast);
-            udpClient = new UdpClient();
-            udpClient.EnableBroadcast = true;
-            udpPacketCount = 0;
+            lock (syncObject)
+            {
+                udpClient = new UdpClient();
+                udpClient.EnableBroadcast = true;
+                udpPacketCount = 0;
+            }
         }
 
         public void StopUdpBroadcast()
         {
-            if (udpClient == null)
-                return;
             Messages.AddMessage(MessageType.Info, StringResources.StopBroadcast);
-            udpClient.Close();
-            udpClient = null;
+            lock (syncObject)
+            {
+                if (udpClient == null)
+                    return;
+                udpClient.Close();
+                udpClient = null;
+            }
         }
 
         public void ListenForClient()
@@ -200,6 +211,7 @@ namespace Ares.Players
         }
 
         private System.Timers.Timer m_WatchdogTimer;
+        private System.Timers.Timer m_PingTimer;
 
         private bool InitConnection(TcpClient aClient)
         {
@@ -243,7 +255,16 @@ namespace Ares.Players
             m_WatchdogTimer = new System.Timers.Timer(25000);
             m_WatchdogTimer.Elapsed += new System.Timers.ElapsedEventHandler(watchdogTimer_Elapsed);
             m_WatchdogTimer.Start();
+            m_PingTimer = new System.Timers.Timer(5000);
+            m_PingTimer.Elapsed += new System.Timers.ElapsedEventHandler(pingTimer_Elapsed);
+            m_PingTimer.AutoReset = true;
+            m_PingTimer.Start();
             return true;
+        }
+
+        void pingTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            SendPing();
         }
 
         void watchdogTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
@@ -281,6 +302,12 @@ namespace Ares.Players
                     m_WatchdogTimer.Stop();
                     m_WatchdogTimer.Dispose();
                     m_WatchdogTimer = null;
+                }
+                if (m_PingTimer != null)
+                {
+                    m_PingTimer.Stop();
+                    m_PingTimer.Dispose();
+                    m_PingTimer = null;
                 }
                 continueListenForKeys = false;
                 if (client != null)
@@ -732,6 +759,30 @@ namespace Ares.Players
                 lock (syncObject)
                 {
                     client.GetStream().Write(package, 0, package.Length);
+                }
+            }
+        }
+
+        private void SendPing()
+        {
+            if (ClientConnected)
+            {
+                byte[] package = new byte[3];
+                package[0] = 9;
+                package[1] = 0;
+                package[2] = 0;
+                try
+                {
+                    lock (syncObject)
+                    {
+                        if (client != null && client.Client != null)
+                        {
+                            client.GetStream().Write(package, 0, package.Length);
+                        }
+                    }
+                }
+                catch (Exception)
+                {
                 }
             }
         }

@@ -50,10 +50,11 @@ public final class ControlConnection {
   
   private INetworkClient networkClient;
   
-  private Timer timer;
+  private Timer pingTimer;
   
   private Timer reconnectTimer;
-  private int reconnectionTries = 0;
+  
+  private Timer watchDogTimer;
   
   private enum State { NotConnected, Connected, ConnectionFailure };
   
@@ -93,8 +94,8 @@ public final class ControlConnection {
 	  });
 	  continueListen = true;
 	  listenThread.start();
-	  timer = new Timer("PingTimer"); //$NON-NLS-1$
-	  timer.scheduleAtFixedRate(new TimerTask() {
+	  pingTimer = new Timer("PingTimer"); //$NON-NLS-1$
+	  pingTimer.scheduleAtFixedRate(new TimerTask() {
 	    public void run() {
 		  UIThreadDispatcher.dispatchToUIThread(new Runnable() {
 			public void run() {
@@ -103,6 +104,13 @@ public final class ControlConnection {
 		  });
 	    }
 	  }, 5000, 5000);
+	  watchDogTimer = new Timer("WatchdogTimer"); //$NON-NLS-1$
+	  watchDogTimer.schedule(new TimerTask() {
+		  public void run() {
+			  Messages.addMessage(MessageType.Warning, Localization.getString("ControlConnection.NoPingFailure")); //$NON-NLS-1$
+			  handleConnectionFailure(false);
+		  }
+	  }, 25000);
 	  state = State.Connected;
       Messages.addMessage(MessageType.Info, Localization.getString("ControlConnection.ConnectedWith") + address + ":" + port); //$NON-NLS-1$ //$NON-NLS-2$
   }
@@ -126,12 +134,10 @@ public final class ControlConnection {
 	  if (state != State.ConnectionFailure)
 		  return false;
 	  try {
-		  ++reconnectionTries;
 		  doConnect(2000);
 		  if (reconnectTimer != null) {
 			  reconnectTimer.cancel();
 			  reconnectTimer = null;
-			  reconnectionTries = 0;
 		  }
 		  return true;
 	  }
@@ -144,9 +150,13 @@ public final class ControlConnection {
   }
   
   private void doDisconnect(boolean stopListenThread) {
-	if (timer != null) {
-		timer.cancel();
-		timer = null;
+	if (pingTimer != null) {
+		pingTimer.cancel();
+		pingTimer = null;
+	}
+	if (watchDogTimer != null) {
+		watchDogTimer.cancel();
+		watchDogTimer = null;
 	}
 	if (stopListenThread) {
 		synchronized(this) {
@@ -168,7 +178,6 @@ public final class ControlConnection {
 		if (reconnectTimer != null) {
 			reconnectTimer.cancel();
 			reconnectTimer = null;
-			reconnectionTries = 0;
 		}
 		return;
 	}
@@ -199,7 +208,9 @@ public final class ControlConnection {
   private void handleConnectionFailure(boolean stopListenThread) {
 	doDisconnect(stopListenThread);
 	try {
-		socket.close();
+		if (socket != null) {
+			socket.close();
+		}
 	}
 	catch (IOException e) {
 	}
@@ -310,6 +321,23 @@ public final class ControlConnection {
 					  }
 					  break;
 				  }
+				  case 9:
+				  {
+    				    // ping
+					    stream.read();
+  					    stream.read();
+						if (watchDogTimer != null) {
+							watchDogTimer.cancel();
+						}
+						watchDogTimer = new Timer("WatchdogTimer"); //$NON-NLS-1$
+						watchDogTimer.schedule(new TimerTask() {
+							  public void run() {
+								  Messages.addMessage(MessageType.Warning, Localization.getString("ControlConnection.NoPingFailure")); //$NON-NLS-1$
+								  handleConnectionFailure(false);
+							  }
+						}, 7000);
+						break;
+				  }
 				  default:
 					  break;
 				  }
@@ -318,7 +346,6 @@ public final class ControlConnection {
 		  catch (IOException e) {
 			  ares.controllers.messages.Messages.addMessage(MessageType.Warning, e.getLocalizedMessage());
 			  handleConnectionFailure(false);
-		      networkClient.connectionFailed();
 			  break;
 		  }
 		  synchronized(this) {
@@ -356,7 +383,6 @@ public final class ControlConnection {
       catch (IOException e) {
         Messages.addMessage(MessageType.Warning, e.getLocalizedMessage());
         handleConnectionFailure(true);
-        networkClient.connectionFailed();
       }
     }
     else 
@@ -387,7 +413,6 @@ public final class ControlConnection {
       catch (IOException e) {
           Messages.addMessage(MessageType.Warning, e.getLocalizedMessage());
           handleConnectionFailure(true);
-          networkClient.connectionFailed();
       }	  
   }
   
@@ -402,7 +427,6 @@ public final class ControlConnection {
     catch (IOException e) {
       Messages.addMessage(MessageType.Warning, e.getLocalizedMessage());
       handleConnectionFailure(true);
-      networkClient.connectionFailed();
     }
   }
   
@@ -428,7 +452,6 @@ public final class ControlConnection {
       catch (IOException e) {
           Messages.addMessage(MessageType.Warning, e.getLocalizedMessage());
           handleConnectionFailure(true);
-          networkClient.connectionFailed();
       }	  	  
   }
   
@@ -452,7 +475,6 @@ public final class ControlConnection {
 	  }
 	  catch (IOException e) {
 		  Messages.addMessage(MessageType.Warning, e.getLocalizedMessage());
-		  networkClient.connectionFailed();
           handleConnectionFailure(true);
 	  }
   }

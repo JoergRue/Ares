@@ -1146,14 +1146,12 @@ public final class MainFrame extends FrameController implements IMessageListener
   
 	
 	public void connectionFailed() {
-		/*
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				Control.getInstance().disconnect(false);
 				updateNetworkState();
 			}
 		});
-		*/		
 	}
 
 	private static class SelectModeAction extends AbstractAction {
