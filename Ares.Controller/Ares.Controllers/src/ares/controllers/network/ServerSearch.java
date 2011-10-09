@@ -128,14 +128,23 @@ public final class ServerSearch {
     }
   }
   
+  public static final int NEEDED_SERVER_VERSION = 1;
+  
   public static ServerInfo getServerInfo(String text, String token) throws UnknownHostException {
       StringTokenizer tokenizer = new StringTokenizer(text, token); //$NON-NLS-1$
-      if (tokenizer.countTokens() < 3) {
-    	  throw new IllegalArgumentException("Wrong format");
+      int neededTokens = (token == "|") ? 4 : 3; //$NON-NLS-1$
+      if (tokenizer.countTokens() < neededTokens) {
+    	  return null;
       }
       String name = tokenizer.nextToken();
       int port = Integer.parseInt(tokenizer.nextToken());
       InetAddress address = InetAddress.getByName(tokenizer.nextToken());
+      if (neededTokens == 4)
+      {
+    	  int version = Integer.parseInt(tokenizer.nextToken());
+    	  if (version != NEEDED_SERVER_VERSION)
+    		  return null;
+      }
       return new ServerInfo(address, port, name);
   }
   
@@ -152,7 +161,11 @@ public final class ServerSearch {
       Messages.addMessage(MessageType.Debug, Localization.getString("ServerSearch.UDPReceived") + receivedData); //$NON-NLS-1$
       ServerInfo server1 = null;
       try {
-    	  server1 = getServerInfo(receivedData, "|");
+    	  server1 = getServerInfo(receivedData, "|"); //$NON-NLS-1$
+    	  if (server1 == null) {
+    		  Messages.addMessage(MessageType.Debug, Localization.getString("ServerSearch.IgnoringPlayerWithWrongVersion")); //$NON-NLS-1$
+    		  return;
+    	  }
       }
       catch (NumberFormatException e) {
           Messages.addMessage(MessageType.Warning, Localization.getString("ServerSearch.InvalidPort")); //$NON-NLS-1$

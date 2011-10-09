@@ -75,6 +75,8 @@ public final class ControlConnection {
   
   private Thread listenThread;
   
+  private boolean checkedVersion = false;
+  
   private void doConnect(int timeout) throws SocketTimeoutException, IOException {
       String hostName = InetAddress.getLocalHost().getHostName();
       NumberFormat format = NumberFormat.getIntegerInstance();
@@ -87,6 +89,7 @@ public final class ControlConnection {
       socket.connect(new InetSocketAddress(address, port), timeout);
       Messages.addMessage(MessageType.Debug, Localization.getString("ControlConnection.SendingInfo") + textToSend); //$NON-NLS-1$
       socket.getOutputStream().write(textToSend.getBytes("UTF8")); //$NON-NLS-1$	  
+      checkedVersion = false;
       listenThread = new Thread(new Runnable() {
   		public void run() {
   			listenForStatusUpdates();
@@ -170,6 +173,7 @@ public final class ControlConnection {
 		catch (InterruptedException e) {
 		}
 	}
+	checkedVersion = false;
   }
   
   public void disconnect(boolean informServer) {
@@ -324,10 +328,19 @@ public final class ControlConnection {
 				  case 9:
 				  {
     				    // ping
-					    stream.read();
-  					    stream.read();
+					    int version = stream.read();
+						version *= (1 << 8);
+						version += stream.read();
 						if (watchDogTimer != null) {
 							watchDogTimer.cancel();
+						}
+						if (!checkedVersion && version != ServerSearch.NEEDED_SERVER_VERSION) {
+							Messages.addMessage(MessageType.Error, Localization.getString("ControlConnection.PlayerHasWrongVersion")); //$NON-NLS-1$
+							networkClient.connectionFailed();
+							break;
+						}
+						else {
+							checkedVersion = true;
 						}
 						watchDogTimer = new Timer("WatchdogTimer"); //$NON-NLS-1$
 						watchDogTimer.schedule(new TimerTask() {

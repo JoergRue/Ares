@@ -561,6 +561,8 @@ namespace Ares.Players
             }
         }
 
+        private static readonly int PLAYER_VERSION = 1;
+
         public void InitConnectionData()
         {
             int tcpPort = Settings.Settings.Instance.TcpPort;
@@ -576,6 +578,8 @@ namespace Ares.Players
                 str.Append(ipAddress);
                 tcpListenAddress = IPAddress.Parse(ipAddress);
             }
+            str.Append("|");
+            str.Append(PLAYER_VERSION);
             udpString = str.ToString();
             udpPacket = System.Text.Encoding.UTF8.GetBytes(udpString);
         }
@@ -769,8 +773,8 @@ namespace Ares.Players
             {
                 byte[] package = new byte[3];
                 package[0] = 9;
-                package[1] = 0;
-                package[2] = 0;
+                package[1] = (byte)(PLAYER_VERSION / (1 << 8));
+                package[2] = (byte)(PLAYER_VERSION % (1 << 8));
                 try
                 {
                     lock (syncObject)
