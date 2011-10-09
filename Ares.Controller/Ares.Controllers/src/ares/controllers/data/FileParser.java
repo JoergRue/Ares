@@ -97,17 +97,20 @@ public final class FileParser {
     KeyStroke keyStroke = null;
     int keyNr = 0;
     try {
-    	keyNr = Integer.parseInt(el.getAttribute("Key")); //$NON-NLS-1$
+    	String attr = el.getAttribute("Key"); //$NON-NLS-1$
+    	keyNr = attr != null ? Integer.parseInt(attr) : 0;
     	if (keyNr != 0)
     	{
     		keyStroke = KeyStroke.getKeyStroke(keyNr, 0);
     	}
     }
     catch (NumberFormatException e) {}
+    /*
     if (keyStroke == null) {
       Messages.addMessage(MessageType.Warning, Localization.getString("FileParser.KeyOfMode") + title + Localization.getString("FileParser.MissingModeIgnored")); //$NON-NLS-1$ //$NON-NLS-2$
       return null;
     }
+    */
     
     Mode mode = new Mode(title, keyNr, keyStroke);
     
@@ -157,25 +160,30 @@ public final class FileParser {
     }
     NodeList nl = el.getElementsByTagName("KeyTrigger"); //$NON-NLS-1$
     if (nl.getLength() == 0) {
-    	Messages.addMessage(MessageType.Warning, Localization.getString("FileParser.NoKeyDefined") + title + Localization.getString("FileParser.ElementIgnored")); //$NON-NLS-1$ //$NON-NLS-2$
-    	return null;
+    	// Messages.addMessage(MessageType.Warning, Localization.getString("FileParser.NoKeyDefined") + title + Localization.getString("FileParser.ElementIgnored")); //$NON-NLS-1$ //$NON-NLS-2$
+    	return new Command(title, id, null);
     }
     else if (nl.getLength() > 1) {
     	Messages.addMessage(MessageType.Warning, Localization.getString("FileParser.DuplicateKeyTriggerElement") + title); //$NON-NLS-1$
+    	return new Command(title, id, null);
     }
-    Element trigger = (Element)nl.item(0);
-    KeyStroke keyStroke = null;
-    try {
-    	int keyNr = Integer.parseInt(trigger.getAttribute("Key")); //$NON-NLS-1$
-    	keyStroke = KeyStroke.getKeyStroke(keyNr, 0);
-    }
-    catch (NumberFormatException e) {}
-    if (keyStroke == null) {
-      Messages.addMessage(MessageType.Error, Localization.getString("FileParser.KeyStrokeCommand") + title + Localization.getString("FileParser.MissingCommandIgnored")); //$NON-NLS-1$ //$NON-NLS-2$
-      return null;
+    else {
+	    Element trigger = (Element)nl.item(0);
+	    KeyStroke keyStroke = null;
+	    try {
+	    	int keyNr = Integer.parseInt(trigger.getAttribute("Key")); //$NON-NLS-1$
+	    	keyStroke = KeyStroke.getKeyStroke(keyNr, 0);
+	    }
+	    catch (NumberFormatException e) {}
+	    /*
+	    if (keyStroke == null) {
+	      Messages.addMessage(MessageType.Error, Localization.getString("FileParser.KeyStrokeCommand") + title + Localization.getString("FileParser.MissingCommandIgnored")); //$NON-NLS-1$ //$NON-NLS-2$
+	      return null;
+	    }
+	    */
+	    return new Command(title, id, keyStroke);
     }
     
-    return new Command(title, id, keyStroke);
   }
   
 }

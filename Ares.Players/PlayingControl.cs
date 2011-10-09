@@ -126,6 +126,11 @@ namespace Ares.Players
             PlayingModule.ProjectPlayer.SetMusicTitle(elementId);
         }
 
+        public bool SwitchElement(Int32 elementId)
+        {
+            return PlayingModule.ProjectPlayer.SwitchElement(elementId);
+        }
+
         private Object syncObject = new Int16();
 
         private IMode m_CurrentMode;

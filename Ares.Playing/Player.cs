@@ -1243,6 +1243,19 @@ namespace Ares.Playing
             }
         }
 
+        public bool SwitchElement(Int32 elementId)
+        {
+            if (m_Project == null)
+                return false;
+            IElement element = Ares.Data.DataModule.ElementRepository.GetElement(elementId);
+            if (element == null)
+                return false;
+            IModeElement modeElement = element as IModeElement;
+            if (modeElement == null)
+                return false;
+            return TriggerElement(modeElement);
+        }
+
         public void NextMusicTitle()
         {
             if (ActiveMusicPlayer != null)
@@ -1345,6 +1358,11 @@ namespace Ares.Playing
         private bool TriggerElement(int keyCode)
         {
             IModeElement element = m_ActiveMode.GetTriggeredElement(keyCode);
+            return TriggerElement(element);
+        }
+
+        private bool TriggerElement(IModeElement element)
+        {
             if (element == null)
                 return false;
             if (element.IsEndless() && element.IsPlaying)

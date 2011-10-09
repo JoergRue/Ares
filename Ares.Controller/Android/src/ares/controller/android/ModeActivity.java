@@ -33,7 +33,6 @@ import android.widget.ToggleButton;
 import android.widget.GridView;
 import ares.controllers.control.Control;
 import ares.controllers.data.Command;
-import ares.controllers.data.KeyStroke;
 import ares.controllers.data.Mode;
 
 public class ModeActivity extends ModeLikeActivity {
@@ -73,18 +72,13 @@ public class ModeActivity extends ModeLikeActivity {
 			}
 			if (!sCommandsActive)
 				return;
-			Control.getInstance().sendKey(mModeKey);
-			Control.getInstance().sendKey(mCommandKey);
+			Control.getInstance().switchElement(mId);
 		}
 		
-		public CommandSender(Mode mode, int index, int id) {
-			mModeKey = mode.getKeyStroke();
-			mCommandKey = mode.getCommands().get(index).getKeyStroke();
+		public CommandSender(int id) {
 			mId = id;
 		}
 
-		private KeyStroke mModeKey;
-		private KeyStroke mCommandKey;
 		private int mId;
     }
     
@@ -127,7 +121,7 @@ public class ModeActivity extends ModeLikeActivity {
 					button.setTextOn(command.getTitle());
 					button.setTextOff(command.getTitle());
 					CommandButtonMapping.getInstance().registerButton(command.getId(), button);
-					button.setOnCheckedChangeListener(new CommandSender(mMode, position, command.getId()));
+					button.setOnCheckedChangeListener(new CommandSender(command.getId()));
 					mButtons.put(position, button);
 					return button;
 				}

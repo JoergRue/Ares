@@ -31,6 +31,7 @@ namespace Ares.Players
         void ClientDataChanged();
         void ProjectShallChange(String newProjectFile);
         void PlayOtherMusic(Int32 elementId);
+        void SwitchElement(Int32 elementId);
     }
 
     public class Network : Ares.Playing.IProjectPlayingCallbacks
@@ -248,8 +249,8 @@ namespace Ares.Players
             }
             Messages.AddMessage(MessageType.Info, String.Format(StringResources.ClientConnected, ClientName));
             networkClient.ClientDataChanged();
-            continueListenForKeys = true;
-            System.Threading.Thread commandThread = new System.Threading.Thread(ListenForKeys);
+            continueListenForCommands = true;
+            System.Threading.Thread commandThread = new System.Threading.Thread(ListenForCommands);
             commandThread.Start();
             StopUdpBroadcast();
             m_WatchdogTimer = new System.Timers.Timer(25000);
@@ -309,7 +310,7 @@ namespace Ares.Players
                     m_PingTimer.Dispose();
                     m_PingTimer = null;
                 }
-                continueListenForKeys = false;
+                continueListenForCommands = false;
                 if (client != null)
                 {
                     if (client.Client != null)
@@ -413,7 +414,7 @@ namespace Ares.Players
             }
         }
 
-        private void ListenForKeys()
+        private void ListenForCommands()
         {
             try
             {
@@ -540,9 +541,29 @@ namespace Ares.Players
                             networkClient.PlayOtherMusic(newMusicId);
                         }
                     }
+                    else if (command == 8)
+                    {
+                        Byte[] data = new Byte[4];
+                        bool success = false;
+                        Int32 elementId = -1;
+                        lock (syncObject)
+                        {
+                            success = client != null && ReadFromStream(client.GetStream(), data, 4, 500);
+                            if (success)
+                            {
+                                if (BitConverter.IsLittleEndian)
+                                    Array.Reverse(data);
+                                elementId = BitConverter.ToInt32(data, 0);
+                            }
+                        }
+                        if (success && elementId != -1)
+                        {
+                            networkClient.SwitchElement(elementId);
+                        }
+                    }
                     lock (syncObject)
                     {
-                        goOn = continueListenForKeys;
+                        goOn = continueListenForCommands;
                     }
                     if (goOn)
                     {
@@ -799,7 +820,7 @@ namespace Ares.Players
 
         private bool continueListenForClients = true;
 
-        private bool continueListenForKeys = true;
+        private bool continueListenForCommands = true;
 
         private bool forceShutdown = false;
 

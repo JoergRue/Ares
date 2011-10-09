@@ -575,6 +575,11 @@ namespace Ares.Player
             m_PlayingControl.SelectMusicElement(id);
         }
 
+        public void SwitchElement(Int32 id)
+        {
+            m_PlayingControl.SwitchElement(id);
+        }
+
         private bool m_WasConnected = false;
 
         private void UpdateClientData()

@@ -90,8 +90,10 @@ class CommandsPanelCreator {
         button.setText(command.getTitle());
         buttonPane.add(button);
         rootPane.getActionMap().put(command.getTitle(), new KeyCommandAction(button));
-        javax.swing.KeyStroke swingStroke = javax.swing.KeyStroke.getKeyStroke(command.getKeyStroke().getKeyCode(), 0);
-        rootPane.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(swingStroke, command.getTitle());
+        if (command.getKeyStroke() != null) {
+        	javax.swing.KeyStroke swingStroke = javax.swing.KeyStroke.getKeyStroke(command.getKeyStroke().getKeyCode(), 0);
+        	rootPane.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(swingStroke, command.getTitle());
+        }
       }
       panel.add(buttonPane, BorderLayout.CENTER);
       return panel;

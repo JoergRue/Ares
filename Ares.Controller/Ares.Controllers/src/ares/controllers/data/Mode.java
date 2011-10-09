@@ -51,8 +51,10 @@ public final class Mode extends Command {
   }
   
   public boolean containsKeyStroke(KeyStroke keyStroke) {
+	if (keyStroke == null)
+		return false;
     for(Command command : commands.values()) {
-      if (command.getKeyStroke().equals(keyStroke)) return true;
+      if (command.getKeyStroke() != null && command.getKeyStroke().equals(keyStroke)) return true;
     }
     return false;
   }

@@ -598,6 +598,11 @@ namespace Ares.Plugin
             m_PlayingControl.KeyReceived(key);
         }
 
+        public void SwitchElement(Int32 id)
+        {
+            m_PlayingControl.SwitchElement(id);
+        }
+
         public void VolumeReceived(VolumeTarget target, int value)
         {
             switch (target)

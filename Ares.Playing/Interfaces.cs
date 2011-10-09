@@ -218,6 +218,16 @@ namespace Ares.Playing
         bool KeyReceived(Int32 keyCode);
 
         /// <summary>
+        /// Tells the player to start / stop a specific element.
+        /// </summary>
+        /// <param name="elementID">ID of the element.</param>
+        /// <returns>whether switch was successful</returns>
+        /// <remarks>
+        /// Only top-level elements of a mode can be switched.
+        /// </remarks>
+        bool SwitchElement(Int32 elementID);
+
+        /// <summary>
         /// Plays the next music title.
         /// </summary>
         void NextMusicTitle();

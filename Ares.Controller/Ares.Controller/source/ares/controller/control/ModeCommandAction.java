@@ -23,18 +23,15 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
-import ares.controllers.data.KeyStroke;
 import ares.controllers.control.Control;
 
 public final class ModeCommandAction extends AbstractAction {
   
-  public ModeCommandAction(KeyStroke modeKey, KeyStroke commandKey) {
-    this.modeKey = modeKey;
-    this.commandKey = commandKey;
+  public ModeCommandAction(int elementId) {
+	  mElementId = elementId;
   }
-  
-  private KeyStroke modeKey;
-  private KeyStroke commandKey;
+
+  private int mElementId;
   
   private static boolean listen = true;
   
@@ -45,8 +42,7 @@ public final class ModeCommandAction extends AbstractAction {
   public void actionPerformed(ActionEvent e) {
 	  if (!listen)
 		  return;
-	  Control.getInstance().sendKey(modeKey);
-	  Control.getInstance().sendKey(commandKey);
+	  Control.getInstance().switchElement(mElementId);
   }
 
 }

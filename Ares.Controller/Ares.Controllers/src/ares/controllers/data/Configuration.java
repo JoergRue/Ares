@@ -58,8 +58,10 @@ public final class Configuration {
   }
   
   public boolean containsKeyStroke(KeyStroke keyStroke) {
+	if (keyStroke == null)
+		return false;
     for(Command command : modes) {
-      if (command.getKeyStroke().equals(keyStroke)) return true;
+      if (command.getKeyStroke() != null && command.getKeyStroke().equals(keyStroke)) return true;
     }
     return false;
   }

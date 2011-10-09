@@ -144,6 +144,15 @@ public final class Control {
 	  }
   }
   
+  public void switchElement(int id) {
+	  if (connection == null || !connection.isConnected()) {
+		  Messages.addMessage(MessageType.Warning, Localization.getString("Control.noConnection")); //$NON-NLS-1$
+	  }
+	  else {
+		  connection.switchElement(id);
+	  }	  
+  }
+  
   public boolean isConnected() {
     return connection != null;
   }

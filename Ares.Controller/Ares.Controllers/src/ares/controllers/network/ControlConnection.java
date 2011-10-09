@@ -492,6 +492,30 @@ public final class ControlConnection {
 	  }
   }
   
+  public void switchElement(int elementId) {
+	    if (!isConnected()) {
+	        Messages.addMessage(MessageType.Warning, Localization.getString("ControlConnection.NoConnection")); //$NON-NLS-1$
+	        return;
+	      }
+	      if (state == State.ConnectionFailure) {
+	      	if (!tryReconnect()) {
+	      	      Messages.addMessage(MessageType.Warning, Localization.getString("ControlConnection.NoConnection")); //$NON-NLS-1$
+	      	      return;    		
+	      	}
+	      }
+	  try {
+		  byte[] bytes = new byte[1 + 4];
+		  bytes[0] = 8;
+		  java.nio.ByteBuffer buffer = java.nio.ByteBuffer.wrap(bytes);
+		  buffer.putInt(1, elementId);
+		  socket.getOutputStream().write(bytes);
+	  }
+	  catch (IOException e) {
+		  Messages.addMessage(MessageType.Warning, e.getLocalizedMessage());
+          handleConnectionFailure(true);
+	  }
+  }
+  
   private HashMap<KeyStroke, byte[]> commandMap = null;
   
   private void createCommandMap() {

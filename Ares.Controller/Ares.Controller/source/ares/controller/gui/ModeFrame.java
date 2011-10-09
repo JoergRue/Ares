@@ -28,18 +28,14 @@ import javax.swing.AbstractButton;
 import ares.controller.control.ComponentKeys;
 import ares.controller.control.ModeCommandAction;
 import ares.controllers.data.Command;
-import ares.controllers.data.KeyStroke;
 import ares.controllers.data.Mode;
 
 final class ModeFrame extends FrameController implements CommandsPanelCreator.IActionCreator {
-  
-  private KeyStroke modeKey;
   
   private Map<Integer, AbstractButton> pushButtons = new HashMap<Integer, AbstractButton>();
   
   public ModeFrame(Mode mode) {
     super(mode.getTitle());
-    modeKey = mode.getKeyStroke();
     ComponentKeys.addAlwaysAvailableKeys(getRootPane());
     initialize(mode);
   }
@@ -60,7 +56,7 @@ final class ModeFrame extends FrameController implements CommandsPanelCreator.IA
   public AbstractAction createAction(final Command command, final AbstractButton button) {
     CommandButtonMapping.getInstance().registerButton(command.getId(), button);
     pushButtons.put(command.getId(), button);
-    return new ModeCommandAction(modeKey, command.getKeyStroke());
+    return new ModeCommandAction(command.getId());
   }
   
 }
