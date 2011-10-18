@@ -1180,11 +1180,13 @@ public final class MainFrame extends FrameController implements IMessageListener
 
 	private void showSettingsDialog() {
 		int oldPort = Preferences.userNodeForPackage(MainFrame.class).getInt("UDPPort", 8009);  //$NON-NLS-1$
+		boolean oldKeys = Preferences.userNodeForPackage(OptionsDialog.class).getBoolean("ShowKeys", false); //$NON-NLS-1$
 		OptionsDialog dialog = new OptionsDialog(MainFrame.this);
 		dialog.setLocationRelativeTo(this);
 		dialog.setModal(true);
 		dialog.setVisible(true);
 		int newPort = Preferences.userNodeForPackage(MainFrame.class).getInt("UDPPort", 8009);  //$NON-NLS-1$
+		boolean newKeys = Preferences.userNodeForPackage(OptionsDialog.class).getBoolean("ShowKeys", false); //$NON-NLS-1$
 		if (serverSearch != null && oldPort != newPort) {
 			boolean wasSearching = serverSearch.isSearching();
 			if (wasSearching) {
@@ -1195,6 +1197,15 @@ public final class MainFrame extends FrameController implements IMessageListener
 			if (wasSearching) {
 				serverSearch.startSearch();
 			}
+		}
+		if (oldKeys != newKeys && Control.getInstance().getConfiguration() != null) {
+			final ArrayList<String> openFrames = closeAllFrames();
+			javax.swing.SwingUtilities.invokeLater(new Runnable() {
+				public void run() {
+					enableProjectSpecificControls(true);
+					reopenFrames(openFrames);					
+				}
+			});
 		}
 	}
 	

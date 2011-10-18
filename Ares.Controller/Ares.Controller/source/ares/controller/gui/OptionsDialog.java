@@ -110,6 +110,8 @@ public final class OptionsDialog extends BGDialog {
   private JComboBox messageLevelBox = null;
   
   private JCheckBox updateCheckBox = null;
+  
+  private JCheckBox keysCheckBox = null;
 
   /**
    * This method initializes
@@ -287,6 +289,7 @@ public final class OptionsDialog extends BGDialog {
     prefs.putBoolean("CheckForUpdate", updateCheckBox.isSelected()); //$NON-NLS-1$
     prefs.putBoolean("StartLocalPlayer", startPlayerBox.isSelected()); //$NON-NLS-1$
     prefs.putBoolean("AskForPlayerStart", askBeforePlayerStartBox.isSelected()); //$NON-NLS-1$
+    prefs.putBoolean("ShowKeys", keysCheckBox.isSelected()); //$NON-NLS-1$
 
     return true;
   }
@@ -321,6 +324,7 @@ public final class OptionsDialog extends BGDialog {
     updateCheckBox.setSelected(prefs.getBoolean("CheckForUpdate", true)); //$NON-NLS-1$
     askBeforePlayerStartBox.setSelected(prefs.getBoolean("AskForPlayerStart", true)); //$NON-NLS-1$
     startPlayerBox.setSelected(prefs.getBoolean("StartLocalPlayer", true)); //$NON-NLS-1$
+    keysCheckBox.setSelected(prefs.getBoolean("ShowKeys", false)); //$NON-NLS-1$
   }
 
   /**
@@ -467,6 +471,7 @@ public final class OptionsDialog extends BGDialog {
       JPanel fgPanel = new JPanel();
       fgPanel.setLayout(new BoxLayout(fgPanel, BoxLayout.LINE_AXIS));
       fgPanel.add(getFGBox());
+      fgPanel.add(getKeysBox());
       fgPanel.add(Box.createHorizontalGlue());
       jPanel1.add(fgPanel);
       JPanel messageLevelPanel = new JPanel();
@@ -492,6 +497,14 @@ public final class OptionsDialog extends BGDialog {
       fgBox.setText(Localization.getString("OptionsDialog.BringToTop")); //$NON-NLS-1$
     }
     return fgBox;
+  }
+  
+  private JCheckBox getKeysBox() {
+	  if (keysCheckBox == null) {
+		  keysCheckBox = new JCheckBox();
+		  keysCheckBox.setText(Localization.getString("OptionsDialog.ShowKeys")); //$NON-NLS-1$
+	  }
+	  return keysCheckBox;
   }
 
   /**

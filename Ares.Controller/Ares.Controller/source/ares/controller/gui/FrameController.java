@@ -20,6 +20,7 @@
 package ares.controller.gui;
 
 import java.awt.Rectangle;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -67,6 +68,26 @@ public abstract class FrameController extends SubFrame implements
   
   protected void addButton(String title, AbstractButton button) {
     frameButtons.put(title, button);
+  }
+  
+  protected ArrayList<String> closeAllFrames()
+  {
+	  ArrayList<String> result = new ArrayList<String>();
+	  for (String key : frameButtons.keySet()) {
+		  if (frameButtons.get(key).isSelected()) {
+			  result.add(key);
+			  frameButtons.get(key).doClick();
+		  }
+	  }
+	  return result;
+  }
+  
+  protected void reopenFrames(ArrayList<String> frames) {
+	  for (String key : frames) {
+		  if (frameButtons.containsKey(key)) {
+			  frameButtons.get(key).doClick();
+		  }
+	  }
   }
   
   private Map<String, AbstractButton> frameButtons = new HashMap<String, AbstractButton>();
