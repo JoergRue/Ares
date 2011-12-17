@@ -52,4 +52,30 @@ namespace Ares.Data
 
         private static ElementRepository s_ElementRepository = new ElementRepository();
     }
+
+
+    static class DataUtils
+    {
+        public static IList<IFileElement> GetFileElements(this IXmlWritable element)
+        {
+            if (element is IGeneralElementContainer)
+            {
+                return (element as IGeneralElementContainer).GetFileElements();
+            }
+            else if (element is IContainerElement)
+            {
+                return (element as IContainerElement).InnerElement.GetFileElements();
+            }
+            else
+            {
+                IList<IFileElement> result = new List<IFileElement>();
+                IFileElement fileElement = element as IFileElement;
+                if (fileElement != null)
+                {
+                    result.Add(fileElement);
+                }
+                return result;
+            }
+        }
+    }
 }

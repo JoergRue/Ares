@@ -77,7 +77,6 @@ namespace Ares.Editor.ElementEditors
             this.stopButton.Name = "stopButton";
             this.stopButton.UseCompatibleTextRendering = true;
             this.stopButton.UseVisualStyleBackColor = true;
-            this.stopButton.Click += new System.EventHandler(this.stopButton_Click);
             // 
             // playButton
             // 
@@ -86,7 +85,6 @@ namespace Ares.Editor.ElementEditors
             this.playButton.Name = "playButton";
             this.playButton.UseCompatibleTextRendering = true;
             this.playButton.UseVisualStyleBackColor = true;
-            this.playButton.Click += new System.EventHandler(this.playButton_Click);
             // 
             // label1
             // 
@@ -99,7 +97,6 @@ namespace Ares.Editor.ElementEditors
             // 
             resources.ApplyResources(this.choiceContainerControl, "choiceContainerControl");
             this.choiceContainerControl.Name = "choiceContainerControl";
-            this.choiceContainerControl.ElementDoubleClick += new System.EventHandler<Ares.Editor.Controls.ElementDoubleClickEventArgs>(this.choiceContainerControl_ElementDoubleClick);
             // 
             // volumeControl
             // 
@@ -116,11 +113,6 @@ namespace Ares.Editor.ElementEditors
             this.Controls.Add(this.choiceContainerControl);
             this.Controls.Add(this.volumeControl);
             this.Name = "ChoiceContainerEditor";
-            this.SizeChanged += new System.EventHandler(this.ChoiceContainerEditor_SizeChanged);
-            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.ChoiceContainerEditor_DragDrop);
-            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.ChoiceContainerEditor_DragEnter);
-            this.DragOver += new System.Windows.Forms.DragEventHandler(this.ChoiceContainerEditor_DragOver);
-            this.DragLeave += new System.EventHandler(this.ChoiceContainerEditor_DragLeave);
             this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
 

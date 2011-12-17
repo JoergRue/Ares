@@ -34,83 +34,44 @@ namespace Ares.Editor.Controls
         public SequentialContainerControl()
         {
             InitializeComponent();
+            AttachGridEvents();
         }
 
         public void SetContainer(ISequentialContainer container)
         {
             m_Container = container;
-            Update(m_Container.Id, Actions.ElementChanges.ChangeType.Changed);
+            ContainerSet();
             EnableUpDownButtons();
-            Actions.ElementChanges.Instance.AddListener(m_Container.Id, Update);
         }
 
-        protected override void RefillGrid()
+        protected override void AddElementToGrid(IContainerElement element)
         {
-            elementsGrid.SuspendLayout();
-            elementsGrid.Rows.Clear();
-            foreach (int key in m_ElementsToRows.Keys)
-            {
-                Actions.ElementChanges.Instance.RemoveListener(key, Update);
-            }
-            m_ElementsToRows.Clear();
-            int row = 0;
-            foreach (ISequentialElement element in m_Container.GetElements())
-            {
-                elementsGrid.Rows.Add(new object[] { element.Title, element.FixedStartDelay.TotalMilliseconds, element.MaximumRandomStartDelay.TotalMilliseconds });
-                SetElementAttributes(elementsGrid, element, row);
-                m_ElementsToRows[element.Id] = row;
-                Actions.ElementChanges.Instance.AddListener(element.Id, Update);
-
-                ++row;
-            }
-            elementsGrid.ResumeLayout();
+            ISequentialElement e = (ISequentialElement)element;
+            elementsGrid.Rows.Add(new object[] { e.Title, e.FixedStartDelay.TotalMilliseconds, e.MaximumRandomStartDelay.TotalMilliseconds });
         }
 
-        private void Update(int elementID, Actions.ElementChanges.ChangeType changeType)
+        protected override void ChangeElementDataInGrid(int elementID, int row)
         {
-            if (!listen)
-                return;
-            listen = false;
-            if (elementID == m_Container.Id && changeType == Actions.ElementChanges.ChangeType.Changed)
-            {
-                RefillGrid();
-            }
-            else if (m_ElementsToRows.ContainsKey(elementID))
-            {
-                if (changeType == Actions.ElementChanges.ChangeType.Removed)
-                {
-                    RefillGrid();
-                }
-                else if (changeType == Actions.ElementChanges.ChangeType.Renamed)
-                {
-                    elementsGrid.Rows[m_ElementsToRows[elementID]].Cells[0].Value =
-                        Ares.Data.DataModule.ElementRepository.GetElement(elementID).Title;
-                }
-                else if (changeType == Actions.ElementChanges.ChangeType.Changed)
-                {
-                    elementsGrid.Rows[m_ElementsToRows[elementID]].Cells[1].Value =
-                        (m_Container.GetElement(elementID)).FixedStartDelay.TotalMilliseconds;
-                    elementsGrid.Rows[m_ElementsToRows[elementID]].Cells[2].Value =
-                        (m_Container.GetElement(elementID)).MaximumRandomStartDelay.TotalMilliseconds;
-                }
-            }
-            listen = true;
+            elementsGrid.Rows[row].Cells[1].Value =
+                (m_Container.GetElement(elementID)).FixedStartDelay.TotalMilliseconds;
+            elementsGrid.Rows[row].Cells[2].Value =
+                (m_Container.GetElement(elementID)).MaximumRandomStartDelay.TotalMilliseconds;
         }
 
-        public void AddElements(IList<IElement> elements)
+        protected override DataGridView Grid
         {
-            listen = false;
-            int index = m_Container.GetElements().Count;
-            Actions.Actions.Instance.AddNew(new Actions.AddContainerElementsAction(m_Container, elements));
-            IList<ISequentialElement> containerElements = m_Container.GetElements();
-            for (int i = index; i < containerElements.Count; ++i)
+            get
             {
-                elementsGrid.Rows.Add(new object[] { containerElements[i].Title, containerElements[i].FixedStartDelay.TotalMilliseconds, containerElements[i].MaximumRandomStartDelay.TotalMilliseconds });
-                SetElementAttributes(elementsGrid, containerElements[i], i);
-                m_ElementsToRows[containerElements[i].Id] = i;
-                Actions.ElementChanges.Instance.AddListener(containerElements[i].Id, Update);
+                return elementsGrid;
             }
-            listen = true;
+        }
+
+        protected override IGeneralElementContainer ElementsContainer
+        {
+            get
+            {
+                return m_Container;
+            }
         }
 
         private ISequentialContainer m_Container;
@@ -126,21 +87,6 @@ namespace Ares.Editor.Controls
                 Actions.Actions.Instance.AddNew(new Actions.SequentialElementChangeAction(
                     m_Container.GetElements()[e.RowIndex], fixedDelay, randomDelay));
             }
-            listen = true;
-        }
-
-        private void elementsGrid_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
-        {
-            if (!listen)
-                return;
-            listen = false;
-            List<IElement> elements = new List<IElement>();
-            IList<ISequentialElement> containerElements = m_Container.GetElements();
-            for (int i = 0; i < e.RowCount; ++i)
-            {
-                elements.Add(containerElements[e.RowIndex + i]);
-            }
-            Actions.Actions.Instance.AddNew(new Actions.RemoveContainerElementsAction(m_Container, elements, e.RowIndex));
             listen = true;
         }
 

@@ -80,7 +80,6 @@ namespace Ares.Editor.ElementEditors
             this.stopButton.Name = "stopButton";
             this.stopButton.UseCompatibleTextRendering = true;
             this.stopButton.UseVisualStyleBackColor = true;
-            this.stopButton.Click += new System.EventHandler(this.stopButton_Click);
             // 
             // playButton
             // 
@@ -89,7 +88,6 @@ namespace Ares.Editor.ElementEditors
             this.playButton.Name = "playButton";
             this.playButton.UseCompatibleTextRendering = true;
             this.playButton.UseVisualStyleBackColor = true;
-            this.playButton.Click += new System.EventHandler(this.playButton_Click);
             // 
             // volumeControl
             // 
@@ -101,7 +99,6 @@ namespace Ares.Editor.ElementEditors
             resources.ApplyResources(this.parallelContainerControl, "parallelContainerControl");
             this.parallelContainerControl.Name = "parallelContainerControl";
             this.parallelContainerControl.ActiveRowChanged += new System.EventHandler(this.parallelContainerControl_ActiveRowChanged);
-            this.parallelContainerControl.ElementDoubleClick += new System.EventHandler<Ares.Editor.Controls.ElementDoubleClickEventArgs>(this.parallelContainerControl_ElementDoubleClick);
             // 
             // groupBox2
             // 
@@ -133,10 +130,6 @@ namespace Ares.Editor.ElementEditors
             this.Controls.Add(this.volumeControl);
             this.Controls.Add(this.groupBox1);
             this.Name = "ParallelContainerEditor";
-            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.ParallelContainerEditor_DragDrop);
-            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.ParallelContainerEditor_DragEnter);
-            this.DragOver += new System.Windows.Forms.DragEventHandler(this.ParallelContainerEditor_DragOver);
-            this.DragLeave += new System.EventHandler(this.ParallelContainerEditor_DragLeave);
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);

@@ -128,7 +128,7 @@ namespace Ares.Editor.ElementEditors
             {
                 listen = false;
                 DisableControls(true);
-                Actions.Playing.Instance.PlayElement(m_Element, this, () => { });
+                Actions.Playing.Instance.PlayElement(m_Element, Parent, () => { });
                 listen = true;
             }
         }

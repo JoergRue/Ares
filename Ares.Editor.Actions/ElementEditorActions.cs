@@ -505,6 +505,52 @@ namespace Ares.Editor.Actions
         private List<IElement> m_Elements;
     }
 
+    public class AddImportedContainerElementsAction : Action
+    {
+        public AddImportedContainerElementsAction(IGeneralElementContainer container, IList<IXmlWritable> elements, int insertionIndex)
+        {
+            m_Container = container;
+            m_InsertionIndex = insertionIndex;
+            m_Elements = new List<IElement>();
+            foreach (IElement element in elements)
+            {
+                IList<IElement> newElements = container.AddGeneralImportedElement(element);
+                m_Elements.AddRange(newElements);
+                foreach (IElement newElement in newElements)
+                {
+                    container.RemoveElement(newElement.Id);
+                }
+            }
+        }
+
+        public override void Do()
+        {
+            int index = m_InsertionIndex;
+            foreach (IElement element in m_Elements)
+            {
+                m_Container.InsertGeneralElement(index, element);
+                ++index;
+            }
+            ElementChanges.Instance.ElementChanged(m_Container.Id);
+            Ares.ModelInfo.ModelChecks.Instance.CheckAll();
+        }
+
+        public override void Undo()
+        {
+            foreach (IElement element in m_Elements)
+            {
+                m_Container.RemoveElement(element.Id);
+                ElementRemoval.NotifyRemoval(element);
+            }
+            ElementChanges.Instance.ElementChanged(m_Container.Id);
+            Ares.ModelInfo.ModelChecks.Instance.CheckAll();
+        }
+
+        private IGeneralElementContainer m_Container;
+        private List<IElement> m_Elements;
+        private int m_InsertionIndex;
+    }
+    
     public class RemoveContainerElementsAction : Action
     {
         public RemoveContainerElementsAction(IGeneralElementContainer container, IList<IElement> elements, int index)
@@ -540,6 +586,62 @@ namespace Ares.Editor.Actions
         private IGeneralElementContainer m_Container;
         private IList<IElement> m_Elements;
         private int m_Index;
+    }
+
+    public class ReorderContainerElementsAction : Action
+    {
+        public ReorderContainerElementsAction(IGeneralElementContainer container, IList<int> indices, int targetIndex)
+        {
+            m_Container = container;
+            m_Indices = indices;
+            m_targetIndex = targetIndex;
+            m_OriginalOrder = container.GetGeneralElements();
+        }
+
+        public override void Do()
+        {
+            IList<IContainerElement> elements = m_Container.GetGeneralElements();
+            List<IContainerElement> elems = new List<IContainerElement>();
+            int targetIndex = m_targetIndex;
+            foreach (int row in m_Indices)
+            {
+                if (row < targetIndex)
+                    --targetIndex;
+                elems.Add(elements[row]);
+            }
+            if (targetIndex < 0)
+                targetIndex = 0;
+            foreach (IContainerElement elem in elems)
+            {
+                m_Container.RemoveElement(elem.Id);
+            }
+            foreach (IContainerElement elem in elems)
+            {
+                m_Container.InsertGeneralElement(targetIndex, elem);
+                ++targetIndex;
+            }
+            ElementChanges.Instance.ElementChanged(m_Container.Id);
+        }
+
+        public override void Undo()
+        {
+            foreach (IContainerElement elem in m_OriginalOrder)
+            {
+                m_Container.RemoveElement(elem.Id);
+            }
+            int i = 0;
+            foreach (IContainerElement elem in m_OriginalOrder)
+            {
+                m_Container.InsertGeneralElement(i, elem);
+                ++i;
+            }
+            ElementChanges.Instance.ElementChanged(m_Container.Id);
+        }
+
+        private IGeneralElementContainer m_Container;
+        private IList<IContainerElement> m_OriginalOrder;
+        private IList<int> m_Indices;
+        private int m_targetIndex;
     }
 
     public class SetModeElementTriggerAction : Action

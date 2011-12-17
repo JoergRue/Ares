@@ -70,10 +70,6 @@ namespace Ares.Editor.ElementEditors
             this.label1.ForeColor = System.Drawing.SystemColors.InactiveCaption;
             this.label1.Name = "label1";
             this.label1.UseCompatibleTextRendering = true;
-            this.label1.DragDrop += new System.Windows.Forms.DragEventHandler(this.RandomPlaylistEditor_DragDrop);
-            this.label1.DragEnter += new System.Windows.Forms.DragEventHandler(this.RandomPlaylistEditor_DragEnter);
-            this.label1.DragOver += new System.Windows.Forms.DragEventHandler(this.RandomPlaylistEditor_DragOver);
-            this.label1.DragLeave += new System.EventHandler(this.RandomPlaylistEditor_DragLeave);
             // 
             // groupBox1
             // 
@@ -91,7 +87,6 @@ namespace Ares.Editor.ElementEditors
             this.stopButton.Name = "stopButton";
             this.stopButton.UseCompatibleTextRendering = true;
             this.stopButton.UseVisualStyleBackColor = true;
-            this.stopButton.Click += new System.EventHandler(this.stopButton_Click);
             // 
             // playButton
             // 
@@ -100,7 +95,6 @@ namespace Ares.Editor.ElementEditors
             this.playButton.Name = "playButton";
             this.playButton.UseCompatibleTextRendering = true;
             this.playButton.UseVisualStyleBackColor = true;
-            this.playButton.Click += new System.EventHandler(this.playButton_Click);
             // 
             // volumeControl
             // 
@@ -123,7 +117,6 @@ namespace Ares.Editor.ElementEditors
             // 
             resources.ApplyResources(this.choiceContainerControl, "choiceContainerControl");
             this.choiceContainerControl.Name = "choiceContainerControl";
-            this.choiceContainerControl.ElementDoubleClick += new System.EventHandler<Ares.Editor.Controls.ElementDoubleClickEventArgs>(this.choiceContainerControl_ElementDoubleClick);
             // 
             // RandomPlaylistOrBGSoundChoiceEditor
             // 
@@ -138,11 +131,6 @@ namespace Ares.Editor.ElementEditors
             this.Controls.Add(this.label1);
             this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.Document)));
             this.Name = "RandomPlaylistOrBGSoundChoiceEditor";
-            this.SizeChanged += new System.EventHandler(this.RandomPlaylistEditor_SizeChanged);
-            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.RandomPlaylistEditor_DragDrop);
-            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.RandomPlaylistEditor_DragEnter);
-            this.DragOver += new System.Windows.Forms.DragEventHandler(this.RandomPlaylistEditor_DragOver);
-            this.DragLeave += new System.EventHandler(this.RandomPlaylistEditor_DragLeave);
             this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
 

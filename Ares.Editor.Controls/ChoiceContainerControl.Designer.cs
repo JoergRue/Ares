@@ -36,15 +36,6 @@ namespace Ares.Editor.ElementEditorControls
             {
                 components.Dispose();
             }
-            if (disposing)
-            {
-                foreach (int key in m_ElementsToRows.Keys)
-                {
-                    Actions.ElementChanges.Instance.RemoveListener(key, Update);
-                }
-                if (m_Container != null)
-                    Actions.ElementChanges.Instance.RemoveListener(m_Container.Id, Update);
-            }
             base.Dispose(disposing);
         }
 
@@ -62,17 +53,9 @@ namespace Ares.Editor.ElementEditorControls
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.elementsGrid = new System.Windows.Forms.DataGridView();
             this.NameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-#if !MONO
             this.ChanceColumn = new DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn();
-#else
-            this.ChanceColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-#endif
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-#if !MONO
             this.dataGridViewNumericUpDownColumn1 = new DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn();
-#else
-            this.dataGridViewNumericUpDownColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-#endif
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.elementsGrid)).BeginInit();
             this.SuspendLayout();
@@ -113,7 +96,6 @@ namespace Ares.Editor.ElementEditorControls
             this.elementsGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.elementsGrid.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.elementsGrid_CellDoubleClick);
             this.elementsGrid.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.elementsGrid_CellEndEdit);
-            this.elementsGrid.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.elementsGrid_RowsRemoved);
             // 
             // NameColumn
             // 
@@ -130,14 +112,12 @@ namespace Ares.Editor.ElementEditorControls
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.ControlDark;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             this.ChanceColumn.DefaultCellStyle = dataGridViewCellStyle1;
-#if !MONO
             resources.ApplyResources(this.ChanceColumn, "ChanceColumn");
             this.ChanceColumn.Maximum = new decimal(new int[] {
             1000,
             0,
             0,
             0});
-#endif
             this.ChanceColumn.Name = "ChanceColumn";
             this.ChanceColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.ChanceColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
@@ -152,14 +132,12 @@ namespace Ares.Editor.ElementEditorControls
             // dataGridViewNumericUpDownColumn1
             // 
             this.dataGridViewNumericUpDownColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-#if !MONO
             resources.ApplyResources(this.dataGridViewNumericUpDownColumn1, "dataGridViewNumericUpDownColumn1");
             this.dataGridViewNumericUpDownColumn1.Maximum = new decimal(new int[] {
             1000,
             0,
             0,
             0});
-#endif
             this.dataGridViewNumericUpDownColumn1.Name = "dataGridViewNumericUpDownColumn1";
             this.dataGridViewNumericUpDownColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridViewNumericUpDownColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;

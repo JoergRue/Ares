@@ -117,121 +117,117 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="NameColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
+  <metadata name="gridContextMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
   </metadata>
-  <data name="NameColumn.HeaderText" xml:space="preserve">
-    <value>Name</value>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="editMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
   </data>
-  <metadata name="ChanceColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="ChanceColumn.HeaderText" xml:space="preserve">
-    <value>Chance</value>
+  <data name="editMenuItem.Text" xml:space="preserve">
+    <value>Edit ...</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="ChanceColumn.Width" type="System.Int32, mscorlib">
-    <value>74</value>
+  <data name="toolStripSeparator2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>149, 6</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="elementsGrid.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
+  <data name="cutMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>Strg+X</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="elementsGrid.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 16</value>
+  <data name="cutMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
   </data>
-  <data name="elementsGrid.Size" type="System.Drawing.Size, System.Drawing">
-    <value>550, 299</value>
+  <data name="cutMenuItem.Text" xml:space="preserve">
+    <value>Cut</value>
   </data>
-  <data name="elementsGrid.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+  <data name="copyMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>Strg+C</value>
   </data>
-  <data name="&gt;&gt;elementsGrid.Name" xml:space="preserve">
-    <value>elementsGrid</value>
+  <data name="copyMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
   </data>
-  <data name="&gt;&gt;elementsGrid.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="copyMenuItem.Text" xml:space="preserve">
+    <value>Copy</value>
   </data>
-  <data name="&gt;&gt;elementsGrid.Parent" xml:space="preserve">
-    <value>groupBox1</value>
+  <data name="pasteMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>Strg+V</value>
   </data>
-  <data name="&gt;&gt;elementsGrid.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="pasteMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
   </data>
-  <data name="groupBox1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
+  <data name="pasteMenuItem.Text" xml:space="preserve">
+    <value>Paste</value>
   </data>
-  <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
+  <data name="toolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>149, 6</value>
   </data>
-  <data name="groupBox1.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>9, 3, 9, 3</value>
+  <data name="deleteMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>Entf</value>
   </data>
-  <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>568, 318</value>
+  <data name="deleteMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
   </data>
-  <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+  <data name="deleteMenuItem.Text" xml:space="preserve">
+    <value>Delete</value>
   </data>
-  <data name="groupBox1.Text" xml:space="preserve">
-    <value>Elements</value>
+  <data name="gridContextMenu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>153, 148</value>
   </data>
-  <data name="&gt;&gt;groupBox1.Name" xml:space="preserve">
-    <value>groupBox1</value>
+  <data name="&gt;&gt;gridContextMenu.Name" xml:space="preserve">
+    <value>gridContextMenu</value>
   </data>
-  <data name="&gt;&gt;groupBox1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;groupBox1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;groupBox1.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="dataGridViewTextBoxColumn1.HeaderText" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="dataGridViewNumericUpDownColumn1.HeaderText" xml:space="preserve">
-    <value>Chance</value>
+  <data name="&gt;&gt;gridContextMenu.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 13</value>
+  <data name="&gt;&gt;editMenuItem.Name" xml:space="preserve">
+    <value>editMenuItem</value>
   </data>
-  <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>568, 318</value>
+  <data name="&gt;&gt;editMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;NameColumn.Name" xml:space="preserve">
-    <value>NameColumn</value>
+  <data name="&gt;&gt;toolStripSeparator2.Name" xml:space="preserve">
+    <value>toolStripSeparator2</value>
   </data>
-  <data name="&gt;&gt;NameColumn.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;toolStripSeparator2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;ChanceColumn.Name" xml:space="preserve">
-    <value>ChanceColumn</value>
+  <data name="&gt;&gt;cutMenuItem.Name" xml:space="preserve">
+    <value>cutMenuItem</value>
   </data>
-  <data name="&gt;&gt;ChanceColumn.Type" xml:space="preserve">
-    <value>DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn, Ares.Editor.Controls, Version=0.6.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
+  <data name="&gt;&gt;cutMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;dataGridViewTextBoxColumn1.Name" xml:space="preserve">
-    <value>dataGridViewTextBoxColumn1</value>
+  <data name="&gt;&gt;copyMenuItem.Name" xml:space="preserve">
+    <value>copyMenuItem</value>
   </data>
-  <data name="&gt;&gt;dataGridViewTextBoxColumn1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;copyMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;dataGridViewNumericUpDownColumn1.Name" xml:space="preserve">
-    <value>dataGridViewNumericUpDownColumn1</value>
+  <data name="&gt;&gt;pasteMenuItem.Name" xml:space="preserve">
+    <value>pasteMenuItem</value>
   </data>
-  <data name="&gt;&gt;dataGridViewNumericUpDownColumn1.Type" xml:space="preserve">
-    <value>DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn, Ares.Editor.Controls, Version=0.6.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
+  <data name="&gt;&gt;pasteMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator1.Name" xml:space="preserve">
+    <value>toolStripSeparator1</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;deleteMenuItem.Name" xml:space="preserve">
+    <value>deleteMenuItem</value>
+  </data>
+  <data name="&gt;&gt;deleteMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>ChoiceContainerControl</value>
+    <value>ContainerControl</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>Ares.Editor.Controls.ContainerControl, Ares.Editor.Controls, Version=0.6.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
+    <value>System.Windows.Forms.UserControl, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

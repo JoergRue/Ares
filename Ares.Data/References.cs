@@ -150,6 +150,11 @@ namespace Ares.Data
             return m_Element.AddGeneralElement(element);
         }
 
+        public IList<IElement> AddGeneralImportedElement(IXmlWritable element)
+        {
+            return m_Element.AddGeneralImportedElement(element);
+        }
+
         public void InsertGeneralElement(int index, IElement element)
         {
             m_Element.InsertGeneralElement(index, element);

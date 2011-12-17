@@ -438,6 +438,11 @@ namespace Ares.Data
         IElement AddGeneralElement(IElement element);
 
         /// <summary>
+        /// Adds an imported element to the container.
+        /// </summary>
+        IList<IElement> AddGeneralImportedElement(IXmlWritable element);
+
+        /// <summary>
         /// Inserts an existing element into the container.
         /// </summary>
         void InsertGeneralElement(int index, IElement element);

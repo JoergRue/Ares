@@ -261,6 +261,18 @@ namespace Ares.Data
                 else
                     return null;
             }
+            else if (reader.IsStartElement("Parallel"))
+            {
+                return new ParallelElement(reader);
+            }
+            else if (reader.IsStartElement("Sequential"))
+            {
+                return new SequentialElement(reader);
+            }
+            else if (reader.IsStartElement("Choice"))
+            {
+                return new ChoiceElement(reader);
+            }
             else
             {
                 reader.ReadOuterXml();

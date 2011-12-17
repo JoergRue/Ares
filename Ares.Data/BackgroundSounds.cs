@@ -33,6 +33,25 @@ namespace Ares.Data
             return AddElement(element);
         }
 
+        public IList<IElement> AddGeneralImportedElement(IXmlWritable element)
+        {
+            List<IElement> result = new List<IElement>();
+            if (element is IChoiceElement)
+            {
+                IChoiceElement choice = element as IChoiceElement;
+                if (choice.InnerElement is IFileElement)
+                {
+                    result.AddRange(m_Container.AddGeneralImportedElement(element));
+                    return result;
+                }
+            }
+            foreach (IFileElement fileElement in element.GetFileElements())
+            {
+                result.Add(m_Container.AddElement(fileElement));
+            }
+            return result;
+        }
+
         public void InsertGeneralElement(int index, IElement element)
         {
             m_Container.InsertGeneralElement(index, element);
@@ -210,6 +229,15 @@ namespace Ares.Data
             return bgChoice;
         }
 
+        public IList<IElement> AddGeneralImportedElement(IXmlWritable writable)
+        {
+            List<IElement> result = new List<IElement>();
+            IElement element = AddImportedElement(writable);
+            if (element != null)
+                result.Add(element);
+            return result;
+        }
+
         public IBackgroundSoundChoice AddElement(IElement element)
         {
             throw new InvalidOperationException();
@@ -367,6 +395,11 @@ namespace Ares.Data
             }
 
             public IElement AddGeneralElement(IElement element)
+            {
+                throw new NotImplementedException();
+            }
+
+            public IList<IElement> AddGeneralImportedElement(IXmlWritable element)
             {
                 throw new NotImplementedException();
             }

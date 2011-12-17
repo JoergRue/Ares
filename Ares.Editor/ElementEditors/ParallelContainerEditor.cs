@@ -28,11 +28,20 @@ using System.Windows.Forms;
 
 namespace Ares.Editor.ElementEditors
 {
-    partial class ParallelContainerEditor : EditorBase
+    partial class ParallelContainerEditor : ContainerEditorBase
     {
         public ParallelContainerEditor()
         {
             InitializeComponent();
+            AttachOtherEvents(playButton, stopButton);
+        }
+
+        protected override Controls.ContainerControl ContainerControl
+        {
+            get
+            {
+                return parallelContainerControl;
+            }
         }
 
         private bool m_HasActiveElement = false;
@@ -43,86 +52,12 @@ namespace Ares.Editor.ElementEditors
             m_Element = container;
             parallelContainerControl.SetContainer(container);
             volumeControl.SetElement(container);
-            Update(m_Element.Id, Actions.ElementChanges.ChangeType.Renamed);
+            ElementSet();
             UpdateActiveElement();
             Actions.ElementChanges.Instance.AddListener(-1, Update);
-            if (Actions.Playing.Instance.IsElementPlaying(container))
-            {
-                DisableControls(true);
-            }
-            else if (Actions.Playing.Instance.IsElementOrSubElementPlaying(container))
-            {
-                DisableControls(false);
-            }
         }
 
-        private void Update(int elementId, Actions.ElementChanges.ChangeType changeType)
-        {
-            if (!listen)
-                return;
-            if (elementId == m_Element.Id)
-            {
-                if (changeType == Actions.ElementChanges.ChangeType.Renamed)
-                {
-                    this.Text = m_Element.Title;
-                }
-                else if (changeType == Actions.ElementChanges.ChangeType.Removed)
-                {
-                    Close();
-                }
-                else if (changeType == Actions.ElementChanges.ChangeType.Played)
-                {
-                    DisableControls(false);
-                }
-                else if (changeType == Actions.ElementChanges.ChangeType.Stopped)
-                {
-                    EnableControls();
-                }
-            }
-            else if (changeType == Actions.ElementChanges.ChangeType.Played || changeType == Actions.ElementChanges.ChangeType.Stopped)
-            {
-                if (Actions.Playing.Instance.IsElementOrSubElementPlaying(m_Element))
-                {
-                    DisableControls(false);
-                }
-                else
-                {
-                    EnableControls();
-                }
-            }
-        }
-
-        private bool m_AcceptDrop;
-
-        private void ParallelContainerEditor_DragEnter(object sender, DragEventArgs e)
-        {
-            m_AcceptDrop = parallelContainerControl.Enabled && e.Data.GetDataPresent(typeof(List<DraggedItem>));
-        }
-
-        private void ParallelContainerEditor_DragLeave(object sender, EventArgs e)
-        {
-            m_AcceptDrop = false;
-        }
-
-        private void ParallelContainerEditor_DragOver(object sender, DragEventArgs e)
-        {
-            if (m_AcceptDrop && (e.AllowedEffect & DragDropEffects.Copy) != 0)
-                e.Effect = DragDropEffects.Copy;
-            else
-                e.Effect = DragDropEffects.None;
-        }
-
-        private void ParallelContainerEditor_DragDrop(object sender, DragEventArgs e)
-        {
-            List<DraggedItem> list = e.Data.GetData(typeof(List<DraggedItem>)) as List<DraggedItem>;
-            if (list != null)
-            {
-                List<Ares.Data.IElement> elements = new List<Ares.Data.IElement>(DragAndDrop.GetElementsFromDroppedItems(list));
-                parallelContainerControl.AddElements(elements);
-            }
-        }
-
-        private void DisableControls(bool allowStop)
+        protected override void DisableControls(bool allowStop)
         {
             playButton.Enabled = false;
             stopButton.Enabled = allowStop;
@@ -132,7 +67,7 @@ namespace Ares.Editor.ElementEditors
             repeatableControl.Enabled = false;
         }
 
-        private void EnableControls()
+        protected override void EnableControls()
         {
             playButton.Enabled = true;
             stopButton.Enabled = false;
@@ -141,26 +76,6 @@ namespace Ares.Editor.ElementEditors
             delayableControl.Enabled = m_HasActiveElement;
             repeatableControl.Enabled = m_HasActiveElement;
         }
-
-        private void playButton_Click(object sender, EventArgs e)
-        {
-            if (m_Element != null)
-            {
-                listen = false;
-                DisableControls(true);
-                Actions.Playing.Instance.PlayElement(m_Element, this, () => { });
-                listen = true;
-            }
-        }
-
-        private void stopButton_Click(object sender, EventArgs e)
-        {
-            Actions.Playing.Instance.StopElement(m_Element);
-        }
-
-        private bool listen = true;
-
-        private Ares.Data.IElementContainer<Ares.Data.IParallelElement> m_Element;
 
         private void parallelContainerControl_ActiveRowChanged(object sender, EventArgs e)
         {
@@ -189,13 +104,5 @@ namespace Ares.Editor.ElementEditors
             }
         }
 
-        private void parallelContainerControl_ElementDoubleClick(object sender, Controls.ElementDoubleClickEventArgs e)
-        {
-#if !MONO
-            Editors.ShowEditor(e.Element.InnerElement, m_Element, this.DockPanel);
-#else
-            Editors.ShowEditor(e.Element.InnerElement, m_Element, this.MdiParent);
-#endif
-        }
     }
 }

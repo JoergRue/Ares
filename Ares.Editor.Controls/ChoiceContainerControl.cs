@@ -35,83 +35,16 @@ namespace Ares.Editor.ElementEditorControls
         public ChoiceContainerControl()
         {
             InitializeComponent();
+            AttachGridEvents();
         }
 
         public void SetContainer(IElementContainer<IChoiceElement> container)
         {
             m_Container = container;
-            Update(m_Container.Id, Actions.ElementChanges.ChangeType.Changed);
-            Actions.ElementChanges.Instance.AddListener(m_Container.Id, Update);
-        }
-
-        protected override void RefillGrid()
-        {
-            elementsGrid.SuspendLayout();
-            elementsGrid.Rows.Clear();
-            foreach (int key in m_ElementsToRows.Keys)
-            {
-                Actions.ElementChanges.Instance.RemoveListener(key, Update);
-            }
-            m_ElementsToRows.Clear();
-            int row = 0;
-            foreach (IChoiceElement element in m_Container.GetElements())
-            {
-                elementsGrid.Rows.Add(new object[] { element.Title, element.RandomChance });
-                m_ElementsToRows[element.Id] = row;
-                Actions.ElementChanges.Instance.AddListener(element.Id, Update);
-                SetElementAttributes(elementsGrid, element, row);
-                ++row;
-            }
-            elementsGrid.ResumeLayout();
-        }
-
-        private void Update(int elementID, Actions.ElementChanges.ChangeType changeType)
-        {
-            if (!listen)
-                return;
-            listen = false;
-            if (elementID == m_Container.Id && changeType == Actions.ElementChanges.ChangeType.Changed)
-            {
-                RefillGrid();
-            }
-            else if (m_ElementsToRows.ContainsKey(elementID))
-            {
-                if (changeType == Actions.ElementChanges.ChangeType.Removed)
-                {
-                    RefillGrid();
-                }
-                else if (changeType == Actions.ElementChanges.ChangeType.Renamed)
-                {
-                    elementsGrid.Rows[m_ElementsToRows[elementID]].Cells[0].Value =
-                        Ares.Data.DataModule.ElementRepository.GetElement(elementID).Title;
-                }
-                else if (changeType == Actions.ElementChanges.ChangeType.Changed)
-                {
-                    elementsGrid.Rows[m_ElementsToRows[elementID]].Cells[1].Value =
-                        (m_Container.GetElement(elementID)).RandomChance;
-                }
-            }
-            listen = true;
-        }
-
-        public void AddElements(IList<IElement> elements)
-        {
-            listen = false;
-            int index = m_Container.GetElements().Count;
-            Actions.Actions.Instance.AddNew(new Actions.AddContainerElementsAction(m_Container, elements));
-            IList<IChoiceElement> containerElements = m_Container.GetElements();
-            for (int i = index; i < containerElements.Count; ++i)
-            {
-                elementsGrid.Rows.Add(new object[] { containerElements[i].Title, containerElements[i].RandomChance });
-                SetElementAttributes(elementsGrid, containerElements[i], i);
-                m_ElementsToRows[containerElements[i].Id] = i;
-                Actions.ElementChanges.Instance.AddListener(containerElements[i].Id, Update);
-            }
-            listen = true;
+            ContainerSet();
         }
 
         private IElementContainer<IChoiceElement> m_Container;
-        private Dictionary<int, int> m_ElementsToRows = new Dictionary<int, int>();
 
         private void elementsGrid_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
@@ -125,19 +58,31 @@ namespace Ares.Editor.ElementEditorControls
             listen = true;
         }
 
-        private void elementsGrid_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
+        protected override DataGridView Grid
         {
-            if (!listen)
-                return;
-            listen = false;
-            List<IElement> elements = new List<IElement>();
-            IList<IChoiceElement> containerElements = m_Container.GetElements();
-            for (int i = 0; i < e.RowCount; ++i)
+            get
             {
-                elements.Add(containerElements[e.RowIndex + i]);
+                return elementsGrid;
             }
-            Actions.Actions.Instance.AddNew(new Actions.RemoveContainerElementsAction(m_Container, elements, e.RowIndex));
-            listen = true;
+        }
+
+        protected override IGeneralElementContainer ElementsContainer
+        {
+            get
+            {
+                return m_Container;
+            }
+        }
+
+        protected override void AddElementToGrid(IContainerElement element)
+        {
+            elementsGrid.Rows.Add(new object[] { element.Title, ((IChoiceElement)element).RandomChance });
+        }
+
+        protected override void ChangeElementDataInGrid(int elementID, int row)
+        {
+            elementsGrid.Rows[row].Cells[1].Value =
+                (m_Container.GetElement(elementID)).RandomChance;
         }
 
         private void elementsGrid_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -151,5 +96,6 @@ namespace Ares.Editor.ElementEditorControls
                 elementsGrid.BeginEdit(true);
             }
         }
+
     }
 }

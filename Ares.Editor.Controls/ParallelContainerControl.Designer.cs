@@ -36,15 +36,6 @@ namespace Ares.Editor.Controls
             {
                 components.Dispose();
             }
-            if (disposing)
-            {
-                foreach (int key in m_ElementsToRows.Keys)
-                {
-                    Actions.ElementChanges.Instance.RemoveListener(key, Update);
-                }
-                if (m_Container != null)
-                    Actions.ElementChanges.Instance.RemoveListener(m_Container.Id, Update);
-            }
             base.Dispose(disposing);
         }
 
@@ -92,7 +83,6 @@ namespace Ares.Editor.Controls
             this.elementsGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.elementsGrid.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.elementsGrid_CellDoubleClick);
             this.elementsGrid.CurrentCellChanged += new System.EventHandler(this.elementsGrid_CurrentCellChanged);
-            this.elementsGrid.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.elementsGrid_RowsRemoved);
             // 
             // NameColumn
             // 

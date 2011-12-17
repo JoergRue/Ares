@@ -72,6 +72,25 @@ namespace Ares.Data
             return AddElement(element);
         }
 
+        public IList<IElement> AddGeneralImportedElement(IXmlWritable element)
+        {
+            List<IElement> result = new List<IElement>();
+            if (element is ISequentialElement)
+            {
+                ISequentialElement sequential = element as ISequentialElement;
+                if (sequential.InnerElement is IFileElement)
+                {
+                    result.AddRange(m_SecondContainer.AddGeneralImportedElement(element));
+                    return result;
+                }
+            }
+            foreach (IFileElement fileElement in element.GetFileElements())
+            {
+                result.Add(m_SecondContainer.AddElement(fileElement));
+            }
+            return result;
+        }
+
         public void InsertGeneralElement(int index, IElement element)
         {
             m_SecondContainer.InsertGeneralElement(index, element);

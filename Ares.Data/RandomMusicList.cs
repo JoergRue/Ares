@@ -100,6 +100,25 @@ namespace Ares.Data
             return AddElement(element);
         }
 
+        public IList<IElement> AddGeneralImportedElement(IXmlWritable element)
+        {
+            List<IElement> result = new List<IElement>();
+            if (element is IChoiceElement)
+            {
+                IChoiceElement choice = element as IChoiceElement;
+                if (choice.InnerElement is IFileElement)
+                {
+                    result.AddRange(m_ThirdContainer.AddGeneralImportedElement(element));
+                    return result;
+                }
+            }
+            foreach (IFileElement fileElement in element.GetFileElements())
+            {
+                result.Add(m_ThirdContainer.AddElement(fileElement));
+            }
+            return result;
+        }
+
         public void InsertGeneralElement(int index, IElement element)
         {
             m_ThirdContainer.InsertGeneralElement(index, element);

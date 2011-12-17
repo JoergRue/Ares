@@ -72,7 +72,6 @@ namespace Ares.Editor.ElementEditors
             // 
             resources.ApplyResources(this.sequentialContainerControl, "sequentialContainerControl");
             this.sequentialContainerControl.Name = "sequentialContainerControl";
-            this.sequentialContainerControl.ElementDoubleClick += new System.EventHandler<Ares.Editor.Controls.ElementDoubleClickEventArgs>(this.sequentialContainerControl_ElementDoubleClick);
             // 
             // groupBox1
             // 
@@ -90,7 +89,6 @@ namespace Ares.Editor.ElementEditors
             this.stopButton.Name = "stopButton";
             this.stopButton.UseCompatibleTextRendering = true;
             this.stopButton.UseVisualStyleBackColor = true;
-            this.stopButton.Click += new System.EventHandler(this.stopButton_Click);
             // 
             // playButton
             // 
@@ -99,7 +97,6 @@ namespace Ares.Editor.ElementEditors
             this.playButton.Name = "playButton";
             this.playButton.UseCompatibleTextRendering = true;
             this.playButton.UseVisualStyleBackColor = true;
-            this.playButton.Click += new System.EventHandler(this.playButton_Click);
             // 
             // label1
             // 
@@ -120,11 +117,6 @@ namespace Ares.Editor.ElementEditors
             this.Controls.Add(this.volumeControl);
             this.Controls.Add(this.repeatableControl);
             this.Name = "SequentialPlaylistEditor";
-            this.SizeChanged += new System.EventHandler(this.RandomPlaylistEditor_SizeChanged);
-            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.SequentialPlaylistEditor_DragDrop);
-            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.SequentialPlaylistEditor_DragEnter);
-            this.DragOver += new System.Windows.Forms.DragEventHandler(this.SequentialPlaylistEditor_DragOver);
-            this.DragLeave += new System.EventHandler(this.SequentialPlaylistEditor_DragLeave);
             this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
 
