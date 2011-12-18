@@ -63,4 +63,6 @@
     <string name="projectsDifferent"> (anders im Player!)</string>
     <string name="no_music_list">Keine Musikliste wird gespielt.</string>
     <string name="musicList">Musikliste</string>
+    <string name="file_system">Dateisystem</string>
+    <string name="dropbox">Dropbox</string>
 </resources>

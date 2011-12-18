@@ -19,8 +19,11 @@
  */
 package ares.controllers.data;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -38,19 +41,57 @@ import ares.controllers.util.Localization;
 public final class FileParser {
 
   public static Configuration parseFile(File file) {
+	  FileInputStream stream = null;
+	  try {
+		  stream = new FileInputStream(file);
+		  return parseStream(stream, file.getName());
+	  }
+	  catch (IOException e) {
+        Messages.addMessage(MessageType.Error, e.getLocalizedMessage());
+        return null;
+      }
+	  finally {
+		  if (stream != null) {
+			  try {
+				  stream.close();
+			  }
+			  catch (IOException e) {
+			  }
+		  }
+	  }
+  }
+  
+  public static Configuration parseBytes(byte[] contents, String name) {
+	  ByteArrayInputStream stream = null;
+	  try {
+		  stream = new ByteArrayInputStream(contents);
+		  return parseStream(stream, name);
+	  }
+	  finally {
+		  if (stream != null) {
+			  try {
+				  stream.close();
+			  }
+			  catch (IOException e) {
+			  }
+		  }
+	  }
+  }
+  
+  private static Configuration parseStream(InputStream stream, String name) {
     Configuration config = new Configuration();
     
     try {
       DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
       DocumentBuilder db = dbf.newDocumentBuilder();
-      Document dom = db.parse(file);
+      Document dom = db.parse(stream);
 
       Element docEle = dom.getDocumentElement();
       
       String title = docEle.getAttribute("Title"); //$NON-NLS-1$
       if (title == null) {
         Messages.addMessage(MessageType.Warning, Localization.getString("FileParser.TitleMissing")); //$NON-NLS-1$
-        title = file.getName();
+        title = name;
       }      
       config.setTitle(title);
       

@@ -162,7 +162,7 @@ public class MainActivity extends ControllerActivity implements INetworkClient, 
         	connectWithFirstServer = false;
         }
         if ((Control.getInstance().getConfiguration() == null) && getPreferences(MODE_PRIVATE).contains(LAST_PROJECT)) {
-        	openProject(getPreferences(MODE_PRIVATE).getString(LAST_PROJECT, ""));
+        	this.fileToOpenDelayed = getPreferences(MODE_PRIVATE).getString(LAST_PROJECT, ""); 
         }
         modesButton = (Button)findViewById(R.id.modesButton);
         modesButton.setEnabled(Control.getInstance().getConfiguration() != null);
@@ -219,6 +219,21 @@ public class MainActivity extends ControllerActivity implements INetworkClient, 
     		catch (IllegalArgumentException e) {
     			Toast.makeText(getApplicationContext(), getString(R.string.invalid_player_connection_format), Toast.LENGTH_LONG).show();
     		}
+    	}
+    }
+    
+    protected void onResume() {
+    	super.onResume();
+    	
+    	if (fileToOpenDelayed != null) {
+    		String path = fileToOpenDelayed;
+    		fileToOpenDelayed = null;
+    		if (Dropbox.getInstance().isWaiting()) {
+    			if (!Dropbox.getInstance().finishConnection(this)) {
+    				return;
+    			}
+    		}
+			openProject(path);
     	}
     }
     
@@ -318,10 +333,29 @@ public class MainActivity extends ControllerActivity implements INetworkClient, 
     	}
     }
     
+    private String fileToOpenDelayed = null;
+    
     private void openProject(String path) {
-		Control.getInstance().openFile(new java.io.File(path));
+    	if (path.startsWith(Control.DB_ROOT_ID)) {
+    		if (!Dropbox.getInstance().connectToDropbox(this)) {
+    			// must authenticate first
+    			fileToOpenDelayed = path;
+    			return;
+    		}
+    		byte[] content = Dropbox.getInstance().getEntryContent(this, path);
+    		if (content != null) {
+    			Control.getInstance().openFile(content, path);
+    		}
+    		else {
+    			return;
+    		}
+    	}
+    	else {
+    		Control.getInstance().openFile(new java.io.File(path));
+    	}
 		getPreferences(MODE_PRIVATE).edit().putString(LAST_PROJECT, path).commit();
 		updateProjectTitle();
+        modesButton.setEnabled(Control.getInstance().getConfiguration() != null);
     }
     
     private void updateProjectTitle() {
@@ -351,6 +385,7 @@ public class MainActivity extends ControllerActivity implements INetworkClient, 
     
 	private void openProject() {
 		Intent intent = new Intent(getBaseContext(), FileDialog.class);
+		intent.putExtra(FileDialog.START_PATH, Control.getInstance().getFilePath());
 		startActivityForResult(intent, REQUEST_OPEN);
 	}
 	
@@ -584,4 +619,5 @@ public class MainActivity extends ControllerActivity implements INetworkClient, 
 	public void musicListChanged(java.util.List<ares.controllers.data.MusicElement> newList) {
 		// nothing here
 	}
+
 }

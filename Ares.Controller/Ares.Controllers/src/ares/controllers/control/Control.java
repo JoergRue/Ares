@@ -76,8 +76,26 @@ public final class Control {
     }
   }
   
+  public void openFile(byte[] contents, String path) {
+	 int pos = path.lastIndexOf("/");
+	 String name = path;
+	 if (pos != -1) {
+		 name = path.substring(pos + 1);
+	 }
+	 configuration = FileParser.parseBytes(contents, name);
+	 if (configuration != null) {
+		  this.filePath = path;
+		  this.fileName = name;
+	      if (isConnected()) {
+	    	  connection.sendProjectOpenRequest(fileName, !isLocalPlayer);
+	      }		 
+	 }
+  }
+  
   private String serverName = ""; //$NON-NLS-1$
   private boolean isLocalPlayer = false;
+  public static final String DB_ROOT_ID = "dropbox:";
+ 
   
   public void connect(ServerInfo server, INetworkClient client, boolean isLocalPlayer) {
     if (connection != null) {
@@ -88,7 +106,12 @@ public final class Control {
     serverName = server.getName();
     this.isLocalPlayer = isLocalPlayer;
     if (getConfiguration() != null) {
-    	connection.sendProjectOpenRequest(getFilePath(), !isLocalPlayer);
+    	if (getFilePath().startsWith(DB_ROOT_ID)) {
+    		connection.sendProjectOpenRequest(getFileName(), !isLocalPlayer);
+    	}
+    	else {
+    		connection.sendProjectOpenRequest(getFilePath(), !isLocalPlayer);
+    	}
     }
   }
   

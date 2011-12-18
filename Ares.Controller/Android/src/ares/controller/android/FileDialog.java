@@ -25,6 +25,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.TreeMap;
 
+import com.dropbox.client2.DropboxAPI;
+
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
@@ -33,8 +35,12 @@ import android.view.KeyEvent;
 import android.view.View;
 
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import ares.controllers.control.Control;
 
 public class FileDialog extends ListActivity {
 
@@ -44,16 +50,15 @@ public class FileDialog extends ListActivity {
 	public static final String START_PATH = "START_PATH";
 	public static final String RESULT_PATH = "RESULT_PATH";
 
-	private List<String> item = null;
 	private List<String> path = null;
 	private String root = "/";
+	private String dbRoot = Control.DB_ROOT_ID + "/";
 	private TextView myPath;
 	private ArrayList<HashMap<String, Object>> mList;
 
 	private String parentPath;
 	private String currentPath = root;
 
-	private File selectedFile;
 	private HashMap<String, Integer> lastPositions = new HashMap<String, Integer>();
 
 	/** Called when the activity is first created. */
@@ -64,15 +69,44 @@ public class FileDialog extends ListActivity {
 
 		setContentView(R.layout.file_dialog_main);
 		myPath = (TextView) findViewById(R.id.path);
-
 		String startPath = getIntent().getStringExtra(START_PATH);
 		if (startPath != null) {
+			String sep = startPath.startsWith(Control.DB_ROOT_ID) ? "/" : File.separator;
+			if (!startPath.endsWith(sep)) {
+				int lastSep = startPath.lastIndexOf(sep);
+				if (lastSep != -1) {
+					startPath = startPath.substring(0, lastSep);
+				}
+			}
+			if (startPath.equals(Control.DB_ROOT_ID)) {
+				startPath = dbRoot;
+			}
+			if (startPath.startsWith(Control.DB_ROOT_ID)) {
+				((RadioButton)findViewById(R.id.rbDropbox)).setChecked(true);
+			}
+		}
+		RadioGroup group = (RadioGroup) findViewById(R.id.fileSourceRadioGroup);
+		group.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			public void onCheckedChanged(RadioGroup group, int checkedId) {
+				if (checkedId == R.id.rbDropbox && !currentPath.startsWith(dbRoot)) {
+					if (Dropbox.getInstance().connectToDropbox(FileDialog.this)) {
+						getDir(dbRoot);
+					}
+					// result == false: delayed, must be authenticated first (other activity started)
+				}
+				else if (checkedId == R.id.rbFileSystem && currentPath.startsWith(dbRoot)){
+					getDir(root);
+				}
+			}
+		});
+
+		if (startPath != null && !startPath.equals("")) {
 			getDir(startPath);
 		} else {
 			getDir(root);
 		}
 	}
-
+	
 	private void getDir(String dirPath) {
 
 		boolean useAutoSelection = dirPath.length() < currentPath.length();
@@ -88,46 +122,26 @@ public class FileDialog extends ListActivity {
 	}
 
 	private void getDirImpl(String dirPath) {
-
+		
 		myPath.setText(getText(R.string.location) + ": " + dirPath);
 		currentPath = dirPath;
 
-		item = new ArrayList<String>();
 		path = new ArrayList<String>();
 		mList = new ArrayList<HashMap<String, Object>>();
-
-		File f = new File(dirPath);
-		File[] files = f.listFiles();
-
-		if (!dirPath.equals(root)) {
-
-			item.add(root);
-			addItem(root, R.drawable.folder);
-			path.add(root);
-
-			item.add("../");
-			addItem("../", R.drawable.folder);
-			path.add(f.getParent());
-			parentPath = f.getParent();
-
-		}
 
 		TreeMap<String, String> dirsMap = new TreeMap<String, String>();
 		TreeMap<String, String> dirsPathMap = new TreeMap<String, String>();
 		TreeMap<String, String> filesMap = new TreeMap<String, String>();
 		TreeMap<String, String> filesPathMap = new TreeMap<String, String>();
-		for (File file : files) {
-			if (file.isDirectory()) {
-				String dirName = file.getName();
-				dirsMap.put(dirName, dirName);
-				dirsPathMap.put(dirName, file.getPath());
-			} else {
-				filesMap.put(file.getName(), file.getName());
-				filesPathMap.put(file.getName(), file.getPath());
-			}
+
+		if (dirPath.startsWith(dbRoot)) {
+			readDBDirectory(dirPath, dirsMap, dirsPathMap, filesMap,
+					filesPathMap);
 		}
-		item.addAll(dirsMap.tailMap("").values());
-		item.addAll(filesMap.tailMap("").values());
+		else {
+			readLocalDirectory(dirPath, dirsMap, dirsPathMap, filesMap,
+					filesPathMap);
+		}
 		path.addAll(dirsPathMap.tailMap("").values());
 		path.addAll(filesPathMap.tailMap("").values());
 
@@ -150,6 +164,39 @@ public class FileDialog extends ListActivity {
 
 	}
 
+	private void readLocalDirectory(String dirPath,
+			TreeMap<String, String> dirsMap,
+			TreeMap<String, String> dirsPathMap,
+			TreeMap<String, String> filesMap,
+			TreeMap<String, String> filesPathMap) {
+		File f = new File(dirPath);
+		File[] files = f.listFiles();
+
+		if (!dirPath.equals(root)) {
+
+			addItem(root, R.drawable.folder);
+			path.add(root);
+
+			addItem("../", R.drawable.folder);
+			path.add(f.getParent());
+			parentPath = f.getParent();
+
+		}
+
+		if (files == null)
+			return;
+		for (File file : files) {
+			if (file.isDirectory()) {
+				String dirName = file.getName();
+				dirsMap.put(dirName, dirName);
+				dirsPathMap.put(dirName, file.getPath());
+			} else {
+				filesMap.put(file.getName(), file.getName());
+				filesPathMap.put(file.getName(), file.getPath());
+			}
+		}
+	}
+
 	private void addItem(String fileName, int imageId) {
 		HashMap<String, Object> item = new HashMap<String, Object>();
 		item.put(ITEM_KEY, fileName);
@@ -160,12 +207,21 @@ public class FileDialog extends ListActivity {
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 
-		File file = new File(path.get(position));
+		String itemPath = path.get(position);
+		if (itemPath.startsWith(Control.DB_ROOT_ID)) {
+			selectDBItem(itemPath, position);
+		}
+		else {
+			selectLocalItem(itemPath, position);
+		}
+	}
 
+	private void selectLocalItem(String itemPath, int position) {
+		File file = new File(itemPath);
 		if (file.isDirectory()) {
 			if (file.canRead()) {
 				lastPositions.put(currentPath, position);
-				getDir(path.get(position));
+				getDir(itemPath);
 			} else {
 				new AlertDialog.Builder(this).setIcon(R.drawable.icon)
 						.setTitle(
@@ -182,8 +238,22 @@ public class FileDialog extends ListActivity {
 								}).show();
 			}
 		} else {
-			selectedFile = file;
-			getIntent().putExtra(RESULT_PATH, selectedFile.getPath());
+			getIntent().putExtra(RESULT_PATH, file.getPath());
+			setResult(RESULT_OK, getIntent());
+			finish();
+		}
+	}
+
+	private void selectDBItem(String itemPath, int position) {
+		DropboxAPI.Entry entry = Dropbox.getInstance().getDBEntry(this, itemPath);
+		if (entry == null)
+			return;
+		if (entry.isDir) {
+			lastPositions.put(currentPath, position);
+			getDir(itemPath);
+		}
+		else {
+			getIntent().putExtra(RESULT_PATH, itemPath);
 			setResult(RESULT_OK, getIntent());
 			finish();
 		}
@@ -205,4 +275,51 @@ public class FileDialog extends ListActivity {
 		}
 	}
 
+	protected void onResume() {
+		super.onResume();
+		
+		if (((RadioButton)findViewById(R.id.rbDropbox)).isChecked() && Dropbox.getInstance().isWaiting()) {
+			if (Dropbox.getInstance().finishConnection(this)) {
+				getDir(dbRoot);
+			}
+			else {
+				((RadioButton)findViewById(R.id.rbFileSystem)).setChecked(true);
+			}
+		}
+	}
+	
+	private void readDBDirectory(String dirPath,
+			TreeMap<String, String> dirsMap,
+			TreeMap<String, String> dirsPathMap,
+			TreeMap<String, String> filesMap,
+			TreeMap<String, String> filesPathMap) {
+		
+		DropboxAPI.Entry entry = Dropbox.getInstance().getDBEntry(this, dirPath);
+		if (entry == null) {
+			return;
+		}
+		
+		if (!dirPath.equals(dbRoot)) {
+
+			addItem(entry.root, R.drawable.folder);
+			path.add(dbRoot);
+
+			addItem("../", R.drawable.folder);
+			path.add(Control.DB_ROOT_ID + entry.parentPath());
+			parentPath = Control.DB_ROOT_ID + entry.parentPath();
+		}
+
+		for (DropboxAPI.Entry file : entry.contents) {
+			String name = file.fileName();
+			String path = dirPath.equals(dbRoot) ? dbRoot + name : dirPath + "/" + name;
+			if (file.isDir) {
+				dirsMap.put(name, name);
+				dirsPathMap.put(name, path);
+			} else {
+				filesMap.put(name, name);
+				filesPathMap.put(name, path);
+			}
+		}
+	}
+	
 }

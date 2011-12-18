@@ -13,11 +13,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="FileDialog"></activity>
+        <activity android:name="FileDialog" android:theme="@style/walnut"></activity>
         <activity android:name="ModesActivity" android:theme="@style/walnut"></activity>
         <activity android:name="ModeActivity" android:theme="@style/walnut"></activity>
         <activity android:name="PrefsActivity"></activity>
         <activity android:theme="@style/walnut" android:name="MusicListActivity"></activity>
 
+    <activity
+      android:name="com.dropbox.client2.android.AuthActivity"
+      android:launchMode="singleTask"
+      android:configChanges="orientation|keyboard">
+      <intent-filter>
+        <!-- Change this to be db- followed by your app key -->
+        <data android:scheme="db-5g36qiqft5s3fk4" />
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <category android:name="android.intent.category.DEFAULT" />
+      </intent-filter>
+    </activity>
+    
     </application>
 </manifest>

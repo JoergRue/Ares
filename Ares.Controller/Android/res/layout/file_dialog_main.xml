@@ -1,50 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout android:id="@+id/relativeLayout01"
+<LinearLayout android:id="@+id/LinearLayout1"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:orientation="vertical" android:layout_width="fill_parent"
 	android:layout_height="fill_parent" android:background="@drawable/backarea">
-
-	<LinearLayout android:id="@+id/fdLinearLayoutList"
-		android:orientation="vertical" android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:layout_alignParentBottom="true">
-
-		<LinearLayout android:id="@+id/fdLinearLayoutSelect"
-			android:orientation="vertical" android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:layout_alignParentBottom="true" android:paddingLeft="10dp"
-			android:paddingRight="10dp" android:paddingBottom="5dp">
-
-			<LinearLayout android:orientation="horizontal"
-				android:layout_width="fill_parent" android:layout_height="fill_parent">
-			</LinearLayout>
-		</LinearLayout>
-
-		<LinearLayout android:id="@+id/fdLinearLayoutCreate"
-			android:orientation="vertical" android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:layout_alignParentBottom="true" android:paddingLeft="10dp"
-			android:paddingRight="10dp" android:paddingBottom="5dp">
-
-			<LinearLayout android:orientation="horizontal"
-				android:layout_width="fill_parent" android:layout_height="fill_parent">
-			</LinearLayout>
-		</LinearLayout>
-
-	</LinearLayout>
-
-	<LinearLayout android:orientation="vertical"
-		android:layout_width="fill_parent" android:layout_height="fill_parent"
-		android:layout_above="@+id/fdLinearLayoutList">
-		<TextView android:id="@+id/path" android:layout_width="fill_parent"
-			android:layout_height="wrap_content" />
-		<ListView android:id="@android:id/list" android:layout_width="fill_parent"
-			android:layout_height="fill_parent" />
-		<TextView android:id="@android:id/empty"
-			android:layout_width="fill_parent" android:layout_height="fill_parent"
-			android:text="@string/no_data" />
-	</LinearLayout>
+    <LinearLayout android:layout_width="fill_parent" android:id="@+id/fdLinearLayoutSelect" android:orientation="vertical" android:layout_height="wrap_content">
+        <LinearLayout android:layout_width="fill_parent" android:orientation="horizontal" android:layout_height="fill_parent">
+            <RadioGroup android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/fileSourceRadioGroup" android:orientation="horizontal">
+                <RadioButton android:id="@+id/rbFileSystem" android:checked="true" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/file_system" android:textColor="@color/black"></RadioButton>
+                <RadioButton android:id="@+id/rbDropbox" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/dropbox" android:textColor="@color/black"></RadioButton>
+            </RadioGroup>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout android:layout_width="fill_parent" android:orientation="vertical" android:layout_height="fill_parent">
+        <TextView android:layout_width="fill_parent" android:id="@+id/path" android:layout_height="wrap_content"></TextView>
+        <ListView android:layout_width="fill_parent" android:id="@android:id/list" android:layout_height="fill_parent"></ListView>
+        <TextView android:layout_width="fill_parent" android:id="@android:id/empty" android:text="@string/no_data" android:layout_height="fill_parent"></TextView>
+    </LinearLayout>
 
 
 
 
-</RelativeLayout>
+</LinearLayout>
