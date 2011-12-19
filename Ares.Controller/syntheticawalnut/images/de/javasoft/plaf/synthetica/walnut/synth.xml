@@ -451,6 +451,25 @@ Button
 	  <painter method="buttonBackground" idref="syntheticaPainter" />
     </state>
 
+    <!-- new since V2.2.0 -->
+    <state value="DEFAULT AND MOUSE_OVER">
+	  <painter method="buttonBackground" idref="syntheticaPainter" />
+    </state>
+
+    <!-- new since V2.2.0 -->
+    <state value="DEFAULT AND DISABLED">
+	  <painter method="buttonBackground" idref="syntheticaPainter" />
+    </state>
+
+    <state value="DEFAULT AND PRESSED AND FOCUSED">
+	  <painter method="buttonBackground" idref="syntheticaPainter" />
+    </state>
+    
+    <!-- new since V2.2.0 -->
+    <state value="DEFAULT AND MOUSE_OVER AND FOCUSED">
+	  <painter method="buttonBackground" idref="syntheticaPainter" />
+    </state>
+
   </style>
   <bind style="button" type="region" key="Button"/>
 
@@ -497,11 +516,12 @@ CheckBox
 	</state>
 
     <state value="FOCUSED">
+    <!--
       <object class="java.lang.String" id="checkBoxFocus">
         <string>walnut/images/focus.png</string>
       </object>
       <defaultsProperty key="Synthetica.checkBox.focus" type="idref" value="checkBoxFocus"/>
-      <defaultsProperty key="Synthetica.checkBox.focus.insets" type="insets" value="5 5 5 5"/>
+      <defaultsProperty key="Synthetica.checkBox.focus.insets" type="insets" value="5 5 5 5"/> -->
 	  <painter method="checkBoxBackground" idref="syntheticaPainter" />
 	  <painter method="checkBoxBorder" idref="syntheticaPainter" />
     </state>
@@ -519,7 +539,7 @@ CheckBox
 	</state>
 
   </style>
-  <bind style="checkBox" type="region" key="CheckBox"/>	 
+  <bind style="checkBox" type="region" key="CheckBox"></bind>	 
 
 
 <!-- 
@@ -555,9 +575,15 @@ Note: editable ComboBox contains TextField and ArrowButton
       </object>
       <defaultsProperty key="Synthetica.comboBox.lockedColor" type="idref" value="lockedColor"/>
 
-      <imagePainter method="comboBoxBorder" path="walnut/images/border.png"
-                    sourceInsets="3 3 3 3" paintCenter="false" stretch="true"/>
+      <string id="comboBoxBorder">walnut/images/border.png</string>
+      <defaultsProperty key="Synthetica.comboBox.border" type="idref" value="comboBoxBorder"/>
+      <defaultsProperty key="Synthetica.comboBox.border.insets" type="insets" value="3 3 3 3"/>
 
+<!--
+      <imagePainter method="comboBoxBorder" path="walnut/images/border.png"
+                    sourceInsets="3 3 3 3" paintCenter="false" stretch="true"/> -->
+
+          <painter method="comboBoxBorder" idref="syntheticaPainter" />
 	  <painter method="comboBoxBackground" idref="syntheticaPainter" />
     </state>
 
@@ -584,10 +610,13 @@ Note: editable ComboBox contains TextField and ArrowButton
       </object>
       <defaultsProperty key="Synthetica.comboBox.focusedColor" type="idref" value="focusedColor"/>
 
+<!--
       <imagePainter method="comboBoxBorder" path="walnut/images/border.png"
-                    sourceInsets="3 3 3 3" paintCenter="false" stretch="true"/>
+                    sourceInsets="3 3 3 3" paintCenter="false" stretch="true"/> -->
 
 	  <!-- <painter method="comboBoxBackground" idref="syntheticaPainter" /> -->
+      <painter method="comboBoxBorder" idref="syntheticaPainter" />
+      <painter method="comboBoxBackground" idref="syntheticaPainter" />
     </state>
 
     <state value="DISABLED">
@@ -778,6 +807,9 @@ FileChooser
       <imagePainter method="fileChooserBackground" path="/de/javasoft/plaf/synthetica/walnut/images/hout.png"
                     sourceInsets="0 0 0 0" destinationInsets="0 0 0 0" paintCenter="true" stretch="false"/>
 
+    <state>
+      <painter method="fileChooserBackground" idref="syntheticaPainter" />                    
+    </state>
   </style>
   <bind style="fileChooser" type="region" key="FileChooser"/>
 
@@ -790,36 +822,36 @@ Flexdock
   <object class="java.lang.String" id="flexdockTitlebarBackground">
     <string>walnut/images/flexdock.png</string>
   </object>
-  <defaultsProperty key="Synthetica.flexdock.titlebar.background" type="idref" value="flexdockTitlebarBackground"/>
+  <defaultsProperty key="Synthetica.docking.titlebar.background" type="idref" value="flexdockTitlebarBackground"/>
 
   <object class="java.lang.String" id="flexdockTitlebarBackgroundSelected">
     <string>walnut/images/flexdock_selected.png</string>
   </object>
-  <defaultsProperty key="Synthetica.flexdock.titlebar.background.selected" type="idref" value="flexdockTitlebarBackgroundSelected"/>
+  <defaultsProperty key="Synthetica.docking.titlebar.background.selected" type="idref" value="flexdockTitlebarBackgroundSelected"/>
 
-  <defaultsProperty key="Synthetica.flexdock.titlebar.insets" type="insets" value="4 4 4 4"/>
+  <defaultsProperty key="Synthetica.docking.titlebar.insets" type="insets" value="4 4 4 4"/>
 
   <object class="javax.swing.plaf.ColorUIResource" id="flexdockTitlebarColor">
      <int>64</int>
      <int>64</int>
      <int>64</int>
   </object>
-  <defaultsProperty key="Synthetica.flexdock.titlebar.color" type="idref" value="flexdockTitlebarColor" />
+  <defaultsProperty key="Synthetica.docking.titlebar.color" type="idref" value="flexdockTitlebarColor" />
 
   <object class="javax.swing.plaf.ColorUIResource" id="flexdockTitlebarColorSelected">
      <int>0</int>
      <int>0</int>
      <int>0</int>
   </object>
-  <defaultsProperty key="Synthetica.flexdock.titlebar.color.selected" type="idref" value="flexdockTitlebarColorSelected" />
+  <defaultsProperty key="Synthetica.docking.titlebar.color.selected" type="idref" value="flexdockTitlebarColorSelected" />
 
   <object class="java.lang.String" id="flexdockTitlebarFontStyle">
     <string>PLAIN</string>
   </object>
-  <defaultsProperty key="Synthetica.flexdock.titlebar.font.style" type="idref" value="flexdockTitlebarFontStyle"/>
+  <defaultsProperty key="Synthetica.docking.titlebar.font.style" type="idref" value="flexdockTitlebarFontStyle"/>
 
   <!--
-  <defaultsProperty key="Synthetica.flexdock.titlebar.font.size" type="integer" value="11"/>
+  <defaultsProperty key="Synthetica.docking.titlebar.font.size" type="integer" value="11"/>
    -->
 
   <object class="javax.swing.plaf.ColorUIResource" id="flexdockBorderColor">
@@ -828,67 +860,67 @@ Flexdock
     <int>96</int>
     <int>96</int>
   </object>
-  <defaultsProperty key="Synthetica.flexdock.border.color" type="idref" value="flexdockBorderColor"/>
+  <defaultsProperty key="Synthetica.docking.border.color" type="idref" value="flexdockBorderColor"/>
 
   <object class="java.lang.String" id="flexdockTitlebarClose">
     <string>walnut/images/closeIconInactive.png</string>
   </object>
-  <defaultsProperty key="Synthetica.flexdock.titlebar.close" type="idref" value="flexdockTitlebarClose"/>
+  <defaultsProperty key="Synthetica.docking.titlebar.close" type="idref" value="flexdockTitlebarClose"/>
 
   <object class="java.lang.String" id="flexdockTitlebarCloseHover">
     <string>walnut/images/closeIconInactive_hover.png</string>
   </object>
-  <defaultsProperty key="Synthetica.flexdock.titlebar.close.hover" type="idref" value="flexdockTitlebarCloseHover"/>
+  <defaultsProperty key="Synthetica.docking.titlebar.close.hover" type="idref" value="flexdockTitlebarCloseHover"/>
 
   <object class="java.lang.String" id="flexdockTitlebarActiveClose">
     <string>walnut/images/closeIconActive.png</string>
   </object>
-  <defaultsProperty key="Synthetica.flexdock.titlebar.active.close" type="idref" value="flexdockTitlebarActiveClose"/>
+  <defaultsProperty key="Synthetica.docking.titlebar.active.close" type="idref" value="flexdockTitlebarActiveClose"/>
 
   <object class="java.lang.String" id="flexdockTitlebarActiveCloseHover">
     <string>walnut/images/closeIconActive_hover.png</string>
   </object>
-  <defaultsProperty key="Synthetica.flexdock.titlebar.active.close.hover" type="idref" value="flexdockTitlebarActiveCloseHover"/>
+  <defaultsProperty key="Synthetica.docking.titlebar.active.close.hover" type="idref" value="flexdockTitlebarActiveCloseHover"/>
 
   <object class="java.lang.String" id="flexdockTitlebarPin">
     <string>walnut/images/iconifyIconInactive.png</string>
   </object>
-  <defaultsProperty key="Synthetica.flexdock.titlebar.pin" type="idref" value="flexdockTitlebarPin"/>
+  <defaultsProperty key="Synthetica.flexdock.titlebar.iconify" type="idref" value="flexdockTitlebarPin"/>
 
   <object class="java.lang.String" id="flexdockTitlebarPinHover">
     <string>walnut/images/iconifyIconInactive_hover.png</string>
   </object>
-  <defaultsProperty key="Synthetica.flexdock.titlebar.pin.hover" type="idref" value="flexdockTitlebarPinHover"/>
+  <defaultsProperty key="Synthetica.docking.titlebar.iconify.hover" type="idref" value="flexdockTitlebarPinHover"/>
 
   <object class="java.lang.String" id="flexdockTitlebarActivePin">
     <string>walnut/images/iconifyIconActive.png</string>
   </object>
-  <defaultsProperty key="Synthetica.flexdock.titlebar.active.pin" type="idref" value="flexdockTitlebarActivePin"/>
+  <defaultsProperty key="Synthetica.docking.titlebar.active.iconify" type="idref" value="flexdockTitlebarActivePin"/>
 
   <object class="java.lang.String" id="flexdockTitlebarActivePinHover">
     <string>walnut/images/iconifyIconActive_hover.png</string>
   </object>
-  <defaultsProperty key="Synthetica.flexdock.titlebar.active.pin.hover" type="idref" value="flexdockTitlebarActivePinHover"/>
+  <defaultsProperty key="Synthetica.docking.titlebar.active.iconify.hover" type="idref" value="flexdockTitlebarActivePinHover"/>
 
   <object class="java.lang.String" id="flexdockTitlebarPinDocked">
     <string>walnut/images/minimizeIconInactive.png</string>
   </object>
-  <defaultsProperty key="Synthetica.flexdock.titlebar.pin.docked" type="idref" value="flexdockTitlebarPinDocked"/>
+  <defaultsProperty key="Synthetica.docking.titlebar.restore" type="idref" value="flexdockTitlebarPinDocked"/>
 
   <object class="java.lang.String" id="flexdockTitlebarPinDockedHover">
     <string>walnut/images/minimizeIconInactive_hover.png</string>
   </object>
-  <defaultsProperty key="Synthetica.flexdock.titlebar.pin.docked.hover" type="idref" value="flexdockTitlebarPinDockedHover"/>
+  <defaultsProperty key="Synthetica.docking.titlebar.restore.hover" type="idref" value="flexdockTitlebarPinDockedHover"/>
 
   <object class="java.lang.String" id="flexdockTitlebarActivePinDocked">
     <string>walnut/images/minimizeIconActive.png</string>
   </object>
-  <defaultsProperty key="Synthetica.flexdock.titlebar.active.pin.docked" type="idref" value="flexdockTitlebarActivePinDocked"/>
+  <defaultsProperty key="Synthetica.docking.titlebar.active.restore" type="idref" value="flexdockTitlebarActivePinDocked"/>
 
   <object class="java.lang.String" id="flexdockTitlebarActivePinDockedHover">
     <string>walnut/images/minimizeIconActive_hover.png</string>
   </object>
-  <defaultsProperty key="Synthetica.flexdock.titlebar.active.pin.docked.hover" type="idref" value="flexdockTitlebarActivePinDockedHover"/>
+  <defaultsProperty key="Synthetica.docking.titlebar.active.restore.hover" type="idref" value="flexdockTitlebarActivePinDockedHover"/>
 
 
 <!-- 
@@ -943,18 +975,62 @@ FormattedTextField
   </style>
   <bind style="formattedTextField" type="region" key="FormattedTextField"/>
 
+<!-- 
+*******************************************************************************
+Focus, complete new section since V2.2.0
+*******************************************************************************
+-->
+  <!-- default focus -->
+  <object class="java.lang.String" id="focus">
+    <string>walnut/images/focus.png</string>
+  </object>
+  <defaultsProperty key="Synthetica.focus" type="idref" value="focus"/>
+  <defaultsProperty key="Synthetica.focus.insets" type="insets" value="4 4 4 4"/>
+
+  <object class="java.lang.String" id="focusButton">
+    <string>walnut/images/buttonFocus.png</string>
+  </object>
+  <defaultsProperty key="Synthetica.focus.button" type="idref" value="focusButton"/>
+  <defaultsProperty key="Synthetica.focus.button.insets" type="insets" value="5 5 5 5"/>
+
+  <!-- no string means disabled, no entry means fallback to default focus -->
+  <object class="java.lang.String" id="focusToggleButton">
+    <string></string>
+  </object>
+  <defaultsProperty key="Synthetica.focus.toggleButton" type="idref" value="focusToggleButton"/>
+  <defaultsProperty key="Synthetica.focus.toggleButton.insets" type="insets" value="0 0 0 0"/>
+
+  <!-- no string means disabled, no entry means fallback to default focus -->
+  <object class="java.lang.String" id="focusTabbedPaneTab">
+    <string></string>
+  </object>
+  <defaultsProperty key="Synthetica.focus.tabbedPane.tab" type="idref" value="focusTabbedPaneTab"/>
+  <defaultsProperty key="Synthetica.focus.tabbedPane.tab.insets" type="insets" value="0 0 0 0"/>
+
+  <object class="java.lang.String" id="focusTaskPane">
+    <string>walnut/images/focus.png</string>
+  </object>
+  <defaultsProperty key="Synthetica.focus.taskPane" type="idref" value="focusTaskPane"/>
+  <defaultsProperty key="Synthetica.focus.taskPane.insets" type="insets" value="4 4 4 4"/>
+
+  <object class="java.lang.String" id="focusHyperlink">
+    <string>walnut/images/sliderFocus.png</string>
+  </object>
+  <defaultsProperty key="Synthetica.focus.hyperlink" type="idref" value="focusHyperlink"/>
+  <defaultsProperty key="Synthetica.focus.hyperlink.insets" type="insets" value="3 3 3 3"/> 
 
 <!-- 
 *******************************************************************************
 Hyperlink
 *******************************************************************************
 -->
+<!--
   <object class="java.lang.String" id="hyperlinkFocus">
     <string>walnut/images/sliderFocus.png</string>
   </object>
   <defaultsProperty key="Synthetica.hyperlink.focus" type="idref" value="hyperlinkFocus"/>
   <defaultsProperty key="Synthetica.hyperlink.focus.insets" type="insets" value="6 6 6 6"/>
-
+-->
 
 <!-- 
 *******************************************************************************
@@ -1321,6 +1397,7 @@ MenuItem
     </state>
 
     <state value="DISABLED AND SELECTED">
+      <color type="TEXT_FOREGROUND" value="#A0A0A0" /> 
       <color type="BACKGROUND" value="#F5F4F4" />
       <property key="RadioButtonMenuItem.checkIcon" value="radioButtonIconDisabledAndSelected"/>
       <property key="CheckBoxMenuItem.checkIcon" value="checkBoxIconDisabledAndSelected"/>
@@ -1506,9 +1583,10 @@ PopupMenu
       </object>
       <defaultsProperty key="Synthetica.popupMenu.background" type="idref" value="popupMenuBackground"/>
       <defaultsProperty key="Synthetica.popupMenu.background.insets" type="insets" value="7 7 7 7"/>
+      <defaultsProperty key="Synthetica.popupMenu.iconSeparatorGap" type="integer" value="4"/>
 
 	  <painter method="popupMenuBackground" idref="syntheticaPainter" />
-	  <painter method="popupMenuBorder" idref="syntheticaPainter" />
+	  <!-- <painter method="popupMenuBorder" idref="syntheticaPainter" /> -->
     </state>
   </style>
   <bind style="popupMenu" type="region" key="PopupMenu"/>
@@ -1526,6 +1604,7 @@ PopupMenuSeparator
     <state>
       <opaque value="true" />
       <color type="BACKGROUND" value="#444444" />
+      <painter method="separatorForeground" idref="syntheticaPainter" />
     </state>
   </style>
   <bind style="popupMenuSeparator" type="region" key="PopupMenuSeparator"/>
@@ -1620,11 +1699,12 @@ RadioButton
 	</state>
 
     <state value="FOCUSED">
+    <!--
       <object class="java.lang.String" id="radioButtonFocus">
         <string>walnut/images/focus.png</string>
       </object>
       <defaultsProperty key="Synthetica.radioButton.focus" type="idref" value="radioButtonFocus"/>
-      <defaultsProperty key="Synthetica.radioButton.focus.insets" type="insets" value="5 5 5 5"/>
+      <defaultsProperty key="Synthetica.radioButton.focus.insets" type="insets" value="5 5 5 5"/> -->
 
 	  <painter method="radioButtonBackground" idref="syntheticaPainter" />
     </state>
@@ -1721,8 +1801,16 @@ Spinner
 
     <state>
       <color type="BACKGROUND" value="#FFFFFF"/>
+      <!--
       <imagePainter method="spinnerBorder" path="walnut/images/border.png"
                     sourceInsets="3 3 3 3" paintCenter="false" stretch="true"/>
+      <painter method="spinnerBackground" idref="syntheticaPainter" /> -->
+      <object class="java.lang.String" id="spinnerBorder">
+        <string>walnut/images/border.png</string>
+      </object>
+      <defaultsProperty key="Synthetica.spinner.border" type="idref" value="spinnerBorder"/>
+      <defaultsProperty key="Synthetica.spinner.border.insets" type="insets" value="3 3 3 3"/>
+      <painter method="spinnerBorder" idref="syntheticaPainter" />
       <painter method="spinnerBackground" idref="syntheticaPainter" />
     </state>
 
@@ -1851,6 +1939,7 @@ Separator
       use #add(new JSeparator()) instead of #addSeparator() 
       -->
       <color type="BACKGROUND" value="#C0C0C0" />
+      <painter method="separatorForeground" idref="syntheticaPainter" />
     </state>
   </style>
   <bind style="separator" type="region" key="Separator"/>
@@ -2033,6 +2122,8 @@ TabbedPane
   <style id="tabbedPaneTab">
     <insets top="2" left="10" bottom="2" right="10"/>
     <defaultsProperty key="Synthetica.tabbedPane.tab.removeDoubleBorder" type="boolean" value="true"/>
+    <defaultsProperty key="Synthetica.tabbedPane.tab.doubleBorderXCorrection" type="integer" value="1"/>
+    <defaultsProperty key="Synthetica.tabbedPane.tab.doubleBorderYCorrection" type="integer" value="1"/>
     <defaultsProperty key="Synthetica.tabbedPane.tab.hover.red" type="integer" value="-8"/>
     <defaultsProperty key="Synthetica.tabbedPane.tab.hover.green" type="integer" value="-7"/>
     <defaultsProperty key="Synthetica.tabbedPane.tab.hover.blue" type="integer" value="-12"/>
@@ -2103,7 +2194,7 @@ TabbedPane
       </object>
       <defaultsProperty key="Synthetica.tabbedPane.tab.y.image.selected" type="idref" value="tabbedPaneTabYImage"/>
 
-      <defaultsProperty key="Synthetica.tabbedPane.tab.insets.selected" type="insets" value="4 4 4 4"/>
+      <defaultsProperty key="Synthetica.tabbedPane.tab.selected.insets" type="insets" value="7 4 7 4"/>
 
 	  <painter method="tabbedPaneTabBackground" idref="syntheticaPainter" />
     </state>
@@ -2151,7 +2242,7 @@ TabbedPane
 
 	  <painter method="tabbedPaneTabBackground" idref="syntheticaPainter" />
 
-      <defaultsProperty key="Synthetica.tabbedPane.tab.insets.disabled" type="insets" value="3 3 3 3"/>
+      <defaultsProperty key="Synthetica.tabbedPane.tab.disabled.insets" type="insets" value="3 3 3 3"/>
     </state>
 
   </style>
@@ -2226,6 +2317,8 @@ Table
     </state>
   </style>
   <bind style="tableHeader" type="region" key="TableHeader"/>
+  <!-- since V2.2.0, avoids plain header text with Java SE 6 on MOUSE_OVER -->
+  <bind style="tableHeader" type="name" key="TableHeader.renderer"/>
 
 
 <!-- 
@@ -2282,11 +2375,12 @@ TaskPane
   </object>
   <defaultsProperty key="TaskPane.background" type="idref" value="taskPaneBackground"/>
 
+<!--
   <object class="java.lang.String" id="taskPaneFocus">
     <string>walnut/images/focus.png</string>
   </object>
   <defaultsProperty key="Synthetica.taskPane.focus" type="idref" value="taskPaneFocus"/>
-  <defaultsProperty key="Synthetica.taskPane.focus.insets" type="insets" value="5 5 5 5"/>
+  <defaultsProperty key="Synthetica.taskPane.focus.insets" type="insets" value="5 5 5 5"/> -->
 
   <!-- ******************** TaskPane Title ****************** -->
 
@@ -2642,15 +2736,15 @@ ToolBar
       <object class="java.lang.String" id="toolBarSeparatorX">
         <string>walnut/images/toolBarSeparatorX.png</string>
       </object>
-      <defaultsProperty key="Synthetica.toolBarSeparator.image.x" type="idref" value="toolBarSeparatorX"/>
+      <defaultsProperty key="Synthetica.separator.toolBar.image.x" type="idref" value="toolBarSeparatorX"/>
 
       <!-- vertical separator / horizontal toolbar -->
       <object class="java.lang.String" id="toolBarSeparatorY">
         <string>walnut/images/toolBarSeparatorY.png</string>
       </object>
-      <defaultsProperty key="Synthetica.toolBarSeparator.image.y" type="idref" value="toolBarSeparatorY"/>
+      <defaultsProperty key="Synthetica.separator.toolBar.image.y" type="idref" value="toolBarSeparatorY"/>
 
-      <defaultsProperty key="Synthetica.toolBarSeparator.image.insets" type="insets" value="0 0 0 0"/>
+      <defaultsProperty key="Synthetica.separator.toolBar.image.insets" type="insets" value="3 3 3 3"/>
 
 	  <painter method="separatorForeground" idref="syntheticaPainter" />
     </state>

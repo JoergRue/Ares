@@ -129,7 +129,7 @@ public class LookAndFeels {
       internalSetLookAndFeel(getCurrentLookAndFeel());
       de.javasoft.plaf.synthetica.SyntheticaLookAndFeel.setExtendedFileChooserEnabled(false);
     }
-    catch (Exception e) {
+    catch (Throwable e) {
       e.printStackTrace();
       UIManager
           .setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());

@@ -275,9 +275,19 @@ public class BackgroundPainter extends SyntheticaPainter {
   
   public void paintComboBoxBackground(SynthContext context, Graphics g, int x,
       int y, int w, int h) {
-    paintBackground(context, g, x, y, w, h, 2);
+	paintComboBoxBorder(context, g, x, y, w, h);
+    paintBackground(context, g, x+1, y+1, w-2, h-2, 2);
   }
 
+  /*
+  public void paintSeparatorForeground(SynthContext synthcontext, Graphics g, int i, int j, int k, int l, int i1) {
+	  Color c = g.getColor();
+	  g.setColor(Color.GRAY);
+	  g.drawLine(i, j, k, l);
+	  g.setColor(c);
+  }
+  */
+  
   public void paintMenuBarBackground(SynthContext context, Graphics g, int x,
       int y, int w, int h) {
     paintBackground(context, g, x, y, w, h, 2);
@@ -296,10 +306,12 @@ public class BackgroundPainter extends SyntheticaPainter {
     paintBackground(context, g, x, y, w, h, imgIndex);
   }
   
+  
   public void paintPopupMenuBackground(SynthContext context, Graphics g, int x,
       int y, int w, int h) {
     super.paintPopupMenuBackground(context, g, x, y, w, h);
   }
+  
 
   public void paintOptionPaneBackground(SynthContext context, Graphics g,
       int x, int y, int w, int h) {
@@ -373,6 +385,13 @@ public class BackgroundPainter extends SyntheticaPainter {
     else {
       draw3DRect(g, x, y, w - 1, h - 1, true);
     }
+  }
+  
+  public void paintComboBoxBorder(SynthContext context, Graphics g, int x, int y, int w, int h) {
+	Color c = g.getColor();
+	g.setColor(Color.GRAY);
+	g.drawRect(x, y, w - 1, h - 1);
+	g.setColor(c);
   }
 
   private void draw3DRect(Graphics g, int x, int y, int width, int height,
@@ -451,6 +470,7 @@ public class BackgroundPainter extends SyntheticaPainter {
 
   public void paintTabbedPaneTabBackground(SynthContext context, Graphics g,
       int x, int y, int w, int h, int tabIndex) {
+    context.getComponent().putClientProperty("Synthetica.tabbedPane.tabIndex", Integer.valueOf(tabIndex));
     int imgIndex = -1;
     boolean active = false;
     if ((context.getComponentState() & SynthConstants.SELECTED) != 0) {

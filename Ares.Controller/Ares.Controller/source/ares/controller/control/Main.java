@@ -22,6 +22,7 @@ package ares.controller.control;
 import java.util.prefs.Preferences;
 
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
 import ares.controller.gui.MainFrame;
 import ares.controller.gui.SubFrame;
@@ -68,7 +69,12 @@ public class Main {
 
   private static void createAndShowGUI() {
     try {
-      LookAndFeels.setLastLookAndFeel();
+      // Synthetica licence
+	  String[] li = {"Licensee=Jörg Rüdenauer", "LicenseRegistrationNumber=NCJR110913", "Product=Synthetica", "LicenseType=Non Commercial", "ExpireDate=--.--.----", "MaxVersion=2.999.999"};
+	  UIManager.put("Synthetica.license.info", li);
+	  UIManager.put("Synthetica.license.key", "6B3713D8-767BE153-5CA73FFD-BB277655-EDA39A83");
+      
+	  LookAndFeels.setLastLookAndFeel();
       MainFrame mainFrame = new MainFrame();
       mainFrame.setVisible(true);
       if (startFiles != null) {
