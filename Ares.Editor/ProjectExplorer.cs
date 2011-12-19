@@ -1297,7 +1297,16 @@ namespace Ares.Editor
             {
                 try
                 {
-                    Data.DataModule.ProjectManager.ExportElements(exportItems, exportDialog.FileName);
+                    if (exportDialog.FileName.EndsWith(".apkg", StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        String tempFileName = System.IO.Path.GetTempFileName() + ".ares";
+                        Data.DataModule.ProjectManager.ExportElements(exportItems, tempFileName);
+                        Ares.ModelInfo.Exporter.Export(this, exportItems, tempFileName, exportDialog.FileName);
+                    }
+                    else
+                    {
+                        Data.DataModule.ProjectManager.ExportElements(exportItems, exportDialog.FileName);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -1405,41 +1414,62 @@ namespace Ares.Editor
             {
                 try
                 {
-                    IList<IXmlWritable> elements = Data.DataModule.ProjectManager.ImportElements(importDialog.FileName);
-                    TreeNode parentNode = SelectedNode;
-                    List<Dialogs.ImportElement> importElements = new List<Dialogs.ImportElement>();
-                    bool hasEnabledElements = false;
-                    foreach (IXmlWritable element in elements)
+                    String fileName = importDialog.FileName;
+                    if (fileName.EndsWith(".apkg", StringComparison.InvariantCultureIgnoreCase))
                     {
-                        bool enabled = IsImportPossible(parentNode.Tag, element);
-                        importElements.Add(new Dialogs.ImportElement(element, enabled));
-                        if (enabled)
-                        {
-                            hasEnabledElements = true;
-                        }
+                        String tempFileName = System.IO.Path.GetTempFileName() + ".ares";
+                        Ares.ModelInfo.Importer.Import(this, fileName, tempFileName, () => DoImport(tempFileName));
                     }
-                    if (!hasEnabledElements)
+                    else
                     {
-                        MessageBox.Show(this, StringResources.NoImportableElements, StringResources.Ares, MessageBoxButtons.OK);
-                        return;
-                    }
-                    Dialogs.ImportDialog dialog = new Dialogs.ImportDialog();
-                    dialog.SetElements(importElements);
-                    if (dialog.ShowDialog(Parent) == System.Windows.Forms.DialogResult.OK)
-                    {
-                        foreach (Dialogs.ImportElement importElement in importElements)
-                        {
-                            if (importElement.Selected)
-                            {
-                                AddImportedElement(parentNode, parentNode.Tag, importElement.Element);
-                            }
-                        }
+                        DoImport(fileName);
                     }
                 }
                 catch (Exception e)
                 {
                     MessageBox.Show(this, String.Format(StringResources.LoadError, e.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+            }
+        }
+
+        private void DoImport(String fileName)
+        {
+            try 
+            {
+                IList<IXmlWritable> elements = Data.DataModule.ProjectManager.ImportElements(fileName);
+                TreeNode parentNode = SelectedNode;
+                List<Dialogs.ImportElement> importElements = new List<Dialogs.ImportElement>();
+                bool hasEnabledElements = false;
+                foreach (IXmlWritable element in elements)
+                {
+                    bool enabled = IsImportPossible(parentNode.Tag, element);
+                    importElements.Add(new Dialogs.ImportElement(element, enabled));
+                    if (enabled)
+                    {
+                        hasEnabledElements = true;
+                    }
+                }
+                if (!hasEnabledElements)
+                {
+                    MessageBox.Show(this, StringResources.NoImportableElements, StringResources.Ares, MessageBoxButtons.OK);
+                    return;
+                }
+                Dialogs.ImportDialog dialog = new Dialogs.ImportDialog();
+                dialog.SetElements(importElements);
+                if (dialog.ShowDialog(Parent) == System.Windows.Forms.DialogResult.OK)
+                {
+                    foreach (Dialogs.ImportElement importElement in importElements)
+                    {
+                        if (importElement.Selected)
+                        {
+                            AddImportedElement(parentNode, parentNode.Tag, importElement.Element);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(this, String.Format(StringResources.LoadError, e.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

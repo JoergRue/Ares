@@ -815,7 +815,7 @@ namespace Ares.Player
             if (result != System.Windows.Forms.DialogResult.OK)
                 return;
 
-            Ares.ModelInfo.ProjectImporter.Import(this, fileName, saveFileDialog.FileName, 
+            Ares.ModelInfo.Importer.Import(this, fileName, saveFileDialog.FileName, 
                 () => OpenProject(saveFileDialog.FileName, false));
         }
     }

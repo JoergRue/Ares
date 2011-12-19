@@ -957,7 +957,7 @@ namespace Ares.Editor
             if (result != System.Windows.Forms.DialogResult.OK)
                 return;
 
-            Ares.ModelInfo.ProjectExporter.Export(this, m_CurrentProject, exportFileDialog.FileName);
+            Ares.ModelInfo.Exporter.Export(this, m_CurrentProject, m_CurrentProject.FileName, exportFileDialog.FileName);
         }
 
         private void importToolStripMenuItem_Click(object sender, EventArgs e)
@@ -983,7 +983,7 @@ namespace Ares.Editor
             if (result != System.Windows.Forms.DialogResult.OK)
                 return;
 
-            Ares.ModelInfo.ProjectImporter.Import(this, fileName, saveFileDialog.FileName, () => OpenProject(saveFileDialog.FileName));
+            Ares.ModelInfo.Importer.Import(this, fileName, saveFileDialog.FileName, () => OpenProject(saveFileDialog.FileName));
         }
 
         private void toolsToolStripMenuItem_Click(object sender, EventArgs e)

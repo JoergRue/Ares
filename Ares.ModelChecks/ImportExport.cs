@@ -29,33 +29,33 @@ namespace Ares.ModelInfo
 
     #region Import
 
-    public class ProjectImporter
+    public class Importer
     {
         private ProgressMonitor m_Monitor;
         private System.ComponentModel.BackgroundWorker m_Worker;
-        private System.Action m_ProjectLoadedFunc;
+        private System.Action m_DataLoadedFunc;
 
-        public static void Import(System.Windows.Forms.Form parent, String importFileName, String projectFileName,
-            System.Action projectLoaded)
+        public static void Import(System.Windows.Forms.Form parent, String importFileName, String targetFileName,
+            System.Action dataLoaded)
         {
-            ProjectImporter importer = new ProjectImporter();
-            importer.DoImport(parent, importFileName, projectFileName, projectLoaded);
+            Importer importer = new Importer();
+            importer.DoImport(parent, importFileName, targetFileName, dataLoaded);
         }
 
-        private ProjectImporter()
+        private Importer()
         {
         }
 
-        private void DoImport(System.Windows.Forms.Form parent, String importFileName, String projectFileName,
-            System.Action projectLoaded)
+        private void DoImport(System.Windows.Forms.Form parent, String importFileName, String targetFileName,
+            System.Action dataLoaded)
         {
-            m_ProjectLoadedFunc = projectLoaded;
+            m_DataLoadedFunc = dataLoaded;
             try
             {
                 long overallSize = 0;
                 bool overWrite = false;
                 bool hasAskedForOverwrite = false;
-                bool hasProjectFile = false;
+                bool hasInnerFile = false;
                 using (ZipFile file = new ZipFile(importFileName))
                 {
                     for (int i = 0; i < file.Count; ++i)
@@ -66,13 +66,13 @@ namespace Ares.ModelInfo
                         String fileName = GetFileName(entry);
                         if (fileName == String.Empty)
                         {
-                            if (hasProjectFile)
+                            if (hasInnerFile)
                             {
                                 throw new ArgumentException(StringResources.InvalidImportFile);
                             }
                             else
                             {
-                                hasProjectFile = true;
+                                hasInnerFile = true;
                                 overallSize += entry.Size;
                             }
                         }
@@ -103,15 +103,15 @@ namespace Ares.ModelInfo
                             overallSize += entry.Size;
                         }
                     }
-                    if (!hasProjectFile)
+                    if (!hasInnerFile)
                     {
                         throw new ArgumentException(StringResources.InvalidImportFile);
                     }
                 }
-                ProjectImportData data = new ProjectImportData();
+                ImportData data = new ImportData();
                 data.Overwrite = overWrite;
                 data.ImportFile = importFileName;
-                data.ProjectFile = projectFileName;
+                data.TargetFile = targetFileName;
                 data.OverallSize = overallSize;
                 m_Worker = new System.ComponentModel.BackgroundWorker();
                 m_Worker.WorkerReportsProgress = true;
@@ -140,7 +140,7 @@ namespace Ares.ModelInfo
             }
             else if (!e.Cancelled)
             {
-                m_ProjectLoadedFunc();
+                m_DataLoadedFunc();
             }
         }
 
@@ -158,7 +158,7 @@ namespace Ares.ModelInfo
 
         void m_Worker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
-            ProjectImportData data = (ProjectImportData)e.Argument;
+            ImportData data = (ImportData)e.Argument;
             using (ZipInputStream stream = new ZipInputStream(System.IO.File.OpenRead(data.ImportFile)))
             {
                 ZipEntry entry;
@@ -171,7 +171,7 @@ namespace Ares.ModelInfo
                     String fileName = GetFileName(entry);
                     if (fileName == String.Empty)
                     {
-                        fileName = data.ProjectFile;
+                        fileName = data.TargetFile;
                     }
                     else if (!data.Overwrite && System.IO.File.Exists(fileName))
                     {
@@ -207,26 +207,26 @@ namespace Ares.ModelInfo
             }
         }
 
-        class ProjectImportData
+        class ImportData
         {
             public bool Overwrite { get; set; }
             public String ImportFile { get; set; }
-            public String ProjectFile { get; set; }
+            public String TargetFile { get; set; }
             public long OverallSize { get; set; }
         }
 
         private String GetFileName(ZipEntry entry)
         {
             String fileName = String.Empty;
-            if (entry.Name.StartsWith(ProjectExporter.MUSIC_DIR))
+            if (entry.Name.StartsWith(Exporter.MUSIC_DIR))
             {
-                fileName = entry.Name.Substring(ProjectExporter.MUSIC_DIR.Length + 1);
+                fileName = entry.Name.Substring(Exporter.MUSIC_DIR.Length + 1);
                 fileName = fileName.Replace('/', System.IO.Path.DirectorySeparatorChar);
                 fileName = System.IO.Path.Combine(Settings.Settings.Instance.MusicDirectory, fileName);
             }
-            else if (entry.Name.StartsWith(ProjectExporter.SOUND_DIR))
+            else if (entry.Name.StartsWith(Exporter.SOUND_DIR))
             {
-                fileName = entry.Name.Substring(ProjectExporter.SOUND_DIR.Length + 1);
+                fileName = entry.Name.Substring(Exporter.SOUND_DIR.Length + 1);
                 fileName = fileName.Replace('/', System.IO.Path.DirectorySeparatorChar);
                 fileName = System.IO.Path.Combine(Settings.Settings.Instance.SoundDirectory, fileName);
             }
@@ -238,38 +238,25 @@ namespace Ares.ModelInfo
 
     #region Export
 
-    public class ProjectExporter
+    public class Exporter
     {
         private ProgressMonitor m_Monitor;
         private System.ComponentModel.BackgroundWorker m_Worker;
 
-        public static void Export(System.Windows.Forms.Form parent, IProject project, String exportFileName)
+        public static String MUSIC_DIR = "Music";
+        public static String SOUND_DIR = "Sounds";
+
+        public static void Export(System.Windows.Forms.Form parent, Object data, String innerFileName, String exportFileName)
         {
-            ProjectExporter exporter = new ProjectExporter();
-            exporter.DoExport(parent, project, exportFileName);
+            Exporter exporter = new Exporter();
+            ExportData exportData = new ExportData();
+            exportData.Data = data;
+            exportData.InnerFileName = innerFileName;
+            exportData.ExportFileName = exportFileName;
+            exporter.DoExport(parent, exportData);
         }
 
-        private ProjectExporter()
-        {
-        }
-
-        private void DoExport(System.Windows.Forms.Form parent, IProject project, String exportFileName)
-        {
-            ProjectExportData data = new ProjectExportData();
-            data.Project = project;
-            data.ProjectFileName = project.FileName;
-            data.ExportFileName = exportFileName;
-            m_Worker = new System.ComponentModel.BackgroundWorker();
-            m_Worker.WorkerReportsProgress = true;
-            m_Worker.WorkerSupportsCancellation = true;
-            m_Worker.DoWork += new System.ComponentModel.DoWorkEventHandler(m_Worker_DoWork);
-            m_Worker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(m_Worker_ProgressChanged);
-            m_Worker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(m_Worker_RunWorkerCompleted);
-            m_Monitor = new ProgressMonitor(parent, StringResources.Exporting);
-            m_Worker.RunWorkerAsync(data);
-        }
-
-        void m_Worker_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        private void m_Worker_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
             m_Monitor.Close();
             if (e.Error != null)
@@ -279,7 +266,7 @@ namespace Ares.ModelInfo
             }
         }
 
-        void m_Worker_ProgressChanged(object sender, System.ComponentModel.ProgressChangedEventArgs e)
+        private void m_Worker_ProgressChanged(object sender, System.ComponentModel.ProgressChangedEventArgs e)
         {
             if (m_Monitor.Canceled)
             {
@@ -291,19 +278,39 @@ namespace Ares.ModelInfo
             }
         }
 
-        public static String MUSIC_DIR = "Music";
-        public static String SOUND_DIR = "Sounds";
-
-        class ProjectExportData
+        private static void SetZipEntryAttributes(ZipEntry entry, String file, out long size)
         {
-            public IProject Project { get; set; }
-            public String ProjectFileName { get; set; }
-            public String ExportFileName { get; set; }
+            entry.CompressionMethod = CompressionMethod.Deflated;
+            entry.DateTime = System.IO.File.GetLastWriteTime(file);
+            size = (new System.IO.FileInfo(file)).Length;
         }
 
-        void m_Worker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        private class ExportData
         {
-            ProjectExportData data = (ProjectExportData)e.Argument;
+            public String InnerFileName { get; set; }
+            public String ExportFileName { get; set; }
+            public Object Data { get; set; }
+        }
+
+        private void DoExport(System.Windows.Forms.Form parent, ExportData exportData)
+        {
+            m_Worker = new System.ComponentModel.BackgroundWorker();
+            m_Worker.WorkerReportsProgress = true;
+            m_Worker.WorkerSupportsCancellation = true;
+            m_Worker.DoWork += new System.ComponentModel.DoWorkEventHandler(m_Worker_DoWork);
+            m_Worker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(m_Worker_ProgressChanged);
+            m_Worker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(m_Worker_RunWorkerCompleted);
+            m_Monitor = new ProgressMonitor(parent, StringResources.Exporting);
+            m_Worker.RunWorkerAsync(exportData);
+        }
+
+        private Exporter()
+        {
+        }
+
+        private void m_Worker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            ExportData data = (ExportData)e.Argument;
             long overallSize = 0;
 
             // collect entries and calculate overall size
@@ -311,16 +318,16 @@ namespace Ares.ModelInfo
             Dictionary<ZipEntry, long> zipSizes = new Dictionary<ZipEntry, long>();
 
             // project file: no path
-            ZipEntry entry = new ZipEntry(System.IO.Path.GetFileName(data.ProjectFileName));
+            ZipEntry entry = new ZipEntry(System.IO.Path.GetFileName(data.InnerFileName));
             long size;
-            SetZipEntryAttributes(entry, data.ProjectFileName, out size);
-            zipEntries[entry] = data.ProjectFileName;
+            SetZipEntryAttributes(entry, data.InnerFileName, out size);
+            zipEntries[entry] = data.InnerFileName;
             zipSizes[entry] = size;
             overallSize += size;
 
             // entries for the music and sound files
             Ares.ModelInfo.FileLists fileLists = new Ares.ModelInfo.FileLists();
-            foreach (IFileElement element in fileLists.GetAllFiles(data.Project))
+            foreach (IFileElement element in fileLists.GetAllFiles(data.Data))
             {
                 String name = element.SoundFileType == SoundFileType.Music ? MUSIC_DIR : SOUND_DIR;
                 name = System.IO.Path.Combine(name, element.FilePath);
@@ -372,14 +379,6 @@ namespace Ares.ModelInfo
                 stream.Close();
             }
         }
-
-        private static void SetZipEntryAttributes(ZipEntry entry, String file, out long size)
-        {
-            entry.CompressionMethod = CompressionMethod.Deflated;
-            entry.DateTime = System.IO.File.GetLastWriteTime(file);
-            size = (new System.IO.FileInfo(file)).Length;
-        }
-
     }
 
     #endregion

@@ -27,11 +27,39 @@ namespace Ares.ModelInfo
     {
         private Dictionary<String, IFileElement> m_Files = new Dictionary<string, IFileElement>();
 
+        public IList<IFileElement> GetAllFiles(Object parents)
+        {
+            IProject project = parents as IProject;
+            if (project != null)
+            {
+                return GetAllFiles(project);
+            }
+            IList<IXmlWritable> roots = parents as IList<IXmlWritable>;
+            if (roots != null)
+            {
+                return GetAllFiles(roots);
+            }
+            return new List<IFileElement>();
+        }
+
         public IList<IFileElement> GetAllFiles(IProject project)
         {
             foreach (IMode mode in project.GetModes())
             {
                 foreach (IModeElement element in mode.GetElements())
+                {
+                    element.Visit(this);
+                }
+            }
+            return new List<IFileElement>(m_Files.Values);
+        }
+
+        public IList<IFileElement> GetAllFiles(IList<IXmlWritable> roots)
+        {
+            foreach (IXmlWritable writable in roots)
+            {
+                IElement element = writable as IElement;
+                if (element != null)
                 {
                     element.Visit(this);
                 }
