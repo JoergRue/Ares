@@ -25,6 +25,7 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceActivity;
 import android.widget.Toast;
+import ares.controllers.network.ServerInfo;
 import ares.controllers.network.ServerSearch;
 
 public class PrefsActivity extends PreferenceActivity {
@@ -52,7 +53,12 @@ public class PrefsActivity extends PreferenceActivity {
 			if (newValue.equals("auto"))
 				return true;
 			try {
-				ServerSearch.getServerInfo(newValue.toString(), ",");
+				ServerInfo info = ServerSearch.getServerInfo(newValue.toString(), ",");
+				if (info == null)
+				{
+					Toast.makeText(getApplicationContext(), getString(R.string.invalid_player_connection_format), Toast.LENGTH_LONG).show();
+					return false;
+				}
 				return true;
 			}
 			catch (Exception e) {

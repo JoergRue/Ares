@@ -210,8 +210,8 @@ Click Next to continue or Cancel to exit Setup.</Value>
     <ForumPage />
     <UpdateUrl />
     <Version>
-      <Major>0</Major>
-      <Minor>6</Minor>
+      <Major>1</Major>
+      <Minor>0</Minor>
       <Build>0</Build>
       <Revision>0</Revision>
     </Version>
@@ -219,9 +219,9 @@ Click Next to continue or Cancel to exit Setup.</Value>
 
 Makes sense only in conjunction with the Ares Controller.</ExtensionDescription>
     <VersionDescription />
-    <DevelopmentStatus>Beta</DevelopmentStatus>
+    <DevelopmentStatus>Rc</DevelopmentStatus>
     <OnlineLocation />
-    <ReleaseDate>2011-06-23T16:32:29</ReleaseDate>
+    <ReleaseDate>2011-12-22T16:32:29</ReleaseDate>
     <Tags />
     <Location>D:\Projekte\Ares\trunk\build\Output\Ares.mpe1</Location>
     <Params>

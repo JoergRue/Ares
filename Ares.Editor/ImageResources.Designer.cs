@@ -95,17 +95,17 @@ namespace Ares.Editor {
             }
         }
         
-        internal static System.Drawing.Icon music {
-            get {
-                object obj = ResourceManager.GetObject("music", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
         internal static System.Drawing.Bitmap music1 {
             get {
                 object obj = ResourceManager.GetObject("music1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Icon musicIcon {
+            get {
+                object obj = ResourceManager.GetObject("musicIcon", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
         

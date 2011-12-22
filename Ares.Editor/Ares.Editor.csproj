@@ -453,7 +453,7 @@
     <None Include="Resources\eventlogWarn.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\music.ico" />
+    <None Include="Resources\musicIcon.ico" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\random_music_list.png" />

@@ -211,7 +211,12 @@ public class MainActivity extends ControllerActivity implements INetworkClient, 
     	else {
     		try {
     			ServerInfo info = ServerSearch.getServerInfo(connectMode, ",");
-    			doConnect(info);
+    			if (info == null) {
+    				Toast.makeText(getApplicationContext(), getString(R.string.invalid_player_connection_format), Toast.LENGTH_LONG).show();
+    			}
+    			else {
+    				doConnect(info);
+    			}
     		}
     		catch (UnknownHostException e) {
     			Toast.makeText(getApplicationContext(), getString(R.string.invalid_player_connection_format), Toast.LENGTH_LONG).show();

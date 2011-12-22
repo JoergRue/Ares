@@ -54,7 +54,7 @@ namespace Ares.Editor
             if (fileType == FileType.Music)
             {
                 Actions.FilesWatcher.Instance.MusicDirChanges += new EventHandler<EventArgs>(DirChanged);
-                this.Icon = ImageResources.music;
+                this.Icon = ImageResources.musicIcon;
             }
             else
             {
