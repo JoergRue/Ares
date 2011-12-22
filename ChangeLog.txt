@@ -1,3 +1,13 @@
+Version 1.0.0
+----------------------------------------------------------------------------------
+- General: Controller can select elements which have no key assigned
+- General: Version check in Controller / Player connection
+- Editor: Drag & Drop and Clipboard support in lists
+- Editor: Import / Export of elements also packed together with all their files
+- Controller: Option to show assigned keys in the buttons
+- Controller: Support for Java 7
+- Controller for Android: Can open project files through Dropbox
+
 Version 0.6.0
 ----------------------------------------------------------------------------------
 - General: Added tempo effect

@@ -1,3 +1,14 @@
+Version 1.0.0
+----------------------------------------------------------------------------------
+- Allgemein: Controller kann Elemente auswählen, die keine Taste zugewiesen haben
+- Allgemein: Versionsprüfung bei Verbindung zwischen Controller und Player
+- Editor: In Listen kann Drag & Drop und die Zwischenablage benutzt werden
+- Editor: Import / Export von Elementen auch in gepackter Form mit allen 
+  zugehörigen Dateien
+- Controller: Option, die Tasten in den Buttons anzuzeigen
+- Controller: Unterstützung für Java 7
+- Controller für Android: Kann Projektdateien über Dropbox öffnen
+
 Version 0.6.0
 ----------------------------------------------------------------------------------
 - Allgemein: Geschwindigkeits-Effekt hinzugefügt
