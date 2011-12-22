@@ -5,9 +5,12 @@ Version 1.0.0
 - Editor: In Listen kann Drag & Drop und die Zwischenablage benutzt werden
 - Editor: Import / Export von Elementen auch in gepackter Form mit allen 
   zugehörigen Dateien
+- Editor: Bugfix: Exception im File Explorer unter Windows XP
 - Controller: Option, die Tasten in den Buttons anzuzeigen
 - Controller: Unterstützung für Java 7
 - Controller für Android: Kann Projektdateien über Dropbox öffnen
+- Controller für Android: Bugfix: Absturz wenn ungültige Verbindungsdaten 
+  eingegeben wurden
 
 Version 0.6.0
 ----------------------------------------------------------------------------------

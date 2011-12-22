@@ -4,9 +4,11 @@ Version 1.0.0
 - General: Version check in Controller / Player connection
 - Editor: Drag & Drop and Clipboard support in lists
 - Editor: Import / Export of elements also packed together with all their files
+- Editor: Bugfix: Exception in File Explorer under Windows XP
 - Controller: Option to show assigned keys in the buttons
 - Controller: Support for Java 7
 - Controller for Android: Can open project files through Dropbox
+- Controller for Android: Bugfix: Crash when entering invalid connection info
 
 Version 0.6.0
 ----------------------------------------------------------------------------------
