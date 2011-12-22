@@ -81,8 +81,8 @@ namespace Ares.Settings
             // 
             // button1
             // 
-            this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
             resources.ApplyResources(this.button1, "button1");
+            this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.button1.Name = "button1";
             this.button1.UseCompatibleTextRendering = true;
             this.button1.UseVisualStyleBackColor = true;
