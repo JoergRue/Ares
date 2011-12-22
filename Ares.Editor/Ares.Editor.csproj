@@ -328,6 +328,7 @@
     <EmbeddedResource Include="ImageResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ImageResources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.de.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -494,10 +495,10 @@
     <None Include="Resources\Folder.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\sounds.png" />
+    <None Include="Resources\sounds1.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\music.png" />
+    <None Include="Resources\music1.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\undo.png" />
