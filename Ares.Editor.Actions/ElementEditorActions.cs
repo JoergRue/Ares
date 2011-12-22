@@ -466,9 +466,10 @@ namespace Ares.Editor.Actions
 
     public class AddContainerElementsAction : Action
     {
-        public AddContainerElementsAction(IGeneralElementContainer container, IList<IElement> elements)
+        public AddContainerElementsAction(IGeneralElementContainer container, IList<IElement> elements, int insertionIndex)
         {
             m_Container = container;
+            m_InsertionIndex = insertionIndex;
             m_Elements = new List<IElement>();
             foreach (IElement element in elements)
             {
@@ -480,7 +481,7 @@ namespace Ares.Editor.Actions
 
         public override void Do()
         {
-            int index = m_Container.GetGeneralElements().Count;
+            int index = m_InsertionIndex;
             foreach (IElement element in m_Elements)
             {
                 m_Container.InsertGeneralElement(index, element);
@@ -503,6 +504,7 @@ namespace Ares.Editor.Actions
 
         private IGeneralElementContainer m_Container;
         private List<IElement> m_Elements;
+        private int m_InsertionIndex;
     }
 
     public class AddImportedContainerElementsAction : Action

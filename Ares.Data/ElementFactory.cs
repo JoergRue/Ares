@@ -311,7 +311,7 @@ namespace Ares.Data
         {
             ElementBase clone = (ElementBase)this.MemberwiseClone();
             clone.m_ID = DataModule.TheElementFactory.GetNextID();
-            DataModule.TheElementRepository.AddElement(clone.m_ID, this);
+            DataModule.TheElementRepository.AddElement(ref clone.m_ID, this);
             return clone;
         }
 
@@ -320,7 +320,7 @@ namespace Ares.Data
         protected ElementBase(int ID)
         {
             m_ID = ID;
-            DataModule.TheElementRepository.AddElement(m_ID, this);
+            DataModule.TheElementRepository.AddElement(ref m_ID, this);
             SetsMusicVolume = false;
             SetsSoundVolume = false;
             MusicVolume = 100;
@@ -340,7 +340,7 @@ namespace Ares.Data
             if (SoundVolume < 0 || SoundVolume > 100)
                 XmlHelpers.ThrowException(StringResources.InvalidVolume, reader);
             
-            DataModule.TheElementRepository.AddElement(m_ID, this);
+            DataModule.TheElementRepository.AddElement(ref m_ID, this);
             DataModule.TheElementFactory.UpdateNextID(m_ID);
         }
 
@@ -348,7 +348,7 @@ namespace Ares.Data
 
         public void OnDeserialization(object sender)
         {
-            DataModule.TheElementRepository.AddElement(m_ID, this);
+            DataModule.TheElementRepository.AddElement(ref m_ID, this);
             DataModule.TheElementFactory.UpdateNextID(m_ID);
         }
 

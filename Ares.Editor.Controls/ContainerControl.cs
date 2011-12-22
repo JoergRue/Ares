@@ -33,18 +33,20 @@ namespace Ares.Editor.Controls
 
         public event EventHandler<ElementImportEventArgs> ElementsImported;
 
-        public void AddElements(IList<IElement> elements)
+        public void AddElements(IList<IElement> elements, int insertionRow)
         {
             listen = false;
             int index = ElementsContainer.GetGeneralElements().Count;
-            Actions.Actions.Instance.AddNew(new Actions.AddContainerElementsAction(ElementsContainer, elements));
-            IList<IContainerElement> containerElements = ElementsContainer.GetGeneralElements();
-            for (int i = index; i < containerElements.Count; ++i)
+            Actions.Actions.Instance.AddNew(new Actions.AddContainerElementsAction(ElementsContainer, elements, insertionRow));
+            RefillGrid();
+            if (Grid.Rows.Count > 0)
             {
-                AddElementToGrid(containerElements[i]);
-                SetElementAttributes(Grid, containerElements[i], i);
-                m_ElementsToRows[containerElements[i].Id] = i;
-                Actions.ElementChanges.Instance.AddListener(containerElements[i].Id, Update);
+                if (insertionRow < 0)
+                    Grid.FirstDisplayedScrollingRowIndex = 0;
+                else if (insertionRow < Grid.Rows.Count)
+                    Grid.FirstDisplayedScrollingRowIndex = insertionRow;
+                else
+                    Grid.FirstDisplayedScrollingRowIndex = Grid.Rows.Count - 1;
             }
             listen = true;
         }
@@ -54,13 +56,15 @@ namespace Ares.Editor.Controls
             listen = false;
             int index = insertionRow;
             Actions.Actions.Instance.AddNew(new Actions.AddImportedContainerElementsAction(ElementsContainer, elements, insertionRow));
-            IList<IContainerElement> containerElements = ElementsContainer.GetGeneralElements();
-            for (int i = index; i < containerElements.Count; ++i)
+            RefillGrid();
+            if (Grid.Rows.Count > 0)
             {
-                AddElementToGrid(containerElements[i]);
-                SetElementAttributes(Grid, containerElements[i], i);
-                m_ElementsToRows[containerElements[i].Id] = i;
-                Actions.ElementChanges.Instance.AddListener(containerElements[i].Id, Update);
+                if (insertionRow < 0)
+                    Grid.FirstDisplayedScrollingRowIndex = 0;
+                else if (insertionRow < Grid.Rows.Count)
+                    Grid.FirstDisplayedScrollingRowIndex = insertionRow;
+                else
+                    Grid.FirstDisplayedScrollingRowIndex = Grid.Rows.Count - 1;
             }
             listen = true;
         }
@@ -273,16 +277,17 @@ namespace Ares.Editor.Controls
             acceptDrop = false;
         }
 
-        public bool PerformDrop(DragEventArgs e)
+        public bool PerformDrop(DragEventArgs e, out int row)
         {
-            if (!acceptDrop)
-                return false;
             Point clientPoint = Grid.PointToClient(new Point(e.X, e.Y));
             int targetRow = Grid.HitTest(clientPoint.X, clientPoint.Y).RowIndex;
             if (targetRow < 0 || targetRow > Grid.RowCount)
             {
                 targetRow = Grid.RowCount;
             }
+            row = targetRow;
+            if (!acceptDrop)
+                return false;
             if (dragStartedHere)
             {
                 if (e.Effect == DragDropEffects.Move)

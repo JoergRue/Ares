@@ -238,7 +238,8 @@ namespace Ares.Editor.ElementEditors
 
         private void Editor_DragDrop(object sender, DragEventArgs e)
         {
-            if (ContainerControl.PerformDrop(e))
+            int row = 0;
+            if (ContainerControl.PerformDrop(e, out row))
             {
                 return;
             }
@@ -246,7 +247,7 @@ namespace Ares.Editor.ElementEditors
             if (list != null)
             {
                 List<Ares.Data.IElement> elements = new List<Ares.Data.IElement>(DragAndDrop.GetElementsFromDroppedItems(list));
-                ContainerControl.AddElements(elements);
+                ContainerControl.AddElements(elements, row);
             }
         }
 
