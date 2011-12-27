@@ -2,7 +2,7 @@ set ant="D:\eclipse\plugins\org.apache.ant_1.7.1.v20100518-1145\bin\ant"
 set nant="D:\nant-0.91-alpha1\bin\NAnt.exe"
 set installjammer="C:\Program Files (x86)\InstallJammer\installjammer.exe"
 set svn="C:\Program Files (x86)\VisualSVN Server\bin\svn.exe"
-set zip="C:\Program Files (x86)\7-Zip\7z.exe"
+set zip="C:\Program Files\7-Zip\7z.exe"
 set JAVA_HOME=""C:\Program Files (x86)\Java\jdk1.6.0_20""
 
 call %ant% -DProductVersion=%1
