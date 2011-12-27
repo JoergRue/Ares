@@ -10,6 +10,11 @@ using System.Windows.Forms;
 using MediaPortal.GUI.Library;
 using MediaPortal.Dialogs;
 
+[assembly: MediaPortal.Common.Utils.CompatibleVersion("1.1.6.27644")]
+[assembly: MediaPortal.Common.Utils.UsesSubsystem("MP.Config")]
+[assembly: MediaPortal.Common.Utils.UsesSubsystem("MP.Players.Music")]
+[assembly: MediaPortal.Common.Utils.UsesSubsystem("MP.SkinEngine")]
+
 
 namespace Ares.Plugin
 {
@@ -122,12 +127,6 @@ namespace Ares.Plugin
             {
                 UpdateClientData();
             }
-        }
-
-        protected override void OnKeyDown(System.Windows.Input.KeyEventArgs e)
-        {
-            // m_PlayingControl.KeyReceived(e.Key);
-            base.OnKeyDown(e);
         }
 
         protected override void OnClicked(int controlId, GUIControl control, MediaPortal.GUI.Library.Action.ActionType actionType)

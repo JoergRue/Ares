@@ -200,8 +200,31 @@ Click Next to continue or Cancel to exit Setup.</Value>
     </Items>
   </Sections>
   <Dependencies>
-    <Items />
+    <Items>
+      <DependencyItem>
+        <Type>MediaPortal</Type>
+        <Id />
+        <MinVersion>
+          <Major>1</Major>
+          <Minor>1</Minor>
+          <Build>6</Build>
+          <Revision>27644</Revision>
+        </MinVersion>
+        <MaxVersion>
+          <Major>1</Major>
+          <Minor>1</Minor>
+          <Build>6</Build>
+          <Revision>27644</Revision>
+        </MaxVersion>
+        <WarnOnly>false</WarnOnly>
+        <Message>requires MediaPortal version 1.1.6.27644 or higher</Message>
+        <Name>MediaPortal</Name>
+      </DependencyItem>
+    </Items>
   </Dependencies>
+  <PluginDependencies>
+    <Items />
+  </PluginDependencies>
   <GeneralInfo>
     <Name>Ares Plugin</Name>
     <Id>8e986ca3-5830-4429-9c8a-3e572b09060b</Id>
@@ -213,7 +236,7 @@ Click Next to continue or Cancel to exit Setup.</Value>
       <Major>1</Major>
       <Minor>0</Minor>
       <Build>0</Build>
-      <Revision>0</Revision>
+      <Revision>1</Revision>
     </Version>
     <ExtensionDescription>Plugin for the Ares (Aureal RPG Experience System) program.
 
@@ -221,7 +244,7 @@ Makes sense only in conjunction with the Ares Controller.</ExtensionDescription>
     <VersionDescription />
     <DevelopmentStatus>Rc</DevelopmentStatus>
     <OnlineLocation />
-    <ReleaseDate>2011-12-22T16:32:29</ReleaseDate>
+    <ReleaseDate>2011-12-26T16:32:29</ReleaseDate>
     <Tags />
     <Location>D:\Projekte\Ares\trunk\build\Output\Ares.mpe1</Location>
     <Params>
@@ -249,7 +272,7 @@ Makes sense only in conjunction with the Ares Controller.</ExtensionDescription>
           <Description>Online stored screenshot urls separated by ; </Description>
         </SectionParam>
         <SectionParam Name="Force to uninstall on update">
-          <Value>yes</Value>
+          <Value>YES</Value>
           <ValueType>Bool</ValueType>
           <Description>Show dialog and force to uninstall previous version when updating an extension. Should only be disabled if you are using an NSIS/MSI installer.</Description>
         </SectionParam>
@@ -332,9 +355,10 @@ Makes sense only in conjunction with the Ares Controller.</ExtensionDescription>
   </UniqueFileList>
   <ProjectSettings>
     <FolderGroups />
-    <ProjectFilename>D:\Projekte\Ares\trunk\Ares.Plugin\AresPlugin.xmp2</ProjectFilename>
+    <ProjectFilename>AresPlugin.xmp2</ProjectFilename>
     <UpdatePath1 />
     <UpdatePath2 />
     <UpdatePath3 />
   </ProjectSettings>
+  <IsSkin>false</IsSkin>
 </PackageClass>
