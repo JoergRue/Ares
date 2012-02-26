@@ -66,6 +66,8 @@ namespace Ares.Editor
             this.playButton = new System.Windows.Forms.ToolStripButton();
             this.stopButton = new System.Windows.Forms.ToolStripButton();
             this.refreshButton = new System.Windows.Forms.ToolStripButton();
+            this.searchBox = new System.Windows.Forms.ToolStripTextBox();
+            this.searchButton = new System.Windows.Forms.ToolStripButton();
             this.treeView1 = new MultiSelectTreeview.MultiSelectTreeview();
             this.fileNodeContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.playToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -81,7 +83,9 @@ namespace Ares.Editor
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.playButton,
             this.stopButton,
-            this.refreshButton});
+            this.refreshButton,
+            this.searchBox,
+            this.searchButton});
             this.toolStrip1.Name = "toolStrip1";
             // 
             // playButton
@@ -106,6 +110,19 @@ namespace Ares.Editor
             this.refreshButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.refreshButton.Name = "refreshButton";
             this.refreshButton.Click += new System.EventHandler(this.refreshButton_Click);
+            // 
+            // searchBox
+            // 
+            resources.ApplyResources(this.searchBox, "searchBox");
+            this.searchBox.Name = "searchBox";
+            this.searchBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.searchBox_KeyPress);
+            // 
+            // searchButton
+            // 
+            resources.ApplyResources(this.searchButton, "searchButton");
+            this.searchButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.searchButton.Name = "searchButton";
+            this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
             // 
             // treeView1
             // 
@@ -173,5 +190,7 @@ namespace Ares.Editor
         private System.Windows.Forms.ToolStripMenuItem playToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem stopToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
+        private System.Windows.Forms.ToolStripTextBox searchBox;
+        private System.Windows.Forms.ToolStripButton searchButton;
     }
 }

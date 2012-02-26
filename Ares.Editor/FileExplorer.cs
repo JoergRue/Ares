@@ -296,6 +296,113 @@ namespace Ares.Editor
             editToolStripMenuItem.Enabled = m_Parent != null && treeView1.SelectedNode != null && treeView1.SelectedNode.Tag != null &&
                 treeView1.SelectedNode.Tag is DraggedItem && ((DraggedItem)treeView1.SelectedNode.Tag).NodeType == DraggedItemType.File;
         }
+
+        private void searchButton_Click(object sender, EventArgs e)
+        {
+            doSearch();
+        }
+
+        [Flags]
+        private enum SearchTypes
+        {
+            Children = 0x1,
+            Siblings = 0x2
+        }
+
+        private void doSearch()
+        {
+            String text = searchBox.Text;
+            TreeNode node = treeView1.SelectedNode;
+            bool found = Search(node, text, SearchTypes.Children | SearchTypes.Siblings);
+            if (!found)
+            {
+                // end of tree: start again at the beginning
+                found = SearchSingleNode(m_Root, text);
+            }
+            if (!found)
+            {
+                found = Search(m_Root, text, SearchTypes.Children);
+            }
+            if (!found)
+            {
+                MessageBox.Show(StringResources.NoFileOrFolderFound, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else if (treeView1.SelectedNode == node)
+            {
+                MessageBox.Show(StringResources.NoFurtherFileOrFolderFound, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private bool SearchSingleNode(TreeNode node, String text)
+        {
+            if (node.Text.IndexOf(text, StringComparison.CurrentCultureIgnoreCase) != -1)
+            {
+                treeView1.SelectedNode = node;
+                node.EnsureVisible();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool Search(TreeNode node, String text, SearchTypes searchTypes)
+        {
+            // do not consider the starting node
+
+            // first search children
+            if ((searchTypes & SearchTypes.Children) != 0)
+            {
+                foreach (TreeNode child in node.Nodes)
+                {
+                    if (SearchSingleNode(child, text))
+                    {
+                        return true;
+                    }
+                    else if (Search(child, text, SearchTypes.Children))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            if (searchTypes == SearchTypes.Children)
+                return false;
+
+            // then search siblings
+            TreeNode sibling = node.NextNode;
+            if (sibling != null)
+            {
+                if (SearchSingleNode(sibling, text))
+                {
+                    return true;
+                }
+                return Search(sibling, text, SearchTypes.Children | SearchTypes.Siblings);
+            }
+
+            // last sibling: search parent's siblings
+            TreeNode parent = node.Parent;
+            if (parent != null)
+            {
+                // do not check parent node: it's earlier in the order
+                return Search(parent, text, SearchTypes.Siblings);
+            }
+            else
+            {
+                // end of tree
+                return false;
+            }
+        }
+
+        private void searchBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Return)
+            {
+                e.Handled = true;
+                doSearch();
+            }
+        }
     }
 
     public enum DraggedItemType

@@ -184,6 +184,12 @@ Left      - Previous music title</value>
   <data name="NewSoundChoice" xml:space="preserve">
     <value>New Sound Choice</value>
   </data>
+  <data name="NoFileOrFolderFound" xml:space="preserve">
+    <value>No file or folder found.</value>
+  </data>
+  <data name="NoFurtherFileOrFolderFound" xml:space="preserve">
+    <value>No other file or folder found.</value>
+  </data>
   <data name="NoImportableElements" xml:space="preserve">
     <value>No elements found in the file which could be imported here.</value>
   </data>

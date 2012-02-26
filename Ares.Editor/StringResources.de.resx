@@ -184,6 +184,12 @@ Pfeil nach links  - Vorheriges Musikstück</value>
   <data name="NewSoundChoice" xml:space="preserve">
     <value>Neue Geräuschauswahl</value>
   </data>
+  <data name="NoFileOrFolderFound" xml:space="preserve">
+    <value>Keine Datei gefunden.</value>
+  </data>
+  <data name="NoFurtherFileOrFolderFound" xml:space="preserve">
+    <value>Keine andere Datei gefunden.</value>
+  </data>
   <data name="NoImportableElements" xml:space="preserve">
     <value>In der Datei wurden keine Elemente gefunden, die hier importiert werden könnten.</value>
   </data>
