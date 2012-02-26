@@ -77,6 +77,8 @@ namespace Ares.Editor.Controls
             setsSoundBox.Checked = m_Element.SetsSoundVolume;
             musicVolumeBar.Value = m_Element.MusicVolume;
             soundVolumeBar.Value = m_Element.SoundVolume;
+            musicVolumeBar.Enabled = m_Element.SetsMusicVolume;
+            soundVolumeBar.Enabled = m_Element.SetsSoundVolume;
         }
 
         private void Commit()
@@ -119,6 +121,11 @@ namespace Ares.Editor.Controls
             setsMusicBox.Checked = true;
             musicVolumeBar.Value = Ares.Settings.Settings.Instance.MusicVolume;
             listen = true;
+            Commit();
+        }
+
+        private void soundVolumeBar_ValueChanged(object sender, EventArgs e)
+        {
             Commit();
         }
 

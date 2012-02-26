@@ -775,6 +775,22 @@ namespace Ares.Editor
                 ShowFileExplorer(FileType.Music);
                 ShowFileExplorer(FileType.Sound);
             }
+            if (m_FileExplorers[0] == null)
+            {
+                ShowFileExplorer(FileType.Music);
+            }
+            if (m_FileExplorers[1] == null)
+            {
+                ShowFileExplorer(FileType.Sound);
+            }
+            if (m_ProjectExplorer == null)
+            {
+                ShowProjectExplorer();
+            }
+            if (m_VolumeWindow == null)
+            {
+                ShowVolumeWindow();
+            }
             Settings.Settings.Instance.SettingsChanged += new EventHandler<Settings.Settings.SettingsEventArgs>(SettingsChanged);
 #if !MONO
             fileExplorerToolStripMenuItem.Checked = !m_FileExplorers[0].IsHidden;

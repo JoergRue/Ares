@@ -67,13 +67,13 @@ namespace Ares.Editor.Controls
             // 
             // groupBox1
             // 
-            resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Controls.Add(this.currentSoundVolumeButton);
             this.groupBox1.Controls.Add(this.currentMusicVolumeButton);
             this.groupBox1.Controls.Add(this.soundVolumeBar);
             this.groupBox1.Controls.Add(this.setsSoundBox);
             this.groupBox1.Controls.Add(this.musicVolumeBar);
             this.groupBox1.Controls.Add(this.setsMusicBox);
+            resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
             this.groupBox1.UseCompatibleTextRendering = true;
@@ -101,6 +101,7 @@ namespace Ares.Editor.Controls
             this.soundVolumeBar.Name = "soundVolumeBar";
             this.soundVolumeBar.SmallChange = 5;
             this.soundVolumeBar.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.soundVolumeBar.ValueChanged += new System.EventHandler(this.soundVolumeBar_ValueChanged);
             // 
             // setsSoundBox
             // 

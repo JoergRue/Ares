@@ -313,13 +313,19 @@ namespace Ares.Editor
         {
             String text = searchBox.Text;
             TreeNode node = treeView1.SelectedNode;
+            if (node == null)
+            {
+                node = m_Root;
+            }
+            if (node == null || String.IsNullOrEmpty(text))
+                return;
             bool found = Search(node, text, SearchTypes.Children | SearchTypes.Siblings);
             if (!found)
             {
                 // end of tree: start again at the beginning
                 found = SearchSingleNode(m_Root, text);
             }
-            if (!found)
+            if (!found && node != m_Root)
             {
                 found = Search(m_Root, text, SearchTypes.Children);
             }
