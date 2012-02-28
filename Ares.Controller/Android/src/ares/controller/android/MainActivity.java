@@ -26,6 +26,7 @@ import java.util.HashMap;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
@@ -36,8 +37,10 @@ import android.gesture.GestureOverlayView;
 import android.gesture.GestureOverlayView.OnGesturePerformedListener;
 import android.gesture.Prediction;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -340,6 +343,64 @@ public class MainActivity extends ControllerActivity implements INetworkClient, 
     
     private String fileToOpenDelayed = null;
     
+    private ProgressDialog mProgressDialog;
+    private OpenProjectTask mTask;
+    
+    private class OpenProjectTask extends AsyncTask<String, Void, Boolean>
+    {
+        private boolean doOpenDropboxProject(String path) {
+			byte[] content = Dropbox.getInstance().getEntryContent(MainActivity.this, path);
+			if (content != null) {
+				Control.getInstance().openFile(content, path);
+				return true;
+			}
+			else {
+				return false;
+			}
+	    }
+	    
+	    private boolean doOpenLocalProject(String path) {
+	    	Control.getInstance().openFile(new java.io.File(path));
+	    	return true;
+	    }
+	    
+	    private String mPath;
+
+		@Override
+		protected Boolean doInBackground(String... arg0) {
+			try {
+				mPath = arg0[0];
+				if (mPath.startsWith(Control.DB_ROOT_ID))
+				{
+					return doOpenDropboxProject(mPath);
+				}
+				else
+				{
+					return doOpenLocalProject(mPath);
+				}
+			}
+			catch (Exception e) {
+				Log.e(getClass().getName(), e.getMessage());
+				return false;
+			}
+		}
+		
+		protected void onPostExecute(Boolean result) {
+			mProgressDialog.dismiss();
+			if (result)
+			{
+				MainActivity.this.projectOpened(mPath);
+			}
+			mTask = null;
+		}
+    }
+    
+    private void projectOpened(String path) {
+		getPreferences(MODE_PRIVATE).edit().putString(LAST_PROJECT, path).commit();
+		updateProjectTitle();
+        modesButton.setEnabled(Control.getInstance().getConfiguration() != null);    	
+    }
+    
     private void openProject(String path) {
     	if (path.startsWith(Control.DB_ROOT_ID)) {
     		if (!Dropbox.getInstance().connectToDropbox(this)) {
@@ -347,20 +408,10 @@ public class MainActivity extends ControllerActivity implements INetworkClient, 
     			fileToOpenDelayed = path;
     			return;
     		}
-    		byte[] content = Dropbox.getInstance().getEntryContent(this, path);
-    		if (content != null) {
-    			Control.getInstance().openFile(content, path);
-    		}
-    		else {
-    			return;
-    		}
     	}
-    	else {
-    		Control.getInstance().openFile(new java.io.File(path));
-    	}
-		getPreferences(MODE_PRIVATE).edit().putString(LAST_PROJECT, path).commit();
-		updateProjectTitle();
-        modesButton.setEnabled(Control.getInstance().getConfiguration() != null);
+  	  	mProgressDialog = ProgressDialog.show(this, "", "Opening Project...", true);
+  	  	mTask = new OpenProjectTask();
+  	  	mTask.execute(path);
     }
     
     private void updateProjectTitle() {
