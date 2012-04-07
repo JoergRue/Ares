@@ -171,4 +171,13 @@
   <data name="ModeNoKey" xml:space="preserve">
     <value>No key defined for mode {0}</value>
   </data>
+  <data name="Copying" xml:space="preserve">
+    <value>Copying ...</value>
+  </data>
+  <data name="FileOpError" xml:space="preserve">
+    <value>Error during file operation: {0}</value>
+  </data>
+  <data name="Moving" xml:space="preserve">
+    <value>Moving ...</value>
+  </data>
 </root>

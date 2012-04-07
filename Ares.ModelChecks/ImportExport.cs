@@ -383,6 +383,233 @@ namespace Ares.ModelInfo
 
     #endregion
 
+    #region Copy / Move
+
+    public class FileOperations
+    {
+        private ProgressMonitor m_Monitor;
+        private System.ComponentModel.BackgroundWorker m_Worker;
+
+        public static void CopyOrMove(System.Windows.Forms.Form parent, System.Collections.Generic.Dictionary<String, object> uniqueElements, bool move, String targetPath, Action completedAction)
+        {
+            FileOperations privateInstance = new FileOperations(completedAction);
+            FileOpData data = new FileOpData();
+            data.TargetPath = targetPath;
+            data.UniqueElements = uniqueElements;
+            data.Move = move;
+            privateInstance.DoCopyOrMove(parent, data);
+        }
+
+        private class FileOpData
+        {
+            public System.Collections.Generic.Dictionary<String, object> UniqueElements { get; set; }
+            public bool Move { get; set; }
+            public String TargetPath { get; set; }
+        }
+
+        private FileOperations(Action completedAction)
+        {
+            m_CompletedAction = completedAction;
+        }
+
+        private Action m_CompletedAction;
+
+
+        private void DoCopyOrMove(System.Windows.Forms.Form parent, FileOpData data)
+        {
+            m_Monitor = new ProgressMonitor(parent, data.Move ? StringResources.Moving : StringResources.Copying);
+            m_Worker = new System.ComponentModel.BackgroundWorker();
+            m_Worker.WorkerReportsProgress = true;
+            m_Worker.WorkerSupportsCancellation = true;
+            m_Worker.DoWork += new System.ComponentModel.DoWorkEventHandler(m_Worker_DoWork);
+            m_Worker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(m_Worker_ProgressChanged);
+            m_Worker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(m_Worker_RunWorkerCompleted);
+            m_Worker.RunWorkerAsync(data);
+        }
+
+        void m_Worker_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        {
+            m_Monitor.Close();
+            if (e.Error != null)
+            {
+                System.Windows.Forms.MessageBox.Show(String.Format(StringResources.FileOpError, e.Error.Message), StringResources.Ares,
+                    System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+            }
+            if (m_CompletedAction != null)
+                m_CompletedAction();
+        }
+
+        void m_Worker_ProgressChanged(object sender, System.ComponentModel.ProgressChangedEventArgs e)
+        {
+            if (m_Monitor.Canceled)
+            {
+                m_Worker.CancelAsync();
+            }
+            else
+            {
+                m_Monitor.SetProgress(e.ProgressPercentage, e.UserState.ToString());
+            }
+        }
+
+        private void m_Worker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            FileOpData data = (FileOpData)e.Argument;
+
+            // determine amount to copy / move
+            long allBytes = 0;
+            foreach (String file in data.UniqueElements.Keys)
+            {
+                allBytes += GetBytes(file);
+            }
+
+            System.Collections.Generic.Dictionary<String, String> filesMoved = new Dictionary<String, String>();
+
+            long currentBytes = 0;
+            int lastPercent = -1;
+            foreach (String file in data.UniqueElements.Keys)
+            {
+                String nameOnly = System.IO.Path.GetFileName(file);
+                String fileTargetPath = System.IO.Path.Combine(data.TargetPath, nameOnly);
+                if (file.Equals(fileTargetPath, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    currentBytes += GetBytes(fileTargetPath);
+                    ReportProgress(currentBytes, allBytes, ref lastPercent, fileTargetPath);
+                    continue;
+                }
+                if (System.IO.Directory.Exists(file))
+                {
+                    if (data.Move)
+                    {
+                        AddMovedFiles(file, fileTargetPath, filesMoved);
+                        System.IO.Directory.Move(file, fileTargetPath);
+                        currentBytes += GetBytes(fileTargetPath);
+                        ReportProgress(currentBytes, allBytes, ref lastPercent, fileTargetPath);
+                    }
+                    else
+                    {
+                        CopyDirectory(file, fileTargetPath, ref currentBytes, allBytes, ref lastPercent);
+                    }
+                }
+                else if (System.IO.File.Exists(file))
+                {
+                    if (data.Move)
+                    {
+                        filesMoved[file] = fileTargetPath;
+                        System.IO.File.Move(file, fileTargetPath);
+                    }
+                    else
+                    {
+                        System.IO.File.Copy(file, fileTargetPath, true);
+                    }
+                    currentBytes += GetBytes(fileTargetPath);
+                    ReportProgress(currentBytes, allBytes, ref lastPercent, fileTargetPath);
+                }
+                if (m_Worker.CancellationPending)
+                    return;
+            }
+
+            if (data.Move)
+            {
+                AdaptElementPaths(filesMoved);
+            }
+        }
+
+        private static void AdaptElementPaths(Dictionary<String, String> filesMoved)
+        {
+            if (ModelChecks.Instance.Project == null)
+                return;
+
+            FileLists lists = new FileLists();
+            IList<IFileElement> elements = lists.GetAllFiles(ModelChecks.Instance.Project);
+            foreach (IFileElement element in elements)
+            {
+                String basePath = element.SoundFileType == SoundFileType.Music ? Ares.Settings.Settings.Instance.MusicDirectory : Ares.Settings.Settings.Instance.SoundDirectory;
+                String currentPath = System.IO.Path.Combine(basePath, element.FilePath);
+                if (filesMoved.ContainsKey(currentPath))
+                {
+                    String newPath = filesMoved[currentPath];
+                    if (newPath.StartsWith(basePath, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        element.FilePath = newPath.Substring(basePath.Length + 1);
+                    }
+                }
+            }
+        }
+
+        private void ReportProgress(long currentBytes, long allBytes, ref int lastPercent, String file)
+        {
+            int currentPercent = (int)(((double)currentBytes / (double)allBytes) * 100.0);
+            if (currentPercent != lastPercent)
+            {
+                lastPercent = currentPercent;
+                m_Worker.ReportProgress(lastPercent, System.IO.Path.GetFileName(file));
+            }
+        }
+
+        private static long GetBytes(String file)
+        {
+            if (System.IO.Directory.Exists(file))
+            {
+                System.IO.DirectoryInfo info = new System.IO.DirectoryInfo(file);
+                return GetBytes(info);
+            }
+            else if (System.IO.File.Exists(file))
+            {
+                return (new System.IO.FileInfo(file)).Length;
+            }
+            else
+                return 0;
+        }
+
+        private static long GetBytes(System.IO.DirectoryInfo directoryInfo)
+        {
+            long sum = 0;
+            foreach (System.IO.DirectoryInfo info in directoryInfo.GetDirectories())
+                sum += GetBytes(info);
+            foreach (System.IO.FileInfo info in directoryInfo.GetFiles())
+                sum += info.Length;
+            return sum;
+        }
+
+        private void CopyDirectory(String source, String destination, ref long currentBytes, long allBytes, ref int lastPercent)
+        {
+            if (!System.IO.Directory.Exists(destination))
+            {
+                System.IO.Directory.CreateDirectory(destination);
+                System.IO.DirectoryInfo info = new System.IO.DirectoryInfo(source);
+                foreach (System.IO.DirectoryInfo subDir in info.GetDirectories())
+                {
+                    CopyDirectory(subDir.FullName, System.IO.Path.Combine(destination, subDir.Name), ref currentBytes, allBytes, ref lastPercent);
+                    if (m_Worker.CancellationPending)
+                        return;
+                }
+                foreach (System.IO.FileInfo file in info.GetFiles())
+                {
+                    System.IO.File.Copy(file.FullName, System.IO.Path.Combine(destination, file.Name), true);
+                    currentBytes += GetBytes(file.FullName);
+                    ReportProgress(currentBytes, allBytes, ref lastPercent, file.FullName);
+                    if (m_Worker.CancellationPending)
+                        return;
+                }
+            }
+        }
+
+        private static void AddMovedFiles(String source, String destination, Dictionary<String, String> movedFiles)
+        {
+            System.IO.DirectoryInfo info = new System.IO.DirectoryInfo(source);
+            foreach (System.IO.DirectoryInfo subDir in info.GetDirectories())
+            {
+                AddMovedFiles(subDir.FullName, System.IO.Path.Combine(destination, subDir.Name), movedFiles);
+            }
+            foreach (System.IO.FileInfo file in info.GetFiles())
+            {
+                movedFiles[file.FullName] = System.IO.Path.Combine(destination, file.Name);
+            }
+        }
+    }
+
+    #endregion
+
     #region Progress
 
     class ProgressMonitor

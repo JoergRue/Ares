@@ -84,21 +84,39 @@ namespace Ares.Editor
         }
 #endif
 
+        private bool m_TreeLocked = false;
+
         public void ReFillTree()
         {
+            if (m_TreeLocked)
+                return;
+
+            Dictionary<String, bool> states = new Dictionary<string, bool>();
+            GetTreeStates(m_Root, states);
+
             treeView1.BeginUpdate();
             treeView1.Nodes.Clear();
             m_Root = new TreeNode(m_FileType == FileType.Music ? StringResources.Music : StringResources.Sounds);
             m_Root.SelectedImageIndex = m_Root.ImageIndex = 0;
             m_Root.Tag = new DraggedItem { NodeType = DraggedItemType.Directory, ItemType = m_FileType, RelativePath = String.Empty };
             String directory = m_FileType == FileType.Music ? Ares.Settings.Settings.Instance.MusicDirectory : Ares.Settings.Settings.Instance.SoundDirectory;
-            FillTreeNode(m_Root, directory, directory, m_FileType);
+            FillTreeNode(m_Root, directory, directory, m_FileType, states);
             treeView1.Nodes.Add(m_Root);
             m_Root.Expand();
             treeView1.EndUpdate();
         }
 
-        private void FillTreeNode(TreeNode node, String directory, String root, FileType dirType)
+        private void GetTreeStates(TreeNode rootNode, Dictionary<String, bool> states)
+        {
+            if (rootNode == null)
+                return;
+            if (rootNode.Tag is DraggedItem)
+                states[((DraggedItem)rootNode.Tag).RelativePath] = rootNode.IsExpanded;
+            foreach (TreeNode child in rootNode.Nodes)
+                GetTreeStates(child, states);
+        }
+
+        private void FillTreeNode(TreeNode node, String directory, String root, FileType dirType, Dictionary<String, bool> states)
         {
             try
             {
@@ -109,9 +127,14 @@ namespace Ares.Editor
                 {
                     TreeNode subNode = new TreeNode(subDir.Substring(subLength));
                     subNode.ImageIndex = subNode.SelectedImageIndex = 0;
-                    subNode.Tag = new DraggedItem { NodeType = DraggedItemType.Directory, ItemType = dirType, RelativePath = subDir.Substring(rootLength) };
-                    FillTreeNode(subNode, subDir, root, dirType);
+                    String relativeDir = subDir.Substring(rootLength);
+                    subNode.Tag = new DraggedItem { NodeType = DraggedItemType.Directory, ItemType = dirType, RelativePath = relativeDir };
+                    FillTreeNode(subNode, subDir, root, dirType, states);
                     node.Nodes.Add(subNode);
+                    if (states.ContainsKey(relativeDir) && states[relativeDir])
+                    {
+                        subNode.Expand();
+                    }
                 }
                 List<string> files = new List<string>();
                 String[] patterns = { "*.wav", "*.mp3", "*.ogg" };
@@ -121,9 +144,14 @@ namespace Ares.Editor
                 {
                     TreeNode subNode = new TreeNode(file.Substring(subLength));
                     subNode.ImageIndex = subNode.SelectedImageIndex = (dirType == FileType.Sound ? 1 : 2);
-                    subNode.Tag = new DraggedItem { NodeType = DraggedItemType.File, ItemType = dirType, RelativePath = file.Substring(rootLength) };
+                    String relativeDir = file.Substring(rootLength);
+                    subNode.Tag = new DraggedItem { NodeType = DraggedItemType.File, ItemType = dirType, RelativePath = relativeDir };
                     subNode.ContextMenuStrip = fileNodeContextMenu;
                     node.Nodes.Add(subNode);
+                    if (states.ContainsKey(relativeDir) && states[relativeDir])
+                    {
+                        subNode.Expand();
+                    }
                 }
             }
             catch (Exception e)
@@ -136,14 +164,15 @@ namespace Ares.Editor
 
         TreeNode m_Root;
 
-        Point m_DragPoint;
+        Rectangle m_DragStartRect;
         bool m_InDrag;
 
         private void treeView1_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == System.Windows.Forms.MouseButtons.Left)
             {
-                m_DragPoint = new Point(e.X, e.Y);
+                Size dragSize = SystemInformation.DragSize;
+                m_DragStartRect = new Rectangle(new Point(e.X - dragSize.Width / 2, e.Y - dragSize.Height / 2), dragSize);
                 m_InDrag = true;
             }
         }
@@ -155,11 +184,11 @@ namespace Ares.Editor
 
         private void treeView1_MouseMove(object sender, MouseEventArgs e)
         {
-            if (m_InDrag)
+            if (m_InDrag && m_DragStartRect != null && !m_DragStartRect.Contains(e.X, e.Y))
             {
                 List<DraggedItem> items = new List<DraggedItem>();
                 treeView1.SelectedNodes.ForEach(node => items.Add((DraggedItem)node.Tag));
-                DoDragDrop(items, DragDropEffects.Copy);
+                DoDragDrop(items, DragDropEffects.Copy | DragDropEffects.Move);
                 m_InDrag = false;
             }
         }
@@ -409,7 +438,155 @@ namespace Ares.Editor
                 doSearch();
             }
         }
+
+        private bool m_AcceptDrop = false;
+
+        private void treeView1_DragEnter(object sender, DragEventArgs e)
+        {
+            CheckAllowedDrop(e);
+        }
+
+        private void CheckAllowedDrop(DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop) || e.Data.GetDataPresent(typeof(List<DraggedItem>)))
+            {
+                if (((e.KeyState & 8) == 8) && ((e.AllowedEffect & DragDropEffects.Copy) == DragDropEffects.Copy))
+                {
+                    m_AcceptDrop = true;
+                    e.Effect = DragDropEffects.Copy;
+                }
+                else if ((e.AllowedEffect & DragDropEffects.Move) == DragDropEffects.Move)
+                {
+                    m_AcceptDrop = true;
+                    e.Effect = DragDropEffects.Move;
+                }
+                else
+                {
+                    m_AcceptDrop = false;
+                    e.Effect = DragDropEffects.None;
+                }
+            }
+            else
+            {
+                m_AcceptDrop = false;
+                e.Effect = DragDropEffects.None;
+            }
+        }
+
+        private void treeView1_DragOver(object sender, DragEventArgs e)
+        {
+            CheckAllowedDrop(e);
+        }
+
+        private void treeView1_DragLeave(object sender, EventArgs e)
+        {
+            m_AcceptDrop = false;
+        }
+
+        private void treeView1_DragDrop(object sender, DragEventArgs e)
+        {
+            m_AcceptDrop = false;
+            bool move = false;
+            if (((e.KeyState & 8) == 8) && ((e.AllowedEffect & DragDropEffects.Copy) == DragDropEffects.Copy))
+            {
+                move = false;
+            }
+            else if ((e.AllowedEffect & DragDropEffects.Move) == DragDropEffects.Move)
+            {
+                move = true;
+            }
+            else
+            {
+                return;
+            }
+
+            List<String> files = new List<String>();
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                Array a = (Array)e.Data.GetData(DataFormats.FileDrop);
+                if (a != null)
+                {
+                    for (int i = 0; i < a.Length; ++i)
+                        files.Add(a.GetValue(i).ToString());
+                }
+            }
+            else if (e.Data.GetDataPresent(typeof(List<DraggedItem>)))
+            {
+                List<DraggedItem> items = (List<DraggedItem>)e.Data.GetData(typeof(List<DraggedItem>));
+                if (items != null)
+                {
+                    for (int i = 0; i < items.Count; ++i)
+                    {
+                        String dir = items[i].ItemType == FileType.Music ? Settings.Settings.Instance.MusicDirectory : Settings.Settings.Instance.SoundDirectory;
+                        String path = System.IO.Path.Combine(dir, items[i].RelativePath);
+                        files.Add(path);
+                    }
+                }
+            }
+            else
+                return;
+
+            TreeNode node = treeView1.GetNodeAt(treeView1.PointToClient(new Point(e.X, e.Y)));
+            if (node == null)
+                node = m_Root;
+            this.Invoke(new Action(() => DropFiles(files, move, node)));
+            this.Activate();
+        }
+
+        private void DropFiles(List<String> files, bool move, TreeNode targetNode)
+        {
+            String targetDir = m_FileType == FileType.Music ? Settings.Settings.Instance.MusicDirectory : Settings.Settings.Instance.SoundDirectory;
+            String targetPath = System.IO.Path.Combine(targetDir, ((DraggedItem)targetNode.Tag).RelativePath);
+            if (!System.IO.Directory.Exists(targetPath))
+            {
+                targetPath = System.IO.Directory.GetParent(targetPath).FullName;
+            }
+            if (!System.IO.Directory.Exists(targetPath))
+            {
+                return;
+            }
+
+            // make files unique
+            Dictionary<String, object> uniqueElements = new Dictionary<string, object>();
+            foreach (String file in files)
+            {
+                uniqueElements.Add(file, null);
+            }
+            // remove all files / directories of which a parent directory is already included
+            List<String> copy = new List<String>(uniqueElements.Keys);
+            foreach (String file in copy)
+            {
+                System.IO.DirectoryInfo parent = System.IO.Directory.GetParent(file);
+                while (parent != null)
+                {
+                    if (copy.Contains(parent.FullName))
+                    {
+                        uniqueElements.Remove(file);
+                        break;
+                    }
+                    parent = System.IO.Directory.GetParent(parent.FullName);
+                }
+            }
+            // check whether move is possible (no move of parent into child)
+            foreach (String file in uniqueElements.Keys)
+            {
+                if (targetPath.StartsWith(file, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    MessageBox.Show(this, StringResources.CopyOrMoveParentIntoChild, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+
+            m_TreeLocked = true;
+            Ares.ModelInfo.FileOperations.CopyOrMove(this, uniqueElements, move, targetPath, () =>
+                {
+                    m_TreeLocked = false;
+                    ReFillTree();
+                });
+        }
+
     }
+
 
     public enum DraggedItemType
     {

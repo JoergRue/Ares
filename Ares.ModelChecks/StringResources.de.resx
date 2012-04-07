@@ -171,4 +171,13 @@
   <data name="ModeNoKey" xml:space="preserve">
     <value>Für den Modus {0} ist keine Taste definiert</value>
   </data>
+  <data name="Copying" xml:space="preserve">
+    <value>Kopiere ...</value>
+  </data>
+  <data name="FileOpError" xml:space="preserve">
+    <value>Fehler bei Dateioperation: {0}</value>
+  </data>
+  <data name="Moving" xml:space="preserve">
+    <value>Verschiebe ...</value>
+  </data>
 </root>

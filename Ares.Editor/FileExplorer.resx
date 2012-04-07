@@ -117,245 +117,245 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="stopToolStripMenuItem.Text" xml:space="preserve">
-    <value>Stop</value>
-  </data>
-  <data name="&gt;&gt;stopButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
+  <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="searchButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsIAAA7CARUoSoAAAALkSURBVEhL3ZPrS1NxHMaFssuL+gt6aQpSYZm1VFiRMd90
-        A2f4IsqSiGhoYsmaOBV9ka106jRvZGluOu/XeYmlqMvFmlix3MqKcKbzwjLnNt15+v2mREXJTiyCDvz4
-        8YXD8/k+z3OOj89/+ZQ1DWyrVmnvyLu1JnnPsEOu0uJBw4C9UNE7dresNVMsvr/lj40rurS7FL3PDe1D
-        BgyYzBiZsUG/wKDv0yLq9OMoqO5dzsqv1aTcqgxgDaGbU/G+0feYcjCYcgIT5LxdAnQLQLcFUM0zyGns
-        d4qyHw7zxeJNrCAKEkubxgCznYF1GbC54L7NBPLaBrRPAC1TQPMMg9Scmrn41CIRK4CyR2vqN064N6fi
-        9KE3nY3EhZo4qDcTwCyQ1zJsFwhlL1kB6h4/c+hJ5jQW68qaA3JPOAADcTD0GZCPExdzwCPjLK4mS5dY
-        AZQ9Onehb+yr2dPNaTy0g5FF0sE0ER4jTqzEicWFKzfywQpQ2fzUrjZ/cRdKNzaSQ28qPkhEle+AVtLD
-        KJmrDDO4mJRrYwUoV6rH6nTj7k07iBDNnMZCZyouNwF6MlPA7bp+V6xAomMFKKjqzCxseOJUzbrQScSb
-        JoFakjmNpYOUO0KcfSR9qOdcEIhLV2SSDAQHB/t6DJFKOzZn32vUSJsGnc0Wxl1m+/yqCwPp4QXZnIon
-        57XgWmIaptvOoLZIBH5goOf/Q0ZhTYA4Vz6UUdLslHXpUU2+FlpolcECSZMGCWmlzOX4LGZIeASTFbxv
-        EC6Xu9FjJ5eKi32TMsvSE9JLXsWLZEsCYR4Td11qu5Ao0cfEJlfERB7/kBLFg1546AcIn8/f4DFkvRd5
-        YSHRvND9+BWEVSfrQcJDdh/96xBOkB/3d5DIA5HbvRIXJ2hnxM8QXflp66nDoSe9AqAiB4P8jn0PqU/j
-        gR/Buek1ABUKW4NQ0LmoE0g4HxPnVQAVC9/rvydsn3907NnoCA5nx1avA/6J4FcWs22Pr741JQAAAABJ
-        RU5ErkJggg==
-</value>
+  <data name="toolStrip1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
   </data>
-  <data name="&gt;&gt;searchBox.Name" xml:space="preserve">
-    <value>searchBox</value>
+  <data name="toolStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>288, 25</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="toolStrip1.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="toolStrip1.Text" xml:space="preserve">
+    <value>toolStrip1</value>
+  </data>
+  <data name="&gt;&gt;toolStrip1.Name" xml:space="preserve">
+    <value>toolStrip1</value>
+  </data>
+  <data name="&gt;&gt;toolStrip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStrip1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;toolStrip1.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="playButton.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="playButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="playButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 22</value>
+  </data>
+  <data name="playButton.Text" xml:space="preserve">
+    <value>Play</value>
+  </data>
+  <data name="stopButton.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="stopButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="stopButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 22</value>
   </data>
   <data name="stopButton.Text" xml:space="preserve">
     <value>Stop</value>
   </data>
-  <data name="stopButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+  <data name="refreshButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAOuSURBVEhLzZN/UJN1HMd3BWxjg/U87YewOfbr2Q9g53Cm
+        CLvNgwkmd3YhVyTLS4Xrh9kfVLq6rqwzQ/RmJ2AymT+YKNACAeXHeRxll5dZcnIeFuKWK1MnLgzCKPLd
+        E3f8BzxrXXc9fz1339f79f7c5/s8LFaUT4JURS3atKMuyjhzTG5Z6yg8NwXpklUOZjoiwhwrTl8miRcK
+        k2g8PmOLy/3E10BB/dBdDkHII1LMBhEqs8VYWlmV/X7XYPahgVHbiUv3cg9eCKxuC4wV9I5jzedTyHrt
+        o9ZoCvh6x3bPioOXYW++gfy2EPK7R5HfO4HcvklYu8dgaR9Bdstt5HX8DGXmqpKIS/h8vsi01ftlTkMQ
+        OSe+h7U1hKWdY1jUdR9pp36F/pMwtE0haLw3oKoLQFF7DcYdZ29ySVIaUYlxc1WP3ReCrfkmMo76Yai+
+        OKHcc3aEcn0VNtZcndQf8j+gaLm6zg9F9RUk77oImWsIhucqfIwFC21Pv5jfchdL93w6LllZ2sBJop6J
+        jY9fzGax1Ww2W02kGB43Vl+dVHoCkFddwcIPv4V653noNu7rJzXmTUwFvBWuc+G0sl3nYzh826yXnmbJ
+        1npvQem+Dt3ub0BtqPxCqDH9LSaZ5CxZZkFJalH5GRoUzQXT6/Ok1w5DW/LuGVKqK6I5HqN4BmALBAr6
+        XTxfQJO3fluiRPEUzXAiFv9PQHMsSyB45D8YJjVOZMpbv3h7Wz+pW7JxvgJZ7rMvcbmkLMIhRHxx5pOl
+        pjd8A9Z6+mfzDCImgcycKywrfusD/Vbfj/Q5MX9BYiIptW9wpjsbhyy1g7DW+2FvC8P0ck3/LMGH5LZ1
+        dqXT16dyB0Hol5UzTC8g0sq9gazqAVjctPzIEKyNQSxvvwft7s9+WLDWWSlZ/cLrSWtecao313jU7/Vc
+        UhwYhuTAdaSs23mBlguY1hNDFb/ZYT18bVpuPhaEtvEOVC2/gOp6AF0voOsBNB2/I6UpjCR3ACLXIOTl
+        3hAngVjOJJ8+53K5yRkVnbdSj4egOH4H6tZxUKcnQZ36DeqT41A0jUB2OIgF+4eRvPcy5M/v/45Hiu0R
+        yWcgntbiUH88Bk37/WmxrvMPaE9PQdU6AUVDCEp6LbJtjbeTbSW1bBZL9Y/kM7C0bO9JXR+9ku4/ISt8
+        tVmYVfj2ozmOfcKsogqCeqwsLi7OEJV4JsThEHLtEf+ovjkMDp+w/CvZXGGRrXiL4Z32n5i/7ejrY3li
+        5Uo6/nC0ir8AWGKDIsRr4E0AAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="refreshButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
     <value>Magenta</value>
   </data>
   <data name="refreshButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>23, 22</value>
   </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>FileExplorer</value>
-  </data>
-  <data name="&gt;&gt;playButton.Name" xml:space="preserve">
-    <value>playButton</value>
-  </data>
-  <data name="&gt;&gt;fileNodeContextMenu.Name" xml:space="preserve">
-    <value>fileNodeContextMenu</value>
-  </data>
-  <data name="playButton.Text" xml:space="preserve">
-    <value>Play</value>
+  <data name="refreshButton.Text" xml:space="preserve">
+    <value>Refresh</value>
   </data>
   <data name="searchBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>100, 25</value>
   </data>
-  <data name="playButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+  <data name="searchButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAALjSURBVEhL3ZPrS1NxHMaFssuL+gt6aQpSYZm1VLDImG+6
+        gTN8EWVGRDQ0McULTmW9yJZs6jTHIsvbdJrzfo2xWJsO1sSK5SwrYjOdF5Y5t+nO0+83JSpKdmIRdODH
+        jy8cns/3eZ5zgoL+y0eu0u5o6DPcbRgYmWgYHHY39hnwsFXrqlQMjZfKO4UCwYNtf2xc0W/Yoxh6bu7W
+        maGdsGF01gnTIgPNpyW0mCZRUT+4cqu8WZ9/uzaMNYRuTsU1Y+8x7WYw7QGs5LxdBoyLwIAd6FtgUNqm
+        8eSVPBrhCQRbWEEUJJYuvRk2FwPHCuD0wnfbCOS1E+i2Ah3TQPssg4LSpvm0gqo8VgDl4MjEU4vVtzkV
+        pw+96WwhLtTEQauNAOaAsvZhFz9H+pIVoOWJwW0imdNYHKvrDshtdQNm4kD3GWicJC7mgXrLHK5niZdZ
+        AZSDRl+hb1xr2dPNaTy0g9El0sEMER4nThzEid2La1nlYAWoVQ271LYvvkLpxhZy6E3FnxFR5Tugk/Qw
+        RuY68yxSM8VOVoD7SvV4i3HSt2kPEaKZ01joTMUbJwATmSngTovGm8IXGVkBKup6hdLHak/fnBe9RFw1
+        BTSTzGksPaTcUeLsI+lDPe8FXyBblYqKERkZGew3RCLp2Vpyr00vVmk97XbGV2b3wpoLM+nhBdmcimeX
+        deBGRiFmus6huSoPvPBw//+H4sqmMIG4UVcka/dI+01oIF8LLbTObIdIpUe6QMZcTRMyupxjmKrhfoPE
+        xcVt9tvJlerq4EyhvCi9SPYqLbdimZ8jYVJvSpyXMkSm5JTsmuSEkx/yE7kw5Rz5AcLj8Tb5DdnoRW5M
+        VBI3+iB+BWHVyUaQ2Ki9x/86hBMREvc7SMKhhJ0BiYsTsTv+Z4hRftZx5mj06YAAqMjhiJAT30NaC7ng
+        xXNyAwagQjHrEAq6kHgK6ReTLwcUQMVi94fuizkQmpRyPimew9m1PeCAfyL4FV8rbW/BhtzSAAAAAElF
+        TkSuQmCC
+</value>
+  </data>
+  <data name="searchButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
     <value>Magenta</value>
-  </data>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 13</value>
-  </data>
-  <data name="&gt;&gt;playToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="treeView1.SelectedNodes" mimetype="application/x-microsoft.net.object.binary.base64">
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="stopButton.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;treeView1.Type" xml:space="preserve">
-    <value>MultiSelectTreeview.MultiSelectTreeview, Ares.Editor.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
-  </data>
-  <data name="refreshButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
-    <value>Magenta</value>
-  </data>
-  <data name="&gt;&gt;refreshButton.Name" xml:space="preserve">
-    <value>refreshButton</value>
-  </data>
-  <data name="&gt;&gt;treeView1.Name" xml:space="preserve">
-    <value>treeView1</value>
-  </data>
-  <data name="&gt;&gt;stopButton.Name" xml:space="preserve">
-    <value>stopButton</value>
-  </data>
-  <data name="toolStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>288, 25</value>
-  </data>
-  <data name="refreshButton.Text" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
-  <data name="playToolStripMenuItem.Text" xml:space="preserve">
-    <value>Play</value>
   </data>
   <data name="searchButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>23, 22</value>
   </data>
-  <data name="&gt;&gt;toolStrip1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="playButton.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;playButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="toolStrip1.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;treeView1.ZOrder" xml:space="preserve">
-    <value>1</value>
+  <data name="searchButton.Text" xml:space="preserve">
+    <value>Search</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="treeView1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
   </data>
-  <data name="&gt;&gt;playToolStripMenuItem.Name" xml:space="preserve">
-    <value>playToolStripMenuItem</value>
+  <data name="treeView1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 28</value>
   </data>
-  <data name="&gt;&gt;toolStrip1.Name" xml:space="preserve">
-    <value>toolStrip1</value>
-  </data>
-  <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 8.25pt</value>
-  </data>
-  <data name="&gt;&gt;searchButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;editToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="refreshButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsIAAA7CARUoSoAAAAOtSURBVEhLzZNrTFN3GMabDWhLC90560VoLb2dXoDGYp0i
-        NK2BCk4SlyGZKJ2ZCtnFuQ9s025ZNrc4h2iqEWRS6XB0KGAFAeUSQ9hcZubcJBKDGyKd3ZxascPBcGzM
-        Z2ckfANO12XJzqeT/H/P73nz/s9hsSJ84qQqatGWXTURxpljcstaR/75KUiXrHIw02ER5mhx6jJJrFCY
-        QOOxadtc7qe+BvLqBu9xCEIelmI2iFCZLcbi8orM9zsHMj/qH7Udv3w/+8hF/+pW/1hezzjWfD6FjNc+
-        bImkgK937PSsOHIF9qabyG0NIrdrFLk9E8junYS1awyWthFkNt9BTvvPUKavKgq7hM/ni0zbvV9m1QeQ
-        dfx7WFuCWNoxhkWdD5By+lfoT4agbQxC470JVY0fiurrMO46d4tLktKwSoxbK7rtviBsTbeQ9vEwDJWX
-        JpT7zo1Qrq9Cxqprk/pa/0OKlqtrhqGovIrEPZcgcw3C8FyZj7FgoW3di7nN97B036fjkpXF9ZwEan10
-        bOxiNoutZrPZaiLJ8KSx8tqk0uOHvOIqFh74FurdF6DbfLCP1Ji3MBXwVrjOh1JK9lyI4vBts156iiVT
-        670NpfsGdHu/AbWp/AuhxvS3mGSSs2TpeUXJBaVnaVA0F0yvz5NaPQRt0btnSamugOZ4jOIZgC0QKOh3
-        8XwBTc7GHfESxTM0wwlb/D8BzdEsgeCx/2CY5BiRKWfj4p2tfaRuyeb5CmTZz77E5ZKyMIcQ8cXpTxeb
-        3vD1W+von80zgKg4Mn2usKzwrQ/0230/0ufE/AXx8aTUvsmZ6mwYtFQPwFo3DHtrCKaXD/XNEnxEbttg
-        Vzp9vSp3AIR+WSnD9AIipdTrz6jsh8VNy48OwtoQwPK2+9Du/eyHBWud5ZLVL7yesOYVp3rrIY/6ve7L
-        isNDkBy+gaQNuy/ScgHTeqKowjfbrbXXp+XmTwLQNtyFqvkXUJ0PoesBdN2Apv13JDWGkOD2Q+QagLzU
-        G+TEEcuZ5NPnXC43Ma2s43bysSAUx+5C3TIO6swkqNO/QX1qHIrGEchqA1hQNYTE/Vcgf77qOx4ptocl
-        n4F4WotDfWIMmrYH02Jdxx/QnpmCqmUCivoglPRaZDsa7iTaiqrZLJbqH8lnYGnJ/lO6XnolXX9Clv9q
-        kzAj/+3HsxwHhRkFZQT1RElMTIwhIvFMiMMh5Nqjw6P6phA4fMLyr2RzhUW2wm2Gd9p+Yv62I6+P5omV
-        K+n4o5Eq/gJsOYMlviJpIAAAAABJRU5ErkJggg==
-</value>
-  </data>
-  <data name="playButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 22</value>
-  </data>
-  <data name="&gt;&gt;stopToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;fileNodeContextMenu.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="toolStrip1.Text" xml:space="preserve">
-    <value>toolStrip1</value>
+  <data name="treeView1.SelectedNodes" mimetype="application/x-microsoft.net.object.binary.base64">
   </data>
   <data name="treeView1.Size" type="System.Drawing.Size, System.Drawing">
     <value>288, 237</value>
   </data>
-  <data name="playToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>106, 22</value>
-  </data>
   <data name="treeView1.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <data name="&gt;&gt;refreshButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;treeView1.Name" xml:space="preserve">
+    <value>treeView1</value>
   </data>
-  <data name="searchButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
-    <value>Magenta</value>
-  </data>
-  <data name="stopToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>106, 22</value>
-  </data>
-  <data name="&gt;&gt;searchBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripTextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>File Explorer</value>
+  <data name="&gt;&gt;treeView1.Type" xml:space="preserve">
+    <value>MultiSelectTreeview.MultiSelectTreeview, Ares.Editor.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
   </data>
   <data name="&gt;&gt;treeView1.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;toolStrip1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;editToolStripMenuItem.Name" xml:space="preserve">
-    <value>editToolStripMenuItem</value>
-  </data>
-  <data name="editToolStripMenuItem.Text" xml:space="preserve">
-    <value>Edit ...</value>
-  </data>
-  <data name="toolStrip1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="&gt;&gt;stopToolStripMenuItem.Name" xml:space="preserve">
-    <value>stopToolStripMenuItem</value>
-  </data>
-  <data name="searchButton.Text" xml:space="preserve">
-    <value>Search</value>
-  </data>
-  <data name="stopButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 22</value>
-  </data>
-  <data name="&gt;&gt;toolStrip1.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="treeView1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 28</value>
-  </data>
-  <data name="fileNodeContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>107, 70</value>
-  </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>288, 264</value>
-  </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>Ares.Editor.ToolWindow, Ares.Editor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
-  </data>
-  <data name="&gt;&gt;searchButton.Name" xml:space="preserve">
-    <value>searchButton</value>
-  </data>
-  <data name="editToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>106, 22</value>
+  <data name="&gt;&gt;treeView1.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <metadata name="fileNodeContextMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>122, 17</value>
   </metadata>
-  <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
+  <data name="fileNodeContextMenu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>107, 70</value>
+  </data>
+  <data name="&gt;&gt;fileNodeContextMenu.Name" xml:space="preserve">
+    <value>fileNodeContextMenu</value>
+  </data>
+  <data name="&gt;&gt;fileNodeContextMenu.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="playToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>106, 22</value>
+  </data>
+  <data name="playToolStripMenuItem.Text" xml:space="preserve">
+    <value>Play</value>
+  </data>
+  <data name="stopToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>106, 22</value>
+  </data>
+  <data name="stopToolStripMenuItem.Text" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+  <data name="editToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>106, 22</value>
+  </data>
+  <data name="editToolStripMenuItem.Text" xml:space="preserve">
+    <value>Edit ...</value>
+  </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 13</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>288, 264</value>
+  </data>
+  <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 8.25pt</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>File Explorer</value>
+  </data>
+  <data name="&gt;&gt;playButton.Name" xml:space="preserve">
+    <value>playButton</value>
+  </data>
+  <data name="&gt;&gt;playButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;stopButton.Name" xml:space="preserve">
+    <value>stopButton</value>
+  </data>
+  <data name="&gt;&gt;stopButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;refreshButton.Name" xml:space="preserve">
+    <value>refreshButton</value>
+  </data>
+  <data name="&gt;&gt;refreshButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;searchBox.Name" xml:space="preserve">
+    <value>searchBox</value>
+  </data>
+  <data name="&gt;&gt;searchBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripTextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;searchButton.Name" xml:space="preserve">
+    <value>searchButton</value>
+  </data>
+  <data name="&gt;&gt;searchButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;playToolStripMenuItem.Name" xml:space="preserve">
+    <value>playToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;playToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;stopToolStripMenuItem.Name" xml:space="preserve">
+    <value>stopToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;stopToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;editToolStripMenuItem.Name" xml:space="preserve">
+    <value>editToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;editToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>FileExplorer</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>Ares.Editor.ToolWindow, Ares.Editor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
+  </data>
 </root>

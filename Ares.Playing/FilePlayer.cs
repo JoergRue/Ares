@@ -35,7 +35,7 @@ namespace Ares.Playing
                 ErrorHandling.BassErrorOccurred(file.Id, StringResources.FilePlayingError);
                 return 0;
             }
-            channel = Un4seen.Bass.AddOn.Fx.BassFx.BASS_FX_TempoCreate(channel, BASSFlag.BASS_STREAM_AUTOFREE | speakerFlag);
+            channel = Un4seen.Bass.AddOn.Fx.BassFx.BASS_FX_TempoCreate(channel, BASSFlag.BASS_STREAM_AUTOFREE | BASSFlag.BASS_FX_FREESOURCE | speakerFlag);
             if (channel == 0)
             {
                 ErrorHandling.BassErrorOccurred(file.Id, StringResources.FilePlayingError);

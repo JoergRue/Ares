@@ -126,6 +126,9 @@
   <data name="BassInitFail" xml:space="preserve">
     <value>Fatal: Couldn't initialize BASS engine!</value>
   </data>
+  <data name="CopyOrMoveParentIntoChild" xml:space="preserve">
+    <value>A parent directory can't be copied or moved into one of its child directories.</value>
+  </data>
   <data name="ElementIsEndless" xml:space="preserve">
     <value>A second key press stops the element (it contains infinite repeats).</value>
   </data>

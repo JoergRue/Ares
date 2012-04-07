@@ -126,6 +126,9 @@
   <data name="BassInitFail" xml:space="preserve">
     <value>Fehler: Konnte BASS nicht initialisieren!</value>
   </data>
+  <data name="CopyOrMoveParentIntoChild" xml:space="preserve">
+    <value>Ein Verzeichnis kann nicht in eines seiner Unterverzeichnisse kopiert oder verschoben werden.</value>
+  </data>
   <data name="ElementIsEndless" xml:space="preserve">
     <value>Ein erneuter Tastendruck stoppt das Element (es enthält unbegrenzte Wiederholungen).</value>
   </data>
