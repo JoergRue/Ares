@@ -23,6 +23,7 @@ using System.Linq;
 using System.Text;
 
 using Ares.Data;
+using Ares.ModelInfo;
 
 namespace Ares.Editor.Actions
 {
@@ -672,6 +673,84 @@ namespace Ares.Editor.Actions
         private IModeElement m_ModeElement;
         private ITrigger m_OldTrigger;
         private ITrigger m_NewTrigger;
+    }
+
+    public class SetAllTriggerFadingAction : Action
+    {
+        public SetAllTriggerFadingAction(bool fade, bool crossFade, int fadeTime)
+        {
+            m_Fade = fade;
+            m_CrossFade = crossFade;
+            m_FadeTime = fadeTime;
+
+            m_OldFades = new List<bool>();
+            m_OldCrossFades = new List<bool>();
+            m_OldFadeTimes = new List<int>();
+            m_OldStopsMusic = new List<bool>();
+            m_Triggers = new List<ITrigger>();
+            m_TriggeredElementIds = new List<int>();
+
+            Ares.Data.IProject project = Ares.ModelInfo.ModelChecks.Instance.Project;
+            if (project != null)
+            {
+                foreach (IMode mode in project.GetModes())
+                {
+                    foreach (IModeElement modeElement in mode.GetElements())
+                    {
+                        if (modeElement.Trigger != null && (modeElement.Trigger.StopMusic || modeElement.AlwaysStartsMusic()))
+                        {
+                            m_Triggers.Add(modeElement.Trigger);
+                            m_TriggeredElementIds.Add(modeElement.Id);
+                            m_OldFades.Add(modeElement.Trigger.FadeMusic);
+                            m_OldCrossFades.Add(modeElement.Trigger.CrossFadeMusic);
+                            m_OldFadeTimes.Add(modeElement.Trigger.FadeMusicTime);
+                            m_OldStopsMusic.Add(modeElement.Trigger.StopMusic);
+                        }
+                    }
+                }
+            }
+        }
+
+        public override void Do()
+        {
+            foreach (ITrigger trigger in m_Triggers)
+            {
+                trigger.FadeMusic = m_Fade;
+                trigger.CrossFadeMusic = m_CrossFade;
+                trigger.FadeMusicTime = m_FadeTime;
+                trigger.StopMusic = true;
+            }
+            foreach (int id in m_TriggeredElementIds)
+            {
+                ElementChanges.Instance.ElementTriggerChanged(id);
+            }
+        }
+
+        public override void Undo()
+        {
+            for (int i = 0; i < m_Triggers.Count; ++i)
+            {
+                m_Triggers[i].CrossFadeMusic = m_OldCrossFades[i];
+                m_Triggers[i].FadeMusic = m_OldFades[i];
+                m_Triggers[i].FadeMusicTime = m_OldFadeTimes[i];
+                m_Triggers[i].StopMusic = m_OldStopsMusic[i];
+            }
+            foreach (int id in m_TriggeredElementIds)
+            {
+                ElementChanges.Instance.ElementTriggerChanged(id);
+            }
+        }
+
+        private bool m_Fade;
+        private bool m_CrossFade;
+        private int m_FadeTime;
+
+        private List<ITrigger> m_Triggers;
+        private List<int> m_TriggeredElementIds;
+        private List<bool> m_OldFades;
+        private List<bool> m_OldCrossFades;
+        private List<bool> m_OldStopsMusic;
+        private List<int> m_OldFadeTimes;
     }
 
 }

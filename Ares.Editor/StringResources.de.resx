@@ -236,6 +236,9 @@ Soll es jetzt gespeichert werden?</value>
   <data name="SaveError" xml:space="preserve">
     <value>Fehler beim Speichern des Projektes: {0}</value>
   </data>
+  <data name="SetFadingForAll" xml:space="preserve">
+    <value>Übernehme Blenden-Einstellungen für alle Modus-Elemente</value>
+  </data>
   <data name="SoundFileEditorStartFail" xml:space="preserve">
     <value>Editor konnte nicht gestartet werden. Fehlermeldung: {0}</value>
   </data>

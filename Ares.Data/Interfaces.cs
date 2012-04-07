@@ -547,6 +547,21 @@ namespace Ares.Data
         bool StopMusic { get; set; }
 
         /// <summary>
+        /// If there shall be cross-fading for old music.
+        /// </summary>
+        bool CrossFadeMusic { get; set; }
+
+        /// <summary>
+        /// If there shall be fading for old music.
+        /// </summary>
+        bool FadeMusic { get; set; }
+
+        /// <summary>
+        /// Cross fading time for music, in milliseconds.
+        /// </summary>
+        Int32 FadeMusicTime { get; set; }
+
+        /// <summary>
         /// Serializes to an xml stream.
         /// </summary>
         /// <param name="writer">Writer for the xml</param>

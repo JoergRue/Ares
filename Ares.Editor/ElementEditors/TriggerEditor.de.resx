@@ -118,6 +118,47 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>59, 13</value>
+  </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>Blendzeit:  </value>
+  </data>
+  <data name="crossFadeButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>86, 17</value>
+  </data>
+  <data name="crossFadeButton.Text" xml:space="preserve">
+    <value>Überblenden</value>
+  </data>
+  <data name="fadeButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>167, 17</value>
+  </data>
+  <data name="fadeButton.Text" xml:space="preserve">
+    <value>Ausblenden, dann Einblenden</value>
+  </data>
+  <data name="noFadeButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>88, 17</value>
+  </data>
+  <data name="noFadeButton.Text" xml:space="preserve">
+    <value>Kein Blenden</value>
+  </data>
+  <data name="allCrossFadeButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADrwAAA68AZW8ckkAAAEmSURBVDhPpZNNa4NAEIbz/3+G3tNTc2zirh+x1kv0JDGC
+        qMVvsSBVkLe7SylqUip14GVhdJ6Z2ZndYWF1XaOqqpm47z1JhG9pu6mjbhoEQYCGBZRlKVQxfbQt+r7H
+        036PNE1njBkgYVk+W+9Otm2DK4oinHV9BhGAoiiQMXKR58iyTChn4tmIosD3fYRhKCrgEH4OwyAqEYCc
+        BT7KzH2u60KWZfDqlNMJ5tkQ/6qqug5wu90wjiMOh2cRYJqv3wBtHYDfvud5uF59lpXCdRwB0NldrGph
+        2pquqdsAlBA4l8v/KyBU2QagdGMFHOA6G1qghOLNsnA8vsBi52QKxa+LNJ+CJqYQx/HPe/hzE6cASZJg
+        GMb9Y+q6DgrbeS7CRvVI/Bsvf2lfJPu2AzV45soAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>164, 114</value>
+  </data>
+  <data name="crossFadingUpDown.Location" type="System.Drawing.Point, System.Drawing">
+    <value>91, 112</value>
+  </data>
   <data name="stopMusicLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>204, 17</value>
   </data>
@@ -138,6 +179,9 @@
   </data>
   <data name="groupBox2.Text" xml:space="preserve">
     <value>Steuerung</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Trigger</value>
   </data>
   <data name="selectKeyButton.Location" type="System.Drawing.Point, System.Drawing">
     <value>48, 19</value>

@@ -883,10 +883,13 @@ namespace Ares.Players
         {
         }
 
+        private int m_CurrentMusicId = -1;
+
         public void MusicStarted(int elementId)
         {
             try
             {
+                m_CurrentMusicId = elementId;
                 InformMusicChange(MusicInfo.GetInfo(elementId));
             }
             catch (System.IO.IOException e)
@@ -900,7 +903,11 @@ namespace Ares.Players
         {
             try
             {
-                InformMusicChange(MusicInfo.GetInfo(-1));
+                if (m_CurrentMusicId == elementId)
+                {
+                    m_CurrentMusicId = -1;
+                    InformMusicChange(MusicInfo.GetInfo(-1));
+                }
             }
             catch (System.IO.IOException e)
             {

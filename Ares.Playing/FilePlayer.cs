@@ -25,7 +25,7 @@ namespace Ares.Playing
 {
     class FilePlayer : IFilePlayer
     {
-        public int PlayFile(ISoundFile file, PlayingFinished callback, bool loop)
+        public int PlayFile(ISoundFile file, int fadeInTime, PlayingFinished callback, bool loop)
         {
             int channel = 0;
             BASSFlag speakerFlag = GetSpeakerFlag(file);
@@ -64,7 +64,7 @@ namespace Ares.Playing
                         return 0;
                     }
                 }
-                if (!SetStartVolume(file, channel))
+                if (!SetStartVolume(file, fadeInTime, channel))
                 {
                     return 0;
                 }
@@ -400,7 +400,7 @@ namespace Ares.Playing
 
         private System.Collections.Generic.Dictionary<int, ISoundFile> m_Loops = new Dictionary<int, ISoundFile>();
 
-        private bool SetStartVolume(ISoundFile file, int channel)
+        private bool SetStartVolume(ISoundFile file, int fadeInTime, int channel)
         {
             float volume = file.Volume / 100.0f;
             float specificVolume = 1.0f;
@@ -409,7 +409,7 @@ namespace Ares.Playing
                 volume = DetermineVolume(file.Effects, volume, out specificVolume);
             }
             m_RunningFilesVolumes[channel] = specificVolume;
-            if (file.Effects != null && file.Effects.FadeInTime != 0)
+            if ((file.Effects != null && file.Effects.FadeInTime != 0) || fadeInTime > 0)
             {
 
                 if (!Bass.BASS_ChannelSetAttribute(channel, BASSAttribute.BASS_ATTRIB_VOL, 0.0f))
@@ -417,7 +417,8 @@ namespace Ares.Playing
                     ErrorHandling.BassErrorOccurred(file.Id, StringResources.SetVolumeError);
                     return false;
                 }
-                if (!Bass.BASS_ChannelSlideAttribute(channel, BASSAttribute.BASS_ATTRIB_VOL, volume, file.Effects.FadeInTime))
+                int maxFadeInTime = file.Effects != null ? Math.Max(file.Effects.FadeInTime, fadeInTime) : fadeInTime;
+                if (!Bass.BASS_ChannelSlideAttribute(channel, BASSAttribute.BASS_ATTRIB_VOL, volume, maxFadeInTime))
                 {
                     ErrorHandling.BassErrorOccurred(file.Id, StringResources.SetVolumeError);
                     return false;
@@ -474,7 +475,7 @@ namespace Ares.Playing
         {
             int id = user.ToInt32();
             ISoundFile file = m_Loops[id];
-            SetStartVolume(file, channel);
+            SetStartVolume(file, 0, channel);
         }
 
         private void FadeOut(int channel, int time)

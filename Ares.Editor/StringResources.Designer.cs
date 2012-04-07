@@ -389,6 +389,15 @@ namespace Ares.Editor {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Set fading settings for all top-level elements. ähnelt.
+        /// </summary>
+        internal static string SetFadingForAll {
+            get {
+                return ResourceManager.GetString("SetFadingForAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Couldn&apos;&apos;t start editor. Error message: {0} ähnelt.
         /// </summary>
         internal static string SoundFileEditorStartFail {

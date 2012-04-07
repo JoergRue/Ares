@@ -238,10 +238,198 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>338, 211</value>
+    <value>338, 320</value>
   </data>
   <data name="groupBox2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
+  </data>
+  <data name="label3.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>27, 114</value>
+  </data>
+  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>67, 13</value>
+  </data>
+  <data name="label3.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>Fading time: </value>
+  </data>
+  <data name="&gt;&gt;label3.Name" xml:space="preserve">
+    <value>label3</value>
+  </data>
+  <data name="&gt;&gt;label3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label3.Parent" xml:space="preserve">
+    <value>groupBox2</value>
+  </data>
+  <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="crossFadeButton.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="crossFadeButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>27, 89</value>
+  </data>
+  <data name="crossFadeButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>80, 17</value>
+  </data>
+  <data name="crossFadeButton.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="crossFadeButton.Text" xml:space="preserve">
+    <value>Crossfading</value>
+  </data>
+  <data name="&gt;&gt;crossFadeButton.Name" xml:space="preserve">
+    <value>crossFadeButton</value>
+  </data>
+  <data name="&gt;&gt;crossFadeButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;crossFadeButton.Parent" xml:space="preserve">
+    <value>groupBox2</value>
+  </data>
+  <data name="&gt;&gt;crossFadeButton.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="fadeButton.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="fadeButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>27, 66</value>
+  </data>
+  <data name="fadeButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>105, 17</value>
+  </data>
+  <data name="fadeButton.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="fadeButton.Text" xml:space="preserve">
+    <value>Fade out, then in</value>
+  </data>
+  <data name="&gt;&gt;fadeButton.Name" xml:space="preserve">
+    <value>fadeButton</value>
+  </data>
+  <data name="&gt;&gt;fadeButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;fadeButton.Parent" xml:space="preserve">
+    <value>groupBox2</value>
+  </data>
+  <data name="&gt;&gt;fadeButton.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="noFadeButton.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="noFadeButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>27, 43</value>
+  </data>
+  <data name="noFadeButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>74, 17</value>
+  </data>
+  <data name="noFadeButton.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="noFadeButton.Text" xml:space="preserve">
+    <value>No Fading</value>
+  </data>
+  <data name="&gt;&gt;noFadeButton.Name" xml:space="preserve">
+    <value>noFadeButton</value>
+  </data>
+  <data name="&gt;&gt;noFadeButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;noFadeButton.Parent" xml:space="preserve">
+    <value>groupBox2</value>
+  </data>
+  <data name="&gt;&gt;noFadeButton.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="allCrossFadeButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADrwAAA68AZW8ckkAAAEmSURBVDhPpZNNa4NAEIbz/3+G3tNTc2zirh+x1kv0JDGC
+        qMVvsSBVkLe7SylqUip14GVhdJ6Z2ZndYWF1XaOqqpm47z1JhG9pu6mjbhoEQYCGBZRlKVQxfbQt+r7H
+        036PNE1njBkgYVk+W+9Otm2DK4oinHV9BhGAoiiQMXKR58iyTChn4tmIosD3fYRhKCrgEH4OwyAqEYCc
+        BT7KzH2u60KWZfDqlNMJ5tkQ/6qqug5wu90wjiMOh2cRYJqv3wBtHYDfvud5uF59lpXCdRwB0NldrGph
+        2pquqdsAlBA4l8v/KyBU2QagdGMFHOA6G1qghOLNsnA8vsBi52QKxa+LNJ+CJqYQx/HPe/hzE6cASZJg
+        GMb9Y+q6DgrbeS7CRvVI/Bsvf2lfJPu2AzV45soAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="allCrossFadeButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>260, 109</value>
+  </data>
+  <data name="allCrossFadeButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>33, 23</value>
+  </data>
+  <data name="allCrossFadeButton.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;allCrossFadeButton.Name" xml:space="preserve">
+    <value>allCrossFadeButton</value>
+  </data>
+  <data name="&gt;&gt;allCrossFadeButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;allCrossFadeButton.Parent" xml:space="preserve">
+    <value>groupBox2</value>
+  </data>
+  <data name="&gt;&gt;allCrossFadeButton.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="label2.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>173, 114</value>
+  </data>
+  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>20, 13</value>
+  </data>
+  <data name="label2.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>ms</value>
+  </data>
+  <data name="&gt;&gt;label2.Name" xml:space="preserve">
+    <value>label2</value>
+  </data>
+  <data name="&gt;&gt;label2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
+    <value>groupBox2</value>
+  </data>
+  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="crossFadingUpDown.Location" type="System.Drawing.Point, System.Drawing">
+    <value>100, 112</value>
+  </data>
+  <data name="crossFadingUpDown.Size" type="System.Drawing.Size, System.Drawing">
+    <value>67, 20</value>
+  </data>
+  <data name="crossFadingUpDown.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;crossFadingUpDown.Name" xml:space="preserve">
+    <value>crossFadingUpDown</value>
+  </data>
+  <data name="&gt;&gt;crossFadingUpDown.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;crossFadingUpDown.Parent" xml:space="preserve">
+    <value>groupBox2</value>
+  </data>
+  <data name="&gt;&gt;crossFadingUpDown.ZOrder" xml:space="preserve">
+    <value>6</value>
   </data>
   <data name="stopMusicLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -268,7 +456,7 @@
     <value>groupBox2</value>
   </data>
   <data name="&gt;&gt;stopMusicLabel.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>7</value>
   </data>
   <data name="stopMusicBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -295,13 +483,13 @@
     <value>groupBox2</value>
   </data>
   <data name="&gt;&gt;stopMusicBox.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>8</value>
   </data>
   <data name="stopSoundsBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="stopSoundsBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 43</value>
+    <value>6, 140</value>
   </data>
   <data name="stopSoundsBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>115, 18</value>
@@ -322,13 +510,13 @@
     <value>groupBox2</value>
   </data>
   <data name="&gt;&gt;stopSoundsBox.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>9</value>
   </data>
   <data name="groupBox2.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 126</value>
   </data>
   <data name="groupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>314, 72</value>
+    <value>314, 164</value>
   </data>
   <data name="groupBox2.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -352,7 +540,7 @@
     <value>Microsoft Sans Serif, 8.25pt</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>TriggerEditor</value>
+    <value>Trigger</value>
   </data>
   <data name="&gt;&gt;errorProvider.Name" xml:space="preserve">
     <value>errorProvider</value>
@@ -364,6 +552,6 @@
     <value>TriggerEditor</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>Ares.Editor.ElementEditors.EditorBase, Ares.Editor, Version=0.1.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
+    <value>Ares.Editor.ElementEditors.EditorBase, Ares.Editor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
   </data>
 </root>

@@ -63,12 +63,20 @@ namespace Ares.Editor.ElementEditors
             this.label1 = new System.Windows.Forms.Label();
             this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.crossFadeButton = new System.Windows.Forms.RadioButton();
+            this.fadeButton = new System.Windows.Forms.RadioButton();
+            this.noFadeButton = new System.Windows.Forms.RadioButton();
+            this.allCrossFadeButton = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.crossFadingUpDown = new System.Windows.Forms.NumericUpDown();
             this.stopMusicLabel = new System.Windows.Forms.Label();
             this.stopMusicBox = new System.Windows.Forms.CheckBox();
             this.stopSoundsBox = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.crossFadingUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -110,12 +118,76 @@ namespace Ares.Editor.ElementEditors
             // groupBox2
             // 
             resources.ApplyResources(this.groupBox2, "groupBox2");
+            this.groupBox2.Controls.Add(this.label3);
+            this.groupBox2.Controls.Add(this.crossFadeButton);
+            this.groupBox2.Controls.Add(this.fadeButton);
+            this.groupBox2.Controls.Add(this.noFadeButton);
+            this.groupBox2.Controls.Add(this.allCrossFadeButton);
+            this.groupBox2.Controls.Add(this.label2);
+            this.groupBox2.Controls.Add(this.crossFadingUpDown);
             this.groupBox2.Controls.Add(this.stopMusicLabel);
             this.groupBox2.Controls.Add(this.stopMusicBox);
             this.groupBox2.Controls.Add(this.stopSoundsBox);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.TabStop = false;
             this.groupBox2.UseCompatibleTextRendering = true;
+            // 
+            // label3
+            // 
+            resources.ApplyResources(this.label3, "label3");
+            this.label3.Name = "label3";
+            // 
+            // crossFadeButton
+            // 
+            resources.ApplyResources(this.crossFadeButton, "crossFadeButton");
+            this.crossFadeButton.Name = "crossFadeButton";
+            this.crossFadeButton.TabStop = true;
+            this.crossFadeButton.UseVisualStyleBackColor = true;
+            this.crossFadeButton.CheckedChanged += new System.EventHandler(this.crossFadingBox_CheckedChanged);
+            // 
+            // fadeButton
+            // 
+            resources.ApplyResources(this.fadeButton, "fadeButton");
+            this.fadeButton.Name = "fadeButton";
+            this.fadeButton.TabStop = true;
+            this.fadeButton.UseVisualStyleBackColor = true;
+            this.fadeButton.CheckedChanged += new System.EventHandler(this.crossFadingBox_CheckedChanged);
+            // 
+            // noFadeButton
+            // 
+            resources.ApplyResources(this.noFadeButton, "noFadeButton");
+            this.noFadeButton.Name = "noFadeButton";
+            this.noFadeButton.TabStop = true;
+            this.noFadeButton.UseVisualStyleBackColor = true;
+            this.noFadeButton.CheckedChanged += new System.EventHandler(this.crossFadingBox_CheckedChanged);
+            // 
+            // allCrossFadeButton
+            // 
+            resources.ApplyResources(this.allCrossFadeButton, "allCrossFadeButton");
+            this.allCrossFadeButton.Name = "allCrossFadeButton";
+            this.allCrossFadeButton.UseVisualStyleBackColor = true;
+            this.allCrossFadeButton.Click += new System.EventHandler(this.allCrossFadeButton_Click);
+            // 
+            // label2
+            // 
+            resources.ApplyResources(this.label2, "label2");
+            this.label2.Name = "label2";
+            // 
+            // crossFadingUpDown
+            // 
+            this.crossFadingUpDown.Increment = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            resources.ApplyResources(this.crossFadingUpDown, "crossFadingUpDown");
+            this.crossFadingUpDown.Maximum = new decimal(new int[] {
+            30000,
+            0,
+            0,
+            0});
+            this.crossFadingUpDown.Name = "crossFadingUpDown";
+            this.crossFadingUpDown.ValueChanged += new System.EventHandler(this.crossFadingUpDown_ValueChanged);
             // 
             // stopMusicLabel
             // 
@@ -145,9 +217,7 @@ namespace Ares.Editor.ElementEditors
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
-#if !MONO
             this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.Document)));
-#endif
             this.Name = "TriggerEditor";
             this.ShowInTaskbar = false;
             this.groupBox1.ResumeLayout(false);
@@ -155,6 +225,7 @@ namespace Ares.Editor.ElementEditors
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.crossFadingUpDown)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -170,5 +241,12 @@ namespace Ares.Editor.ElementEditors
         private System.Windows.Forms.CheckBox stopMusicBox;
         private System.Windows.Forms.CheckBox stopSoundsBox;
         private System.Windows.Forms.Label stopMusicLabel;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.NumericUpDown crossFadingUpDown;
+        private System.Windows.Forms.Button allCrossFadeButton;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.RadioButton crossFadeButton;
+        private System.Windows.Forms.RadioButton fadeButton;
+        private System.Windows.Forms.RadioButton noFadeButton;
     }
 }

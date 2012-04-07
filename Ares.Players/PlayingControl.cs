@@ -305,7 +305,8 @@ namespace Ares.Players
         {
             lock (syncObject)
             {
-                m_MusicElement = -1;
+                if (m_MusicElement == elementId)
+                    m_MusicElement = -1;
             }
         }
 

@@ -235,6 +235,9 @@ You should adapt some settings first.</value>
   <data name="SaveError" xml:space="preserve">
     <value>Error saving the project: {0}</value>
   </data>
+  <data name="SetFadingForAll" xml:space="preserve">
+    <value>Set fading settings for all top-level elements.</value>
+  </data>
   <data name="SoundFileEditorStartFail" xml:space="preserve">
     <value>Couldn''t start editor. Error message: {0}</value>
   </data>

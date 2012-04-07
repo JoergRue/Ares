@@ -161,7 +161,7 @@ namespace Ares.Playing
 
     interface IElementPlayerClient
     {
-        int PlayFile(IFileElement fileElement, Action<bool> afterPlayed, bool loop);
+        int PlayFile(IFileElement fileElement, int fadeInTime, Action<bool> afterPlayed, bool loop);
 
         bool Stopped { get; }
 
@@ -192,14 +192,14 @@ namespace Ares.Playing
 
         public virtual void VisitRandomMusicList(IRandomBackgroundMusicList musicList) { }
 
-        public abstract void StopMusic();
+        public abstract void StopMusic(int crossFadeMusicTime);
         public abstract void StopSounds();
         public abstract void SetSoundVolume(int volume);
 
         protected int CurrentPlayedHandle { get; set; }
         protected int CurrentFadeOut { get; set; }
 
-        protected void StopCurrentFile(bool allowFadeOut)
+        protected void StopCurrentFile(bool allowFadeOut, int fadeOutTime)
         {
             lock (syncObject)
             {
@@ -207,7 +207,12 @@ namespace Ares.Playing
                 {
                     int handle = CurrentPlayedHandle;
                     CurrentPlayedHandle = 0;
-                    PlayingModule.FilePlayer.StopFile(handle, allowFadeOut, CurrentFadeOut);
+                    int fadeOut = CurrentFadeOut;
+                    if (fadeOutTime > 0 && CurrentFadeOut > 0)
+                        fadeOut = Math.Min(CurrentFadeOut, fadeOutTime);
+                    else if (fadeOut == 0)
+                        fadeOut = fadeOutTime;
+                    PlayingModule.FilePlayer.StopFile(handle, allowFadeOut, fadeOut);
                 }
             }
         }
@@ -232,23 +237,26 @@ namespace Ares.Playing
             }
             if (delay.Ticks > 0)
             {
+                int fadeInTime = m_MusicFadeInTime;
                 m_RegisteredWaitHandle = ThreadPool.RegisterWaitForSingleObject(StoppedEvent, (Object state, bool timedOut) =>
                 {
                     m_RegisteredWaitHandle.Unregister(null);
                     if (timedOut && !Client.Stopped)
                     {
-                        Process(element);
+                        Process(element, fadeInTime);
                     }
                 },
                 null, delay, true);
             }
             else
             {
-                Process(element);
+                Process(element, m_MusicFadeInTime);
             }
         }
 
-        protected void Process(IElement element)
+        protected int m_MusicFadeInTime;
+
+        protected void Process(IElement element, int musicFadeInTime)
         {
             if (element.SetsMusicVolume)
             {
@@ -260,7 +268,9 @@ namespace Ares.Playing
                 PlayingModule.ThePlayer.SetVolume(VolumeTarget.Sounds, element.SoundVolume);
                 PlayingModule.ThePlayer.ProjectCallbacks.VolumeChanged(VolumeTarget.Sounds, element.SoundVolume);
             }
+            m_MusicFadeInTime = musicFadeInTime;
             element.Visit(this);
+            m_MusicFadeInTime = 0;
         }
 
         protected IChoiceElement SelectRandomElement(IElementContainer<IChoiceElement> choiceContainer)
@@ -307,7 +317,7 @@ namespace Ares.Playing
     {
         public override void VisitFileElement(IFileElement fileElement)
         {
-            CurrentPlayedHandle = Client.PlayFile(fileElement, (success) =>
+            CurrentPlayedHandle = Client.PlayFile(fileElement, m_MusicFadeInTime, (success) =>
                 {
                     bool stop = false;
                     lock (syncObject)
@@ -337,16 +347,21 @@ namespace Ares.Playing
 
         public void Stop()
         {
+            Stop(0);
+        }
+
+        public void Stop(int crossFadeMusicTime)
+        {
             lock (syncObject)
             {
                 shallStop = true;
             }
-            StopCurrentFile(false);
+            StopCurrentFile(crossFadeMusicTime > 0, crossFadeMusicTime / 2);
         }
 
-        public override void StopMusic()
+        public override void StopMusic(int crossFadeMusicTime)
         {
-            Stop();
+            Stop(crossFadeMusicTime);
         }
 
         public override void StopSounds()
@@ -372,7 +387,7 @@ namespace Ares.Playing
 
         public void Next()
         {
-            StopCurrentFile(true); // will automatically start the next file
+            StopCurrentFile(true, 0); // will automatically start the next file
         }
 
         public abstract void Previous();
@@ -398,7 +413,7 @@ namespace Ares.Playing
                     {
                         m_Index = i - 1;
                     }
-                    StopCurrentFile(true); // will automatically start the next file
+                    StopCurrentFile(true, 0); // will automatically start the next file
                     break;
                 }
             }
@@ -412,7 +427,7 @@ namespace Ares.Playing
                 if (m_Index < -1) 
                     m_Index = -1;
             }
-            StopCurrentFile(true); // will automatically start the next file
+            StopCurrentFile(true, 0); // will automatically start the next file
         }
 
         public override void PlayNext()
@@ -472,7 +487,7 @@ namespace Ares.Playing
             m_RepeatCount = 0;
         }
 
-        public void Start()
+        public void Start(int musicFadeInTime)
         {
             if (m_Container.GetElements().Count > 0)
             {
@@ -481,7 +496,7 @@ namespace Ares.Playing
                 {
                     PlayingModule.ThePlayer.ProjectCallbacks.MusicPlaylistStarted(m_Container.Id);
                 }
-                ThreadPool.QueueUserWorkItem(state => Process(m_Container));
+                ThreadPool.QueueUserWorkItem(state => Process(m_Container, musicFadeInTime));
             }
             else
             {
@@ -567,7 +582,7 @@ namespace Ares.Playing
             PlayNext();
         }
 
-        public void Start()
+        public void Start(int musicFadeInTime)
         {
             if (m_Container.GetElements().Count == 0)
             {
@@ -585,7 +600,7 @@ namespace Ares.Playing
             m_LastElementsStack.Add(element);
             m_GoBack = false;
             Monitor.Exit(syncObject);
-            Process(element);
+            Process(element, musicFadeInTime);
         }
 
         public RandomMusicPlayer(IRandomBackgroundMusicList list, WaitHandle stoppedEvent, IElementPlayerClient client)
@@ -616,9 +631,9 @@ namespace Ares.Playing
             Client.SubPlayerFinished(this);
         }
 
-        public void Start()
+        public void Start(int musicFadeInTime)
         {
-            Process(m_Element);
+            Process(m_Element, musicFadeInTime);
         }
 
         public SingleMusicPlayer(IFileElement musicFile, WaitHandle stoppedEvent, IElementPlayerClient client)
@@ -640,9 +655,9 @@ namespace Ares.Playing
         // in parallel containers
         // Mostly just pass through to our own client
 
-        public int PlayFile(IFileElement element, Action<bool> afterPlayed, bool loop)
+        public int PlayFile(IFileElement element, int fadeInTime, Action<bool> afterPlayed, bool loop)
         {
-            return Client.PlayFile(element, afterPlayed, loop);
+            return Client.PlayFile(element, fadeInTime, afterPlayed, loop);
         }
 
         public bool Stopped { get { return Client.Stopped; } }
@@ -669,7 +684,7 @@ namespace Ares.Playing
         
         // Because this player doesn't play music by itself, but delegates to sub-players,
         // no implementation is necessary
-        public override void StopMusic()
+        public override void StopMusic(int crossFadeMusicTime)
         { 
         }
 
@@ -679,7 +694,7 @@ namespace Ares.Playing
             {
                 m_StopSounds = true;
             }
-            StopCurrentFile(false);
+            StopCurrentFile(false, 0);
         }
 
         public override void SetSoundVolume(int volume)
@@ -711,11 +726,19 @@ namespace Ares.Playing
                 SingleMusicPlayer subPlayer = new SingleMusicPlayer(fileElement, StoppedEvent, this);
                 Client.SubPlayerStarted(subPlayer);
                 Interlocked.Increment(ref m_ActiveSubPlayers);
-                subPlayer.Start();
+                if (MusicFadeInTime != 0)
+                {
+                    subPlayer.Start(MusicFadeInTime);
+                    MusicFadeInTime = 0;
+                }
+                else
+                {
+                    subPlayer.Start(0);
+                }
             }
             else
             {
-                int handle = Client.PlayFile(fileElement, (success) =>
+                int handle = Client.PlayFile(fileElement, 0, (success) =>
                     {
                         lock (syncObject)
                         {
@@ -752,8 +775,9 @@ namespace Ares.Playing
                 ElementPlayer subPlayer = new ElementPlayer(this, StoppedEvent, element);
                 Client.SubPlayerStarted(subPlayer);
                 Interlocked.Increment(ref m_ActiveSubPlayers);
-                subPlayer.Start();
+                subPlayer.Start(MusicFadeInTime);
             }
+            MusicFadeInTime = 0;
         }
 
         public override void VisitChoiceContainer(IElementContainer<IChoiceElement> choiceContainer)
@@ -775,7 +799,8 @@ namespace Ares.Playing
             SequentialMusicPlayer subPlayer = new SequentialMusicPlayer(list, StoppedEvent, this);
             Client.SubPlayerStarted(subPlayer);
             Interlocked.Increment(ref m_ActiveSubPlayers);
-            subPlayer.Start();
+            subPlayer.Start(MusicFadeInTime);
+            MusicFadeInTime = 0;
         }
 
         public override void VisitRandomMusicList(IRandomBackgroundMusicList list)
@@ -785,13 +810,18 @@ namespace Ares.Playing
             RandomMusicPlayer subPlayer = new RandomMusicPlayer(list, StoppedEvent, this);
             Client.SubPlayerStarted(subPlayer);
             Interlocked.Increment(ref m_ActiveSubPlayers);
-            subPlayer.Start();
+            subPlayer.Start(MusicFadeInTime);
+            MusicFadeInTime = 0;
         }
 
         // Interface for the mode player
 
-        public void Start()
+        protected int MusicFadeInTime { get; set; }
+
+        public void Start(int musicFadeInTime)
         {
+            if (musicFadeInTime != 0)
+                MusicFadeInTime = musicFadeInTime;
             ThreadPool.QueueUserWorkItem(state => Next());
         }
 
@@ -868,7 +898,7 @@ namespace Ares.Playing
                     }
                     else
                     {
-                        Process(element.Element);
+                        Process(element.Element, MusicFadeInTime);
                     }
                 }
                 else
@@ -911,11 +941,11 @@ namespace Ares.Playing
 
     abstract class StartElementPlayer : IElementPlayerClient
     {
-        public int PlayFile(IFileElement fileElement, Action<bool> afterPlayed, bool loop)
+        public int PlayFile(IFileElement fileElement, int fadeInTime, Action<bool> afterPlayed, bool loop)
         {
             SoundFile soundFile = new SoundFile(fileElement);
             FileStarted(fileElement);
-            int handle = PlayingModule.FilePlayer.PlayFile(soundFile, (id, handle2) =>
+            int handle = PlayingModule.FilePlayer.PlayFile(soundFile, fadeInTime, (id, handle2) =>
                 {
                     FileFinished(id, fileElement.SoundFileType);
                     lock (syncObject)
@@ -950,7 +980,7 @@ namespace Ares.Playing
             }
         }
 
-        public void StopMusic()
+        public ManualResetEvent StopMusic(int crossFadeMusicTime)
         {
             List<ElementPlayerBase> players = new List<ElementPlayerBase>();
             lock (syncObject)
@@ -959,8 +989,9 @@ namespace Ares.Playing
             }
             foreach (ElementPlayerBase player in players)
             {
-                player.StopMusic();
+                player.StopMusic(crossFadeMusicTime);
             }
+            return m_StoppedEvent;
         }
 
         public void StopSounds()
@@ -1014,7 +1045,7 @@ namespace Ares.Playing
             }
         }
 
-        public void Start()
+        public void Start(int musicFadeInTime)
         {
             PlayerStarted();
             if (m_Element != null)
@@ -1025,7 +1056,7 @@ namespace Ares.Playing
                 {
                     m_SubPlayers[subPlayer] = true;
                 }
-                subPlayer.Start();
+                subPlayer.Start(musicFadeInTime);
             }
         }
 
@@ -1294,14 +1325,19 @@ namespace Ares.Playing
             }
         }
 
-        private void StopMusic()
+        private ManualResetEvent StopMusic(int crossFadeMusicTime)
         {
             List<StartElementPlayer> copy = new List<StartElementPlayer>();
             foreach (IElement key in m_Players.Keys)
             {
                 copy.AddRange(m_Players[key]);
             }
-            copy.ForEach(player => player.StopMusic());
+            ManualResetEvent mre = null;
+            foreach (StartElementPlayer player in copy)
+            {
+                mre = player.StopMusic(crossFadeMusicTime);
+            }
+            return mre;
         }
 
         private void StopSounds()
@@ -1376,7 +1412,7 @@ namespace Ares.Playing
             return true;
         }
 
-        private void DoStartElement(IElement element, StartElementPlayer player)
+        private void DoStartElement(IElement element, StartElementPlayer player, Int32 musicFadeInTime)
         {
             lock (syncObject)
             {
@@ -1387,7 +1423,7 @@ namespace Ares.Playing
                 m_Players[element].Add(player);
                 ++nrOfActivePlayers;
             }
-            player.Start();
+            player.Start(musicFadeInTime);
         }
 
         private void DoStopElement(IElement element)
@@ -1411,24 +1447,63 @@ namespace Ares.Playing
             DoStopElement(element);
         }
 
+        private RegisteredWaitHandle m_RegisteredWaitHandle;
+        private ModeElementPlayer m_NextModeElementPlayer;
+
         private void StartElement(IModeElement element)
         {
+            if (m_NextModeElementPlayer != null)
+            {
+                m_NextModeElementPlayer.Stop();
+                m_NextModeElementPlayer = null;
+            }
+
+            ManualResetEvent stoppedEvent = null;
             if (element.Trigger != null && element.Trigger.StopMusic)
             {
-                StopMusic();
+                int fadeTime = 0;
+                if (element.Trigger.CrossFadeMusic)
+                    fadeTime = element.Trigger.FadeMusicTime * 2; // because it will be calculated / 2 later again
+                else if (element.Trigger.FadeMusic)
+                    fadeTime = element.Trigger.FadeMusicTime;
+                stoppedEvent = StopMusic(fadeTime);
             }
             if (element.Trigger != null && element.Trigger.StopSounds)
             {
                 StopSounds();
             }
             ModeElementPlayer player = new ModeElementPlayer(element, ProjectCallbacks, player2 => PlayerStopped(player2, element));
-            DoStartElement(element, player);
+            if (stoppedEvent != null && element.Trigger.FadeMusic && element.Trigger.FadeMusicTime > 0)
+            {
+                RegisteredWaitHandle handle = null;
+                m_NextModeElementPlayer = player;
+                handle = ThreadPool.RegisterWaitForSingleObject(stoppedEvent, (Object state, bool timedOut) =>
+                {
+                    handle.Unregister(null);
+                    if (timedOut && !player.Stopped)
+                    {
+                        m_NextModeElementPlayer = null;
+                        DoStartElement(element, player, element.Trigger.FadeMusicTime / 2);
+                    }
+                },
+                null, element.Trigger.FadeMusicTime / 2, true);
+                m_RegisteredWaitHandle = handle;
+            }
+            else if (element.Trigger != null && element.Trigger.CrossFadeMusic && element.Trigger.FadeMusicTime > 0)
+            {
+                m_AllowTwoMusicPlayers = true;
+                DoStartElement(element, player, element.Trigger.FadeMusicTime);
+            }
+            else
+            {
+                DoStartElement(element, player, 0);
+            }
         }
 
         public void PlayElement(IElement element)
         {
             SingleElementPlayer player = new SingleElementPlayer(element, ElementCallbacks, player2 => PlayerStopped(player2, element));
-            DoStartElement(element, player);
+            DoStartElement(element, player, 0);
         }
 
         public void StopElement(IElement element)
@@ -1460,6 +1535,8 @@ namespace Ares.Playing
         internal int MusicVolume { get; set; }
         internal int SoundVolume { get; set; }
 
+        private bool m_AllowTwoMusicPlayers = false;
+
         internal IMusicPlayer ActiveMusicPlayer
         {
             get
@@ -1470,7 +1547,10 @@ namespace Ares.Playing
             {
                 if (m_ActiveMusicPlayer != null && m_ActiveMusicPlayer != value)
                 {
-                    m_ActiveMusicPlayer.Stop();
+                    if (!m_AllowTwoMusicPlayers)
+                        m_ActiveMusicPlayer.Stop();
+                    else
+                        m_AllowTwoMusicPlayers = false;
                 }
                 m_ActiveMusicPlayer = value;
             }
