@@ -49,6 +49,7 @@ namespace Ares.Playing
                     {
                         callback(file.Id, channel);
                     });
+                    m_RunningFilesVolumes[channel] = file.Volume;
                 }
                 if (!loop)
                 {
@@ -58,6 +59,7 @@ namespace Ares.Playing
                         lock (m_Mutex)
                         {
                             m_RunningStreams.Remove(channel);
+                            m_RunningFilesVolumes.Remove(channel);
                         }
                         return 0;
                     }
@@ -170,6 +172,7 @@ namespace Ares.Playing
                     {
                         Bass.BASS_StreamFree(channel);
                         m_RunningStreams.Remove(channel);
+                        m_RunningFilesVolumes.Remove(channel);
                     }
                     return 0;
                 }
@@ -217,16 +220,17 @@ namespace Ares.Playing
             }
         }
 
-        private static float DetermineVolume(Data.IEffects effects, float baseVolume)
+        private static float DetermineVolume(Data.IEffects effects, float baseVolume, out float specificVolume)
         {
             if (!effects.HasRandomVolume)
             {
-                return baseVolume * effects.Volume / 100.0f;
+                specificVolume = effects.Volume / 100.0f;
             }
             else
             {
-                return (float)(baseVolume * 0.01 * ((PlayingModule.Randomizer.NextDouble() * (effects.MaxRandomVolume - effects.MinRandomVolume) + effects.MinRandomVolume)));
+                specificVolume = (float)(0.01 * ((PlayingModule.Randomizer.NextDouble() * (effects.MaxRandomVolume - effects.MinRandomVolume) + effects.MinRandomVolume)));
             }
+            return baseVolume * specificVolume;
         }
 
         private static float DetermineIntEffectValue(Data.IIntEffect effect)
@@ -381,7 +385,9 @@ namespace Ares.Playing
             bool error = false;
             lock (m_Mutex)
             {
-                if (!Un4seen.Bass.Bass.BASS_ChannelSetAttribute(handle, BASSAttribute.BASS_ATTRIB_VOL, volume / 100.0f))
+                float specificVolume = m_RunningFilesVolumes.ContainsKey(handle) ? m_RunningFilesVolumes[handle] : 0.01f;
+                specificVolume *= volume * 0.01f;
+                if (!Un4seen.Bass.Bass.BASS_ChannelSetAttribute(handle, BASSAttribute.BASS_ATTRIB_VOL, specificVolume))
                 {
                     error = true;
                 }
@@ -397,10 +403,12 @@ namespace Ares.Playing
         private bool SetStartVolume(ISoundFile file, int channel)
         {
             float volume = file.Volume / 100.0f;
+            float specificVolume = 1.0f;
             if (file.Effects != null)
             {
-                volume = DetermineVolume(file.Effects, volume);
+                volume = DetermineVolume(file.Effects, volume, out specificVolume);
             }
+            m_RunningFilesVolumes[channel] = specificVolume;
             if (file.Effects != null && file.Effects.FadeInTime != 0)
             {
 
@@ -434,6 +442,7 @@ namespace Ares.Playing
             m_LoopSync = new SYNCPROC(LoopSync);
             m_StopSync = new SYNCPROC(StopSync);
             m_RunningStreams = new Dictionary<int, Action>();
+            m_RunningFilesVolumes = new Dictionary<int, float>();
         }
 
         public void Dispose()
@@ -483,6 +492,10 @@ namespace Ares.Playing
                     endAction = m_RunningStreams[channel];
                     m_RunningStreams.Remove(channel);
                 }
+                if (m_RunningFilesVolumes.ContainsKey(channel))
+                {
+                    m_RunningFilesVolumes.Remove(channel);
+                }
             }
             if (endAction != null)
             {
@@ -497,6 +510,7 @@ namespace Ares.Playing
         private SYNCPROC m_StopSync;
 
         private Dictionary<int, Action> m_RunningStreams;
+        private Dictionary<int, float> m_RunningFilesVolumes;
         private Object m_Mutex = new Int16();
 
     }
