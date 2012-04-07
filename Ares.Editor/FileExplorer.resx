@@ -117,245 +117,311 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="toolStrip1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
+  <data name="&gt;&gt;copyToolStripMenuItem.Name" xml:space="preserve">
+    <value>copyToolStripMenuItem</value>
   </data>
-  <data name="toolStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>288, 25</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="toolStrip1.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="toolStrip1.Text" xml:space="preserve">
-    <value>toolStrip1</value>
-  </data>
-  <data name="&gt;&gt;toolStrip1.Name" xml:space="preserve">
-    <value>toolStrip1</value>
-  </data>
-  <data name="&gt;&gt;toolStrip1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;toolStrip1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;toolStrip1.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="playButton.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="playButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
-    <value>Magenta</value>
-  </data>
-  <data name="playButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 22</value>
-  </data>
-  <data name="playButton.Text" xml:space="preserve">
-    <value>Play</value>
-  </data>
-  <data name="stopButton.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="stopButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
-    <value>Magenta</value>
-  </data>
-  <data name="stopButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 22</value>
-  </data>
-  <data name="stopButton.Text" xml:space="preserve">
+  <data name="stopToolStripMenuItem.Text" xml:space="preserve">
     <value>Stop</value>
   </data>
-  <data name="refreshButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="&gt;&gt;stopButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="searchButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAOuSURBVEhLzZN/UJN1HMd3BWxjg/U87YewOfbr2Q9g53Cm
-        CLvNgwkmd3YhVyTLS4Xrh9kfVLq6rqwzQ/RmJ2AymT+YKNACAeXHeRxll5dZcnIeFuKWK1MnLgzCKPLd
-        E3f8BzxrXXc9fz1339f79f7c5/s8LFaUT4JURS3atKMuyjhzTG5Z6yg8NwXpklUOZjoiwhwrTl8miRcK
-        k2g8PmOLy/3E10BB/dBdDkHII1LMBhEqs8VYWlmV/X7XYPahgVHbiUv3cg9eCKxuC4wV9I5jzedTyHrt
-        o9ZoCvh6x3bPioOXYW++gfy2EPK7R5HfO4HcvklYu8dgaR9Bdstt5HX8DGXmqpKIS/h8vsi01ftlTkMQ
-        OSe+h7U1hKWdY1jUdR9pp36F/pMwtE0haLw3oKoLQFF7DcYdZ29ySVIaUYlxc1WP3ReCrfkmMo76Yai+
-        OKHcc3aEcn0VNtZcndQf8j+gaLm6zg9F9RUk77oImWsIhucqfIwFC21Pv5jfchdL93w6LllZ2sBJop6J
-        jY9fzGax1Ww2W02kGB43Vl+dVHoCkFddwcIPv4V653noNu7rJzXmTUwFvBWuc+G0sl3nYzh826yXnmbJ
-        1npvQem+Dt3ub0BtqPxCqDH9LSaZ5CxZZkFJalH5GRoUzQXT6/Ok1w5DW/LuGVKqK6I5HqN4BmALBAr6
-        XTxfQJO3fluiRPEUzXAiFv9PQHMsSyB45D8YJjVOZMpbv3h7Wz+pW7JxvgJZ7rMvcbmkLMIhRHxx5pOl
-        pjd8A9Z6+mfzDCImgcycKywrfusD/Vbfj/Q5MX9BYiIptW9wpjsbhyy1g7DW+2FvC8P0ck3/LMGH5LZ1
-        dqXT16dyB0Hol5UzTC8g0sq9gazqAVjctPzIEKyNQSxvvwft7s9+WLDWWSlZ/cLrSWtecao313jU7/Vc
-        UhwYhuTAdaSs23mBlguY1hNDFb/ZYT18bVpuPhaEtvEOVC2/gOp6AF0voOsBNB2/I6UpjCR3ACLXIOTl
-        3hAngVjOJJ8+53K5yRkVnbdSj4egOH4H6tZxUKcnQZ36DeqT41A0jUB2OIgF+4eRvPcy5M/v/45Hiu0R
-        yWcgntbiUH88Bk37/WmxrvMPaE9PQdU6AUVDCEp6LbJtjbeTbSW1bBZL9Y/kM7C0bO9JXR+9ku4/ISt8
-        tVmYVfj2ozmOfcKsogqCeqwsLi7OEJV4JsThEHLtEf+ovjkMDp+w/CvZXGGRrXiL4Z32n5i/7ejrY3li
-        5Uo6/nC0ir8AWGKDIsRr4E0AAAAASUVORK5CYII=
+        YQUAAAAJcEhZcwAADr4AAA6+AepCscAAAALjSURBVEhL3ZPrS1NxHMaFssuL+gt6aQpSYZm1VFiRMd90
+        A2f4IsqMiGhooslSnJq9yOb91szIcrrpZs77tdSyzQlrYsVylhWxmXeWObfpztPvNyUqSnZiEXTgx48v
+        HJ7P93mec7y8/sunXNW/pbp9MLu6Uzta1aWxy9oHcV/ZbyuRd4/klDdlikT3Nv2xcXnH4A5593NDi9qA
+        /lEzhqat0M8z6Pu0AKV+DEXSzqUbhbWalJuVfqwhdHMq3jf8HhN2BhMOwETO20VANw90TgHtcwyy63sd
+        yVkPtHyRaAMriJzE0qwxwGxjYFkCrE64bjOBvLYCLSagcQJomGaQmlMzG5tamswKoOjSjj4xmlybU3H6
+        0JvORuKihzioMxPADFCgGrAJhMUvWQGUj7R2PcmcxmJZXnVAbpMdMBAH6s+AbIy4mAWqjDO4nJi7yAqg
+        6NK5Cn1jW8mebk7joR0MLZAOJonwCHFiIU6mnLh0tRCsAJX1A7Ye8xdXoXRjIzn0puLPiKjiHdBEehgm
+        s9QwjZiEPCsrwF1Fz4hSN+batJUI0cxpLHSm4rJRQE9mCril7HVGC8Q6VoAiaVtm0cPHjvYZJ9qIuGoc
+        qCWZ01haSblDxNlH0kfPrBMCkWS5WJyBwMBAb7ch+fmtG7Nu12tyVU8dDVOMq8yWuRUXBtLDC7I5FU8q
+        aMSV+DRMNp9CbWky+P7+7v8PGSU1fqI8mTqtrMFR3KFHNflaaKFSwxTEKg3iRBLmYux1Ri08hPEK3jcI
+        l8td77aTCxKJd0JmeXpcetmrWGHhokCYx8Qk5lvPxYv1UdFJFVHhRz+kRPCgFx74AcLn89e5DVnrRV5I
+        UCQveC9+BWHVyVqQ0KCdh/86hBPgw/0dJHxf+FaPxMUJ2B72M0R356TlxMHg4x4BUJH9AT5HvofUpfHA
+        D+Nc8xiACoWsQijoTMQxxJ2NOu9RABUL3e27K2SPb2T06cgwDmfbZo8D/ongV9QAbVZtZjw3AAAAAElF
+        TkSuQmCC
 </value>
   </data>
-  <data name="refreshButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+  <data name="&gt;&gt;searchBox.Name" xml:space="preserve">
+    <value>searchBox</value>
+  </data>
+  <data name="stopButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
     <value>Magenta</value>
   </data>
   <data name="refreshButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>23, 22</value>
   </data>
-  <data name="refreshButton.Text" xml:space="preserve">
-    <value>Refresh</value>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>FileExplorer</value>
+  </data>
+  <data name="deleteToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>146, 22</value>
+  </data>
+  <data name="&gt;&gt;playButton.Name" xml:space="preserve">
+    <value>playButton</value>
+  </data>
+  <data name="&gt;&gt;fileNodeContextMenu.Name" xml:space="preserve">
+    <value>fileNodeContextMenu</value>
+  </data>
+  <data name="playButton.Text" xml:space="preserve">
+    <value>Play</value>
+  </data>
+  <data name="&gt;&gt;copyToolStripMenuItem1.Name" xml:space="preserve">
+    <value>copyToolStripMenuItem1</value>
+  </data>
+  <data name="playButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 13</value>
+  </data>
+  <data name="stopButton.Text" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+  <data name="deleteToolStripMenuItem.Text" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="treeView1.SelectedNodes" mimetype="application/x-microsoft.net.object.binary.base64">
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="stopButton.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;editToolStripMenuItem.Name" xml:space="preserve">
+    <value>editToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;treeView1.Name" xml:space="preserve">
+    <value>treeView1</value>
   </data>
   <data name="searchBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>100, 25</value>
   </data>
-  <data name="searchButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAALjSURBVEhL3ZPrS1NxHMaFssuL+gt6aQpSYZm1VLDImG+6
-        gTN8EWVGRDQ0McULTmW9yJZs6jTHIsvbdJrzfo2xWJsO1sSK5SwrYjOdF5Y5t+nO0+83JSpKdmIRdODH
-        jy8cns/3eZ5zgoL+y0eu0u5o6DPcbRgYmWgYHHY39hnwsFXrqlQMjZfKO4UCwYNtf2xc0W/Yoxh6bu7W
-        maGdsGF01gnTIgPNpyW0mCZRUT+4cqu8WZ9/uzaMNYRuTsU1Y+8x7WYw7QGs5LxdBoyLwIAd6FtgUNqm
-        8eSVPBrhCQRbWEEUJJYuvRk2FwPHCuD0wnfbCOS1E+i2Ah3TQPssg4LSpvm0gqo8VgDl4MjEU4vVtzkV
-        pw+96WwhLtTEQauNAOaAsvZhFz9H+pIVoOWJwW0imdNYHKvrDshtdQNm4kD3GWicJC7mgXrLHK5niZdZ
-        AZSDRl+hb1xr2dPNaTy0g9El0sEMER4nThzEid2La1nlYAWoVQ271LYvvkLpxhZy6E3FnxFR5Tugk/Qw
-        RuY68yxSM8VOVoD7SvV4i3HSt2kPEaKZ01joTMUbJwATmSngTovGm8IXGVkBKup6hdLHak/fnBe9RFw1
-        BTSTzGksPaTcUeLsI+lDPe8FXyBblYqKERkZGew3RCLp2Vpyr00vVmk97XbGV2b3wpoLM+nhBdmcimeX
-        deBGRiFmus6huSoPvPBw//+H4sqmMIG4UVcka/dI+01oIF8LLbTObIdIpUe6QMZcTRMyupxjmKrhfoPE
-        xcVt9tvJlerq4EyhvCi9SPYqLbdimZ8jYVJvSpyXMkSm5JTsmuSEkx/yE7kw5Rz5AcLj8Tb5DdnoRW5M
-        VBI3+iB+BWHVyUaQ2Ki9x/86hBMREvc7SMKhhJ0BiYsTsTv+Z4hRftZx5mj06YAAqMjhiJAT30NaC7ng
-        xXNyAwagQjHrEAq6kHgK6ReTLwcUQMVi94fuizkQmpRyPimew9m1PeCAfyL4FV8rbW/BhtzSAAAAAElF
-        TkSuQmCC
-</value>
+  <data name="&gt;&gt;treeView1.Type" xml:space="preserve">
+    <value>MultiSelectTreeview.MultiSelectTreeview, Ares.Editor.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
   </data>
-  <data name="searchButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+  <data name="refreshButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
     <value>Magenta</value>
+  </data>
+  <data name="&gt;&gt;playToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;refreshButton.Name" xml:space="preserve">
+    <value>refreshButton</value>
+  </data>
+  <data name="toolStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>288, 25</value>
+  </data>
+  <data name="refreshButton.Text" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="playToolStripMenuItem.Text" xml:space="preserve">
+    <value>Play</value>
   </data>
   <data name="searchButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>23, 22</value>
   </data>
-  <data name="searchButton.Text" xml:space="preserve">
-    <value>Search</value>
+  <data name="&gt;&gt;toolStrip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="playButton.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="copyToolStripMenuItem1.Text" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="&gt;&gt;playButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="toolStrip1.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;pasteToolStripMenuItem.Name" xml:space="preserve">
+    <value>pasteToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;treeView1.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="treeView1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
   </data>
-  <data name="treeView1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 28</value>
+  <data name="&gt;&gt;playToolStripMenuItem.Name" xml:space="preserve">
+    <value>playToolStripMenuItem</value>
   </data>
-  <data name="treeView1.SelectedNodes" mimetype="application/x-microsoft.net.object.binary.base64">
-  </data>
-  <data name="treeView1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>288, 237</value>
-  </data>
-  <data name="treeView1.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;treeView1.Name" xml:space="preserve">
-    <value>treeView1</value>
-  </data>
-  <data name="&gt;&gt;treeView1.Type" xml:space="preserve">
-    <value>MultiSelectTreeview.MultiSelectTreeview, Ares.Editor.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
-  </data>
-  <data name="&gt;&gt;treeView1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;treeView1.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <metadata name="fileNodeContextMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>122, 17</value>
-  </metadata>
-  <data name="fileNodeContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>107, 70</value>
-  </data>
-  <data name="&gt;&gt;fileNodeContextMenu.Name" xml:space="preserve">
-    <value>fileNodeContextMenu</value>
-  </data>
-  <data name="&gt;&gt;fileNodeContextMenu.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="playToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>106, 22</value>
-  </data>
-  <data name="playToolStripMenuItem.Text" xml:space="preserve">
-    <value>Play</value>
-  </data>
-  <data name="stopToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>106, 22</value>
-  </data>
-  <data name="stopToolStripMenuItem.Text" xml:space="preserve">
-    <value>Stop</value>
-  </data>
-  <data name="editToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>106, 22</value>
-  </data>
-  <data name="editToolStripMenuItem.Text" xml:space="preserve">
-    <value>Edit ...</value>
-  </data>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 13</value>
-  </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>288, 264</value>
+  <data name="&gt;&gt;toolStrip1.Name" xml:space="preserve">
+    <value>toolStrip1</value>
   </data>
   <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 8.25pt</value>
   </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>File Explorer</value>
-  </data>
-  <data name="&gt;&gt;playButton.Name" xml:space="preserve">
-    <value>playButton</value>
-  </data>
-  <data name="&gt;&gt;playButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;stopButton.Name" xml:space="preserve">
-    <value>stopButton</value>
-  </data>
-  <data name="&gt;&gt;stopButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;refreshButton.Name" xml:space="preserve">
-    <value>refreshButton</value>
-  </data>
-  <data name="&gt;&gt;refreshButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;searchBox.Name" xml:space="preserve">
-    <value>searchBox</value>
-  </data>
-  <data name="&gt;&gt;searchBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripTextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;searchButton.Name" xml:space="preserve">
-    <value>searchButton</value>
-  </data>
-  <data name="&gt;&gt;searchButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;playToolStripMenuItem.Name" xml:space="preserve">
-    <value>playToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;playToolStripMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;editToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;stopToolStripMenuItem.Name" xml:space="preserve">
-    <value>stopToolStripMenuItem</value>
+  <data name="&gt;&gt;deleteToolStripMenuItem.Name" xml:space="preserve">
+    <value>deleteToolStripMenuItem</value>
+  </data>
+  <data name="copyToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>146, 22</value>
+  </data>
+  <data name="&gt;&gt;copyToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="refreshButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADr4AAA6+AepCscAAAAOsSURBVEhLzZN/UJN1HMd3BWxjg/U87YewObY9e/aDH+dw
+        pgi7zYMJJnd2IVcky0uF64fZH1S6uq6sM0P0pidoMlkqEwVaIKD8OI+j7PIyS07OwyJguTJ14sIgjCLf
+        PXLHf8Cz1nXX89dz9329X+/Pfb7Pw+FE+MTJNfSiTTtqIoyzx5SWtY6C81OQL1nlYKfDIszR0tRlslix
+        OIHBY9O3uNxPfA3k1w7c4RGEMizFbBChMVvSSioqs97v6M/6qG/UdvLy3ZzDF/2rW/xj+d3jWPP5FDJf
+        +7A5kgKhwbHds+LwFdgbryOvJYi8zlHkdU8gp2cS1s4xWFpHkNV0C7ltv0Cdsao47BKhUCgxbfV+mV0X
+        QPbJH2BtDmJp+xgWddxDyunfYPgkBF1DEFrvdWhq/FBVDyFtx7kbfJKUh1WStrmyy+4LwtZ4A+nHhmGs
+        ujSh3nNuhHZ9FUqr+n7S4Bm6TzNyqmYYqqqrSNx1CQrXAIzPlftYCxbann4xr+kOlu75dFy2sqSOl0A/
+        Ex0bu5jL4VJcLpcikoyPPyhRe/xQVl7Fwn3fgtp5AfqN+3tJrXkTW4Fghet8KKV014UontA266WnWLJ0
+        3ptQu69Bv/sb0BsqvhBrTQ/EJJuco8jIL04uLDvLgJK5YGZ9ntTqQeiK3z1LyvWFDCdgFc8AXJFIxbxL
+        5wtoc9dvi5epnmIYXtji/wlojuaIRI/8B8Mkx0hMuesXb2/pJfVLNs5XoMh59iU+n1SEOYREKM14ssT0
+        hq/PWsv8bJ5+RMWRGXOFFUVvfWDY6vuJOSfmL4iPJ+X2Dc5UZ/2Apbof1tph2FtCML18oHeW4ENK2zq7
+        2unr0bgDIAzLylimFxEpZV5/ZlUfLG5GfnQA1voAlrfehW73Zz8uWOuskK1+4fWENa84qc0HPNR7XZdV
+        hwYhO3QNSet2XmTkIrb1RNFFb7ZZjwxNy83HA9DV34am6VfQHfeh7wb0XYC27Q8kNYSQ4PZD4uqHsswb
+        5MURy9nk0+d8Pj8xvbz9ZvKJIFQnboNqHgd9ZhL06d9BnRqHqmEEiiMBLDg4iMS9V6B8/uB3AlJqD0s+
+        Awl0Fgf18Ri0rfemxfr2P6E7MwVN8wRUdUGombUottXfSrQVV3M5HM0/ks/A8tK9p/Q9zEo6/4Ki4NVG
+        cWbB249mO/aLMwvLCfqx0piYGGNE4pkQj0codUeHRw2NIfCEhOVfyeYKS2xFW4zvtP7M/m1HXh8tkKpX
+        MvGHI1X8DUSLgx8gDlMUAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="playButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 22</value>
   </data>
   <data name="&gt;&gt;stopToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;editToolStripMenuItem.Name" xml:space="preserve">
-    <value>editToolStripMenuItem</value>
+  <data name="&gt;&gt;fileNodeContextMenu.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;editToolStripMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;copyToolStripMenuItem1.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>FileExplorer</value>
+  <data name="pasteToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>Strg+V</value>
+  </data>
+  <data name="copyToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>146, 22</value>
+  </data>
+  <data name="treeView1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>288, 237</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator1.Name" xml:space="preserve">
+    <value>toolStripSeparator1</value>
+  </data>
+  <data name="playToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>146, 22</value>
+  </data>
+  <data name="treeView1.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;deleteToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;stopButton.Name" xml:space="preserve">
+    <value>stopButton</value>
+  </data>
+  <data name="searchButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="stopToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>146, 22</value>
+  </data>
+  <data name="copyToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>Strg+X</value>
+  </data>
+  <data name="&gt;&gt;searchBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripTextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>File Explorer</value>
+  </data>
+  <data name="pasteToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>146, 22</value>
+  </data>
+  <data name="&gt;&gt;treeView1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;toolStrip1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="toolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>143, 6</value>
+  </data>
+  <data name="toolStrip1.Text" xml:space="preserve">
+    <value>toolStrip1</value>
+  </data>
+  <data name="editToolStripMenuItem.Text" xml:space="preserve">
+    <value>Edit ...</value>
+  </data>
+  <data name="toolStrip1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="copyToolStripMenuItem.Text" xml:space="preserve">
+    <value>Cut</value>
+  </data>
+  <data name="pasteToolStripMenuItem.Text" xml:space="preserve">
+    <value>Paste</value>
+  </data>
+  <data name="copyToolStripMenuItem1.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>Strg+C</value>
+  </data>
+  <data name="&gt;&gt;toolStrip1.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;searchButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="stopButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 22</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="treeView1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 28</value>
+  </data>
+  <data name="searchButton.Text" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="fileNodeContextMenu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>147, 164</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>288, 264</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>Ares.Editor.ToolWindow, Ares.Editor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
   </data>
+  <data name="&gt;&gt;searchButton.Name" xml:space="preserve">
+    <value>searchButton</value>
+  </data>
+  <data name="&gt;&gt;stopToolStripMenuItem.Name" xml:space="preserve">
+    <value>stopToolStripMenuItem</value>
+  </data>
+  <data name="editToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>146, 22</value>
+  </data>
+  <data name="&gt;&gt;refreshButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pasteToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <metadata name="fileNodeContextMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>122, 17</value>
+  </metadata>
+  <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
 </root>

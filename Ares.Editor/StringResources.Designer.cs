@@ -97,6 +97,15 @@ namespace Ares.Editor {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Error deleting files: {0} ähnelt.
+        /// </summary>
+        internal static string DeleteError {
+            get {
+                return ResourceManager.GetString("DeleteError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die A second key press stops the element (it contains infinite repeats). ähnelt.
         /// </summary>
         internal static string ElementIsEndless {
@@ -358,6 +367,15 @@ namespace Ares.Editor {
         internal static string ProjectChanged {
             get {
                 return ResourceManager.GetString("ProjectChanged", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Files will be deleted permanently. Proceed? ähnelt.
+        /// </summary>
+        internal static string ReallyDelete {
+            get {
+                return ResourceManager.GetString("ReallyDelete", resourceCulture);
             }
         }
         

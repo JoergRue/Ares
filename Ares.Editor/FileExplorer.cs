@@ -130,6 +130,7 @@ namespace Ares.Editor
                     String relativeDir = subDir.Substring(rootLength);
                     subNode.Tag = new DraggedItem { NodeType = DraggedItemType.Directory, ItemType = dirType, RelativePath = relativeDir };
                     FillTreeNode(subNode, subDir, root, dirType, states);
+                    subNode.ContextMenuStrip = fileNodeContextMenu;
                     node.Nodes.Add(subNode);
                     if (states.ContainsKey(relativeDir) && states[relativeDir])
                     {
@@ -270,6 +271,22 @@ namespace Ares.Editor
             if (e.KeyCode == Keys.Return)
             {
                 DefaultNodeAction();
+                e.Handled = true;
+            }
+            else if (e.Control && e.KeyCode == Keys.C)
+            {
+                CopyFiles();
+                e.Handled = true;
+            }
+            else if (e.Control && e.KeyCode == Keys.X)
+            {
+                CutFiles();
+                e.Handled = true;
+            }
+            else if (e.Control && e.KeyCode == Keys.V)
+            {
+                PasteFiles();
+                e.Handled = true;
             }
         }
 
@@ -324,6 +341,7 @@ namespace Ares.Editor
             playToolStripMenuItem.Enabled = PlayingPossible;
             editToolStripMenuItem.Enabled = m_Parent != null && treeView1.SelectedNode != null && treeView1.SelectedNode.Tag != null &&
                 treeView1.SelectedNode.Tag is DraggedItem && ((DraggedItem)treeView1.SelectedNode.Tag).NodeType == DraggedItemType.File;
+            pasteToolStripMenuItem.Enabled = Clipboard.ContainsFileDropList() || Clipboard.ContainsData(DataFormats.GetFormat("AresFilesList").Name);
         }
 
         private void searchButton_Click(object sender, EventArgs e)
@@ -439,8 +457,6 @@ namespace Ares.Editor
             }
         }
 
-        private bool m_AcceptDrop = false;
-
         private void treeView1_DragEnter(object sender, DragEventArgs e)
         {
             CheckAllowedDrop(e);
@@ -452,23 +468,19 @@ namespace Ares.Editor
             {
                 if (((e.KeyState & 8) == 8) && ((e.AllowedEffect & DragDropEffects.Copy) == DragDropEffects.Copy))
                 {
-                    m_AcceptDrop = true;
                     e.Effect = DragDropEffects.Copy;
                 }
                 else if ((e.AllowedEffect & DragDropEffects.Move) == DragDropEffects.Move)
                 {
-                    m_AcceptDrop = true;
                     e.Effect = DragDropEffects.Move;
                 }
                 else
                 {
-                    m_AcceptDrop = false;
                     e.Effect = DragDropEffects.None;
                 }
             }
             else
             {
-                m_AcceptDrop = false;
                 e.Effect = DragDropEffects.None;
             }
         }
@@ -480,12 +492,10 @@ namespace Ares.Editor
 
         private void treeView1_DragLeave(object sender, EventArgs e)
         {
-            m_AcceptDrop = false;
         }
 
         private void treeView1_DragDrop(object sender, DragEventArgs e)
         {
-            m_AcceptDrop = false;
             bool move = false;
             if (((e.KeyState & 8) == 8) && ((e.AllowedEffect & DragDropEffects.Copy) == DragDropEffects.Copy))
             {
@@ -546,6 +556,28 @@ namespace Ares.Editor
                 return;
             }
 
+            Dictionary<String, object> uniqueElements = GetUniqueParents(files);
+
+            // check whether move is possible (no move of parent into child)
+            foreach (String file in uniqueElements.Keys)
+            {
+                if (targetPath.StartsWith(file, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    MessageBox.Show(this, StringResources.CopyOrMoveParentIntoChild, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+
+            m_TreeLocked = true;
+            Ares.ModelInfo.FileOperations.CopyOrMove(this, uniqueElements, move, targetPath, () =>
+                {
+                    m_TreeLocked = false;
+                    ReFillTree();
+                });
+        }
+
+        private Dictionary<String, object> GetUniqueParents(List<String> files)
+        {
             // make files unique
             Dictionary<String, object> uniqueElements = new Dictionary<string, object>();
             foreach (String file in files)
@@ -567,22 +599,105 @@ namespace Ares.Editor
                     parent = System.IO.Directory.GetParent(parent.FullName);
                 }
             }
-            // check whether move is possible (no move of parent into child)
-            foreach (String file in uniqueElements.Keys)
+            return uniqueElements;
+        }
+
+        [Serializable]
+        private class ClipboardFilesList
+        {
+            public List<String> Files { get; set; }
+            public bool FilesAreCut { get; set; }
+        }
+
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DeleteFiles();
+        }
+
+        private void DeleteFiles()
+        {
+            List<String> files = GetFilesForClipboard();
+            if (MessageBox.Show(this, StringResources.ReallyDelete, StringResources.Ares, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
             {
-                if (targetPath.StartsWith(file, StringComparison.InvariantCultureIgnoreCase))
+                Dictionary<String, object> uniqueParents = GetUniqueParents(files);
+                try
                 {
-                    MessageBox.Show(this, StringResources.CopyOrMoveParentIntoChild, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    foreach (String file in uniqueParents.Keys)
+                    {
+                        if (System.IO.Directory.Exists(file))
+                            System.IO.Directory.Delete(file, true);
+                        else if (System.IO.File.Exists(file))
+                            System.IO.File.Delete(file);
+                    }
+                }
+                catch (System.IO.IOException ex)
+                {
+                    MessageBox.Show(this, String.Format(StringResources.DeleteError, ex.Message), StringResources.Ares, MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Error);
                 }
             }
+        }
 
-            m_TreeLocked = true;
-            Ares.ModelInfo.FileOperations.CopyOrMove(this, uniqueElements, move, targetPath, () =>
+        private void copyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CutFiles();
+        }
+
+        private void CutFiles()
+        {
+            ClipboardFilesList filesList = new ClipboardFilesList();
+            filesList.Files = GetFilesForClipboard();
+            filesList.FilesAreCut = true;
+            Clipboard.SetData(DataFormats.GetFormat("AresFilesList").Name, filesList);
+        }
+
+        private void copyToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            CopyFiles();
+        }
+
+        private void CopyFiles()
+        {
+            ClipboardFilesList filesList = new ClipboardFilesList();
+            filesList.Files = GetFilesForClipboard();
+            filesList.FilesAreCut = false;
+            Clipboard.SetData(DataFormats.GetFormat("AresFilesList").Name, filesList);
+        }
+
+        private List<String> GetFilesForClipboard()
+        {
+            List<String> items = new List<String>();
+            String basePath = m_FileType == FileType.Sound ? Ares.Settings.Settings.Instance.SoundDirectory : Ares.Settings.Settings.Instance.MusicDirectory;
+            treeView1.SelectedNodes.ForEach(node => items.Add(System.IO.Path.Combine(basePath, ((DraggedItem)node.Tag).RelativePath)));
+            return items;
+        }
+
+        private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PasteFiles();
+        }
+
+        private void PasteFiles()
+        {
+            if (Clipboard.ContainsFileDropList())
+            {
+                System.Collections.Specialized.StringCollection filesList = Clipboard.GetFileDropList();
+                List<String> files = new List<string>();
+                foreach (String file in filesList)
                 {
-                    m_TreeLocked = false;
-                    ReFillTree();
-                });
+                    files.Add(file);
+                }
+                TreeNode target = treeView1.SelectedNode;
+                DropFiles(files, false, target);
+            }
+            else if (Clipboard.ContainsData(DataFormats.GetFormat("AresFilesList").Name))
+            {
+                ClipboardFilesList filesList = (ClipboardFilesList)Clipboard.GetData(DataFormats.GetFormat("AresFilesList").Name);
+                if (filesList != null)
+                {
+                    TreeNode target = treeView1.SelectedNode;
+                    DropFiles(filesList.Files, filesList.FilesAreCut, target);
+                }
+            }
         }
 
     }

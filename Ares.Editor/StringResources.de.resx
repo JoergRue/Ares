@@ -129,6 +129,9 @@
   <data name="CopyOrMoveParentIntoChild" xml:space="preserve">
     <value>Ein Verzeichnis kann nicht in eines seiner Unterverzeichnisse kopiert oder verschoben werden.</value>
   </data>
+  <data name="DeleteError" xml:space="preserve">
+    <value>Fehler beim Löschen der Dateien: {0}</value>
+  </data>
   <data name="ElementIsEndless" xml:space="preserve">
     <value>Ein erneuter Tastendruck stoppt das Element (es enthält unbegrenzte Wiederholungen).</value>
   </data>
@@ -226,6 +229,9 @@ Sie sollten zuerst ein paar Einstellungen vornehmen.</value>
   <data name="ProjectChanged" xml:space="preserve">
     <value>Das aktuelle Projekt hat ungespeicherte Änderungen.
 Soll es jetzt gespeichert werden?</value>
+  </data>
+  <data name="ReallyDelete" xml:space="preserve">
+    <value>Dateien werden permanent gelöscht. Fortsetzen?</value>
   </data>
   <data name="SaveError" xml:space="preserve">
     <value>Fehler beim Speichern des Projektes: {0}</value>

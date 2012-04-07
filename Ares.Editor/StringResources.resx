@@ -129,6 +129,9 @@
   <data name="CopyOrMoveParentIntoChild" xml:space="preserve">
     <value>A parent directory can't be copied or moved into one of its child directories.</value>
   </data>
+  <data name="DeleteError" xml:space="preserve">
+    <value>Error deleting files: {0}</value>
+  </data>
   <data name="ElementIsEndless" xml:space="preserve">
     <value>A second key press stops the element (it contains infinite repeats).</value>
   </data>
@@ -225,6 +228,9 @@ You should adapt some settings first.</value>
   </data>
   <data name="ProjectChanged" xml:space="preserve">
     <value>The current project has unsaved changes. Shall it be saved now?</value>
+  </data>
+  <data name="ReallyDelete" xml:space="preserve">
+    <value>Files will be deleted permanently. Proceed?</value>
   </data>
   <data name="SaveError" xml:space="preserve">
     <value>Error saving the project: {0}</value>
