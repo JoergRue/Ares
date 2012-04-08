@@ -1,3 +1,23 @@
+Version 1.1.0
+----------------------------------------------------------------------------------
+- Allgemein: Musik kann aus-/ein-/überblendet werden, wenn ein Moduselement 
+  gewechselt wird
+- Allgemein: Bessere Fehlermeldungen, wenn das BASS-System nicht initialisiert 
+  werden kann
+- Editor: Suche im Musik- & Geräuscheexplorer
+- Editor: Unterstützung für Drag & Drop und Zwischenablage im Projektexplorer
+- Editor: Unterstützung für Drag & Drop im Musik- & Geräuscheexplorer oder vom 
+  Windows-Explorer zum Musik- & Geräuscheexplorer
+- Editor: Unterstützung der Zwischenablage und Löschen im Musik- und 
+  Geräuscheexplorer
+- Editor: Bugfix: Robuster gegenüber kaputten Einstellungsdateien
+- Editor: Bugfix: Robuster bezüglich Änderungen an der Lautstärke-Einstellung
+- Player: Streaming über Icecast ermöglicht
+- Player: Bugfix: Ändern der globalen Geräuschlautstärke berücksichtigte nicht 
+  die ursprüngliche individuelle Lautstärke von bereits laufenden Geräuschen
+- Player: Bugfix: Datei-Handles werden jetzt nach dem Abspielen korrekt freigegeben
+- Player/MediaPortal: Plugin ist jetzt für die MediaPortal-Version 1.2.x
+
 Version 1.0.0
 ----------------------------------------------------------------------------------
 - Allgemein: Controller kann Elemente auswählen, die keine Taste zugewiesen haben

@@ -1,3 +1,20 @@
+Version 1.1.0
+----------------------------------------------------------------------------------
+- General: Music fading possible when mode element is switched
+- General: Better error messages if BASS engine can't be initialized.
+- Editor: Search in Music & Sound Explorer
+- Editor: Drag & drop and clipboard support in Project Explorer
+- Editor: Drag & drop in Music & Sound Explorer or from Windows Explorer to
+  Music & Sound Explorer
+- Editor: Cut / Copy / Paste / Delete in Music & Sound Explorer
+- Editor: Bugfix: More robust regarding corrupted setting files
+- Editor: Bugfix: More robust regarding volume control changes
+- Player: Streaming through Icecast is now possible
+- Player: Bugfix: Changing global sound volume didn't respect the original  
+  individual volume of already running sounds
+- Player: Bugfix: File handles are now correctly released after playing
+- Player/MediaPortal: Plugin now for MediaPortal version 1.2.x
+
 Version 1.0.0
 ----------------------------------------------------------------------------------
 - General: Controller can select elements which have no key assigned
