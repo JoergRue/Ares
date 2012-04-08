@@ -1197,6 +1197,10 @@ namespace Ares.Editor
                 if (item is ToolStripMenuItem)
                     item.Enabled = !disableAll && (!disable ||
                         ((item.Tag != null) && item.Tag.ToString().Contains("MultipleNodes")));
+                if (item.Tag != null && item.Tag.ToString().Contains("Paste"))
+                {
+                    item.Enabled = item.Enabled && Clipboard.ContainsData(DataFormats.GetFormat("AresProjectExplorerElements").Name);
+                }
             }
         }
 
@@ -1251,6 +1255,21 @@ namespace Ares.Editor
                 if (parent != null)
                 {
                     SelectedNode = parent;
+                }
+            }
+            else if (e.Control && e.KeyCode == Keys.C)
+            {
+                CopyElements();
+            }
+            else if (e.Control && e.KeyCode == Keys.X)
+            {
+                CutElements();
+            }
+            else if (e.Control && e.KeyCode == Keys.V)
+            {
+                if (projectTree.SelectedNodes.Count == 1 && !(projectTree.SelectedNode.Tag is IBackgroundSoundChoice))
+                {
+                    PasteElements();
                 }
             }
         }
@@ -1313,6 +1332,65 @@ namespace Ares.Editor
                     MessageBox.Show(this, String.Format(StringResources.SaveError, ex.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+        }
+
+        private void CutElements()
+        {
+            CopyElements();
+            DeleteElements();
+        }
+
+        [Serializable]
+        private class ClipboardElements
+        {
+            public String SerializedForm { get; set; }
+        }
+
+        private void CopyElements()
+        {
+            List<IXmlWritable> exportItems = new List<IXmlWritable>();
+            // export only root nodes
+            WithSelectedRoots((TreeNode rootElement) =>
+            {
+                if (rootElement.Tag is IXmlWritable)
+                    exportItems.Add(rootElement.Tag as IXmlWritable);
+            });
+            if (exportItems.Count == 0)
+                return;
+            StringBuilder serializedForm = new StringBuilder();
+            Data.DataModule.ProjectManager.ExportElements(exportItems, serializedForm);
+            ClipboardElements cpElements = new ClipboardElements() { SerializedForm = serializedForm.ToString() };
+            Clipboard.SetData(DataFormats.GetFormat("AresProjectExplorerElements").Name, cpElements);
+        }
+
+        public void PasteElements()
+        {
+            String format = DataFormats.GetFormat("AresProjectExplorerElements").Name;
+            if (!Clipboard.ContainsData(format))
+                return;
+            ClipboardElements cpElements = (ClipboardElements)Clipboard.GetData(format);
+            if (cpElements == null)
+                return;
+            String serializedForm = cpElements.SerializedForm;
+
+            IList<IXmlWritable> elements = Data.DataModule.ProjectManager.ImportElementsFromString(serializedForm);
+            TreeNode parentNode = SelectedNode;
+            bool hasEnabledElements = false;
+            foreach (IXmlWritable element in elements)
+            {
+                bool enabled = IsImportPossible(parentNode.Tag, element);
+                if (enabled)
+                {
+                    hasEnabledElements = true;
+                    AddImportedElement(parentNode, parentNode.Tag, element);
+                }
+            }
+            if (!hasEnabledElements)
+            {
+                MessageBox.Show(this, StringResources.NoPasteableElements, StringResources.Ares, MessageBoxButtons.OK);
+                return;
+            }
+
         }
 
         private bool IsImportPossible(object parentElement, IXmlWritable element)
@@ -1516,6 +1594,87 @@ namespace Ares.Editor
         private void importToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Import();
+        }
+
+        private void toolStripMenuItem4_Click_1(object sender, EventArgs e)
+        {
+            CutElements();
+        }
+
+        private void toolStripMenuItem5_Click_1(object sender, EventArgs e)
+        {
+            CopyElements();
+        }
+
+        private void toolStripMenuItem3_Click_1(object sender, EventArgs e)
+        {
+            PasteElements();
+        }
+
+        private void toolStripMenuItem8_Click(object sender, EventArgs e)
+        {
+            PasteElements();
+        }
+
+        private void toolStripMenuItem7_Click(object sender, EventArgs e)
+        {
+            CopyElements();
+        }
+
+        private void toolStripMenuItem6_Click(object sender, EventArgs e)
+        {
+            CutElements();
+        }
+
+        private void toolStripMenuItem11_Click(object sender, EventArgs e)
+        {
+            PasteElements();
+        }
+
+        private void toolStripMenuItem10_Click(object sender, EventArgs e)
+        {
+            CopyElements();
+        }
+
+        private void toolStripMenuItem9_Click(object sender, EventArgs e)
+        {
+            CutElements();
+        }
+
+        private void toolStripMenuItem13_Click(object sender, EventArgs e)
+        {
+            PasteElements();
+        }
+
+        private void toolStripMenuItem12_Click(object sender, EventArgs e)
+        {
+            CopyElements();
+        }
+
+        private void toolStripMenuItem11_Click_1(object sender, EventArgs e)
+        {
+            CutElements();
+        }
+
+        private void projectContextMenu_Opening(object sender, CancelEventArgs e)
+        {
+            ContextMenuStrip menu = SelectedNode != null ? SelectedNode.ContextMenuStrip : null;
+            if (menu == null)
+                return;
+
+            foreach (ToolStripItem item in menu.Items)
+            {
+                if (item.Tag != null && item.Tag.ToString().Contains("Paste"))
+                {
+                    item.Enabled = item.Enabled && Clipboard.ContainsData(DataFormats.GetFormat("AresProjectExplorerElements").Name);
+                }
+            }
+
+        }
+
+        private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PasteElements();
         }
 
     }

@@ -205,6 +205,9 @@ Left      - Previous music title</value>
   <data name="NoOpenedProject" xml:space="preserve">
     <value>No Project Opened</value>
   </data>
+  <data name="NoPasteableElements" xml:space="preserve">
+    <value>No elements found in the file which could be pasted here.</value>
+  </data>
   <data name="NoProjectName" xml:space="preserve">
     <value>[No name]</value>
   </data>

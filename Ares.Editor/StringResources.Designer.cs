@@ -305,6 +305,15 @@ namespace Ares.Editor {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die No elements found in the file which could be pasted here. ähnelt.
+        /// </summary>
+        internal static string NoPasteableElements {
+            get {
+                return ResourceManager.GetString("NoPasteableElements", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die [No name] ähnelt.
         /// </summary>
         internal static string NoProjectName {

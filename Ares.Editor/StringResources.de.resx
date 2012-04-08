@@ -205,6 +205,9 @@ Pfeil nach links  - Vorheriges Musikstück</value>
   <data name="NoOpenedProject" xml:space="preserve">
     <value>Kein Projekt geöffnet</value>
   </data>
+  <data name="NoPasteableElements" xml:space="preserve">
+    <value>In der Zwischenablage wurden keine Elemente gefunden, die hier eingefügt werden könnten.</value>
+  </data>
   <data name="NoProjectName" xml:space="preserve">
     <value>[Kein Name]</value>
   </data>

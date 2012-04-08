@@ -130,8 +130,17 @@
   <data name="toolStripMenuItem1.Text" xml:space="preserve">
     <value>Modus hinzufügen ...</value>
   </data>
+  <data name="importToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>186, 22</value>
+  </data>
+  <data name="pasteToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>186, 22</value>
+  </data>
+  <data name="pasteToolStripMenuItem.Text" xml:space="preserve">
+    <value>Einfügen</value>
+  </data>
   <data name="projectContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>187, 48</value>
+    <value>187, 92</value>
   </data>
   <data name="projectTree.SelectedNodes" mimetype="application/x-microsoft.net.object.binary.base64">
   </data>
@@ -146,6 +155,27 @@
   </data>
   <data name="toolStripMenuItem2.Text" xml:space="preserve">
     <value>Taste wählen ...</value>
+  </data>
+  <data name="toolStripSeparator9.Size" type="System.Drawing.Size, System.Drawing">
+    <value>266, 6</value>
+  </data>
+  <data name="toolStripMenuItem4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>269, 22</value>
+  </data>
+  <data name="toolStripMenuItem4.Text" xml:space="preserve">
+    <value>Ausschneiden</value>
+  </data>
+  <data name="toolStripMenuItem5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>269, 22</value>
+  </data>
+  <data name="toolStripMenuItem5.Text" xml:space="preserve">
+    <value>Kopieren</value>
+  </data>
+  <data name="toolStripMenuItem3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>269, 22</value>
+  </data>
+  <data name="toolStripMenuItem3.Text" xml:space="preserve">
+    <value>Einfügen</value>
   </data>
   <data name="deleteToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>269, 22</value>
@@ -201,8 +231,17 @@
   <data name="addChoiceListToolStripMenuItem.Text" xml:space="preserve">
     <value>Zufällige Liste hinzufügen ...</value>
   </data>
+  <data name="toolStripSeparator5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>266, 6</value>
+  </data>
+  <data name="importToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>269, 22</value>
+  </data>
+  <data name="exportToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>269, 22</value>
+  </data>
   <data name="modeContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>270, 236</value>
+    <value>270, 358</value>
   </data>
   <data name="editToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>269, 22</value>
@@ -227,6 +266,27 @@
   </data>
   <data name="modeElementStartingToolStripMenuItem.Text" xml:space="preserve">
     <value>Start ...</value>
+  </data>
+  <data name="toolStripSeparator10.Size" type="System.Drawing.Size, System.Drawing">
+    <value>266, 6</value>
+  </data>
+  <data name="toolStripMenuItem6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>269, 22</value>
+  </data>
+  <data name="toolStripMenuItem6.Text" xml:space="preserve">
+    <value>Ausschneiden</value>
+  </data>
+  <data name="toolStripMenuItem7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>269, 22</value>
+  </data>
+  <data name="toolStripMenuItem7.Text" xml:space="preserve">
+    <value>Kopieren</value>
+  </data>
+  <data name="toolStripMenuItem8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>269, 22</value>
+  </data>
+  <data name="toolStripMenuItem8.Text" xml:space="preserve">
+    <value>Einfügen</value>
   </data>
   <data name="deleteToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
     <value>269, 22</value>
@@ -276,41 +336,71 @@
   <data name="addChoiceListToolStripMenuItem1.Text" xml:space="preserve">
     <value>Zufällige Liste hinzufügen ...</value>
   </data>
+  <data name="toolStripSeparator6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>266, 6</value>
+  </data>
+  <data name="importToolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>269, 22</value>
+  </data>
+  <data name="exportToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>269, 22</value>
+  </data>
   <data name="containerContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>270, 258</value>
+    <value>270, 380</value>
   </data>
   <data name="editToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>155, 22</value>
+    <value>191, 22</value>
   </data>
   <data name="editToolStripMenuItem1.Text" xml:space="preserve">
     <value>Bearbeiten ...</value>
   </data>
   <data name="renameToolStripMenuItem3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>155, 22</value>
+    <value>191, 22</value>
   </data>
   <data name="renameToolStripMenuItem3.Text" xml:space="preserve">
     <value>Umbenennen</value>
   </data>
   <data name="selectElementKeyMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>155, 22</value>
+    <value>191, 22</value>
   </data>
   <data name="selectElementKeyMenuItem.Text" xml:space="preserve">
     <value>Taste wählen ...</value>
   </data>
   <data name="modeElementStartingToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>155, 22</value>
+    <value>191, 22</value>
   </data>
   <data name="modeElementStartingToolStripMenuItem1.Text" xml:space="preserve">
     <value>Start ...</value>
   </data>
+  <data name="toolStripSeparator11.Size" type="System.Drawing.Size, System.Drawing">
+    <value>188, 6</value>
+  </data>
+  <data name="toolStripMenuItem9.Size" type="System.Drawing.Size, System.Drawing">
+    <value>191, 22</value>
+  </data>
+  <data name="toolStripMenuItem9.Text" xml:space="preserve">
+    <value>Ausschneiden</value>
+  </data>
+  <data name="toolStripMenuItem10.Size" type="System.Drawing.Size, System.Drawing">
+    <value>191, 22</value>
+  </data>
+  <data name="toolStripMenuItem10.Text" xml:space="preserve">
+    <value>Kopieren</value>
+  </data>
   <data name="deleteToolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>155, 22</value>
+    <value>191, 22</value>
   </data>
   <data name="deleteToolStripMenuItem2.Text" xml:space="preserve">
     <value>Löschen</value>
   </data>
+  <data name="toolStripSeparator7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>188, 6</value>
+  </data>
+  <data name="exportToolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>191, 22</value>
+  </data>
   <data name="elementContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>156, 114</value>
+    <value>192, 192</value>
   </data>
   <data name="renameToolStripMenuItem4.Size" type="System.Drawing.Size, System.Drawing">
     <value>229, 22</value>
@@ -330,20 +420,50 @@
   <data name="modeElementStartingToolStripMenuItem2.Text" xml:space="preserve">
     <value>Start ...</value>
   </data>
-  <data name="deleteToolStripMenuItem3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>229, 22</value>
-  </data>
-  <data name="deleteToolStripMenuItem3.Text" xml:space="preserve">
-    <value>Löschen</value>
-  </data>
   <data name="addSoundChoiceToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>229, 22</value>
   </data>
   <data name="addSoundChoiceToolStripMenuItem.Text" xml:space="preserve">
     <value>Geräuschauswahl hinzufügen</value>
   </data>
+  <data name="toolStripSeparator12.Size" type="System.Drawing.Size, System.Drawing">
+    <value>226, 6</value>
+  </data>
+  <data name="toolStripMenuItem11.Size" type="System.Drawing.Size, System.Drawing">
+    <value>229, 22</value>
+  </data>
+  <data name="toolStripMenuItem11.Text" xml:space="preserve">
+    <value>Ausschneiden</value>
+  </data>
+  <data name="toolStripMenuItem12.Size" type="System.Drawing.Size, System.Drawing">
+    <value>229, 22</value>
+  </data>
+  <data name="toolStripMenuItem12.Text" xml:space="preserve">
+    <value>Kopieren</value>
+  </data>
+  <data name="toolStripMenuItem13.Size" type="System.Drawing.Size, System.Drawing">
+    <value>229, 22</value>
+  </data>
+  <data name="toolStripMenuItem13.Text" xml:space="preserve">
+    <value>Einfügen</value>
+  </data>
+  <data name="deleteToolStripMenuItem3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>229, 22</value>
+  </data>
+  <data name="deleteToolStripMenuItem3.Text" xml:space="preserve">
+    <value>Löschen</value>
+  </data>
+  <data name="toolStripSeparator8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>226, 6</value>
+  </data>
+  <data name="importToolStripMenuItem4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>229, 22</value>
+  </data>
+  <data name="exportToolStripMenuItem3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>229, 22</value>
+  </data>
   <data name="bgSoundsContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>230, 114</value>
+    <value>230, 236</value>
   </data>
   <data name="playButton.Text" xml:space="preserve">
     <value>Abspielen</value>
