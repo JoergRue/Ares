@@ -177,6 +177,7 @@ namespace Ares.Editor
             // 
             // projectTree
             // 
+            this.projectTree.AllowDrop = true;
             resources.ApplyResources(this.projectTree, "projectTree");
             this.projectTree.HideSelection = false;
             this.projectTree.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
@@ -187,9 +188,14 @@ namespace Ares.Editor
             this.projectTree.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.projectTree_BeforeExpand);
             this.projectTree.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.projectTree_BeforeSelect);
             this.projectTree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.projectTree_AfterSelect);
+            this.projectTree.DragDrop += new System.Windows.Forms.DragEventHandler(this.projectTree_DragDrop);
+            this.projectTree.DragEnter += new System.Windows.Forms.DragEventHandler(this.projectTree_DragEnter);
+            this.projectTree.DragOver += new System.Windows.Forms.DragEventHandler(this.projectTree_DragOver);
             this.projectTree.DoubleClick += new System.EventHandler(this.projectTree_DoubleClick);
             this.projectTree.KeyDown += new System.Windows.Forms.KeyEventHandler(this.projectTree_KeyDown);
             this.projectTree.MouseDown += new System.Windows.Forms.MouseEventHandler(this.projectTree_MouseDown);
+            this.projectTree.MouseMove += new System.Windows.Forms.MouseEventHandler(this.projectTree_MouseMove);
+            this.projectTree.MouseUp += new System.Windows.Forms.MouseEventHandler(this.projectTree_MouseUp);
             // 
             // modeContextMenu
             // 

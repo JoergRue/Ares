@@ -190,6 +190,9 @@ Pfeil nach links  - Vorheriges Musikstück</value>
   <data name="NewSoundChoice" xml:space="preserve">
     <value>Neue Geräuschauswahl</value>
   </data>
+  <data name="NoDroppableElements" xml:space="preserve">
+    <value>Diese Elemente können hier nicht eingefügt werden.</value>
+  </data>
   <data name="NoFileOrFolderFound" xml:space="preserve">
     <value>Keine Datei gefunden.</value>
   </data>

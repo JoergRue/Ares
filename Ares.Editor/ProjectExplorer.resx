@@ -531,7 +531,7 @@
     <value>Export ...</value>
   </data>
   <data name="elementContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>159, 192</value>
+    <value>159, 214</value>
   </data>
   <data name="&gt;&gt;elementContextMenu.Name" xml:space="preserve">
     <value>elementContextMenu</value>

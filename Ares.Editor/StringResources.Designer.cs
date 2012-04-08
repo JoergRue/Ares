@@ -260,6 +260,15 @@ namespace Ares.Editor {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die None of these elements can be dropped here. ähnelt.
+        /// </summary>
+        internal static string NoDroppableElements {
+            get {
+                return ResourceManager.GetString("NoDroppableElements", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die No file or folder found. ähnelt.
         /// </summary>
         internal static string NoFileOrFolderFound {

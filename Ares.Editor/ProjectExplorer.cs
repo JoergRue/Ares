@@ -338,10 +338,19 @@ namespace Ares.Editor
 
         private bool cancelExpand = false;
 
+        private Rectangle m_DragStartRect;
+        private bool m_InDrag;
+
         private void projectTree_MouseDown(object sender, MouseEventArgs e)
         {
             cancelExpand = e.Clicks > 1;
             setKeyButton.Enabled = (SelectedNode != null) && ((SelectedNode.Tag is IMode) || (SelectedNode.Tag is IModeElement));
+            if (e.Button == System.Windows.Forms.MouseButtons.Left)
+            {
+                Size dragSize = SystemInformation.DragSize;
+                m_DragStartRect = new Rectangle(new Point(e.X - dragSize.Width / 2, e.Y - dragSize.Height / 2), dragSize);
+                m_InDrag = true;
+            }
         }
 
         private void renameToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1390,7 +1399,6 @@ namespace Ares.Editor
                 MessageBox.Show(this, StringResources.NoPasteableElements, StringResources.Ares, MessageBoxButtons.OK);
                 return;
             }
-
         }
 
         private bool IsImportPossible(object parentElement, IXmlWritable element)
@@ -1677,5 +1685,123 @@ namespace Ares.Editor
             PasteElements();
         }
 
+        private void projectTree_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (m_InDrag && m_DragStartRect != null && !m_DragStartRect.Contains(e.X, e.Y))
+            {
+                List<IXmlWritable> exportItems = new List<IXmlWritable>();
+                List<TreeNode> exportNodes = new List<TreeNode>();
+                // export only root nodes
+                WithSelectedRoots((TreeNode rootElement) =>
+                {
+                    if (rootElement.Tag is IXmlWritable)
+                    {
+                        exportItems.Add(rootElement.Tag as IXmlWritable);
+                        exportNodes.Add(rootElement);
+                    }
+                });
+                if (exportItems.Count == 0)
+                    return;
+                StringBuilder serializedForm = new StringBuilder();
+                Data.DataModule.ProjectManager.ExportElements(exportItems, serializedForm);
+                ClipboardElements cpElements = new ClipboardElements() { SerializedForm = serializedForm.ToString() };
+                DragDropEffects effects = DoDragDrop(cpElements, DragDropEffects.Copy | DragDropEffects.Move);
+                if (effects == DragDropEffects.Move)
+                {
+                    foreach (TreeNode rootNode in exportNodes)
+                    {
+                        if (rootNode.Tag is IMode)
+                            DeleteMode(rootNode);
+                        else
+                            DeleteElement(rootNode);
+                    }
+                }
+                m_InDrag = false;
+            }
+
+        }
+
+        private void projectTree_MouseUp(object sender, MouseEventArgs e)
+        {
+            m_InDrag = false;
+        }
+
+        private void projectTree_DragEnter(object sender, DragEventArgs e)
+        {
+            CheckAllowedDrop(e);
+        }
+
+        private void CheckAllowedDrop(DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(typeof(ClipboardElements)))
+            {
+                TreeNode node = projectTree.GetNodeAt(projectTree.PointToClient(new Point(e.X, e.Y)));
+                if (node == null || node.Tag is IBackgroundSoundChoice)
+                {
+                    e.Effect = DragDropEffects.None;
+                }
+                else if (((e.KeyState & 8) == 8) && ((e.AllowedEffect & DragDropEffects.Copy) == DragDropEffects.Copy))
+                {
+                    e.Effect = DragDropEffects.Copy;
+                }
+                else if ((e.AllowedEffect & DragDropEffects.Move) == DragDropEffects.Move)
+                {
+                    e.Effect = DragDropEffects.Move;
+                }
+                else
+                {
+                    e.Effect = DragDropEffects.None;
+                }
+            }
+            else
+            {
+                e.Effect = DragDropEffects.None;
+            }
+        }
+
+        private void projectTree_DragOver(object sender, DragEventArgs e)
+        {
+            CheckAllowedDrop(e);
+        }
+
+        private void projectTree_DragDrop(object sender, DragEventArgs e)
+        {
+                TreeNode node = projectTree.GetNodeAt(projectTree.PointToClient(new Point(e.X, e.Y)));
+                if (node == null || node.Tag is IBackgroundSoundChoice)
+                {
+                    e.Effect = DragDropEffects.None;
+                    return;
+                }
+
+                if (!e.Data.GetDataPresent(typeof(ClipboardElements)))
+                {
+                    e.Effect = DragDropEffects.None;
+                    return;
+                }
+
+                ClipboardElements cpElements = (ClipboardElements)e.Data.GetData(typeof(ClipboardElements));
+                if (cpElements == null)
+                    return;
+                String serializedForm = cpElements.SerializedForm;
+
+                IList<IXmlWritable> elements = Data.DataModule.ProjectManager.ImportElementsFromString(serializedForm);
+                TreeNode parentNode = node;
+                bool hasEnabledElements = false;
+                foreach (IXmlWritable element in elements)
+                {
+                    bool enabled = IsImportPossible(parentNode.Tag, element);
+                    if (enabled)
+                    {
+                        hasEnabledElements = true;
+                        AddImportedElement(parentNode, parentNode.Tag, element);
+                    }
+                }
+                if (!hasEnabledElements)
+                {
+                    MessageBox.Show(this, StringResources.NoDroppableElements, StringResources.Ares, MessageBoxButtons.OK);
+                    e.Effect = DragDropEffects.None;
+                    return;
+                }
+        }
     }
 }

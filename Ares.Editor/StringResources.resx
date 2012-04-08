@@ -190,6 +190,9 @@ Left      - Previous music title</value>
   <data name="NewSoundChoice" xml:space="preserve">
     <value>New Sound Choice</value>
   </data>
+  <data name="NoDroppableElements" xml:space="preserve">
+    <value>None of these elements can be dropped here.</value>
+  </data>
   <data name="NoFileOrFolderFound" xml:space="preserve">
     <value>No file or folder found.</value>
   </data>
