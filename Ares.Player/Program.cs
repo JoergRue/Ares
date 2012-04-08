@@ -26,6 +26,45 @@ namespace Ares.Player
 {
     static class Program
     {
+
+        private static String GetBassInitErrorMessage()
+        {
+            switch (Un4seen.Bass.Bass.BASS_ErrorGetCode())
+            {
+                case Un4seen.Bass.BASSError.BASS_ERROR_DEVICE:
+                    return StringResources.BassDeviceInvalid;
+                case Un4seen.Bass.BASSError.BASS_ERROR_ALREADY:
+                    return StringResources.BassDeviceAlready;
+                case Un4seen.Bass.BASSError.BASS_ERROR_DRIVER:
+                    return StringResources.BassDeviceDriver;
+                case Un4seen.Bass.BASSError.BASS_ERROR_FORMAT:
+                    return StringResources.BassDeviceFormat;
+                case Un4seen.Bass.BASSError.BASS_ERROR_MEM:
+                    return StringResources.BassNoMem;
+                case Un4seen.Bass.BASSError.BASS_ERROR_NO3D:
+                    return StringResources.BassNo3D;
+                default:
+                    return StringResources.BassUnknown;
+            }
+        }
+
+        private static String MakeBassInitErrorMessage()
+        {
+            int device = Un4seen.Bass.Bass.BASS_GetDevice();
+            if (device != -1)
+            {
+                Un4seen.Bass.BASS_DEVICEINFO deviceInfo = Un4seen.Bass.Bass.BASS_GetDeviceInfo(device);
+                if (deviceInfo != null)
+                {
+                    String deviceStr = String.Format(StringResources.BassDeviceInfo, deviceInfo.name, 
+                        deviceInfo.driver != null ? deviceInfo.driver : StringResources.NoDeviceDriver, 
+                        deviceInfo.IsEnabled ? StringResources.DeviceEnabled : StringResources.DeviceDisabled);
+                    return String.Format(StringResources.BassInitFail, GetBassInitErrorMessage(), deviceStr);
+                }
+            }
+            return String.Format(StringResources.BassInitFail, GetBassInitErrorMessage(), StringResources.NoDevice);
+        }
+
         /// <summary>
         /// Der Haupteinstiegspunkt für die Anwendung.
         /// </summary>
@@ -50,19 +89,19 @@ namespace Ares.Player
 #if !MONO
                 if (!Un4seen.Bass.Bass.LoadMe())
                 {
-                    MessageBox.Show("Konnte BASS nicht laden!");
+                    MessageBox.Show(StringResources.BassLoadFail, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Stop);
                     return;
                 }
 #endif
                 if (!Un4seen.Bass.Bass.BASS_Init(-1, 44100, Un4seen.Bass.BASSInit.BASS_DEVICE_DEFAULT, IntPtr.Zero))
                 {
-                    MessageBox.Show(StringResources.BassInitFail, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    MessageBox.Show(MakeBassInitErrorMessage(), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Stop);
                     return;
                 }
 #if !MONO
                 if (!Un4seen.Bass.AddOn.Fx.BassFx.LoadMe())
                 {
-                    MessageBox.Show(StringResources.BassInitFail + "\n Error: " + Un4seen.Bass.Bass.BASS_ErrorGetCode(), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    MessageBox.Show(StringResources.BassFxLoadFail, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Stop);
                     return;
                 }
 #endif
