@@ -123,6 +123,15 @@ namespace Ares.Player
 
         bool m_InFileSystemWatcherHandler = false;
 
+        private void StopAllPlaying()
+        {
+            PlayingModule.ProjectPlayer.StopAll();
+            if (PlayingModule.Streamer.IsStreaming)
+            {
+                PlayingModule.Streamer.EndStreaming();
+            }
+        }
+
         private void fileSystemWatcher1_Changed(object sender, System.IO.FileSystemEventArgs e)
         {
             if (m_Project == null || m_InFileSystemWatcherHandler)
@@ -133,7 +142,7 @@ namespace Ares.Player
             {
                 if (MessageBox.Show(this, StringResources.ReloadProject, StringResources.Ares, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
                 {
-                    PlayingModule.ProjectPlayer.StopAll();
+                    StopAllPlaying();
                     OpenProject(path, false);
                 }
             }
@@ -152,7 +161,7 @@ namespace Ares.Player
 
         private void ShowSettingsDialog()
         {
-            PlayingModule.ProjectPlayer.StopAll();
+            StopAllPlaying();
             Ares.Settings.Settings settings = Ares.Settings.Settings.Instance;
             Ares.Settings.SettingsDialog dialog = new Ares.Settings.SettingsDialog(Ares.Settings.Settings.Instance, m_BasicSettings);
             if (dialog.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
@@ -168,7 +177,7 @@ namespace Ares.Player
 
         private void OpenProject()
         {
-            PlayingModule.ProjectPlayer.StopAll();
+            StopAllPlaying();
             DialogResult result = openFileDialog1.ShowDialog(this);
             if (result != System.Windows.Forms.DialogResult.OK)
                 return;
@@ -273,7 +282,7 @@ namespace Ares.Player
             }
             if (keyData == (Keys.F4 | Keys.Alt))
             {
-                PlayingModule.ProjectPlayer.StopAll();
+                StopAllPlaying();
                 Close();
                 return true;
             }
@@ -794,7 +803,7 @@ namespace Ares.Player
 
         private void importToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            PlayingModule.ProjectPlayer.StopAll();
+            StopAllPlaying();
 
             DialogResult result = importFileDialog.ShowDialog(this);
             if (result != System.Windows.Forms.DialogResult.OK)
@@ -817,6 +826,16 @@ namespace Ares.Player
 
             Ares.ModelInfo.Importer.Import(this, fileName, saveFileDialog.FileName, 
                 () => OpenProject(saveFileDialog.FileName, false));
+        }
+
+        private void streamingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            StopAllPlaying();
+            StreamingDialog dialog = new StreamingDialog();
+            if (dialog.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
+            {
+                Settings.Settings.Instance.Commit();
+            }
         }
     }
 }

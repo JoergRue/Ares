@@ -51,6 +51,15 @@ namespace Ares.Settings
 
         public int MessageFilterLevel { get; set; }
 
+        public bool UseStreaming { get; set; }
+
+        public String StreamingServerAddress { get; set; }
+
+        public int StreamingServerPort { get; set; }
+
+        public String StreamingPassword { get; set; }
+
+        public int StreamingEncoder { get; set; }
     }
 
     public class Settings
@@ -80,6 +89,16 @@ namespace Ares.Settings
         public String SoundFileEditor { get { return Data.SoundFileEditor; } set { Data.SoundFileEditor = value; } }
 
         public int MessageFilterLevel { get { return Data.MessageFilterLevel; } set { Data.MessageFilterLevel = value; } }
+
+        public bool UseStreaming { get { return Data.UseStreaming; } set { Data.UseStreaming = value; } }
+
+        public String StreamingServerAddress { get { return Data.StreamingServerAddress; } set { Data.StreamingServerAddress = value; } }
+
+        public int StreamingServerPort { get { return Data.StreamingServerPort; } set { Data.StreamingServerPort = value; } }
+
+        public String StreamingPassword { get { return Data.StreamingPassword; } set { Data.StreamingPassword = value; } }
+
+        public int StreamingEncoder { get { return Data.StreamingEncoder; } set { Data.StreamingEncoder = value; } }
 
         public static Settings Instance
         {
@@ -245,6 +264,11 @@ namespace Ares.Settings
             CheckForUpdate = true;
             SoundFileEditor = String.Empty;
             MessageFilterLevel = 2; // warning
+            UseStreaming = false;
+            StreamingServerAddress = "localhost";
+            StreamingServerPort = 8000;
+            StreamingPassword = "hackme";
+            StreamingEncoder = 1;
         }
 
         private void WriteSettings(XmlWriter writer)
@@ -273,6 +297,13 @@ namespace Ares.Settings
             writer.WriteEndElement();
             writer.WriteStartElement("Options");
             writer.WriteAttributeString("MessageFilterLevel", MessageFilterLevel.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            writer.WriteEndElement();
+            writer.WriteStartElement("Streaming");
+            writer.WriteAttributeString("Active", UseStreaming ? "true" : "false");
+            writer.WriteAttributeString("Address", StreamingServerAddress);
+            writer.WriteAttributeString("Port", StreamingServerPort.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            writer.WriteAttributeString("Password", StreamingPassword);
+            writer.WriteAttributeString("Encoding", StreamingEncoder.ToString(System.Globalization.CultureInfo.InvariantCulture));
             writer.WriteEndElement();
             writer.WriteEndElement();
         }
@@ -366,6 +397,22 @@ namespace Ares.Settings
                 else if (reader.IsStartElement("Options"))
                 {
                     MessageFilterLevel = reader.GetIntegerAttribute("MessageFilterLevel");
+                    if (reader.IsEmptyElement)
+                        reader.Read();
+                    else
+                    {
+                        reader.Read();
+                        reader.ReadInnerXml();
+                        reader.ReadEndElement();
+                    }
+                }
+                else if (reader.IsStartElement("Streaming"))
+                {
+                    UseStreaming = reader.GetBooleanAttribute("Active");
+                    StreamingServerAddress = reader.GetAttribute("Address");
+                    StreamingServerPort = reader.GetIntegerAttribute("Port");
+                    StreamingPassword = reader.GetAttribute("Password");
+                    StreamingEncoder = reader.GetIntegerAttribute("Encoding");
                     if (reader.IsEmptyElement)
                         reader.Read();
                     else

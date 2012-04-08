@@ -136,6 +136,9 @@
     <value>Could not start editor. Reason:
 {0}</value>
   </data>
+  <data name="GetLameYourself" xml:space="preserve">
+    <value>You have to obtain lame.exe yourself and copy it into the Ares Player installation directory.</value>
+  </data>
   <data name="HelpPage" xml:space="preserve">
     <value>http://aresrpg.sourceforge.net/en/hilfe/Player.html</value>
   </data>

@@ -67,6 +67,10 @@ namespace Ares.Players
             if (key == System.Windows.Forms.Keys.Escape)
             {
                 PlayingModule.ProjectPlayer.StopAll();
+                if (Settings.Settings.Instance.UseStreaming)
+                {
+                    PlayingModule.Streamer.EndStreaming();
+                }
                 return true;
             }
             else if (key == System.Windows.Forms.Keys.Up)
@@ -117,18 +121,44 @@ namespace Ares.Players
             }
             else
             {
+                if (Settings.Settings.Instance.UseStreaming && !PlayingModule.Streamer.IsStreaming)
+                {
+                    PlayingModule.Streamer.BeginStreaming(CreateStreamingParameters());
+                }
                 return PlayingModule.ProjectPlayer.KeyReceived((int)key);
             }
         }
 
         public void SelectMusicElement(Int32 elementId)
         {
+            if (Settings.Settings.Instance.UseStreaming && !PlayingModule.Streamer.IsStreaming)
+            {
+                PlayingModule.Streamer.BeginStreaming(CreateStreamingParameters());
+            }
             PlayingModule.ProjectPlayer.SetMusicTitle(elementId);
         }
 
         public bool SwitchElement(Int32 elementId)
         {
+            if (Settings.Settings.Instance.UseStreaming && !PlayingModule.Streamer.IsStreaming)
+            {
+                PlayingModule.Streamer.BeginStreaming(CreateStreamingParameters());
+            }
             return PlayingModule.ProjectPlayer.SwitchElement(elementId);
+        }
+
+        private Playing.StreamingParameters CreateStreamingParameters()
+        {
+            Playing.StreamingParameters result = new StreamingParameters();
+            Ares.Settings.Settings settings = Ares.Settings.Settings.Instance;
+            result.Encoding = (StreamEncoding)settings.StreamingEncoder;
+            result.Password = settings.StreamingPassword;
+            result.ServerAddress = settings.StreamingServerAddress;
+            result.ServerPort = settings.StreamingServerPort;
+            result.Streamer = StreamerType.Icecast;
+            result.StreamName = "Ares";
+            result.Username = "";
+            return result;
         }
 
         private Object syncObject = new Int16();

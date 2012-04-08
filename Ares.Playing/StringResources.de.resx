@@ -210,4 +210,7 @@
   <data name="SpeakerNotAvailable" xml:space="preserve">
     <value>Der eingestellte Lautsprecher ist nicht verfügbar.</value>
   </data>
+  <data name="StreamingError" xml:space="preserve">
+    <value>Streaming-Fehler: {0}</value>
+  </data>
 </root>

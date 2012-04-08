@@ -222,6 +222,11 @@ namespace Ares.Playing
             get { return sPlayer; }
         }
 
+        public static IStreamer Streamer
+        {
+            get { return BassStreamer.Instance; }
+        }
+
         public static void AddCallbacks(IProjectPlayingCallbacks callbacks)
         {
             ProjectCallbacks.Instance.AddCallbacks(callbacks);
@@ -255,5 +260,6 @@ namespace Ares.Playing
         private static Player sPlayer = new Player();
         private static FilePlayer sFilePlayer = new FilePlayer();
         private static Random sRandom = new Random();
+        
    }
 }

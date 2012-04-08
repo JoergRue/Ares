@@ -35,7 +35,9 @@ namespace Ares.Playing
                 ErrorHandling.BassErrorOccurred(file.Id, StringResources.FilePlayingError);
                 return 0;
             }
-            channel = Un4seen.Bass.AddOn.Fx.BassFx.BASS_FX_TempoCreate(channel, BASSFlag.BASS_STREAM_AUTOFREE | BASSFlag.BASS_FX_FREESOURCE | speakerFlag);
+            bool isStreaming = BassStreamer.Instance.IsStreaming;
+            Un4seen.Bass.BASSFlag flags = isStreaming ? BASSFlag.BASS_FX_FREESOURCE | BASSFlag.BASS_STREAM_DECODE : BASSFlag.BASS_STREAM_AUTOFREE | BASSFlag.BASS_FX_FREESOURCE | speakerFlag;
+            channel = Un4seen.Bass.AddOn.Fx.BassFx.BASS_FX_TempoCreate(channel, flags);
             if (channel == 0)
             {
                 ErrorHandling.BassErrorOccurred(file.Id, StringResources.FilePlayingError);
@@ -165,7 +167,8 @@ namespace Ares.Playing
                 {
                     Bass.BASS_ChannelFlags(channel, BASSFlag.BASS_SAMPLE_LOOP, BASSFlag.BASS_SAMPLE_LOOP);
                 }
-                if (!Bass.BASS_ChannelPlay(channel, false))
+                bool result = isStreaming ? BassStreamer.Instance.AddChannel(channel) : Bass.BASS_ChannelPlay(channel, false);
+                if (!result)
                 {
                     ErrorHandling.BassErrorOccurred(file.Id, StringResources.FilePlayingError);
                     lock (m_Mutex)
@@ -498,6 +501,10 @@ namespace Ares.Playing
                     m_RunningFilesVolumes.Remove(channel);
                 }
             }
+
+            if (BassStreamer.Instance.IsStreaming)
+                BassStreamer.Instance.RemoveChannel(channel);
+
             if (endAction != null)
             {
                 endAction();
