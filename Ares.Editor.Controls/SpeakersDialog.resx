@@ -120,6 +120,9 @@
   <data name="oneSpeakerBox.Items2" xml:space="preserve">
     <value>Center (5.1 or 7.1)</value>
   </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Note: Speaker assignment works only with mono sounds.</value>
+  </data>
   <data name="&gt;&gt;twoSpeakersButton.Name" xml:space="preserve">
     <value>twoSpeakersButton</value>
   </data>
@@ -138,16 +141,13 @@
     <value>163, 21</value>
   </data>
   <data name="&gt;&gt;twoSpeakersButton.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="&gt;&gt;stopButton.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;defaultButton.Parent" xml:space="preserve">
     <value>groupBox1</value>
-  </data>
-  <data name="twoSpeakersButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>94, 18</value>
   </data>
   <data name="oneSpeakerBox.Items4" xml:space="preserve">
     <value>Rear Right (5.1 or 7.1)</value>
@@ -156,8 +156,8 @@
   <data name="defaultButton.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="oneSpeakerBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>112, 43</value>
+  <data name="okButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>137, 238</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>SpeakersDialog</value>
@@ -165,8 +165,8 @@
   <data name="oneSpeakerButton.Text" xml:space="preserve">
     <value>One Speaker</value>
   </data>
-  <data name="groupBox2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
+  <data name="&gt;&gt;label1.Name" xml:space="preserve">
+    <value>label1</value>
   </data>
   <data name="randomButton.Text" xml:space="preserve">
     <value>Random</value>
@@ -202,7 +202,7 @@
     <value>Center and Subwoofer (5.1 or 7.1)</value>
   </data>
   <data name="&gt;&gt;oneSpeakerBox.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="&gt;&gt;playButton.Parent" xml:space="preserve">
     <value>groupBox2</value>
@@ -220,7 +220,7 @@
     <value>4</value>
   </data>
   <data name="cancelButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>218, 204</value>
+    <value>218, 238</value>
   </data>
   <data name="defaultButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>58, 18</value>
@@ -234,20 +234,20 @@
   <data name="defaultButton.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="oneSpeakerButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 43</value>
+  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
+    <value>groupBox1</value>
   </data>
-  <data name="randomButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>65, 18</value>
+  <data name="oneSpeakerBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>112, 43</value>
   </data>
-  <data name="okButton.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
+  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="&gt;&gt;defaultButton.Type" xml:space="preserve">
     <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;randomButton.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="twoSpeakersBox.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -255,14 +255,23 @@
   <data name="okButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
   </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>Speaker Assignment</value>
+  <data name="label1.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>272, 33</value>
   </data>
   <data name="cancelButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
   </data>
   <data name="okButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
+  </data>
+  <data name="okButton.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="twoSpeakersBox.Items" xml:space="preserve">
+    <value>Front</value>
   </data>
   <data name="groupBox2.Text" xml:space="preserve">
     <value>Test</value>
@@ -272,6 +281,9 @@
   </data>
   <data name="&gt;&gt;playButton.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="randomButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>65, 18</value>
   </data>
   <data name="&gt;&gt;cancelButton.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -382,7 +394,7 @@
     <value>defaultButton</value>
   </data>
   <data name="groupBox2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 139</value>
+    <value>12, 173</value>
   </data>
   <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 12</value>
@@ -411,20 +423,20 @@
   <data name="&gt;&gt;oneSpeakerBox.Name" xml:space="preserve">
     <value>oneSpeakerBox</value>
   </data>
-  <data name="groupBox1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
+  <data name="twoSpeakersButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>94, 18</value>
   </data>
   <data name="oneSpeakerButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>89, 18</value>
   </data>
   <data name="&gt;&gt;oneSpeakerButton.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="okButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>137, 204</value>
+    <value>5</value>
   </data>
   <data name="okButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
+  </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 13</value>
   </data>
   <data name="&gt;&gt;randomButton.Type" xml:space="preserve">
     <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -451,10 +463,10 @@
     <value>cancelButton</value>
   </data>
   <data name="&gt;&gt;defaultButton.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 13</value>
+  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 119</value>
   </data>
   <data name="groupBox2.Size" type="System.Drawing.Size, System.Drawing">
     <value>281, 59</value>
@@ -462,8 +474,14 @@
   <data name="randomButton.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="oneSpeakerButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 43</value>
+  </data>
   <data name="&gt;&gt;groupBox2.Name" xml:space="preserve">
     <value>groupBox2</value>
+  </data>
+  <data name="groupBox2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
   </data>
   <data name="&gt;&gt;groupBox1.Type" xml:space="preserve">
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -478,7 +496,7 @@
     <value>$this</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>305, 240</value>
+    <value>305, 273</value>
   </data>
   <data name="&gt;&gt;twoSpeakersBox.Parent" xml:space="preserve">
     <value>groupBox1</value>
@@ -490,7 +508,7 @@
     <value>38, 23</value>
   </data>
   <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>281, 121</value>
+    <value>281, 155</value>
   </data>
   <data name="twoSpeakersBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -510,6 +528,9 @@
   <data name="&gt;&gt;groupBox1.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Speaker Assignment</value>
+  </data>
   <data name="&gt;&gt;groupBox2.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
@@ -519,11 +540,14 @@
   <data name="&gt;&gt;randomButton.Name" xml:space="preserve">
     <value>randomButton</value>
   </data>
-  <data name="twoSpeakersBox.Items" xml:space="preserve">
-    <value>Front</value>
+  <data name="groupBox1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="&gt;&gt;label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;twoSpeakersBox.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="&gt;&gt;oneSpeakerButton.Parent" xml:space="preserve">
     <value>groupBox1</value>

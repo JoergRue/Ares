@@ -121,6 +121,15 @@
   <data name="groupBox2.Size" type="System.Drawing.Size, System.Drawing">
     <value>294, 59</value>
   </data>
+  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 119</value>
+  </data>
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>269, 39</value>
+  </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Hinweis: Die Lautsprecher-Zuordnung funktioniert nur mit Mono-Geräuschen.</value>
+  </data>
   <data name="oneSpeakerBox.Items" xml:space="preserve">
     <value>Vorne Links</value>
   </data>
@@ -182,22 +191,22 @@
     <value>Ein Lautsprecher</value>
   </data>
   <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>294, 121</value>
+    <value>294, 155</value>
   </data>
   <data name="groupBox1.Text" xml:space="preserve">
     <value>Einstellungen</value>
   </data>
   <data name="okButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>150, 204</value>
+    <value>150, 238</value>
   </data>
   <data name="cancelButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>231, 204</value>
+    <value>231, 238</value>
   </data>
   <data name="cancelButton.Text" xml:space="preserve">
     <value>Abbrechen</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>318, 240</value>
+    <value>318, 269</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

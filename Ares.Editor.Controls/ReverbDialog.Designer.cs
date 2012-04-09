@@ -49,6 +49,7 @@ namespace Ares.Editor.Controls
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ReverbDialog));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.delayUpDown = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
@@ -69,6 +70,7 @@ namespace Ares.Editor.Controls
             // groupBox1
             // 
             resources.ApplyResources(this.groupBox1, "groupBox1");
+            this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.delayUpDown);
             this.groupBox1.Controls.Add(this.label3);
@@ -78,6 +80,11 @@ namespace Ares.Editor.Controls
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
             this.groupBox1.UseCompatibleTextRendering = true;
+            // 
+            // label5
+            // 
+            resources.ApplyResources(this.label5, "label5");
+            this.label5.Name = "label5";
             // 
             // label4
             // 
@@ -158,8 +165,8 @@ namespace Ares.Editor.Controls
             // 
             // playButton
             // 
-            this.playButton.Image = global::Ares.Editor.Controls.Properties.Resources.RunSmall;
             resources.ApplyResources(this.playButton, "playButton");
+            this.playButton.Image = global::Ares.Editor.Controls.Properties.Resources.RunSmall;
             this.playButton.Name = "playButton";
             this.playButton.UseCompatibleTextRendering = true;
             this.playButton.UseVisualStyleBackColor = true;
@@ -216,5 +223,6 @@ namespace Ares.Editor.Controls
         private System.Windows.Forms.Button playButton;
         private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.Button cancelButton;
+        private System.Windows.Forms.Label label5;
     }
 }
