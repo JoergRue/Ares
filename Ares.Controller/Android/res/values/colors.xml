@@ -1,8 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#000000</color>
-    <style name="walnut" parent="android:Theme">
-        <item name="android:textColor">@color/black</item>
-    </style>
     
 </resources>

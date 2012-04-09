@@ -19,12 +19,12 @@
  */
 package ares.controller.android;
 
-import android.app.Activity;
 import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
 import ares.controllers.control.Control;
 
-public class ControllerActivity extends Activity {
+public class ControllerActivity extends FragmentActivity {
 	
 	public void onStart() {
 		super.onStart();

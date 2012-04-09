@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="ares.controller.android"
-      android:versionName="1.0" android:versionCode="3">
-    <uses-sdk android:minSdkVersion="7" />
+      android:versionName="1.1" android:versionCode="4">
+    <uses-sdk android:minSdkVersion="7" android:targetSdkVersion="14"/>
+    <supports-screens android:xlargeScreens="true" />
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
 
     <application android:icon="@drawable/icon" android:label="@string/app_name" android:name="Main">
         <activity android:name=".MainActivity"
-                  android:label="@string/app_name" android:icon="@drawable/icon" android:theme="@style/walnut">
+                  android:label="@string/app_name" android:icon="@drawable/icon">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="FileDialog" android:theme="@style/walnut"></activity>
-        <activity android:name="ModesActivity" android:theme="@style/walnut"></activity>
-        <activity android:name="ModeActivity" android:theme="@style/walnut"></activity>
+        <activity android:name="FileDialog"></activity>
+        <activity android:name="ModesActivity"></activity>
+        <activity android:name="ModeActivity"></activity>
         <activity android:name="PrefsActivity"></activity>
-        <activity android:theme="@style/walnut" android:name="MusicListActivity"></activity>
+        <activity android:name="MusicListActivity"></activity>
 
     <activity
       android:name="com.dropbox.client2.android.AuthActivity"

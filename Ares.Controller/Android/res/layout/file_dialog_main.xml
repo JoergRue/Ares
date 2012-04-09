@@ -2,12 +2,12 @@
 <LinearLayout android:id="@+id/LinearLayout1"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:orientation="vertical" android:layout_width="fill_parent"
-	android:layout_height="fill_parent" android:background="@drawable/backarea">
+	android:layout_height="fill_parent">
     <LinearLayout android:layout_width="fill_parent" android:id="@+id/fdLinearLayoutSelect" android:orientation="vertical" android:layout_height="wrap_content">
         <LinearLayout android:layout_width="fill_parent" android:orientation="horizontal" android:layout_height="fill_parent">
             <RadioGroup android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/fileSourceRadioGroup" android:orientation="horizontal">
-                <RadioButton android:id="@+id/rbFileSystem" android:checked="true" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/file_system" android:textColor="@color/black"></RadioButton>
-                <RadioButton android:id="@+id/rbDropbox" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/dropbox" android:textColor="@color/black"></RadioButton>
+                <RadioButton android:id="@+id/rbFileSystem" android:checked="true" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/file_system"></RadioButton>
+                <RadioButton android:id="@+id/rbDropbox" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/dropbox"></RadioButton>
             </RadioGroup>
         </LinearLayout>
     </LinearLayout>

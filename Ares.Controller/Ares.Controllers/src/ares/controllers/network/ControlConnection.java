@@ -79,6 +79,12 @@ public final class ControlConnection {
   
   private void doConnect(int timeout) throws SocketTimeoutException, IOException {
       String hostName = InetAddress.getLocalHost().getHostName();
+      if (hostName.equals("localhost")) {
+    	 String vendor = System.getProperties().getProperty("java.vendor");
+    	 if (vendor != null && vendor.contains("Android")) {
+    		 hostName = "Android Controller";
+    	 }
+      }
       NumberFormat format = NumberFormat.getIntegerInstance();
       format.setMinimumIntegerDigits(4);
       format.setMaximumIntegerDigits(4);

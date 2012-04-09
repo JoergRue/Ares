@@ -1,168 +1,30 @@
 /*
-Copyright (c) 2011 [Joerg Ruedenauer]
+ Copyright (c) 2012 [Joerg Ruedenauer]
+ 
+ This file is part of Ares.
 
-This file is part of Ares.
+ Ares is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
 
-Ares is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
+ Ares is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
 
-Ares is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with Ares; if not, write to the Free Software
-Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
+ You should have received a copy of the GNU General Public License
+ along with Ares; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
 package ares.controller.android;
 
-import java.util.List;
-
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.ViewSwitcher;
 
-import ares.controllers.control.Control;
-import ares.controllers.data.MusicElement;
-import ares.controllers.network.INetworkClient;
-
-public class MusicListActivity extends ModeLikeActivity implements INetworkClient {
+public class MusicListActivity extends ModeLikeActivity {
 
 	public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.music_list);
-        registerGestures();
-        
-        mElements = PlayingState.getInstance().getMusicList();
-        
-        mViewSwitcher = (ViewSwitcher)findViewById(R.id.musicListSwitcher);
-
-        if (mElements == null || mElements.size() == 0) {
-        	mViewSwitcher.showNext();
-        	mListShown = false;
-        }
-        else {
-        	mListShown = true;
-        	updateList();
-        }
-		ListView listView = (ListView)findViewById(R.id.musicList);
-		listView.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				if (position < 0 || position >= mElements.size())
-					return;
-				Control.getInstance().setMusicTitle(mElements.get(position).getId());
-			}
-		});
-		listView.setTextFilterEnabled(true);
-	}
-	
-    public void onStart() {
-    	super.onStart();
-    	PlayingState.getInstance().setClient(this);
-    }
-    
-    public void onStop() {
-    	PlayingState.getInstance().setClient(null);
-    	super.onStop();
-    }
-
-	private void updateList() {
-		if (mElements != null && mElements.size() > 0) {
-			int curPos = -1;
-			String curTitle = PlayingState.getInstance().getShortMusicPlayed();
-			String[] entries = new String[mElements.size()];
-			for (int i = 0; i < mElements.size(); ++i) {
-				entries[i] = mElements.get(i).getTitle();
-				if (entries[i].equals(curTitle)) {
-					curPos = i;
-				}
-			}
-			ListView listView = (ListView)findViewById(R.id.musicList);
-			listView.setAdapter(new ArrayAdapter<String>(this, R.layout.music_list_item, entries));
-			if (curPos != -1)
-			{
-				listView.setSelection(curPos);
-			}
-		}
-	}
-	
-	private ViewSwitcher mViewSwitcher;
-	private List<MusicElement> mElements;
-	private boolean mListShown;
-
-	@Override
-	public void modeChanged(String newMode) {
-	}
-
-	@Override
-	public void modeElementStarted(int element) {
-	}
-
-	@Override
-	public void modeElementStopped(int element) {
-	}
-
-	@Override
-	public void allModeElementsStopped() {
-	}
-
-	@Override
-	public void volumeChanged(int index, int value) {
-	}
-
-	@Override
-	public void musicChanged(String newMusic, String shortTitle) {
-		if (!mListShown)
-			return;
-		for (int i = 0; i < mElements.size(); ++i) {
-			if (mElements.get(i).getTitle().equals(shortTitle)) {
-				ListView listView = (ListView)findViewById(R.id.musicList);
-				listView.setSelection(i);
-				break;
-			}
-		}
-	}
-
-	@Override
-	public void projectChanged(String newTitle) {
-	}
-
-	@Override
-	public void musicListChanged(List<MusicElement> newList) {
-		mElements = newList;
-		updateList();
-		if (mElements == null || mElements.size() == 0) {
-			if (mListShown) {
-				mViewSwitcher.showNext();
-				mListShown = false;
-			}
-		}
-		else {
-			if (!mListShown) {
-				mViewSwitcher.showPrevious();
-				mListShown = true;
-			}
-		}
-	}
-
-	@Override
-	public void disconnect() {
-		mElements = null;
-		updateList();
-		if (mListShown) {
-			mViewSwitcher.showNext();
-			mListShown = false;
-		}
-	}
-
-	@Override
-	public void connectionFailed() {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.music_list_activity);
 	}
 }

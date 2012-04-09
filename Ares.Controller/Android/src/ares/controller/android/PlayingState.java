@@ -88,14 +88,18 @@ public class PlayingState implements INetworkClient {
 	
 	private Handler handler = new Handler();
 	
-	private INetworkClient client = null;
-
-	public INetworkClient getClient() {
-		return client;
+	private List<INetworkClient> clients = new ArrayList<INetworkClient>();
+	
+	private boolean hasClient() {
+		return clients.size() > 0;
 	}
 
-	public void setClient(INetworkClient client) {
-		this.client = client;
+	public void addClient(INetworkClient client) {
+		clients.add(client);
+	}
+	
+	public void removeClient(INetworkClient client) {
+		clients.remove(client);
 	}
 	
 	public void clearState() {
@@ -108,9 +112,10 @@ public class PlayingState implements INetworkClient {
 		handler.post(new Runnable(){
 			public void run() {
 				mode = m;
-				if (getClient() == null)
+				if (!hasClient())
 					return;
-				getClient().modeChanged(mode);
+				for (INetworkClient client : clients)
+					client.modeChanged(mode);
 			}
 		});
 	}
@@ -140,9 +145,10 @@ public class PlayingState implements INetworkClient {
 				if (title != null) {
 					modeElements.add(title);
 				}
-				if (getClient() == null)
+				if (!hasClient())
 					return;
-				getClient().modeElementStarted(el);
+				for (INetworkClient client : clients)
+					client.modeElementStarted(el);
 			}
 		});
 	}
@@ -161,9 +167,10 @@ public class PlayingState implements INetworkClient {
 				if (title != null) {
 					modeElements.remove(title);
 				}
-				if (getClient() == null)
+				if (!hasClient())
 					return;
-				getClient().modeElementStopped(el);
+				for (INetworkClient client : clients)
+					client.modeElementStopped(el);
 			}
 		});		
 	}
@@ -177,8 +184,10 @@ public class PlayingState implements INetworkClient {
 					CommandButtonMapping.getInstance().allCommandsInactive();
 				}				
 				modeElements.clear();
-				if (getClient() != null) {
-					getClient().allModeElementsStopped();
+				if (!hasClient())
+					return;
+				for (INetworkClient client : clients) {
+					client.allModeElementsStopped();
 				}
 			}
 		});
@@ -203,9 +212,10 @@ public class PlayingState implements INetworkClient {
 				default:
 					break;
 				}
-				if (getClient() == null)
+				if (!hasClient())
 					return;
-				getClient().volumeChanged(i, v);
+				for (INetworkClient client : clients)
+					client.volumeChanged(i, v);
 			}
 		});
 	}
@@ -218,9 +228,10 @@ public class PlayingState implements INetworkClient {
 			public void run() {
 				musicPlayed = m;
 				shortMusicPlayed = s;
-				if (getClient() == null)
+				if (!hasClient())
 					return;
-				getClient().musicChanged(m, s);
+				for (INetworkClient client : clients)
+					client.musicChanged(m, s);
 			}
 		});
 	}
@@ -231,8 +242,10 @@ public class PlayingState implements INetworkClient {
 			public void run() {
 				clearState();
 				Control.getInstance().disconnect(false);
-				if (getClient() != null)
-					getClient().disconnect();
+				if (!hasClient())
+					return;
+				for (INetworkClient client : clients)
+					client.disconnect();
 			}
 		});
 	}
@@ -243,8 +256,10 @@ public class PlayingState implements INetworkClient {
 			public void run() {
 				clearState();
 				Control.getInstance().disconnect(false);
-				if (getClient() != null) 
-					getClient().connectionFailed();
+				if (!hasClient())
+					return;
+				for (INetworkClient client : clients)
+					client.connectionFailed();
 			}
 		});
 	}
@@ -255,9 +270,10 @@ public class PlayingState implements INetworkClient {
 		handler.post(new Runnable() {
 			public void run() {
 				playerProject = t;
-				if (getClient() != null) {
-					getClient().projectChanged(t);
-				}
+				if (!hasClient())
+					return;
+				for (INetworkClient client : clients)
+					client.projectChanged(t);
 			}
 		});
 	}
@@ -268,9 +284,10 @@ public class PlayingState implements INetworkClient {
 		handler.post(new Runnable() {
 			public void run() {
 				musicList = l;
-				if (getClient() != null) {
-					getClient().musicListChanged(l);
-				}
+				if (!hasClient())
+					return;
+				for (INetworkClient client : clients)
+					client.musicListChanged(l);
 			}
 		});
 		

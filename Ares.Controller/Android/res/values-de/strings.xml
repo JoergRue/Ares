@@ -65,4 +65,5 @@
     <string name="musicList">Musikliste</string>
     <string name="file_system">Dateisystem</string>
     <string name="dropbox">Dropbox</string>
+    <string name="no_mode">Kein Modus (kein Projekt geladen)</string>
 </resources>

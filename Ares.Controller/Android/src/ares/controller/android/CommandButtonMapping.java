@@ -45,10 +45,10 @@ class CommandButtonMapping {
 	public void registerButton(int id, ToggleButton button) {
 		mButtons.put(id, button);
 		if (mActiveCommands.contains(id)) {
-			ModeActivity.setCommandsActive(false);
+			ModeFragment.setCommandsActive(false);
 			button.setChecked(true);
 			button.setSelected(true);
-			ModeActivity.setCommandsActive(true);
+			ModeFragment.setCommandsActive(true);
 		}
 	}
 	
@@ -68,25 +68,25 @@ class CommandButtonMapping {
 			mActiveCommands.add(id);
 		}
 		if (mButtons.containsKey(id)) {
-			ModeActivity.setCommandsActive(false);
+			ModeFragment.setCommandsActive(false);
 			ToggleButton button = mButtons.get(id);
 			if (button.isChecked() != active) {
 				button.setChecked(active);
 				button.setSelected(active);
 				button.invalidate();
 			}
-			ModeActivity.setCommandsActive(true);
+			ModeFragment.setCommandsActive(true);
 		}
 	}
 	
 	public void allCommandsInactive() {
-		ModeActivity.setCommandsActive(false);
+		ModeFragment.setCommandsActive(false);
 		for (int id : mActiveCommands) {
 			if (mButtons.containsKey(id)) {
 				mButtons.get(id).setChecked(false);
 			}
 		}
-		ModeActivity.setCommandsActive(true);
+		ModeFragment.setCommandsActive(true);
 		mActiveCommands.clear();
 	}
 
