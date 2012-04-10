@@ -109,11 +109,11 @@ public class FileDialog extends ListActivity {
 	
 	private void getDir(String dirPath) {
 
-		boolean useAutoSelection = dirPath.length() < currentPath.length();
+		boolean useAutoSelection = dirPath != null && currentPath != null && dirPath.length() < currentPath.length();
 
 		Integer position = lastPositions.get(parentPath);
 
-		getDirImpl(dirPath);
+		getDirImpl(dirPath != null ? dirPath : "");
 
 		if (position != null && useAutoSelection) {
 			getListView().setSelection(position);
@@ -208,6 +208,8 @@ public class FileDialog extends ListActivity {
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 
 		String itemPath = path.get(position);
+		if (itemPath == null)
+			return;
 		if (itemPath.startsWith(Control.DB_ROOT_ID)) {
 			selectDBItem(itemPath, position);
 		}

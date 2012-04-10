@@ -23,6 +23,7 @@ import java.util.HashMap;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,18 +49,29 @@ public class ModeFragment extends ModeLikeFragment {
         if (!isOnXLargeScreen()) {
         	registerGestures();
         }
-        initializeViews();
+    }
+    
+    public void onStart() {
+    	super.onStart();
+    	uninitializeViews();
+    	initializeViews();
     }
     
     public void onDestroyView() {
-    	for (Command command : Control.getInstance().getConfiguration().getModes().get(getMode()).getCommands()) {
-    		CommandButtonMapping.getInstance().unregisterButton(command.getId());
-    	}
+    	uninitializeViews();
     	super.onDestroyView();
     }
     
     public void projectLoaded() {
     	initializeViews();
+    }
+    
+    private void uninitializeViews() {
+    	if (Control.getInstance().getConfiguration() != null) {
+	    	for (Command command : Control.getInstance().getConfiguration().getModes().get(getMode()).getCommands()) {
+	    		CommandButtonMapping.getInstance().unregisterButton(command.getId());
+	    	}    	
+    	}
     }
     
     private void initializeViews() {
@@ -92,6 +104,7 @@ public class ModeFragment extends ModeLikeFragment {
 			}
 			if (!sCommandsActive)
 				return;
+			Log.d("ModeFragment", "Switching element " + mId);
 			Control.getInstance().switchElement(mId);
 		}
 		

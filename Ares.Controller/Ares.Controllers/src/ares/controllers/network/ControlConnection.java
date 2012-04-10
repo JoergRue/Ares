@@ -250,6 +250,11 @@ public final class ControlConnection {
 	  boolean goOn = true;
 	  while (goOn) {
 		  try {
+			  if (socket == null) {
+				  handleConnectionFailure(false);
+				  goOn = false;
+				  break;
+			  }
 			  InputStream stream = socket.getInputStream();
 			  if (stream.available() < 3) {
                 try {

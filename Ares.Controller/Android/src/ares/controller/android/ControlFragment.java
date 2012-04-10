@@ -19,9 +19,7 @@
  */
 package ares.controller.android;
 
-import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -58,12 +56,10 @@ import android.widget.Toast;
 import android.widget.LinearLayout.LayoutParams;
 import ares.controllers.control.Control;
 import ares.controllers.network.INetworkClient;
-import ares.controllers.network.IServerListener;
 import ares.controllers.network.ServerInfo;
-import ares.controllers.network.ServerSearch;
 
 
-public class ControlFragment extends Fragment implements INetworkClient, IServerListener {
+public class ControlFragment extends ConnectedFragment implements INetworkClient {
 
 	private class VolumeChanger implements SeekBar.OnSeekBarChangeListener {
 		
@@ -85,8 +81,6 @@ public class ControlFragment extends Fragment implements INetworkClient, IServer
 		private int volumeIndex;
 	}
 	
-	private ServerSearch serverSearch = null;
-	
 	private final String LAST_PROJECT = "LastProject";
 	
 	private ImageButton stopButton;
@@ -97,18 +91,6 @@ public class ControlFragment extends Fragment implements INetworkClient, IServer
 	private int VK_ESCAPE = 27;
 	private int VK_LEFT = 37;
 	private int VK_RIGHT = 39;
-	
-	private int getServerSearchPort() {
-        String portString = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext()).getString("udp_port", "8009");
-        int port = 8009;
-        try {
-        	port = Integer.parseInt(portString);
-        }
-        catch (NumberFormatException e) {
-        	port = 8009;
-        }
-        return port;
-	}
 	
 	private void registerGestures()	{
 		final GestureLibrary gesturelib = GestureLibraries.fromRawResource(getActivity(), R.raw.gestures);
@@ -156,9 +138,8 @@ public class ControlFragment extends Fragment implements INetworkClient, IServer
     	return view;
     }
     
-    private boolean isOnXLargeScreen()
-    {
-    	return getActivity().findViewById(R.id.modeFragmentContainer) != null;
+    protected boolean isControlFragment() {
+    	return true;
     }
     
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -176,10 +157,6 @@ public class ControlFragment extends Fragment implements INetworkClient, IServer
         SeekBar bar3 = (SeekBar)getActivity().findViewById(R.id.soundsVolumeBar);
         bar3.setOnSeekBarChangeListener(new VolumeChanger(0));
         boolean connected = Control.getInstance().isConnected();
-        serverSearch = new ServerSearch(this, getServerSearchPort());
-        if (connected) {
-        	connectWithFirstServer = false;
-        }
         if ((Control.getInstance().getConfiguration() == null) && getActivity().getPreferences(Activity.MODE_PRIVATE).contains(LAST_PROJECT)) {
         	this.fileToOpenDelayed = getActivity().getPreferences(Activity.MODE_PRIVATE).getString(LAST_PROJECT, ""); 
         }
@@ -234,30 +211,6 @@ public class ControlFragment extends Fragment implements INetworkClient, IServer
         }
     }
     
-    private void tryConnect() {
-    	String connectMode = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext()).getString("player_connection", "auto");
-    	if (connectMode.equals("auto")) {
-    		serverSearch.startSearch();
-    	}
-    	else {
-    		try {
-    			ServerInfo info = ServerSearch.getServerInfo(connectMode, ",");
-    			if (info == null) {
-    				Toast.makeText(getActivity().getApplicationContext(), getString(R.string.invalid_player_connection_format), Toast.LENGTH_LONG).show();
-    			}
-    			else {
-    				doConnect(info);
-    			}
-    		}
-    		catch (UnknownHostException e) {
-    			Toast.makeText(getActivity().getApplicationContext(), getString(R.string.invalid_player_connection_format), Toast.LENGTH_LONG).show();
-    		}
-    		catch (IllegalArgumentException e) {
-    			Toast.makeText(getActivity().getApplicationContext(), getString(R.string.invalid_player_connection_format), Toast.LENGTH_LONG).show();
-    		}
-    	}
-    }
-    
     public void onResume() {
     	super.onResume();
     	
@@ -276,17 +229,11 @@ public class ControlFragment extends Fragment implements INetworkClient, IServer
     public void onStart() {
     	super.onStart();
     	PlayingState.getInstance().addClient(this);
-    	if (!Control.getInstance().isConnected()) {
-    		tryConnect();
-    	}
     	updateAll();
     }
     
     public void onStop() {
     	PlayingState.getInstance().removeClient(this);
-    	if (!Control.getInstance().isConnected()) {
-    		serverSearch.stopSearch();
-    	}
     	super.onStop();
     }
     
@@ -340,17 +287,7 @@ public class ControlFragment extends Fragment implements INetworkClient, IServer
     }
     
     public void preferencesChanged() {
-		if (!Control.getInstance().isConnected())
-		{
-			serverSearch.stopSearch();
-		}
-		servers.clear();
-		serverNames.clear();
-		serverSearch = new ServerSearch(this, getServerSearchPort());
-		if (!Control.getInstance().isConnected()) 
-		{
-			tryConnect();
-		}    	
+    	onPrefsChanged();
     }
     
     private String fileToOpenDelayed = null;
@@ -392,7 +329,7 @@ public class ControlFragment extends Fragment implements INetworkClient, IServer
 				}
 			}
 			catch (Exception e) {
-				Log.e(getClass().getName(), e.getMessage());
+				Log.e(getClass().getName(), e.getMessage() != null ? e.getMessage() : "Unknown error.");
 				return false;
 			}
 		}
@@ -599,28 +536,20 @@ public class ControlFragment extends Fragment implements INetworkClient, IServer
 	}
 
 	
-	private void doConnect(ServerInfo info) {
-		serverSearch.stopSearch();
-		Control.getInstance().connect(info, PlayingState.getInstance(), false);
+	protected void onConnect(ServerInfo info) {
+		super.onConnect(info);
 		setText(R.id.networkTextView, String.format(getString(R.string.connected_with), info.getName()));
 		stopButton.setEnabled(true);
 		backButton.setEnabled(true);
 		forwardButton.setEnabled(true);
 }
 	
-	private void doDisconnect(boolean startServerSearch, boolean informServer) {
-		Control.getInstance().disconnect(informServer);
-		PlayingState.getInstance().clearState();
-		onDisconnect(startServerSearch);
-	}
-	
-	private void onDisconnect(boolean startServerSearch) {
+	protected void onDisconnect(boolean startServerSearch) {
+		super.onDisconnect(startServerSearch);
 		setText(R.id.networkTextView, getString(R.string.disconnected));
 		stopButton.setEnabled(false);
 		backButton.setEnabled(false);
 		forwardButton.setEnabled(false);
-		if (startServerSearch)
-			serverSearch.startSearch();
 		updateAll();
 	}
 
@@ -634,22 +563,6 @@ public class ControlFragment extends Fragment implements INetworkClient, IServer
 		onDisconnect(true);
 	}
 	
-	private HashMap<String, ServerInfo> servers = new HashMap<String, ServerInfo>();
-	private ArrayList<String> serverNames = new ArrayList<String>();
-	private boolean connectWithFirstServer = true;
-
-	@Override
-	public void serverFound(ServerInfo server) {
-		if (!servers.containsKey(server.getName())) {
-			servers.put(server.getName(), server);
-			serverNames.add(server.getName());
-			if (connectWithFirstServer && servers.size() == 1) {
-				connectWithFirstServer = false;
-				doConnect(server);
-			}
-		}
-	}
-
 	@Override
 	public void modeChanged(String newMode) {
 		setText(R.id.modeTextView, newMode);		

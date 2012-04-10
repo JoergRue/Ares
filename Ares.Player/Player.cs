@@ -226,6 +226,14 @@ namespace Ares.Player
         {
             if (m_Project != null)
             {
+                if (onControllerRequest && m_Project.FileName.Equals(filePath, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    if (m_Network != null)
+                    {
+                        m_Network.InformClientOfProject(m_Project.Title);
+                    }
+                    return;
+                }
                 Ares.Data.DataModule.ProjectManager.UnloadProject(m_Project);
                 m_Project = null;
                 m_Instance.SetLoadedProject("-");

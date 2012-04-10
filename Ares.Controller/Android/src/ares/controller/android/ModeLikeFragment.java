@@ -30,7 +30,6 @@ import android.gesture.Prediction;
 import android.gesture.GestureOverlayView.OnGesturePerformedListener;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -39,18 +38,46 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import ares.controllers.control.Control;
 
-public abstract class ModeLikeFragment extends Fragment {
+public abstract class ModeLikeFragment extends ConnectedFragment {
 	
 	public abstract void projectLoaded();
+	
+	protected void handleConnectionOnStart() {
+		boolean connected = Control.getInstance().isConnected();
+        if (connected) {
+        	// everything ok
+        	// Log.d("ConnectedFragment", "Already connected");
+        }
+        else if (!isOnXLargeScreen()) {
+        	// not connected, not in control fragment, not in main activity
+        	// switch to main activity so that control fragment is displayed
+        	// and connection can be restored
+        	Intent intent = new Intent(getActivity().getBaseContext(), MainActivity.class);
+        	startActivity(intent);    	
+        }
+        // else control fragment is displayed and will manage the connection
+	}
 
-	protected boolean isOnXLargeScreen() {
-    	return getActivity().findViewById(R.id.modeFragmentContainer) != null;
+	protected void onDisconnect(boolean startServerSearch) {
+		super.onDisconnect(startServerSearch);
+		if (!isOnXLargeScreen()) {
+        	// not connected, not in control fragment, not in main activity
+        	// switch to main activity so that control fragment is displayed
+        	// and connection can be restored
+        	Intent intent = new Intent(getActivity().getBaseContext(), MainActivity.class);
+        	startActivity(intent);    	
+        }
 	}
 
 	protected void registerGestures()	{
 		registerGestures(R.id.modeRootLayout, R.id.modeMainLayout);
 	}
 	
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setHasOptionsMenu(true);
+	}
+    
 	private void registerGestures(int rootId, int mainId) {
 		final GestureLibrary gesturelib = GestureLibraries.fromRawResource(getActivity(), R.raw.gestures);
 		gesturelib.load();

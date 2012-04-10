@@ -24,6 +24,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import android.util.Log;
 import android.widget.ToggleButton;
 
 
@@ -53,7 +54,9 @@ class CommandButtonMapping {
 	}
 	
 	public void unregisterButton(int id) {
-		mButtons.remove(id);
+		if (mButtons.containsKey(id)) {
+			mButtons.remove(id);
+		}
 	}
 	
 	public boolean isCommandActive(int id) {
@@ -61,6 +64,7 @@ class CommandButtonMapping {
 	}
 	
 	public void commandStateChanged(int id, boolean active) {
+		Log.d("CommandMapping", "id " + id + " has now state " + active);
 		if (mActiveCommands.contains(id) && !active) {
 			mActiveCommands.remove(id);
 		}
@@ -80,6 +84,7 @@ class CommandButtonMapping {
 	}
 	
 	public void allCommandsInactive() {
+		Log.d("CommandMapping", "All set to inactive");
 		ModeFragment.setCommandsActive(false);
 		for (int id : mActiveCommands) {
 			if (mButtons.containsKey(id)) {
