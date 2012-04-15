@@ -103,6 +103,7 @@ namespace Ares.Editor
             FillTreeNode(m_Root, directory, directory, m_FileType, states);
             treeView1.Nodes.Add(m_Root);
             m_Root.Expand();
+            treeView1.SelectedNode = m_Root;
             treeView1.EndUpdate();
         }
 
@@ -634,6 +635,7 @@ namespace Ares.Editor
                 {
                     MessageBox.Show(this, String.Format(StringResources.DeleteError, ex.Message), StringResources.Ares, MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Error);
                 }
+                treeView1.SelectedNode = m_Root;
             }
         }
 
