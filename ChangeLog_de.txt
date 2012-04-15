@@ -18,6 +18,7 @@ Version 1.1.0
   die ursprüngliche individuelle Lautstärke von bereits laufenden Geräuschen
 - Player: Bugfix: Datei-Handles werden jetzt nach dem Abspielen korrekt freigegeben
 - Player/MediaPortal: Plugin ist jetzt für die MediaPortal-Version 1.2.x
+- Controller: Bugfix für Tastaturbedienung, wenn Tasten angezeigt werden
 - Controller/Android: Bessere Unterstützung für Tablets und höhere Android-Versionen
 - Controller/Android: Laden von Projekten im Hintergrund
 - Controller/Android: Verschiedene kleine Verbesserungen und Bugfixes

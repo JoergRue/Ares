@@ -15,6 +15,7 @@ Version 1.1.0
   individual volume of already running sounds
 - Player: Bugfix: File handles are now correctly released after playing
 - Player/MediaPortal: Plugin now for MediaPortal version 1.2.x
+- Controller: Bugfix for key handling when keys are displayed
 - Controller/Android: Better support for tablets and higher Android versions
 - Controller/Android: Loading of projects in the background
 - Controller/Android: various small improvements and bugfixes
