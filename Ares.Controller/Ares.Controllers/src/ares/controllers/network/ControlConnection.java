@@ -195,6 +195,11 @@ public final class ControlConnection {
 	{
 		return;
 	}
+	else if (informServer && reconnectTimer != null) {
+		reconnectTimer.cancel();
+		reconnectTimer = null;
+	}
+    state = State.NotConnected;
 	doDisconnect(true);
     if (socket != null) {
       Messages.addMessage(MessageType.Info, Localization.getString("ControlConnection.ClosingConnection")); //$NON-NLS-1$
