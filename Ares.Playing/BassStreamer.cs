@@ -86,7 +86,9 @@ namespace Ares.Playing
                 case StreamerType.Shoutcast:
                     {
                         Un4seen.Bass.Misc.SHOUTcast shoutCast = new Un4seen.Bass.Misc.SHOUTcast(encoder, true);
+#if !MEDIA_PORTAL
                         shoutCast.Username = parameters.Username;
+#endif
                         shoutCast.Password = parameters.Password;
                         shoutCast.ServerAddress = parameters.ServerAddress;
                         shoutCast.ServerPort = parameters.ServerPort;
