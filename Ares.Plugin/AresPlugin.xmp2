@@ -66,6 +66,13 @@
               <ZipFileName>Installer{CopyFile}\{eaabd5a1-2ec6-4a50-b678-7679b816cca6}-ICSharpCode.SharpZipLib.dll</ZipFileName>
               <DestinationFilename>%Base%\plugins\Windows\ICSharpCode.SharpZipLib.dll</DestinationFilename>
             </FileItem>
+            <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
+              <Param1 />
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
+              <LocalFileName>..\bin\Release_MediaPortal\oggenc2.exe</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{a9e4591b-f68f-41a0-b2c5-f519bd13a111}-oggenc2.exe</ZipFileName>
+              <DestinationFilename>%Base%\plugins\Windows\oggenc2.exe</DestinationFilename>
+            </FileItem>
           </Items>
         </Files>
       </GroupItem>
@@ -336,6 +343,13 @@ Makes sense only in conjunction with the Ares Controller.</ExtensionDescription>
         <LocalFileName>..\bin\Release_MediaPortal\ICSharpCode.SharpZipLib.dll</LocalFileName>
         <ZipFileName>Installer{CopyFile}\{eaabd5a1-2ec6-4a50-b678-7679b816cca6}-ICSharpCode.SharpZipLib.dll</ZipFileName>
         <DestinationFilename>%Base%\plugins\Windows\ICSharpCode.SharpZipLib.dll</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
+        <Param1 />
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
+        <LocalFileName>..\bin\Release_MediaPortal\oggenc2.exe</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{a9e4591b-f68f-41a0-b2c5-f519bd13a111}-oggenc2.exe</ZipFileName>
+        <DestinationFilename>%Base%\plugins\Windows\oggenc2.exe</DestinationFilename>
       </FileItem>
       <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="true">
         <Param1 />

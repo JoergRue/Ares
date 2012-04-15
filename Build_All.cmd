@@ -14,6 +14,7 @@ call %ant% -DProductVersion=%1 prepareSetup
 cd ..\..\..
 
 %nant% clean prepareSetup
+copy Libraries\oggenc2.exe build\Ares\Player_Editor
 
 %installjammer% -DProductVersion %1 --build-dir build\temp --build-log-file build\setup.log --output-dir build\output --build-for-release --build Setup\Ares\Ares.mpi
 

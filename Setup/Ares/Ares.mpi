@@ -273,6 +273,7 @@ File ::7F2E8A3D-AC51-4E7B-8008-BC7442368F0B -name ICSharpCode.SharpZipLib.dll -p
 File ::C413A9AB-6557-4EC5-AE90-D860E4D86DB9 -name bassenc.dll -parent 85519505-B2E6-4155-96D6-3C0D6C533801
 File ::AE69F8A9-3833-4F53-86C9-305E506FF151 -name bassmix.dll -parent 85519505-B2E6-4155-96D6-3C0D6C533801
 File ::09EB32EA-3624-4CCC-8339-9BDB2D589DD3 -name basswma.dll -parent 85519505-B2E6-4155-96D6-3C0D6C533801
+File ::8ED46B54-71D7-4CC5-A966-1E4ABAD37DD0 -name oggenc2.exe -parent 85519505-B2E6-4155-96D6-3C0D6C533801
 FileGroup ::68676E85-DEAC-451E-9016-59D1A2300E9B -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows TarArchive ZipArchive} -name Player -parent FileGroups
 File ::47DFEC14-D002-4E55-8F13-B613310C042C -name D:/Projekte/Ares/trunk/build/Ares/Player_Editor/Ares.Player.exe -location <%BaseDir%>/Ares/Player_Editor -parent 68676E85-DEAC-451E-9016-59D1A2300E9B
 File ::183D5336-C3DB-4D10-A1C9-893B83D8B44F -name D:/Projekte/Ares/trunk/build/Ares/Player_Editor/Ares.Player.exe.config -location <%BaseDir%>/Ares/Player_Editor -parent 68676E85-DEAC-451E-9016-59D1A2300E9B
