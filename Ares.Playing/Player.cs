@@ -261,12 +261,18 @@ namespace Ares.Playing
             if (element.SetsMusicVolume)
             {
                 PlayingModule.ThePlayer.SetVolume(VolumeTarget.Music, element.MusicVolume);
-                PlayingModule.ThePlayer.ProjectCallbacks.VolumeChanged(VolumeTarget.Music, element.MusicVolume);
+                if (PlayingModule.ThePlayer.ProjectCallbacks != null)
+                {
+                    PlayingModule.ThePlayer.ProjectCallbacks.VolumeChanged(VolumeTarget.Music, element.MusicVolume);
+                }
             }
             if (element.SetsSoundVolume)
             {
                 PlayingModule.ThePlayer.SetVolume(VolumeTarget.Sounds, element.SoundVolume);
-                PlayingModule.ThePlayer.ProjectCallbacks.VolumeChanged(VolumeTarget.Sounds, element.SoundVolume);
+                if (PlayingModule.ThePlayer.ProjectCallbacks != null)
+                {
+                    PlayingModule.ThePlayer.ProjectCallbacks.VolumeChanged(VolumeTarget.Sounds, element.SoundVolume);
+                }
             }
             m_MusicFadeInTime = musicFadeInTime;
             element.Visit(this);
