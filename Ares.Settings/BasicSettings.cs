@@ -88,17 +88,26 @@ namespace Ares.Settings
             System.IO.File.Delete(tempFileName);            
         }
 
+		private static bool IsLinux
+		{
+		    get
+		    {
+		        int p = (int) Environment.OSVersion.Platform;
+		        return (p == 4) || (p == 6) || (p == 128);
+		    }
+		}
+
 		private static string AppPath 
 		{ 
 		    get 
 		    { 
-		        return System.IO.Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]); 
+		        return Environment.GetCommandLineArgs()[0]; 
 		     } 
 		} 
 		
 		public static bool IsAppDirAllowed()
         {
-            return !AppPath.StartsWith(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles));
+            return IsLinux || !AppPath.StartsWith(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles));
         }
 
         public bool ReadFromFile()

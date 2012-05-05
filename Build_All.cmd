@@ -25,6 +25,13 @@ cd build
 xcopy /S /E /I Ares Ares_Portable
 xcopy /S /E ..\Ares_Portable Ares_Portable
 del Ares_Portable\buildlog.txt
+rmdir /S /Q Ares_Portable\Player
 %zip% a output\Ares_Portable_%1.zip Ares_Portable
+
+xcopy /S /E /I Ares Ares_Portable_Linux
+xcopy /S /E ..\Ares_Portable Ares_Portable_Linux
+del Ares_Portable_Linux\buildlog.txt
+rmdir /S /Q Ares_Portable_Linux\Player_Editor
+%zip% a output\Ares_Portable_Linux_%1.zip Ares_Portable_Linux
 
 cd ..

@@ -44,27 +44,22 @@ namespace Ares.Online
             downloader.Download(url, StringResources.SearchingVersion, VersionDownloaded);
         }
 
-        public static void DownloadSetup(Form parent, String version) 
+		private static bool IsLinux
+		{
+		    get
+		    {
+		        int p = (int) Environment.OSVersion.Platform;
+		        return (p == 4) || (p == 6) || (p == 128);
+		    }
+		}
+		
+		public static void DownloadSetup(Form parent, String version) 
         {
             String urlBase = "http://sourceforge.net/projects/aresrpg/files/";
             String urlAppendix = "/download";
             String windowsPart = "-Setup.exe";
             String linuxPart = "-Linux-x86-Install";
-            bool isWindows = true;
-            switch (System.Environment.OSVersion.Platform)
-            {
-                case PlatformID.Unix:
-                    isWindows = false;
-                    break;
-                case PlatformID.Win32NT:
-                case PlatformID.Win32S:
-                case PlatformID.Win32Windows:
-                    isWindows = true;
-                    break;
-                default:
-                    MessageBox.Show(parent, StringResources.UnknownOS, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-            }
+            bool isWindows = !IsLinux;
             String url = urlBase + version + "/Ares-" + version + (isWindows ? windowsPart : linuxPart) + urlAppendix;
             try
             {

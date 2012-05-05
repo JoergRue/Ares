@@ -77,6 +77,7 @@
 			  <include name="**/*.so" />
 			  <include name="**/*.config" />
 			  <include name="**/*.sh" />
+			  <include name="**/*.png" />
    		  </fileset>
 		</copy>
 	    <copy todir="${output.dir}">
