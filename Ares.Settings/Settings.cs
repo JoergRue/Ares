@@ -124,8 +124,10 @@ namespace Ares.Settings
 
             public bool FundamentalChange { get; set; }
         }
-
+		
+#if !MONO
         public event EventHandler<SettingsEventArgs> SettingsChanged;
+#endif
 
         public static readonly string PlayerID = "Player";
         public static readonly string EditorID = "Editor";
@@ -133,7 +135,11 @@ namespace Ares.Settings
         public bool Initialize(String id, String directory)
         {
             m_ID = id;
+#if MONO
+			bool success = false;
+#else
             bool success = ReadFromSharedMemory();
+#endif
             if (!success && !String.IsNullOrEmpty(directory))
             {
                 success = ReadFromFile(directory);
@@ -142,6 +148,7 @@ namespace Ares.Settings
             {
                 InitDefaults();
             }
+#if !MONO
             bool createdOwn;
             bool createdOther;
             m_OwnWaitHandle = new System.Threading.EventWaitHandle(false, System.Threading.EventResetMode.ManualReset, "AresSettingsEvent" + m_ID, out createdOwn);
@@ -149,11 +156,13 @@ namespace Ares.Settings
             m_SharedMemoryThread = new System.Threading.Thread(ListenForSMChanges);
             m_ContinueSMThread = true;
             m_SharedMemoryThread.Start();
+#endif
             return success;
         }
 
         public void Shutdown()
         {
+#if !MONO
             m_OwnWaitHandle.Close();
             m_OtherWaitHandle.Close();
             if (m_SharedMemory != null)
@@ -164,11 +173,14 @@ namespace Ares.Settings
             }
             m_ContinueSMThread = false;
             m_SharedMemoryThread.Join();
+#endif
         }
 
         public void Commit()
         {
+#if !MONO
             WriteToSharedMemory();
+#endif
         }
 
         private Settings()
@@ -176,7 +188,8 @@ namespace Ares.Settings
             Data = new SettingsData();
             InitDefaults();
         }
-
+		
+#if !MONO
         private void ListenForSMChanges()
         {
             bool continueThread = true;
@@ -193,6 +206,7 @@ namespace Ares.Settings
                 }
             }
         }
+#endif
 
         public readonly String settingsFileName = "Ares.Editor.Settings.xml";
 
@@ -440,7 +454,8 @@ namespace Ares.Settings
                 return true;
             return false;
         }
-
+		
+#if !MONO
         private bool ReadFromSharedMemory()
         {
             try
@@ -512,6 +527,7 @@ namespace Ares.Settings
         private System.Threading.Thread m_SharedMemoryThread;
 
         private bool m_ContinueSMThread;
+#endif
 
         private String m_ID;
 

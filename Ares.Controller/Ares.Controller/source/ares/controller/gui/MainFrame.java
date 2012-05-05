@@ -121,7 +121,13 @@ public final class MainFrame extends FrameController implements IMessageListener
   
   private boolean connectWithFirstServer = true;
   
-  private File findLocalPlayer() {
+  private static boolean isWindows()
+  {
+	  return System.getProperty("os.name").startsWith("Windows");
+  }
+  
+  private String findLocalPlayerDir()
+  {
 	  URL myPath = MainFrame.class.getProtectionDomain().getCodeSource().getLocation();
 	  File file;
 	  try {
@@ -133,13 +139,32 @@ public final class MainFrame extends FrameController implements IMessageListener
 		  File baseDir = myDir.getParentFile(); // .../Ares
 		  if (baseDir == null)
 			  return null;
-		  String playerFileName = baseDir.toString() + File.separator +  "Player_Editor" + File.separator + "Ares.Player.exe"; //$NON-NLS-1$ //$NON-NLS-2$
-		  File playerExe = new File(playerFileName); //$NON-NLS-1$ //$NON-NLS-2$
-		  return playerExe.exists() ? playerExe : null;
-  	  } 
+		  if (isWindows()) {
+			  return baseDir.toString() + File.separator +  "Player_Editor" + File.separator; //$NON-NLS-1$
+		  }
+		  else {
+			  return baseDir.toString() + File.separator +  "Player" + File.separator; //$NON-NLS-1$
+		  }
+	  }
 	  catch (URISyntaxException e) {
 		return null;
 	  }
+	  
+  }
+  
+  private File findLocalPlayer() {
+	  String localPlayerDir = findLocalPlayerDir();
+	  if (localPlayerDir == null)
+		  return null;
+	  String playerFileName = localPlayerDir;
+	  if (isWindows()) {
+		  playerFileName += "Ares.Player.exe"; //$NON-NLS-1$
+	  }
+	  else {
+		  playerFileName += "Ares.Player.sh"; //$NON-NLS-1$
+	  }
+	  File playerExe = new File(playerFileName); //$NON-NLS-1$ //$NON-NLS-2$
+	  return playerExe.exists() ? playerExe : null;
   }
   
   private Timer firstTimer;
@@ -724,7 +749,7 @@ public final class MainFrame extends FrameController implements IMessageListener
 		try {
     		connectWithFirstServer = true;
     		isLocalPlayer = true;
-			Runtime.getRuntime().exec(commandLine);
+			Runtime.getRuntime().exec(commandLine, null, new File(findLocalPlayerDir()));
 		} 
 		catch (IOException e) {
 			JOptionPane.showMessageDialog(this, Localization.getString("MainFrame.CouldNotStartPlayer") + e.getLocalizedMessage(), Localization.getString("MainFrame.Ares"), JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$ //$NON-NLS-2$

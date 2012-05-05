@@ -1,0 +1,30 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Mono_Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Ares.Player\Player.cs">
+    <Files>
+      <File FileName="Ares.Settings\Settings.cs" Line="130" Column="7" />
+      <File FileName="Ares.Player\Player.cs" Line="480" Column="34" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True" selected="True">
+          <Node name="Ares.Player_Mono" expanded="True" />
+        </State>
+      </Pad>
+      <Pad Id="ClassPad">
+        <State expanded="True" selected="True" />
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State>
+          <Value>copy</Value>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches>
+    <Watch file="Ares.Player\MainWindow.cs" line="155" offsetX="661" offsetY="2295" expression="evnt" liveUpdate="False" />
+  </MonoDevelop.Ide.DebuggingService.PinnedWatches>
+</Properties>

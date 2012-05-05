@@ -88,9 +88,17 @@ namespace Ares.Settings
             System.IO.File.Delete(tempFileName);            
         }
 
-        public static bool IsAppDirAllowed()
+		private static string AppPath 
+		{ 
+		    get 
+		    { 
+		        return System.IO.Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]); 
+		     } 
+		} 
+		
+		public static bool IsAppDirAllowed()
         {
-            return !System.Windows.Forms.Application.ExecutablePath.StartsWith(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles));
+            return !AppPath.StartsWith(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles));
         }
 
         public bool ReadFromFile()
@@ -128,7 +136,7 @@ namespace Ares.Settings
             }
             else if (location == SettingsLocation.AppDir)
             {
-                settingsDir = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath);
+                settingsDir = System.IO.Path.GetDirectoryName(AppPath);
             }
             else
             {

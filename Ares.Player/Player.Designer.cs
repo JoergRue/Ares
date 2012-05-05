@@ -38,8 +38,10 @@ namespace Ares.Player
             }
             if (disposing)
             {
+#if !MONO
                 m_Instance.Dispose();
-            }
+#endif
+			}
             base.Dispose(disposing);
         }
 

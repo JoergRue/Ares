@@ -201,10 +201,12 @@ namespace Ares.Data
             settings.ProhibitDtd = false;
             using (System.IO.FileStream stream = new System.IO.FileStream(fileName, System.IO.FileMode.Open))
             {
-                using (XmlReader reader = XmlReader.Create(stream, settings))
+				using (System.IO.StreamReader streamReader = new System.IO.StreamReader(stream, System.Text.Encoding.UTF8)) {
+                using (XmlReader reader = XmlReader.Create(streamReader, settings))
                 {
                     DoImportElements(reader, elements, fileName, isProject);
                 }
+				}
             }
 
             return elements;

@@ -1,0 +1,215 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Mono_Release</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FF45F69E-C808-46A5-9557-307D5F8A0A6D}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Ares.Player</RootNamespace>
+    <FileAlignment>512</FileAlignment>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <AssemblyName>Ares.Player</AssemblyName>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>ares.snk</AssemblyOriginatorKeyFile>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\Ares.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Mono_Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\bin\Mono Release</OutputPath>
+    <DefineConstants>MONO</DefineConstants>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Mono_Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\Mono Debug</OutputPath>
+    <DefineConstants>TRACE;DEBUG;MONO</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Bass.Net">
+      <HintPath>..\Libraries\Bass.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="BassRegistration">
+      <HintPath>..\Libraries\BassRegistration.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Deployment" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="MessagesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MessagesForm.Designer.cs">
+      <DependentUpon>MessagesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Player.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Player.Designer.cs">
+      <DependentUpon>Player.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StreamingDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StreamingDialog.Designer.cs">
+      <DependentUpon>StreamingDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StringResources.de.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StringResources.de.resx</DependentUpon>
+    </Compile>
+    <Compile Include="StringResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StringResources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="MessagesForm.de.resx">
+      <DependentUpon>MessagesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MessagesForm.resx">
+      <DependentUpon>MessagesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Player.de.resx">
+      <DependentUpon>Player.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Player.resx">
+      <DependentUpon>Player.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="StreamingDialog.de.resx">
+      <DependentUpon>StreamingDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StreamingDialog.resx">
+      <DependentUpon>StreamingDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StringResources.de.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>StringResources.de.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StringResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>StringResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="ares.snk" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gear.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\eventlogError.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\eventlogInfo.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\eventlogWarn.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Ares.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ItemGroup>
+    <ProjectReference Include="..\Ares.Data\Ares.Data_Mono.csproj">
+      <Project>{F64D6AF3-3543-47F0-A7B8-0336750B09C3}</Project>
+      <Name>Ares.Data_Mono</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ares.ModelChecks\Ares.ModelInfo_Mono.csproj">
+      <Project>{50EA19EE-5337-499C-8B7B-1B22EA9E24A6}</Project>
+      <Name>Ares.ModelInfo_Mono</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ares.Online\Ares.Online_Mono.csproj">
+      <Project>{7550AD48-17A5-45BF-A632-B75EB82123DD}</Project>
+      <Name>Ares.Online_Mono</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ares.Players\Ares.Players_Mono.csproj">
+      <Project>{87F61D82-5515-48C4-94F5-FC5EF8435DBF}</Project>
+      <Name>Ares.Players_Mono</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ares.Playing\Ares.Playing_Mono.csproj">
+      <Project>{6C55F933-0F49-489C-AFF4-E0E0A8581E42}</Project>
+      <Name>Ares.Playing_Mono</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ares.Settings\Ares.Settings_Mono.csproj">
+      <Project>{E99E229E-2D6A-4C49-8E6F-C06E3F346606}</Project>
+      <Name>Ares.Settings_Mono</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

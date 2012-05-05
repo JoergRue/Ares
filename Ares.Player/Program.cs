@@ -108,10 +108,13 @@ namespace Ares.Player
             }
             catch (Exception ex)
             {
-                MessageBox.Show(StringResources.BassInitFail, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                MessageBox.Show("Fehler: " + ex.Message + "(" + ex.GetType().FullName + ")\n" + ex.StackTrace, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                MessageBox.Show(String.Format(StringResources.BassInitFail, 
+				                              ex.Message + "(" + ex.GetType().FullName + ")", 
+				                              ex.StackTrace),
+				                StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return;
             }
+#if !MONO
             try
             {
                 Application.Run(new Player());
@@ -119,6 +122,9 @@ namespace Ares.Player
             catch (Ares.Ipc.ApplicationAlreadyStartedException)
             {
             }
+#else
+			Application.Run (new Player());
+#endif
             Un4seen.Bass.Bass.BASS_Free();
         }
     }

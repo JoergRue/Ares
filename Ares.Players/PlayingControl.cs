@@ -27,6 +27,54 @@ using Ares.Data;
 
 namespace Ares.Players
 {
+	public enum Keys
+	{
+		Back = 8,
+		Tab = 9,
+		Return = 13,
+		Escape = 27,
+		Space = 32,
+		PageUp = 33,
+		PageDown = 34,
+		End = 35,
+		Home = 36,
+		Left = 37,
+		Up = 38,
+		Right = 39,
+		Down = 40,
+		Insert = 45,
+		Delete = 46,
+		NumPad0= 96,
+		NumPad1 = 97,
+		NumPad2 = 98,
+		NumPad3 = 99,
+		NumPad4 = 100,
+		NumPad5 = 101,
+		NumPad6 = 102,
+		NumPad7 = 103,
+		NumPad8 = 104,
+		NumPad9 = 105,
+		F1 = 112,
+		F2 = 113,
+		F3 = 114,
+		F4 = 115,
+		F5 = 116,
+		F6 = 117,
+		F7 = 118,
+		F8 = 119,
+		F9 = 120,
+		F10 = 121,
+		F11 = 122,
+		F12 = 123,
+		OemSemicolon = 186,
+		OemComma = 188,
+		OemMinus = 189,
+		OemPeriod = 190,
+		Oem2= 191,
+		Oem3 = 192,
+		Oem4 = 219
+	}
+	
     public class PlayingControl : IProjectPlayingCallbacks, IDisposable
     {
         public PlayingControl()
@@ -62,9 +110,9 @@ namespace Ares.Players
             }
         }
 
-        public bool KeyReceived(System.Windows.Forms.Keys key)
+        public bool KeyReceived(int key)
         {
-            if (key == System.Windows.Forms.Keys.Escape)
+            if (key == (int)Keys.Escape)
             {
                 PlayingModule.ProjectPlayer.StopAll();
                 if (Settings.Settings.Instance.UseStreaming)
@@ -73,48 +121,48 @@ namespace Ares.Players
                 }
                 return true;
             }
-            else if (key == System.Windows.Forms.Keys.Up)
+            else if (key == (int)Keys.Up)
             {
                 int value = ModifyVolume(ref m_GlobalVolume, true);
                 PlayingModule.ProjectPlayer.SetVolume(VolumeTarget.Both, value);
                 return true;
             }
-            else if (key == System.Windows.Forms.Keys.Down)
+            else if (key == (int)Keys.Down)
             {
                 int value = ModifyVolume(ref m_GlobalVolume, false);
                 PlayingModule.ProjectPlayer.SetVolume(VolumeTarget.Both, value);
                 return true;
             }
-            else if (key == System.Windows.Forms.Keys.PageUp)
+            else if (key == (int)Keys.PageUp)
             {
                 int value = ModifyVolume(ref m_SoundVolume, true);
                 PlayingModule.ProjectPlayer.SetVolume(VolumeTarget.Sounds, value);
                 return true;
             }
-            else if (key == System.Windows.Forms.Keys.PageDown)
+            else if (key == (int)Keys.PageDown)
             {
                 int value = ModifyVolume(ref m_SoundVolume, false);
                 PlayingModule.ProjectPlayer.SetVolume(VolumeTarget.Sounds, value);
                 return true;
             }
-            else if (key == System.Windows.Forms.Keys.Insert)
+            else if (key == (int)Keys.Insert)
             {
                 int value = ModifyVolume(ref m_MusicVolume, true);
                 PlayingModule.ProjectPlayer.SetVolume(VolumeTarget.Music, value);
                 return true;
             }
-            else if (key == System.Windows.Forms.Keys.Delete)
+            else if (key == (int)Keys.Delete)
             {
                 int value = ModifyVolume(ref m_MusicVolume, false);
                 PlayingModule.ProjectPlayer.SetVolume(VolumeTarget.Music, value);
                 return true;
             }
-            else if (key == System.Windows.Forms.Keys.Right)
+            else if (key == (int)Keys.Right)
             {
                 PlayingModule.ProjectPlayer.NextMusicTitle();
                 return true;
             }
-            else if (key == System.Windows.Forms.Keys.Left)
+            else if (key == (int)Keys.Left)
             {
                 PlayingModule.ProjectPlayer.PreviousMusicTitle();
                 return true;
@@ -125,7 +173,7 @@ namespace Ares.Players
                 {
                     PlayingModule.Streamer.BeginStreaming(CreateStreamingParameters());
                 }
-                return PlayingModule.ProjectPlayer.KeyReceived((int)key);
+                return PlayingModule.ProjectPlayer.KeyReceived(key);
             }
         }
 

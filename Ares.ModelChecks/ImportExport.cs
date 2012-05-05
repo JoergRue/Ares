@@ -34,9 +34,11 @@ namespace Ares.ModelInfo
         private ProgressMonitor m_Monitor;
         private System.ComponentModel.BackgroundWorker m_Worker;
         private System.Action m_DataLoadedFunc;
-
-        public static void Import(System.Windows.Forms.Form parent, String importFileName, String targetFileName,
-            System.Action dataLoaded)
+		
+        public static void Import(
+							      System.Windows.Forms.Form parent, 
+		                          String importFileName, String targetFileName,
+            					  System.Action dataLoaded)
         {
             Importer importer = new Importer();
             importer.DoImport(parent, importFileName, targetFileName, dataLoaded);
@@ -46,8 +48,10 @@ namespace Ares.ModelInfo
         {
         }
 
-        private void DoImport(System.Windows.Forms.Form parent, String importFileName, String targetFileName,
-            System.Action dataLoaded)
+        private void DoImport(
+						      System.Windows.Forms.Form parent, 
+		                      String importFileName, String targetFileName,
+            				  System.Action dataLoaded)
         {
             m_DataLoadedFunc = dataLoaded;
             try
@@ -237,7 +241,9 @@ namespace Ares.ModelInfo
     #endregion
 
     #region Export
-
+	
+#if !MONO
+	
     public class Exporter
     {
         private ProgressMonitor m_Monitor;
@@ -380,8 +386,20 @@ namespace Ares.ModelInfo
             }
         }
     }
+	
+#else
+	
+	public class Exporter
+    {
+        public static String MUSIC_DIR = "Music";
+        public static String SOUND_DIR = "Sounds";
+	}
+	
+#endif
 
     #endregion
+	
+#if !MONO
 
     #region Copy / Move
 
@@ -609,6 +627,8 @@ namespace Ares.ModelInfo
     }
 
     #endregion
+	
+#endif
 
     #region Progress
 
@@ -623,7 +643,7 @@ namespace Ares.ModelInfo
         private const int DELAY = 700;
 
         private Object syncObject = new object();
-
+		
         public ProgressMonitor(System.Windows.Forms.Form parent, String text)
         {
             dialog = new ProgressDialog(text);
@@ -661,10 +681,11 @@ namespace Ares.ModelInfo
                 if (closed)
                     return;
             }
-            DialogClosed(dialog.ShowDialog(parent));
+			dialog.ShowDialog(parent);
+			DialogClosed();
         }
 
-        private void DialogClosed(System.Windows.Forms.DialogResult result)
+        private void DialogClosed()
         {
             lock (syncObject)
             {
@@ -696,18 +717,23 @@ namespace Ares.ModelInfo
             }
             if (dialog != null && dialog.InvokeRequired)
             {
-                dialog.Invoke(new Action(() => { Close(); }));
+                dialog.Invoke(new Action(() => { DoClose(); }));
             }
             else
             {
-                if (dialog != null && dialog.Visible)
-                {
-                    dialog.Visible = false;
-                    dialog.Close();
-                }
-                timer.Dispose();
+				DoClose();
             }
         }
+		
+		private void DoClose()
+		{
+            if (dialog != null && dialog.Visible)
+            {
+                dialog.Visible = false;
+                dialog.Close();
+            }
+            timer.Dispose();
+		}
 
         public void SetProgress(int progress, String text)
         {

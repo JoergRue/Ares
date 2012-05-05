@@ -29,9 +29,32 @@ namespace Ares.Playing
         {
             int channel = 0;
             BASSFlag speakerFlag = GetSpeakerFlag(file);
+#if MONO
+			byte[] buffer = null;
+			long length = 0;
+			try 
+			{
+				System.IO.FileStream fs = System.IO.File.OpenRead(file.Path);
+				length = fs.Length;
+				buffer = new byte[length];
+				fs.Read (buffer, 0, (int)length);
+				fs.Close ();
+			}
+			catch (System.IO.IOException e)
+			{
+				ErrorHandling.ErrorOccurred(file.Id, e.Message);
+				return 0;
+			}
+			System.Runtime.InteropServices.GCHandle gcHandle = System.Runtime.InteropServices.GCHandle.Alloc(buffer, System.Runtime.InteropServices.GCHandleType.Pinned);
+			channel = Bass.BASS_StreamCreateFile(gcHandle.AddrOfPinnedObject(), 0L, length, BASSFlag.BASS_STREAM_DECODE);
+#else
             channel = Bass.BASS_StreamCreateFile(file.Path, 0, 0, BASSFlag.BASS_STREAM_DECODE);
+#endif
             if (channel == 0)
             {
+#if MONO
+				gcHandle.Free();
+#endif
                 ErrorHandling.BassErrorOccurred(file.Id, StringResources.FilePlayingError);
                 return 0;
             }
@@ -40,6 +63,9 @@ namespace Ares.Playing
             channel = Un4seen.Bass.AddOn.Fx.BassFx.BASS_FX_TempoCreate(channel, flags);
             if (channel == 0)
             {
+#if MONO
+				gcHandle.Free();
+#endif
                 ErrorHandling.BassErrorOccurred(file.Id, StringResources.FilePlayingError);
                 return 0;
             }
@@ -49,6 +75,9 @@ namespace Ares.Playing
                 {
                     m_RunningStreams[channel] = new Action(() =>
                     {
+#if MONO
+						gcHandle.Free();
+#endif
                         callback(file.Id, channel);
                     });
                     m_RunningFilesVolumes[channel] = file.Volume;
@@ -57,6 +86,9 @@ namespace Ares.Playing
                 {
                     if (Bass.BASS_ChannelSetSync(channel, BASSSync.BASS_SYNC_END, 0, m_EndSync, IntPtr.Zero) == 0)
                     {
+#if MONO
+						gcHandle.Free();
+#endif
                         ErrorHandling.BassErrorOccurred(file.Id, StringResources.FilePlayingError);
                         lock (m_Mutex)
                         {
@@ -170,6 +202,9 @@ namespace Ares.Playing
                 bool result = isStreaming ? BassStreamer.Instance.AddChannel(channel) : Bass.BASS_ChannelPlay(channel, false);
                 if (!result)
                 {
+#if MONO
+					gcHandle.Free();
+#endif
                     ErrorHandling.BassErrorOccurred(file.Id, StringResources.FilePlayingError);
                     lock (m_Mutex)
                     {

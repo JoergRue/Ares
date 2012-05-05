@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Mono_Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{50EA19EE-5337-499C-8B7B-1B22EA9E24A6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Ares.ModelInfo</RootNamespace>
+    <FileAlignment>512</FileAlignment>
+    <AssemblyName>Ares.ModelInfo</AssemblyName>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>ares.snk</AssemblyOriginatorKeyFile>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Mono_Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\Mono Debug</OutputPath>
+    <DefineConstants>TRACE;DEBUG;MONO</DefineConstants>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Mono_Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\bin\Mono Release</OutputPath>
+    <DefineConstants>MONO</DefineConstants>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\Libraries\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Drawing" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DataExtensions.cs" />
+    <Compile Include="FileChecks.cs" />
+    <Compile Include="FileLists.cs" />
+    <Compile Include="ImportExport.cs" />
+    <Compile Include="ModelChecks.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StringResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StringResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="PathLabel.cs" />
+    <Compile Include="ProgressDialog.cs" />
+    <Compile Include="ProgressDialog.Designer.cs" />
+    <Compile Include="KeyChecks.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ares.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="StringResources.de.resx" />
+    <EmbeddedResource Include="StringResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>StringResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Ares.png" />
+    <EmbeddedResource Include="ProgressDialog.resx" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ItemGroup>
+    <ProjectReference Include="..\Ares.Data\Ares.Data_Mono.csproj">
+      <Project>{F64D6AF3-3543-47F0-A7B8-0336750B09C3}</Project>
+      <Name>Ares.Data_Mono</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ares.Settings\Ares.Settings_Mono.csproj">
+      <Project>{E99E229E-2D6A-4C49-8E6F-C06E3F346606}</Project>
+      <Name>Ares.Settings_Mono</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

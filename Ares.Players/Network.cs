@@ -26,7 +26,7 @@ namespace Ares.Players
 {
     public interface INetworkClient
     {
-        void KeyReceived(System.Windows.Forms.Keys key);
+        void KeyReceived(int key);
         void VolumeReceived(Ares.Playing.VolumeTarget target, int value);
         void ClientDataChanged();
         void ProjectShallChange(String newProjectFile);
@@ -332,85 +332,83 @@ namespace Ares.Players
             }
         }
 
-        private System.Windows.Forms.KeysConverter converter = new System.Windows.Forms.KeysConverter();
-
-        private System.Windows.Forms.Keys MapKeyCodeToKey(Byte[] keyCode)
+        private int MapKeyCodeToKey(Byte[] keyCode)
         {
             try
             {
                 if (keyCode[0] == 0)
                 {
                     String s = System.Text.Encoding.ASCII.GetString(keyCode, 1, 1);
-                    return (System.Windows.Forms.Keys)converter.ConvertFromInvariantString(s);
+                    return (int)s[0];
                 }
                 else if (keyCode[0] == 1)
                 {
                     switch (keyCode[1])
                     {
-                        case 1: return System.Windows.Forms.Keys.F1;
-                        case 2: return System.Windows.Forms.Keys.F2;
-                        case 3: return System.Windows.Forms.Keys.F3;
-                        case 4: return System.Windows.Forms.Keys.F4;
-                        case 5: return System.Windows.Forms.Keys.F5;
-                        case 6: return System.Windows.Forms.Keys.F6;
-                        case 7: return System.Windows.Forms.Keys.F7;
-                        case 8: return System.Windows.Forms.Keys.F8;
-                        case 9: return System.Windows.Forms.Keys.F9;
-                        case 10: return System.Windows.Forms.Keys.F10;
-                        case 11: return System.Windows.Forms.Keys.F11;
-                        case 12: return System.Windows.Forms.Keys.F12;
+                        case 1: return (int)Keys.F1;
+                        case 2: return (int)Keys.F2;
+                        case 3: return (int)Keys.F3;
+                        case 4: return (int)Keys.F4;
+                        case 5: return (int)Keys.F5;
+                        case 6: return (int)Keys.F6;
+                        case 7: return (int)Keys.F7;
+                        case 8: return (int)Keys.F8;
+                        case 9: return (int)Keys.F9;
+                        case 10: return (int)Keys.F10;
+                        case 11: return (int)Keys.F11;
+                        case 12: return (int)Keys.F12;
                     }
                 }
                 else if (keyCode[0] == 2)
                 {
                     switch (keyCode[1])
                     {
-                        case 0: return System.Windows.Forms.Keys.NumPad0;
-                        case 1: return System.Windows.Forms.Keys.NumPad1;
-                        case 2: return System.Windows.Forms.Keys.NumPad2;
-                        case 3: return System.Windows.Forms.Keys.NumPad3;
-                        case 4: return System.Windows.Forms.Keys.NumPad4;
-                        case 5: return System.Windows.Forms.Keys.NumPad5;
-                        case 6: return System.Windows.Forms.Keys.NumPad6;
-                        case 7: return System.Windows.Forms.Keys.NumPad7;
-                        case 8: return System.Windows.Forms.Keys.NumPad8;
-                        case 9: return System.Windows.Forms.Keys.NumPad9;
+                        case 0: return (int)Keys.NumPad0;
+                        case 1: return (int)Keys.NumPad1;
+                        case 2: return (int)Keys.NumPad2;
+                        case 3: return (int)Keys.NumPad3;
+                        case 4: return (int)Keys.NumPad4;
+                        case 5: return (int)Keys.NumPad5;
+                        case 6: return (int)Keys.NumPad6;
+                        case 7: return (int)Keys.NumPad7;
+                        case 8: return (int)Keys.NumPad8;
+                        case 9: return (int)Keys.NumPad9;
                     }
                 }
                 else if (keyCode[0] == 3)
                 {
                     switch (keyCode[1])
                     {
-                        case 0: return System.Windows.Forms.Keys.Insert;
-                        case 1: return System.Windows.Forms.Keys.Delete;
-                        case 2: return System.Windows.Forms.Keys.Home;
-                        case 3: return System.Windows.Forms.Keys.End;
-                        case 4: return System.Windows.Forms.Keys.PageUp;
-                        case 5: return System.Windows.Forms.Keys.PageDown;
-                        case 6: return System.Windows.Forms.Keys.Left;
-                        case 7: return System.Windows.Forms.Keys.Right;
-                        case 8: return System.Windows.Forms.Keys.Up;
-                        case 9: return System.Windows.Forms.Keys.Down;
-                        case 10: return System.Windows.Forms.Keys.Space;
-                        case 11: return System.Windows.Forms.Keys.Return;
-                        case 12: return System.Windows.Forms.Keys.Escape;
-                        case 13: return System.Windows.Forms.Keys.Tab;
-                        case 14: return System.Windows.Forms.Keys.Back;
-                        case 15: return System.Windows.Forms.Keys.OemPeriod;
-                        case 16: return System.Windows.Forms.Keys.OemSemicolon;
-                        case 17: return System.Windows.Forms.Keys.Oem4;
-                        case 18: return System.Windows.Forms.Keys.Oemcomma;
-                        case 19: return System.Windows.Forms.Keys.Oem2;
-                        case 20: return System.Windows.Forms.Keys.OemMinus;
-                        case 21: return System.Windows.Forms.Keys.Oem3;
+                        case 0: return (int)Keys.Insert;
+                        case 1: return (int)Keys.Delete;
+                        case 2: return (int)Keys.Home;
+                        case 3: return (int)Keys.End;
+                        case 4: return (int)Keys.PageUp;
+                        case 5: return (int)Keys.PageDown;
+                        case 6: return (int)Keys.Left;
+                        case 7: return (int)Keys.Right;
+                        case 8: return (int)Keys.Up;
+                        case 9: return (int)Keys.Down;
+                        case 10: return (int)Keys.Space;
+                        case 11: return (int)Keys.Return;
+                        case 12: return (int)Keys.Escape;
+                        case 13: return (int)Keys.Tab;
+                        case 14: return (int)Keys.Back;
+                        case 15: return (int)Keys.OemPeriod;
+                        case 16: return (int)Keys.OemSemicolon;
+                        case 17: return (int)Keys.Oem4;
+                        case 18: return (int)Keys.OemComma;
+                        case 19: return (int)Keys.Oem2;
+                        case 20: return (int)Keys.OemMinus;
+                        case 21: return (int)Keys.Oem3;
                     }
                 }
-                return System.Windows.Forms.Keys.Escape;
+                return (int)Keys.Escape;
             }
             catch (Exception e)
             {
                 Messages.AddMessage(MessageType.Error, String.Format(StringResources.InvalidKeyCode, e.Message));
-                return System.Windows.Forms.Keys.Escape;
+                return (int)Keys.Escape;
             }
         }
 

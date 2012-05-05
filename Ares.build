@@ -2,10 +2,13 @@
 
   <property name="configuration" value="Release"/>
   <property name="nant.settings.currentframework" value="net-3.5" />
+  <property name="xbuild" value="C:\Program Files (x86)\MonoDevelop\bin\mdtool.exe" />
+  <property name="monoConfiguration" value="Mono_Release"/>
 	
 	<property name="build.dir" value="build" />
 	<property name="temp.dir" value="${build.dir}/temp" />
 	<property name="output.dir" value="${build.dir}/Ares/Player_Editor" />
+	<property name="monooutput.dir" value="${build.dir}/Ares/Player" />
 	<property name="libraries.dir" value="Libraries" />
 	
     <target name="clean" description="Delete all previously compiled binaries.">
@@ -20,6 +23,7 @@
     </target>
     
     <property name="solutionFile" value="Ares.sln" />
+	<property name="monoSolutionFile" value="Ares.MonoPlayer.sln" />
     
     <target name="build" description="Build all targets.">
 	    
@@ -38,6 +42,17 @@
         <property name="Ares.Editor" value="${expected.output}/Ares.Editor.exe" />
         <fail unless="${file::exists(Ares.Player)}">Output file doesn't exist in ${expected.output}</fail>
         <fail unless="${file::exists(Ares.Editor)}">Output file doesn't exist in ${expected.output}</fail>
+		
+		<exec program="${xbuild}" commandline="build --target:build --configuration:${monoConfiguration} --project:Ares.Data_Mono ${monoSolutionFile}" workingdir="." />
+		<exec program="${xbuild}" commandline="build --target:build --configuration:${monoConfiguration} --project:Ares.Settings_Mono ${monoSolutionFile}" workingdir="." />
+		<exec program="${xbuild}" commandline="build --target:build --configuration:${monoConfiguration} --project:Ares.ModelInfo_Mono ${monoSolutionFile}" workingdir="." />
+		<exec program="${xbuild}" commandline="build --target:build --configuration:${monoConfiguration} --project:Ares.Playing_Mono ${monoSolutionFile}" workingdir="." />
+		<exec program="${xbuild}" commandline="build --target:build --configuration:${monoConfiguration} --project:Ares.Online_Mono ${monoSolutionFile}" workingdir="." />
+		<exec program="${xbuild}" commandline="build --target:build --configuration:${monoConfiguration} --project:Ares.Players_Mono ${monoSolutionFile}" workingdir="." />
+		<exec program="${xbuild}" commandline="build --target:build --configuration:${monoConfiguration} --project:Ares.Player_Mono ${monoSolutionFile}" workingdir="." />
+		
+		<property name="Ares.MonoPlayer" value="bin/Mono Release/Ares.Player.exe" />
+		<fail unless="${file::exists(Ares.MonoPlayer)}">Output file doesn't exist in bin/Mono Release</fail>
     </target>
     
     <target name="rebuild" depends="clean, build" />
@@ -50,6 +65,20 @@
 			  <include name="**/*.config" />
 			</fileset>
 	    </copy>
+		<copy todir="${monooutput.dir}">
+		  <fileset basedir="bin/Mono Release">
+			  <include name="**/*.dll" />
+			  <include name="**/*.exe" />
+			  <include name="**/*.config" />
+   		  </fileset>
+		</copy>
+		<copy todir="${monooutput.dir}">
+		  <fileset basedir="Libraries_Linux">
+			  <include name="**/*.so" />
+			  <include name="**/*.config" />
+			  <include name="**/*.sh" />
+   		  </fileset>
+		</copy>
 	    <copy todir="${output.dir}">
 		    <fileset basedir=".">
 			  <include name="*.ico" />

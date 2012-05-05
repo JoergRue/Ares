@@ -97,13 +97,13 @@ namespace Ares.ModelInfo
             m_Errors = new Dictionary<CheckType, List<ModelError>>();
             m_ErrorsByElement = new Dictionary<Object, List<ModelError>>();
             m_ModelChecks = new Dictionary<CheckType, IModelCheck>();
-
+			
             AddCheck(new KeyChecks());
             AddCheck(new FileChecks());
         }
 
         public IProject Project { get; set; }
-
+		
         public String GetErrorForKey(IModeElement modeElement, int key)
         {
             return KeyChecks.GetErrorForKey(Project, modeElement, key);

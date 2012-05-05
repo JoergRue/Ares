@@ -35,7 +35,9 @@ namespace Ares.Player
 {
     public partial class Player : Form, INetworkClient
     {
+#if !MONO
         private Ares.Ipc.ApplicationInstance m_Instance;
+#endif
 
         private Network m_Network;
 
@@ -54,6 +56,7 @@ namespace Ares.Player
                 m_HideToTray = true;
                 projectName = Environment.GetCommandLineArgs().Length > 3 ? Environment.GetCommandLineArgs()[3] : String.Empty;
             }
+#if !MONO
             if (String.IsNullOrEmpty(projectName))
             {
                 m_Instance = Ares.Ipc.ApplicationInstance.CreateOrActivate("Ares.Player");
@@ -66,18 +69,23 @@ namespace Ares.Player
             {
                 throw new Ares.Ipc.ApplicationAlreadyStartedException();
             }
+#endif
             InitializeComponent();
             if (!m_HideToTray)
             {
                 notifyIcon.Visible = false;
             }
+#if !MONO
             else
             {
                 Visible = false;
                 WindowState = FormWindowState.Minimized;
             }
+#endif
+#if !MONO
             m_Instance.SetWindowHandle(Handle);
             m_Instance.ProjectOpenAction = (projectName2, projectPath) => OpenProjectFromRequest(projectName2, projectPath);
+#endif
             m_PlayingControl = new PlayingControl();
         }
 
@@ -236,7 +244,9 @@ namespace Ares.Player
                 }
                 Ares.Data.DataModule.ProjectManager.UnloadProject(m_Project);
                 m_Project = null;
+#if !MONO
                 m_Instance.SetLoadedProject("-");
+#endif
             }
             try
             {
@@ -263,7 +273,9 @@ namespace Ares.Player
             {
                 fileSystemWatcher1.Path = System.IO.Path.GetDirectoryName(m_Project.FileName);
             }
+#if !MONO
             m_Instance.SetLoadedProject(filePath);
+#endif
             if (m_Network != null)
             {
                 m_Network.InformClientOfProject(m_Project != null ? m_Project.Title : String.Empty);
@@ -281,14 +293,19 @@ namespace Ares.Player
             }
         }
 
-        protected override bool ProcessCmdKey(ref System.Windows.Forms.Message msg, Keys keyData)
+        private int GetPlayersKey(System.Windows.Forms.Keys key)
+        {
+            return (int)key;
+        }
+
+        protected override bool ProcessCmdKey(ref System.Windows.Forms.Message msg, System.Windows.Forms.Keys keyData)
         {
             const int WM_KEYDOWN = 0x100;
             if (msg.Msg == WM_KEYDOWN)
             {
-                return m_PlayingControl.KeyReceived(keyData);
+                return m_PlayingControl.KeyReceived(GetPlayersKey(keyData));
             }
-            if (keyData == (Keys.F4 | Keys.Alt))
+            if (keyData == (System.Windows.Forms.Keys.F4 | System.Windows.Forms.Keys.Alt))
             {
                 StopAllPlaying();
                 Close();
@@ -462,13 +479,17 @@ namespace Ares.Player
             {
                 SettingsChanged(true);
             }
+#if !MONO
             Ares.Settings.Settings.Instance.SettingsChanged += new EventHandler<Settings.Settings.SettingsEventArgs>(SettingsChanged);
+#endif
         }
-
+		
+#if !MONO
         void SettingsChanged(object sender, Settings.Settings.SettingsEventArgs e)
         {
             SettingsChanged(e.FundamentalChange);
         }
+#endif
 
         private void SettingsChanged(bool fundamentalChange)
         {
@@ -480,7 +501,7 @@ namespace Ares.Player
             Ares.Settings.Settings settings = Ares.Settings.Settings.Instance;
             if (fundamentalChange)
             {
-                m_PlayingControl.KeyReceived(Keys.Escape);
+                m_PlayingControl.KeyReceived((int)Ares.Players.Keys.Escape);
                 m_PlayingControl.UpdateDirectories();
             }
             listenForPorts = false;
@@ -526,6 +547,7 @@ namespace Ares.Player
 
         private void StartEditor()
         {
+#if !MONO
             String appDir = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath);
             String commandLine = System.IO.Path.Combine(appDir, "Ares.Editor.exe");
             try
@@ -537,24 +559,25 @@ namespace Ares.Player
             {
                 MessageBox.Show(this, String.Format(StringResources.EditorStartError, ex.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+#endif
         }
 
         private void stopButton_Click(object sender, EventArgs e)
         {
-            m_PlayingControl.KeyReceived(Keys.Escape);
+            m_PlayingControl.KeyReceived((int)Ares.Players.Keys.Escape);
         }
 
         private void previousButton_Click(object sender, EventArgs e)
         {
-            m_PlayingControl.KeyReceived(Keys.Left);
+            m_PlayingControl.KeyReceived((int)Ares.Players.Keys.Left);
         }
 
         private void nextButton_Click(object sender, EventArgs e)
         {
-            m_PlayingControl.KeyReceived(Keys.Right);
+            m_PlayingControl.KeyReceived((int)Ares.Players.Keys.Right);
         }
 
-        public void KeyReceived(Keys key)
+        public void KeyReceived(int key)
         {
             m_PlayingControl.KeyReceived(key);
         }
@@ -744,6 +767,11 @@ namespace Ares.Player
             {
                 ipAddressBox.Enabled = false;
             }
+#if MONO
+			editorButton.Enabled = false;
+			startEditorToolStripMenuItem.Enabled = false;
+			streamingToolStripMenuItem.Enabled = false;
+#endif
             listenForPorts = true;
             m_Network = new Network(this);
             m_Network.InitConnectionData();
@@ -793,10 +821,12 @@ namespace Ares.Player
 
         private void Player_Resize(object sender, EventArgs e)
         {
+#if !MONO
             if (m_HideToTray && WindowState == FormWindowState.Minimized)
             {
                 Hide();
             }
+#endif
         }
 
         private void Player_Shown(object sender, EventArgs e)

@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ares.Settings_Mono", "Ares.Settings\Ares.Settings_Mono.csproj", "{E99E229E-2D6A-4C49-8E6F-C06E3F346606}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ares.Data_Mono", "Ares.Data\Ares.Data_Mono.csproj", "{F64D6AF3-3543-47F0-A7B8-0336750B09C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ares.ModelInfo_Mono", "Ares.ModelChecks\Ares.ModelInfo_Mono.csproj", "{50EA19EE-5337-499C-8B7B-1B22EA9E24A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ares.Playing_Mono", "Ares.Playing\Ares.Playing_Mono.csproj", "{6C55F933-0F49-489C-AFF4-E0E0A8581E42}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ares.Players_Mono", "Ares.Players\Ares.Players_Mono.csproj", "{87F61D82-5515-48C4-94F5-FC5EF8435DBF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ares.Player_Mono", "Ares.Player\Ares.Player_Mono.csproj", "{FF45F69E-C808-46A5-9557-307D5F8A0A6D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ares.Online_Mono", "Ares.Online\Ares.Online_Mono.csproj", "{7550AD48-17A5-45BF-A632-B75EB82123DD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Mono_Debug|Any CPU = Mono_Debug|Any CPU
+		Mono_Release|Any CPU = Mono_Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{50EA19EE-5337-499C-8B7B-1B22EA9E24A6}.Mono_Debug|Any CPU.ActiveCfg = Mono_Debug|Any CPU
+		{50EA19EE-5337-499C-8B7B-1B22EA9E24A6}.Mono_Debug|Any CPU.Build.0 = Mono_Debug|Any CPU
+		{50EA19EE-5337-499C-8B7B-1B22EA9E24A6}.Mono_Release|Any CPU.ActiveCfg = Mono_Release|Any CPU
+		{50EA19EE-5337-499C-8B7B-1B22EA9E24A6}.Mono_Release|Any CPU.Build.0 = Mono_Release|Any CPU
+		{6C55F933-0F49-489C-AFF4-E0E0A8581E42}.Mono_Debug|Any CPU.ActiveCfg = Mono_Debug|Any CPU
+		{6C55F933-0F49-489C-AFF4-E0E0A8581E42}.Mono_Debug|Any CPU.Build.0 = Mono_Debug|Any CPU
+		{6C55F933-0F49-489C-AFF4-E0E0A8581E42}.Mono_Release|Any CPU.ActiveCfg = Mono_Release|Any CPU
+		{6C55F933-0F49-489C-AFF4-E0E0A8581E42}.Mono_Release|Any CPU.Build.0 = Mono_Release|Any CPU
+		{7550AD48-17A5-45BF-A632-B75EB82123DD}.Mono_Debug|Any CPU.ActiveCfg = Mono_Debug|Any CPU
+		{7550AD48-17A5-45BF-A632-B75EB82123DD}.Mono_Debug|Any CPU.Build.0 = Mono_Debug|Any CPU
+		{7550AD48-17A5-45BF-A632-B75EB82123DD}.Mono_Release|Any CPU.ActiveCfg = Mono_Release|Any CPU
+		{7550AD48-17A5-45BF-A632-B75EB82123DD}.Mono_Release|Any CPU.Build.0 = Mono_Release|Any CPU
+		{87F61D82-5515-48C4-94F5-FC5EF8435DBF}.Mono_Debug|Any CPU.ActiveCfg = Mono_Debug|Any CPU
+		{87F61D82-5515-48C4-94F5-FC5EF8435DBF}.Mono_Debug|Any CPU.Build.0 = Mono_Debug|Any CPU
+		{87F61D82-5515-48C4-94F5-FC5EF8435DBF}.Mono_Release|Any CPU.ActiveCfg = Mono_Release|Any CPU
+		{87F61D82-5515-48C4-94F5-FC5EF8435DBF}.Mono_Release|Any CPU.Build.0 = Mono_Release|Any CPU
+		{E99E229E-2D6A-4C49-8E6F-C06E3F346606}.Mono_Debug|Any CPU.ActiveCfg = Mono_Debug|Any CPU
+		{E99E229E-2D6A-4C49-8E6F-C06E3F346606}.Mono_Debug|Any CPU.Build.0 = Mono_Debug|Any CPU
+		{E99E229E-2D6A-4C49-8E6F-C06E3F346606}.Mono_Release|Any CPU.ActiveCfg = Mono_Release|Any CPU
+		{E99E229E-2D6A-4C49-8E6F-C06E3F346606}.Mono_Release|Any CPU.Build.0 = Mono_Release|Any CPU
+		{F64D6AF3-3543-47F0-A7B8-0336750B09C3}.Mono_Debug|Any CPU.ActiveCfg = Mono_Debug|Any CPU
+		{F64D6AF3-3543-47F0-A7B8-0336750B09C3}.Mono_Debug|Any CPU.Build.0 = Mono_Debug|Any CPU
+		{F64D6AF3-3543-47F0-A7B8-0336750B09C3}.Mono_Release|Any CPU.ActiveCfg = Mono_Release|Any CPU
+		{F64D6AF3-3543-47F0-A7B8-0336750B09C3}.Mono_Release|Any CPU.Build.0 = Mono_Release|Any CPU
+		{FF45F69E-C808-46A5-9557-307D5F8A0A6D}.Mono_Debug|Any CPU.ActiveCfg = Mono_Debug|Any CPU
+		{FF45F69E-C808-46A5-9557-307D5F8A0A6D}.Mono_Debug|Any CPU.Build.0 = Mono_Debug|Any CPU
+		{FF45F69E-C808-46A5-9557-307D5F8A0A6D}.Mono_Release|Any CPU.ActiveCfg = Mono_Release|Any CPU
+		{FF45F69E-C808-46A5-9557-307D5F8A0A6D}.Mono_Release|Any CPU.Build.0 = Mono_Release|Any CPU
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Ares.Player\Ares.Player_Mono.csproj
+		outputpath = ..\bin\Mono Debug
+	EndGlobalSection
+EndGlobal
