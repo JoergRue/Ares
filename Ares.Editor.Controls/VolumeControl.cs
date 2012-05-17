@@ -33,6 +33,10 @@ namespace Ares.Editor.Controls
         public VolumeControl()
         {
             InitializeComponent();
+            volumeControlToolTip.SetToolTip(setsMusicBox, StringResources.SetGlobalMusicVolume);
+            volumeControlToolTip.SetToolTip(musicVolumeBar, StringResources.SetGlobalMusicVolume);
+            volumeControlToolTip.SetToolTip(soundVolumeBar, StringResources.SetGlobalSoundVolume);
+            volumeControlToolTip.SetToolTip(setsSoundBox, StringResources.SetGlobalSoundVolume);
         }
 
         public void SetElement(Ares.Data.IElement element)

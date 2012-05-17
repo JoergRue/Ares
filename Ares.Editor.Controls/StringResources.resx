@@ -120,4 +120,12 @@
   <data name="ForAllFileElements" xml:space="preserve">
     <value>Set value for all files in container</value>
   </data>
+  <data name="SetGlobalMusicVolume" xml:space="preserve">
+    <value>Sets the overall music volume as with the slider in the player or the controller.
+Volumes of individual files are relative to the global volume.</value>
+  </data>
+  <data name="SetGlobalSoundVolume" xml:space="preserve">
+    <value>Sets the overall sound volume (for all sounds), as with the slider in the player or the controller.
+Volumes of individual sounds are set relative to the global volume.</value>
+  </data>
 </root>

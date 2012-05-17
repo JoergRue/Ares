@@ -52,6 +52,7 @@ namespace Ares.Editor.Controls
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(VolumeControl));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.currentSoundVolumeButton = new System.Windows.Forms.Button();
@@ -60,6 +61,7 @@ namespace Ares.Editor.Controls
             this.setsSoundBox = new System.Windows.Forms.CheckBox();
             this.musicVolumeBar = new System.Windows.Forms.TrackBar();
             this.setsMusicBox = new System.Windows.Forms.CheckBox();
+            this.volumeControlToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.soundVolumeBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.musicVolumeBar)).BeginInit();
@@ -152,5 +154,6 @@ namespace Ares.Editor.Controls
         private System.Windows.Forms.CheckBox setsMusicBox;
         private System.Windows.Forms.Button currentSoundVolumeButton;
         private System.Windows.Forms.Button currentMusicVolumeButton;
+        private System.Windows.Forms.ToolTip volumeControlToolTip;
     }
 }

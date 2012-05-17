@@ -120,4 +120,13 @@
   <data name="ForAllFileElements" xml:space="preserve">
     <value>Wert für alle Dateien in der Liste setzen</value>
   </data>
+  <data name="SetGlobalMusicVolume" xml:space="preserve">
+    <value>Setzt die globale Musiklautstärke wie mit dem Schieberegler im Player oder Controller.
+Lautstärken einzelner Dateien sind relativ zur globalen Lautstärke.</value>
+  </data>
+  <data name="SetGlobalSoundVolume" xml:space="preserve">
+    <value>Setzt die globale Geräuschlautstärke (für alle Geräusche), wie mit dem Schieberegler im
+Player oder im Controller.
+Lautstärken einzelner Geräusche sind relativ zur globalen Lautstärke.</value>
+  </data>
 </root>
