@@ -18,6 +18,11 @@ copy Libraries\oggenc2.exe build\Ares\Player_Editor
 
 %installjammer% -DProductVersion %1 --build-dir build\temp --build-log-file build\setup.log --output-dir build\output --build-for-release --build Setup\Ares\Ares.mpi
 
+cd MGPlugin
+%zip% a ..\build\output\Ares-%1-MGPlugin.zip Ares.MeisterGeisterPlugin.dll de
+cd ..
+rmdir /S/Q MGPlugin
+
 %svn% export file:///D:/Repositories/Ares/trunk build\Ares_%1_Source
 cd build
 %zip% a output\Ares_%1_Source.7z Ares_%1_Source

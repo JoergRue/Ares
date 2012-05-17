@@ -182,17 +182,17 @@ namespace Ares.Plugin
 
         private void StopClicked()
         {
-            m_PlayingControl.KeyReceived((int)Ares.Players.Keys.Escape);
+            m_PlayingControl.KeyReceived((int)Ares.Data.Keys.Escape);
         }
 
         private void PrevClicked()
         {
-            m_PlayingControl.KeyReceived((int)Ares.Players.Keys.Left); 
+            m_PlayingControl.KeyReceived((int)Ares.Data.Keys.Left); 
         }
 
         private void NextClicked()
         {
-            m_PlayingControl.KeyReceived((int)Ares.Players.Keys.Right);
+            m_PlayingControl.KeyReceived((int)Ares.Data.Keys.Right);
         }
 
         private void DisconnectClicked()

@@ -345,70 +345,70 @@ namespace Ares.Players
                 {
                     switch (keyCode[1])
                     {
-                        case 1: return (int)Keys.F1;
-                        case 2: return (int)Keys.F2;
-                        case 3: return (int)Keys.F3;
-                        case 4: return (int)Keys.F4;
-                        case 5: return (int)Keys.F5;
-                        case 6: return (int)Keys.F6;
-                        case 7: return (int)Keys.F7;
-                        case 8: return (int)Keys.F8;
-                        case 9: return (int)Keys.F9;
-                        case 10: return (int)Keys.F10;
-                        case 11: return (int)Keys.F11;
-                        case 12: return (int)Keys.F12;
+                        case 1: return (int)Ares.Data.Keys.F1;
+                        case 2: return (int)Ares.Data.Keys.F2;
+                        case 3: return (int)Ares.Data.Keys.F3;
+                        case 4: return (int)Ares.Data.Keys.F4;
+                        case 5: return (int)Ares.Data.Keys.F5;
+                        case 6: return (int)Ares.Data.Keys.F6;
+                        case 7: return (int)Ares.Data.Keys.F7;
+                        case 8: return (int)Ares.Data.Keys.F8;
+                        case 9: return (int)Ares.Data.Keys.F9;
+                        case 10: return (int)Ares.Data.Keys.F10;
+                        case 11: return (int)Ares.Data.Keys.F11;
+                        case 12: return (int)Ares.Data.Keys.F12;
                     }
                 }
                 else if (keyCode[0] == 2)
                 {
                     switch (keyCode[1])
                     {
-                        case 0: return (int)Keys.NumPad0;
-                        case 1: return (int)Keys.NumPad1;
-                        case 2: return (int)Keys.NumPad2;
-                        case 3: return (int)Keys.NumPad3;
-                        case 4: return (int)Keys.NumPad4;
-                        case 5: return (int)Keys.NumPad5;
-                        case 6: return (int)Keys.NumPad6;
-                        case 7: return (int)Keys.NumPad7;
-                        case 8: return (int)Keys.NumPad8;
-                        case 9: return (int)Keys.NumPad9;
+                        case 0: return (int)Ares.Data.Keys.NumPad0;
+                        case 1: return (int)Ares.Data.Keys.NumPad1;
+                        case 2: return (int)Ares.Data.Keys.NumPad2;
+                        case 3: return (int)Ares.Data.Keys.NumPad3;
+                        case 4: return (int)Ares.Data.Keys.NumPad4;
+                        case 5: return (int)Ares.Data.Keys.NumPad5;
+                        case 6: return (int)Ares.Data.Keys.NumPad6;
+                        case 7: return (int)Ares.Data.Keys.NumPad7;
+                        case 8: return (int)Ares.Data.Keys.NumPad8;
+                        case 9: return (int)Ares.Data.Keys.NumPad9;
                     }
                 }
                 else if (keyCode[0] == 3)
                 {
                     switch (keyCode[1])
                     {
-                        case 0: return (int)Keys.Insert;
-                        case 1: return (int)Keys.Delete;
-                        case 2: return (int)Keys.Home;
-                        case 3: return (int)Keys.End;
-                        case 4: return (int)Keys.PageUp;
-                        case 5: return (int)Keys.PageDown;
-                        case 6: return (int)Keys.Left;
-                        case 7: return (int)Keys.Right;
-                        case 8: return (int)Keys.Up;
-                        case 9: return (int)Keys.Down;
-                        case 10: return (int)Keys.Space;
-                        case 11: return (int)Keys.Return;
-                        case 12: return (int)Keys.Escape;
-                        case 13: return (int)Keys.Tab;
-                        case 14: return (int)Keys.Back;
-                        case 15: return (int)Keys.OemPeriod;
-                        case 16: return (int)Keys.OemSemicolon;
-                        case 17: return (int)Keys.Oem4;
-                        case 18: return (int)Keys.OemComma;
-                        case 19: return (int)Keys.Oem2;
-                        case 20: return (int)Keys.OemMinus;
-                        case 21: return (int)Keys.Oem3;
+                        case 0: return (int)Ares.Data.Keys.Insert;
+                        case 1: return (int)Ares.Data.Keys.Delete;
+                        case 2: return (int)Ares.Data.Keys.Home;
+                        case 3: return (int)Ares.Data.Keys.End;
+                        case 4: return (int)Ares.Data.Keys.PageUp;
+                        case 5: return (int)Ares.Data.Keys.PageDown;
+                        case 6: return (int)Ares.Data.Keys.Left;
+                        case 7: return (int)Ares.Data.Keys.Right;
+                        case 8: return (int)Ares.Data.Keys.Up;
+                        case 9: return (int)Ares.Data.Keys.Down;
+                        case 10: return (int)Ares.Data.Keys.Space;
+                        case 11: return (int)Ares.Data.Keys.Return;
+                        case 12: return (int)Ares.Data.Keys.Escape;
+                        case 13: return (int)Ares.Data.Keys.Tab;
+                        case 14: return (int)Ares.Data.Keys.Back;
+                        case 15: return (int)Ares.Data.Keys.OemPeriod;
+                        case 16: return (int)Ares.Data.Keys.OemSemicolon;
+                        case 17: return (int)Ares.Data.Keys.Oem4;
+                        case 18: return (int)Ares.Data.Keys.OemComma;
+                        case 19: return (int)Ares.Data.Keys.Oem2;
+                        case 20: return (int)Ares.Data.Keys.OemMinus;
+                        case 21: return (int)Ares.Data.Keys.Oem3;
                     }
                 }
-                return (int)Keys.Escape;
+                return (int)Ares.Data.Keys.Escape;
             }
             catch (Exception e)
             {
                 Messages.AddMessage(MessageType.Error, String.Format(StringResources.InvalidKeyCode, e.Message));
-                return (int)Keys.Escape;
+                return (int)Ares.Data.Keys.Escape;
             }
         }
 

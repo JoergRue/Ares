@@ -501,7 +501,7 @@ namespace Ares.Player
             Ares.Settings.Settings settings = Ares.Settings.Settings.Instance;
             if (fundamentalChange)
             {
-                m_PlayingControl.KeyReceived((int)Ares.Players.Keys.Escape);
+                m_PlayingControl.KeyReceived((int)Ares.Data.Keys.Escape);
                 m_PlayingControl.UpdateDirectories();
             }
             listenForPorts = false;
@@ -564,17 +564,17 @@ namespace Ares.Player
 
         private void stopButton_Click(object sender, EventArgs e)
         {
-            m_PlayingControl.KeyReceived((int)Ares.Players.Keys.Escape);
+            m_PlayingControl.KeyReceived((int)Ares.Data.Keys.Escape);
         }
 
         private void previousButton_Click(object sender, EventArgs e)
         {
-            m_PlayingControl.KeyReceived((int)Ares.Players.Keys.Left);
+            m_PlayingControl.KeyReceived((int)Ares.Data.Keys.Left);
         }
 
         private void nextButton_Click(object sender, EventArgs e)
         {
-            m_PlayingControl.KeyReceived((int)Ares.Players.Keys.Right);
+            m_PlayingControl.KeyReceived((int)Ares.Data.Keys.Right);
         }
 
         public void KeyReceived(int key)

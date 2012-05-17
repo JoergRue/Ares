@@ -144,6 +144,10 @@
     <value>Could not open help web page. Reason:
 {0}</value>
   </data>
+  <data name="OpenHomepageError" xml:space="preserve">
+    <value>Could not open web page. Reason:
+{0}</value>
+  </data>
   <data name="SearchingVersion" xml:space="preserve">
     <value>Searching for new version ...</value>
   </data>

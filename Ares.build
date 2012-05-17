@@ -1,15 +1,18 @@
 <project name="Ares" default="rebuild">
 
   <property name="configuration" value="Release"/>
-  <property name="nant.settings.currentframework" value="net-3.5" />
-  <property name="xbuild" value="C:\Program Files (x86)\MonoDevelop\bin\mdtool.exe" />
   <property name="monoConfiguration" value="Mono_Release"/>
+
+  <property name="nant.settings.currentframework" value="net-3.5" />
+  <property name="framework4" value="net-4.0" />
+  <property name="xbuild" value="C:\Program Files (x86)\MonoDevelop\bin\mdtool.exe" />
 	
 	<property name="build.dir" value="build" />
 	<property name="temp.dir" value="${build.dir}/temp" />
 	<property name="output.dir" value="${build.dir}/Ares/Player_Editor" />
 	<property name="monooutput.dir" value="${build.dir}/Ares/Player" />
 	<property name="libraries.dir" value="Libraries" />
+	<property name="mgoutput.dir" value="MGPlugin" />
 	
     <target name="clean" description="Delete all previously compiled binaries.">
         <delete>
@@ -23,6 +26,8 @@
     </target>
     
     <property name="solutionFile" value="Ares.sln" />
+	<property name="mgSolutionFile" value="Ares.Controllers.sln" />
+	<property name="mpSolutionFile" value="Ares_MediaPortal.sln" />
 	<property name="monoSolutionFile" value="Ares.MonoPlayer.sln" />
     
     <target name="build" description="Build all targets.">
@@ -43,6 +48,20 @@
         <fail unless="${file::exists(Ares.Player)}">Output file doesn't exist in ${expected.output}</fail>
         <fail unless="${file::exists(Ares.Editor)}">Output file doesn't exist in ${expected.output}</fail>
 		
+        <exec program="${framework::get-framework-directory(framework4)}\msbuild.exe"         
+			        commandline="${mgSolutionFile} /t:Build /p:Configuration=${configuration} /v:q" workingdir="." 
+			        />
+					
+        <property name="Ares.MGPlugin" value="bin/Release_MG/Ares.MeisterGeisterPlugin.dll" />
+        <fail unless="${file::exists(Ares.MGPlugin)}">Output file doesn't exist in bin/Release_MG</fail>		
+
+        <exec program="${framework::get-framework-directory(framework::get-target-framework())}\msbuild.exe"         
+			        commandline="${mpSolutionFile} /t:Build /p:Configuration=${configuration} /v:q" workingdir="." 
+			        />
+					
+        <property name="Ares.MPPlugin" value="bin/Release_MediaPortal/Ares.Plugin.dll" />
+        <fail unless="${file::exists(Ares.MPPlugin)}">Output file doesn't exist in bin/Release_MediaPortal</fail>		
+
 		<exec program="${xbuild}" commandline="build --target:build --configuration:${monoConfiguration} --project:Ares.Data_Mono ${monoSolutionFile}" workingdir="." />
 		<exec program="${xbuild}" commandline="build --target:build --configuration:${monoConfiguration} --project:Ares.Settings_Mono ${monoSolutionFile}" workingdir="." />
 		<exec program="${xbuild}" commandline="build --target:build --configuration:${monoConfiguration} --project:Ares.ModelInfo_Mono ${monoSolutionFile}" workingdir="." />
@@ -95,6 +114,12 @@
 		    <fileset basedir=".">
 			  <include name="*.txt" />
 			  <exclude name="WeifenLuo.WinFormsUI.License.txt" />
+			</fileset>
+	    </copy>		
+	    <copy todir="${mgoutput.dir}">
+		    <fileset basedir="bin/Release_MG">
+			  <include name="Ares.MeisterGeisterPlugin.dll" />
+			  <include name="de/Ares.MeisterGeisterPlugin.resources.dll" />
 			</fileset>
 	    </copy>		
 	</target>

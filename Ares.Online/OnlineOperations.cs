@@ -25,7 +25,7 @@ namespace Ares.Online
 {
     public class OnlineOperations
     {
-        public static void ShowHelppage(String url, IWin32Window owner)
+        public static void ShowHelppage(String url, Form owner)
         {
             try
             {
@@ -37,11 +37,41 @@ namespace Ares.Online
             }
         }
 
+        public static void ShowHomepage(Form owner)
+        {
+            String url = GetUrlBase();
+            try
+            {
+                System.Diagnostics.Process.Start(url);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(owner, String.Format(StringResources.OpenHomepageError, ex.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         public static void CheckForUpdate(Form parent, bool verbose)
+        {
+            DoCheckForUpdate(parent, true, verbose, false);
+        }
+
+        public static void CheckForUpdateMGPlugin(Form parent)
+        {
+            DoCheckForUpdate(parent, false, true, false);
+        }
+
+        private static void DoCheckForUpdate(Form parent, bool mainProgram, bool verbose, bool directDownload)
         {
             String url = GetUrlBase() + "ares_version.txt";
             FileDownloader<bool> downloader = new FileDownloader<bool>(parent, verbose);
-            downloader.Download(url, StringResources.SearchingVersion, VersionDownloaded);
+            if (mainProgram && directDownload)
+                downloader.Download(url, StringResources.SearchingVersion, DownloadMainSetup);
+            else if (mainProgram && !directDownload)
+                downloader.Download(url, StringResources.SearchingVersion, VersionDownloadedMain);
+            else if (directDownload)
+                downloader.Download(url, StringResources.SearchingVersion, DownloadPluginSetup);
+            else
+                downloader.Download(url, StringResources.SearchingVersion, VersionDownloadedPlugin);
         }
 
 		private static bool IsLinux
@@ -52,19 +82,34 @@ namespace Ares.Online
 		        return (p == 4) || (p == 6) || (p == 128);
 		    }
 		}
-		
-		public static void DownloadSetup(Form parent, String version) 
+
+        public static void DownloadLatestSetup(Form parent, bool main)
+        {
+            DoCheckForUpdate(parent, main, true, true);
+        }
+
+        public static void DownloadSetup(Form parent, String version, bool main)
+        {
+            DoDownloadSetup(parent, version, main, true);
+        }
+
+		private static void DoDownloadSetup(Form parent, String version, bool main, bool askForClose) 
         {
             String urlBase = "http://sourceforge.net/projects/aresrpg/files/";
             String urlAppendix = "/download";
             String windowsPart = "-Setup.exe";
             String linuxPart = "-Linux-x86-Install";
+            String pluginPart = "-MGPlugin.zip";
             bool isWindows = !IsLinux;
-            String url = urlBase + version + "/Ares-" + version + (isWindows ? windowsPart : linuxPart) + urlAppendix;
+            String url = urlBase + version;
+            if (main)
+                url += "/Ares-" + version + (isWindows ? windowsPart : linuxPart) + urlAppendix;
+            else
+                url += "/Ares-" + version + pluginPart + urlAppendix;
             try
             {
                 System.Diagnostics.Process.Start(url);
-                if (MessageBox.Show(parent, StringResources.CloseAres, StringResources.Ares, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                if (main && askForClose && MessageBox.Show(parent, StringResources.CloseAres, StringResources.Ares, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     parent.Close();
                 }
@@ -75,7 +120,51 @@ namespace Ares.Online
             }
         }
 
-        private static void ChangeLogDownloaded(System.Net.DownloadStringCompletedEventArgs result, Form parent, String version)
+        private static void ChangeLogDownloadedMain(System.Net.DownloadStringCompletedEventArgs result, Form parent, String version)
+        {
+            ChangeLogDownloaded(result, parent, version, true);
+        }
+
+        private static void ChangeLogDownloadedPlugin(System.Net.DownloadStringCompletedEventArgs result, Form parent, String version)
+        {
+            ChangeLogDownloaded(result, parent, version, false);
+        }
+
+        private static void DownloadMainSetup(System.Net.DownloadStringCompletedEventArgs result, Form parent, bool verbose)
+        {
+            DownloadSetupDirectly(result, parent, verbose, true);
+        }
+
+        private static void DownloadPluginSetup(System.Net.DownloadStringCompletedEventArgs result, Form parent, bool verbose)
+        {
+            DownloadSetupDirectly(result, parent, verbose, false);
+        }
+
+        private static void DownloadSetupDirectly(System.Net.DownloadStringCompletedEventArgs result, Form parent, bool verbose, bool main)
+        {
+            Exception ex = result.Error;
+            System.Version newVersion = null;
+            if (ex == null)
+            {
+                String versionString = result.Result + ".0";
+                try
+                {
+                    newVersion = new Version(versionString);
+                }
+                catch (Exception e)
+                {
+                    ex = e;
+                }
+            }
+            if (ex != null)
+            {
+                MessageBox.Show(parent, String.Format(StringResources.DownloadError, result.Error.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            DoDownloadSetup(parent, result.Result, main, false);
+        }
+
+        private static void ChangeLogDownloaded(System.Net.DownloadStringCompletedEventArgs result, Form parent, String version, bool mainProgram)
         {
             if (result.Cancelled)
                 return;
@@ -84,7 +173,7 @@ namespace Ares.Online
             DialogResult res = dialog.ShowDialog(parent);
             if (res == DialogResult.OK)
             {
-                DownloadSetup(parent, version);
+                DownloadSetup(parent, version, mainProgram);
             }
         }
 
@@ -93,7 +182,17 @@ namespace Ares.Online
             return "http://aresrpg.sourceforge.net/";
         }
         
-        private static void VersionDownloaded(System.Net.DownloadStringCompletedEventArgs result, Form parent, bool verbose)
+        private static void VersionDownloadedMain(System.Net.DownloadStringCompletedEventArgs result, Form parent, bool verbose)
+        {
+            VersionDownloaded(result, parent, verbose, true);
+        }
+
+        private static void VersionDownloadedPlugin(System.Net.DownloadStringCompletedEventArgs result, Form parent, bool verbose)
+        {
+            VersionDownloaded(result, parent, verbose, false);
+        }
+        
+        private static void VersionDownloaded(System.Net.DownloadStringCompletedEventArgs result, Form parent, bool verbose, bool mainProgram)
         {
             Exception ex = result.Error;
             System.Version newVersion = null;
@@ -125,11 +224,14 @@ namespace Ares.Online
                 {
                     String url = GetUrlBase() + StringResources.ChangeLogFile;
                     FileDownloader<String> downloader = new FileDownloader<String>(parent, result.Result);
-                    downloader.Download(url, StringResources.GettingChangeLog, ChangeLogDownloaded);
+                    if (mainProgram)
+                        downloader.Download(url, StringResources.GettingChangeLog, ChangeLogDownloadedMain);
+                    else
+                        downloader.Download(url, StringResources.GettingChangeLog, ChangeLogDownloadedPlugin);
                 }
                 else
                 {
-                    DownloadSetup(parent, result.Result);
+                    DownloadSetup(parent, result.Result, mainProgram);
                 }
             }
             else if (verbose && !result.Cancelled)

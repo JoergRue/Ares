@@ -1227,7 +1227,7 @@ namespace Ares.Editor
 
         private void projectTree_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.F2)
+            if (e.KeyCode == System.Windows.Forms.Keys.F2)
             {
                 if (SelectedNode != null)
                 {
@@ -1239,7 +1239,7 @@ namespace Ares.Editor
                         RenameElement();
                 }
             }
-            else if (e.KeyCode == Keys.F3)
+            else if (e.KeyCode == System.Windows.Forms.Keys.F3)
             {
                 if (SelectedNode != null)
                 {
@@ -1253,11 +1253,11 @@ namespace Ares.Editor
                     }
                 }
             }
-            else if (e.KeyCode == Keys.Return)
+            else if (e.KeyCode == System.Windows.Forms.Keys.Return)
             {
                 DefaultNodeAction();
             }
-            else if (e.KeyCode == Keys.Delete)
+            else if (e.KeyCode == System.Windows.Forms.Keys.Delete)
             {
                 TreeNode parent = SelectedNode.Parent;
                 DeleteElements();
@@ -1266,15 +1266,15 @@ namespace Ares.Editor
                     SelectedNode = parent;
                 }
             }
-            else if (e.Control && e.KeyCode == Keys.C)
+            else if (e.Control && e.KeyCode == System.Windows.Forms.Keys.C)
             {
                 CopyElements();
             }
-            else if (e.Control && e.KeyCode == Keys.X)
+            else if (e.Control && e.KeyCode == System.Windows.Forms.Keys.X)
             {
                 CutElements();
             }
-            else if (e.Control && e.KeyCode == Keys.V)
+            else if (e.Control && e.KeyCode == System.Windows.Forms.Keys.V)
             {
                 if (projectTree.SelectedNodes.Count == 1 && !(projectTree.SelectedNode.Tag is IBackgroundSoundChoice))
                 {

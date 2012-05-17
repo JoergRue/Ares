@@ -27,54 +27,6 @@ using Ares.Data;
 
 namespace Ares.Players
 {
-	public enum Keys
-	{
-		Back = 8,
-		Tab = 9,
-		Return = 13,
-		Escape = 27,
-		Space = 32,
-		PageUp = 33,
-		PageDown = 34,
-		End = 35,
-		Home = 36,
-		Left = 37,
-		Up = 38,
-		Right = 39,
-		Down = 40,
-		Insert = 45,
-		Delete = 46,
-		NumPad0= 96,
-		NumPad1 = 97,
-		NumPad2 = 98,
-		NumPad3 = 99,
-		NumPad4 = 100,
-		NumPad5 = 101,
-		NumPad6 = 102,
-		NumPad7 = 103,
-		NumPad8 = 104,
-		NumPad9 = 105,
-		F1 = 112,
-		F2 = 113,
-		F3 = 114,
-		F4 = 115,
-		F5 = 116,
-		F6 = 117,
-		F7 = 118,
-		F8 = 119,
-		F9 = 120,
-		F10 = 121,
-		F11 = 122,
-		F12 = 123,
-		OemSemicolon = 186,
-		OemComma = 188,
-		OemMinus = 189,
-		OemPeriod = 190,
-		Oem2= 191,
-		Oem3 = 192,
-		Oem4 = 219
-	}
-	
     public class PlayingControl : IProjectPlayingCallbacks, IDisposable
     {
         public PlayingControl()

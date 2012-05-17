@@ -433,15 +433,18 @@ Condition D91AD8BD-CA86-4DC6-A135-FD29436F1798 -active Yes -parent 3AB9347B-8308
 InstallComponent A57F82D8-AE77-4DEF-A45B-DEA778597039 -setup Install -type action -conditions {BF8B7C30-06A2-4D9F-AF02-9F113B721BF4 ED98D459-2E6D-48C8-8412-1A54547E6680} -title {Player Shortcut} -component InstallProgramFolderShortcut -command insert -active Yes -parent 1B8DD5C0-1EB8-498D-97F3-11EE29D2E1CE
 Condition BF8B7C30-06A2-4D9F-AF02-9F113B721BF4 -active Yes -parent A57F82D8-AE77-4DEF-A45B-DEA778597039 -title {String Is Condition} -component StringIsCondition -TreeObject::id FCE2A36A-0A2A-4A1F-B457-D6B8E7FB4D75
 Condition ED98D459-2E6D-48C8-8412-1A54547E6680 -active Yes -parent A57F82D8-AE77-4DEF-A45B-DEA778597039 -title {File Exists Condition} -component FileExistsCondition -TreeObject::id D91AD8BD-CA86-4DC6-A135-FD29436F1798
+InstallComponent DEEA0034-B00A-4EFF-8CF4-D44B52A9DE04 -setup Install -type action -conditions {C19E4C77-7F40-4930-AD3B-AE0ED3AC6DCC 60BE7378-54D1-4FB5-B416-7F8C88B6C9E4} -title {Add Player Path Registry Key} -component AddWindowsRegistryKey -command reorder -active Yes -parent 1B8DD5C0-1EB8-498D-97F3-11EE29D2E1CE
+Condition C19E4C77-7F40-4930-AD3B-AE0ED3AC6DCC -active Yes -parent DEEA0034-B00A-4EFF-8CF4-D44B52A9DE04 -title {Platform Condition} -component PlatformCondition -TreeObject::id C19E4C77-7F40-4930-AD3B-AE0ED3AC6DCC
+Condition 60BE7378-54D1-4FB5-B416-7F8C88B6C9E4 -active Yes -parent DEEA0034-B00A-4EFF-8CF4-D44B52A9DE04 -title {File Exists Condition} -component FileExistsCondition -TreeObject::id 60BE7378-54D1-4FB5-B416-7F8C88B6C9E4
 InstallComponent 255EDC92-2485-440B-8316-D7263BA928C5 -setup Install -type action -conditions {DEE9A726-8196-485B-B079-D1F56924AD02 D345DF22-47B1-4010-856D-B0E53DB96562 C67A4891-F64D-49CF-8624-CC7FA31A0BE6} -title {Controller Shortcut} -component InstallProgramFolderShortcut -command insert -active Yes -parent 1B8DD5C0-1EB8-498D-97F3-11EE29D2E1CE
 Condition DEE9A726-8196-485B-B079-D1F56924AD02 -active Yes -parent 255EDC92-2485-440B-8316-D7263BA928C5 -title {String Is Condition} -component StringIsCondition -TreeObject::id FCE2A36A-0A2A-4A1F-B457-D6B8E7FB4D75
 Condition D345DF22-47B1-4010-856D-B0E53DB96562 -active Yes -parent 255EDC92-2485-440B-8316-D7263BA928C5 -title {File Exists Condition} -component FileExistsCondition -TreeObject::id D91AD8BD-CA86-4DC6-A135-FD29436F1798
 Condition C67A4891-F64D-49CF-8624-CC7FA31A0BE6 -active Yes -parent 255EDC92-2485-440B-8316-D7263BA928C5 -title {Platform Condition} -component PlatformCondition -TreeObject::id C67A4891-F64D-49CF-8624-CC7FA31A0BE6
-InstallComponent 204203E9-B032-4FC3-972D-23AFA438CE2D -setup Install -type action -conditions {3617490F-1AD6-4074-99E8-01F65F878D4F DD0D5EC1-6728-4093-8E56-F55BEEAF20E4 22B1C1FB-87FF-4325-850C-4020476C6F86} -title {Controller Linux Shortcut} -component InstallProgramFolderShortcut -command reorder -active Yes -parent 1B8DD5C0-1EB8-498D-97F3-11EE29D2E1CE
+InstallComponent 204203E9-B032-4FC3-972D-23AFA438CE2D -setup Install -type action -conditions {3617490F-1AD6-4074-99E8-01F65F878D4F DD0D5EC1-6728-4093-8E56-F55BEEAF20E4 22B1C1FB-87FF-4325-850C-4020476C6F86} -title {Controller Linux Shortcut} -component InstallProgramFolderShortcut -command insert -active Yes -parent 1B8DD5C0-1EB8-498D-97F3-11EE29D2E1CE
 Condition 3617490F-1AD6-4074-99E8-01F65F878D4F -active Yes -parent 204203E9-B032-4FC3-972D-23AFA438CE2D -title {String Is Condition} -component StringIsCondition -TreeObject::id FCE2A36A-0A2A-4A1F-B457-D6B8E7FB4D75
 Condition DD0D5EC1-6728-4093-8E56-F55BEEAF20E4 -active Yes -parent 204203E9-B032-4FC3-972D-23AFA438CE2D -title {File Exists Condition} -component FileExistsCondition -TreeObject::id D91AD8BD-CA86-4DC6-A135-FD29436F1798
 Condition 22B1C1FB-87FF-4325-850C-4020476C6F86 -active Yes -parent 204203E9-B032-4FC3-972D-23AFA438CE2D -title {Platform Condition} -component PlatformCondition -TreeObject::id C67A4891-F64D-49CF-8624-CC7FA31A0BE6
-InstallComponent 5E229BF6-F03C-4668-95A5-DDD85A8EC8F2 -setup Install -type action -conditions {9DA415F8-47BF-495E-8002-4824156A22CB EBF17447-0048-49AC-92D4-F076DD491915 72A0A7C6-24E0-4DE4-93C7-0B568B7DDF59} -title {Player Linux Shortcut} -component InstallProgramFolderShortcut -command reorder -active Yes -parent 1B8DD5C0-1EB8-498D-97F3-11EE29D2E1CE
+InstallComponent 5E229BF6-F03C-4668-95A5-DDD85A8EC8F2 -setup Install -type action -conditions {9DA415F8-47BF-495E-8002-4824156A22CB EBF17447-0048-49AC-92D4-F076DD491915 72A0A7C6-24E0-4DE4-93C7-0B568B7DDF59} -title {Player Linux Shortcut} -component InstallProgramFolderShortcut -command insert -active Yes -parent 1B8DD5C0-1EB8-498D-97F3-11EE29D2E1CE
 Condition 9DA415F8-47BF-495E-8002-4824156A22CB -active Yes -parent 5E229BF6-F03C-4668-95A5-DDD85A8EC8F2 -title {String Is Condition} -component StringIsCondition -TreeObject::id FCE2A36A-0A2A-4A1F-B457-D6B8E7FB4D75
 Condition EBF17447-0048-49AC-92D4-F076DD491915 -active Yes -parent 5E229BF6-F03C-4668-95A5-DDD85A8EC8F2 -title {File Exists Condition} -component FileExistsCondition -TreeObject::id D91AD8BD-CA86-4DC6-A135-FD29436F1798
 Condition 72A0A7C6-24E0-4DE4-93C7-0B568B7DDF59 -active Yes -parent 5E229BF6-F03C-4668-95A5-DDD85A8EC8F2 -title {Platform Condition} -component PlatformCondition -TreeObject::id C67A4891-F64D-49CF-8624-CC7FA31A0BE6
@@ -456,7 +459,7 @@ InstallComponent C5A2C47B-73F3-4D11-9B52-42429C848B7F -setup Install -type actio
 Condition 02FF6855-241F-4354-BC04-BDBCB8FAFC7E -active Yes -parent C5A2C47B-73F3-4D11-9B52-42429C848B7F -title {String Is Condition} -component StringIsCondition -TreeObject::id 90A1EA90-29BC-42EA-BDE3-EF981ED0812C
 Condition 1836E5CB-3960-4AE1-A7E7-9E19583B5AFD -active Yes -parent C5A2C47B-73F3-4D11-9B52-42429C848B7F -title {File Exists Condition} -component FileExistsCondition -TreeObject::id 7A1C47C1-B737-4270-9749-0B7BBB5FBAE5
 Condition 21C9801F-AEA0-4020-B863-7C88ED417F7E -active Yes -parent C5A2C47B-73F3-4D11-9B52-42429C848B7F -title {Platform Condition} -component PlatformCondition -TreeObject::id 21C9801F-AEA0-4020-B863-7C88ED417F7E
-InstallComponent 5A2E7D85-0E32-44A9-ADEE-E3875124818E -setup Install -type action -conditions {CF3ADFA0-F09D-4456-8BE0-88731CA7EE1E 47DEDAE0-28B8-4876-A859-32281E78389F 21E2A1DA-82D4-43DA-BEAE-83622D404431} -title {Install Controller Linux Desktop Shortcut} -component InstallDesktopShortcut -command reorder -active Yes -parent 700E9606-18F1-4DDE-BA65-4A48A95B1BB3
+InstallComponent 5A2E7D85-0E32-44A9-ADEE-E3875124818E -setup Install -type action -conditions {CF3ADFA0-F09D-4456-8BE0-88731CA7EE1E 47DEDAE0-28B8-4876-A859-32281E78389F 21E2A1DA-82D4-43DA-BEAE-83622D404431} -title {Install Controller Linux Desktop Shortcut} -component InstallDesktopShortcut -command insert -active Yes -parent 700E9606-18F1-4DDE-BA65-4A48A95B1BB3
 Condition CF3ADFA0-F09D-4456-8BE0-88731CA7EE1E -active Yes -parent 5A2E7D85-0E32-44A9-ADEE-E3875124818E -title {String Is Condition} -component StringIsCondition -TreeObject::id 90A1EA90-29BC-42EA-BDE3-EF981ED0812C
 Condition 47DEDAE0-28B8-4876-A859-32281E78389F -active Yes -parent 5A2E7D85-0E32-44A9-ADEE-E3875124818E -title {File Exists Condition} -component FileExistsCondition -TreeObject::id 7A1C47C1-B737-4270-9749-0B7BBB5FBAE5
 Condition 21E2A1DA-82D4-43DA-BEAE-83622D404431 -active Yes -parent 5A2E7D85-0E32-44A9-ADEE-E3875124818E -title {Platform Condition} -component PlatformCondition -TreeObject::id 21E2A1DA-82D4-43DA-BEAE-83622D404431
@@ -1276,6 +1279,12 @@ array set Properties {
 5E96A17D-9B6F-46EC-941A-A92A33C92A92,Conditions
 {1 condition}
 
+60BE7378-54D1-4FB5-B416-7F8C88B6C9E4,CheckCondition
+{Before Action is Executed}
+
+60BE7378-54D1-4FB5-B416-7F8C88B6C9E4,Filename
+{<%InstallDir%>/Player_Editor/Ares.Player.exe}
+
 62367D36-33F5-478A-BCC9-7815DC4FD645,Conditions
 {0 conditions}
 
@@ -1990,6 +1999,12 @@ C0349C64-6704-48E2-B465-3C63F85DCD9E,Filename
 C0DD3AB9-8BA1-44CF-8232-509BF10074C5,ExitType
 {Finish}
 
+C19E4C77-7F40-4930-AD3B-AE0ED3AC6DCC,CheckCondition
+{Before Action is Executed}
+
+C19E4C77-7F40-4930-AD3B-AE0ED3AC6DCC,Platform
+{Windows}
+
 C3BD8297-EA8B-41AC-BED9-1493CCC2C1A7,Action
 {Uninstall Actions}
 
@@ -2199,6 +2214,21 @@ DEE9A726-8196-485B-B079-D1F56924AD02,Operator
 
 DEE9A726-8196-485B-B079-D1F56924AD02,String
 {<%UpgradeInstall%>}
+
+DEEA0034-B00A-4EFF-8CF4-D44B52A9DE04,Conditions
+{2 conditions}
+
+DEEA0034-B00A-4EFF-8CF4-D44B52A9DE04,Key
+{SOFTWARE\Ares}
+
+DEEA0034-B00A-4EFF-8CF4-D44B52A9DE04,Name
+{PlayerPath}
+
+DEEA0034-B00A-4EFF-8CF4-D44B52A9DE04,RootKey
+{HKEY_LOCAL_MACHINE}
+
+DEEA0034-B00A-4EFF-8CF4-D44B52A9DE04,Value
+{<%InstallDir%>/Player_Editor/Ares.Player.exe}
 
 DF99F19F-5777-44F0-991C-17A8D23F432B,CheckCondition
 {Before Action is Executed}

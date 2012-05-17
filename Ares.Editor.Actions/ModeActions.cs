@@ -28,7 +28,7 @@ namespace Ares.Editor.Actions
         public static string GetNodeTitle(this IMode mode)
         {
             KeysConverter converter = new KeysConverter();
-            return mode.Title + " (" + (mode.KeyCode != 0 ? converter.ConvertToString((Keys)mode.KeyCode) : StringResources.NoKey) + ")";
+            return mode.Title + " (" + (mode.KeyCode != 0 ? converter.ConvertToString((System.Windows.Forms.Keys)mode.KeyCode) : StringResources.NoKey) + ")";
         }
 
         public static string GetNodeTitle(this IModeElement modeElement)
@@ -38,7 +38,7 @@ namespace Ares.Editor.Actions
             {
                 KeysConverter converter = new KeysConverter();
                 int keyCode = (trigger as IKeyTrigger).KeyCode;
-                return modeElement.Title + " (" + (keyCode != 0 ? converter.ConvertToString((Keys)keyCode) : StringResources.NoKey) + ")";
+                return modeElement.Title + " (" + (keyCode != 0 ? converter.ConvertToString((System.Windows.Forms.Keys)keyCode) : StringResources.NoKey) + ")";
             }
             else
             {
