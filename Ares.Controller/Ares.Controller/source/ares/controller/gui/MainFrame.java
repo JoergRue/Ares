@@ -123,7 +123,7 @@ public final class MainFrame extends FrameController implements IMessageListener
   
   private static boolean isWindows()
   {
-	  return System.getProperty("os.name").startsWith("Windows");
+	  return System.getProperty("os.name").startsWith("Windows"); //$NON-NLS-1$ //$NON-NLS-2$
   }
   
   private String findLocalPlayerDir()
@@ -491,7 +491,7 @@ public final class MainFrame extends FrameController implements IMessageListener
 	        projectLabel.setText(text);
 	    }
 	    else {
-	        projectLabel.setText("-"); //$NON-NLS-1$	    	
+	        projectLabel.setText(Localization.getString("MainFrame.NoProjectOpened"));	    	 //$NON-NLS-1$
 	    }
   }
 
@@ -636,6 +636,7 @@ public final class MainFrame extends FrameController implements IMessageListener
 	  elementsLabel = new JLabel();
 	  musicLabel = new JLabel();
 	  projectLabel = new JLabel();
+	  projectLabel.setText(Localization.getString("MainFrame.NoProjectOpened"));	    	 //$NON-NLS-1$
 	  inner.add(new JLabel(Localization.getString("MainFrame.Configuration"))); //$NON-NLS-1$
 	  inner.add(projectLabel);
 	  inner.add(new JLabel(Localization.getString("MainFrame.Mode"))); //$NON-NLS-1$
