@@ -1,3 +1,14 @@
+Version 1.2.0
+----------------------------------------------------------------------------------
+- General: Player for Linux available. Ares Portable for Linux available.
+- General: Controller Plugin for the MeisterGeister program available
+- Editor: Added tooltips to the controls to set global music / sound volume
+- Editor: Bugfix: Crashed if element is played which sets global sound / music volume
+- Player: Added controls to select elements with the mouse
+- Player: Changed semantics of 'stop music' / 'stop other sounds' so it stops the
+  whole currently played mode element(s)
+- Controller: Hint that project must be opened in the controller
+
 Version 1.1.0
 ----------------------------------------------------------------------------------
 - General: Music fading possible when mode element is switched

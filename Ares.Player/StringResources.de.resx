@@ -189,6 +189,9 @@ Fehlermeldung: {0}
   <data name="NoDeviceDriver" xml:space="preserve">
     <value>Kein Sound-Treiber gefunden.</value>
   </data>
+  <data name="NoElements" xml:space="preserve">
+    <value>Keine Elemente vorhanden</value>
+  </data>
   <data name="NoOpenedProject" xml:space="preserve">
     <value>Kein Projekt geladen</value>
   </data>

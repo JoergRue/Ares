@@ -1,3 +1,15 @@
+Version 1.2.0
+----------------------------------------------------------------------------------
+- Allgemein: Player für Linux verfügbar. Ares Portable für Linux verfügbar.
+- Allgemein: Controller-Plugin für die MeisterGeister (DSA) verfügbar
+- Editor: Tooltips für das Setzen globaler Musik- / Geräuschlautstärke hinzugefügt
+- Editor: Bugfix: Absturz beim Abspielen eines Elements, das die globale Musik- / 
+  Geräuschlautstärke setzt
+- Player: Bedienelemente zur Auswahl von Elementen per Mausklick hinzugefügt
+- Player: Bedeutung von "stoppe Musik" / "stoppe andere Geräusche" geändert, sodass
+  jetzt die entsprechenden gerade abgespielten Moduselemente komplett gestoppt werden
+- Controller: Hinweis, dass das Projekt im Controller geöffnet werden muss
+
 Version 1.1.0
 ----------------------------------------------------------------------------------
 - Allgemein: Musik kann aus-/ein-/überblendet werden, wenn ein Moduselement 

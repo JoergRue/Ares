@@ -1383,6 +1383,25 @@ namespace Ares.Playing
             return TriggerElement(modeElement);
         }
 
+        public bool SetMode(String modeTitle)
+        {
+            if (m_Project == null)
+                return false;
+            foreach (IMode mode in m_Project.GetModes())
+            {
+                if (mode.Title == modeTitle)
+                {
+                    m_ActiveMode = mode;
+                    if (ProjectCallbacks != null)
+                    {
+                        ProjectCallbacks.ModeChanged(mode);
+                    }
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public void NextMusicTitle()
         {
             if (ActiveMusicPlayer != null)

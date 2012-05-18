@@ -228,6 +228,13 @@ namespace Ares.Playing
         bool SwitchElement(Int32 elementID);
 
         /// <summary>
+        /// Tells the player to switch to a specific mode.
+        /// </summary>
+        /// <param name="modeTitle">title of the mode</param>
+        /// <returns>whether switch was successful</returns>
+        bool SetMode(String modeTitle);
+
+        /// <summary>
         /// Plays the next music title.
         /// </summary>
         void NextMusicTitle();

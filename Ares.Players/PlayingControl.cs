@@ -147,6 +147,11 @@ namespace Ares.Players
             return PlayingModule.ProjectPlayer.SwitchElement(elementId);
         }
 
+        public bool SetMode(IMode mode)
+        {
+            return PlayingModule.ProjectPlayer.SetMode(mode.Title);
+        }
+
         private Playing.StreamingParameters CreateStreamingParameters()
         {
             Playing.StreamingParameters result = new StreamingParameters();

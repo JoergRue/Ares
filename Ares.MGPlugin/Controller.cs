@@ -718,16 +718,6 @@ namespace Ares.MGPlugin
                     IList<Ares.Data.IModeElement> elements = Controllers.Control.Instance.Project.GetModes()[modeIndex - 1].GetElements();
                     int maxWidth = 0;
                     CheckBox checkBox = new CheckBox();
-                    //Font font = checkBox.Font;
-                    //using (Graphics g = checkBox.CreateGraphics())
-                    //{
-                    //    for (int i = 0; i < elements.Count; ++i)
-                    //    {
-                    //        int width = (int)g.MeasureString(elements[i].Title, font).Width;
-                    //        if (width > maxWidth)
-                    //            maxWidth = width;
-                    //    }
-                    //}
                     checkBox.Appearance = Appearance.Button;
                     for (int i = 0; i < elements.Count; ++i)
                     {

@@ -189,6 +189,9 @@ Error message: {0}
   <data name="NoDeviceDriver" xml:space="preserve">
     <value>No sound device driver found.</value>
   </data>
+  <data name="NoElements" xml:space="preserve">
+    <value>There are no elements in this mode</value>
+  </data>
   <data name="NoOpenedProject" xml:space="preserve">
     <value>No Project Loaded</value>
   </data>

@@ -280,6 +280,139 @@ namespace Ares.Player
             {
                 m_Network.InformClientOfProject(m_Project != null ? m_Project.Title : String.Empty);
             }
+            UpdateModesList();
+        }
+
+        private bool m_Listen = true;
+
+        private void UpdateModesList()
+        {
+            foreach (CheckBox box in m_CurrentButtons.Keys)
+            {
+                box.CheckedChanged -= m_CurrentButtons[box];
+            }
+            m_CurrentButtons.Clear();
+            m_ButtonsForIds.Clear();
+
+            modesList.BeginUpdate();
+            modesList.Items.Clear();
+            m_Listen = false;
+            if (m_Project != null)
+            {
+                IList<Ares.Data.IMode> modes = m_Project.GetModes();
+                if (modes.Count == 0)
+                    return;
+                modesList.Items.Add("Musikliste");
+                int i = 1;
+                int currentMode = 0;
+                foreach (Ares.Data.IMode mode in modes)
+                {
+                    modesList.Items.Add(mode.Title);
+                    if (mode == m_PlayingControl.CurrentMode)
+                    {
+                        currentMode = i;
+                    }
+                    ++i;
+                }
+                modesList.SelectedIndex = currentMode;
+            }
+            modesList.EndUpdate();
+            UpdateElementsPanel();
+            m_Listen = true;
+        }
+
+        private Dictionary<CheckBox, EventHandler> m_CurrentButtons = new Dictionary<CheckBox, EventHandler>();
+        private Dictionary<int, CheckBox> m_ButtonsForIds = new Dictionary<int, CheckBox>();
+        private bool m_ButtonsActive = true;
+        
+        private void UpdateElementsPanel()
+        {
+            int modeIndex = modesList.SelectedIndex;
+            if (modeIndex == -1)
+                return;
+            if (modeIndex == 0)
+            {
+                musicList.BeginUpdate();
+                musicList.Items.Clear();
+                Ares.Data.IElement element = Ares.Data.DataModule.ElementRepository.GetElement(m_PlayingControl.CurrentMusicList);
+                if (element != null && element is Ares.Data.IMusicList)
+                {
+                    Ares.Data.IMusicList currentMusicList = (Ares.Data.IMusicList)element;
+                    var fileElements = currentMusicList.GetFileElements();
+                    int selIndex = -1;
+                    for (int i = 0; i < fileElements.Count; ++i)
+                    {
+                        musicList.Items.Add(fileElements[i].Title);
+                        if (fileElements[i].Id == m_PlayingControl.CurrentMusicElement)
+                            selIndex = i;
+                    }
+                    if (selIndex != -1)
+                        musicList.SelectedIndex = selIndex;
+                }
+                musicList.EndUpdate();
+                elementsPanel.Visible = false;
+                m_ButtonsActive = false;
+                musicList.Visible = true;
+            }
+            else
+            {
+                foreach (CheckBox box in m_CurrentButtons.Keys)
+                {
+                    box.CheckedChanged -= m_CurrentButtons[box];
+                }
+                m_CurrentButtons.Clear();
+                m_ButtonsForIds.Clear();
+                elementsPanel.Controls.Clear();
+
+                if (m_Project != null && m_Project.GetModes().Count >= modeIndex)
+                {
+                    IList<Ares.Data.IModeElement> elements = m_Project.GetModes()[modeIndex - 1].GetElements();
+                    int maxWidth = 0;
+                    CheckBox checkBox = new CheckBox();
+                    checkBox.Appearance = Appearance.Button;
+                    for (int i = 0; i < elements.Count; ++i)
+                    {
+                        checkBox.Text = elements[i].Title;
+                        int width = checkBox.PreferredSize.Width;
+                        if (width > maxWidth)
+                            maxWidth = width;
+                    }
+                    checkBox.Dispose();
+                    for (int i = 0; i < elements.Count; ++i)
+                    {
+                        int row = i / 4;
+                        int column = i % 4;
+                        checkBox = new CheckBox();
+                        checkBox.Text = elements[i].Title;
+                        checkBox.Appearance = Appearance.Button;
+                        Size size = checkBox.PreferredSize;
+                        size.Width = maxWidth;
+                        checkBox.SetBounds(0, 0, size.Width, size.Height);
+                        checkBox.Checked = m_PlayingControl.CurrentModeElements.Contains(elements[i]);
+                        int id = elements[i].Id;
+                        EventHandler handler = new EventHandler((Object, EventArgs) =>
+                        {
+                            if (m_Listen && m_ButtonsActive)
+                            {
+                                m_PlayingControl.SwitchElement(id);
+                            }
+                        });
+                        checkBox.CheckedChanged += handler;
+                        m_CurrentButtons.Add(checkBox, handler);
+                        m_ButtonsForIds.Add(id, checkBox);
+                        elementsPanel.Controls.Add(checkBox);
+                    }
+                }
+                else
+                {
+                    Label label = new Label();
+                    label.Text = StringResources.NoElements;
+                    elementsPanel.Controls.Add(label);
+                }
+                m_ButtonsActive = true;
+                musicList.Visible = false;
+                elementsPanel.Visible = true;
+            }
         }
 
         private void DoModelChecks()
@@ -315,18 +448,40 @@ namespace Ares.Player
         }
 
         private int lastMusicElementId = -1;
+        private String lastMode = String.Empty;
+        private int lastMusicListId = -1;
 
         private void UpdateStatus()
         {
             PlayingControl control = m_PlayingControl;
+            m_Listen = false;
             IMode mode = control.CurrentMode;
             modeLabel.Text = mode != null ? mode.Title : String.Empty;
+            if (m_Project != null && mode.Title != lastMode)
+            {
+                for (int i = 0; i < m_Project.GetModes().Count; ++i)
+                {
+                    if (m_Project.GetModes()[i].Title == mode.Title)
+                    {
+                        modesList.SelectedIndex = i + 1;
+                        break;
+                    }
+                }
+                UpdateElementsPanel();
+                lastMode = mode.Title;
+            }
             StringBuilder modeElementsText = new StringBuilder();
+            Dictionary<int, object> currentModeElementIds = new Dictionary<int, object>();
             foreach (IModeElement modeElement in control.CurrentModeElements)
             {
                 if (modeElementsText.Length > 0)
                     modeElementsText.Append(", ");
                 modeElementsText.Append(modeElement.Title);
+                currentModeElementIds.Add(modeElement.Id, null);
+            }
+            foreach (int id in m_ButtonsForIds.Keys)
+            {
+                m_ButtonsForIds[id].Checked = currentModeElementIds.ContainsKey(id);
             }
             elementsLabel.Text = modeElementsText.ToString();
             StringBuilder soundElementsText = new StringBuilder();
@@ -342,7 +497,27 @@ namespace Ares.Player
             {
                 musicLabel.Text = MusicInfo.GetInfo(musicElementId).LongTitle;
                 lastMusicElementId = musicElementId;
+                var currentMusicList = Ares.Data.DataModule.ElementRepository.GetElement(m_PlayingControl.CurrentMusicList) as IMusicList;
+                var elements = currentMusicList != null ? currentMusicList.GetFileElements() : null;
+                if (elements != null && musicList.Items.Count > 0)
+                {
+                    for (int i = 0; i < elements.Count; ++i)
+                    {
+                        if (elements[i].Id == musicElementId)
+                        {
+                            if (musicList.Items.Count > i)
+                                musicList.SelectedIndex = i;
+                            break;
+                        }
+                    }
+                }
             }
+            if (control.CurrentMusicList != lastMusicListId && modesList.SelectedIndex == 0)
+            {
+                UpdateElementsPanel();
+            }
+            lastMusicListId = control.CurrentMusicList;
+            m_Listen = true;
             bool settingsChanged = false;
             if (overallVolumeBar.Value != control.GlobalVolume)
             {
@@ -873,6 +1048,31 @@ namespace Ares.Player
             if (dialog.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
             {
                 Settings.Settings.Instance.Commit();
+            }
+        }
+
+        private void modesList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!m_Listen)
+                return;
+            if (modesList.SelectedIndex > 0 && m_Project != null && modesList.SelectedIndex <= m_Project.GetModes().Count)
+            {
+                m_PlayingControl.SetMode(m_Project.GetModes()[modesList.SelectedIndex - 1]);
+            }
+            m_Listen = false;
+            UpdateElementsPanel();
+            m_Listen = true;
+        }
+
+        private void musicList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!m_Listen)
+                return;
+            IMusicList list = Ares.Data.DataModule.ElementRepository.GetElement(m_PlayingControl.CurrentMusicList) as IMusicList;
+            var elements = list != null ? list.GetFileElements() : null;
+            if (elements != null && musicList.SelectedIndex < elements.Count)
+            {
+                m_PlayingControl.SelectMusicElement(elements[musicList.SelectedIndex].Id);
             }
         }
     }
