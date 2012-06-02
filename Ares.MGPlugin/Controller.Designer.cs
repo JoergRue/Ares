@@ -73,16 +73,19 @@
             this.overlayOKButton = new System.Windows.Forms.Button();
             this.overlayCloseButton = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.transparentFlowLayoutPanel2 = new Ares.MGPlugin.TransparentFlowLayoutPanel();
+            this.overlayLabel5 = new Ares.MGPlugin.TransparentLabel();
+            this.settingsLabel = new Ares.MGPlugin.TransparentLinkLabel();
+            this.overlayLabel6 = new Ares.MGPlugin.TransparentLabel();
+            this.transparentFlowLayoutPanel1 = new Ares.MGPlugin.TransparentFlowLayoutPanel();
+            this.overlayLabel3 = new Ares.MGPlugin.TransparentLabel();
+            this.setupLabel = new Ares.MGPlugin.TransparentLinkLabel();
+            this.overlayLabel4 = new Ares.MGPlugin.TransparentLabel();
+            this.flowLayoutPanel1 = new Ares.MGPlugin.TransparentFlowLayoutPanel();
+            this.overlayLabel2 = new Ares.MGPlugin.TransparentLabel();
+            this.homepageLabel = new Ares.MGPlugin.TransparentLinkLabel();
             this.overlayLabel9 = new Ares.MGPlugin.TransparentLabel();
             this.overlayLabel7 = new Ares.MGPlugin.TransparentLabel();
-            this.overlayLabel6 = new Ares.MGPlugin.TransparentLabel();
-            this.settingsLabel = new Ares.MGPlugin.TransparentLinkLabel();
-            this.overlayLabel5 = new Ares.MGPlugin.TransparentLabel();
-            this.overlayLabel4 = new Ares.MGPlugin.TransparentLabel();
-            this.setupLabel = new Ares.MGPlugin.TransparentLinkLabel();
-            this.overlayLabel3 = new Ares.MGPlugin.TransparentLabel();
-            this.homepageLabel = new Ares.MGPlugin.TransparentLinkLabel();
-            this.overlayLabel2 = new Ares.MGPlugin.TransparentLabel();
             this.overlayLabel1 = new Ares.MGPlugin.TransparentLabel();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.soundsBar)).BeginInit();
@@ -94,6 +97,9 @@
             this.groupBox5.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.overLayPanel.SuspendLayout();
+            this.transparentFlowLayoutPanel2.SuspendLayout();
+            this.transparentFlowLayoutPanel1.SuspendLayout();
+            this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -306,7 +312,7 @@
             this.groupBox4.Controls.Add(this.modesList);
             this.groupBox4.Location = new System.Drawing.Point(283, 40);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(200, 295);
+            this.groupBox4.Size = new System.Drawing.Size(200, 256);
             this.groupBox4.TabIndex = 3;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Modi";
@@ -319,7 +325,7 @@
             this.modesList.FormattingEnabled = true;
             this.modesList.Location = new System.Drawing.Point(6, 21);
             this.modesList.Name = "modesList";
-            this.modesList.Size = new System.Drawing.Size(188, 264);
+            this.modesList.Size = new System.Drawing.Size(188, 225);
             this.modesList.TabIndex = 0;
             this.modesList.SelectedIndexChanged += new System.EventHandler(this.modesList_SelectedIndexChanged);
             // 
@@ -332,7 +338,7 @@
             this.groupBox5.Controls.Add(this.musicList);
             this.groupBox5.Location = new System.Drawing.Point(489, 40);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(357, 295);
+            this.groupBox5.Size = new System.Drawing.Size(230, 256);
             this.groupBox5.TabIndex = 4;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Elemente";
@@ -345,7 +351,7 @@
             this.elementsPanel.AutoScroll = true;
             this.elementsPanel.Location = new System.Drawing.Point(6, 21);
             this.elementsPanel.Name = "elementsPanel";
-            this.elementsPanel.Size = new System.Drawing.Size(345, 262);
+            this.elementsPanel.Size = new System.Drawing.Size(218, 232);
             this.elementsPanel.TabIndex = 2;
             // 
             // musicList
@@ -356,7 +362,7 @@
             this.musicList.FormattingEnabled = true;
             this.musicList.Location = new System.Drawing.Point(6, 20);
             this.musicList.Name = "musicList";
-            this.musicList.Size = new System.Drawing.Size(345, 264);
+            this.musicList.Size = new System.Drawing.Size(218, 225);
             this.musicList.TabIndex = 1;
             this.musicList.Visible = false;
             this.musicList.SelectedIndexChanged += new System.EventHandler(this.musicList_SelectedIndexChanged);
@@ -462,17 +468,12 @@
             // overLayPanel
             // 
             this.overLayPanel.BackgroundImage = global::Ares.MGPlugin.Properties.Resources.Controller_Overlay;
+            this.overLayPanel.Controls.Add(this.transparentFlowLayoutPanel2);
+            this.overLayPanel.Controls.Add(this.transparentFlowLayoutPanel1);
+            this.overLayPanel.Controls.Add(this.flowLayoutPanel1);
             this.overLayPanel.Controls.Add(this.overlayLabel9);
             this.overLayPanel.Controls.Add(this.overlayOKButton);
             this.overLayPanel.Controls.Add(this.overlayLabel7);
-            this.overLayPanel.Controls.Add(this.overlayLabel6);
-            this.overLayPanel.Controls.Add(this.settingsLabel);
-            this.overLayPanel.Controls.Add(this.overlayLabel5);
-            this.overLayPanel.Controls.Add(this.overlayLabel4);
-            this.overLayPanel.Controls.Add(this.setupLabel);
-            this.overLayPanel.Controls.Add(this.overlayLabel3);
-            this.overLayPanel.Controls.Add(this.homepageLabel);
-            this.overLayPanel.Controls.Add(this.overlayLabel2);
             this.overLayPanel.Controls.Add(this.overlayLabel1);
             this.overLayPanel.Controls.Add(this.overlayCloseButton);
             this.overLayPanel.Location = new System.Drawing.Point(3, 40);
@@ -507,6 +508,144 @@
             this.overlayCloseButton.UseVisualStyleBackColor = false;
             this.overlayCloseButton.Click += new System.EventHandler(this.overlayCloseButton_Click);
             // 
+            // transparentFlowLayoutPanel2
+            // 
+            this.transparentFlowLayoutPanel2.BackColor = System.Drawing.Color.Transparent;
+            this.transparentFlowLayoutPanel2.Controls.Add(this.overlayLabel5);
+            this.transparentFlowLayoutPanel2.Controls.Add(this.settingsLabel);
+            this.transparentFlowLayoutPanel2.Controls.Add(this.overlayLabel6);
+            this.transparentFlowLayoutPanel2.Location = new System.Drawing.Point(65, 155);
+            this.transparentFlowLayoutPanel2.Name = "transparentFlowLayoutPanel2";
+            this.transparentFlowLayoutPanel2.Size = new System.Drawing.Size(761, 18);
+            this.transparentFlowLayoutPanel2.TabIndex = 15;
+            // 
+            // overlayLabel5
+            // 
+            this.overlayLabel5.AutoSize = true;
+            this.overlayLabel5.BackColor = System.Drawing.Color.Transparent;
+            this.overlayLabel5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.overlayLabel5.Location = new System.Drawing.Point(3, 0);
+            this.overlayLabel5.Margin = new System.Windows.Forms.Padding(3, 0, 0, 0);
+            this.overlayLabel5.Name = "overlayLabel5";
+            this.overlayLabel5.Size = new System.Drawing.Size(416, 16);
+            this.overlayLabel5.TabIndex = 8;
+            this.overlayLabel5.Text = "Falls der Ares Player doch installiert sein sollte, können Sie ihn in den";
+            // 
+            // settingsLabel
+            // 
+            this.settingsLabel.AutoSize = true;
+            this.settingsLabel.BackColor = System.Drawing.Color.Transparent;
+            this.settingsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.settingsLabel.Location = new System.Drawing.Point(419, 0);
+            this.settingsLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.settingsLabel.Name = "settingsLabel";
+            this.settingsLabel.Size = new System.Drawing.Size(88, 16);
+            this.settingsLabel.TabIndex = 9;
+            this.settingsLabel.TabStop = true;
+            this.settingsLabel.Text = "Einstellungen";
+            this.settingsLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.settingsLabel_LinkClicked);
+            // 
+            // overlayLabel6
+            // 
+            this.overlayLabel6.AutoSize = true;
+            this.overlayLabel6.BackColor = System.Drawing.Color.Transparent;
+            this.overlayLabel6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.overlayLabel6.Location = new System.Drawing.Point(507, 0);
+            this.overlayLabel6.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
+            this.overlayLabel6.Name = "overlayLabel6";
+            this.overlayLabel6.Size = new System.Drawing.Size(207, 16);
+            this.overlayLabel6.TabIndex = 10;
+            this.overlayLabel6.Text = "des Plugins auswählen. Wenn ein";
+            // 
+            // transparentFlowLayoutPanel1
+            // 
+            this.transparentFlowLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
+            this.transparentFlowLayoutPanel1.Controls.Add(this.overlayLabel3);
+            this.transparentFlowLayoutPanel1.Controls.Add(this.setupLabel);
+            this.transparentFlowLayoutPanel1.Controls.Add(this.overlayLabel4);
+            this.transparentFlowLayoutPanel1.Location = new System.Drawing.Point(65, 131);
+            this.transparentFlowLayoutPanel1.Name = "transparentFlowLayoutPanel1";
+            this.transparentFlowLayoutPanel1.Size = new System.Drawing.Size(761, 23);
+            this.transparentFlowLayoutPanel1.TabIndex = 14;
+            // 
+            // overlayLabel3
+            // 
+            this.overlayLabel3.AutoSize = true;
+            this.overlayLabel3.BackColor = System.Drawing.Color.Transparent;
+            this.overlayLabel3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.overlayLabel3.Location = new System.Drawing.Point(3, 0);
+            this.overlayLabel3.Margin = new System.Windows.Forms.Padding(3, 0, 0, 0);
+            this.overlayLabel3.Name = "overlayLabel3";
+            this.overlayLabel3.Size = new System.Drawing.Size(160, 16);
+            this.overlayLabel3.TabIndex = 5;
+            this.overlayLabel3.Text = "besuchen oder direkt das";
+            // 
+            // setupLabel
+            // 
+            this.setupLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.setupLabel.AutoSize = true;
+            this.setupLabel.BackColor = System.Drawing.Color.Transparent;
+            this.setupLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.setupLabel.Location = new System.Drawing.Point(163, 0);
+            this.setupLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.setupLabel.Name = "setupLabel";
+            this.setupLabel.Size = new System.Drawing.Size(74, 16);
+            this.setupLabel.TabIndex = 6;
+            this.setupLabel.TabStop = true;
+            this.setupLabel.Text = "Ares Setup";
+            this.setupLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.setupLabel_LinkClicked);
+            // 
+            // overlayLabel4
+            // 
+            this.overlayLabel4.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.overlayLabel4.AutoSize = true;
+            this.overlayLabel4.BackColor = System.Drawing.Color.Transparent;
+            this.overlayLabel4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.overlayLabel4.Location = new System.Drawing.Point(237, 0);
+            this.overlayLabel4.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
+            this.overlayLabel4.Name = "overlayLabel4";
+            this.overlayLabel4.Size = new System.Drawing.Size(93, 16);
+            this.overlayLabel4.TabIndex = 7;
+            this.overlayLabel4.Text = "herunterladen.";
+            // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
+            this.flowLayoutPanel1.Controls.Add(this.overlayLabel2);
+            this.flowLayoutPanel1.Controls.Add(this.homepageLabel);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(65, 110);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(761, 20);
+            this.flowLayoutPanel1.TabIndex = 13;
+            // 
+            // overlayLabel2
+            // 
+            this.overlayLabel2.AutoSize = true;
+            this.overlayLabel2.BackColor = System.Drawing.Color.Transparent;
+            this.overlayLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.overlayLabel2.Location = new System.Drawing.Point(3, 0);
+            this.overlayLabel2.Margin = new System.Windows.Forms.Padding(3, 0, 0, 0);
+            this.overlayLabel2.Name = "overlayLabel2";
+            this.overlayLabel2.Size = new System.Drawing.Size(629, 16);
+            this.overlayLabel2.TabIndex = 3;
+            this.overlayLabel2.Text = "Es wurde kein Ares Player im Netzwerk oder lokal installiert gefunden. Wenn Sie m" +
+    "öchten, können Sie die";
+            // 
+            // homepageLabel
+            // 
+            this.homepageLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.homepageLabel.AutoSize = true;
+            this.homepageLabel.BackColor = System.Drawing.Color.Transparent;
+            this.homepageLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.homepageLabel.Location = new System.Drawing.Point(632, 0);
+            this.homepageLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.homepageLabel.Name = "homepageLabel";
+            this.homepageLabel.Size = new System.Drawing.Size(108, 16);
+            this.homepageLabel.TabIndex = 4;
+            this.homepageLabel.TabStop = true;
+            this.homepageLabel.Text = "Ares Homepage";
+            this.homepageLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.homepageLabel_LinkClicked);
+            // 
             // overlayLabel9
             // 
             this.overlayLabel9.AutoSize = true;
@@ -523,107 +662,12 @@
             this.overlayLabel7.AutoSize = true;
             this.overlayLabel7.BackColor = System.Drawing.Color.Transparent;
             this.overlayLabel7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.overlayLabel7.Location = new System.Drawing.Point(65, 172);
+            this.overlayLabel7.Location = new System.Drawing.Point(67, 176);
             this.overlayLabel7.Name = "overlayLabel7";
             this.overlayLabel7.Size = new System.Drawing.Size(651, 16);
             this.overlayLabel7.TabIndex = 10;
             this.overlayLabel7.Text = "Player im Netzwerk gestartet wurde, müssen Sie eventuell die Firewall-Einstellung" +
     "en der Rechner überprüfen.";
-            // 
-            // overlayLabel6
-            // 
-            this.overlayLabel6.AutoSize = true;
-            this.overlayLabel6.BackColor = System.Drawing.Color.Transparent;
-            this.overlayLabel6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.overlayLabel6.Location = new System.Drawing.Point(566, 156);
-            this.overlayLabel6.Name = "overlayLabel6";
-            this.overlayLabel6.Size = new System.Drawing.Size(207, 16);
-            this.overlayLabel6.TabIndex = 9;
-            this.overlayLabel6.Text = "des Plugins auswählen. Wenn ein";
-            // 
-            // settingsLabel
-            // 
-            this.settingsLabel.AutoSize = true;
-            this.settingsLabel.BackColor = System.Drawing.Color.Transparent;
-            this.settingsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.settingsLabel.Location = new System.Drawing.Point(481, 156);
-            this.settingsLabel.Name = "settingsLabel";
-            this.settingsLabel.Size = new System.Drawing.Size(88, 16);
-            this.settingsLabel.TabIndex = 8;
-            this.settingsLabel.TabStop = true;
-            this.settingsLabel.Text = "Einstellungen";
-            this.settingsLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.settingsLabel_LinkClicked);
-            // 
-            // overlayLabel5
-            // 
-            this.overlayLabel5.AutoSize = true;
-            this.overlayLabel5.BackColor = System.Drawing.Color.Transparent;
-            this.overlayLabel5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.overlayLabel5.Location = new System.Drawing.Point(65, 156);
-            this.overlayLabel5.Name = "overlayLabel5";
-            this.overlayLabel5.Size = new System.Drawing.Size(416, 16);
-            this.overlayLabel5.TabIndex = 7;
-            this.overlayLabel5.Text = "Falls der Ares Player doch installiert sein sollte, können Sie ihn in den";
-            // 
-            // overlayLabel4
-            // 
-            this.overlayLabel4.AutoSize = true;
-            this.overlayLabel4.BackColor = System.Drawing.Color.Transparent;
-            this.overlayLabel4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.overlayLabel4.Location = new System.Drawing.Point(295, 133);
-            this.overlayLabel4.Name = "overlayLabel4";
-            this.overlayLabel4.Size = new System.Drawing.Size(93, 16);
-            this.overlayLabel4.TabIndex = 6;
-            this.overlayLabel4.Text = "herunterladen.";
-            // 
-            // setupLabel
-            // 
-            this.setupLabel.AutoSize = true;
-            this.setupLabel.BackColor = System.Drawing.Color.Transparent;
-            this.setupLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.setupLabel.Location = new System.Drawing.Point(224, 133);
-            this.setupLabel.Name = "setupLabel";
-            this.setupLabel.Size = new System.Drawing.Size(74, 16);
-            this.setupLabel.TabIndex = 5;
-            this.setupLabel.TabStop = true;
-            this.setupLabel.Text = "Ares Setup";
-            this.setupLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.setupLabel_LinkClicked);
-            // 
-            // overlayLabel3
-            // 
-            this.overlayLabel3.AutoSize = true;
-            this.overlayLabel3.BackColor = System.Drawing.Color.Transparent;
-            this.overlayLabel3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.overlayLabel3.Location = new System.Drawing.Point(65, 133);
-            this.overlayLabel3.Name = "overlayLabel3";
-            this.overlayLabel3.Size = new System.Drawing.Size(160, 16);
-            this.overlayLabel3.TabIndex = 4;
-            this.overlayLabel3.Text = "besuchen oder direkt das";
-            // 
-            // homepageLabel
-            // 
-            this.homepageLabel.AutoSize = true;
-            this.homepageLabel.BackColor = System.Drawing.Color.Transparent;
-            this.homepageLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.homepageLabel.Location = new System.Drawing.Point(690, 116);
-            this.homepageLabel.Name = "homepageLabel";
-            this.homepageLabel.Size = new System.Drawing.Size(108, 16);
-            this.homepageLabel.TabIndex = 3;
-            this.homepageLabel.TabStop = true;
-            this.homepageLabel.Text = "Ares Homepage";
-            this.homepageLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.homepageLabel_LinkClicked);
-            // 
-            // overlayLabel2
-            // 
-            this.overlayLabel2.AutoSize = true;
-            this.overlayLabel2.BackColor = System.Drawing.Color.Transparent;
-            this.overlayLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.overlayLabel2.Location = new System.Drawing.Point(65, 116);
-            this.overlayLabel2.Name = "overlayLabel2";
-            this.overlayLabel2.Size = new System.Drawing.Size(629, 16);
-            this.overlayLabel2.TabIndex = 2;
-            this.overlayLabel2.Text = "Es wurde kein Ares Player im Netzwerk oder lokal installiert gefunden. Wenn Sie m" +
-    "öchten, können Sie die";
             // 
             // overlayLabel1
             // 
@@ -666,6 +710,12 @@
             this.toolStrip1.PerformLayout();
             this.overLayPanel.ResumeLayout(false);
             this.overLayPanel.PerformLayout();
+            this.transparentFlowLayoutPanel2.ResumeLayout(false);
+            this.transparentFlowLayoutPanel2.PerformLayout();
+            this.transparentFlowLayoutPanel1.ResumeLayout(false);
+            this.transparentFlowLayoutPanel1.PerformLayout();
+            this.flowLayoutPanel1.ResumeLayout(false);
+            this.flowLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -711,18 +761,21 @@
         private System.Windows.Forms.Panel overLayPanel;
         private System.Windows.Forms.Button overlayOKButton;
         private TransparentLabel overlayLabel7;
-        private TransparentLabel overlayLabel6;
-        private TransparentLinkLabel settingsLabel;
-        private TransparentLabel overlayLabel5;
-        private TransparentLabel overlayLabel4;
-        private TransparentLinkLabel setupLabel;
-        private TransparentLabel overlayLabel3;
-        private TransparentLinkLabel homepageLabel;
-        private TransparentLabel overlayLabel2;
         private TransparentLabel overlayLabel1;
         private System.Windows.Forms.Button overlayCloseButton;
         private TransparentLabel overlayLabel9;
         private System.Windows.Forms.ToolTip toolTip1;
+        private TransparentFlowLayoutPanel flowLayoutPanel1;
+        private TransparentLabel overlayLabel2;
+        private TransparentLinkLabel homepageLabel;
+        private TransparentFlowLayoutPanel transparentFlowLayoutPanel2;
+        private TransparentLabel overlayLabel5;
+        private TransparentLinkLabel settingsLabel;
+        private TransparentLabel overlayLabel6;
+        private TransparentFlowLayoutPanel transparentFlowLayoutPanel1;
+        private TransparentLabel overlayLabel3;
+        private TransparentLinkLabel setupLabel;
+        private TransparentLabel overlayLabel4;
 
     }
 }

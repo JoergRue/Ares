@@ -20,4 +20,13 @@ namespace Ares.MGPlugin
             this.BackColor = System.Drawing.Color.Transparent;
         }
     }
+
+    class TransparentFlowLayoutPanel : FlowLayoutPanel
+    {
+        public TransparentFlowLayoutPanel()
+        {
+            this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
+            this.BackColor = System.Drawing.Color.Transparent;
+        }
+    }
 }

@@ -48,7 +48,14 @@ namespace Ares.MGPlugin
                 // try to find via registry
                 try
                 {
-                    path = (String)Microsoft.Win32.Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Ares", "PlayerPath", null);
+                    if (System.Environment.Is64BitProcess)
+                    {
+                        path = (String)Microsoft.Win32.Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Ares", "PlayerPath", null);
+                    }
+                    else
+                    {
+                        path = (String)Microsoft.Win32.Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Ares", "PlayerPath", null);
+                    }
                 }
                 catch (System.Security.SecurityException)
                 {
@@ -61,8 +68,17 @@ namespace Ares.MGPlugin
                 if (String.IsNullOrEmpty(path))
                 {
                     // try default location
-                    path = System.Environment.Is64BitOperatingSystem ? @"C:\Program Files (x86)\Ares\Player_Editor\Ares.Player.exe" : @"C:\Program Files\Ares\Player_Editor\Ares.Player.exe";
-                    return null;
+                    path = System.IO.Path.Combine(System.Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), @"Ares\Player_Editor\Ares.Player.exe");
+                    if (System.IO.File.Exists(path))
+                    {
+                        Settings.Default.LocalPlayerPath = path;
+                        Settings.Default.Save();
+                        return path;
+                    }
+                    else
+                    {
+                        return null;
+                    }
                 }
                 else
                 {
@@ -722,7 +738,7 @@ namespace Ares.MGPlugin
                     for (int i = 0; i < elements.Count; ++i)
                     {
                         checkBox.Text = elements[i].Title;
-                        int width = checkBox.PreferredSize.Width;
+                        int width = checkBox.PreferredSize.Width + 15;
                         if (width > maxWidth)
                             maxWidth = width;
                     }
