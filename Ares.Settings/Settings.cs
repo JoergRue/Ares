@@ -60,6 +60,8 @@ namespace Ares.Settings
         public String StreamingPassword { get; set; }
 
         public int StreamingEncoder { get; set; }
+
+        public bool ShowKeysInButtons { get; set; }
     }
 
     public class Settings
@@ -99,6 +101,8 @@ namespace Ares.Settings
         public String StreamingPassword { get { return Data.StreamingPassword; } set { Data.StreamingPassword = value; } }
 
         public int StreamingEncoder { get { return Data.StreamingEncoder; } set { Data.StreamingEncoder = value; } }
+
+        public bool ShowKeysInButtons { get { return Data.ShowKeysInButtons; } set { Data.ShowKeysInButtons = value; } }
 
         public static Settings Instance
         {
@@ -283,6 +287,7 @@ namespace Ares.Settings
             StreamingServerPort = 8000;
             StreamingPassword = "hackme";
             StreamingEncoder = 1;
+            ShowKeysInButtons = false;
         }
 
         private void WriteSettings(XmlWriter writer)
@@ -311,6 +316,7 @@ namespace Ares.Settings
             writer.WriteEndElement();
             writer.WriteStartElement("Options");
             writer.WriteAttributeString("MessageFilterLevel", MessageFilterLevel.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            writer.WriteAttributeString("ShowKeys", ShowKeysInButtons ? "true" : "false");
             writer.WriteEndElement();
             writer.WriteStartElement("Streaming");
             writer.WriteAttributeString("Active", UseStreaming ? "true" : "false");
@@ -411,6 +417,7 @@ namespace Ares.Settings
                 else if (reader.IsStartElement("Options"))
                 {
                     MessageFilterLevel = reader.GetIntegerAttribute("MessageFilterLevel");
+                    ShowKeysInButtons = reader.GetBooleanAttributeOrDefault("ShowKeys", false);
                     if (reader.IsEmptyElement)
                         reader.Read();
                     else

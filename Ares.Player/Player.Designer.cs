@@ -112,6 +112,7 @@ namespace Ares.Player
             this.startEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.messagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.showKeysMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.streamingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -567,6 +568,7 @@ namespace Ares.Player
             this.startEditorToolStripMenuItem,
             this.messagesToolStripMenuItem,
             this.toolStripSeparator3,
+            this.showKeysMenuItem,
             this.settingsToolStripMenuItem1,
             this.streamingToolStripMenuItem});
             this.extrasToolStripMenuItem.Name = "extrasToolStripMenuItem";
@@ -588,6 +590,13 @@ namespace Ares.Player
             // 
             resources.ApplyResources(this.toolStripSeparator3, "toolStripSeparator3");
             this.toolStripSeparator3.Name = "toolStripSeparator3";
+            // 
+            // showKeysMenuItem
+            // 
+            resources.ApplyResources(this.showKeysMenuItem, "showKeysMenuItem");
+            this.showKeysMenuItem.CheckOnClick = true;
+            this.showKeysMenuItem.Name = "showKeysMenuItem";
+            this.showKeysMenuItem.CheckedChanged += new System.EventHandler(this.showKeysMenuItem_CheckedChanged);
             // 
             // settingsToolStripMenuItem1
             // 
@@ -798,6 +807,7 @@ namespace Ares.Player
         private System.Windows.Forms.ListBox musicList;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.ListBox modesList;
+        private System.Windows.Forms.ToolStripMenuItem showKeysMenuItem;
     }
 }
 

@@ -305,9 +305,16 @@ namespace Ares.Player
                 modesList.Items.Add("Musikliste");
                 int i = 1;
                 int currentMode = 0;
+                bool showKeys = Settings.Settings.Instance.ShowKeysInButtons;
+                KeysConverter converter = new KeysConverter();
                 foreach (Ares.Data.IMode mode in modes)
                 {
-                    modesList.Items.Add(mode.Title);
+                    String title = mode.Title;
+                    if (showKeys && mode.KeyCode != 0)
+                    {
+                        title += " (" + converter.ConvertToString((System.Windows.Forms.Keys)mode.KeyCode) + ")";
+                    }
+                    modesList.Items.Add(title);
                     if (mode == m_PlayingControl.CurrentMode)
                     {
                         currentMode = i;
@@ -366,13 +373,22 @@ namespace Ares.Player
 
                 if (m_Project != null && m_Project.GetModes().Count >= modeIndex)
                 {
+                    bool showKeys = Settings.Settings.Instance.ShowKeysInButtons;
+                    KeysConverter converter = new KeysConverter();
                     IList<Ares.Data.IModeElement> elements = m_Project.GetModes()[modeIndex - 1].GetElements();
                     int maxWidth = 0;
                     CheckBox checkBox = new CheckBox();
                     checkBox.Appearance = Appearance.Button;
                     for (int i = 0; i < elements.Count; ++i)
                     {
-                        checkBox.Text = elements[i].Title;
+                        String text = elements[i].Title;
+                        if (showKeys && elements[i].Trigger != null && elements[i].Trigger.TriggerType == TriggerType.Key)
+                        {
+                            int keyCode = (elements[i].Trigger as IKeyTrigger).KeyCode;
+                            if (keyCode != 0)
+                            text += " (" + converter.ConvertToString((System.Windows.Forms.Keys)keyCode) + ")";
+                        }
+                        checkBox.Text = text;
                         int width = checkBox.PreferredSize.Width;
                         if (width > maxWidth)
                             maxWidth = width;
@@ -383,7 +399,14 @@ namespace Ares.Player
                         int row = i / 4;
                         int column = i % 4;
                         checkBox = new CheckBox();
-                        checkBox.Text = elements[i].Title;
+                        String text = elements[i].Title;
+                        if (showKeys && elements[i].Trigger != null && elements[i].Trigger.TriggerType == TriggerType.Key)
+                        {
+                            int keyCode = (elements[i].Trigger as IKeyTrigger).KeyCode;
+                            if (keyCode != 0)
+                                text += " (" + converter.ConvertToString((System.Windows.Forms.Keys)keyCode) + ")";
+                        }
+                        checkBox.Text = text;
                         checkBox.Appearance = Appearance.Button;
                         Size size = checkBox.PreferredSize;
                         size.Width = maxWidth;
@@ -889,6 +912,7 @@ namespace Ares.Player
         {
             m_BasicSettings = new BasicSettings();
             ReadSettings();
+            showKeysMenuItem.Checked = Settings.Settings.Instance.ShowKeysInButtons;
             Messages.Instance.MessageReceived += new MessageReceivedHandler(MessageReceived);
             String projectName = Environment.GetCommandLineArgs().Length > 1 ? Environment.GetCommandLineArgs()[1] : String.Empty;
             if (projectName.StartsWith("Language="))
@@ -1074,6 +1098,15 @@ namespace Ares.Player
             {
                 m_PlayingControl.SelectMusicElement(elements[musicList.SelectedIndex].Id);
             }
+        }
+
+        private void showKeysMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            Settings.Settings.Instance.ShowKeysInButtons = showKeysMenuItem.Checked;
+            Settings.Settings.Instance.Commit();
+            m_Listen = false;
+            UpdateModesList();
+            m_Listen = true;
         }
     }
 }
