@@ -94,9 +94,21 @@ namespace Ares.Editor.ElementEditors
                 }
                 else if (element is Ares.Data.IFileElement)
                 {
-                    FileElementEditor editor = new FileElementEditor();
-                    editor.SetElement(element as Ares.Data.IFileElement, container);
-                    ShowEditor(editor, parent);
+                    Ares.Data.IFileElement fileElement = (Ares.Data.IFileElement)element;
+                    if (fileElement.FilePath.EndsWith(".m3u", StringComparison.InvariantCultureIgnoreCase) ||
+                        fileElement.FilePath.EndsWith(".m3u8", StringComparison.InvariantCultureIgnoreCase) ||
+                        fileElement.FilePath.EndsWith(".pls", StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        String basePath = fileElement.SoundFileType == Data.SoundFileType.Music ? Ares.Settings.Settings.Instance.MusicDirectory : Ares.Settings.Settings.Instance.SoundDirectory;
+                        String filePath = System.IO.Path.Combine(basePath, fileElement.FilePath);
+                        System.Diagnostics.Process.Start(filePath);
+                    }
+                    else
+                    {
+                        FileElementEditor editor = new FileElementEditor();
+                        editor.SetElement(element as Ares.Data.IFileElement, container);
+                        ShowEditor(editor, parent);
+                    }
                 }
             }
         }

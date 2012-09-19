@@ -139,8 +139,7 @@ namespace Ares.Editor
                     }
                 }
                 List<string> files = new List<string>();
-                String[] patterns = { "*.wav", "*.mp3", "*.ogg" };
-                files.AddRange(FileSearch.GetFilesInDirectory(directory, false));
+                files.AddRange(FileSearch.GetFilesInDirectory(dirType, directory, false));
                 files.Sort(StringComparer.CurrentCulture);
                 foreach (String file in files)
                 {
@@ -724,21 +723,33 @@ namespace Ares.Editor
 
     public static class FileSearch
     {
-        public static IEnumerable<string> GetFilesInDirectory(String directory, bool descendToSubDirs)
+        private static String[] GetPatterns(FileType dirType)
         {
-            String[] patterns = { "*.wav", "*.mp3", "*.ogg" };
+            if (dirType == FileType.Music)
+                return new String[] { "*.wav", "*.mp3", "*.ogg", "*.pls", "*.m3u", "*.m3u8" };
+            else
+                return new String[] { "*.wav", "*.mp3", "*.ogg" };
+        }
+
+        public static IEnumerable<string> GetFilesInDirectory(FileType dirType, String directory, bool descendToSubDirs)
+        {
+            String[] patterns = GetPatterns(dirType);
             foreach (String pattern in patterns)
             {
+                String ending = pattern.Substring(2); // necessary because searching for *.wav also returns xy.wav_old etc.
                 foreach (String file in System.IO.Directory.GetFiles(directory, pattern))
                 {
-                    yield return file;
+                    if (file.EndsWith(ending))
+                    {
+                        yield return file;
+                    }
                 }
             }
             if (descendToSubDirs)
             {
                 foreach (String subDir in System.IO.Directory.GetDirectories(directory))
                 {
-                    foreach (String file in GetFilesInDirectory(subDir, true))
+                    foreach (String file in GetFilesInDirectory(dirType, subDir, true))
                     {
                         yield return file;
                     }

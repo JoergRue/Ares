@@ -180,4 +180,13 @@
   <data name="Moving" xml:space="preserve">
     <value>Verschiebe ...</value>
   </data>
+  <data name="CannotPlayURLS" xml:space="preserve">
+    <value>URLs in Playlists können nicht verwendet werden. Eintrag {0} ignoriert.</value>
+  </data>
+  <data name="ErrorReadingPlaylist" xml:space="preserve">
+    <value>Fehler beim Lesen von {0}: {1}</value>
+  </data>
+  <data name="PlaylistNotFound" xml:space="preserve">
+    <value>Playlist {0} wurde nicht gefunden.</value>
+  </data>
 </root>

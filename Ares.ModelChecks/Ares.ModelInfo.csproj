@@ -79,6 +79,7 @@
     <Compile Include="PathLabel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Playlists.cs" />
     <Compile Include="ProgressDialog.cs">
       <SubType>Form</SubType>
     </Compile>

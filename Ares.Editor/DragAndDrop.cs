@@ -65,7 +65,7 @@ namespace Ares.Editor
             {
                 if (System.IO.Directory.Exists(path))
                 {
-                    foreach (String file in FileSearch.GetFilesInDirectory(path, true))
+                    foreach (String file in FileSearch.GetFilesInDirectory(item.ItemType, path, true))
                     {
                         AddItemsToSet(uniqueItems, new DraggedItem { NodeType = DraggedItemType.File, ItemType = item.ItemType, RelativePath = file.Substring(baseDir.Length + 1) });
                     }

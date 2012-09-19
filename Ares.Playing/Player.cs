@@ -538,7 +538,10 @@ namespace Ares.Playing
         public SequentialMusicPlayer(ISequentialBackgroundMusicList list, WaitHandle stoppedEvent, IElementPlayerClient client)
             : base(stoppedEvent, client)
         {
-            m_Container = list;
+            m_Container = Ares.ModelInfo.Playlists.ExpandSequentialMusicList(list, (String error) =>
+            {
+                ErrorHandling.ErrorOccurred(list.Id, error);
+            });
             m_RepeatCount = 0;
         }
 
@@ -662,7 +665,10 @@ namespace Ares.Playing
         public RandomMusicPlayer(IRandomBackgroundMusicList list, WaitHandle stoppedEvent, IElementPlayerClient client)
             : base(stoppedEvent, client)
         {
-            m_Container = list;
+            m_Container = Ares.ModelInfo.Playlists.ExpandRandomMusicList(list, (String error) =>
+            {
+                ErrorHandling.ErrorOccurred(list.Id, error);
+            });
             m_LastElementsStack = new List<IChoiceElement>();
             m_GoBack = false;
             m_FixedNext = -1;
