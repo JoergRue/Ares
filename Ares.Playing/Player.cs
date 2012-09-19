@@ -378,13 +378,21 @@ namespace Ares.Playing
                         CurrentFadeOut = 0;
                         stop = shallStop;
                     }
-                    if (stop || !success)
+                    if (stop || (!success && IsSingleFileList()))
                     {
                         if (PlayingModule.ThePlayer.ProjectCallbacks != null)
                         {
                             PlayingModule.ThePlayer.ProjectCallbacks.MusicPlaylistFinished();
                         }
                         Client.SubPlayerFinished(this, stop);
+                    }
+                    else if (!success)
+                    {
+                        // must get out of current call stack
+                        m_PlayAfterErrorTimer = new System.Timers.Timer(5);
+                        m_PlayAfterErrorTimer.AutoReset = false;
+                        m_PlayAfterErrorTimer.Elapsed += new System.Timers.ElapsedEventHandler(playAfterErrorTimer_Elapsed);
+                        m_PlayAfterErrorTimer.Start();
                     }
                     else
                     {
@@ -395,7 +403,26 @@ namespace Ares.Playing
             PlayingModule.ThePlayer.ActiveMusicPlayer = this;
         }
 
+        private System.Timers.Timer m_PlayAfterErrorTimer;
+
+        private void playAfterErrorTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            m_PlayAfterErrorTimer.Dispose();
+            m_PlayAfterErrorTimer = null;
+            bool stop = false;
+            lock (syncObject)
+            {
+                stop = shallStop;
+            }
+            if (!stop)
+            {
+                PlayNext();
+            }
+        }
+
         public abstract void PlayNext();
+
+        protected abstract bool IsSingleFileList();
 
         public void Stop()
         {
@@ -525,6 +552,11 @@ namespace Ares.Playing
             }
         }
 
+        protected override bool IsSingleFileList()
+        {
+            return ((IMusicList)m_Container).GetFileElements().Count < 2;
+        }
+
         public override void VisitSequentialMusicList(ISequentialBackgroundMusicList musicList)
         {
             // called when starting / repeating
@@ -635,6 +667,11 @@ namespace Ares.Playing
             }
         }
 
+        protected override bool IsSingleFileList()
+        {
+            return ((IMusicList)m_Container).GetFileElements().Count < 2;
+        }
+
         public override void VisitRandomMusicList(IRandomBackgroundMusicList musicList)
         {
             // called on first start
@@ -691,6 +728,11 @@ namespace Ares.Playing
         public override void  PlayNext()
         {
             Client.SubPlayerFinished(this, false);
+        }
+
+        protected override bool IsSingleFileList()
+        {
+            return true;
         }
 
         public void Start(int musicFadeInTime)
