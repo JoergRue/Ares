@@ -79,6 +79,28 @@ namespace Ares.ModelInfo
             return result;
         }
 
+        public static List<String> ReadPlaylist(String playlistPath, Action<String> errorHandler)
+        {
+            String dir = Path.GetDirectoryName(playlistPath);
+            using (StreamReader reader = new StreamReader(playlistPath, true))
+            {
+                if (playlistPath.EndsWith(".m3u", StringComparison.InvariantCultureIgnoreCase)
+                    || playlistPath.EndsWith(".m3u8", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    return ReadM3UList(reader, dir, errorHandler);
+                }
+                else if (playlistPath.EndsWith(".pls", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    return ReadPLSList(reader, dir, errorHandler);
+                }
+                else
+                {
+                    errorHandler("Unknown playlist type: " + playlistPath);
+                    return null;
+                }
+            }
+        }
+
         private static void InsertElement(IElementContainer<IChoiceElement> choiceContainer, IFileElement newElement, IChoiceElement origElement)
         {
             IChoiceElement choiceElement = choiceContainer.AddElement(newElement);
@@ -103,46 +125,30 @@ namespace Ares.ModelInfo
             int count = 0;
             try
             {
-                String dir = Path.GetDirectoryName(playlistPath);
-                using (StreamReader reader = new StreamReader(playlistPath, true))
+                List<String> filePaths = ReadPlaylist(playlistPath, errorHandler);
+                if (filePaths == null)
+                    return 0;
+                foreach (String filePath in filePaths)
                 {
-                    List<String> filePaths = null;
-                    if (playlistPath.EndsWith(".m3u", StringComparison.InvariantCultureIgnoreCase)
-                        || playlistPath.EndsWith(".m3u8", StringComparison.InvariantCultureIgnoreCase))
+                    IFileElement newElement = Ares.Data.DataModule.ElementFactory.CreateFileElement(filePath, SoundFileType.Music);
+                    newElement.SetsMusicVolume = playListElement.SetsMusicVolume;
+                    newElement.SetsSoundVolume = playListElement.SetsSoundVolume;
+                    newElement.MusicVolume = playListElement.MusicVolume;
+                    newElement.SoundVolume = playListElement.SoundVolume;
+                    if (origElement is IChoiceElement)
                     {
-                        filePaths = ReadM3UList(reader, dir, errorHandler);
+                        InsertElement((IElementContainer<IChoiceElement>)container, newElement, (IChoiceElement)origElement);
+                        ++count;
                     }
-                    else if (playlistPath.EndsWith(".pls", StringComparison.InvariantCultureIgnoreCase))
+                    else if (origElement is ISequentialElement)
                     {
-                        filePaths = ReadPLSList(reader, dir, errorHandler);
+                        InsertElement((IElementContainer<ISequentialElement>)container, newElement, (ISequentialElement)origElement);
+                        ++count;
                     }
                     else
                     {
-                        errorHandler("Unknown playlist type: " + playlistPath);
+                        errorHandler("Internal error: Unknown music list type.");
                         return 0;
-                    }
-                    foreach (String filePath in filePaths)
-                    {
-                        IFileElement newElement = Ares.Data.DataModule.ElementFactory.CreateFileElement(filePath, SoundFileType.Music);
-                        newElement.SetsMusicVolume = playListElement.SetsMusicVolume;
-                        newElement.SetsSoundVolume = playListElement.SetsSoundVolume;
-                        newElement.MusicVolume = playListElement.MusicVolume;
-                        newElement.SoundVolume = playListElement.SoundVolume;
-                        if (origElement is IChoiceElement)
-                        {
-                            InsertElement((IElementContainer<IChoiceElement>)container, newElement, (IChoiceElement)origElement);
-                            ++count;
-                        }
-                        else if (origElement is ISequentialElement)
-                        {
-                            InsertElement((IElementContainer<ISequentialElement>)container, newElement, (ISequentialElement)origElement);
-                            ++count;
-                        }
-                        else
-                        {
-                            errorHandler("Internal error: Unknown music list type.");
-                            return 0;
-                        }
                     }
                 }
             }

@@ -345,6 +345,33 @@ namespace Ares.ModelInfo
                 zipEntries[fileEntry] = fileName;
                 zipSizes[fileEntry] = size;
                 overallSize += size;
+                if (element.FilePath.EndsWith(".m3u", StringComparison.InvariantCultureIgnoreCase) ||
+                    element.FilePath.EndsWith(".m3u8", StringComparison.InvariantCultureIgnoreCase) ||
+                    element.FilePath.EndsWith(".pls", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    List<String> filesInPlaylist = Playlists.ReadPlaylist(fileName, (String error) =>
+                        {
+                            throw new System.IO.IOException(error);
+                        });
+                    if (filesInPlaylist != null)
+                    {
+                        String pathStart = element.SoundFileType == SoundFileType.Music ?
+                            Settings.Settings.Instance.MusicDirectory : Settings.Settings.Instance.SoundDirectory;
+                        foreach (String playlistFile in filesInPlaylist)
+                        {
+                            if (playlistFile.StartsWith(pathStart, StringComparison.InvariantCultureIgnoreCase))
+                            {
+                                name = element.SoundFileType == SoundFileType.Music ? MUSIC_DIR : SOUND_DIR;
+                                name = System.IO.Path.Combine(name, playlistFile.Substring(pathStart.Length + 1));
+                                ZipEntry playlistFileEntry = new ZipEntry(ZipEntry.CleanName(name));
+                                SetZipEntryAttributes(playlistFileEntry, playlistFile, out size);
+                                zipEntries[playlistFileEntry] = playlistFile;
+                                zipSizes[playlistFileEntry] = size;
+                                overallSize += size;
+                            }
+                        }
+                    }
+                }
             }
 
             // now write zip file
