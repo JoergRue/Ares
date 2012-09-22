@@ -102,6 +102,7 @@ namespace Ares.MGPlugin
             Controllers.Control.Instance.Disconnect(true);
             Controllers.Messages.Instance.MessageAdded -= new EventHandler<Controllers.MessageEventArgs>(MessageAdded);
             m_ServerSearch.Dispose();
+            CloseMessagesForm();
         }
 
         private bool m_Listen = true;
@@ -421,14 +422,22 @@ namespace Ares.MGPlugin
 
         private MessagesForm m_MessagesForm = null;
 
-        private void messagesButton_Click(object sender, EventArgs e)
+        private void CloseMessagesForm()
         {
-            CloseOverlay();
             if (m_MessagesForm != null)
             {
                 m_MessagesForm.FormClosed -= new FormClosedEventHandler(m_MessagesForm_FormClosed);
                 m_MessagesForm.Close();
                 m_MessagesForm = null;
+            }
+        }
+
+        private void messagesButton_Click(object sender, EventArgs e)
+        {
+            CloseOverlay();
+            if (m_MessagesForm != null)
+            {
+                CloseMessagesForm();
                 messagesButton.Checked = false;   
             }
             else
