@@ -73,6 +73,7 @@
     <Compile Include="DataExtensions.cs" />
     <Compile Include="FileChecks.cs" />
     <Compile Include="FileLists.cs" />
+    <Compile Include="FileSearch.cs" />
     <Compile Include="ImportExport.cs" />
     <Compile Include="KeyChecks.cs" />
     <Compile Include="ModelChecks.cs" />

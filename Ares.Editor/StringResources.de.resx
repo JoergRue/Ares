@@ -201,6 +201,9 @@ Pfeil nach links  - Vorheriges Musikstück</value>
   <data name="LoadError" xml:space="preserve">
     <value>Fehler beim Laden des Projektes: {0}</value>
   </data>
+  <data name="ModeIntro" xml:space="preserve">
+    <value>Modus "{0}": </value>
+  </data>
   <data name="Music" xml:space="preserve">
     <value>Musik</value>
   </data>
@@ -236,6 +239,9 @@ Pfeil nach links  - Vorheriges Musikstück</value>
   </data>
   <data name="NoDroppableElements" xml:space="preserve">
     <value>Diese Elemente können hier nicht eingefügt werden.</value>
+  </data>
+  <data name="NoElementsFound" xml:space="preserve">
+    <value>Die Datei "{0}" wird derzeit im Projekt nicht verwendet.</value>
   </data>
   <data name="NoFileOrFolderFound" xml:space="preserve">
     <value>Keine Datei gefunden.</value>
@@ -285,6 +291,9 @@ Soll es jetzt gespeichert werden?</value>
   </data>
   <data name="SaveError" xml:space="preserve">
     <value>Fehler beim Speichern des Projektes: {0}</value>
+  </data>
+  <data name="SearchElementsTitle" xml:space="preserve">
+    <value>Die Datei "{0}" wird derzeit hier verwendet:</value>
   </data>
   <data name="SetFadingForAll" xml:space="preserve">
     <value>Übernehme Blenden-Einstellungen für alle Modus-Elemente</value>

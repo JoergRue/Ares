@@ -201,6 +201,9 @@ Left      - Previous music title</value>
   <data name="LoadError" xml:space="preserve">
     <value>Error opening the project: {0}</value>
   </data>
+  <data name="ModeIntro" xml:space="preserve">
+    <value>Mode '{0}': </value>
+  </data>
   <data name="Music" xml:space="preserve">
     <value>Music</value>
   </data>
@@ -236,6 +239,9 @@ Left      - Previous music title</value>
   </data>
   <data name="NoDroppableElements" xml:space="preserve">
     <value>None of these elements can be dropped here.</value>
+  </data>
+  <data name="NoElementsFound" xml:space="preserve">
+    <value>The file '{0}' is not currently used in the project.</value>
   </data>
   <data name="NoFileOrFolderFound" xml:space="preserve">
     <value>No file or folder found.</value>
@@ -284,6 +290,9 @@ You should adapt some settings first.</value>
   </data>
   <data name="SaveError" xml:space="preserve">
     <value>Error saving the project: {0}</value>
+  </data>
+  <data name="SearchElementsTitle" xml:space="preserve">
+    <value>The file '{0}' is currently used here:</value>
   </data>
   <data name="SetFadingForAll" xml:space="preserve">
     <value>Set fading settings for all top-level elements.</value>

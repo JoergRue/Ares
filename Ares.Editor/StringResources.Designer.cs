@@ -289,6 +289,15 @@ namespace Ares.Editor {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Mode &apos;{0}&apos;:  ähnelt.
+        /// </summary>
+        internal static string ModeIntro {
+            get {
+                return ResourceManager.GetString("ModeIntro", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Music ähnelt.
         /// </summary>
         internal static string Music {
@@ -393,6 +402,15 @@ namespace Ares.Editor {
         internal static string NoDroppableElements {
             get {
                 return ResourceManager.GetString("NoDroppableElements", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The file &apos;{0}&apos; is not currently used in the project. ähnelt.
+        /// </summary>
+        internal static string NoElementsFound {
+            get {
+                return ResourceManager.GetString("NoElementsFound", resourceCulture);
             }
         }
         
@@ -531,6 +549,15 @@ namespace Ares.Editor {
         internal static string SaveError {
             get {
                 return ResourceManager.GetString("SaveError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The file &apos;{0}&apos; is currently used here: ähnelt.
+        /// </summary>
+        internal static string SearchElementsTitle {
+            get {
+                return ResourceManager.GetString("SearchElementsTitle", resourceCulture);
             }
         }
         
