@@ -12,5 +12,6 @@
 	<classpathentry kind="lib" path="libraries/syntheticaSilverMoon.jar"/>
 	<classpathentry kind="lib" path="libraries/syntheticawalnut.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Ares Controllers"/>
+	<classpathentry kind="lib" path="libraries/JNativeHook.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

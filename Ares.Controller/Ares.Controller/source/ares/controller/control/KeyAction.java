@@ -32,8 +32,20 @@ public class KeyAction extends AbstractAction {
   }
   
   public void actionPerformed(ActionEvent e) {
-    Control.getInstance().sendKey(key);
+	  if (sEnabled) {
+		  Control.getInstance().sendKey(key);
+	  }
   }
+  
+  public static void setKeysEnabled(boolean enabled) {
+	  sEnabled = enabled;
+  }
+  
+  public static boolean areKeysEnabled() {
+	  return sEnabled;
+  }
+  
+  private static boolean sEnabled = true;
   
   private KeyStroke key; 
 }

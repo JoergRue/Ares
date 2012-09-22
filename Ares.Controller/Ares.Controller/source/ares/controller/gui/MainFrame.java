@@ -68,6 +68,11 @@ import java.util.prefs.Preferences;
 
 import javax.swing.JComboBox;
 
+import org.jnativehook.GlobalScreen;
+import org.jnativehook.NativeHookException;
+import org.jnativehook.keyboard.NativeKeyEvent;
+import org.jnativehook.keyboard.NativeKeyListener;
+
 import ares.controllers.control.Control;
 import ares.controller.control.KeyAction;
 import ares.controller.control.ComponentKeys;
@@ -169,6 +174,9 @@ public final class MainFrame extends FrameController implements IMessageListener
   
   private Timer firstTimer;
   private boolean hasLocalPlayer;
+  private boolean globalHookPossible;
+  private boolean globalHookActive;
+  
 
   /**
    * This method initializes 
@@ -176,6 +184,20 @@ public final class MainFrame extends FrameController implements IMessageListener
    */
   public MainFrame() {
   	super(Localization.getString("MainFrame.SoundController")); //$NON-NLS-1$
+  	globalHookPossible = false;
+  	globalHookActive = false;
+	try {
+		GlobalScreen.registerNativeHook();
+		globalHookPossible = true;
+	}
+	catch (NativeHookException ex){
+		Messages.addMessage(MessageType.Warning, Localization.getString("MainFrame.KeyCaptureNotPossible") + ex.getLocalizedMessage()); //$NON-NLS-1$
+	}
+  	Preferences prefs = Preferences.userNodeForPackage(OptionsDialog.class);
+  	if (globalHookPossible && prefs.getBoolean("GlobalKeyHook", false)) //$NON-NLS-1$
+  	{
+  		addGlobalKeyHook();
+  	}
   	initialize();
     this.addWindowListener(new MyWindowListener());
   	Messages.getInstance().addObserver(this);
@@ -212,6 +234,12 @@ public final class MainFrame extends FrameController implements IMessageListener
     serverSearch.dispose();
     FrameManagement.getInstance().setExiting();
     FrameManagement.getInstance().closeAllFrames(this);
+    if (globalHookActive) {
+    	removeGlobalKeyHook();
+    }
+    if (globalHookPossible) {
+    	GlobalScreen.unregisterNativeHook();
+    }
     super.dispose();
   }
 
@@ -300,10 +328,58 @@ public final class MainFrame extends FrameController implements IMessageListener
 			  showSettingsDialog();
 		  }
 	  });
+	  final JMenuItem globalKeyItem = new JCheckBoxMenuItem(Localization.getString("MainFrame.GlobalKeyCapture")); //$NON-NLS-1$
+	  globalKeyItem.addActionListener(new ActionListener() {
+		  public void actionPerformed(ActionEvent e) {
+			  if (!globalHookActive)
+				  addGlobalKeyHook();
+			  else
+				  removeGlobalKeyHook();
+			  globalKeyItem.setSelected(globalHookActive);
+			  Preferences prefs = Preferences.userNodeForPackage(OptionsDialog.class);
+			  prefs.putBoolean("GlobalKeyHook", globalHookActive); //$NON-NLS-1$
+		  }
+	  });
+	  globalKeyItem.setSelected(globalHookActive);
+	  if (!globalHookPossible) {
+		  globalKeyItem.setEnabled(false);
+	  }
 	  extrasMenu.add(messagesMenuItem);
 	  extrasMenu.addSeparator();
+	  extrasMenu.add(globalKeyItem);
 	  extrasMenu.add(settingsItem);
 	  return extrasMenu;
+  }
+  
+  private class GlobalKeyListener implements NativeKeyListener {
+
+	@Override
+	public void nativeKeyPressed(NativeKeyEvent arg0) {
+		Control.getInstance().sendKey(ComponentKeys.getKeyStroke(arg0.getKeyCode()));
+	}
+
+	@Override
+	public void nativeKeyReleased(NativeKeyEvent arg0) {
+	}
+
+	@Override
+	public void nativeKeyTyped(NativeKeyEvent arg0) {
+	}
+	  
+  }
+  
+  private GlobalKeyListener m_GlobalKeyListener = new GlobalKeyListener();
+  
+  private void addGlobalKeyHook() {
+	  GlobalScreen.getInstance().addNativeKeyListener(m_GlobalKeyListener);
+	  globalHookActive = true;
+	  KeyAction.setKeysEnabled(false);
+  }
+  
+  private void removeGlobalKeyHook() {
+	  GlobalScreen.getInstance().removeNativeKeyListener(m_GlobalKeyListener);
+	  globalHookActive = false;
+	  KeyAction.setKeysEnabled(true);
   }
   
   private JMenu getHelpMenu() {
@@ -993,7 +1069,10 @@ public final class MainFrame extends FrameController implements IMessageListener
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				modeLabel.setText(newMode);
-				FrameManagement.getInstance().activateFrame(newMode);
+				if (!globalHookActive)
+				{
+					FrameManagement.getInstance().activateFrame(newMode);
+				}
 			}
 		});
 	}

@@ -34,6 +34,7 @@ import javax.swing.JPanel;
 import javax.swing.JRootPane;
 import javax.swing.JToggleButton;
 
+import ares.controller.control.KeyAction;
 import ares.controllers.data.Command;
 
 class CommandsPanelCreator {
@@ -50,7 +51,9 @@ class CommandsPanelCreator {
     }
 
     public void actionPerformed(ActionEvent arg0) {
-      button.doClick();
+    	if (KeyAction.areKeysEnabled()) {
+    		button.doClick();
+    	}
     }
     
   }

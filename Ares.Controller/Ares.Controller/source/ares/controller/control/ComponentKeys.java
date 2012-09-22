@@ -48,7 +48,7 @@ public class ComponentKeys {
 		    component.getActionMap().put(escapeStroke.toString(), new KeyAction(escapeStroke));
 		  }
 		  
-	  private static ares.controllers.data.KeyStroke getKeyStroke(int keyCode) {
+	  public static ares.controllers.data.KeyStroke getKeyStroke(int keyCode) {
 		    return ares.controllers.data.KeyStroke.getKeyStroke(keyCode, 0);
 		  }
 		  

@@ -12,4 +12,5 @@ Class-Path:
   libraries/syntheticaGreenDream.jar 
   libraries/syntheticaSilverMoon.jar 
   libraries/skinlf.jar 
+  libraries/JNativeHook.jar
 
