@@ -274,10 +274,13 @@ File ::C413A9AB-6557-4EC5-AE90-D860E4D86DB9 -name bassenc.dll -parent 85519505-B
 File ::AE69F8A9-3833-4F53-86C9-305E506FF151 -name bassmix.dll -parent 85519505-B2E6-4155-96D6-3C0D6C533801
 File ::09EB32EA-3624-4CCC-8339-9BDB2D589DD3 -name basswma.dll -parent 85519505-B2E6-4155-96D6-3C0D6C533801
 File ::8ED46B54-71D7-4CC5-A966-1E4ABAD37DD0 -name oggenc2.exe -parent 85519505-B2E6-4155-96D6-3C0D6C533801
+File ::B8B3C50D-E979-412E-8104-9E7D4247A43F -name MouseKeyboardActivityMonitor.dll -active 0 -parent 85519505-B2E6-4155-96D6-3C0D6C533801
 FileGroup ::68676E85-DEAC-451E-9016-59D1A2300E9B -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows TarArchive ZipArchive} -name Player -parent FileGroups
 File ::47DFEC14-D002-4E55-8F13-B613310C042C -name D:/Projekte/Ares/trunk/build/Ares/Player_Editor/Ares.Player.exe -location <%BaseDir%>/Ares/Player_Editor -parent 68676E85-DEAC-451E-9016-59D1A2300E9B
 File ::183D5336-C3DB-4D10-A1C9-893B83D8B44F -name D:/Projekte/Ares/trunk/build/Ares/Player_Editor/Ares.Player.exe.config -location <%BaseDir%>/Ares/Player_Editor -parent 68676E85-DEAC-451E-9016-59D1A2300E9B
 File ::0F8B9FC1-9BDE-49EC-9103-0CC62C7CA7DE -directory <%InstallDir%>/Player_Editor/de -name D:/Projekte/Ares/trunk/build/Ares/Player_Editor/de/Ares.Player.resources.dll -location <%BaseDir%>/Ares/Player_Editor/de -parent 68676E85-DEAC-451E-9016-59D1A2300E9B
+File ::CA1E9798-2A30-4C31-80BD-A586080F8934 -name D:/Projekte/Ares/trunk/build/Ares/MouseKeyboardHooksLicence.txt -parent 68676E85-DEAC-451E-9016-59D1A2300E9B
+File ::EF0E86AB-F73F-4E87-8FBD-D30D335D533C -name D:/Projekte/Ares/trunk/build/Ares/Player_Editor/MouseKeyboardActivityMonitor.dll -parent 68676E85-DEAC-451E-9016-59D1A2300E9B
 FileGroup ::5600FFDB-0F3C-4E9F-B311-0FACC5462967 -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows TarArchive ZipArchive} -name Editor -parent FileGroups
 File ::960E9C98-3E8C-479E-AE39-17842C3F4784 -name D:/Projekte/Ares/trunk/build/Ares/Player_Editor/Ares.Editor.Actions.dll -location <%BaseDir%>/Ares/Player_Editor -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
 File ::07A9F401-88DE-416E-9C01-274C8039279B -name D:/Projekte/Ares/trunk/build/Ares/Player_Editor/Ares.Editor.Controls.dll -location <%BaseDir%>/Ares/Player_Editor -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
@@ -306,6 +309,7 @@ File ::26AE6E3E-C069-4207-BC11-00317E63B23A -name syntheticaBlueSteel.jar -paren
 File ::2455DB1E-8C98-48B4-885E-E752AF0DC502 -name syntheticaGreenDream.jar -parent FA9C91E3-0411-4AA1-80D6-21E076EEE1D4
 File ::256B7AB4-F2B4-4960-BF2E-FF406F553698 -name syntheticaSilverMoon.jar -parent FA9C91E3-0411-4AA1-80D6-21E076EEE1D4
 File ::641E8D52-2D73-4CCB-9B0B-F641A85B6547 -name syntheticawalnut.jar -parent FA9C91E3-0411-4AA1-80D6-21E076EEE1D4
+File ::8C6A5906-0DFE-40CC-A28B-3E44F02412BE -name JNativeHook.jar -parent FA9C91E3-0411-4AA1-80D6-21E076EEE1D4
 File ::57811A4B-BDB5-4FA6-820B-36649E767B51 -type dir -name skins -parent 91F171A1-E4C0-4BED-ACD5-C4ADACD8CC2C
 File ::8525D5C9-9A8E-4ECC-86BF-8B70EFA93030 -name aquathemepack.zip -parent 57811A4B-BDB5-4FA6-820B-36649E767B51
 File ::EC8456F5-D93D-456B-95BE-F6EB0F30ECDF -name modernthemepack.zip -parent 57811A4B-BDB5-4FA6-820B-36649E767B51
@@ -316,6 +320,7 @@ File ::11831456-14E1-47FC-B84B-D25ACAA3BD05 -name Ares.Controller.sh -active 0 -
 File ::A0723606-79F3-4F68-AE84-08016AD51869 -name Ares.png -parent 91F171A1-E4C0-4BED-ACD5-C4ADACD8CC2C
 File ::5686986F-FD7B-41ED-A112-C1B08A342D49 -name Ares.Controllers.jar -parent 91F171A1-E4C0-4BED-ACD5-C4ADACD8CC2C
 File ::E0E14B08-EECE-4088-B068-43D8FDD3F8D5 -name controllers_res.jar -parent 91F171A1-E4C0-4BED-ACD5-C4ADACD8CC2C
+File ::0F28FA5E-61E1-42AF-9492-8B01FC35991B -name D:/Projekte/Ares/trunk/build/Ares/license-gplv3.txt -parent 953890EA-7233-446E-AF22-E9084BF13BF4
 FileGroup ::F15BCB0E-1F11-4A72-9067-9D94B8381202 -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows TarArchive ZipArchive} -name {Controller Windows} -parent FileGroups
 File ::A279A555-6234-41D5-A0CE-F9C5F327953A -name D:/Projekte/Ares/trunk/build/Ares/Controller/Ares.Controller.exe -location <%BaseDir%>/Ares/Controller -parent F15BCB0E-1F11-4A72-9067-9D94B8381202
 File ::FFAF3037-9AED-4D83-912D-CA85674399FB -name D:/Projekte/Ares/trunk/build/Ares/Controller/Ares.ico -location <%BaseDir%>/Ares/Controller -parent F15BCB0E-1F11-4A72-9067-9D94B8381202
@@ -433,7 +438,7 @@ Condition D91AD8BD-CA86-4DC6-A135-FD29436F1798 -active Yes -parent 3AB9347B-8308
 InstallComponent A57F82D8-AE77-4DEF-A45B-DEA778597039 -setup Install -type action -conditions {BF8B7C30-06A2-4D9F-AF02-9F113B721BF4 ED98D459-2E6D-48C8-8412-1A54547E6680} -title {Player Shortcut} -component InstallProgramFolderShortcut -command insert -active Yes -parent 1B8DD5C0-1EB8-498D-97F3-11EE29D2E1CE
 Condition BF8B7C30-06A2-4D9F-AF02-9F113B721BF4 -active Yes -parent A57F82D8-AE77-4DEF-A45B-DEA778597039 -title {String Is Condition} -component StringIsCondition -TreeObject::id FCE2A36A-0A2A-4A1F-B457-D6B8E7FB4D75
 Condition ED98D459-2E6D-48C8-8412-1A54547E6680 -active Yes -parent A57F82D8-AE77-4DEF-A45B-DEA778597039 -title {File Exists Condition} -component FileExistsCondition -TreeObject::id D91AD8BD-CA86-4DC6-A135-FD29436F1798
-InstallComponent DEEA0034-B00A-4EFF-8CF4-D44B52A9DE04 -setup Install -type action -conditions {C19E4C77-7F40-4930-AD3B-AE0ED3AC6DCC 60BE7378-54D1-4FB5-B416-7F8C88B6C9E4} -title {Add Player Path Registry Key} -component AddWindowsRegistryKey -command reorder -active Yes -parent 1B8DD5C0-1EB8-498D-97F3-11EE29D2E1CE
+InstallComponent DEEA0034-B00A-4EFF-8CF4-D44B52A9DE04 -setup Install -type action -conditions {C19E4C77-7F40-4930-AD3B-AE0ED3AC6DCC 60BE7378-54D1-4FB5-B416-7F8C88B6C9E4} -title {Add Player Path Registry Key} -component AddWindowsRegistryKey -command insert -active Yes -parent 1B8DD5C0-1EB8-498D-97F3-11EE29D2E1CE
 Condition C19E4C77-7F40-4930-AD3B-AE0ED3AC6DCC -active Yes -parent DEEA0034-B00A-4EFF-8CF4-D44B52A9DE04 -title {Platform Condition} -component PlatformCondition -TreeObject::id C19E4C77-7F40-4930-AD3B-AE0ED3AC6DCC
 Condition 60BE7378-54D1-4FB5-B416-7F8C88B6C9E4 -active Yes -parent DEEA0034-B00A-4EFF-8CF4-D44B52A9DE04 -title {File Exists Condition} -component FileExistsCondition -TreeObject::id 60BE7378-54D1-4FB5-B416-7F8C88B6C9E4
 InstallComponent 255EDC92-2485-440B-8316-D7263BA928C5 -setup Install -type action -conditions {DEE9A726-8196-485B-B079-D1F56924AD02 D345DF22-47B1-4010-856D-B0E53DB96562 C67A4891-F64D-49CF-8624-CC7FA31A0BE6} -title {Controller Shortcut} -component InstallProgramFolderShortcut -command insert -active Yes -parent 1B8DD5C0-1EB8-498D-97F3-11EE29D2E1CE

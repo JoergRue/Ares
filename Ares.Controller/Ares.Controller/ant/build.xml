@@ -29,7 +29,7 @@
 	<target name="compile" description="Compile java files">
 	    <mkdir dir="${classes.dir}"/>
 	    <javac srcdir="${src.dir}" destdir="${classes.dir}" source="1.6" target="1.6" 
-	        classpath="${libraries.dir}/skinlf.jar:${libraries.dir}/synthetica.jar:${libraries.dir}/syntheticaBlueIce.jar:${libraries.dir}/syntheticaBlueSteel.jar:${libraries.dir}/syntheticaGreenDream.jar:${libraries.dir}/syntheticaSilverMoon.jar:${libraries.dir}/syntheticawalnut.jar:${libraries.dir}/l2fprod-common-fontchooser.jar:${libraries.dir}/l2fprod-common-directorychooser.jar" />
+	        classpath="${libraries.dir}/skinlf.jar:${libraries.dir}/synthetica.jar:${libraries.dir}/syntheticaBlueIce.jar:${libraries.dir}/syntheticaBlueSteel.jar:${libraries.dir}/syntheticaGreenDream.jar:${libraries.dir}/syntheticaSilverMoon.jar:${libraries.dir}/syntheticawalnut.jar:${libraries.dir}/l2fprod-common-fontchooser.jar:${libraries.dir}/l2fprod-common-directorychooser.jar:${libraries.dir}/JNativeHook.jar" />
 	</target>
 
 	<target name="jar" description="Build jar file" depends="resources, compile">
