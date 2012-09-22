@@ -62,6 +62,7 @@ namespace Ares.Settings
         public int StreamingEncoder { get; set; }
 
         public bool ShowKeysInButtons { get; set; }
+        public bool GlobalKeyHook { get; set; }
     }
 
     public class Settings
@@ -103,6 +104,8 @@ namespace Ares.Settings
         public int StreamingEncoder { get { return Data.StreamingEncoder; } set { Data.StreamingEncoder = value; } }
 
         public bool ShowKeysInButtons { get { return Data.ShowKeysInButtons; } set { Data.ShowKeysInButtons = value; } }
+
+        public bool GlobalKeyHook { get { return Data.GlobalKeyHook; } set { Data.GlobalKeyHook = value; } }
 
         public static Settings Instance
         {
@@ -288,6 +291,7 @@ namespace Ares.Settings
             StreamingPassword = "hackme";
             StreamingEncoder = 1;
             ShowKeysInButtons = false;
+            GlobalKeyHook = false;
         }
 
         private void WriteSettings(XmlWriter writer)
@@ -317,6 +321,7 @@ namespace Ares.Settings
             writer.WriteStartElement("Options");
             writer.WriteAttributeString("MessageFilterLevel", MessageFilterLevel.ToString(System.Globalization.CultureInfo.InvariantCulture));
             writer.WriteAttributeString("ShowKeys", ShowKeysInButtons ? "true" : "false");
+            writer.WriteAttributeString("GlobalKeyHook", GlobalKeyHook ? "true" : "false");
             writer.WriteEndElement();
             writer.WriteStartElement("Streaming");
             writer.WriteAttributeString("Active", UseStreaming ? "true" : "false");
@@ -418,6 +423,7 @@ namespace Ares.Settings
                 {
                     MessageFilterLevel = reader.GetIntegerAttribute("MessageFilterLevel");
                     ShowKeysInButtons = reader.GetBooleanAttributeOrDefault("ShowKeys", false);
+                    GlobalKeyHook = reader.GetBooleanAttributeOrDefault("GlobalKeyHook", false);
                     if (reader.IsEmptyElement)
                         reader.Read();
                     else

@@ -1,16 +1,18 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Mono_Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Ares.Settings\BasicSettings.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Ares.Player\Player.cs">
     <Files>
       <File FileName="Ares.Settings\Settings.cs" Line="308" Column="44" />
-      <File FileName="Ares.Player\Player.cs" Line="480" Column="34" />
+      <File FileName="Ares.Player\Player.cs" Line="1157" Column="14" />
       <File FileName="Ares.Settings\SettingsDialog.cs" Line="42" Column="121" />
       <File FileName="Ares.Settings\BasicSettings.cs" Line="104" Column="53" />
       <File FileName="Ares.Online\OnlineOperations.cs" Line="55" Column="1" />
+      <File FileName="Ares.Playing\Player.cs" Line="573" Column="42" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
+          <Node name="Ares.ModelInfo_Mono" expanded="True" />
           <Node name="Ares.Online_Mono" expanded="True" />
           <Node name="Ares.Player_Mono" expanded="True" selected="True" />
           <Node name="Ares.Settings_Mono" expanded="True" />

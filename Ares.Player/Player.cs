@@ -44,6 +44,10 @@ namespace Ares.Player
         private bool m_HideToTray = false;
         private bool m_FirstShow = true;
 
+#if !MONO
+        private readonly MouseKeyboardActivityMonitor.KeyboardHookListener m_KeyboardHookManager;
+#endif
+
         public Player()
         {
             String projectName = Environment.GetCommandLineArgs().Length > 1 ? Environment.GetCommandLineArgs()[1] : String.Empty;
@@ -70,6 +74,11 @@ namespace Ares.Player
                 throw new Ares.Ipc.ApplicationAlreadyStartedException();
             }
 #endif
+#if !MONO
+            m_KeyboardHookManager = new MouseKeyboardActivityMonitor.KeyboardHookListener(new MouseKeyboardActivityMonitor.WinApi.AppHooker());
+            m_KeyboardHookManager.Enabled = true;
+            m_KeyboardHookManager.KeyDown += new KeyEventHandler(m_KeyboardHookManager_KeyDown);
+#endif
             InitializeComponent();
             if (!m_HideToTray)
             {
@@ -88,6 +97,13 @@ namespace Ares.Player
 #endif
             m_PlayingControl = new PlayingControl();
         }
+
+#if !MONO
+        void m_KeyboardHookManager_KeyDown(object sender, KeyEventArgs e)
+        {
+            m_PlayingControl.KeyReceived(GetPlayersKey(e.KeyData));
+        }
+#endif
 
         private void MessageReceived(Ares.Players.Message m)
         {
@@ -456,11 +472,13 @@ namespace Ares.Player
 
         protected override bool ProcessCmdKey(ref System.Windows.Forms.Message msg, System.Windows.Forms.Keys keyData)
         {
+#if MONO
             const int WM_KEYDOWN = 0x100;
             if (msg.Msg == WM_KEYDOWN)
             {
                 return m_PlayingControl.KeyReceived(GetPlayersKey(keyData));
             }
+#endif
             if (keyData == (System.Windows.Forms.Keys.F4 | System.Windows.Forms.Keys.Alt))
             {
                 StopAllPlaying();
@@ -631,6 +649,9 @@ namespace Ares.Player
             m_Network.StopUdpBroadcast();
             m_Network.Shutdown();
             m_PlayingControl.Dispose();
+#if !MONO
+            m_KeyboardHookManager.Dispose();
+#endif
             WriteSettings();
             Settings.Settings.Instance.Shutdown();
         }
@@ -913,6 +934,16 @@ namespace Ares.Player
             m_BasicSettings = new BasicSettings();
             ReadSettings();
             showKeysMenuItem.Checked = Settings.Settings.Instance.ShowKeysInButtons;
+#if !MONO
+            globalKeyHookItem.Checked = Settings.Settings.Instance.GlobalKeyHook;
+            if (Settings.Settings.Instance.GlobalKeyHook)
+            {
+                m_KeyboardHookManager.Replace(new MouseKeyboardActivityMonitor.WinApi.GlobalHooker());
+            }
+#else
+            globalKeyHookItem.Checked = false;
+            globalKeyHookItem.Enabled = false;
+#endif
             Messages.Instance.MessageReceived += new MessageReceivedHandler(MessageReceived);
             String projectName = Environment.GetCommandLineArgs().Length > 1 ? Environment.GetCommandLineArgs()[1] : String.Empty;
             if (projectName.StartsWith("Language="))
@@ -1107,6 +1138,27 @@ namespace Ares.Player
             m_Listen = false;
             UpdateModesList();
             m_Listen = true;
+        }
+
+        private void globalKeyHookItem_CheckedChanged(object sender, EventArgs e)
+        {
+#if !MONO
+            Settings.Settings.Instance.GlobalKeyHook = globalKeyHookItem.Checked;
+            Settings.Settings.Instance.Commit();
+            MouseKeyboardActivityMonitor.WinApi.Hooker hook;
+
+            if (!globalKeyHookItem.Checked)
+            {
+                hook = new MouseKeyboardActivityMonitor.WinApi.AppHooker();
+            }
+            else
+            {
+                hook = new MouseKeyboardActivityMonitor.WinApi.GlobalHooker();
+            }
+
+            m_KeyboardHookManager.Replace(hook);
+#endif
+            
         }
     }
 }

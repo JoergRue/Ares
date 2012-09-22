@@ -177,7 +177,7 @@
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="recentToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
+    <value>134, 22</value>
   </data>
   <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -490,6 +490,9 @@
   <data name="label9.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
   </data>
+  <data name="globalKeyHookItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>175, 22</value>
+  </data>
   <data name="menuStrip1.Text" xml:space="preserve">
     <value>menuStrip1</value>
   </data>
@@ -572,7 +575,7 @@
     <value>166, 22</value>
   </data>
   <data name="exitToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
+    <value>134, 22</value>
   </data>
   <data name="label9.Location" type="System.Drawing.Point, System.Drawing">
     <value>8, 26</value>
@@ -602,7 +605,7 @@
     <value>Check for Update</value>
   </data>
   <data name="streamingToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
+    <value>175, 22</value>
   </data>
   <data name="musicLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>328, 40</value>
@@ -631,17 +634,17 @@
   <data name="settingsButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsIAAA7CARUoSoAAAAI+SURBVDhPrZNdSNNRGMZHEEHdGCQEFlE35Y3UvAti201E
-        f903U9FKA2cWlEwEHcWE3EQcGY1mw4yytcyWRRShEThTnPahbWRourmtRTNXZjL3/fTfWf+cbNJFvfDw
-        nnPg+b0vDxwW63+WwWDY2N2hm+7r1cxp6uVHnrSqorfbG3FT3whDmxI6dS1UNaVxvbZBKbnPbRabeQNp
-        85/23DKtzKlNZ2ScWXw9C0ZhtwLLH6ow80KKVoUILderoX6tRhrgTkdz/rkijgv+U+i9VkwAIZcCK7On
-        sTQug3+EQrh/D0xdJyAx88C60OkEo57+aZiNbQh5VLjaJEECIji4H4GP1fhpK4b/JRfzzw9goXsrtJeF
-        4N1gJwHGYaBv1EvMAddF1FRQcL9RoqpcTCDCQzw4H7NhNezEkC4bl05ug0jOBac9Nwl4NvaDmL12DTG3
-        XLlL96NwWCpQUlgETOxC/t5sbN6UhbzdG1ApE6C0vgRs7XawLNZ3SJTP50ZT3XF4PznJ/e3YIIFM3stD
-        TtYWlJcdg77T+Ce0fZU5DbnyHasAxCIg+l3ReBzmB4+gKOPBPuWBxw8c5kvTUx8YSW6QCojR5mAkjqVA
-        DF8Wo0QzvnUAg6N24u96OEQUTzkzb4k+6V0HYLHa1mwQpQnBcAzflyP4/C0Chy8MmzuICfdfAMy0EB1D
-        6mTm/MoRy5yBdXxqzQYB+sZoIQS4FoH384CNVsYQa+vOg6L4KBRIVyWSoUAoASUQo4BWolN8UWbAv/7m
-        X15tF4FN7kRkAAAAAElFTkSuQmCC
+        YQUAAAAJcEhZcwAADsIAAA7CARUoSoAAAAI/SURBVDhPrZNdSNNRGMZHEEHdGCQEFlE35Y3UvAti201E
+        f903U9FKA2cWlEwEHcWE3MQaGY1mw4yytcyWRRShEThTnPahbWRourmtRTNXZjL3/fTfWf+cbNJFvfDw
+        nnPg+b0vDxwW63+WwWBY39Wum+rt0cxq6uWHnlxQRW+3NeKmvhGGViV06lqoakrjem2DUnKf2yw28/rT
+        5j/tvmVanlWbTsk4M/h6GozCbgWWPlRh+oUUFxUitFyvhvq1GmmAO+3N+WeKOC74T6DnWjEBhFwKLM+c
+        xOKYDP5hCuG+XTB1HoPEzAPrXIcTjLr7pmA2tiLkUeFqkwQJiGD/XgQ+VuOnrRj+l1zMPd+H+a7N0F4W
+        gneDnQQYh4DeES8xB1znUVNBwf1GiapyMYEID/DgfMyG1bAdg7psXDq+BSI5F5y23CTg2egPYvbaNcTc
+        cuUu3Q/DYalASWERML4D+buzsXFDFvJ2rkOlTIDS+hKwtVvBsljfIVE+nxtNdUfh/eQk97ejAwQycS8P
+        OVmbUF52BPoO45/Q9lTmNOTKt60AEIuA6HdF43GYHzyCoowH+6QHHj9wkC9NT71/OLlBKiBGm4OROBYD
+        MXxZiBJN+9YADIzYib/z4SBRPOXMvCX6hHcNgMVqW7VBlCYEwzF8X4rg87cIHL4wbO4gxt1/ATDTQnQM
+        qZOZ8ytHLHMG1rHJVRsE6Buj+RDgWgDezwE2WhlDrK07C4rio1AgXZFIhgKhBJRAjAJaiU7xRZkB//qb
+        fwFavBeA6RkLzgAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="&gt;&gt;disconnectButton.Type" xml:space="preserve">
@@ -729,7 +732,7 @@
     <value>4</value>
   </data>
   <data name="toolStripSeparator3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>149, 6</value>
+    <value>172, 6</value>
   </data>
   <data name="&gt;&gt;label12.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -800,8 +803,8 @@
   <data name="importFileDialog.Filter" xml:space="preserve">
     <value>Ares packed projects|*.apkg|All files|*.*</value>
   </data>
-  <data name="&gt;&gt;streamingToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="label7.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="elementsPanel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
@@ -1058,9 +1061,6 @@
   <data name="clientStateLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>226, 17</value>
   </data>
-  <data name="label7.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
   <data name="label9.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -1089,7 +1089,7 @@
     <value>soundsLabel</value>
   </data>
   <data name="startEditorToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
+    <value>175, 22</value>
   </data>
   <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
     <value>5</value>
@@ -1266,7 +1266,7 @@
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="openToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
+    <value>134, 22</value>
   </data>
   <data name="&gt;&gt;udpPortUpDown.Type" xml:space="preserve">
     <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -1326,7 +1326,7 @@
     <value>1</value>
   </data>
   <data name="showKeysMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
+    <value>175, 22</value>
   </data>
   <data name="&gt;&gt;label7.ZOrder" xml:space="preserve">
     <value>4</value>
@@ -1439,14 +1439,17 @@
   <data name="overallVolumeBar.AutoSize" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
+  <data name="&gt;&gt;streamingToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="importToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
+    <value>134, 22</value>
   </data>
   <data name="label10.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 55</value>
   </data>
   <data name="toolStripSeparator2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>149, 6</value>
+    <value>131, 6</value>
   </data>
   <data name="&gt;&gt;groupBox5.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -1475,6 +1478,9 @@
   <data name="&gt;&gt;saveFileDialog.Type" xml:space="preserve">
     <value>System.Windows.Forms.SaveFileDialog, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;globalKeyHookItem.Name" xml:space="preserve">
+    <value>globalKeyHookItem</value>
+  </data>
   <data name="aboutButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>23, 22</value>
   </data>
@@ -1494,7 +1500,7 @@
     <value>label5</value>
   </data>
   <data name="messagesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
+    <value>175, 22</value>
   </data>
   <data name="&gt;&gt;helpOnlineToolStripMenuItem.Name" xml:space="preserve">
     <value>helpOnlineToolStripMenuItem</value>
@@ -1529,6 +1535,9 @@
   <data name="&gt;&gt;label9.Parent" xml:space="preserve">
     <value>groupBox3</value>
   </data>
+  <data name="&gt;&gt;globalKeyHookItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="settingsButton.Text" xml:space="preserve">
     <value>Settings ...</value>
   </data>
@@ -1548,7 +1557,7 @@
     <value>63, 17</value>
   </data>
   <data name="settingsToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
+    <value>175, 22</value>
   </data>
   <data name="udpPortUpDown.Location" type="System.Drawing.Point, System.Drawing">
     <value>77, 53</value>
@@ -1675,6 +1684,9 @@
   </data>
   <data name="elementsLabel.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
+  </data>
+  <data name="globalKeyHookItem.Text" xml:space="preserve">
+    <value>Global Key Capture</value>
   </data>
   <metadata name="broadCastTimer.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>563, 17</value>

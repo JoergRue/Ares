@@ -113,6 +113,7 @@ namespace Ares.Player
             this.messagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.showKeysMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.globalKeyHookItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.streamingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -569,6 +570,7 @@ namespace Ares.Player
             this.messagesToolStripMenuItem,
             this.toolStripSeparator3,
             this.showKeysMenuItem,
+            this.globalKeyHookItem,
             this.settingsToolStripMenuItem1,
             this.streamingToolStripMenuItem});
             this.extrasToolStripMenuItem.Name = "extrasToolStripMenuItem";
@@ -597,6 +599,13 @@ namespace Ares.Player
             this.showKeysMenuItem.CheckOnClick = true;
             this.showKeysMenuItem.Name = "showKeysMenuItem";
             this.showKeysMenuItem.CheckedChanged += new System.EventHandler(this.showKeysMenuItem_CheckedChanged);
+            // 
+            // globalKeyHookItem
+            // 
+            resources.ApplyResources(this.globalKeyHookItem, "globalKeyHookItem");
+            this.globalKeyHookItem.CheckOnClick = true;
+            this.globalKeyHookItem.Name = "globalKeyHookItem";
+            this.globalKeyHookItem.CheckedChanged += new System.EventHandler(this.globalKeyHookItem_CheckedChanged);
             // 
             // settingsToolStripMenuItem1
             // 
@@ -808,6 +817,7 @@ namespace Ares.Player
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.ListBox modesList;
         private System.Windows.Forms.ToolStripMenuItem showKeysMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem globalKeyHookItem;
     }
 }
 
