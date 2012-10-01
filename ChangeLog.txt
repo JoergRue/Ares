@@ -1,3 +1,18 @@
+Version 1.3.0
+----------------------------------------------------------------------------------
+- General: Added macros
+- General: Playlists (.m3u, .m3u8, .pls) can be used
+- General: Removed warning for modes / mode elements without defined keys
+- Editor: Added menu item to show uses of a particular file
+- Player: Added option to show keys in buttons
+- Player: Added option to use global keys (hotkeys)
+- Player: Added possiblity to turn off network
+- Player: playing of a music list is not stopped because of single file errors
+- Player: Bugfix: crashed when starting an already running element
+- Player/MediaPortal: Added skin file for Avalon HD skin
+- Controller: Added option to use global keys (hotkeys)
+- Controller/MeisterGeister: Bugfix: Messages window was not closed automatically
+
 Version 1.2.0
 ----------------------------------------------------------------------------------
 - General: Player for Linux available. Ares Portable for Linux available.

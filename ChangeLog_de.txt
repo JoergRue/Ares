@@ -1,3 +1,21 @@
+Version 1.3.0
+----------------------------------------------------------------------------------
+- Allgemein: Makros hinzugefügt
+- Allgemein: Playlists (.m3u, .m3u8, .pls) können verwendet werden
+- Allgemein: Warnung bei Modi / Elementen ohne definierte Tasten entfernt
+- Editor: Menübefehl zur Anzeige der Verwendungsstellen einer bestimmten Datei 
+  hinzugefügt
+- Player: Tasten können in den Buttons angezeigt werden
+- Player: Tasten können global (als 'Hotkeys') verwendet werden
+- Player: Netzwerkverwendung kann abgeschaltet werden
+- Player: Abspielen einer Musikliste wird nicht wegen eines Fehlers bei einer 
+  einzelnen Datei gestoppt
+- Player: Bugfix: Absturz wenn ein bereits laufendes Element nochmal gestartet wurde
+- Player/MediaPortal: Skin-Datei für das Avalon HD Skin hinzugefügt
+- Controller: Tasten können global (als 'Hotkeys') verwendet werden
+- Controller/MeisterGeister: Bugfix: Meldungsfenster wurde nicht automatisch 
+  geschlossen
+
 Version 1.2.0
 ----------------------------------------------------------------------------------
 - Allgemein: Player für Linux verfügbar. Ares Portable für Linux verfügbar.
