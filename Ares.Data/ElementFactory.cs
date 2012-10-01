@@ -83,6 +83,12 @@ namespace Ares.Data
         IModeElement CreateModeElement(String title, IElement firstElement);
 
         /// <summary>
+        /// Creates a macro
+        /// </summary>
+        IMacro CreateMacro(String title);
+
+        /*
+        /// <summary>
         /// Creates a reference to a container.
         /// </summary>
         /// <typeparam name="T">Type of the container.</typeparam>
@@ -90,6 +96,7 @@ namespace Ares.Data
         /// <param name="container">The container.</param>
         /// <returns>New reference to the container.</returns>
         IContainerReference<T, U> CreateContainerReference<T, U>(T container) where T : IElementContainer<U> where U : IContainerElement;
+         */
     }
 
     class ElementFactory : IElementFactory
@@ -155,12 +162,19 @@ namespace Ares.Data
             return new ModeElement(GetNextID(), title, firstElement);
         }
 
+        public IMacro CreateMacro(String title)
+        {
+            return new Macro(GetNextID(), title);
+        }
+
+        /*
         public IContainerReference<T, U> CreateContainerReference<T, U>(T container) where T : IElementContainer<U> where U : IContainerElement
         {
             IContainerReference<T, U> result = new ContainerReference<T, U>(GetNextID(), container);
             container.AddReference(result);
             return result;
         }
+         */
 
 
         internal ElementFactory()
@@ -273,10 +287,22 @@ namespace Ares.Data
             {
                 return new ChoiceElement(reader);
             }
+            else if (reader.IsStartElement("Macro"))
+            {
+                return new Macro(reader);
+            }
             else
             {
-                reader.ReadOuterXml();
-                return null;
+                IMacroCommand macroCommand = DataModule.TheMacroFactory.CreateMacroCommand(reader);
+                if (macroCommand != null)
+                {
+                    return macroCommand;
+                }
+                else
+                {
+                    reader.ReadOuterXml();
+                    return null;
+                }
             }
         }
 
@@ -364,6 +390,7 @@ namespace Ares.Data
 
         public abstract void WriteToXml(System.Xml.XmlWriter writer);
 
+        /*
         private List<IElementReference> m_References;
 
         public IList<IElementReference> References
@@ -380,5 +407,6 @@ namespace Ares.Data
                 m_References = new List<IElementReference>();
             m_References.Add(reference);
         }
+         */
     }
 }

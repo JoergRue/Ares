@@ -477,6 +477,7 @@ namespace Ares.Editor.Actions
                 IElement newElement = container.AddGeneralElement(element);
                 m_Elements.Add(newElement);
                 container.RemoveElement(newElement.Id);
+                Data.DataModule.ElementRepository.DeleteElement(newElement.Id);
             }
         }
 
@@ -486,10 +487,12 @@ namespace Ares.Editor.Actions
             foreach (IElement element in m_Elements)
             {
                 m_Container.InsertGeneralElement(index, element);
+                Data.DataModule.ElementRepository.AddElement(element);
+                Ares.ModelInfo.ModelChecks.Instance.CheckAll();
+                ElementRemoval.NotifyUndo(element);
                 ++index;
             }
             ElementChanges.Instance.ElementChanged(m_Container.Id);
-            Ares.ModelInfo.ModelChecks.Instance.CheckAll();
         }
 
         public override void Undo()
@@ -497,10 +500,11 @@ namespace Ares.Editor.Actions
             foreach (IElement element in m_Elements)
             {
                 m_Container.RemoveElement(element.Id);
+                Data.DataModule.ElementRepository.DeleteElement(element.Id);
+                Ares.ModelInfo.ModelChecks.Instance.CheckAll();
                 ElementRemoval.NotifyRemoval(element);
             }
             ElementChanges.Instance.ElementChanged(m_Container.Id);
-            Ares.ModelInfo.ModelChecks.Instance.CheckAll();
         }
 
         private IGeneralElementContainer m_Container;
@@ -522,6 +526,7 @@ namespace Ares.Editor.Actions
                 foreach (IElement newElement in newElements)
                 {
                     container.RemoveElement(newElement.Id);
+                    Data.DataModule.ElementRepository.DeleteElement(newElement.Id);
                 }
             }
         }
@@ -532,10 +537,12 @@ namespace Ares.Editor.Actions
             foreach (IElement element in m_Elements)
             {
                 m_Container.InsertGeneralElement(index, element);
+                Data.DataModule.ElementRepository.AddElement(element);
+                Ares.ModelInfo.ModelChecks.Instance.CheckAll();
+                ElementRemoval.NotifyUndo(element);
                 ++index;
             }
             ElementChanges.Instance.ElementChanged(m_Container.Id);
-            Ares.ModelInfo.ModelChecks.Instance.CheckAll();
         }
 
         public override void Undo()
@@ -543,10 +550,11 @@ namespace Ares.Editor.Actions
             foreach (IElement element in m_Elements)
             {
                 m_Container.RemoveElement(element.Id);
+                Data.DataModule.ElementRepository.DeleteElement(element.Id);
+                Ares.ModelInfo.ModelChecks.Instance.CheckAll();
                 ElementRemoval.NotifyRemoval(element);
             }
             ElementChanges.Instance.ElementChanged(m_Container.Id);
-            Ares.ModelInfo.ModelChecks.Instance.CheckAll();
         }
 
         private IGeneralElementContainer m_Container;
@@ -568,10 +576,11 @@ namespace Ares.Editor.Actions
             foreach (IElement element in m_Elements)
             {
                 m_Container.RemoveElement(element.Id);
+                Data.DataModule.ElementRepository.DeleteElement(element.Id);
+                Ares.ModelInfo.ModelChecks.Instance.CheckAll();
                 ElementRemoval.NotifyRemoval(element);
             }
             ElementChanges.Instance.ElementChanged(m_Container.Id);
-            Ares.ModelInfo.ModelChecks.Instance.CheckAll();
         }
 
         public override void Undo()
@@ -580,10 +589,12 @@ namespace Ares.Editor.Actions
             foreach (IElement element in m_Elements)
             {
                 m_Container.InsertGeneralElement(index, element);
+                Data.DataModule.ElementRepository.AddElement(element);
+                Ares.ModelInfo.ModelChecks.Instance.CheckAll();
+                ElementRemoval.NotifyUndo(element);
                 ++index;
             }
             ElementChanges.Instance.ElementChanged(m_Container.Id);
-            Ares.ModelInfo.ModelChecks.Instance.CheckAll();
         }
 
         private IGeneralElementContainer m_Container;

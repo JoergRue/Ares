@@ -159,14 +159,24 @@ namespace Ares.Editor.Actions
         {
             (m_ProjectNode.Tag as IProject).RemoveMode(m_Mode);
             m_ProjectNode.Nodes.Remove(m_ModeNode);
-            Ares.ModelInfo.ModelChecks.Instance.CheckAll();
+            foreach (IModeElement modeElement in m_Mode.GetElements())
+            {
+                Ares.Data.DataModule.ElementRepository.DeleteElement(modeElement.Id);
+                Ares.ModelInfo.ModelChecks.Instance.CheckAll();
+                ElementRemoval.NotifyRemoval(modeElement);
+            }
         }
 
         public override void Undo()
         {
+            foreach (IModeElement modeElement in m_Mode.GetElements())
+            {
+                Ares.Data.DataModule.ElementRepository.AddElement(modeElement);
+                Ares.ModelInfo.ModelChecks.Instance.CheckAll();
+                ElementRemoval.NotifyUndo(modeElement);
+            }
             (m_ProjectNode.Tag as IProject).InsertMode(m_Index, m_Mode);
             m_ProjectNode.Nodes.Insert(m_Index, m_ModeNode);
-            Ares.ModelInfo.ModelChecks.Instance.CheckAll();
         }
 
         private IMode m_Mode;

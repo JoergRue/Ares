@@ -52,6 +52,8 @@ namespace Ares.Editor.Controls
 
         protected override void ChangeElementDataInGrid(int elementID, int row)
         {
+            elementsGrid.Rows[row].Cells[0].Value =
+                Ares.Data.DataModule.ElementRepository.GetElement(elementID).Title;
             elementsGrid.Rows[row].Cells[1].Value =
                 (m_Container.GetElement(elementID)).FixedStartDelay.TotalMilliseconds;
             elementsGrid.Rows[row].Cells[2].Value =
@@ -97,7 +99,7 @@ namespace Ares.Editor.Controls
             {
                 indices.Add(elementsGrid.SelectedRows[i].Index);
             }
-            Actions.Actions.Instance.AddNew(new Actions.ReorderElementsAction(m_Container, indices, -1));
+            Actions.Actions.Instance.AddNew(new Actions.ReorderElementsAction<ISequentialElement>(m_Container, indices, -1));
             // note: the action modified the list
             elementsGrid.ClearSelection();
             for (int i = 0; i < indices.Count; ++i)
@@ -113,7 +115,7 @@ namespace Ares.Editor.Controls
             {
                 indices.Add(elementsGrid.SelectedRows[i].Index);
             }
-            Actions.Actions.Instance.AddNew(new Actions.ReorderElementsAction(m_Container, indices, 1));
+            Actions.Actions.Instance.AddNew(new Actions.ReorderElementsAction<ISequentialElement>(m_Container, indices, 1));
             // note: the action modified the list
             elementsGrid.ClearSelection();
             for (int i = 0; i < indices.Count; ++i)

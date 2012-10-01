@@ -117,6 +117,7 @@
     <Compile Include="Data.cs" />
     <Compile Include="ElementFactory.cs" />
     <Compile Include="ElementRepository.cs" />
+    <Compile Include="Macros.cs" />
     <Compile Include="Modes.cs" />
     <Compile Include="ProjectInterfaces.cs" />
     <Compile Include="ProjectManager.cs" />

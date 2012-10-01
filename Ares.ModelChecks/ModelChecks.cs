@@ -29,7 +29,8 @@ namespace Ares.ModelInfo
     {
         File,
         Key,
-        Logic
+        Logic,
+        Reference
     }
 
     public class ModelError
@@ -100,6 +101,7 @@ namespace Ares.ModelInfo
 			
             AddCheck(new KeyChecks());
             AddCheck(new FileChecks());
+            AddCheck(new ReferenceChecks());
         }
 
         public IProject Project { get; set; }
@@ -196,4 +198,5 @@ namespace Ares.ModelInfo
             }
         }
     }
+
 }

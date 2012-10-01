@@ -512,17 +512,17 @@ namespace Ares.Player
                 lastMode = mode.Title;
             }
             StringBuilder modeElementsText = new StringBuilder();
-            Dictionary<int, object> currentModeElementIds = new Dictionary<int, object>();
+            HashSet<int> currentModeElementIds = new HashSet<int>();
             foreach (IModeElement modeElement in control.CurrentModeElements)
             {
                 if (modeElementsText.Length > 0)
                     modeElementsText.Append(", ");
                 modeElementsText.Append(modeElement.Title);
-                currentModeElementIds.Add(modeElement.Id, null);
+                currentModeElementIds.Add(modeElement.Id);
             }
             foreach (int id in m_ButtonsForIds.Keys)
             {
-                m_ButtonsForIds[id].Checked = currentModeElementIds.ContainsKey(id);
+                m_ButtonsForIds[id].Checked = currentModeElementIds.Contains(id);
             }
             elementsLabel.Text = modeElementsText.ToString();
             StringBuilder soundElementsText = new StringBuilder();

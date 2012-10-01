@@ -107,6 +107,7 @@
     <Compile Include="Triggers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XmlHelpers.cs" />
+    <Compile Include="Macros.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ares.snk" />

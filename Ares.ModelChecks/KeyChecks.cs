@@ -90,8 +90,10 @@ namespace Ares.ModelInfo
                 // check: no empty key
                 if (mode.KeyCode == 0)
                 {
+                    /*
                     AddError(errors, ModelError.ErrorSeverity.Warning,
                         String.Format(StringResources.ModeNoKey, mode.Title), mode);
+                    */
                 }
                 else
                 {
@@ -135,8 +137,10 @@ namespace Ares.ModelInfo
                     // check: no empty key
                     if (keyCode == 0)
                     {
+                        /*
                         AddError(errors, ModelError.ErrorSeverity.Warning,
                             String.Format(StringResources.ModeElementNoKey, modeElement.Title), modeElement);
+                         */
                     }
                     else
                     {

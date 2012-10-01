@@ -22,6 +22,76 @@ using System.Collections.Generic;
 
 namespace Ares.Data
 {
+
+    interface IReferenceHolder
+    {
+        int ReferencedId { get; set; }
+    }
+
+    [Serializable]
+    class ReferenceHolder : IReferenceHolder
+    {
+        public int ReferencedId { get; set; }
+
+        public void WriteToXml(System.Xml.XmlWriter writer, String name)
+        {
+            writer.WriteAttributeString(name, ReferencedId.ToString(System.Globalization.CultureInfo.InvariantCulture));
+        }
+
+        public ReferenceHolder(int id)
+        {
+            ReferencedId = id;
+        }
+
+        public ReferenceHolder(System.Xml.XmlReader reader, String name)
+        {
+            ReferencedId = reader.GetIntegerAttribute(name);
+            if (DataModule.TheElementRepository.Redirector != null)
+            {
+                DataModule.TheElementRepository.Redirector.AddReferenceHolder(this);
+            }
+        }
+    }
+
+    class ReferenceRedirector
+    {
+        public ReferenceRedirector()
+        {
+            m_ReferenceHolders = new Dictionary<int, List<IReferenceHolder>>();
+            m_Redirections = new Dictionary<int,int>();
+        }
+
+        public void AddReferenceHolder(IReferenceHolder referenceHolder)
+        {
+            int id = referenceHolder.ReferencedId;
+            if (!m_ReferenceHolders.ContainsKey(id))
+            {
+                m_ReferenceHolders[id] = new List<IReferenceHolder>();
+            }
+            m_ReferenceHolders[id].Add(referenceHolder);
+            if (m_Redirections.ContainsKey(id))
+            {
+                referenceHolder.ReferencedId = m_Redirections[id];
+            }
+        }
+
+        public void AddRedirection(int originalId, int newId)
+        {
+            m_Redirections[originalId] = newId;
+            if (m_ReferenceHolders.ContainsKey(originalId))
+            {
+                foreach (IReferenceHolder holder in m_ReferenceHolders[originalId])
+                {
+                    holder.ReferencedId = newId;
+                }
+            }
+        }
+
+        private Dictionary<int, List<IReferenceHolder>> m_ReferenceHolders;
+        private Dictionary<int, int> m_Redirections;
+    }
+
+    /*
     class ContainerReference<T, U> : IContainerReference<T, U> where T : IElementContainer<U> where U : IContainerElement
     {
         public ContainerReference(int id, T element)
@@ -190,4 +260,5 @@ namespace Ares.Data
         private T m_Element;
         private int m_Id;
     }
+     */
 }

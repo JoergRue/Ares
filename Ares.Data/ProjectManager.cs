@@ -242,6 +242,7 @@ namespace Ares.Data
             }
             else
             {
+                DataModule.TheElementRepository.Redirector = new ReferenceRedirector();
                 if (!isProject)
                 {
                     reader.Read(); // ExportedElements or Project

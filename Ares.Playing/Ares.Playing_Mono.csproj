@@ -52,6 +52,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>StringResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="MacroPlayer.cs" />
+    <Compile Include="MusicPlayer.cs" />
+    <Compile Include="StartElementPlayer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ares.snk" />

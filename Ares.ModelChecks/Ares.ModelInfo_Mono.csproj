@@ -58,6 +58,7 @@
     <Compile Include="KeyChecks.cs" />
     <Compile Include="FileSearch.cs" />
     <Compile Include="Playlists.cs" />
+    <Compile Include="ReferenceChecks.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ares.snk" />

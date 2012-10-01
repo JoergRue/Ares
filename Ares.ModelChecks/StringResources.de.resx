@@ -189,4 +189,16 @@
   <data name="PlaylistNotFound" xml:space="preserve">
     <value>Playlist {0} wurde nicht gefunden.</value>
   </data>
+  <data name="ConditionElementNotFound" xml:space="preserve">
+    <value>Element für die Bedingung wurde nicht gefunden.</value>
+  </data>
+  <data name="AwaitedElementNotFound" xml:space="preserve">
+    <value>Element, auf das gewartet werden soll, wurde nicht gefunden.</value>
+  </data>
+  <data name="StartedElementNotFound" xml:space="preserve">
+    <value>Zu startendes Element wurde nicht gefunden.</value>
+  </data>
+  <data name="StoppedElementNotFound" xml:space="preserve">
+    <value>Zu stoppendes Element wurde nicht gefunden.</value>
+  </data>
 </root>

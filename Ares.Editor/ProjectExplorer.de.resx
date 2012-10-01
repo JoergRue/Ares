@@ -210,6 +210,12 @@
   <data name="addBackgroundSoundsToolStripMenuItem.Text" xml:space="preserve">
     <value>Hintergrundgeräusche hinzufügen ...</value>
   </data>
+  <data name="toolStripMenuItem14.Size" type="System.Drawing.Size, System.Drawing">
+    <value>269, 22</value>
+  </data>
+  <data name="toolStripMenuItem14.Text" xml:space="preserve">
+    <value>Makro hinzufügen ...</value>
+  </data>
   <data name="toolStripSeparator2.Size" type="System.Drawing.Size, System.Drawing">
     <value>266, 6</value>
   </data>
@@ -241,7 +247,7 @@
     <value>269, 22</value>
   </data>
   <data name="modeContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>270, 358</value>
+    <value>270, 380</value>
   </data>
   <data name="editToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>269, 22</value>

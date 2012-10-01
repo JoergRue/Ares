@@ -117,8 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ElementNotRunningCondition" xml:space="preserve">
+    <value>{0} läuft nicht</value>
+  </data>
+  <data name="ElementRunningCondition" xml:space="preserve">
+    <value>{0} läuft</value>
+  </data>
   <data name="ForAllFileElements" xml:space="preserve">
     <value>Wert für alle Dateien in der Liste setzen</value>
+  </data>
+  <data name="InvalidModeElement" xml:space="preserve">
+    <value>&lt;nicht gefunden&gt;</value>
+  </data>
+  <data name="ModeElementDisplay" xml:space="preserve">
+    <value>"{0}/{1}"</value>
+  </data>
+  <data name="NoCondition" xml:space="preserve">
+    <value>--</value>
   </data>
   <data name="SetGlobalMusicVolume" xml:space="preserve">
     <value>Setzt die globale Musiklautstärke wie mit dem Schieberegler im Player oder Controller.
@@ -128,5 +143,20 @@ Lautstärken einzelner Dateien sind relativ zur globalen Lautstärke.</value>
     <value>Setzt die globale Geräuschlautstärke (für alle Geräusche), wie mit dem Schieberegler im
 Player oder im Controller.
 Lautstärken einzelner Geräusche sind relativ zur globalen Lautstärke.</value>
+  </data>
+  <data name="StartCommand" xml:space="preserve">
+    <value>Starte {0}</value>
+  </data>
+  <data name="StopCommand" xml:space="preserve">
+    <value>Stoppe {0}</value>
+  </data>
+  <data name="WaitElementNotRunningCommand" xml:space="preserve">
+    <value>Warte bis {0} nicht läuft</value>
+  </data>
+  <data name="WaitElementRunningCommand" xml:space="preserve">
+    <value>Warte bis {0} läuft</value>
+  </data>
+  <data name="WaitTimeCommand" xml:space="preserve">
+    <value>Warte {0} ms</value>
   </data>
 </root>

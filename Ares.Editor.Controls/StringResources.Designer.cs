@@ -61,11 +61,56 @@ namespace Ares.Editor.Controls {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {0} is not running ähnelt.
+        /// </summary>
+        internal static string ElementNotRunningCondition {
+            get {
+                return ResourceManager.GetString("ElementNotRunningCondition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {0} is running ähnelt.
+        /// </summary>
+        internal static string ElementRunningCondition {
+            get {
+                return ResourceManager.GetString("ElementRunningCondition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Set value for all files in container ähnelt.
         /// </summary>
         internal static string ForAllFileElements {
             get {
                 return ResourceManager.GetString("ForAllFileElements", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die &lt;not found&gt; ähnelt.
+        /// </summary>
+        internal static string InvalidModeElement {
+            get {
+                return ResourceManager.GetString("InvalidModeElement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die &apos;{0}/{1}&apos; ähnelt.
+        /// </summary>
+        internal static string ModeElementDisplay {
+            get {
+                return ResourceManager.GetString("ModeElementDisplay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die -- ähnelt.
+        /// </summary>
+        internal static string NoCondition {
+            get {
+                return ResourceManager.GetString("NoCondition", resourceCulture);
             }
         }
         
@@ -86,6 +131,51 @@ namespace Ares.Editor.Controls {
         internal static string SetGlobalSoundVolume {
             get {
                 return ResourceManager.GetString("SetGlobalSoundVolume", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Start {0} ähnelt.
+        /// </summary>
+        internal static string StartCommand {
+            get {
+                return ResourceManager.GetString("StartCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Stop {0} ähnelt.
+        /// </summary>
+        internal static string StopCommand {
+            get {
+                return ResourceManager.GetString("StopCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Wait until {0} is not running ähnelt.
+        /// </summary>
+        internal static string WaitElementNotRunningCommand {
+            get {
+                return ResourceManager.GetString("WaitElementNotRunningCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Wait until {0} is running ähnelt.
+        /// </summary>
+        internal static string WaitElementRunningCommand {
+            get {
+                return ResourceManager.GetString("WaitElementRunningCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Wait {0} ms ähnelt.
+        /// </summary>
+        internal static string WaitTimeCommand {
+            get {
+                return ResourceManager.GetString("WaitTimeCommand", resourceCulture);
             }
         }
     }

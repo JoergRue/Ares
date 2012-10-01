@@ -70,11 +70,29 @@ namespace Ares.ModelInfo {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Element to wait for not found. ähnelt.
+        /// </summary>
+        internal static string AwaitedElementNotFound {
+            get {
+                return ResourceManager.GetString("AwaitedElementNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die URLs can&apos;t be used in playlists. Entry {0} ignored. ähnelt.
         /// </summary>
         internal static string CannotPlayURLS {
             get {
                 return ResourceManager.GetString("CannotPlayURLS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Element for condition not found. ähnelt.
+        /// </summary>
+        internal static string ConditionElementNotFound {
+            get {
+                return ResourceManager.GetString("ConditionElementNotFound", resourceCulture);
             }
         }
         
@@ -273,6 +291,24 @@ namespace Ares.ModelInfo {
         internal static string PlaylistNotFound {
             get {
                 return ResourceManager.GetString("PlaylistNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Element to start not found. ähnelt.
+        /// </summary>
+        internal static string StartedElementNotFound {
+            get {
+                return ResourceManager.GetString("StartedElementNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Element to stop not found. ähnelt.
+        /// </summary>
+        internal static string StoppedElementNotFound {
+            get {
+                return ResourceManager.GetString("StoppedElementNotFound", resourceCulture);
             }
         }
     }

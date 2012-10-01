@@ -38,17 +38,21 @@ namespace Ares.Data
         /// </summary>
         public static IElementFactory ElementFactory { get { return s_ElementFactory; } }
 
+        public static IMacroFactory MacroFactory { get { return s_MacroFactory; } }
+
         /// <summary>
         /// Returns the element repository.
         /// </summary>
         public static IElementRepository ElementRepository { get { return s_ElementRepository; } }
 
         internal static ElementFactory TheElementFactory { get { return s_ElementFactory; } }
+        internal static MacroFactory TheMacroFactory { get { return s_MacroFactory; } }
         internal static ElementRepository TheElementRepository { get { return s_ElementRepository; } }
 
         private static ProjectManager s_ProjectManager = new ProjectManager();
 
         private static ElementFactory s_ElementFactory = new ElementFactory();
+        private static MacroFactory s_MacroFactory = new MacroFactory();
 
         private static ElementRepository s_ElementRepository = new ElementRepository();
     }

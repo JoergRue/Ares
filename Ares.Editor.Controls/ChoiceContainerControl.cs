@@ -81,6 +81,8 @@ namespace Ares.Editor.ElementEditorControls
 
         protected override void ChangeElementDataInGrid(int elementID, int row)
         {
+            elementsGrid.Rows[row].Cells[0].Value =
+                Ares.Data.DataModule.ElementRepository.GetElement(elementID).Title;
             elementsGrid.Rows[row].Cells[1].Value =
                 (m_Container.GetElement(elementID)).RandomChance;
         }

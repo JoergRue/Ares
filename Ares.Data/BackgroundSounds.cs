@@ -489,6 +489,7 @@ namespace Ares.Data
                 throw new NotImplementedException();
             }
 
+            /*
             public IList<IElementReference> References
             {
                 get { throw new NotImplementedException(); }
@@ -498,6 +499,7 @@ namespace Ares.Data
             {
                 throw new NotImplementedException();
             }
+             */
 
             public IElement InnerElement
             {

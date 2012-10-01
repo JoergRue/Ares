@@ -55,6 +55,7 @@ namespace Ares.Editor
             sImageList.Images.Add(ImageResources.sequential);
             sImageList.Images.Add(ImageResources.parallel);
             sImageList.Images.Add(ImageResources.vierge);
+            sImageList.Images.Add(ImageResources.base_cog_32);
         }
 
         public ProjectExplorer()
@@ -216,7 +217,11 @@ namespace Ares.Editor
 
         private void AddSubElements(TreeNode node, IElement element)
         {
-            if (element is IGeneralElementContainer)
+            if (element is IMacro)
+            {
+                return;
+            }
+            else if (element is IGeneralElementContainer)
             {
                 AddSubElements(node, (element as IGeneralElementContainer).GetGeneralElements());
             }
@@ -286,7 +291,11 @@ namespace Ares.Editor
             {
                 node.ContextMenuStrip = elementContextMenu;
                 node.ImageIndex = node.SelectedImageIndex = 1;
-
+            }
+            else if (element is IMacro)
+            {
+                node.ContextMenuStrip = elementContextMenu;
+                node.ImageIndex = node.SelectedImageIndex = 9;
             }
             else if (element is IGeneralElementContainer)
             {
@@ -520,6 +529,19 @@ namespace Ares.Editor
                 {
                     m_AfterEditAction = null;
                     AddSoundChoice(true);
+                };
+            RenameElement();
+        }
+
+        private void AddMacro()
+        {
+            String name = StringResources.NewMacro;
+            IMacro element = DataModule.ElementFactory.CreateMacro(name);
+            AddModeElement(element, name);
+            m_AfterEditAction = () =>
+                {
+                    m_AfterEditAction = null;
+                    EditElement(GetElement(SelectedNode));
                 };
             RenameElement();
         }
@@ -807,7 +829,7 @@ namespace Ares.Editor
             else if (changeType == ElementChanges.ChangeType.Changed && listenForContainerChanges)
             {
                 TreeNode node = FindNodeForElement(elementId, projectTree.Nodes[0]);
-                if (node != null && GetElement(node) is IGeneralElementContainer)
+                if (node != null && GetElement(node) is IGeneralElementContainer && !(GetElement(node) is IMacro))
                 {
                     node.Nodes.Clear();
                     AddSubElements(node, (GetElement(node) as IGeneralElementContainer).GetGeneralElements());
@@ -932,6 +954,7 @@ namespace Ares.Editor
         {
             AddBackgroundSounds();
         }
+
 
         private void addParallelElementToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -1090,6 +1113,8 @@ namespace Ares.Editor
                 if (element == null)
                     return false;
                 if (Actions.Playing.Instance.IsElementOrSubElementPlaying(element))
+                    return false;
+                if (element is IMacro || ((element is IModeElement) && (element as IModeElement).StartElement is IMacro))
                     return false;
                 return true;
             }
@@ -1802,6 +1827,11 @@ namespace Ares.Editor
                     e.Effect = DragDropEffects.None;
                     return;
                 }
+        }
+
+        private void toolStripMenuItem14_Click(object sender, EventArgs e)
+        {
+            AddMacro();
         }
     }
 }

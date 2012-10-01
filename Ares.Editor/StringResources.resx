@@ -198,8 +198,17 @@ Left      - Previous music title</value>
   <data name="HelpPage" xml:space="preserve">
     <value>http://aresrpg.sourceforge.net/en/hilfe/Editor.html</value>
   </data>
+  <data name="InsufficientCommandData" xml:space="preserve">
+    <value>The command still needs some data. Please select the necessary element(s).</value>
+  </data>
+  <data name="InvalidModeElement" xml:space="preserve">
+    <value>&lt;not found&gt;</value>
+  </data>
   <data name="LoadError" xml:space="preserve">
     <value>Error opening the project: {0}</value>
+  </data>
+  <data name="ModeElementDisplay" xml:space="preserve">
+    <value>{0}/{1}</value>
   </data>
   <data name="ModeIntro" xml:space="preserve">
     <value>Mode '{0}': </value>
@@ -209,6 +218,9 @@ Left      - Previous music title</value>
   </data>
   <data name="NewBackgroundSounds" xml:space="preserve">
     <value>New Background Sounds</value>
+  </data>
+  <data name="NewMacro" xml:space="preserve">
+    <value>New Macro</value>
   </data>
   <data name="NewParallelList" xml:space="preserve">
     <value>New Parallel List</value>
@@ -281,6 +293,9 @@ You should adapt some settings first.</value>
   <data name="PlayerStartError" xml:space="preserve">
     <value>Could not start player. Reason:
 {0}</value>
+  </data>
+  <data name="PleaseSelectElement" xml:space="preserve">
+    <value>Please select an element</value>
   </data>
   <data name="ProjectChanged" xml:space="preserve">
     <value>The current project has unsaved changes. Shall it be saved now?</value>

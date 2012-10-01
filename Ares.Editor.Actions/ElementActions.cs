@@ -59,6 +59,12 @@ namespace Ares.Editor.Actions
             Notify(element);
         }
 
+        public static void NotifyUndo(IModeElement element)
+        {
+            NotifyUndo(element.StartElement);
+            DoNotifyUndo(element);
+        }
+
         public static void NotifyRemoval(IElement element)
         {
             if (element == null)
@@ -73,9 +79,28 @@ namespace Ares.Editor.Actions
             Notify(element);
         }
 
+        public static void NotifyUndo(IElement element)
+        {
+            if (element == null)
+                return;
+            if (element is IGeneralElementContainer)
+            {
+                foreach (IContainerElement subElement in (element as IGeneralElementContainer).GetGeneralElements())
+                {
+                    NotifyUndo(subElement.InnerElement);
+                }
+            }
+            DoNotifyUndo(element);
+        }
+
         private static void Notify(IElement element)
         {
             ElementChanges.Instance.ElementRemoved(element.Id);
+        }
+
+        private static void DoNotifyUndo(IElement element)
+        {
+            ElementChanges.Instance.ElementChanged(element.Id);
         }
     }
 
@@ -93,15 +118,18 @@ namespace Ares.Editor.Actions
             m_Parent.Nodes.Remove(m_Node);
             IModeElement element = (m_Node.Tag as IModeElement);
             (m_Parent.Tag as IMode).RemoveElement(element);
-            ElementRemoval.NotifyRemoval(element);
+            Data.DataModule.ElementRepository.DeleteElement(element.Id);
             Ares.ModelInfo.ModelChecks.Instance.CheckAll();
+            ElementRemoval.NotifyRemoval(element);
         }
 
         public override void Undo()
         {
             m_Parent.Nodes.Insert(m_Index, m_Node);
+            Data.DataModule.ElementRepository.AddElement(m_Node.Tag as IModeElement);
             (m_Parent.Tag as IMode).InsertElement(m_Index, (m_Node.Tag as IModeElement));
             Ares.ModelInfo.ModelChecks.Instance.CheckAll();
+            ElementRemoval.NotifyUndo(m_Node.Tag as IElement);
         }
 
         private TreeNode m_Parent;
@@ -124,9 +152,10 @@ namespace Ares.Editor.Actions
             IBackgroundSoundChoice soundChoice = (m_Node.Tag as IBackgroundSoundChoice);
             IBackgroundSounds bgSounds = m_Parent.Tag as IBackgroundSounds;
             bgSounds.RemoveElement(soundChoice.Id);
+            Data.DataModule.ElementRepository.DeleteElement(soundChoice.Id);
+            Ares.ModelInfo.ModelChecks.Instance.CheckAll();
             ElementRemoval.NotifyRemoval(soundChoice);
             ElementChanges.Instance.ElementChanged(bgSounds.Id);
-            Ares.ModelInfo.ModelChecks.Instance.CheckAll();
         }
 
         public override void Undo()
@@ -134,8 +163,10 @@ namespace Ares.Editor.Actions
             m_Parent.Nodes.Insert(m_Index, m_Node);
             IBackgroundSounds bgSounds = m_Parent.Tag as IBackgroundSounds;
             bgSounds.InsertElement(m_Index, (m_Node.Tag as IBackgroundSoundChoice));
-            ElementChanges.Instance.ElementChanged(bgSounds.Id);
+            Data.DataModule.ElementRepository.AddElement((m_Node.Tag as IBackgroundSoundChoice));
             Ares.ModelInfo.ModelChecks.Instance.CheckAll();
+            ElementRemoval.NotifyUndo(m_Node.Tag as IBackgroundSoundChoice);
+            ElementChanges.Instance.ElementChanged(bgSounds.Id);
         }
 
         private TreeNode m_Parent;
@@ -308,17 +339,20 @@ namespace Ares.Editor.Actions
         {
             m_Parent.Nodes.Remove(m_Node);
             m_Container.RemoveElement((m_Node.Tag as IElement).Id);
+            Data.DataModule.ElementRepository.DeleteElement((m_Node.Tag as IElement).Id);
+            Ares.ModelInfo.ModelChecks.Instance.CheckAll();
             ElementRemoval.NotifyRemoval(m_Node.Tag as IElement);
             ElementChanges.Instance.ElementChanged(m_Container.Id);
-            Ares.ModelInfo.ModelChecks.Instance.CheckAll();
         }
 
         public override void Undo()
         {
             m_Parent.Nodes.Insert(m_Index, m_Node);
             m_Container.InsertGeneralElement(m_Index, m_Element);
-            ElementChanges.Instance.ElementChanged(m_Container.Id);
+            Data.DataModule.ElementRepository.AddElement(m_Element);
             Ares.ModelInfo.ModelChecks.Instance.CheckAll();
+            ElementRemoval.NotifyUndo(m_Element);
+            ElementChanges.Instance.ElementChanged(m_Container.Id);
         }
 
         private TreeNode m_Parent;
@@ -328,9 +362,9 @@ namespace Ares.Editor.Actions
         private int m_Index;
     }
 
-    public class ReorderElementsAction : Action
+    public class ReorderElementsAction<T> : Action where T : IContainerElement
     {
-        public ReorderElementsAction(ISequentialContainer container, List<int> indices, int offset)
+        public ReorderElementsAction(IReorderableContainer<T> container, List<int> indices, int offset)
         {
             m_Container = container;
             indices.Sort();
@@ -389,7 +423,7 @@ namespace Ares.Editor.Actions
         }
 
 
-        private ISequentialContainer m_Container;
+        private IReorderableContainer<T> m_Container;
         private List<int> m_Indices;
         private int m_offset;
     }

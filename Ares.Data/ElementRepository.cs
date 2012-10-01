@@ -37,6 +37,12 @@ namespace Ares.Data
         /// </summary>
         /// <param name="id">ID of the element.</param>
         void DeleteElement(int id);
+        /// <summary>
+        /// Adds a (previously deleted) element to the repository (for undo).
+        /// </summary>
+        /// <param name="element">the element</param>
+        /// <returns>the (possibly new) Id of the element</returns>
+        int AddElement(IElement element);
     }
 
     class ElementRepository : IElementRepository
@@ -50,14 +56,63 @@ namespace Ares.Data
 
         public void DeleteElement(int id)
         {
-            m_Elements.Remove(id);
+            if (m_Elements.ContainsKey(id))
+            {
+                IElement element = m_Elements[id];
+                if (element is IGeneralElementContainer)
+                {
+                    foreach (IContainerElement containerElement in (element as IGeneralElementContainer).GetGeneralElements())
+                    {
+                        DeleteElement(containerElement.InnerElement.Id);
+                    }
+                }
+                else if (element is IModeElement)
+                {
+                    IModeElement me = (element as IModeElement);
+                    if (me.StartElement != null) 
+                    {
+                        DeleteElement(me.StartElement.Id);
+                    }
+                }
+                m_Elements.Remove(id);
+            }
+        }
+
+        public ReferenceRedirector Redirector { get; set; }
+
+        public int AddElement(IElement element)
+        {
+            if (element is IGeneralElementContainer)
+            {
+                foreach (IContainerElement containerElement in (element as IGeneralElementContainer).GetGeneralElements())
+                {
+                    AddElement(containerElement.InnerElement);
+                }
+            }
+            else if (element is IModeElement)
+            {
+                IModeElement me = (element as IModeElement);
+                if (me.StartElement != null)
+                {
+                    AddElement(me.StartElement);
+                }
+            }
+            int id = element.Id;
+            AddElement(ref id, element);
+            element.Id = id;
+            return id;
         }
 
         public void AddElement(ref int id, IElement element)
         {
             if (m_Elements.ContainsKey(id))
             {
+                int oldId = id;
                 id = Data.DataModule.TheElementFactory.GetNextID();
+                if (Redirector != null)
+                {
+                    Redirector.AddRedirection(oldId, id);
+                }
             }
             m_Elements.Add(id, element);
         }

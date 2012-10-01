@@ -280,11 +280,38 @@ namespace Ares.Editor {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The command still needs some data. Please select the necessary element(s). ähnelt.
+        /// </summary>
+        internal static string InsufficientCommandData {
+            get {
+                return ResourceManager.GetString("InsufficientCommandData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die &lt;not found&gt; ähnelt.
+        /// </summary>
+        internal static string InvalidModeElement {
+            get {
+                return ResourceManager.GetString("InvalidModeElement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Error opening the project: {0} ähnelt.
         /// </summary>
         internal static string LoadError {
             get {
                 return ResourceManager.GetString("LoadError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {0}/{1} ähnelt.
+        /// </summary>
+        internal static string ModeElementDisplay {
+            get {
+                return ResourceManager.GetString("ModeElementDisplay", resourceCulture);
             }
         }
         
@@ -312,6 +339,15 @@ namespace Ares.Editor {
         internal static string NewBackgroundSounds {
             get {
                 return ResourceManager.GetString("NewBackgroundSounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die New Macro ähnelt.
+        /// </summary>
+        internal static string NewMacro {
+            get {
+                return ResourceManager.GetString("NewMacro", resourceCulture);
             }
         }
         
@@ -522,6 +558,15 @@ namespace Ares.Editor {
         internal static string PlayerStartError {
             get {
                 return ResourceManager.GetString("PlayerStartError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Please select an element ähnelt.
+        /// </summary>
+        internal static string PleaseSelectElement {
+            get {
+                return ResourceManager.GetString("PleaseSelectElement", resourceCulture);
             }
         }
         

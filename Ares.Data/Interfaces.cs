@@ -51,6 +51,14 @@ namespace Ares.Data
         /// Visits a randomized music list
         /// </summary>
         void VisitRandomMusicList(IRandomBackgroundMusicList musicList);
+        /// <summary>
+        /// Visits a macro.
+        /// </summary>
+        void VisitMacro(IMacro macro);
+        /// <summary>
+        /// Visits a macro command.
+        /// </summary>
+        void VisitMacroCommand(IMacroCommand macroCommand);
     }
 
     /// <summary>
@@ -93,6 +101,7 @@ namespace Ares.Data
         /// </summary>
         void Visit(IElementVisitor visitor);
 
+        /*
         /// <summary>
         /// Returns the references to this element. The list may be null or empty.
         /// </summary>
@@ -102,8 +111,10 @@ namespace Ares.Data
         /// Adds a reference to the element.
         /// </summary>
         void AddReference(IElementReference reference);
+         */
     }
 
+    /*
     /// <summary>
     /// Contains a reference to another element.
     /// </summary>
@@ -114,6 +125,7 @@ namespace Ares.Data
         /// </summary>
         IElement ReferencedElement { get; }
     }
+     */
 
     /// <summary>
     /// Interface for a music list.
@@ -482,14 +494,23 @@ namespace Ares.Data
         T GetElement(int id);
     }
 
+
     /// <summary>
-    /// Special interface for a sequential container
+    /// Special container which can reorder elements.
     /// </summary>
-    public interface ISequentialContainer : IElementContainer<ISequentialElement>
+    public interface IReorderableContainer<T> : IElementContainer<T> where T : IContainerElement
     {
         void MoveElements(int startIndex, int endIndex, int offset);
     }
 
+    /// <summary>
+    /// Special interface for a sequential container
+    /// </summary>
+    public interface ISequentialContainer : IReorderableContainer<ISequentialElement>
+    {
+    }
+
+    /*
     /// <summary>
     /// Special element reference to a container.
     /// </summary>
@@ -501,6 +522,7 @@ namespace Ares.Data
         /// </summary>
         T ReferencedContainer { get; }
     }
+     */
 
     /// <summary>
     /// Type of triggers which can start the playback of an element.

@@ -173,6 +173,11 @@ namespace Ares.Editor.Controls
                     grid.Rows[row].Cells[0].ErrorText = errorTexts;
                 }
             }
+            else
+            {
+                grid.Rows[row].Cells[0].Style.ForeColor = Color.Black;
+                grid.Rows[row].Cells[0].ErrorText = String.Empty;
+            }
         }
 
         private void Grid_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
@@ -202,13 +207,25 @@ namespace Ares.Editor.Controls
             int row = 0;
             foreach (IContainerElement element in ElementsContainer.GetGeneralElements())
             {
-                AddElementToGrid(element);                
-                m_ElementsToRows[element.Id] = row;
-                Actions.ElementChanges.Instance.AddListener(element.Id, Update);
+                AddElementToGrid(element);
+                foreach (int id in GetInterestingElementIds(element))
+                {
+                    if (!m_ElementsToRows.ContainsKey(id))
+                    {
+                        m_ElementsToRows[id] = new List<int>();
+                        Actions.ElementChanges.Instance.AddListener(id, Update);
+                    }
+                    m_ElementsToRows[id].Add(row);
+                }
                 SetElementAttributes(Grid, element, row);
                 ++row;
             }
             Grid.ResumeLayout();
+        }
+
+        protected virtual IEnumerable<int> GetInterestingElementIds(IContainerElement element)
+        {
+            yield return element.Id;
         }
 
         private void Grid_MouseDown(Object sender, MouseEventArgs e)
@@ -338,12 +355,20 @@ namespace Ares.Editor.Controls
             List<DataGridViewRow> rows = new List<DataGridViewRow>();
             List<IElement> elements = new List<IElement>();
             IList<IContainerElement> containerElements = ElementsContainer.GetGeneralElements();
+            List<DataGridViewRow> selectedRows = new List<DataGridViewRow>();
+            int minIndex = Grid.Rows.Count;
             foreach (DataGridViewRow row in Grid.SelectedRows)
+            {
+                selectedRows.Add(row);
+                if (row.Index < minIndex)
+                    minIndex = row.Index;
+            }
+            foreach (DataGridViewRow row in selectedRows.OrderBy(row => row.Index))
             {
                 elements.Add(containerElements[row.Index]);
                 rows.Add(row);
             }
-            Actions.Actions.Instance.AddNew(new Actions.RemoveContainerElementsAction(ElementsContainer, elements, Grid.SelectedRows[0].Index));
+            Actions.Actions.Instance.AddNew(new Actions.RemoveContainerElementsAction(ElementsContainer, elements, minIndex));
             RefillGrid();
             listen = true;
         }
@@ -374,12 +399,18 @@ namespace Ares.Editor.Controls
                 }
                 else if (changeType == Actions.ElementChanges.ChangeType.Renamed)
                 {
-                    Grid.Rows[m_ElementsToRows[elementID]].Cells[0].Value =
-                        Ares.Data.DataModule.ElementRepository.GetElement(elementID).Title;
+                    foreach (int row in m_ElementsToRows[elementID])
+                    {
+                        ChangeElementDataInGrid(elementID, row);
+                    }
                 }
                 else if (changeType == Actions.ElementChanges.ChangeType.Changed)
                 {
-                    ChangeElementDataInGrid(elementID, m_ElementsToRows[elementID]);
+                    foreach (int row in m_ElementsToRows[elementID])
+                    {
+                        ChangeElementDataInGrid(elementID, row);
+                        SetElementAttributes(Grid, ElementsContainer.GetGeneralElements()[row], row);
+                    }
                 }
             }
             listen = true;
@@ -444,7 +475,7 @@ namespace Ares.Editor.Controls
         {
         }
 
-        private Dictionary<int, int> m_ElementsToRows = new Dictionary<int, int>();
+        private Dictionary<int, List<int>> m_ElementsToRows = new Dictionary<int, List<int>>();
 
         private int mouseDownRowIndex = -1;
         private Rectangle dragStartRect = Rectangle.Empty;

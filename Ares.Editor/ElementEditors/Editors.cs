@@ -74,6 +74,12 @@ namespace Ares.Editor.ElementEditors
                     editor.SetPlaylist(element as Ares.Data.ISequentialBackgroundMusicList);
                     ShowEditor(editor, parent);
                 }
+                else if (element is Ares.Data.IMacro)
+                {
+                    MacroEditor editor = new MacroEditor();
+                    editor.SetContainer(element as Ares.Data.IMacro);
+                    ShowEditor(editor, parent);
+                }
                 else if (element is Ares.Data.IElementContainer<Ares.Data.IChoiceElement>)
                 {
                     ChoiceContainerEditor editor = new ChoiceContainerEditor();

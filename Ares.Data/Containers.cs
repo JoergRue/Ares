@@ -92,6 +92,7 @@ namespace Ares.Data
             m_Element.Visit(visitor);
         }
 
+        /*
         public IList<IElementReference> References
         {
             get
@@ -104,6 +105,7 @@ namespace Ares.Data
         {
             m_Element.AddReference(reference);
         }
+         */
 
         protected void DoWriteToXml(System.Xml.XmlWriter writer)
         {
@@ -183,6 +185,14 @@ namespace Ares.Data
                 element.Visit(this);
             }
         }
+
+        public void VisitMacro(IMacro macro)
+        {
+        }
+
+        public void VisitMacroCommand(IMacroCommand macroCommand)
+        {
+        }
     }
 
     [Serializable]
@@ -208,7 +218,9 @@ namespace Ares.Data
             }
             else
             {
-                result.Add(AddElement(element as IElement));
+                I added = AddElement(element as IElement);
+                if (added != null)
+                    result.Add(added);
             }
             return result;
         }
@@ -218,8 +230,15 @@ namespace Ares.Data
             m_Elements.Insert(index, (T)element);
         }
 
+        protected virtual bool CanAddElement(IElement element)
+        {
+            return !(element is IMacroCommand);
+        }
+
         public I AddElement(IElement element)
         {
+            if (!CanAddElement(element))
+                return default(I);
             T wrapper = new T();
             ((ContainerElement)wrapper).InnerElement = element;
             m_Elements.Add(wrapper);

@@ -127,5 +127,13 @@ namespace Ares.ModelInfo
                 element.Visit(this);
             }
         }
+
+        public void VisitMacro(IMacro macro)
+        {
+        }
+
+        public void VisitMacroCommand(IMacroCommand macroCommand)
+        {
+        }
     }
 }
