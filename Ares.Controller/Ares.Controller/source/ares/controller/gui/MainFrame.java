@@ -300,11 +300,29 @@ public final class MainFrame extends FrameController implements IMessageListener
   
   private JMenu getPlayMenu() {
 	  JMenu playMenu = new JMenu(Localization.getString("MainFrame.Play")); //$NON-NLS-1$
-	  JMenuItem stopItem = new JMenuItem(new KeyAction(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0)));
+	  JMenuItem stopItem = new JMenuItem(new AbstractAction() {
+		@Override
+		public void actionPerformed(ActionEvent e) 
+		{
+			Control.getInstance().sendKey(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0));
+		}
+	  });
 	  stopItem.setText(Localization.getString("MainFrame.StopAll")); //$NON-NLS-1$
-	  JMenuItem previousItem = new JMenuItem(new KeyAction(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0)));
+	  JMenuItem previousItem = new JMenuItem(new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				Control.getInstance().sendKey(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0));
+			}
+		  });
 	  previousItem.setText(Localization.getString("MainFrame.PreviousMusic")); //$NON-NLS-1$
-	  JMenuItem nextItem = new JMenuItem(new KeyAction(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0)));
+	  JMenuItem nextItem = new JMenuItem(new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				Control.getInstance().sendKey(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0));
+			}
+		  });
 	  nextItem.setText(Localization.getString("MainFrame.NextMusic")); //$NON-NLS-1$
 	  playMenu.add(stopItem);
 	  playMenu.add(previousItem);
@@ -970,7 +988,12 @@ public final class MainFrame extends FrameController implements IMessageListener
   private JButton getStopAllButton() {
 	if (stopAllButton == null) {
 	    stopAllButton = new JButton();
-	    stopAllButton.setAction(new KeyAction(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0)));
+	    stopAllButton.setAction(new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Control.getInstance().sendKey(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0));
+			}
+	    });
 	    stopAllButton.setIcon(new ImageIcon(getClass().getResource("StopSmall.png"))); //$NON-NLS-1$
 	    stopAllButton.setToolTipText(Localization.getString("MainControlsFrame.StopAll")); //$NON-NLS-1$
 	}
@@ -983,7 +1006,12 @@ public final class MainFrame extends FrameController implements IMessageListener
   private JButton getNextTrackButton() {
 	  if (nextTrackButton == null) {
 		  nextTrackButton = new JButton();
-		  nextTrackButton.setAction(new KeyAction(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0)));
+		  nextTrackButton.setAction(new AbstractAction() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					Control.getInstance().sendKey(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0));
+				}
+		    });
 		  nextTrackButton.setIcon(new ImageIcon(getClass().getResource("forward.png"))); //$NON-NLS-1$
 		  nextTrackButton.setToolTipText(Localization.getString("MainControlsFrame.NextTrack")); //$NON-NLS-1$
 	  }
@@ -998,7 +1026,12 @@ public final class MainFrame extends FrameController implements IMessageListener
   private JButton getPreviousButton() {
 	  if (previousButton == null) {
 		  previousButton = new JButton();
-		  previousButton.setAction(new KeyAction(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0)));
+		  previousButton.setAction(new AbstractAction() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					Control.getInstance().sendKey(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0));
+				}
+		    });
 		  previousButton.setIcon(new ImageIcon(getClass().getResource("back.png"))); //$NON-NLS-1$
 		  previousButton.setToolTipText(Localization.getString("MainControlsFrame.PreviousTrack")); //$NON-NLS-1$
 	  }
