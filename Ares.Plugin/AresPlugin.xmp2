@@ -97,6 +97,13 @@
               <ZipFileName>Installer{GenericSkinFile}\{93e9f113-c09d-4617-82ae-357be0ca0c99}-Ares.png</ZipFileName>
               <DestinationFilename>%Skin%\[DEFAULT]\Media\Ares.png</DestinationFilename>
             </FileItem>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="true">
+              <Param1 />
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
+              <LocalFileName>Ares_hd.xml</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{8d53e585-17fa-4594-bdc4-e165777d3518}-Ares_hd.xml</ZipFileName>
+              <DestinationFilename>%Skin%\Avalon\Ares.xml</DestinationFilename>
+            </FileItem>
           </Items>
         </Files>
       </GroupItem>
@@ -241,7 +248,7 @@ Click Next to continue or Cancel to exit Setup.</Value>
     <UpdateUrl />
     <Version>
       <Major>1</Major>
-      <Minor>2</Minor>
+      <Minor>3</Minor>
       <Build>0</Build>
       <Revision>0</Revision>
     </Version>
@@ -364,6 +371,13 @@ Makes sense only in conjunction with the Ares Controller.</ExtensionDescription>
         <LocalFileName>..\Images\Ares.png</LocalFileName>
         <ZipFileName>Installer{GenericSkinFile}\{93e9f113-c09d-4617-82ae-357be0ca0c99}-Ares.png</ZipFileName>
         <DestinationFilename>%Skin%\[DEFAULT]\Media\Ares.png</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="true">
+        <Param1 />
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
+        <LocalFileName>Ares_hd.xml</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{8d53e585-17fa-4594-bdc4-e165777d3518}-Ares_hd.xml</ZipFileName>
+        <DestinationFilename>%Skin%\Avalon\Ares.xml</DestinationFilename>
       </FileItem>
     </Items>
   </UniqueFileList>
