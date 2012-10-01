@@ -170,9 +170,21 @@ Fehlermeldung: {0}
   <data name="DeviceEnabled" xml:space="preserve">
     <value>angeschaltet</value>
   </data>
+  <data name="Disable" xml:space="preserve">
+    <value>Ausschalten</value>
+  </data>
+  <data name="Disabled" xml:space="preserve">
+    <value>Ausgeschaltet</value>
+  </data>
+  <data name="Disconnect" xml:space="preserve">
+    <value>Trennen</value>
+  </data>
   <data name="EditorStartError" xml:space="preserve">
     <value>Konnte Editor nicht starten. Grund:
 {0}</value>
+  </data>
+  <data name="Enable" xml:space="preserve">
+    <value>Einschalten</value>
   </data>
   <data name="GetLameYourself" xml:space="preserve">
     <value>Lame.exe muss man selbst besorgen und ins Installationsverzeichnis des Ares Player kopieren.</value>

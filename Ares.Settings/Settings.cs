@@ -63,6 +63,8 @@ namespace Ares.Settings
 
         public bool ShowKeysInButtons { get; set; }
         public bool GlobalKeyHook { get; set; }
+
+        public bool NetworkEnabled { get; set; }
     }
 
     public class Settings
@@ -106,6 +108,8 @@ namespace Ares.Settings
         public bool ShowKeysInButtons { get { return Data.ShowKeysInButtons; } set { Data.ShowKeysInButtons = value; } }
 
         public bool GlobalKeyHook { get { return Data.GlobalKeyHook; } set { Data.GlobalKeyHook = value; } }
+
+        public bool NetworkEnabled { get { return Data.NetworkEnabled; } set { Data.NetworkEnabled = value; } }
 
         public static Settings Instance
         {
@@ -292,6 +296,7 @@ namespace Ares.Settings
             StreamingEncoder = 1;
             ShowKeysInButtons = false;
             GlobalKeyHook = false;
+            NetworkEnabled = true;
         }
 
         private void WriteSettings(XmlWriter writer)
@@ -313,6 +318,7 @@ namespace Ares.Settings
             writer.WriteAttributeString("UdpPort", UdpPort.ToString(System.Globalization.CultureInfo.InvariantCulture));
             writer.WriteAttributeString("IPAddress", IPAddress);
             writer.WriteAttributeString("CheckForUpdate", CheckForUpdate ? "true" : "false");
+            writer.WriteAttributeString("Enabled", NetworkEnabled ? "true" : "false");
             writer.WriteEndElement();
             RecentFiles.WriteFiles(writer);
             writer.WriteStartElement("Tools");
@@ -393,6 +399,7 @@ namespace Ares.Settings
                     TcpPort = reader.GetIntegerAttribute("TcpPort");
                     IPAddress = reader.GetAttribute("IPAddress");
                     CheckForUpdate = reader.GetBooleanAttributeOrDefault("CheckForUpdate", true);
+                    NetworkEnabled = reader.GetBooleanAttributeOrDefault("Enabled", true);
                     if (IPAddress == null) IPAddress = String.Empty;
                     if (reader.IsEmptyElement)
                         reader.Read();

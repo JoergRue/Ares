@@ -851,14 +851,14 @@ namespace Ares.Player
                     m_PlayingControl.SoundVolume, m_PlayingControl.CurrentMode, MusicInfo.GetInfo(m_PlayingControl.CurrentMusicElement),
                     m_PlayingControl.CurrentModeElements, m_Project != null ? m_Project.Title : String.Empty, 
                     m_PlayingControl.CurrentMusicList);
-                disconnectButton.Enabled = true;
+                disconnectButton.Text = StringResources.Disconnect;
                 m_WasConnected = true;
             }
             else
             {
                 clientStateLabel.Text = StringResources.NotConnected;
                 clientStateLabel.ForeColor = System.Drawing.Color.Red;
-                disconnectButton.Enabled = false;
+                disconnectButton.Text = Settings.Settings.Instance.NetworkEnabled ? StringResources.Disable : StringResources.Enable;
                 if (m_HideToTray && m_WasConnected)
                 {
                     Close();
@@ -868,7 +868,28 @@ namespace Ares.Player
 
         private void disconnectButton_Click(object sender, EventArgs e)
         {
-            m_Network.DisconnectClient(true);
+            if (m_Network.ClientConnected)
+            {
+                m_Network.DisconnectClient(true);
+            }
+            else
+            {
+                bool isNowEnabled = !Settings.Settings.Instance.NetworkEnabled;
+                Settings.Settings.Instance.NetworkEnabled = isNowEnabled;
+                Settings.Settings.Instance.Commit();
+                disconnectButton.Text = isNowEnabled ? StringResources.Disable : StringResources.Enable;
+                if (isNowEnabled)
+                {
+                    clientStateLabel.Text = StringResources.NotConnected;
+                    m_Network.StartUdpBroadcast();
+                }
+                else
+                {
+                    m_Network.StopUdpBroadcast();
+                    clientStateLabel.Text = StringResources.Disabled;
+                }
+                clientStateLabel.ForeColor = System.Drawing.Color.Red;
+            }
         }
 
         private bool listenForPorts = false;
@@ -1005,7 +1026,18 @@ namespace Ares.Player
             listenForPorts = true;
             m_Network = new Network(this);
             m_Network.InitConnectionData();
-            m_Network.StartUdpBroadcast();
+            if (Settings.Settings.Instance.NetworkEnabled)
+            {
+                m_Network.StartUdpBroadcast();
+                disconnectButton.Text = StringResources.Disable;
+                clientStateLabel.Text = StringResources.NotConnected;
+            }
+            else
+            {
+                disconnectButton.Text = StringResources.Enable;
+                clientStateLabel.Text = StringResources.Disabled;
+            }
+            clientStateLabel.ForeColor = System.Drawing.Color.Red;
             broadCastTimer.Tick += new EventHandler(broadCastTimer_Tick);
             broadCastTimer.Enabled = true;
             m_Network.ListenForClient();
@@ -1030,7 +1062,10 @@ namespace Ares.Player
             }
             m_Network.StopUdpBroadcast();
             m_Network.InitConnectionData();
-            m_Network.StartUdpBroadcast();
+            if (Settings.Settings.Instance.NetworkEnabled)
+            {
+                m_Network.StartUdpBroadcast();
+            }
         }
 
         private void helpOnlineToolStripMenuItem_Click(object sender, EventArgs e)
