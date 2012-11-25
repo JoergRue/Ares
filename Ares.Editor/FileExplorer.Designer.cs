@@ -68,19 +68,25 @@ namespace Ares.Editor
             this.refreshButton = new System.Windows.Forms.ToolStripButton();
             this.searchBox = new System.Windows.Forms.ToolStripTextBox();
             this.searchButton = new System.Windows.Forms.ToolStripButton();
+            this.showInfoButton = new System.Windows.Forms.ToolStripButton();
             this.treeView1 = new MultiSelectTreeview.MultiSelectTreeview();
             this.fileNodeContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.playToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.showUsesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.informationBox = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.toolStrip1.SuspendLayout();
             this.fileNodeContextMenu.SuspendLayout();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -90,7 +96,8 @@ namespace Ares.Editor
             this.stopButton,
             this.refreshButton,
             this.searchBox,
-            this.searchButton});
+            this.searchButton,
+            this.showInfoButton});
             resources.ApplyResources(this.toolStrip1, "toolStrip1");
             this.toolStrip1.Name = "toolStrip1";
             // 
@@ -130,6 +137,15 @@ namespace Ares.Editor
             this.searchButton.Name = "searchButton";
             this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
             // 
+            // showInfoButton
+            // 
+            this.showInfoButton.Checked = true;
+            this.showInfoButton.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showInfoButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.showInfoButton, "showInfoButton");
+            this.showInfoButton.Name = "showInfoButton";
+            this.showInfoButton.Click += new System.EventHandler(this.showInfoButton_Click);
+            // 
             // treeView1
             // 
             this.treeView1.AllowDrop = true;
@@ -153,7 +169,6 @@ namespace Ares.Editor
             this.playToolStripMenuItem,
             this.stopToolStripMenuItem,
             this.editToolStripMenuItem,
-            this.showUsesMenuItem,
             this.toolStripSeparator1,
             this.copyToolStripMenuItem,
             this.copyToolStripMenuItem1,
@@ -180,12 +195,6 @@ namespace Ares.Editor
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             resources.ApplyResources(this.editToolStripMenuItem, "editToolStripMenuItem");
             this.editToolStripMenuItem.Click += new System.EventHandler(this.editToolStripMenuItem_Click);
-            // 
-            // showUsesMenuItem
-            // 
-            this.showUsesMenuItem.Name = "showUsesMenuItem";
-            resources.ApplyResources(this.showUsesMenuItem, "showUsesMenuItem");
-            this.showUsesMenuItem.Click += new System.EventHandler(this.showUsesMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
@@ -216,16 +225,45 @@ namespace Ares.Editor
             resources.ApplyResources(this.deleteToolStripMenuItem, "deleteToolStripMenuItem");
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
+            // informationBox
+            // 
+            resources.ApplyResources(this.informationBox, "informationBox");
+            this.informationBox.Name = "informationBox";
+            this.informationBox.ReadOnly = true;
+            // 
+            // label1
+            // 
+            resources.ApplyResources(this.label1, "label1");
+            this.label1.Name = "label1";
+            // 
+            // splitContainer1
+            // 
+            resources.ApplyResources(this.splitContainer1, "splitContainer1");
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.treeView1);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.informationBox);
+            this.splitContainer1.Panel2.Controls.Add(this.label1);
+            // 
             // FileExplorer
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.treeView1);
+            this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.toolStrip1);
             this.Name = "FileExplorer";
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.fileNodeContextMenu.ResumeLayout(false);
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            this.splitContainer1.Panel2.PerformLayout();
+            this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -249,6 +287,9 @@ namespace Ares.Editor
         private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem showUsesMenuItem;
+        private System.Windows.Forms.ToolStripButton showInfoButton;
+        private System.Windows.Forms.TextBox informationBox;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.SplitContainer splitContainer1;
     }
 }

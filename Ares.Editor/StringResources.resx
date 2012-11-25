@@ -204,6 +204,9 @@ Left      - Previous music title</value>
   <data name="InvalidModeElement" xml:space="preserve">
     <value>&lt;not found&gt;</value>
   </data>
+  <data name="Length" xml:space="preserve">
+    <value>Length: {0}</value>
+  </data>
   <data name="LoadError" xml:space="preserve">
     <value>Error opening the project: {0}</value>
   </data>

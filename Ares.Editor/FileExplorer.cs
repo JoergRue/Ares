@@ -61,6 +61,10 @@ namespace Ares.Editor
                 Actions.FilesWatcher.Instance.SoundDirChanges += new EventHandler<EventArgs>(DirChanged);
                 this.Icon = ImageResources.sounds;
             }
+            if (Height > 200)
+            {
+                splitContainer1.SplitterDistance = Height - 100;
+            }
         }
 
         private void  DirChanged(object sender, EventArgs e)
@@ -215,32 +219,6 @@ namespace Ares.Editor
 
         private void ShowUses()
         {
-            TreeNode node = treeView1.SelectedNode;
-            DraggedItem item = node.Tag as DraggedItem;
-            Ares.Data.SoundFileType soundFileType = (item.ItemType == FileType.Music) ? Ares.Data.SoundFileType.Music : Ares.Data.SoundFileType.SoundEffect;
-            Ares.ModelInfo.FileSearch fileSearch = new ModelInfo.FileSearch();
-            List<KeyValuePair<Ares.Data.IMode,  List<Ares.Data.IModeElement>>> modeElements = fileSearch.GetRootElements(Ares.ModelInfo.ModelChecks.Instance.Project, item.RelativePath, soundFileType);
-            String msg = String.Empty;
-            if (modeElements.Count > 0)
-            {
-                StringBuilder builder = new StringBuilder();
-                builder.Append(String.Format(StringResources.SearchElementsTitle, node.Text) + "\n\n");
-                foreach (KeyValuePair<Ares.Data.IMode, List<Ares.Data.IModeElement>> modesData in modeElements)
-                {
-                    builder.Append(String.Format(StringResources.ModeIntro, modesData.Key.Title));
-                    for (int i = 0; i < modesData.Value.Count; ++i)
-                    {
-                        builder.Append(modesData.Value[i].Title);
-                        builder.Append(i + 1 == modesData.Value.Count ? "\n" : ", ");
-                    }
-                }
-                msg = builder.ToString();
-            }
-            else
-            {
-                msg = String.Format(StringResources.NoElementsFound, node.Text);
-            }
-            MessageBox.Show(this, msg, StringResources.Ares, MessageBoxButtons.OK);
         }
 
         private bool PlayingPossible
@@ -272,12 +250,65 @@ namespace Ares.Editor
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
             playButton.Enabled = PlayingPossible;
+            updateInformationPanel();
         }
 
         private void treeView1_DoubleClick(object sender, EventArgs e)
         {
             DefaultNodeAction();
         }
+
+        private void updateInformationPanel()
+        {
+            String msg = String.Empty;
+            TreeNode node = treeView1.SelectedNode;
+
+            if (node != null)
+            {
+                DraggedItem item = node.Tag as DraggedItem;
+                if (!String.IsNullOrEmpty(item.RelativePath) && item.NodeType != DraggedItemType.Directory)
+                {
+                    Ares.Data.SoundFileType soundFileType = (item.ItemType == FileType.Music) ? Ares.Data.SoundFileType.Music : Ares.Data.SoundFileType.SoundEffect;
+
+                    String path = soundFileType == Data.SoundFileType.Music ? Settings.Settings.Instance.MusicDirectory : Settings.Settings.Instance.SoundDirectory;
+                    path = System.IO.Path.Combine(path, item.RelativePath);
+                    Un4seen.Bass.AddOn.Tags.TAG_INFO tag = Un4seen.Bass.AddOn.Tags.BassTags.BASS_TAG_GetFromFile(path, true, true);
+                    if (tag != null)
+                    {
+                        TimeSpan duration = TimeSpan.FromSeconds(tag.duration);
+                        msg = String.Format(StringResources.Length, (DateTime.Today + duration).ToString("HH::mm::ss.fff"));
+                    }
+                    else
+                    {
+                        msg = String.Format(StringResources.Length, StringResources.Unknown);
+                    }
+
+                    Ares.ModelInfo.FileSearch fileSearch = new ModelInfo.FileSearch();
+                    List<KeyValuePair<Ares.Data.IMode, List<Ares.Data.IModeElement>>> modeElements = fileSearch.GetRootElements(Ares.ModelInfo.ModelChecks.Instance.Project, item.RelativePath, soundFileType);
+                    if (modeElements.Count > 0)
+                    {
+                        StringBuilder builder = new StringBuilder();
+                        builder.Append(String.Format(StringResources.SearchElementsTitle, node.Text) + Environment.NewLine);
+                        foreach (KeyValuePair<Ares.Data.IMode, List<Ares.Data.IModeElement>> modesData in modeElements)
+                        {
+                            builder.Append(String.Format(StringResources.ModeIntro, modesData.Key.Title));
+                            for (int i = 0; i < modesData.Value.Count; ++i)
+                            {
+                                builder.Append(modesData.Value[i].Title);
+                                builder.Append(i + 1 == modesData.Value.Count ? Environment.NewLine : ", ");
+                            }
+                        }
+                        msg += Environment.NewLine + " " + Environment.NewLine + builder.ToString();
+                    }
+                    else
+                    {
+                        msg += Environment.NewLine + " " + Environment.NewLine + String.Format(StringResources.NoElementsFound, node.Text);
+                    }
+                }
+            }
+            informationBox.Text = msg;
+        }
+
 
         private void DefaultNodeAction()
         {
@@ -371,7 +402,6 @@ namespace Ares.Editor
             playToolStripMenuItem.Enabled = PlayingPossible;
             editToolStripMenuItem.Enabled = m_Parent != null && treeView1.SelectedNode != null && treeView1.SelectedNode.Tag != null &&
                 treeView1.SelectedNode.Tag is DraggedItem && ((DraggedItem)treeView1.SelectedNode.Tag).NodeType == DraggedItemType.File;
-            showUsesMenuItem.Enabled = editToolStripMenuItem.Enabled;
             pasteToolStripMenuItem.Enabled = Clipboard.ContainsFileDropList() || Clipboard.ContainsData(DataFormats.GetFormat("AresFilesList").Name);
         }
 
@@ -735,6 +765,12 @@ namespace Ares.Editor
         private void showUsesMenuItem_Click(object sender, EventArgs e)
         {
             ShowUses();
+        }
+
+        private void showInfoButton_Click(object sender, EventArgs e)
+        {
+            splitContainer1.Panel2Collapsed = !splitContainer1.Panel2Collapsed;
+            showInfoButton.Checked = !splitContainer1.Panel2Collapsed;
         }
 
     }
