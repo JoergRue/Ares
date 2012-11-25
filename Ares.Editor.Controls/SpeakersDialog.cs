@@ -35,12 +35,12 @@ namespace Ares.Editor.Controls
 
         public Actions.SpeakerChangeAction Action { get; set; }
         
-        public SpeakersDialog(Data.IFileElement element)
+        public SpeakersDialog(IList<Data.IFileElement> elements)
         {
             InitializeComponent();
-            Element = element;
-            Action = new Actions.SpeakerChangeAction(element, true, element.Effects.SpeakerAssignment.Random, element.Effects.SpeakerAssignment.Assignment);
-            if (element.Effects.SpeakerAssignment.Random)
+            Element = elements[0];
+            Action = new Actions.SpeakerChangeAction(elements, true, Element.Effects.SpeakerAssignment.Random, Element.Effects.SpeakerAssignment.Assignment);
+            if (Element.Effects.SpeakerAssignment.Random)
             {
                 randomButton.Checked = true;
                 defaultButton.Checked = false;
@@ -54,7 +54,7 @@ namespace Ares.Editor.Controls
             else
             {
                 randomButton.Checked = false;
-                switch (element.Effects.SpeakerAssignment.Assignment)
+                switch (Element.Effects.SpeakerAssignment.Assignment)
                 {
                     case Data.SpeakerAssignment.LeftFront:
                         oneSpeakerBox.SelectedIndex = 0;

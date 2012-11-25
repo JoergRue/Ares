@@ -124,6 +124,51 @@
   <data name="editMenuItem.Text" xml:space="preserve">
     <value>Bearbeiten...</value>
   </data>
+  <data name="volumeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>173, 22</value>
+  </data>
+  <data name="volumeToolStripMenuItem.Text" xml:space="preserve">
+    <value>Lautstärke ...</value>
+  </data>
+  <data name="balanceToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>173, 22</value>
+  </data>
+  <data name="pitchToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>173, 22</value>
+  </data>
+  <data name="pitchToolStripMenuItem.Text" xml:space="preserve">
+    <value>Tonhöhe ...</value>
+  </data>
+  <data name="volumedBToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>173, 22</value>
+  </data>
+  <data name="volumedBToolStripMenuItem.Text" xml:space="preserve">
+    <value>Lautstärke (dB) ...</value>
+  </data>
+  <data name="reverbToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>173, 22</value>
+  </data>
+  <data name="reverbToolStripMenuItem.Text" xml:space="preserve">
+    <value>Hall ...</value>
+  </data>
+  <data name="speakersToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>173, 22</value>
+  </data>
+  <data name="speakersToolStripMenuItem.Text" xml:space="preserve">
+    <value>Lautsprecher ...</value>
+  </data>
+  <data name="tempoToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>173, 22</value>
+  </data>
+  <data name="tempoToolStripMenuItem.Text" xml:space="preserve">
+    <value>Geschwindigkeit ...</value>
+  </data>
+  <data name="effectsMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>191, 22</value>
+  </data>
+  <data name="effectsMenuItem.Text" xml:space="preserve">
+    <value>Effekte</value>
+  </data>
   <data name="toolStripSeparator2.Size" type="System.Drawing.Size, System.Drawing">
     <value>188, 6</value>
   </data>
@@ -155,6 +200,6 @@
     <value>Löschen</value>
   </data>
   <data name="gridContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>192, 126</value>
+    <value>192, 148</value>
   </data>
 </root>

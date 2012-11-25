@@ -25,13 +25,20 @@ namespace Ares.Editor.Actions
 {
     public class SpeakerChangeAction : Action
     {
-        public SpeakerChangeAction(IFileElement element, bool active, bool random, SpeakerAssignment assignment)
+        public SpeakerChangeAction(IList<IFileElement> elements, bool active, bool random, SpeakerAssignment assignment)
         {
-            m_Element = element;
-            m_OldActive = element.Effects.SpeakerAssignment.Active;
-            m_OldRandom = element.Effects.SpeakerAssignment.Random;
-            m_OldAssignment = element.Effects.SpeakerAssignment.Assignment;
-            m_OldBalance = element.Effects.Balance.Active;
+            m_Elements = elements;
+            m_OldActive = new List<bool>();
+            m_OldRandom = new List<bool>();
+            m_OldAssignment = new List<SpeakerAssignment>();
+            m_OldBalance = new List<bool>();
+            for (int i = 0; i < m_Elements.Count; ++i)
+            {
+                m_OldActive.Add(elements[i].Effects.SpeakerAssignment.Active);
+                m_OldRandom.Add(elements[i].Effects.SpeakerAssignment.Random);
+                m_OldAssignment.Add(elements[i].Effects.SpeakerAssignment.Assignment);
+                m_OldBalance.Add(elements[i].Effects.Balance.Active);
+            }
             m_NewActive = active;
             m_NewRandom = random;
             m_NewAssignment = assignment;
@@ -46,38 +53,44 @@ namespace Ares.Editor.Actions
 
         public override void Do()
         {
-            ISpeakerAssignmentEffect effect = m_Element.Effects.SpeakerAssignment;
-            effect.Active = m_NewActive;
-            effect.Random = m_NewRandom;
-            effect.Assignment = m_NewAssignment;
-            if (m_OldBalance && m_NewActive)
-                m_Element.Effects.Balance.Active = false;
-            ElementChanges.Instance.ElementChanged(m_Element.Id);
+            for (int i = 0; i < m_Elements.Count; ++i)
+            {
+                ISpeakerAssignmentEffect effect = m_Elements[i].Effects.SpeakerAssignment;
+                effect.Active = m_NewActive;
+                effect.Random = m_NewRandom;
+                effect.Assignment = m_NewAssignment;
+                if (m_OldBalance[i] && m_NewActive)
+                    m_Elements[i].Effects.Balance.Active = false;
+                ElementChanges.Instance.ElementChanged(m_Elements[i].Id);
+            }
         }
 
         public override void Undo()
         {
-            ISpeakerAssignmentEffect effect = m_Element.Effects.SpeakerAssignment;
-            effect.Active = m_OldActive;
-            effect.Random = m_OldRandom;
-            effect.Assignment = m_OldAssignment;
-            m_Element.Effects.Balance.Active = m_OldBalance;
-            ElementChanges.Instance.ElementChanged(m_Element.Id);
-        }
-
-        public IFileElement Element
-        {
-            get
+            for (int i = 0; i < m_Elements.Count; ++i)
             {
-                return m_Element;
+                ISpeakerAssignmentEffect effect = m_Elements[i].Effects.SpeakerAssignment;
+                effect.Active = m_OldActive[i];
+                effect.Random = m_OldRandom[i];
+                effect.Assignment = m_OldAssignment[i];
+                m_Elements[i].Effects.Balance.Active = m_OldBalance[i];
+                ElementChanges.Instance.ElementChanged(m_Elements[i].Id);
             }
         }
 
-        private IFileElement m_Element;
-        private bool m_OldActive;
-        private bool m_OldRandom;
-        private bool m_OldBalance;
-        private SpeakerAssignment m_OldAssignment;
+        public IList<IFileElement> Elements
+        {
+            get
+            {
+                return m_Elements;
+            }
+        }
+
+        private IList<IFileElement> m_Elements;
+        private List<bool> m_OldActive;
+        private List<bool> m_OldRandom;
+        private List<bool> m_OldBalance;
+        private List<SpeakerAssignment> m_OldAssignment;
         private bool m_NewActive;
         private bool m_NewRandom;
         private SpeakerAssignment m_NewAssignment;
@@ -85,23 +98,29 @@ namespace Ares.Editor.Actions
 
     public class ReverbEffectChangeAction : Action
     {
-        private IFileElement m_Element;
-        private bool m_OldActive;
-        private int m_OldLevel;
-        private int m_OldDelay;
+        private IList<IFileElement> m_Elements;
+        private List<bool> m_OldActive;
+        private List<int> m_OldLevel;
+        private List<int> m_OldDelay;
         private bool m_NewActive;
         private int m_NewLevel;
         private int m_NewDelay;
 
-        public ReverbEffectChangeAction(IFileElement element, bool active)
+        public ReverbEffectChangeAction(IList<IFileElement> elements, bool active)
         {
-            m_Element = element;
-            m_OldActive = element.Effects.Reverb.Active;
-            m_OldLevel = element.Effects.Reverb.Level;
-            m_OldDelay = element.Effects.Reverb.Delay;
+            m_Elements = elements;
+            m_OldActive = new List<bool>();
+            m_OldLevel = new List<int>();
+            m_OldDelay = new List<int>();
+            for (int i = 0; i < elements.Count; ++i)
+            {
+                m_OldActive.Add(elements[i].Effects.Reverb.Active);
+                m_OldLevel.Add(elements[i].Effects.Reverb.Level);
+                m_OldDelay.Add(elements[i].Effects.Reverb.Delay);
+            }
             m_NewActive = active;
-            m_NewDelay = m_OldDelay;
-            m_NewLevel = m_OldLevel;
+            m_NewDelay = m_OldDelay.Count > 0 ? m_OldDelay[0] : 0;
+            m_NewLevel = m_OldLevel.Count > 0 ? m_OldLevel[0] : 0;
         }
 
         public void SetData(bool active, int level, int delay)
@@ -113,43 +132,57 @@ namespace Ares.Editor.Actions
 
         public override void Do()
         {
-            IReverbEffect effect = m_Element.Effects.Reverb;
-            effect.Active = m_NewActive;
-            effect.Delay = m_NewDelay;
-            effect.Level = m_NewLevel;
-            ElementChanges.Instance.ElementChanged(m_Element.Id);
+            for (int i = 0; i < m_Elements.Count; ++i)
+            {
+                IReverbEffect effect = m_Elements[i].Effects.Reverb;
+                effect.Active = m_NewActive;
+                effect.Delay = m_NewDelay;
+                effect.Level = m_NewLevel;
+                ElementChanges.Instance.ElementChanged(m_Elements[i].Id);
+            }
         }
 
         public override void Undo()
         {
-            IReverbEffect effect = m_Element.Effects.Reverb;
-            effect.Active = m_OldActive;
-            effect.Delay = m_OldDelay;
-            effect.Level = m_OldLevel;
-            ElementChanges.Instance.ElementChanged(m_Element.Id);
+            for (int i = 0; i < m_Elements.Count; ++i)
+            {
+                IReverbEffect effect = m_Elements[i].Effects.Reverb;
+                effect.Active = m_OldActive[i];
+                effect.Delay = m_OldDelay[i];
+                effect.Level = m_OldLevel[i];
+                ElementChanges.Instance.ElementChanged(m_Elements[i].Id);
+            }
         }
 
-        public IFileElement Element
+        public IList<IFileElement> Elements
         {
             get
             {
-                return m_Element;
+                return m_Elements;
             }
         }
     }
 
     public class IntEffectChangeAction : Action
     {
-        public IntEffectChangeAction(IFileElement element, IIntEffect effect, 
+        public IntEffectChangeAction(IList<IFileElement> elements, IList<IIntEffect> effects, 
             bool active, bool random, int fixValue, int minRandomValue, int maxRandomValue)
         {
-            m_Element = element;
-            m_Effect = effect;
-            m_OldActive = m_Effect.Active;
-            m_OldFixValue = m_Effect.FixValue;
-            m_OldRandom = m_Effect.Random;
-            m_OldMinRandom = m_Effect.MinRandomValue;
-            m_OldMaxRandom = m_Effect.MaxRandomValue;
+            m_Elements = elements;
+            m_Effects = effects;
+            m_OldActive = new List<bool>();
+            m_OldFixValue = new List<int>();
+            m_OldMinRandom = new List<int>();
+            m_OldMaxRandom = new List<int>();
+            m_OldRandom = new List<bool>();
+            for (int i = 0; i < elements.Count; ++i)
+            {
+                m_OldActive.Add(m_Effects[i].Active);
+                m_OldFixValue.Add(m_Effects[i].FixValue);
+                m_OldRandom.Add(m_Effects[i].Random);
+                m_OldMinRandom.Add(m_Effects[i].MinRandomValue);
+                m_OldMaxRandom.Add(m_Effects[i].MaxRandomValue);
+            }
             m_NewActive = active;
             m_NewFixValue = fixValue;
             m_NewRandom = random;
@@ -157,11 +190,11 @@ namespace Ares.Editor.Actions
             m_NewMaxRandom = maxRandomValue;
         }
 
-        public IFileElement Element
+        public IList<IFileElement> Elements
         {
             get
             {
-                return m_Element;
+                return m_Elements;
             }
         }
 
@@ -176,31 +209,37 @@ namespace Ares.Editor.Actions
 
         public override void Do()
         {
-            m_Effect.Active = m_NewActive;
-            m_Effect.FixValue = m_NewFixValue;
-            m_Effect.Random = m_NewRandom;
-            m_Effect.MinRandomValue = m_NewMinRandom;
-            m_Effect.MaxRandomValue = m_NewMaxRandom;
-            ElementChanges.Instance.ElementChanged(m_Element.Id);
+            for (int i = 0; i < m_Effects.Count; ++i)
+            {
+                m_Effects[i].Active = m_NewActive;
+                m_Effects[i].FixValue = m_NewFixValue;
+                m_Effects[i].Random = m_NewRandom;
+                m_Effects[i].MinRandomValue = m_NewMinRandom;
+                m_Effects[i].MaxRandomValue = m_NewMaxRandom;
+                ElementChanges.Instance.ElementChanged(m_Elements[i].Id);
+            }
         }
 
         public override void Undo()
         {
-            m_Effect.Active = m_OldActive;
-            m_Effect.FixValue = m_OldFixValue;
-            m_Effect.Random = m_OldRandom;
-            m_Effect.MinRandomValue = m_OldMinRandom;
-            m_Effect.MaxRandomValue = m_OldMaxRandom;
-            ElementChanges.Instance.ElementChanged(m_Element.Id);
+            for (int i = 0; i < m_Effects.Count; ++i)
+            {
+                m_Effects[i].Active = m_OldActive[i];
+                m_Effects[i].FixValue = m_OldFixValue[i];
+                m_Effects[i].Random = m_OldRandom[i];
+                m_Effects[i].MinRandomValue = m_OldMinRandom[i];
+                m_Effects[i].MaxRandomValue = m_OldMaxRandom[i];
+                ElementChanges.Instance.ElementChanged(m_Elements[i].Id);
+            }
         }
 
-        protected IFileElement m_Element;
-        private IIntEffect m_Effect;
-        private bool m_OldActive;
-        private int m_OldFixValue;
-        private bool m_OldRandom;
-        private int m_OldMinRandom;
-        private int m_OldMaxRandom;
+        protected IList<IFileElement> m_Elements;
+        private IList<IIntEffect> m_Effects;
+        private List<bool> m_OldActive;
+        private List<int> m_OldFixValue;
+        private List<bool> m_OldRandom;
+        private List<int> m_OldMinRandom;
+        private List<int> m_OldMaxRandom;
         protected bool m_NewActive;
         private int m_NewFixValue;
         private bool m_NewRandom;
@@ -210,46 +249,70 @@ namespace Ares.Editor.Actions
 
     public class BalanceChangeAction : IntEffectChangeAction
     {
-        private bool m_OldSpeakers;
-        private bool m_OldPanning;
-        private int m_OldPanningStart;
-        private int m_OldPanningEnd;
+        private List<bool> m_OldSpeakers;
+        private List<bool> m_OldPanning;
+        private List<int> m_OldPanningStart;
+        private List<int> m_OldPanningEnd;
         private bool m_NewPanning;
         private int m_NewPanningStart;
         private int m_NewPanningEnd;
 
-        public BalanceChangeAction(IFileElement element, bool active)
-            : base(element, element.Effects.Balance, active, element.Effects.Balance.Random,
-            element.Effects.Balance.FixValue, element.Effects.Balance.MinRandomValue, element.Effects.Balance.MaxRandomValue)
+        private static IList<IIntEffect> GetEffectList(IList<IFileElement> elements)
         {
-            m_OldSpeakers = element.Effects.SpeakerAssignment.Active;
-            IBalanceEffect effect = element.Effects.Balance;
-            m_OldPanning = effect.IsPanning;
-            m_OldPanningStart = effect.PanningStart;
-            m_OldPanningEnd = effect.PanningEnd;
-            m_NewPanning = m_OldPanning;
-            m_NewPanningStart = m_OldPanningStart;
-            m_NewPanningEnd = m_OldPanningEnd;
+            List<IIntEffect> result = new List<IIntEffect>();
+            for (int i = 0; i < elements.Count; ++i)
+            {
+                result.Add(elements[i].Effects.Balance);
+            }
+            return result;
+        }
+
+
+        public BalanceChangeAction(IList<IFileElement> elements, bool active)
+            : base(elements, GetEffectList(elements), active, elements[0].Effects.Balance.Random,
+            elements[0].Effects.Balance.FixValue, elements[0].Effects.Balance.MinRandomValue, elements[0].Effects.Balance.MaxRandomValue)
+        {
+            m_OldSpeakers = new List<bool>();
+            m_OldPanning = new List<bool>();
+            m_OldPanningStart = new List<int>();
+            m_OldPanningEnd = new List<int>();
+            for (int i = 0; i < elements.Count; ++i)
+            {
+                m_OldSpeakers.Add(elements[i].Effects.SpeakerAssignment.Active);
+                IBalanceEffect effect = elements[i].Effects.Balance;
+                m_OldPanning.Add(effect.IsPanning);
+                m_OldPanningStart.Add(effect.PanningStart);
+                m_OldPanningEnd.Add(effect.PanningEnd);
+            }
+            m_NewPanning = m_OldPanning[0];
+            m_NewPanningStart = m_OldPanningStart[0];
+            m_NewPanningEnd = m_OldPanningEnd[0];
         }
 
         public override void Do()
         {
-            if (m_Element.Effects.SpeakerAssignment.Active && m_NewActive)
-                m_Element.Effects.SpeakerAssignment.Active = false;
-            IBalanceEffect effect = m_Element.Effects.Balance;
-            effect.IsPanning = m_NewPanning;
-            effect.PanningStart = m_NewPanningStart;
-            effect.PanningEnd = m_NewPanningEnd;
+            for (int i = 0; i < m_Elements.Count; ++i)
+            {
+                if (m_Elements[i].Effects.SpeakerAssignment.Active && m_NewActive)
+                    m_Elements[i].Effects.SpeakerAssignment.Active = false;
+                IBalanceEffect effect = m_Elements[i].Effects.Balance;
+                effect.IsPanning = m_NewPanning;
+                effect.PanningStart = m_NewPanningStart;
+                effect.PanningEnd = m_NewPanningEnd;
+            }
             base.Do();
         }
 
         public override void Undo()
         {
-            m_Element.Effects.SpeakerAssignment.Active = m_OldSpeakers;
-            IBalanceEffect effect = m_Element.Effects.Balance;
-            effect.IsPanning = m_OldPanning;
-            effect.PanningStart = m_OldPanningStart;
-            effect.PanningEnd = m_OldPanningEnd;
+            for (int i = 0; i < m_Elements.Count; ++i)
+            {
+                m_Elements[i].Effects.SpeakerAssignment.Active = m_OldSpeakers[i];
+                IBalanceEffect effect = m_Elements[i].Effects.Balance;
+                effect.IsPanning = m_OldPanning[i];
+                effect.PanningStart = m_OldPanningStart[i];
+                effect.PanningEnd = m_OldPanningEnd[i];
+            }
             base.Undo();
         }
 

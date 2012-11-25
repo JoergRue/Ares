@@ -127,6 +127,54 @@
   <data name="editMenuItem.Text" xml:space="preserve">
     <value>Edit ...</value>
   </data>
+  <data name="volumeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
+  </data>
+  <data name="volumeToolStripMenuItem.Text" xml:space="preserve">
+    <value>Volume ...</value>
+  </data>
+  <data name="balanceToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
+  </data>
+  <data name="balanceToolStripMenuItem.Text" xml:space="preserve">
+    <value>Balance ...</value>
+  </data>
+  <data name="pitchToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
+  </data>
+  <data name="pitchToolStripMenuItem.Text" xml:space="preserve">
+    <value>Pitch ...</value>
+  </data>
+  <data name="volumedBToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
+  </data>
+  <data name="volumedBToolStripMenuItem.Text" xml:space="preserve">
+    <value>Volume (dB) ...</value>
+  </data>
+  <data name="reverbToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
+  </data>
+  <data name="reverbToolStripMenuItem.Text" xml:space="preserve">
+    <value>Reverb ...</value>
+  </data>
+  <data name="speakersToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
+  </data>
+  <data name="speakersToolStripMenuItem.Text" xml:space="preserve">
+    <value>Speakers ...</value>
+  </data>
+  <data name="tempoToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
+  </data>
+  <data name="tempoToolStripMenuItem.Text" xml:space="preserve">
+    <value>Tempo ...</value>
+  </data>
+  <data name="effectsMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
+  </data>
+  <data name="effectsMenuItem.Text" xml:space="preserve">
+    <value>Effects</value>
+  </data>
   <data name="toolStripSeparator2.Size" type="System.Drawing.Size, System.Drawing">
     <value>149, 6</value>
   </data>
@@ -171,7 +219,7 @@
     <value>Delete</value>
   </data>
   <data name="gridContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>153, 148</value>
+    <value>153, 170</value>
   </data>
   <data name="&gt;&gt;gridContextMenu.Name" xml:space="preserve">
     <value>gridContextMenu</value>
@@ -186,6 +234,54 @@
     <value>editMenuItem</value>
   </data>
   <data name="&gt;&gt;editMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;effectsMenuItem.Name" xml:space="preserve">
+    <value>effectsMenuItem</value>
+  </data>
+  <data name="&gt;&gt;effectsMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;volumeToolStripMenuItem.Name" xml:space="preserve">
+    <value>volumeToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;volumeToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;balanceToolStripMenuItem.Name" xml:space="preserve">
+    <value>balanceToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;balanceToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pitchToolStripMenuItem.Name" xml:space="preserve">
+    <value>pitchToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;pitchToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;volumedBToolStripMenuItem.Name" xml:space="preserve">
+    <value>volumedBToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;volumedBToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;reverbToolStripMenuItem.Name" xml:space="preserve">
+    <value>reverbToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;reverbToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;speakersToolStripMenuItem.Name" xml:space="preserve">
+    <value>speakersToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;speakersToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tempoToolStripMenuItem.Name" xml:space="preserve">
+    <value>tempoToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;tempoToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;toolStripSeparator2.Name" xml:space="preserve">

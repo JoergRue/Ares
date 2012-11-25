@@ -98,6 +98,12 @@
     <Compile Include="FileVolumeControl.Designer.cs">
       <DependentUpon>FileVolumeControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="FileVolumeDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FileVolumeDialog.Designer.cs">
+      <DependentUpon>FileVolumeDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUIExtensions\DataGridViewNumericUpDownCell.cs" />
     <Compile Include="GUIExtensions\DataGridViewNumericUpDownColumn.cs" />
     <Compile Include="GUIExtensions\DataGridViewNumericUpDownEditingControl.cs">
@@ -253,6 +259,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BalanceDialog.resx">
       <DependentUpon>BalanceDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FileVolumeDialog.de.resx">
+      <DependentUpon>FileVolumeDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FileVolumeDialog.resx">
+      <DependentUpon>FileVolumeDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MacroControl.de.resx">
       <DependentUpon>MacroControl.cs</DependentUpon>

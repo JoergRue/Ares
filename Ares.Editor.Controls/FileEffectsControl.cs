@@ -37,6 +37,7 @@ namespace Ares.Editor.Controls
         }
 
         private Ares.Data.IFileElement m_Element;
+        private List<Ares.Data.IFileElement> m_ElementList;
         private bool listen = true;
         private Ares.Data.IGeneralElementContainer m_Container;
 
@@ -52,6 +53,8 @@ namespace Ares.Editor.Controls
                 Actions.ElementChanges.Instance.RemoveListener(m_Element.Id, Update);
             }
             m_Element = element;
+            m_ElementList = new List<IFileElement>();
+            m_ElementList.Add(m_Element);
             if (m_Element != null)
             {
                 Update(m_Element.Id, Actions.ElementChanges.ChangeType.Changed);
@@ -107,13 +110,15 @@ namespace Ares.Editor.Controls
             if (!listen)
                 return;
             IIntEffect effect = m_Element.Effects.Pitch;
-            Actions.Actions.Instance.AddNew(new Actions.IntEffectChangeAction(m_Element, effect,
+            List<IIntEffect> effects = new List<IIntEffect>();
+            effects.Add(effect);
+            Actions.Actions.Instance.AddNew(new Actions.IntEffectChangeAction(m_ElementList, effects,
                 pitchBox.Checked, effect.Random, effect.FixValue, effect.MinRandomValue, effect.MaxRandomValue));
         }
 
         private void pitchButton_Click(object sender, EventArgs e)
         {
-            PitchDialog dialog = new PitchDialog(m_Element);
+            PitchDialog dialog = new PitchDialog(m_ElementList);
             if (dialog.ShowDialog(Parent) == DialogResult.OK)
             {
                 dialog.UpdateAction();
@@ -132,12 +137,12 @@ namespace Ares.Editor.Controls
         {
             if (!listen)
                 return;
-            Actions.Actions.Instance.AddNew(new Actions.BalanceChangeAction(m_Element, balanceBox.Checked));
+            Actions.Actions.Instance.AddNew(new Actions.BalanceChangeAction(m_ElementList, balanceBox.Checked));
         }
 
         private void balanceButton_Click(object sender, EventArgs e)
         {
-            BalanceDialog dialog = new BalanceDialog(m_Element);
+            BalanceDialog dialog = new BalanceDialog(m_ElementList);
             if (dialog.ShowDialog(Parent) == DialogResult.OK)
             {
                 dialog.UpdateAction();
@@ -156,13 +161,15 @@ namespace Ares.Editor.Controls
             if (!listen)
                 return;
             IIntEffect effect = m_Element.Effects.VolumeDB;
-            Actions.Actions.Instance.AddNew(new Actions.IntEffectChangeAction(m_Element, effect,
+            List<IIntEffect> effects = new List<IIntEffect>();
+            effects.Add(effect);
+            Actions.Actions.Instance.AddNew(new Actions.IntEffectChangeAction(m_ElementList, effects,
                 volumeBox.Checked, effect.Random, effect.FixValue, effect.MinRandomValue, effect.MaxRandomValue));
         }
 
         private void volumeButton_Click(object sender, EventArgs e)
         {
-            VolumeDBDialog dialog = new VolumeDBDialog(m_Element);
+            VolumeDBDialog dialog = new VolumeDBDialog(m_ElementList);
             if (dialog.ShowDialog(Parent) == DialogResult.OK)
             {
                 dialog.UpdateAction();
@@ -182,13 +189,13 @@ namespace Ares.Editor.Controls
             if (!listen)
                 return;
             ISpeakerAssignmentEffect effect = m_Element.Effects.SpeakerAssignment;
-            Actions.Actions.Instance.AddNew(new Actions.SpeakerChangeAction(m_Element, speakerBox.Checked,
+            Actions.Actions.Instance.AddNew(new Actions.SpeakerChangeAction(m_ElementList, speakerBox.Checked,
                 effect.Random, effect.Assignment));
         }
 
         private void speakerButton_Click(object sender, EventArgs e)
         {
-            SpeakersDialog dialog = new SpeakersDialog(m_Element);
+            SpeakersDialog dialog = new SpeakersDialog(m_ElementList);
             if (dialog.ShowDialog(Parent) == DialogResult.OK)
             {
                 dialog.UpdateAction();
@@ -207,12 +214,12 @@ namespace Ares.Editor.Controls
         {
             if (!listen)
                 return;
-            Actions.Actions.Instance.AddNew(new Actions.ReverbEffectChangeAction(m_Element, reverbBox.Checked));
+            Actions.Actions.Instance.AddNew(new Actions.ReverbEffectChangeAction(m_ElementList, reverbBox.Checked));
         }
 
         private void reverbButton_Click(object sender, EventArgs e)
         {
-            ReverbDialog dialog = new ReverbDialog(m_Element);
+            ReverbDialog dialog = new ReverbDialog(m_ElementList);
             if (dialog.ShowDialog(Parent) == DialogResult.OK)
             {
                 dialog.UpdateAction();
@@ -228,7 +235,7 @@ namespace Ares.Editor.Controls
 
         private void tempoButton_Click(object sender, EventArgs e)
         {
-            TempoDialog dialog = new TempoDialog(m_Element);
+            TempoDialog dialog = new TempoDialog(m_ElementList);
             if (dialog.ShowDialog(Parent) == DialogResult.OK)
             {
                 dialog.UpdateAction();
@@ -248,7 +255,9 @@ namespace Ares.Editor.Controls
             if (!listen)
                 return;
             IIntEffect effect = m_Element.Effects.Tempo;
-            Actions.Actions.Instance.AddNew(new Actions.IntEffectChangeAction(m_Element, effect,
+            List<IIntEffect> effects = new List<IIntEffect>();
+            effects.Add(effect);
+            Actions.Actions.Instance.AddNew(new Actions.IntEffectChangeAction(m_ElementList, effects,
                 tempoBox.Checked, effect.Random, effect.FixValue, effect.MinRandomValue, effect.MaxRandomValue));
         }
     }

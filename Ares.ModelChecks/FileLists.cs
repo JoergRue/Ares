@@ -26,6 +26,17 @@ namespace Ares.ModelInfo
     public class FileLists : IElementVisitor
     {
         private Dictionary<String, IFileElement> m_Files = new Dictionary<string, IFileElement>();
+        private bool m_RemoveDuplicates;
+
+        public FileLists()
+        {
+            m_RemoveDuplicates = true;
+        }
+
+        public FileLists(bool removeDuplicates)
+        {
+            m_RemoveDuplicates = removeDuplicates;
+        }
 
         public IList<IFileElement> GetAllFiles(Object parents)
         {
@@ -83,20 +94,27 @@ namespace Ares.ModelInfo
 
         public void VisitFileElement(IFileElement fileElement)
         {
-            String path;
-            if (fileElement.SoundFileType == SoundFileType.Music)
+            if (m_RemoveDuplicates)
             {
-                path = Ares.Settings.Settings.Instance.MusicDirectory;
+                String path;
+                if (fileElement.SoundFileType == SoundFileType.Music)
+                {
+                    path = Ares.Settings.Settings.Instance.MusicDirectory;
+                }
+                else
+                {
+                    path = Ares.Settings.Settings.Instance.SoundDirectory;
+                }
+                path = System.IO.Path.Combine(path, fileElement.FilePath);
+                path = System.IO.Path.GetFullPath(path).ToUpperInvariant();
+                if (!m_Files.ContainsKey(path))
+                {
+                    m_Files.Add(path, fileElement);
+                }
             }
             else
             {
-                path = Ares.Settings.Settings.Instance.SoundDirectory;
-            }
-            path = System.IO.Path.Combine(path, fileElement.FilePath);
-            path = System.IO.Path.GetFullPath(path).ToUpperInvariant();
-            if (!m_Files.ContainsKey(path))
-            {
-                m_Files.Add(path, fileElement);
+                m_Files.Add("" + m_Files.Count, fileElement);
             }
         }
 

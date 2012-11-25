@@ -35,12 +35,15 @@ namespace Ares.Editor.Controls
 
         public IntEffectChangeAction Action { get; set; }
 
-        public PitchDialog(IFileElement element)
+        public PitchDialog(IList<IFileElement> elements)
         {
             InitializeComponent();
-            Element = element;
-            IIntEffect effect = element.Effects.Pitch;
-            Action = new IntEffectChangeAction(element, effect, true, effect.Random, effect.FixValue, effect.MinRandomValue, effect.MaxRandomValue);
+            Element = elements[0];
+            IIntEffect effect = elements[0].Effects.Pitch;
+            List<IIntEffect> effects = new List<IIntEffect>();
+            for (int i = 0; i < elements.Count; ++i)
+                effects.Add(elements[i].Effects.Pitch);
+            Action = new IntEffectChangeAction(elements, effects, true, effect.Random, effect.FixValue, effect.MinRandomValue, effect.MaxRandomValue);
             fixedButton.Checked = !effect.Random;
             randomButton.Checked = effect.Random;
             fixedBar.Value = effect.FixValue * 10;

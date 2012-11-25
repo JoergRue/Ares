@@ -35,12 +35,12 @@ namespace Ares.Editor.Controls
 
         public BalanceChangeAction Action { get; set; }
 
-        public BalanceDialog(IFileElement element)
+        public BalanceDialog(IList<IFileElement> elements)
         {
             InitializeComponent();
-            Element = element;
-            IBalanceEffect effect = element.Effects.Balance;
-            Action = new BalanceChangeAction(element, true);
+            Element = elements[0];
+            IBalanceEffect effect = elements[0].Effects.Balance;
+            Action = new BalanceChangeAction(elements, true);
             fixedButton.Checked = !effect.Random && !effect.IsPanning;
             randomButton.Checked = effect.Random;
             movingButton.Checked = effect.IsPanning;

@@ -93,6 +93,14 @@ namespace Ares.Editor.Controls
         private ContextMenuStrip gridContextMenu;
         private ToolStripMenuItem editMenuItem;
         private ToolStripSeparator toolStripSeparator2;
+        private ToolStripMenuItem effectsMenuItem;
+        private ToolStripMenuItem volumeToolStripMenuItem;
+        private ToolStripMenuItem balanceToolStripMenuItem;
+        private ToolStripMenuItem pitchToolStripMenuItem;
+        private ToolStripMenuItem volumedBToolStripMenuItem;
+        private ToolStripMenuItem reverbToolStripMenuItem;
+        private ToolStripMenuItem speakersToolStripMenuItem;
+        private ToolStripMenuItem tempoToolStripMenuItem;
 
         protected bool listen = true;
 
@@ -454,6 +462,13 @@ namespace Ares.Editor.Controls
             deleteMenuItem.Enabled = enable;
             pasteMenuItem.Enabled = Grid.Enabled && Clipboard.ContainsData(DataFormats.GetFormat(formatName).Name);
             editMenuItem.Enabled = enable;
+            speakersToolStripMenuItem.Enabled = enable;
+            volumedBToolStripMenuItem.Enabled = enable;
+            volumeToolStripMenuItem.Enabled = enable;
+            pitchToolStripMenuItem.Enabled = enable;
+            tempoToolStripMenuItem.Enabled = enable;
+            reverbToolStripMenuItem.Enabled = enable;
+            balanceToolStripMenuItem.Enabled = enable;
         }
 
         private static readonly String formatName = "AresGridDataExchangeFormat";
@@ -489,6 +504,14 @@ namespace Ares.Editor.Controls
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ContainerControl));
             this.gridContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.editMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.effectsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.volumeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.balanceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pitchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.volumedBToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.reverbToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.speakersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tempoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.cutMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -502,6 +525,7 @@ namespace Ares.Editor.Controls
             // 
             this.gridContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.editMenuItem,
+            this.effectsMenuItem,
             this.toolStripSeparator2,
             this.cutMenuItem,
             this.copyMenuItem,
@@ -517,6 +541,61 @@ namespace Ares.Editor.Controls
             this.editMenuItem.Name = "editMenuItem";
             resources.ApplyResources(this.editMenuItem, "editMenuItem");
             this.editMenuItem.Click += new System.EventHandler(this.editMenuItem_Click);
+            // 
+            // effectsMenuItem
+            // 
+            this.effectsMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.volumeToolStripMenuItem,
+            this.balanceToolStripMenuItem,
+            this.pitchToolStripMenuItem,
+            this.volumedBToolStripMenuItem,
+            this.reverbToolStripMenuItem,
+            this.speakersToolStripMenuItem,
+            this.tempoToolStripMenuItem});
+            this.effectsMenuItem.Name = "effectsMenuItem";
+            resources.ApplyResources(this.effectsMenuItem, "effectsMenuItem");
+            // 
+            // volumeToolStripMenuItem
+            // 
+            this.volumeToolStripMenuItem.Name = "volumeToolStripMenuItem";
+            resources.ApplyResources(this.volumeToolStripMenuItem, "volumeToolStripMenuItem");
+            this.volumeToolStripMenuItem.Click += new System.EventHandler(this.volumeToolStripMenuItem_Click);
+            // 
+            // balanceToolStripMenuItem
+            // 
+            this.balanceToolStripMenuItem.Name = "balanceToolStripMenuItem";
+            resources.ApplyResources(this.balanceToolStripMenuItem, "balanceToolStripMenuItem");
+            this.balanceToolStripMenuItem.Click += new System.EventHandler(this.balanceToolStripMenuItem_Click);
+            // 
+            // pitchToolStripMenuItem
+            // 
+            this.pitchToolStripMenuItem.Name = "pitchToolStripMenuItem";
+            resources.ApplyResources(this.pitchToolStripMenuItem, "pitchToolStripMenuItem");
+            this.pitchToolStripMenuItem.Click += new System.EventHandler(this.pitchToolStripMenuItem_Click);
+            // 
+            // volumedBToolStripMenuItem
+            // 
+            this.volumedBToolStripMenuItem.Name = "volumedBToolStripMenuItem";
+            resources.ApplyResources(this.volumedBToolStripMenuItem, "volumedBToolStripMenuItem");
+            this.volumedBToolStripMenuItem.Click += new System.EventHandler(this.volumedBToolStripMenuItem_Click);
+            // 
+            // reverbToolStripMenuItem
+            // 
+            this.reverbToolStripMenuItem.Name = "reverbToolStripMenuItem";
+            resources.ApplyResources(this.reverbToolStripMenuItem, "reverbToolStripMenuItem");
+            this.reverbToolStripMenuItem.Click += new System.EventHandler(this.reverbToolStripMenuItem_Click);
+            // 
+            // speakersToolStripMenuItem
+            // 
+            this.speakersToolStripMenuItem.Name = "speakersToolStripMenuItem";
+            resources.ApplyResources(this.speakersToolStripMenuItem, "speakersToolStripMenuItem");
+            this.speakersToolStripMenuItem.Click += new System.EventHandler(this.speakersToolStripMenuItem_Click);
+            // 
+            // tempoToolStripMenuItem
+            // 
+            this.tempoToolStripMenuItem.Name = "tempoToolStripMenuItem";
+            resources.ApplyResources(this.tempoToolStripMenuItem, "tempoToolStripMenuItem");
+            this.tempoToolStripMenuItem.Click += new System.EventHandler(this.tempoToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
@@ -561,6 +640,103 @@ namespace Ares.Editor.Controls
         }
 
         private System.ComponentModel.IContainer components;
+
+        private IList<IFileElement> GetAllSelectedFileElements()
+        {
+            List<IXmlWritable> elements = new List<IXmlWritable>();
+            IList<IContainerElement> containerElements = ElementsContainer.GetGeneralElements();
+            List<int> selectedIndices = new List<int>();
+            foreach (DataGridViewRow row in Grid.SelectedRows)
+            {
+                elements.Add(containerElements[row.Index]);
+            }
+            Ares.ModelInfo.FileLists fileLists = new ModelInfo.FileLists(false);
+            return fileLists.GetAllFiles(elements);
+        }
+
+        private void volumeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var list = GetAllSelectedFileElements();
+            if (list.Count == 0) return;
+            FileVolumeDialog dialog = new FileVolumeDialog(list);
+            if (dialog.ShowDialog(Parent) == DialogResult.OK)
+            {
+                dialog.UpdateAction();
+                Actions.Actions.Instance.AddNew(dialog.Action);
+            }
+        }
+
+        private void balanceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var list = GetAllSelectedFileElements();
+            if (list.Count == 0) return;
+            BalanceDialog dialog = new BalanceDialog(list);
+            if (dialog.ShowDialog(Parent) == DialogResult.OK)
+            {
+                dialog.UpdateAction();
+                Actions.Actions.Instance.AddNew(dialog.Action);
+            }
+        }
+
+        private void pitchToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var list = GetAllSelectedFileElements();
+            if (list.Count == 0) return;
+            PitchDialog dialog = new PitchDialog(list);
+            if (dialog.ShowDialog(Parent) == DialogResult.OK)
+            {
+                dialog.UpdateAction();
+                Actions.Actions.Instance.AddNew(dialog.Action);
+            }
+        }
+
+        private void volumedBToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var list = GetAllSelectedFileElements();
+            if (list.Count == 0) return;
+            VolumeDBDialog dialog = new VolumeDBDialog(list);
+            if (dialog.ShowDialog(Parent) == DialogResult.OK)
+            {
+                dialog.UpdateAction();
+                Actions.Actions.Instance.AddNew(dialog.Action);
+            }
+        }
+
+        private void reverbToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var list = GetAllSelectedFileElements();
+            if (list.Count == 0) return;
+            ReverbDialog dialog = new ReverbDialog(list);
+            if (dialog.ShowDialog(Parent) == DialogResult.OK)
+            {
+                dialog.UpdateAction();
+                Actions.Actions.Instance.AddNew(dialog.Action);
+            }
+        }
+
+        private void speakersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var list = GetAllSelectedFileElements();
+            if (list.Count == 0) return;
+            SpeakersDialog dialog = new SpeakersDialog(list);
+            if (dialog.ShowDialog(Parent) == DialogResult.OK)
+            {
+                dialog.UpdateAction();
+                Actions.Actions.Instance.AddNew(dialog.Action);
+            }
+        }
+
+        private void tempoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var list = GetAllSelectedFileElements();
+            if (list.Count == 0) return;
+            TempoDialog dialog = new TempoDialog(list);
+            if (dialog.ShowDialog(Parent) == DialogResult.OK)
+            {
+                dialog.UpdateAction();
+                Actions.Actions.Instance.AddNew(dialog.Action);
+            }
+        }
 
     }
 

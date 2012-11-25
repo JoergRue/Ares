@@ -202,15 +202,24 @@ namespace Ares.Editor.Actions
 
     public class ElementVolumeEffectsChangeAction : Action
     {
-        public ElementVolumeEffectsChangeAction(IFileElement element, bool randomVolume, int volume, int minRandomVolume, int maxRandomVolume, int fadeIn, int fadeOut)
+        public ElementVolumeEffectsChangeAction(IList<IFileElement> elements, bool randomVolume, int volume, int minRandomVolume, int maxRandomVolume, int fadeIn, int fadeOut)
         {
-            m_Element = element;
-            m_OldVolume = m_Element.Effects.Volume;
-            m_OldFadeIn = m_Element.Effects.FadeInTime;
-            m_OldFadeOut = m_Element.Effects.FadeOutTime;
-            m_OldRandom = m_Element.Effects.HasRandomVolume;
-            m_OldMinRandom = m_Element.Effects.MinRandomVolume;
-            m_OldMaxRandom = m_Element.Effects.MaxRandomVolume;
+            m_Elements = elements;
+            m_OldVolume = new List<int>();
+            m_OldFadeIn = new List<int>();
+            m_OldFadeOut = new List<int>();
+            m_OldRandom = new List<bool>();
+            m_OldMinRandom = new List<int>();
+            m_OldMaxRandom = new List<int>();
+            for (int i = 0; i < elements.Count; ++i)
+            {
+                m_OldVolume.Add(m_Elements[i].Effects.Volume);
+                m_OldFadeIn.Add(m_Elements[i].Effects.FadeInTime);
+                m_OldFadeOut.Add(m_Elements[i].Effects.FadeOutTime);
+                m_OldRandom.Add(m_Elements[i].Effects.HasRandomVolume);
+                m_OldMinRandom.Add(m_Elements[i].Effects.MinRandomVolume);
+                m_OldMaxRandom.Add(m_Elements[i].Effects.MaxRandomVolume);
+            }
             m_NewVolume = volume;
             m_NewFadeIn = fadeIn;
             m_NewFadeOut = fadeOut;
@@ -219,11 +228,11 @@ namespace Ares.Editor.Actions
             m_NewMaxRandom = maxRandomVolume;
         }
 
-        public IFileElement Element
+        public IList<IFileElement> Elements
         {
             get
             {
-                return m_Element;
+                return m_Elements;
             }
         }
 
@@ -239,33 +248,39 @@ namespace Ares.Editor.Actions
 
         public override void Do()
         {
-            m_Element.Effects.Volume = m_NewVolume;
-            m_Element.Effects.FadeInTime = m_NewFadeIn;
-            m_Element.Effects.FadeOutTime = m_NewFadeOut;
-            m_Element.Effects.HasRandomVolume = m_NewRandom;
-            m_Element.Effects.MinRandomVolume = m_NewMinRandom;
-            m_Element.Effects.MaxRandomVolume = m_NewMaxRandom;
-            ElementChanges.Instance.ElementChanged(m_Element.Id);
+            for (int i = 0; i < m_Elements.Count; ++i)
+            {
+                m_Elements[i].Effects.Volume = m_NewVolume;
+                m_Elements[i].Effects.FadeInTime = m_NewFadeIn;
+                m_Elements[i].Effects.FadeOutTime = m_NewFadeOut;
+                m_Elements[i].Effects.HasRandomVolume = m_NewRandom;
+                m_Elements[i].Effects.MinRandomVolume = m_NewMinRandom;
+                m_Elements[i].Effects.MaxRandomVolume = m_NewMaxRandom;
+                ElementChanges.Instance.ElementChanged(m_Elements[i].Id);
+            }
         }
 
         public override void Undo()
         {
-            m_Element.Effects.Volume = m_OldVolume;
-            m_Element.Effects.FadeInTime = m_OldFadeIn;
-            m_Element.Effects.FadeOutTime = m_OldFadeOut;
-            m_Element.Effects.HasRandomVolume = m_OldRandom;
-            m_Element.Effects.MinRandomVolume = m_OldMinRandom;
-            m_Element.Effects.MaxRandomVolume = m_OldMaxRandom;
-            ElementChanges.Instance.ElementChanged(m_Element.Id);
+            for (int i = 0; i < m_Elements.Count; ++i)
+            {
+                m_Elements[i].Effects.Volume = m_OldVolume[i];
+                m_Elements[i].Effects.FadeInTime = m_OldFadeIn[i];
+                m_Elements[i].Effects.FadeOutTime = m_OldFadeOut[i];
+                m_Elements[i].Effects.HasRandomVolume = m_OldRandom[i];
+                m_Elements[i].Effects.MinRandomVolume = m_OldMinRandom[i];
+                m_Elements[i].Effects.MaxRandomVolume = m_OldMaxRandom[i];
+                ElementChanges.Instance.ElementChanged(m_Elements[i].Id);
+            }
         }
 
-        private IFileElement m_Element;
-        private int m_OldVolume;
-        private int m_OldFadeIn;
-        private int m_OldFadeOut;
-        private bool m_OldRandom;
-        private int m_OldMinRandom;
-        private int m_OldMaxRandom;
+        private IList<IFileElement> m_Elements;
+        private List<int> m_OldVolume;
+        private List<int> m_OldFadeIn;
+        private List<int> m_OldFadeOut;
+        private List<bool> m_OldRandom;
+        private List<int> m_OldMinRandom;
+        private List<int> m_OldMaxRandom;
         private int m_NewVolume;
         private int m_NewFadeIn;
         private int m_NewFadeOut;

@@ -35,11 +35,11 @@ namespace Ares.Editor.Controls
 
         public Actions.ReverbEffectChangeAction Action { get; set; }
 
-        public ReverbDialog(IFileElement element)
+        public ReverbDialog(IList<IFileElement> elements)
         {
             InitializeComponent();
-            m_Element = element;
-            Action = new Actions.ReverbEffectChangeAction(m_Element, true);
+            m_Element = elements[0];
+            Action = new Actions.ReverbEffectChangeAction(elements, true);
             volumeUpDown.Value = m_Element.Effects.Reverb.Level;
             delayUpDown.Value = m_Element.Effects.Reverb.Delay;
         }

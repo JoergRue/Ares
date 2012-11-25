@@ -35,12 +35,17 @@ namespace Ares.Editor.Controls
 
         public IntEffectChangeAction Action { get; set; }
 
-        public TempoDialog(IFileElement element)
+        public TempoDialog(IList<IFileElement> elements)
         {
             InitializeComponent();
-            Element = element;
-            IIntEffect effect = element.Effects.Tempo;
-            Action = new IntEffectChangeAction(element, effect, true, effect.Random, effect.FixValue, effect.MinRandomValue, effect.MaxRandomValue);
+            Element = elements[0];
+            IIntEffect effect = Element.Effects.Tempo;
+            List<IIntEffect> effects = new List<IIntEffect>();
+            for (int i = 0; i < elements.Count; ++i)
+            {
+                effects.Add(elements[i].Effects.Tempo);
+            }
+            Action = new IntEffectChangeAction(elements, effects, true, effect.Random, effect.FixValue, effect.MinRandomValue, effect.MaxRandomValue);
             fixedButton.Checked = !effect.Random;
             randomButton.Checked = effect.Random;
             fixedValueUpDown.Value = effect.FixValue;
