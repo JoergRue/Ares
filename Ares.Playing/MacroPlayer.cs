@@ -184,6 +184,10 @@ namespace Ares.Playing
         {
         }
 
+        public void MusicRepeatChanged(bool repeat)
+        {
+        }
+
         public void ErrorOccurred(int elementId, string errorMessage)
         {
         }

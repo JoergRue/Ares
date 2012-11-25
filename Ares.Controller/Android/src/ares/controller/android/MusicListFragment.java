@@ -181,6 +181,10 @@ public class MusicListFragment extends ModeLikeFragment implements INetworkClien
 			}
 		}
 	}
+	
+	@Override
+	public void musicRepeatChanged(boolean repeat) {
+	}
 
 	@Override
 	public void disconnect() {

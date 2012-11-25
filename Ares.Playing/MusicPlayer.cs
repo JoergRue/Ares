@@ -33,6 +33,7 @@ namespace Ares.Playing
         void Stop();
         void SetMusicVolume(int volume);
         void PlayMusicTitle(Int32 elementId);
+        bool RepeatCurrentMusic { set; }
     }
 
     abstract class MusicPlayer : ElementPlayerBase, IMusicPlayer
@@ -69,6 +70,11 @@ namespace Ares.Playing
                     PlayNext();
                 }
             }, false);
+
+            if (CurrentPlayedHandle != 0 && m_RepeatCurrentMusic)
+            {
+                ((FilePlayer)PlayingModule.FilePlayer).SetRepeatFile(CurrentPlayedHandle, true);
+            }
             CurrentFadeOut = fileElement.Effects.FadeOutTime;
             PlayingModule.ThePlayer.ActiveMusicPlayer = this;
         }
@@ -144,9 +150,24 @@ namespace Ares.Playing
 
         public abstract void Previous();
 
+        public bool RepeatCurrentMusic
+        {
+            set
+            {
+                m_RepeatCurrentMusic = value;
+                if (CurrentPlayedHandle != 0)
+                {
+                    ((FilePlayer)PlayingModule.FilePlayer).SetRepeatFile(CurrentPlayedHandle, value);
+                }
+            }
+        }
+
+        private bool m_RepeatCurrentMusic;
+
         protected MusicPlayer(WaitHandle stoppedEvent, IElementPlayerClient client)
             : base(stoppedEvent, client)
         {
+            m_RepeatCurrentMusic = PlayingModule.ThePlayer.RepeatCurrentMusic;
         }
 
         protected bool shallStop = false;

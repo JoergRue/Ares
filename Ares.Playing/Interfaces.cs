@@ -135,6 +135,11 @@ namespace Ares.Playing
         /// The current music playlist was stopped.
         /// </summary>
         void MusicPlaylistFinished();
+
+        /// <summary>
+        /// Repeat mode for music was changed.
+        /// </summary>
+        void MusicRepeatChanged(bool repeat);
     }
 
     /// <summary>
@@ -248,6 +253,12 @@ namespace Ares.Playing
         /// could happen by accident (request sent, but music list already finished).
         /// </summary>
         void SetMusicTitle(Int32 elementId);
+
+        /// <summary>
+        /// Whether the current music title shall be repeated endlessly.
+        /// Default is false.
+        /// </summary>
+        bool RepeatCurrentMusic { get; set; }
     }
 
     /// <summary>

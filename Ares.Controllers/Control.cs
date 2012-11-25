@@ -175,5 +175,17 @@ namespace Ares.Controllers
                 m_Connection.SwitchElement(id);
             }
         }
+
+        public void SetMusicRepeat(bool repeat)
+        {
+            if (m_Connection == null || !m_Connection.Connected)
+            {
+                Messages.AddMessage(MessageType.Warning, StringResources.NoConnection);
+            }
+            else
+            {
+                m_Connection.SetMusicRepeat(repeat);
+            }
+        }
     }
 }

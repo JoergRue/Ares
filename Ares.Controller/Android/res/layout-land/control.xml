@@ -55,6 +55,13 @@
             <ares.controller.android.ScrollableTextView android:scrollHorizontally="true" android:layout_height="wrap_content" android:ellipsize="marquee" android:layout_margin="5dip" android:marqueeRepeatLimit="marquee_forever" android:layout_gravity="center_vertical" android:focusable="true" android:focusableInTouchMode="true" android:id="@+id/musicTextView" android:textAppearance="?android:attr/textAppearanceSmall" android:text="@string/Empty" android:layout_weight="1" android:layout_width="fill_parent"></ares.controller.android.ScrollableTextView>
             <ImageButton android:id="@+id/backButton" android:src="@drawable/back" android:layout_height="wrap_content" android:layout_width="wrap_content"></ImageButton>
             <ImageButton android:id="@+id/forwardButton" android:src="@drawable/forward" android:layout_height="wrap_content" android:layout_width="wrap_content"></ImageButton>
+
+            <ImageButton
+                android:id="@+id/repeatButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/repeat" />
+
         </LinearLayout>
     </LinearLayout>
 	</LinearLayout>

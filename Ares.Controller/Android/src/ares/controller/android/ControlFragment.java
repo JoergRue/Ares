@@ -34,7 +34,9 @@ import android.gesture.GestureLibrary;
 import android.gesture.GestureOverlayView;
 import android.gesture.Prediction;
 import android.gesture.GestureOverlayView.OnGesturePerformedListener;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -87,6 +89,7 @@ public class ControlFragment extends ConnectedFragment implements INetworkClient
 	private ImageButton forwardButton;
 	private ImageButton backButton;
 	private Button modesButton;
+	private ImageButton repeatButton;
 	
 	private int VK_ESCAPE = 27;
 	private int VK_LEFT = 37;
@@ -128,6 +131,8 @@ public class ControlFragment extends ConnectedFragment implements INetworkClient
 		});
 	}
 	
+	Bitmap normalRepeatBmp, selectedRepeatBmp;
+	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
@@ -163,13 +168,15 @@ public class ControlFragment extends ConnectedFragment implements INetworkClient
         
         if (!isOnXLargeScreen()) {
 	        modesButton = (Button)getActivity().findViewById(R.id.modesButton);
-	        modesButton.setEnabled(Control.getInstance().getConfiguration() != null);
-	        modesButton.setOnClickListener(new OnClickListener() {
-	        	public void onClick(View v) {
-	        		showModesActivity(ControllerActivity.ANIM_MOVE_DOWN);
-	        		getActivity().overridePendingTransition(R.anim.slide_from_bottom, R.anim.slide_to_top);
-	        	}
-	        });
+	        if (modesButton != null) {
+		        modesButton.setEnabled(Control.getInstance().getConfiguration() != null);
+		        modesButton.setOnClickListener(new OnClickListener() {
+		        	public void onClick(View v) {
+		        		showModesActivity(ControllerActivity.ANIM_MOVE_DOWN);
+		        		getActivity().overridePendingTransition(R.anim.slide_from_bottom, R.anim.slide_to_top);
+		        	}
+		        });
+	        }
         }
         ImageButton openButton = (ImageButton)getActivity().findViewById(R.id.openProjectButton);
         openButton.setOnClickListener(new OnClickListener() {
@@ -198,6 +205,15 @@ public class ControlFragment extends ConnectedFragment implements INetworkClient
         		Control.getInstance().sendKey(ares.controllers.data.KeyStroke.getKeyStroke(VK_LEFT, 0));
         	}
         });
+        repeatButton = (ImageButton)getActivity().findViewById(R.id.repeatButton);
+        repeatButton.setEnabled(connected);
+        repeatButton.setOnClickListener(new OnClickListener() {
+        	public void onClick(View v) {
+        		Control.getInstance().setMusicRepeat(!PlayingState.getInstance().isMusicRepeat());
+        	}
+        });
+        normalRepeatBmp = ((BitmapDrawable)getResources().getDrawable(R.drawable.repeat)).getBitmap();
+        selectedRepeatBmp = ((BitmapDrawable)getResources().getDrawable(R.drawable.repeatred)).getBitmap();
         
         if (isOnXLargeScreen()) {
         	FragmentManager fragmentManager = getFragmentManager();
@@ -532,6 +548,11 @@ public class ControlFragment extends ConnectedFragment implements INetworkClient
 		if (Control.getInstance().getConfiguration() != null) {
 			setText(R.id.projectTextView, Control.getInstance().getConfiguration().getTitle());
 		}
+		if (repeatButton != null) {
+			boolean repeat = PlayingState.getInstance().isMusicRepeat();
+			repeatButton.setSelected(repeat);
+			repeatButton.setImageBitmap(!repeat ? normalRepeatBmp : selectedRepeatBmp);
+		}
 		updateProjectTitle();
 	}
 
@@ -542,6 +563,7 @@ public class ControlFragment extends ConnectedFragment implements INetworkClient
 		stopButton.setEnabled(true);
 		backButton.setEnabled(true);
 		forwardButton.setEnabled(true);
+		repeatButton.setEnabled(true);
 }
 	
 	protected void onDisconnect(boolean startServerSearch) {
@@ -550,6 +572,7 @@ public class ControlFragment extends ConnectedFragment implements INetworkClient
 		stopButton.setEnabled(false);
 		backButton.setEnabled(false);
 		forwardButton.setEnabled(false);
+		repeatButton.setEnabled(false);
 		updateAll();
 	}
 
@@ -613,6 +636,14 @@ public class ControlFragment extends ConnectedFragment implements INetworkClient
 	@Override
 	public void musicListChanged(java.util.List<ares.controllers.data.MusicElement> newList) {
 		// nothing here
-	}	
+	}
+	
+	@Override
+	public void musicRepeatChanged(boolean repeat) {
+		if (repeatButton != null) {
+			repeatButton.setSelected(repeat);
+			repeatButton.setImageBitmap(!repeat ? normalRepeatBmp : selectedRepeatBmp);
+		}
+	}
 	
 }

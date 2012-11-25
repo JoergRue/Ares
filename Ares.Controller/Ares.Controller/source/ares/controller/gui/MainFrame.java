@@ -298,6 +298,8 @@ public final class MainFrame extends FrameController implements IMessageListener
 	  dispose();
   }
   
+  private JMenuItem repeatItem;
+  
   private JMenu getPlayMenu() {
 	  JMenu playMenu = new JMenu(Localization.getString("MainFrame.Play")); //$NON-NLS-1$
 	  JMenuItem stopItem = new JMenuItem(new AbstractAction() {
@@ -324,9 +326,18 @@ public final class MainFrame extends FrameController implements IMessageListener
 			}
 		  });
 	  nextItem.setText(Localization.getString("MainFrame.NextMusic")); //$NON-NLS-1$
+	  repeatItem = new JMenuItem(new AbstractAction() {
+		  @Override
+		  public void actionPerformed(ActionEvent e) 
+		  {
+			  toggleRepeat();
+		  }
+	  });
+	  repeatItem.setText(Localization.getString("MainFrame.repeatMusic")); //$NON-NLS-1$
 	  playMenu.add(stopItem);
 	  playMenu.add(previousItem);
 	  playMenu.add(nextItem);
+	  playMenu.add(repeatItem);
 	  return playMenu;
   }
   
@@ -649,6 +660,7 @@ public final class MainFrame extends FrameController implements IMessageListener
       buttonPanel2.add(getStopAllButton());
       buttonPanel2.add(getPreviousButton());
       buttonPanel2.add(getNextTrackButton());
+      buttonPanel2.add(getRepeatButton());
       northPanel.add(buttonPanel2);
       JPanel inner = new JPanel();
       inner.setLayout(new BorderLayout());
@@ -1002,6 +1014,7 @@ public final class MainFrame extends FrameController implements IMessageListener
   
   private JButton nextTrackButton = null;
   private JButton previousButton = null;
+  private JButton repeatButton = null;
 
   private JButton getNextTrackButton() {
 	  if (nextTrackButton == null) {
@@ -1038,6 +1051,21 @@ public final class MainFrame extends FrameController implements IMessageListener
 	  return previousButton;
   }
   
+  private JButton getRepeatButton() {
+	  if (repeatButton == null) {
+		  repeatButton = new JButton();
+		  repeatButton.setAction(new AbstractAction() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					toggleRepeat();
+				}
+		    });
+		  repeatButton.setIcon(new ImageIcon(getClass().getResource("RepeatHS.png"))); //$NON-NLS-1$
+		  repeatButton.setToolTipText(Localization.getString("MainFrame.repeatMusic")); //$NON-NLS-1$
+	  }
+	  return repeatButton;
+  }
+
   
 
   /* (non-Javadoc)
@@ -1256,6 +1284,21 @@ public final class MainFrame extends FrameController implements IMessageListener
 				currentShortTitle = shortTitle;
 			}
 		});
+	}
+	
+	@Override
+	public void musicRepeatChanged(final boolean repeat) {
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				getRepeatButton().setSelected(repeat);
+				repeatItem.setSelected(repeat);
+			}
+		});
+	}
+	
+	public void toggleRepeat() {
+		boolean isRepeat = getRepeatButton().isSelected();
+		Control.getInstance().setMusicRepeat(!isRepeat);
 	}
 	
 	private List<MusicElement> currentMusicList = null;

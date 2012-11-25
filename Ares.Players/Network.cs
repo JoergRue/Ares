@@ -32,6 +32,7 @@ namespace Ares.Players
         void ProjectShallChange(String newProjectFile);
         void PlayOtherMusic(Int32 elementId);
         void SwitchElement(Int32 elementId);
+        void SetMusicRepeat(bool repeat);
     }
 
     public class Network : Ares.Playing.IProjectPlayingCallbacks
@@ -144,7 +145,7 @@ namespace Ares.Players
         }
 
         public void InformClientOfEverything(int overallVolume, int musicVolume, int soundVolume, Ares.Data.IMode mode, MusicInfo music,
-            System.Collections.Generic.IList<Ares.Data.IModeElement> elements, String projectName, Int32 musicListId)
+            System.Collections.Generic.IList<Ares.Data.IModeElement> elements, String projectName, Int32 musicListId, bool musicRepeat)
         {
             InformProjectChange(projectName);
             InformVolume(Playing.VolumeTarget.Both, overallVolume);
@@ -157,6 +158,7 @@ namespace Ares.Players
                 InformModeElementChange(element, true);
             }
             InformMusicList(musicListId);
+            InformRepeatChanged(musicRepeat);
         }
 
         public void ListenInThread()
@@ -559,6 +561,26 @@ namespace Ares.Players
                             networkClient.SwitchElement(elementId);
                         }
                     }
+                    else if (command == 9)
+                    {
+                        Byte[] data = new Byte[4];
+                        bool success = false;
+                        Int32 repeatValue = 0;
+                        lock (syncObject)
+                        {
+                            success = client != null && ReadFromStream(client.GetStream(), data, 4, 500);
+                            if (success)
+                            {
+                                if (BitConverter.IsLittleEndian)
+                                    Array.Reverse(data);
+                                repeatValue = BitConverter.ToInt32(data, 0);
+                            }
+                        }
+                        if (success)
+                        {
+                            networkClient.SetMusicRepeat(repeatValue == 1);
+                        }
+                    }
                     lock (syncObject)
                     {
                         goOn = continueListenForCommands;
@@ -786,6 +808,21 @@ namespace Ares.Players
             }
         }
 
+        private void InformRepeatChanged(bool repeat)
+        {
+            if (ClientConnected)
+            {
+                byte[] package = new byte[3];
+                package[0] = 10;
+                package[1] = (byte)(repeat ? 1 : 0);
+                package[2] = 0;
+                lock (syncObject)
+                {
+                    client.GetStream().Write(package, 0, package.Length);
+                }
+            }
+        }
+
         private void SendPing()
         {
             if (ClientConnected)
@@ -922,6 +959,19 @@ namespace Ares.Players
         public void MusicPlaylistFinished()
         {
             InformMusicList(-1);
+        }
+
+        public void MusicRepeatChanged(bool repeat)
+        {
+            try
+            {
+                InformRepeatChanged(repeat);
+            }
+            catch (System.IO.IOException e)
+            {
+                Messages.AddMessage(MessageType.Warning, e.Message);
+                DoDisconnect(true);
+            }
         }
 
         public void VolumeChanged(Ares.Playing.VolumeTarget target, int newValue)

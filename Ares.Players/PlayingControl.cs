@@ -152,6 +152,11 @@ namespace Ares.Players
             return PlayingModule.ProjectPlayer.SetMode(mode.Title);
         }
 
+        public void SetRepeatCurrentMusic(bool repeat)
+        {
+            PlayingModule.ProjectPlayer.RepeatCurrentMusic = repeat;
+        }
+
         private Playing.StreamingParameters CreateStreamingParameters()
         {
             Playing.StreamingParameters result = new StreamingParameters();
@@ -288,6 +293,16 @@ namespace Ares.Players
             }
         }
 
+        private bool m_MusicRepeat = false;
+
+        public bool MusicRepeat
+        {
+            get
+            {
+                return m_MusicRepeat;
+            }
+        }
+
         public void ModeChanged(Data.IMode newMode)
         {
             lock (syncObject)
@@ -386,6 +401,14 @@ namespace Ares.Players
             lock (syncObject)
             {
                 m_CurrentMusicList = -1;
+            }
+        }
+
+        public void MusicRepeatChanged(bool repeat)
+        {
+            lock (syncObject)
+            {
+                m_MusicRepeat = repeat;
             }
         }
 

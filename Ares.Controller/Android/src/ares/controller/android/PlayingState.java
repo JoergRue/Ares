@@ -40,6 +40,8 @@ public class PlayingState implements INetworkClient {
 	private String musicPlayed = "";
 	private String shortMusicPlayed = "";
 	
+	private boolean isRepeat = false;
+	
 	private ArrayList<String> modeElements = new ArrayList<String>();
 	
 	private String playerProject = "";
@@ -72,9 +74,12 @@ public class PlayingState implements INetworkClient {
 		return playerProject;
 	}
 	
-	public List<MusicElement> getMusicList()
-	{
+	public List<MusicElement> getMusicList() {
 		return musicList;
+	}
+	
+	public boolean isMusicRepeat() {
+		return isRepeat;
 	}
 	
 	private static PlayingState sInstance = null;
@@ -232,6 +237,20 @@ public class PlayingState implements INetworkClient {
 					return;
 				for (INetworkClient client : clients)
 					client.musicChanged(m, s);
+			}
+		});
+	}
+	
+	@Override
+	public void musicRepeatChanged(boolean repeat) {
+		final boolean r = repeat;
+		handler.post(new Runnable() {
+			public void run() {
+				isRepeat = r;
+				if (!hasClient())
+					return;
+				for (INetworkClient client : clients)
+					client.musicRepeatChanged(r);
 			}
 		});
 	}

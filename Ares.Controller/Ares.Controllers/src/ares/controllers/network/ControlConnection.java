@@ -367,6 +367,14 @@ public final class ControlConnection {
 						}, 7000);
 						break;
 				  }
+				  case 10:
+				  {
+					  // repeat music
+					  int val = stream.read();
+					  stream.read();
+					  boolean isRepeat = (val == 1);
+					  networkClient.musicRepeatChanged(isRepeat);
+				  }
 				  default:
 					  break;
 				  }
@@ -530,6 +538,30 @@ public final class ControlConnection {
 		  Messages.addMessage(MessageType.Warning, e.getLocalizedMessage());
           handleConnectionFailure(true);
 	  }
+  }
+  
+  public void setMusicRepeat(boolean repeat) {
+	    if (!isConnected()) {
+	        Messages.addMessage(MessageType.Warning, Localization.getString("ControlConnection.NoConnection")); //$NON-NLS-1$
+	        return;
+	      }
+	      if (state == State.ConnectionFailure) {
+	      	if (!tryReconnect()) {
+	      	      Messages.addMessage(MessageType.Warning, Localization.getString("ControlConnection.NoConnection")); //$NON-NLS-1$
+	      	      return;    		
+	      	}
+	      }
+	  try {
+		  byte[] bytes = new byte[1 + 4];
+		  bytes[0] = 9;
+		  java.nio.ByteBuffer buffer = java.nio.ByteBuffer.wrap(bytes);
+		  buffer.putInt(1, repeat ? 1 : 0);
+		  socket.getOutputStream().write(bytes);
+	  }
+	  catch (IOException e) {
+		  Messages.addMessage(MessageType.Warning, e.getLocalizedMessage());
+          handleConnectionFailure(true);
+	  }	  
   }
   
   private HashMap<KeyStroke, byte[]> commandMap = null;

@@ -19,11 +19,13 @@
  */
 package ares.controller.android;
 
+import java.lang.reflect.Field;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -39,9 +41,23 @@ public abstract class ConnectedFragment extends Fragment implements IServerListe
 	
 	private static Boolean sOnXLargeScreen = null;
 	
-	protected boolean isOnXLargeScreen() {
+	protected boolean isOnXLargeScreen() 
+	{
 		if (sOnXLargeScreen == null) {
-			sOnXLargeScreen = (getActivity().findViewById(R.id.modeFragmentContainer) != null);
+		     Configuration conf = getResources().getConfiguration();
+		     int screenLayout = 1; // application default behavior
+		     try {
+		         Field field = conf.getClass().getDeclaredField("screenLayout");
+		         screenLayout = field.getInt(conf);
+			     // Configuration.SCREENLAYOUT_SIZE_MASK == 15
+			     int screenType = screenLayout & 15;
+			     // Configuration.SCREENLAYOUT_SIZE_XLARGE == 4
+		         sOnXLargeScreen = (screenType == 4); 
+		     } 
+		     catch (Exception e) {
+		         // NoSuchFieldException or related stuff
+		    	 sOnXLargeScreen = false;
+		     }
 		}
 		return sOnXLargeScreen;
 	}

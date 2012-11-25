@@ -553,6 +553,13 @@ namespace Ares.Player
                     }
                 }
             }
+            bool repeat = m_PlayingControl.MusicRepeat;
+            if (musicElementId == -1)
+            {
+                repeat = false;
+            }
+            repeatButton.Checked = repeat;
+            repeatCurrentMusicToolStripMenuItem.Checked = repeat;
             if (control.CurrentMusicList != lastMusicListId && modesList.SelectedIndex == 0)
             {
                 UpdateElementsPanel();
@@ -839,6 +846,11 @@ namespace Ares.Player
             m_PlayingControl.SwitchElement(id);
         }
 
+        public void SetMusicRepeat(bool repeat)
+        {
+            m_PlayingControl.SetRepeatCurrentMusic(repeat);
+        }
+
         private bool m_WasConnected = false;
 
         private void UpdateClientData()
@@ -850,7 +862,7 @@ namespace Ares.Player
                 m_Network.InformClientOfEverything(m_PlayingControl.GlobalVolume, m_PlayingControl.MusicVolume,
                     m_PlayingControl.SoundVolume, m_PlayingControl.CurrentMode, MusicInfo.GetInfo(m_PlayingControl.CurrentMusicElement),
                     m_PlayingControl.CurrentModeElements, m_Project != null ? m_Project.Title : String.Empty, 
-                    m_PlayingControl.CurrentMusicList);
+                    m_PlayingControl.CurrentMusicList, m_PlayingControl.MusicRepeat);
                 disconnectButton.Text = StringResources.Disconnect;
                 m_WasConnected = true;
             }
@@ -1194,6 +1206,11 @@ namespace Ares.Player
             m_KeyboardHookManager.Replace(hook);
 #endif
             
+        }
+
+        private void repeatButton_Click(object sender, EventArgs e)
+        {
+            m_PlayingControl.SetRepeatCurrentMusic(!m_PlayingControl.MusicRepeat);
         }
     }
 }

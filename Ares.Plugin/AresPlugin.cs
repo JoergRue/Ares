@@ -381,7 +381,7 @@ namespace Ares.Plugin
                 m_Network.InformClientOfEverything(m_PlayingControl.GlobalVolume, m_PlayingControl.MusicVolume,
                     m_PlayingControl.SoundVolume, m_PlayingControl.CurrentMode, MusicInfo.GetInfo(m_PlayingControl.CurrentMusicElement),
                     m_PlayingControl.CurrentModeElements, m_Project != null ? m_Project.Title : String.Empty,
-                    m_PlayingControl.CurrentMusicList);
+                    m_PlayingControl.CurrentMusicList, m_PlayingControl.MusicRepeat);
                 disconnectButton.IsEnabled = true;
             }
             else
@@ -641,6 +641,11 @@ namespace Ares.Plugin
             {
                 controllerFileName = newProjectFile;
             }
+        }
+
+        public void SetMusicRepeat(bool repeat)
+        {
+            m_PlayingControl.SetRepeatCurrentMusic(repeat);
         }
     }
 }

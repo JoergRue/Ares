@@ -70,9 +70,6 @@
             this.nextMusicButton = new System.Windows.Forms.ToolStripButton();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.overLayPanel = new System.Windows.Forms.Panel();
-            this.overlayOKButton = new System.Windows.Forms.Button();
-            this.overlayCloseButton = new System.Windows.Forms.Button();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.transparentFlowLayoutPanel2 = new Ares.MGPlugin.TransparentFlowLayoutPanel();
             this.overlayLabel5 = new Ares.MGPlugin.TransparentLabel();
             this.settingsLabel = new Ares.MGPlugin.TransparentLinkLabel();
@@ -85,8 +82,12 @@
             this.overlayLabel2 = new Ares.MGPlugin.TransparentLabel();
             this.homepageLabel = new Ares.MGPlugin.TransparentLinkLabel();
             this.overlayLabel9 = new Ares.MGPlugin.TransparentLabel();
+            this.overlayOKButton = new System.Windows.Forms.Button();
             this.overlayLabel7 = new Ares.MGPlugin.TransparentLabel();
             this.overlayLabel1 = new Ares.MGPlugin.TransparentLabel();
+            this.overlayCloseButton = new System.Windows.Forms.Button();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.repeatButton = new System.Windows.Forms.ToolStripButton();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.soundsBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.musicBar)).BeginInit();
@@ -378,10 +379,11 @@
             this.toolStripSeparator1,
             this.stopButton,
             this.prevMusicButton,
-            this.nextMusicButton});
+            this.nextMusicButton,
+            this.repeatButton});
             this.toolStrip1.Location = new System.Drawing.Point(3, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(188, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(242, 25);
             this.toolStrip1.TabIndex = 0;
             // 
             // openButton
@@ -481,32 +483,6 @@
             this.overLayPanel.Size = new System.Drawing.Size(853, 295);
             this.overLayPanel.TabIndex = 5;
             this.overLayPanel.Visible = false;
-            // 
-            // overlayOKButton
-            // 
-            this.overlayOKButton.Location = new System.Drawing.Point(735, 206);
-            this.overlayOKButton.Name = "overlayOKButton";
-            this.overlayOKButton.Size = new System.Drawing.Size(75, 23);
-            this.overlayOKButton.TabIndex = 11;
-            this.overlayOKButton.Text = "OK";
-            this.overlayOKButton.UseVisualStyleBackColor = true;
-            this.overlayOKButton.Click += new System.EventHandler(this.overlayOKButton_Click);
-            // 
-            // overlayCloseButton
-            // 
-            this.overlayCloseButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(177)))), ((int)(((byte)(177)))), ((int)(((byte)(177)))));
-            this.overlayCloseButton.FlatAppearance.BorderColor = System.Drawing.Color.Silver;
-            this.overlayCloseButton.FlatAppearance.BorderSize = 0;
-            this.overlayCloseButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Silver;
-            this.overlayCloseButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
-            this.overlayCloseButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.overlayCloseButton.Image = global::Ares.MGPlugin.Properties.Resources.eventlogError;
-            this.overlayCloseButton.Location = new System.Drawing.Point(816, 0);
-            this.overlayCloseButton.Name = "overlayCloseButton";
-            this.overlayCloseButton.Size = new System.Drawing.Size(30, 34);
-            this.overlayCloseButton.TabIndex = 0;
-            this.overlayCloseButton.UseVisualStyleBackColor = false;
-            this.overlayCloseButton.Click += new System.EventHandler(this.overlayCloseButton_Click);
             // 
             // transparentFlowLayoutPanel2
             // 
@@ -657,6 +633,16 @@
             this.overlayLabel9.TabIndex = 12;
             this.overlayLabel9.Text = "Ares Controller Plugin";
             // 
+            // overlayOKButton
+            // 
+            this.overlayOKButton.Location = new System.Drawing.Point(735, 206);
+            this.overlayOKButton.Name = "overlayOKButton";
+            this.overlayOKButton.Size = new System.Drawing.Size(75, 23);
+            this.overlayOKButton.TabIndex = 11;
+            this.overlayOKButton.Text = "OK";
+            this.overlayOKButton.UseVisualStyleBackColor = true;
+            this.overlayOKButton.Click += new System.EventHandler(this.overlayOKButton_Click);
+            // 
             // overlayLabel7
             // 
             this.overlayLabel7.AutoSize = true;
@@ -680,6 +666,32 @@
             this.overlayLabel1.Text = "Ares (Aural RPG Experience System) ist ein Programm, mit dem man während des Roll" +
     "enspiels passende Musik und Geräusche abspielen kann. Mit diesem Plugin lässt si" +
     "ch der Ares Player steuern.";
+            // 
+            // overlayCloseButton
+            // 
+            this.overlayCloseButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(177)))), ((int)(((byte)(177)))), ((int)(((byte)(177)))));
+            this.overlayCloseButton.FlatAppearance.BorderColor = System.Drawing.Color.Silver;
+            this.overlayCloseButton.FlatAppearance.BorderSize = 0;
+            this.overlayCloseButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Silver;
+            this.overlayCloseButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
+            this.overlayCloseButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.overlayCloseButton.Image = global::Ares.MGPlugin.Properties.Resources.eventlogError;
+            this.overlayCloseButton.Location = new System.Drawing.Point(816, 0);
+            this.overlayCloseButton.Name = "overlayCloseButton";
+            this.overlayCloseButton.Size = new System.Drawing.Size(30, 34);
+            this.overlayCloseButton.TabIndex = 0;
+            this.overlayCloseButton.UseVisualStyleBackColor = false;
+            this.overlayCloseButton.Click += new System.EventHandler(this.overlayCloseButton_Click);
+            // 
+            // repeatButton
+            // 
+            this.repeatButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.repeatButton.Image = ((System.Drawing.Image)(resources.GetObject("repeatButton.Image")));
+            this.repeatButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.repeatButton.Name = "repeatButton";
+            this.repeatButton.Size = new System.Drawing.Size(23, 22);
+            this.repeatButton.Text = "Aktuelle Musik wiederholen";
+            this.repeatButton.Click += new System.EventHandler(this.repeatButton_Click);
             // 
             // Controller
             // 
@@ -776,6 +788,7 @@
         private TransparentLabel overlayLabel3;
         private TransparentLinkLabel setupLabel;
         private TransparentLabel overlayLabel4;
+        private System.Windows.Forms.ToolStripButton repeatButton;
 
     }
 }

@@ -176,6 +176,15 @@ public final class Control {
 	  }	  
   }
   
+  public void setMusicRepeat(boolean repeat) {
+	  if (connection == null || !connection.isConnected()) {
+		  Messages.addMessage(MessageType.Warning, Localization.getString("Control.noConnection")); //$NON-NLS-1$
+	  }
+	  else {
+		  connection.setMusicRepeat(repeat);
+	  }	  	  
+  }
+  
   public boolean isConnected() {
     return connection != null;
   }

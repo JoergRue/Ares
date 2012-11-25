@@ -191,6 +191,19 @@ namespace Ares.Playing
             }
         }
 
+        public void MusicRepeatChanged(bool repeat)
+        {
+            List<IProjectPlayingCallbacks> copy = null;
+            lock (syncObject)
+            {
+                copy = new List<IProjectPlayingCallbacks>(m_Clients);
+            }
+            foreach (IProjectPlayingCallbacks callback in copy)
+            {
+                callback.MusicRepeatChanged(repeat);
+            }
+        }
+
         public void ErrorOccurred(int elementId, string errorMessage)
         {
             List<IProjectPlayingCallbacks> copy = null;

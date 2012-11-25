@@ -113,6 +113,7 @@ namespace Ares.MGPlugin
             stopButton.Enabled = enabled;
             nextMusicButton.Enabled = enabled;
             prevMusicButton.Enabled = enabled;
+            repeatButton.Enabled = enabled;
             modesList.Items.Clear();
             elementsPanel.Controls.Clear();
             m_CurrentMode = String.Empty;
@@ -660,6 +661,18 @@ namespace Ares.MGPlugin
             );
         }
 
+        private bool m_IsMusicRepeat = false;
+
+        public void MusicRepeatChanged(bool repeat)
+        {
+            DispatchToUIThread(() =>
+                {
+                    m_IsMusicRepeat = repeat;
+                    repeatButton.Checked = repeat;
+                }
+            );
+        }
+
         List<Controllers.MusicListItem> m_CurrentMusicList = new List<Controllers.MusicListItem>();
 
         public void MusicListChanged(List<Controllers.MusicListItem> newList)
@@ -907,6 +920,11 @@ namespace Ares.MGPlugin
         private void overlayOKButton_Click(object sender, EventArgs e)
         {
             CloseOverlay();
+        }
+
+        private void repeatButton_Click(object sender, EventArgs e)
+        {
+            Ares.Controllers.Control.Instance.SetMusicRepeat(!m_IsMusicRepeat);
         }
     }
 }

@@ -85,6 +85,7 @@ namespace Ares.Player
             this.stopButton = new System.Windows.Forms.ToolStripButton();
             this.previousButton = new System.Windows.Forms.ToolStripButton();
             this.nextButton = new System.Windows.Forms.ToolStripButton();
+            this.repeatButton = new System.Windows.Forms.ToolStripButton();
             this.broadCastTimer = new System.Windows.Forms.Timer(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.ipAddressBox = new System.Windows.Forms.ComboBox();
@@ -108,6 +109,7 @@ namespace Ares.Player
             this.stopAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.previousMusicToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nextMusicTitleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.repeatCurrentMusicToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.extrasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.startEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.messagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -308,7 +310,8 @@ namespace Ares.Player
             this.toolStripSeparator1,
             this.stopButton,
             this.previousButton,
-            this.nextButton});
+            this.nextButton,
+            this.repeatButton});
             resources.ApplyResources(this.toolStrip1, "toolStrip1");
             this.toolStrip1.Name = "toolStrip1";
             // 
@@ -373,6 +376,13 @@ namespace Ares.Player
             resources.ApplyResources(this.nextButton, "nextButton");
             this.nextButton.Name = "nextButton";
             this.nextButton.Click += new System.EventHandler(this.nextButton_Click);
+            // 
+            // repeatButton
+            // 
+            this.repeatButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.repeatButton, "repeatButton");
+            this.repeatButton.Name = "repeatButton";
+            this.repeatButton.Click += new System.EventHandler(this.repeatButton_Click);
             // 
             // groupBox1
             // 
@@ -501,8 +511,8 @@ namespace Ares.Player
             // 
             // openToolStripMenuItem
             // 
-            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             resources.ApplyResources(this.openToolStripMenuItem, "openToolStripMenuItem");
+            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openButton_Click);
             // 
             // importToolStripMenuItem
@@ -540,27 +550,35 @@ namespace Ares.Player
             this.playToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.stopAllToolStripMenuItem,
             this.previousMusicToolStripMenuItem,
-            this.nextMusicTitleToolStripMenuItem});
+            this.nextMusicTitleToolStripMenuItem,
+            this.repeatCurrentMusicToolStripMenuItem});
             this.playToolStripMenuItem.Name = "playToolStripMenuItem";
             resources.ApplyResources(this.playToolStripMenuItem, "playToolStripMenuItem");
             // 
             // stopAllToolStripMenuItem
             // 
-            this.stopAllToolStripMenuItem.Name = "stopAllToolStripMenuItem";
             resources.ApplyResources(this.stopAllToolStripMenuItem, "stopAllToolStripMenuItem");
+            this.stopAllToolStripMenuItem.Name = "stopAllToolStripMenuItem";
             this.stopAllToolStripMenuItem.Click += new System.EventHandler(this.stopButton_Click);
             // 
             // previousMusicToolStripMenuItem
             // 
-            this.previousMusicToolStripMenuItem.Name = "previousMusicToolStripMenuItem";
             resources.ApplyResources(this.previousMusicToolStripMenuItem, "previousMusicToolStripMenuItem");
+            this.previousMusicToolStripMenuItem.Name = "previousMusicToolStripMenuItem";
             this.previousMusicToolStripMenuItem.Click += new System.EventHandler(this.previousButton_Click);
             // 
             // nextMusicTitleToolStripMenuItem
             // 
+            this.nextMusicTitleToolStripMenuItem.Image = global::Ares.Player.Properties.Resources.forward;
             this.nextMusicTitleToolStripMenuItem.Name = "nextMusicTitleToolStripMenuItem";
             resources.ApplyResources(this.nextMusicTitleToolStripMenuItem, "nextMusicTitleToolStripMenuItem");
             this.nextMusicTitleToolStripMenuItem.Click += new System.EventHandler(this.nextButton_Click);
+            // 
+            // repeatCurrentMusicToolStripMenuItem
+            // 
+            resources.ApplyResources(this.repeatCurrentMusicToolStripMenuItem, "repeatCurrentMusicToolStripMenuItem");
+            this.repeatCurrentMusicToolStripMenuItem.Name = "repeatCurrentMusicToolStripMenuItem";
+            this.repeatCurrentMusicToolStripMenuItem.Click += new System.EventHandler(this.repeatButton_Click);
             // 
             // extrasToolStripMenuItem
             // 
@@ -578,14 +596,14 @@ namespace Ares.Player
             // 
             // startEditorToolStripMenuItem
             // 
-            this.startEditorToolStripMenuItem.Name = "startEditorToolStripMenuItem";
             resources.ApplyResources(this.startEditorToolStripMenuItem, "startEditorToolStripMenuItem");
+            this.startEditorToolStripMenuItem.Name = "startEditorToolStripMenuItem";
             this.startEditorToolStripMenuItem.Click += new System.EventHandler(this.editorButton_Click);
             // 
             // messagesToolStripMenuItem
             // 
-            this.messagesToolStripMenuItem.Name = "messagesToolStripMenuItem";
             resources.ApplyResources(this.messagesToolStripMenuItem, "messagesToolStripMenuItem");
+            this.messagesToolStripMenuItem.Name = "messagesToolStripMenuItem";
             this.messagesToolStripMenuItem.Click += new System.EventHandler(this.messagesToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
@@ -609,8 +627,8 @@ namespace Ares.Player
             // 
             // settingsToolStripMenuItem1
             // 
-            this.settingsToolStripMenuItem1.Name = "settingsToolStripMenuItem1";
             resources.ApplyResources(this.settingsToolStripMenuItem1, "settingsToolStripMenuItem1");
+            this.settingsToolStripMenuItem1.Name = "settingsToolStripMenuItem1";
             this.settingsToolStripMenuItem1.Click += new System.EventHandler(this.settingsButton_Click);
             // 
             // streamingToolStripMenuItem
@@ -648,8 +666,8 @@ namespace Ares.Player
             // 
             // aboutToolStripMenuItem
             // 
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             resources.ApplyResources(this.aboutToolStripMenuItem, "aboutToolStripMenuItem");
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutButton_Click);
             // 
             // notifyIcon
@@ -818,6 +836,8 @@ namespace Ares.Player
         private System.Windows.Forms.ListBox modesList;
         private System.Windows.Forms.ToolStripMenuItem showKeysMenuItem;
         private System.Windows.Forms.ToolStripMenuItem globalKeyHookItem;
+        private System.Windows.Forms.ToolStripButton repeatButton;
+        private System.Windows.Forms.ToolStripMenuItem repeatCurrentMusicToolStripMenuItem;
     }
 }
 

@@ -84,7 +84,8 @@ namespace Ares.Playing
                 }
                 if (!loop)
                 {
-                    if (Bass.BASS_ChannelSetSync(channel, BASSSync.BASS_SYNC_END, 0, m_EndSync, IntPtr.Zero) == 0)
+                    int sync = Bass.BASS_ChannelSetSync(channel, BASSSync.BASS_SYNC_END, 0, m_EndSync, IntPtr.Zero);
+                    if (sync == 0)
                     {
 #if MONO
 						gcHandle.Free();
@@ -96,6 +97,10 @@ namespace Ares.Playing
                             m_RunningFilesVolumes.Remove(channel);
                         }
                         return 0;
+                    }
+                    else
+                    {
+                        m_NotLoops[channel] = sync;
                     }
                 }
                 if (!SetStartVolume(file, fadeInTime, channel))
@@ -436,7 +441,25 @@ namespace Ares.Playing
             }
         }
 
+        public void SetRepeatFile(int handle, bool repeat)
+        {
+            if (!m_NotLoops.ContainsKey(handle))
+                return; // file is looped anyway
+            if (repeat)
+            {
+                Bass.BASS_ChannelFlags(handle, BASSFlag.BASS_SAMPLE_LOOP, BASSFlag.BASS_SAMPLE_LOOP);
+                Bass.BASS_ChannelRemoveSync(handle, m_NotLoops[handle]);
+            }
+            else
+            {
+                Bass.BASS_ChannelFlags(handle, BASSFlag.BASS_DEFAULT, BASSFlag.BASS_SAMPLE_LOOP);
+                int sync = Bass.BASS_ChannelSetSync(handle, BASSSync.BASS_SYNC_END, 0, m_EndSync, IntPtr.Zero);
+                m_NotLoops[handle] = sync;
+            }
+        }
+
         private System.Collections.Generic.Dictionary<int, ISoundFile> m_Loops = new Dictionary<int, ISoundFile>();
+        private System.Collections.Generic.Dictionary<int, int> m_NotLoops = new Dictionary<int, int>(); // channel to sync
 
         private bool SetStartVolume(ISoundFile file, int fadeInTime, int channel)
         {
@@ -490,6 +513,8 @@ namespace Ares.Playing
 
         private void EndSync(int handle, int channel, int data, IntPtr user)
         {
+            if (m_NotLoops.ContainsKey(user.ToInt32()))
+                m_NotLoops.Remove(user.ToInt32());
             FileFinished(channel);
         }
 

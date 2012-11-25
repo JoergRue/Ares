@@ -15,9 +15,6 @@
     <LinearLayout android:id="@+id/linearLayout1" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical" android:layout_gravity="fill_vertical" android:layout_weight="0.5">
         <LinearLayout android:id="@+id/linearLayout3" android:layout_width="fill_parent" android:layout_height="wrap_content">
             <TextView android:text="@string/Volumes" android:id="@+id/textView1" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="0.2" android:layout_gravity="bottom"></TextView>
-            <ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/back" android:id="@+id/backButton"></ImageButton>
-            <ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/forward" android:id="@+id/forwardButton"></ImageButton>
-            <ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/stop" android:id="@+id/stopButton" android:layout_marginLeft="5dip" android:layout_marginRight="5dip"></ImageButton>
         </LinearLayout>
 
         <TableLayout
@@ -64,10 +61,38 @@
             <TableRow android:id="@+id/tableRow6" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_weight="0.2">
                 <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView9" android:textAppearance="?android:attr/textAppearanceSmall" android:text="@string/Elements" android:layout_gravity="center_vertical"></TextView>
                 <ares.controller.android.ScrollableTextView android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceSmall" android:layout_margin="5dip" android:text="@string/Empty" android:id="@+id/elementsTextView" android:layout_gravity="center_vertical" android:ellipsize="marquee" android:focusable="true" android:focusableInTouchMode="true" android:marqueeRepeatLimit="marquee_forever" android:scrollHorizontally="true" android:layout_width="fill_parent"></ares.controller.android.ScrollableTextView>
+
+                <ImageButton
+                    android:id="@+id/stopButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dip"
+                    android:layout_marginRight="5dip"
+                    android:src="@drawable/stop" />
+
             </TableRow>
             <TableRow android:id="@+id/tableRow7" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_weight="0.2">
                 <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView8" android:textAppearance="?android:attr/textAppearanceSmall" android:text="@string/Music" android:layout_gravity="center_vertical"></TextView>
                 <ares.controller.android.ScrollableTextView android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceSmall" android:layout_margin="5dip" android:id="@+id/musicTextView" android:text="@string/Empty" android:ellipsize="marquee" android:marqueeRepeatLimit="marquee_forever" android:layout_gravity="center_vertical" android:scrollHorizontally="true" android:focusableInTouchMode="true" android:focusable="true" android:layout_width="fill_parent"></ares.controller.android.ScrollableTextView>
+
+                <ImageButton
+                    android:id="@+id/backButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/back" />
+
+                <ImageButton
+                    android:id="@+id/forwardButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/forward" />
+
+                <ImageButton
+                    android:id="@+id/repeatButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/repeat" />
+
             </TableRow>
             <TableRow android:layout_weight="0.2" android:id="@+id/tableRow8" android:layout_height="wrap_content" android:layout_width="wrap_content">
                 <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView10" android:text="@string/NetworkLabel" android:layout_gravity="center_vertical"></TextView>

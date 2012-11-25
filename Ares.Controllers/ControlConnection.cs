@@ -41,6 +41,7 @@ namespace Ares.Controllers
         void MusicChanged(String newMusic, String shortTitle);
         void ProjectChanged(String newTitle);
         void MusicListChanged(List<MusicListItem> newList);
+        void MusicRepeatChanged(bool repeat);
 
         void Disconnect();
         void ConnectionFailed();
@@ -430,6 +431,12 @@ namespace Ares.Controllers
                                     m_WatchDogTimer.Start();
                                     break;
                                 }
+                            case 10:
+                                {
+                                    int repeat = buffer[1];
+                                    m_NetworkClient.MusicRepeatChanged(repeat == 1);
+                                    break;
+                                }
                             default:
                                 break;
                         }
@@ -618,6 +625,39 @@ namespace Ares.Controllers
                 byte[] bytes = new byte[1 + 4];
                 bytes[0] = 8;
                 byte[] idBytes = BitConverter.GetBytes(elementId);
+                if (BitConverter.IsLittleEndian)
+                    Array.Reverse(idBytes);
+                Array.Copy(idBytes, 0, bytes, 1, 4);
+                m_Socket.Send(bytes);
+            }
+            catch (SocketException ex)
+            {
+                Messages.AddMessage(MessageType.Warning, ex.Message);
+                HandleConnectionFailure(true);
+            }
+        }
+
+        public void SetMusicRepeat(bool repeat)
+        {
+            if (!Connected)
+            {
+                Messages.AddMessage(MessageType.Warning, StringResources.NoConnection);
+                return;
+            }
+            if (m_State == State.ConnectionFailure)
+            {
+                if (!TryReconnect())
+                {
+                    Messages.AddMessage(MessageType.Warning, StringResources.NoConnection);
+                    return;
+                }
+            }
+            try
+            {
+                Int32 val = repeat ? 1 : 0;
+                byte[] bytes = new byte[1 + 4];
+                bytes[0] = 9;
+                byte[] idBytes = BitConverter.GetBytes(val);
                 if (BitConverter.IsLittleEndian)
                     Array.Reverse(idBytes);
                 Array.Copy(idBytes, 0, bytes, 1, 4);

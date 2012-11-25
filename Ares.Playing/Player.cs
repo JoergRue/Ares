@@ -784,6 +784,25 @@ namespace Ares.Playing
             }
         }
 
+        private bool m_RepeatCurrentMusic = false;
+
+        public bool RepeatCurrentMusic
+        {
+            get { return m_RepeatCurrentMusic; }
+            set
+            {
+                m_RepeatCurrentMusic = value;
+                if (ActiveMusicPlayer != null)
+                {
+                    ActiveMusicPlayer.RepeatCurrentMusic = value;
+                }
+                if (ProjectCallbacks != null)
+                {
+                    ProjectCallbacks.MusicRepeatChanged(value);
+                }
+            }
+        }
+
         public void StopAll()
         {
             List<StartElementPlayer> copy = new List<StartElementPlayer>();

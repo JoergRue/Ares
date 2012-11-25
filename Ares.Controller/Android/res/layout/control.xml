@@ -47,6 +47,13 @@
             <TableRow android:id="@+id/tableRow7" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_weight="0.2">
                 <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView8" android:textAppearance="?android:attr/textAppearanceSmall" android:text="@string/Music" android:layout_gravity="center_vertical"></TextView>
                 <ares.controller.android.ScrollableTextView android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceSmall" android:layout_margin="5dip" android:id="@+id/musicTextView" android:text="@string/Empty" android:ellipsize="marquee" android:marqueeRepeatLimit="marquee_forever" android:layout_gravity="center_vertical" android:scrollHorizontally="true" android:focusableInTouchMode="true" android:focusable="true" android:layout_width="fill_parent"></ares.controller.android.ScrollableTextView>
+
+                <ImageButton
+                    android:id="@+id/repeatButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/repeat" />
+
             </TableRow>
             <TableRow android:layout_weight="0.2" android:id="@+id/tableRow8" android:layout_height="wrap_content" android:layout_width="wrap_content">
                 <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView10" android:text="@string/NetworkLabel" android:layout_gravity="center_vertical"></TextView>

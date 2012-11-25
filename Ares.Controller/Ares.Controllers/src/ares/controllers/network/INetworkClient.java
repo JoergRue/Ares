@@ -36,4 +36,5 @@ public interface INetworkClient {
 
 	void disconnect();
 	void connectionFailed();
+	void musicRepeatChanged(boolean isRepeat);
 }
