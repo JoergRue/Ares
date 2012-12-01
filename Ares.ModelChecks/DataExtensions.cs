@@ -75,6 +75,11 @@ namespace Ares.ModelInfo
 
         private static bool IsEndless(IElement element)
         {
+            return IsEndless(new HashSet<IElement>(), element);
+        }
+
+        private static bool IsEndless(HashSet<IElement> checkedReferences, IElement element)
+        {
             if (element is IRepeatableElement)
             {
                 if ((element as IRepeatableElement).RepeatCount == -1)
@@ -83,17 +88,29 @@ namespace Ares.ModelInfo
             if (element is IContainerElement)
             {
                 IElement inner = (element as IContainerElement).InnerElement;
-                if (inner != element && IsEndless(inner))
+                if (inner != element && IsEndless(checkedReferences, inner))
                     return true;
             }
             else if (element is IGeneralElementContainer)
             {
                 foreach (IContainerElement subElement in ((element as IGeneralElementContainer).GetGeneralElements()))
                 {
-                    if (IsEndless(subElement))
+                    if (IsEndless(checkedReferences, subElement))
                         return true;
                 }
             }
+            else if (element is Ares.Data.IReferenceElement)
+            {
+                if (checkedReferences.Contains(element))
+                    return false;
+                checkedReferences.Add(element);
+                Ares.Data.IElement referencedElement = Ares.Data.DataModule.ElementRepository.GetElement((element as Ares.Data.IReferenceElement).ReferencedId);
+                if (referencedElement != null && IsEndless(checkedReferences, referencedElement))
+                {
+                    return true;
+                }
+            }
+
             return false;
         }
     }

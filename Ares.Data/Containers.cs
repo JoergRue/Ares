@@ -129,10 +129,13 @@ namespace Ares.Data
     class FileElementSearcher : IElementVisitor
     {
         private List<IFileElement> mFileElements;
+        private HashSet<IFileElement> mElementsSet;
+        private HashSet<IElement> mCheckedReferences = new HashSet<IElement>();
 
         public FileElementSearcher()
         {
             mFileElements = new List<IFileElement>();
+            mElementsSet = new HashSet<IFileElement>();
         }
 
         public IList<IFileElement> GetFoundElements()
@@ -143,7 +146,11 @@ namespace Ares.Data
 
         public void VisitFileElement(IFileElement fileElement)
         {
-            mFileElements.Add(fileElement);
+            if (!mElementsSet.Contains(fileElement))
+            {
+                mFileElements.Add(fileElement);
+                mElementsSet.Add(fileElement);
+            }
         }
 
         public void VisitSequentialContainer(ISequentialContainer sequentialContainer)
@@ -192,6 +199,18 @@ namespace Ares.Data
 
         public void VisitMacroCommand(IMacroCommand macroCommand)
         {
+        }
+
+        public void VisitReference(IReferenceElement reference)
+        {
+            if (!mCheckedReferences.Contains(reference))
+            {
+                mCheckedReferences.Add(reference);
+                IElement referencedElement = DataModule.ElementRepository.GetElement(reference.ReferencedId);
+                if (referencedElement != null)
+                    referencedElement.Visit(this);
+                mCheckedReferences.Remove(reference);
+            }
         }
     }
 

@@ -87,6 +87,11 @@ namespace Ares.Data
         /// </summary>
         IMacro CreateMacro(String title);
 
+        /// <summary>
+        /// Creates an element reference.
+        /// </summary>
+        IReferenceElement CreateReferenceElement(int referencedId);
+
         /*
         /// <summary>
         /// Creates a reference to a container.
@@ -167,6 +172,11 @@ namespace Ares.Data
             return new Macro(GetNextID(), title);
         }
 
+        public IReferenceElement CreateReferenceElement(int referencedId)
+        {
+            return new ReferenceElement(referencedId);
+        }
+
         /*
         public IContainerReference<T, U> CreateContainerReference<T, U>(T container) where T : IElementContainer<U> where U : IContainerElement
         {
@@ -234,6 +244,15 @@ namespace Ares.Data
             }
         }
 
+        internal IReferenceElement CreateReferenceElement(System.Xml.XmlReader reader)
+        {
+            if (!reader.IsStartElement("ReferenceElement"))
+            {
+                XmlHelpers.ThrowException(String.Format(StringResources.ExpectedElement, "ReferenceElement"), reader);
+            }
+            return new ReferenceElement(reader);
+        }
+
         internal IElement CreateElement(System.Xml.XmlReader reader)
         {
             if (reader.IsStartElement("SequentialMusicList"))
@@ -290,6 +309,10 @@ namespace Ares.Data
             else if (reader.IsStartElement("Macro"))
             {
                 return new Macro(reader);
+            }
+            else if (reader.IsStartElement("ReferenceElement"))
+            {
+                return new ReferenceElement(reader);
             }
             else
             {

@@ -23,7 +23,7 @@ using System.Collections.Generic;
 namespace Ares.Data
 {
 
-    interface IReferenceHolder
+    public interface IReferenceHolder
     {
         int ReferencedId { get; set; }
     }
@@ -89,6 +89,59 @@ namespace Ares.Data
 
         private Dictionary<int, List<IReferenceHolder>> m_ReferenceHolders;
         private Dictionary<int, int> m_Redirections;
+    }
+
+    public interface IReferenceElement : IElement, IReferenceHolder
+    {
+    }
+
+    class ReferenceElement : ElementBase, IReferenceElement
+    {
+        public int ReferencedId { get; set; }
+
+        public override void WriteToXml(System.Xml.XmlWriter writer)
+        {
+            writer.WriteStartElement("ReferenceElement");
+            DoWriteToXml(writer);
+            writer.WriteAttributeString("ReferencedId", ReferencedId.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            writer.WriteEndElement();
+        }
+
+        public ReferenceElement(int id)
+            : base(DataModule.TheElementFactory.GetNextID())
+        {
+            ReferencedId = id;
+            IElement referencedElement = DataModule.ElementRepository.GetElement(id);
+            Title = referencedElement != null ? referencedElement.Title : "Reference";
+            SetsMusicVolume = SetsSoundVolume = false;
+        }
+
+        public ReferenceElement(System.Xml.XmlReader reader)
+            : base(reader)
+        {
+            ReferencedId = reader.GetIntegerAttribute("ReferencedId");
+            if (DataModule.TheElementRepository.Redirector != null)
+            {
+                DataModule.TheElementRepository.Redirector.AddReferenceHolder(this);
+            }
+
+            if (!reader.IsEmptyElement)
+            {
+                reader.Read();
+                reader.ReadInnerXml();
+                reader.ReadEndElement();
+            }
+            else
+            {
+                reader.Read();
+            }
+        }
+
+        public override void Visit(IElementVisitor visitor)
+        {
+            visitor.VisitReference(this);
+        }
+
     }
 
     /*

@@ -62,13 +62,41 @@ namespace Ares.Data
     {
         public static IList<IFileElement> GetFileElements(this IXmlWritable element)
         {
+            return GetFileElements(new HashSet<IXmlWritable>(), element);
+        }
+
+        private static IList<IFileElement> GetFileElements(HashSet<IXmlWritable> checkedReferences, IXmlWritable element)
+        {
             if (element is IGeneralElementContainer)
             {
-                return (element as IGeneralElementContainer).GetFileElements();
+                return GetFileElements(checkedReferences, (element as IGeneralElementContainer));
             }
             else if (element is IContainerElement)
             {
-                return (element as IContainerElement).InnerElement.GetFileElements();
+                return GetFileElements(checkedReferences, (element as IContainerElement).InnerElement);
+            }
+            else if (element is IReferenceElement)
+            {
+                if (!checkedReferences.Contains(element))
+                {
+                    checkedReferences.Add(element);
+                    IElement referencedElement = DataModule.ElementRepository.GetElement((element as IReferenceElement).ReferencedId);
+                    IList<IFileElement> result;
+                    if (referencedElement != null)
+                    {
+                        result = GetFileElements(checkedReferences, referencedElement);
+                    }
+                    else
+                    {
+                        result = new List<IFileElement>();
+                    }
+                    checkedReferences.Remove(element);
+                    return result;
+                }
+                else
+                {
+                    return new List<IFileElement>();
+                }
             }
             else
             {

@@ -32,7 +32,7 @@ namespace Ares.ModelInfo
             m_SearchedPath = GetAbsolutePath(relativePath, soundFileType);
             foreach (IMode mode in project.GetModes())
             {
-                m_CurrentList = new List<IModeElement>();
+                m_CurrentList = new HashSet<IModeElement>();
                 foreach (IModeElement element in mode.GetElements())
                 {
                     m_CurrentModeElement = element;
@@ -40,7 +40,8 @@ namespace Ares.ModelInfo
                 }
                 if (m_CurrentList.Count > 0)
                 {
-                    resultList.Add(new KeyValuePair<IMode, List<IModeElement>>(mode, m_CurrentList));
+                    List<IModeElement> modeElements = new List<IModeElement>(m_CurrentList);
+                    resultList.Add(new KeyValuePair<IMode, List<IModeElement>>(mode, modeElements));
                 }
             }
             return resultList;
@@ -48,7 +49,8 @@ namespace Ares.ModelInfo
 
         private String m_SearchedPath;
         private IModeElement m_CurrentModeElement;
-        private List<IModeElement> m_CurrentList;
+        private HashSet<IModeElement> m_CurrentList;
+        private HashSet<IElement> m_References = new HashSet<IElement>();
 
         private static String GetAbsolutePath(String relativePath, SoundFileType soundFileType)
         {
@@ -134,6 +136,20 @@ namespace Ares.ModelInfo
 
         public void VisitMacroCommand(IMacroCommand macroCommand)
         {
+        }
+
+        public void VisitReference(IReferenceElement reference)
+        {
+            if (!m_References.Contains(reference))
+            {
+                m_References.Add(reference);
+                IElement referencedElement = Ares.Data.DataModule.ElementRepository.GetElement(reference.ReferencedId);
+                if (referencedElement != null)
+                {
+                    referencedElement.Visit(this);
+                }
+                m_References.Remove(reference);
+            }
         }
     }
 }

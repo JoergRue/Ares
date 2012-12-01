@@ -530,6 +530,36 @@
   <ItemGroup>
     <None Include="Resources\base_cog_32.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SeriousWarning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\parallel_ref.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\parallelsounds_ref.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\random_music_list_ref.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\randomsounds_ref.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sequential_music_list_ref.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sequential_ref.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SeriousWarning_ref.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\random_ref.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\base_cog_32_ref.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

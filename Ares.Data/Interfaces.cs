@@ -59,6 +59,10 @@ namespace Ares.Data
         /// Visits a macro command.
         /// </summary>
         void VisitMacroCommand(IMacroCommand macroCommand);
+        /// <summary>
+        /// Visits a reference to an element.
+        /// </summary>
+        void VisitReference(IReferenceElement reference);
     }
 
     /// <summary>

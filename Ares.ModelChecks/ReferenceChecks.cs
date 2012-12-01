@@ -78,6 +78,15 @@ namespace Ares.ModelInfo
             macroCommand.VisitMacroCommand(this);
         }
 
+        public void VisitReference(IReferenceElement reference)
+        {
+            if (Data.DataModule.ElementRepository.GetElement(reference.ReferencedId) == null)
+            {
+                AddError(m_ModelErrors, ModelError.ErrorSeverity.Error, StringResources.ReferencedElementNotFound, reference);
+            }
+            // no need to follow the reference, referenced element will be checked through its 'default' path
+        }
+
         private void CheckCondition(IMacroCommand command)
         {
             switch (command.Condition.ConditionType)

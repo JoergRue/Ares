@@ -201,4 +201,7 @@
   <data name="StoppedElementNotFound" xml:space="preserve">
     <value>Zu stoppendes Element wurde nicht gefunden.</value>
   </data>
+  <data name="ReferencedElementNotFound" xml:space="preserve">
+    <value>Verlinktes Element wurde nicht gefunden.</value>
+  </data>
 </root>

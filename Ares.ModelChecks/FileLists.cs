@@ -23,17 +23,25 @@ using Ares.Data;
 
 namespace Ares.ModelInfo
 {
+    public enum DuplicateRemoval
+    {
+        None,
+        PathBased,
+        IdBased
+    }
+
     public class FileLists : IElementVisitor
     {
         private Dictionary<String, IFileElement> m_Files = new Dictionary<string, IFileElement>();
-        private bool m_RemoveDuplicates;
+        private DuplicateRemoval m_RemoveDuplicates;
+        private HashSet<IElement> m_References = new HashSet<IElement>();
 
         public FileLists()
         {
-            m_RemoveDuplicates = true;
+            m_RemoveDuplicates = DuplicateRemoval.PathBased;
         }
 
-        public FileLists(bool removeDuplicates)
+        public FileLists(DuplicateRemoval removeDuplicates)
         {
             m_RemoveDuplicates = removeDuplicates;
         }
@@ -94,27 +102,40 @@ namespace Ares.ModelInfo
 
         public void VisitFileElement(IFileElement fileElement)
         {
-            if (m_RemoveDuplicates)
+            switch (m_RemoveDuplicates)
             {
-                String path;
-                if (fileElement.SoundFileType == SoundFileType.Music)
-                {
-                    path = Ares.Settings.Settings.Instance.MusicDirectory;
-                }
-                else
-                {
-                    path = Ares.Settings.Settings.Instance.SoundDirectory;
-                }
-                path = System.IO.Path.Combine(path, fileElement.FilePath);
-                path = System.IO.Path.GetFullPath(path).ToUpperInvariant();
-                if (!m_Files.ContainsKey(path))
-                {
-                    m_Files.Add(path, fileElement);
-                }
-            }
-            else
-            {
-                m_Files.Add("" + m_Files.Count, fileElement);
+                case DuplicateRemoval.PathBased:
+                    {
+                        String path;
+                        if (fileElement.SoundFileType == SoundFileType.Music)
+                        {
+                            path = Ares.Settings.Settings.Instance.MusicDirectory;
+                        }
+                        else
+                        {
+                            path = Ares.Settings.Settings.Instance.SoundDirectory;
+                        }
+                        path = System.IO.Path.Combine(path, fileElement.FilePath);
+                        path = System.IO.Path.GetFullPath(path).ToUpperInvariant();
+                        if (!m_Files.ContainsKey(path))
+                        {
+                            m_Files.Add(path, fileElement);
+                        }
+                    }
+                    break;
+                case DuplicateRemoval.IdBased:
+                    {
+                        String key = "" + fileElement.Id;
+                        if (!m_Files.ContainsKey(key))
+                        {
+                            m_Files.Add(key, fileElement);
+                        }
+                    }
+                    break;
+                case DuplicateRemoval.None:
+                default:
+                    m_Files.Add("" + m_Files.Count, fileElement);
+                    break;
             }
         }
 
@@ -164,6 +185,20 @@ namespace Ares.ModelInfo
 
         public void VisitMacroCommand(IMacroCommand macroCommand)
         {
+        }
+
+        public void VisitReference(IReferenceElement reference)
+        {
+            if (!m_References.Contains(reference))
+            {
+                m_References.Add(reference);
+                IElement referencedElement = Ares.Data.DataModule.ElementRepository.GetElement(reference.ReferencedId);
+                if (referencedElement != null)
+                {
+                    referencedElement.Visit(this);
+                }
+                m_References.Remove(reference);
+            }
         }
     }
 }

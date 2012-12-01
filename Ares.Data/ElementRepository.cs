@@ -74,6 +74,7 @@ namespace Ares.Data
                         DeleteElement(me.StartElement.Id);
                     }
                 }
+                // do NOT follow references ;-)
                 m_Elements.Remove(id);
             }
         }
@@ -97,6 +98,7 @@ namespace Ares.Data
                     AddElement(me.StartElement);
                 }
             }
+            // do NOT follow references
             int id = element.Id;
             AddElement(ref id, element);
             element.Id = id;

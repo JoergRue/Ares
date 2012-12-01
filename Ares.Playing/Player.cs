@@ -187,6 +187,15 @@ namespace Ares.Playing
 
         public virtual void VisitMacroCommand(IMacroCommand macroCommand) { }
 
+        public virtual void VisitReference(IReferenceElement reference)
+        {
+            IElement referencedElement = DataModule.ElementRepository.GetElement(reference.ReferencedId);
+            if (referencedElement != null)
+            {
+                referencedElement.Visit(this);
+            }
+        }
+
         public abstract void StopMusic(int crossFadeMusicTime);
         public abstract void StopSounds();
         public abstract void SetSoundVolume(int volume);
@@ -567,6 +576,11 @@ namespace Ares.Playing
 
         private bool HasOnlyOneLoopableFileElement(IElement element)
         {
+            return HasOnlyOneLoopableFileElement(new HashSet<IElement>(), element);
+        }
+
+        private bool HasOnlyOneLoopableFileElement(HashSet<IElement> checkedReferences, IElement element)
+        {
             if (element is IFileElement)
                 return true;
             if (element is IGeneralElementContainer)
@@ -593,6 +607,16 @@ namespace Ares.Playing
             else if (element is IContainerElement)
             {
                 return HasOnlyOneLoopableFileElement((element as IContainerElement).InnerElement);
+            }
+            else if (element is IReferenceElement)
+            {
+                if (checkedReferences.Contains(element))
+                    return false;
+                checkedReferences.Add(element);
+                IElement referencedElement = Data.DataModule.ElementRepository.GetElement((element as IReferenceElement).ReferencedId);
+                bool result = referencedElement != null ? HasOnlyOneLoopableFileElement(referencedElement) : false;
+                checkedReferences.Remove(element);
+                return result;
             }
             return false;
         }

@@ -650,7 +650,7 @@ namespace Ares.Editor.Controls
             {
                 elements.Add(containerElements[row.Index]);
             }
-            Ares.ModelInfo.FileLists fileLists = new ModelInfo.FileLists(false);
+            Ares.ModelInfo.FileLists fileLists = new ModelInfo.FileLists(ModelInfo.DuplicateRemoval.None);
             return fileLists.GetAllFiles(elements);
         }
 

@@ -46,24 +46,58 @@ namespace Ares.Editor.Actions
 
         private void NotifyStart(Ares.Data.IElement element)
         {
+            NotifyStart(new HashSet<Ares.Data.IElement>(), element);
+        }
+
+        private void NotifyStart(HashSet<Ares.Data.IElement> references, Ares.Data.IElement element)
+        {
             ElementChanges.Instance.ElementPlayed(element.Id);
             if (element is Ares.Data.IGeneralElementContainer)
             {
                 foreach (Ares.Data.IContainerElement e in (element as Ares.Data.IGeneralElementContainer).GetGeneralElements())
                 {
-                    NotifyStart(e.InnerElement);
+                    NotifyStart(references, e.InnerElement);
+                }
+            }
+            else if (element is Ares.Data.IReferenceElement)
+            {
+                if (!references.Contains(element))
+                {
+                    references.Add(element);
+                    Ares.Data.IElement referencedElement = Ares.Data.DataModule.ElementRepository.GetElement((element as Ares.Data.IReferenceElement).ReferencedId);
+                    if (referencedElement != null)
+                    {
+                        NotifyStart(references, referencedElement);
+                    }
                 }
             }
         }
 
         private void NotifyEnd(Ares.Data.IElement element)
         {
+            NotifyEnd(new HashSet<Ares.Data.IElement>(), element);
+        }
+
+        private void NotifyEnd(HashSet<Ares.Data.IElement> references, Ares.Data.IElement element)
+        {
             ElementChanges.Instance.ElementStopped(element.Id);
             if (element is Ares.Data.IGeneralElementContainer)
             {
                 foreach (Ares.Data.IContainerElement e in (element as Ares.Data.IGeneralElementContainer).GetGeneralElements())
                 {
-                    NotifyEnd(e.InnerElement);
+                    NotifyEnd(references, e.InnerElement);
+                }
+            }
+            else if (element is Ares.Data.IReferenceElement)
+            {
+                if (!references.Contains(element))
+                {
+                    references.Add(element);
+                    Ares.Data.IElement referencedElement = Ares.Data.DataModule.ElementRepository.GetElement((element as Ares.Data.IReferenceElement).ReferencedId);
+                    if (referencedElement != null)
+                    {
+                        NotifyEnd(references, referencedElement);
+                    }
                 }
             }
         }
@@ -125,6 +159,11 @@ namespace Ares.Editor.Actions
 
         public bool IsElementOrSubElementPlaying(Ares.Data.IElement element)
         {
+            return IsElementOrSubElementPlaying(new HashSet<Ares.Data.IElement>(), element);
+        }
+
+        private bool IsElementOrSubElementPlaying(HashSet<Ares.Data.IElement> checkedReferences, Ares.Data.IElement element)
+        {
             lock (syncObject)
             {
                 if (m_PlayedElements.ContainsKey(element.Id))
@@ -134,15 +173,26 @@ namespace Ares.Editor.Actions
             {
                 foreach (Ares.Data.IContainerElement subElement in (element as Ares.Data.IGeneralElementContainer).GetGeneralElements())
                 {
-                    if (IsElementOrSubElementPlaying(subElement))
+                    if (IsElementOrSubElementPlaying(checkedReferences, subElement))
                         return true;
                 }
             }
             else if (element is Ares.Data.IContainerElement)
             {
                 Ares.Data.IElement inner = (element as Ares.Data.IContainerElement).InnerElement;
-                if (inner != element && IsElementOrSubElementPlaying(inner))
+                if (inner != element && IsElementOrSubElementPlaying(checkedReferences, inner))
                     return true;
+            }
+            else if (element is Ares.Data.IReferenceElement)
+            {
+                if (checkedReferences.Contains(element))
+                    return false;
+                checkedReferences.Add(element);
+                Ares.Data.IElement referencedElement = Ares.Data.DataModule.ElementRepository.GetElement((element as Ares.Data.IReferenceElement).ReferencedId);
+                if (referencedElement != null && IsElementOrSubElementPlaying(checkedReferences, referencedElement))
+                {
+                    return true;
+                }
             }
             else
             {
@@ -167,14 +217,31 @@ namespace Ares.Editor.Actions
 
         private bool IsSubElementOfElement(Ares.Data.IElement parent, Ares.Data.IElement element)
         {
+            HashSet<Ares.Data.IElement> checkedReferences = new HashSet<Data.IElement>();
+            return IsSubElementOfElements(checkedReferences, parent, element);
+        }
+
+        private bool IsSubElementOfElements(HashSet<Ares.Data.IElement> checkedReferences, Ares.Data.IElement parent, Ares.Data.IElement element)
+        {
             if (parent == element)
                 return true;
             else if (parent is Ares.Data.IGeneralElementContainer)
             {
                 foreach (Ares.Data.IContainerElement containerElement in (parent as Ares.Data.IGeneralElementContainer).GetGeneralElements())
                 {
-                    if (IsSubElementOfElement(containerElement.InnerElement, element))
+                    if (IsSubElementOfElements(checkedReferences, containerElement.InnerElement, element))
                         return true;
+                }
+            }
+            else if (parent is Ares.Data.IReferenceElement)
+            {
+                if (checkedReferences.Contains(parent))
+                    return false;
+                checkedReferences.Add(parent);
+                Ares.Data.IElement referencedElement = Ares.Data.DataModule.ElementRepository.GetElement((parent as Ares.Data.IReferenceElement).ReferencedId);
+                if (referencedElement != null && IsSubElementOfElements(checkedReferences, referencedElement, element))
+                {
+                    return true;
                 }
             }
             return false;

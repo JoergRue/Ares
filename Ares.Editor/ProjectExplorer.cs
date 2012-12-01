@@ -56,6 +56,19 @@ namespace Ares.Editor
             sImageList.Images.Add(ImageResources.parallel);
             sImageList.Images.Add(ImageResources.vierge);
             sImageList.Images.Add(ImageResources.base_cog_32);
+            sImageList.Images.Add(ImageResources.SeriousWarning);
+
+            sImageList.Images.Add(ImageResources.random_music_list_ref);
+            sImageList.Images.Add(ImageResources.sequential_music_list_ref);
+            sImageList.Images.Add(ImageResources.randomsounds_ref);
+            sImageList.Images.Add(ImageResources.parallelsounds_ref);
+            sImageList.Images.Add(ImageResources.aressmall);
+            sImageList.Images.Add(ImageResources.random_ref);
+            sImageList.Images.Add(ImageResources.sequential_ref);
+            sImageList.Images.Add(ImageResources.parallel_ref);
+            sImageList.Images.Add(ImageResources.vierge);
+            sImageList.Images.Add(ImageResources.base_cog_32_ref);
+            sImageList.Images.Add(ImageResources.SeriousWarning_ref);
         }
 
         public ProjectExplorer()
@@ -229,6 +242,7 @@ namespace Ares.Editor
             {
                 AddSubElements(node, (element as IBackgroundSounds).GetElements());
             }
+            // do not follow references (too confusing)
         }
 
         private void AddSubElements(TreeNode parent, IList<IContainerElement> subElements)
@@ -267,52 +281,95 @@ namespace Ares.Editor
             return node;
         }
 
+        private ContextMenuStrip GetNodeContextMenu(IElement element)
+        {
+            if (element is IBackgroundSounds)
+            {
+                return bgSoundsContextMenu;
+            }
+            else if (element is IBackgroundSoundChoice)
+            {
+                return elementContextMenu;
+            }
+            else if (element is IRandomBackgroundMusicList)
+            {
+                return elementContextMenu;
+            }
+            else if (element is ISequentialBackgroundMusicList)
+            {
+                return elementContextMenu;
+            }
+            else if (element is IMacro)
+            {
+                return elementContextMenu;
+            }
+            else if (element is IGeneralElementContainer)
+            {
+                return containerContextMenu;
+            }
+            else if (element is IReferenceElement)
+            {
+                return elementContextMenu;
+            }
+            else
+                return null;
+        }
+
+        private int GetNodeImageIndex(IElement element)
+        {
+            if (element is IBackgroundSounds)
+            {
+                return 3;
+            }
+            else if (element is IBackgroundSoundChoice)
+            {
+                return 2;
+            }
+            else if (element is IRandomBackgroundMusicList)
+            {
+                return 0;
+            }
+            else if (element is ISequentialBackgroundMusicList)
+            {
+                return 1;
+            }
+            else if (element is IMacro)
+            {
+                return 9;
+            }
+            else if (element is IGeneralElementContainer)
+            {
+                if (element is IElementContainer<IChoiceElement>)
+                {
+                    return 5;
+                }
+                else if (element is IElementContainer<ISequentialElement>)
+                {
+                    return 6;
+                }
+                else
+                {
+                    return 7;
+                }
+            }
+            else if (element is IReferenceElement)
+            {
+                IElement referencedElement = Data.DataModule.ElementRepository.GetElement((element as IReferenceElement).ReferencedId);
+                if (referencedElement != null)
+                    return GetNodeImageIndex(referencedElement) + 11;
+                else
+                    return 10;
+            }
+            else
+                return 0;
+        }
+
         private TreeNode CreateElementNode(IElement element)
         {
             TreeNode node = new TreeNode(element.Title);
             node.Tag = element;
-            if (element is IBackgroundSounds)
-            {
-                node.ContextMenuStrip = bgSoundsContextMenu;
-                node.ImageIndex = node.SelectedImageIndex = 3;
-            }
-            else if (element is IBackgroundSoundChoice)
-            {
-                node.ContextMenuStrip = elementContextMenu;
-                node.ImageIndex = node.SelectedImageIndex = 2;
-            }
-            else if (element is IRandomBackgroundMusicList)
-            {
-                node.ContextMenuStrip = elementContextMenu;
-                node.ImageIndex = node.SelectedImageIndex = 0;
-
-            }
-            else if (element is ISequentialBackgroundMusicList)
-            {
-                node.ContextMenuStrip = elementContextMenu;
-                node.ImageIndex = node.SelectedImageIndex = 1;
-            }
-            else if (element is IMacro)
-            {
-                node.ContextMenuStrip = elementContextMenu;
-                node.ImageIndex = node.SelectedImageIndex = 9;
-            }
-            else if (element is IGeneralElementContainer)
-            {
-                node.ContextMenuStrip = containerContextMenu;
-                if (element is IElementContainer<IChoiceElement>)
-                {
-                    node.ImageIndex = node.SelectedImageIndex = 5;
-                }
-                else if (element is IElementContainer<ISequentialElement>)
-                {
-                    node.ImageIndex = node.SelectedImageIndex = 6;
-                }
-                else
-                {
-                    node.ImageIndex = node.SelectedImageIndex = 7;
-                }
-            }
+            node.ContextMenuStrip = GetNodeContextMenu(element);
+            node.ImageIndex = node.SelectedImageIndex = GetNodeImageIndex(element);
             return node;
         }
 
@@ -1428,6 +1485,14 @@ namespace Ares.Editor
 
         private bool IsImportPossible(object parentElement, IXmlWritable element)
         {
+            if (element is IReferenceElement)
+            {
+                IElement referencedElement = Data.DataModule.ElementRepository.GetElement((element as IReferenceElement).ReferencedId);
+                if (referencedElement != null)
+                    return IsImportPossible(parentElement, referencedElement);
+                else
+                    return false;
+            }
             if (parentElement is IProject)
             {
                 return element is IMode;
@@ -1462,6 +1527,54 @@ namespace Ares.Editor
             }
         }
 
+        private void AddLink(TreeNode parent, object parentElement, IXmlWritable element)
+        {
+            if (element == null)
+                return;
+
+            if (parentElement is IProject)
+            {
+                // should not happen
+                return;
+            }
+            else if (parentElement is IMode)
+            {
+                if (element is IModeElement)
+                {
+                    AddLink(parent, parentElement, (element as IModeElement).StartElement);
+                }
+                else
+                {
+                    IElement newLink = DataModule.ElementFactory.CreateReferenceElement((element as IElement).Id);
+                    IModeElement modeElement = DataModule.ElementFactory.CreateModeElement(newLink.Title, newLink);
+                    TreeNode node = CreateModeElementNode(modeElement);
+                    Actions.Actions.Instance.AddNew(new AddModeElementAction(parent, modeElement, node));
+                    AddSubElements(node, modeElement.StartElement); // though there shouldn't be any sub-elements in current design
+                }
+            }
+            else if (parentElement is IModeElement)
+            {
+                AddLink(parent, (parentElement as IModeElement).StartElement, element);
+            }
+            else if (parentElement is IBackgroundSounds)
+            {
+                // not supported yet
+                return;
+            }
+            else if (parentElement is IGeneralElementContainer)
+            {
+                IElement elem = element is IModeElement ? (element as IModeElement).StartElement : element as IElement;
+                IElement newLink = DataModule.ElementFactory.CreateReferenceElement((elem as IElement).Id);
+                bool oldListen = listenForContainerChanges;
+                listenForContainerChanges = false;
+                TreeNode newNode;
+                Actions.Actions.Instance.AddNew(new AddElementAction(parent, parentElement as IGeneralElementContainer, newLink,
+                    CreateElementNode, out newNode));
+                AddSubElements(newNode, newLink); // though there shouldn't be any sub-elements in current design
+                listenForContainerChanges = oldListen;
+            }
+        }
+
         private void AddImportedElement(TreeNode parent, object parentElement, IXmlWritable element)
         {
             if (parentElement is IProject)
@@ -1489,7 +1602,7 @@ namespace Ares.Editor
                 {
                     IModeElement modeElement = DataModule.ElementFactory.CreateModeElement(element.Title, element as IElement);
                     TreeNode node = CreateModeElementNode(modeElement);
-                    Actions.Actions.Instance.AddNew(new AddModeElementAction(SelectedNode, modeElement, node));
+                    Actions.Actions.Instance.AddNew(new AddModeElementAction(parent, modeElement, node));
                     AddSubElements(node, modeElement.StartElement);
                 }
             }
@@ -1710,27 +1823,32 @@ namespace Ares.Editor
             PasteElements();
         }
 
+        private bool m_DragStartedHere = false;
+        private List<IXmlWritable> m_ExportItems = null;
+
         private void projectTree_MouseMove(object sender, MouseEventArgs e)
         {
             if (m_InDrag && m_DragStartRect != null && !m_DragStartRect.Contains(e.X, e.Y))
             {
-                List<IXmlWritable> exportItems = new List<IXmlWritable>();
+                m_ExportItems = new List<IXmlWritable>();
                 List<TreeNode> exportNodes = new List<TreeNode>();
                 // export only root nodes
                 WithSelectedRoots((TreeNode rootElement) =>
                 {
                     if (rootElement.Tag is IXmlWritable)
                     {
-                        exportItems.Add(rootElement.Tag as IXmlWritable);
+                        m_ExportItems.Add(rootElement.Tag as IXmlWritable);
                         exportNodes.Add(rootElement);
                     }
                 });
-                if (exportItems.Count == 0)
+                if (m_ExportItems.Count == 0)
                     return;
                 StringBuilder serializedForm = new StringBuilder();
-                Data.DataModule.ProjectManager.ExportElements(exportItems, serializedForm);
+                Data.DataModule.ProjectManager.ExportElements(m_ExportItems, serializedForm);
                 ClipboardElements cpElements = new ClipboardElements() { SerializedForm = serializedForm.ToString() };
-                DragDropEffects effects = DoDragDrop(cpElements, DragDropEffects.Copy | DragDropEffects.Move);
+                m_DragStartedHere = true;
+                DragDropEffects effects = DoDragDrop(cpElements, DragDropEffects.Copy | DragDropEffects.Move | DragDropEffects.Link);
+                m_DragStartedHere = false;
                 if (effects == DragDropEffects.Move)
                 {
                     foreach (TreeNode rootNode in exportNodes)
@@ -1741,6 +1859,7 @@ namespace Ares.Editor
                             DeleteElement(rootNode);
                     }
                 }
+                m_ExportItems = null;
                 m_InDrag = false;
             }
 
@@ -1764,6 +1883,11 @@ namespace Ares.Editor
                 if (node == null || node.Tag is IBackgroundSoundChoice)
                 {
                     e.Effect = DragDropEffects.None;
+                }
+                else if (((e.KeyState & 8) == 8) && ((e.KeyState & 4) == 4) && ((e.AllowedEffect & DragDropEffects.Link) == DragDropEffects.Link) 
+                    && !(node.Tag is IProject) && !(node.Tag is IBackgroundSounds) && !((node.Tag is IModeElement) && ((IModeElement)node.Tag).StartElement is IBackgroundSounds))
+                {
+                    e.Effect = DragDropEffects.Link;
                 }
                 else if (((e.KeyState & 8) == 8) && ((e.AllowedEffect & DragDropEffects.Copy) == DragDropEffects.Copy))
                 {
@@ -1812,13 +1936,39 @@ namespace Ares.Editor
                 IList<IXmlWritable> elements = Data.DataModule.ProjectManager.ImportElementsFromString(serializedForm);
                 TreeNode parentNode = node;
                 bool hasEnabledElements = false;
-                foreach (IXmlWritable element in elements)
+                if (m_DragStartedHere && e.Effect == DragDropEffects.Link)
                 {
-                    bool enabled = IsImportPossible(parentNode.Tag, element);
-                    if (enabled)
+                    foreach (IXmlWritable element in m_ExportItems)
                     {
-                        hasEnabledElements = true;
-                        AddImportedElement(parentNode, parentNode.Tag, element);
+                        bool enabled = IsImportPossible(parentNode.Tag, element);
+                        if (enabled)
+                        {
+                            hasEnabledElements = true;
+                            if (element is IReferenceElement)
+                            {
+                                IElement referencedElement = DataModule.ElementRepository.GetElement((element as IReferenceElement).ReferencedId);
+                                if (referencedElement != null)
+                                {
+                                    AddLink(parentNode, parentNode.Tag, referencedElement);
+                                }
+                            }
+                            else
+                            {
+                                AddLink(parentNode, parentNode.Tag, element);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (IXmlWritable element in elements)
+                    {
+                        bool enabled = IsImportPossible(parentNode.Tag, element);
+                        if (enabled)
+                        {
+                            hasEnabledElements = true;
+                            AddImportedElement(parentNode, parentNode.Tag, element);
+                        }
                     }
                 }
                 if (!hasEnabledElements)
@@ -1833,5 +1983,6 @@ namespace Ares.Editor
         {
             AddMacro();
         }
+
     }
 }

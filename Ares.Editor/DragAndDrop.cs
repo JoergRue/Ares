@@ -82,4 +82,13 @@ namespace Ares.Editor
         }
 
     }
+
+    class Win32ContextMenu
+    {
+        [System.Runtime.InteropServices.DllImport("user32")]
+        public static extern int TrackPopupMenu(IntPtr hMenu, int wFlags, int x, int y, int nReserved, IntPtr hwnd, IntPtr lprc);
+
+        public const int TPM_RETURNCMD = 0x0100;
+        public const int TPM_RIGHTBUTTON = 0x0002;
+    }
 }

@@ -105,5 +105,10 @@ namespace Ares.ModelInfo
         public void VisitMacroCommand(IMacroCommand macroCommand)
         {
         }
+
+        public void VisitReference(IReferenceElement reference)
+        {
+            // don't need to follow the link: will be checked through its normal 'element path'
+        }
     }
 }
