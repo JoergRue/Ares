@@ -182,6 +182,7 @@ namespace Ares.Editor
 
         private void RecreateTree()
         {
+            m_AfterEditAction = null;
             projectTree.BeginUpdate();
             projectTree.Nodes.Clear();
             if (m_Project != null)
@@ -451,6 +452,8 @@ namespace Ares.Editor
         private void projectTree_AfterLabelEdit(object sender, NodeLabelEditEventArgs e)
         {
             String text = e.Label;
+            if (e.Node == null)
+                return;
             if (e.Node.Tag == m_Project)
             {
                 if (e.Label != null)
