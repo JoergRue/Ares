@@ -58,7 +58,9 @@ namespace Ares.Editor.ElementEditors
             {
                 if (changeType == Actions.ElementChanges.ChangeType.Changed)
                 {
+                    listen = false;
                     UpdateTriggerDesc();
+                    listen = true;
                 }
                 else if (changeType == Actions.ElementChanges.ChangeType.TriggerChanged)
                 {
@@ -117,6 +119,7 @@ namespace Ares.Editor.ElementEditors
             }
             UpdateTriggerDesc();
             UpdateErrorProvider();
+            hideInPlayerBox.Checked = !m_Element.IsVisibleInPlayer;
 
             listen = true;
         }
@@ -173,7 +176,6 @@ namespace Ares.Editor.ElementEditors
             noFadeButton.Enabled = stopMusicBox.Checked;
             crossFadingUpDown.Enabled = stopMusicBox.Checked && (crossFadeButton.Checked || fadeButton.Checked);
             allCrossFadeButton.Enabled = stopMusicBox.Checked;
-            listen = true;
         }
 
         private void Commit()
@@ -261,6 +263,14 @@ namespace Ares.Editor.ElementEditors
         {
             Ares.Editor.Actions.Actions.Instance.AddNew(new Ares.Editor.Actions.SetAllTriggerFadingAction(
                 fadeButton.Checked, crossFadeButton.Checked, (int)crossFadingUpDown.Value));
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!listen)
+                return;
+            Ares.Editor.Actions.Actions.Instance.AddNew(new Ares.Editor.Actions.SetModeElementVisibleAction(
+                m_Element, !hideInPlayerBox.Checked));
         }
 
 

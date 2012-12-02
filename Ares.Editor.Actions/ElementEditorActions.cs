@@ -673,6 +673,32 @@ namespace Ares.Editor.Actions
         private int m_targetIndex;
     }
 
+    public class SetModeElementVisibleAction : Action
+    {
+        public SetModeElementVisibleAction(IModeElement modeElement, bool visibleInPlayer)
+        {
+            m_ModeElement = modeElement;
+            m_OldVisible = modeElement.IsVisibleInPlayer;
+            m_NewVisible = visibleInPlayer;
+        }
+
+        public override void Do()
+        {
+            m_ModeElement.IsVisibleInPlayer = m_NewVisible;
+            ElementChanges.Instance.ElementTriggerChanged(m_ModeElement.Id);
+        }
+
+        public override void Undo()
+        {
+            m_ModeElement.IsVisibleInPlayer = m_OldVisible;
+            ElementChanges.Instance.ElementTriggerChanged(m_ModeElement.Id);
+        }
+
+        private IModeElement m_ModeElement;
+        private bool m_OldVisible;
+        private bool m_NewVisible;
+    }
+
     public class SetModeElementTriggerAction : Action
     {
         public SetModeElementTriggerAction(IModeElement modeElement, ITrigger trigger)

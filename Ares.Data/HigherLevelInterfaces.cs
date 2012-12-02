@@ -44,6 +44,11 @@ namespace Ares.Data
         /// Whether the element is currently playing
         /// </summary>
         bool IsPlaying { get; set; }
+
+        /// <summary>
+        /// Whether the element is visible in Player and Controller.
+        /// </summary>
+        bool IsVisibleInPlayer { get; set; }
     }
 
     /// <summary>

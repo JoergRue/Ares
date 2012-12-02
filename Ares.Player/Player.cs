@@ -397,6 +397,8 @@ namespace Ares.Player
                     checkBox.Appearance = Appearance.Button;
                     for (int i = 0; i < elements.Count; ++i)
                     {
+                        if (!elements[i].IsVisibleInPlayer)
+                            continue;
                         String text = elements[i].Title;
                         if (showKeys && elements[i].Trigger != null && elements[i].Trigger.TriggerType == TriggerType.Key)
                         {
@@ -410,10 +412,14 @@ namespace Ares.Player
                             maxWidth = width;
                     }
                     checkBox.Dispose();
+                    int count = 0;
                     for (int i = 0; i < elements.Count; ++i)
                     {
-                        int row = i / 4;
-                        int column = i % 4;
+                        if (!elements[i].IsVisibleInPlayer)
+                            continue;
+                        ++count;
+                        int row = count / 4;
+                        int column = count % 4;
                         checkBox = new CheckBox();
                         String text = elements[i].Title;
                         if (showKeys && elements[i].Trigger != null && elements[i].Trigger.TriggerType == TriggerType.Key)
@@ -441,11 +447,19 @@ namespace Ares.Player
                         m_ButtonsForIds.Add(id, checkBox);
                         elementsPanel.Controls.Add(checkBox);
                     }
+                    if (count == 0)
+                    {
+                        Label label = new Label();
+                        label.Text = StringResources.NoElements;
+                        label.SetBounds(0, 0, label.PreferredSize.Width, label.PreferredSize.Height);
+                        elementsPanel.Controls.Add(label);
+                    }
                 }
                 else
                 {
                     Label label = new Label();
                     label.Text = StringResources.NoElements;
+                    label.SetBounds(0, 0, label.PreferredSize.Width, label.PreferredSize.Height);
                     elementsPanel.Controls.Add(label);
                 }
                 m_ButtonsActive = true;

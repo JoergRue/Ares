@@ -20,6 +20,7 @@
 package ares.controller.android;
 
 import java.util.HashMap;
+import java.util.List;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -132,7 +133,16 @@ public class ModeFragment extends ModeLikeFragment {
     	
 		public int getCount() {
 			if (mMode != null)
-				return mMode.getCommands().size();
+			{
+				int count = 0;
+				List<Command> commands = mMode.getCommands();
+				for (int i = 0; i < commands.size(); ++i) {
+					if (commands.get(i).isVisible()) {
+						++count;
+					}
+				}
+				return count;
+			}
 			else
 				return 0;
 		}
@@ -155,14 +165,31 @@ public class ModeFragment extends ModeLikeFragment {
 				}
 				else {
 					button = new ToggleButton(mContext);
-					Command command = mMode.getCommands().get(position);
-					//button.setLayoutParams(new GridView.LayoutParams(80, 20));
+					List<Command> commands = mMode.getCommands();
+					int count = 0; 
+					Command command = null;
+					for (int i = 0; i < commands.size(); ++i) {
+						if (commands.get(i).isVisible()) {
+							if (count == position) {
+								command = commands.get(i);
+								break;
+							}
+							else {
+								++count;
+							}
+						}
+					}
 					button.setPadding(5, 5, 5, 5);
-					button.setText(command.getTitle());
-					button.setTextOn(command.getTitle());
-					button.setTextOff(command.getTitle());
-					CommandButtonMapping.getInstance().registerButton(command.getId(), button);
-					button.setOnCheckedChangeListener(new CommandSender(command.getId()));
+					if (command != null) {
+						button.setText(command.getTitle());
+						button.setTextOn(command.getTitle());
+						button.setTextOff(command.getTitle());
+						CommandButtonMapping.getInstance().registerButton(command.getId(), button);
+						button.setOnCheckedChangeListener(new CommandSender(command.getId()));					
+					}
+					else {
+						button.setText("<Error>");
+					}
 					mButtons.put(position, button);
 					return button;
 				}

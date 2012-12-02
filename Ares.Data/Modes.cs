@@ -46,6 +46,8 @@ namespace Ares.Data
             }
         }
 
+        public bool IsVisibleInPlayer { get; set; }
+
         public override void Visit(IElementVisitor visitor)
         {
             StartElement.Visit(visitor);
@@ -57,12 +59,14 @@ namespace Ares.Data
             // IsPlaying = false;
             Title = title;
             StartElement = startElement;
+            IsVisibleInPlayer = true;
         }
 
         internal ModeElement(System.Xml.XmlReader reader)
             : base(reader)
         {
             // IsPlaying = false;
+            IsVisibleInPlayer = reader.GetBooleanAttributeOrDefault("visibleInPlayer", true);
             if (!reader.IsEmptyElement)
             {
                 reader.Read();
@@ -79,6 +83,7 @@ namespace Ares.Data
         public override void WriteToXml(System.Xml.XmlWriter writer)
         {
             writer.WriteStartElement("ModeElement");
+            writer.WriteAttributeString("visibleInPlayer", IsVisibleInPlayer ? "true" : "false");
             DoWriteToXml(writer);
             StartElement.WriteToXml(writer);
             if (Trigger != null)

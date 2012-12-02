@@ -759,16 +759,22 @@ namespace Ares.MGPlugin
                     checkBox.Appearance = Appearance.Button;
                     for (int i = 0; i < elements.Count; ++i)
                     {
+                        if (!elements[i].IsVisibleInPlayer)
+                            continue;
                         checkBox.Text = elements[i].Title;
                         int width = checkBox.PreferredSize.Width + 15;
                         if (width > maxWidth)
                             maxWidth = width;
                     }
                     checkBox.Dispose();
+                    int count = 0;
                     for (int i = 0; i < elements.Count; ++i)
                     {
-                        int row = i / 4;
-                        int column = i % 4;
+                        if (!elements[i].IsVisibleInPlayer)
+                            continue;
+                        ++count;
+                        int row = count / 4;
+                        int column = count % 4;
                         checkBox = new CheckBox();
                         checkBox.Text = elements[i].Title;
                         checkBox.Appearance = Appearance.Button;
@@ -779,11 +785,19 @@ namespace Ares.MGPlugin
                         m_CurrentButtons.Add(elements[i].Id);
                         elementsPanel.Controls.Add(checkBox);
                     }
+                    if (count == 0)
+                    {
+                        Label label = new Label();
+                        label.Text = "Keine Elemente vorhanden";
+                        label.SetBounds(0, 0, label.PreferredSize.Width + 15, label.PreferredSize.Height);
+                        elementsPanel.Controls.Add(label);
+                    }
                 }
                 else
                 {
                     Label label = new Label();
                     label.Text = "Keine Elemente vorhanden";
+                    label.SetBounds(0, 0, label.PreferredSize.Width + 15, label.PreferredSize.Height);
                     elementsPanel.Controls.Add(label);
                 }
                 CommandButtonMapping.Instance.ButtonsActive = true;

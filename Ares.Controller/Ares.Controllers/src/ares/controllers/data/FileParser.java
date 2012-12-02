@@ -199,14 +199,20 @@ public final class FileParser {
     	Messages.addMessage(MessageType.Warning, Localization.getString("FileParser.MissingElementId") + title + Localization.getString("FileParser.ElementIgnored")); //$NON-NLS-1$ //$NON-NLS-2$
     	return null;
     }
+    boolean visible = true;
+    String visibleAttr = el.getAttribute("visibleInPlayer"); //$NON-NLS-1$
+    if (!"".equals(visibleAttr) && !("true".equals(visibleAttr))) //$NON-NLS-1$ $NON-NLS-2$
+    {
+    	visible = false;
+    }
     NodeList nl = el.getElementsByTagName("KeyTrigger"); //$NON-NLS-1$
     if (nl.getLength() == 0) {
     	// Messages.addMessage(MessageType.Warning, Localization.getString("FileParser.NoKeyDefined") + title + Localization.getString("FileParser.ElementIgnored")); //$NON-NLS-1$ //$NON-NLS-2$
-    	return new Command(title, id, null);
+    	return new Command(title, id, null, visible);
     }
     else if (nl.getLength() > 1) {
     	Messages.addMessage(MessageType.Warning, Localization.getString("FileParser.DuplicateKeyTriggerElement") + title); //$NON-NLS-1$
-    	return new Command(title, id, null);
+    	return new Command(title, id, null, visible);
     }
     else {
 	    Element trigger = (Element)nl.item(0);
@@ -222,7 +228,7 @@ public final class FileParser {
 	      return null;
 	    }
 	    */
-	    return new Command(title, id, keyStroke);
+	    return new Command(title, id, keyStroke, visible);
     }
     
   }

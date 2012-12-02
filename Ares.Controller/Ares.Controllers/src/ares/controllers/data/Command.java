@@ -24,11 +24,13 @@ public class Command {
   private String title;
   private KeyStroke keyStroke;
   private int id;
+  private boolean visible;
   
-  public Command(String title, int id, KeyStroke keyStroke) {
+  public Command(String title, int id, KeyStroke keyStroke, boolean visible) {
     this.title = title;
     this.keyStroke = keyStroke;
     this.id = id;
+    this.visible = visible;
   }
   
   public int getId() {
@@ -41,6 +43,10 @@ public class Command {
   
   public KeyStroke getKeyStroke() {
     return keyStroke;
+  }
+  
+  public boolean isVisible() {
+	  return visible;
   }
   
 }
