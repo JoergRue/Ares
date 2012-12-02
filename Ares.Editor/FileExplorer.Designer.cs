@@ -48,6 +48,7 @@ namespace Ares.Editor
                 {
                     Actions.FilesWatcher.Instance.SoundDirChanges -= new EventHandler<EventArgs>(DirChanged);
                 }
+                Ares.Editor.Actions.ElementChanges.Instance.RemoveListener(-1, ElementChanged);
             }
             base.Dispose(disposing);
         }

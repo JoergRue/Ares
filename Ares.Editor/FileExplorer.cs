@@ -41,6 +41,11 @@ namespace Ares.Editor
             sImageList.Images.Add(ImageResources.eventlogError);
         }
 
+        private void ElementChanged(int elementId, Ares.Editor.Actions.ElementChanges.ChangeType changeType)
+        {
+            updateInformationPanel();
+        }
+
         private IFileExplorerParent m_Parent;
 
         public FileExplorer(FileType fileType, IFileExplorerParent parent)
@@ -65,6 +70,7 @@ namespace Ares.Editor
             {
                 splitContainer1.SplitterDistance = Height - 100;
             }
+            Ares.Editor.Actions.ElementChanges.Instance.AddListener(-1, ElementChanged);
         }
 
         private void  DirChanged(object sender, EventArgs e)
