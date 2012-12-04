@@ -1,3 +1,18 @@
+Version 1.4.0
+----------------------------------------------------------------------------------
+- Allgemein: Links zu Listen können erstellt werden (Strg+Shift+Drag im Projekt-
+  Explorer oder "Als Link einfügen" im Kontextmenü nach "Kopieren")
+- Allgemein: Elemente können im Player / Controller verborgen werden (Checkbox
+  in den Start-Einstellungen des Elements)
+- Editor: Informationsbereich im Musik- / Geräuschexplorer
+- Editor: Effekte können für mehrere Dateien gleichzeitig gesetzt werden über
+  das Kontextmenü in der Liste
+- Editor: Bugfix für seltenen Absturz wenn ein neues Projekt erstellt wird
+- Player: Repeat-Button für das aktuell gespielte Musikstück
+- Controller: Repeat-Button für das aktuell gespielte Musikstück
+- Controller/Android: Bugfix für selten auftretenden Absturz bei der 
+  Reaktivierung der App auf Tablets
+
 Version 1.3.0
 ----------------------------------------------------------------------------------
 - Allgemein: Makros hinzugefügt
