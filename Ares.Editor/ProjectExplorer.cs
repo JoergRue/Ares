@@ -78,8 +78,11 @@ namespace Ares.Editor
             ensureDefaultImageIndex(projectTree);
             RecreateTree();
             ElementChanges.Instance.AddListener(-1, ElementChanged);
-            
         }
+
+        private int m_Id;
+
+        private static int s_NextId = 1;
 
         private System.Action m_AfterEditAction;
         private bool listenForContainerChanges = true;
@@ -183,6 +186,8 @@ namespace Ares.Editor
         private void RecreateTree()
         {
             m_AfterEditAction = null;
+            m_ExportItems = null;
+            m_Id = ++s_NextId;
             projectTree.BeginUpdate();
             projectTree.Nodes.Clear();
             if (m_Project != null)
@@ -816,7 +821,7 @@ namespace Ares.Editor
                 else
                     DeleteElement(rootElement);
             });
-
+            m_ExportItems = null;
         }
 
         private void DeleteMode(TreeNode node)
@@ -1295,6 +1300,10 @@ namespace Ares.Editor
                 {
                     item.Enabled = item.Enabled && Clipboard.ContainsData(DataFormats.GetFormat("AresProjectExplorerElements").Name);
                 }
+                if (item.Tag != null && item.Tag.ToString().Contains("PasteLink"))
+                {
+                    item.Enabled = item.Enabled && m_ExportItems != null;
+                }
             }
         }
 
@@ -1438,6 +1447,7 @@ namespace Ares.Editor
         private class ClipboardElements
         {
             public String SerializedForm { get; set; }
+            public int SourceId { get; set; }
         }
 
         private void CopyElements()
@@ -1453,8 +1463,9 @@ namespace Ares.Editor
                 return;
             StringBuilder serializedForm = new StringBuilder();
             Data.DataModule.ProjectManager.ExportElements(exportItems, serializedForm);
-            ClipboardElements cpElements = new ClipboardElements() { SerializedForm = serializedForm.ToString() };
+            ClipboardElements cpElements = new ClipboardElements() { SerializedForm = serializedForm.ToString(), SourceId = m_Id };
             Clipboard.SetData(DataFormats.GetFormat("AresProjectExplorerElements").Name, cpElements);
+            m_ExportItems = exportItems;
         }
 
         public void PasteElements()
@@ -1487,6 +1498,43 @@ namespace Ares.Editor
             else
             {
                 Ares.ModelInfo.ModelChecks.Instance.CheckAll();
+            }
+        }
+
+        private void PasteElementsAsLink()
+        {
+            String format = DataFormats.GetFormat("AresProjectExplorerElements").Name;
+            if (!Clipboard.ContainsData(format))
+                return;
+            ClipboardElements cpElements = (ClipboardElements)Clipboard.GetData(format);
+            if (cpElements == null)
+                return;
+            if (m_ExportItems == null)
+                return;
+            if (cpElements.SourceId != this.m_Id)
+            {
+                return;
+            }
+            TreeNode parentNode = SelectedNode;
+            List<IXmlWritable> roots = m_ExportItems;
+            foreach (IXmlWritable element in roots)
+            {
+                bool enabled = IsImportPossible(parentNode.Tag, element);
+                if (enabled)
+                {
+                    if (element is IReferenceElement)
+                    {
+                        IElement referencedElement = DataModule.ElementRepository.GetElement((element as IReferenceElement).ReferencedId);
+                        if (referencedElement != null)
+                        {
+                            AddLink(parentNode, parentNode.Tag, referencedElement);
+                        }
+                    }
+                    else
+                    {
+                        AddLink(parentNode, parentNode.Tag, element);
+                    }
+                }
             }
         }
 
@@ -1552,7 +1600,15 @@ namespace Ares.Editor
                 }
                 else
                 {
-                    IElement newLink = DataModule.ElementFactory.CreateReferenceElement((element as IElement).Id);
+                    IElement newLink = null;
+                    if (element is IReferenceElement)
+                    {
+                        newLink = DataModule.ElementFactory.CreateReferenceElement((element as IReferenceElement).ReferencedId);
+                    }
+                    else
+                    {
+                        newLink = DataModule.ElementFactory.CreateReferenceElement((element as IElement).Id);
+                    }
                     IModeElement modeElement = DataModule.ElementFactory.CreateModeElement(newLink.Title, newLink);
                     TreeNode node = CreateModeElementNode(modeElement);
                     Actions.Actions.Instance.AddNew(new AddModeElementAction(parent, modeElement, node));
@@ -1571,7 +1627,15 @@ namespace Ares.Editor
             else if (parentElement is IGeneralElementContainer)
             {
                 IElement elem = element is IModeElement ? (element as IModeElement).StartElement : element as IElement;
-                IElement newLink = DataModule.ElementFactory.CreateReferenceElement((elem as IElement).Id);
+                IElement newLink = null;
+                if (elem is IReferenceElement)
+                {
+                    newLink = DataModule.ElementFactory.CreateReferenceElement((elem as IReferenceElement).ReferencedId);
+                }
+                else
+                {
+                    newLink = DataModule.ElementFactory.CreateReferenceElement((elem as IElement).Id);
+                }
                 bool oldListen = listenForContainerChanges;
                 listenForContainerChanges = false;
                 TreeNode newNode;
@@ -1822,6 +1886,10 @@ namespace Ares.Editor
                 {
                     item.Enabled = item.Enabled && Clipboard.ContainsData(DataFormats.GetFormat("AresProjectExplorerElements").Name);
                 }
+                if (item.Tag != null && item.Tag.ToString().Contains("PasteLink"))
+                {
+                    item.Enabled = item.Enabled && m_ExportItems != null;
+                }
             }
 
         }
@@ -1990,6 +2058,16 @@ namespace Ares.Editor
         private void toolStripMenuItem14_Click(object sender, EventArgs e)
         {
             AddMacro();
+        }
+
+        private void toolStripMenuItem15_Click(object sender, EventArgs e)
+        {
+            PasteElementsAsLink();
+        }
+
+        private void toolStripMenuItem16_Click(object sender, EventArgs e)
+        {
+            PasteElementsAsLink();
         }
 
     }

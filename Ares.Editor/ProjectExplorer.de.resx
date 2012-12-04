@@ -177,6 +177,12 @@
   <data name="toolStripMenuItem3.Text" xml:space="preserve">
     <value>Einfügen</value>
   </data>
+  <data name="toolStripMenuItem15.Size" type="System.Drawing.Size, System.Drawing">
+    <value>269, 22</value>
+  </data>
+  <data name="toolStripMenuItem15.Text" xml:space="preserve">
+    <value>Als Link einfügen</value>
+  </data>
   <data name="deleteToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>269, 22</value>
   </data>
@@ -247,7 +253,7 @@
     <value>269, 22</value>
   </data>
   <data name="modeContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>270, 380</value>
+    <value>270, 402</value>
   </data>
   <data name="editToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>269, 22</value>
@@ -293,6 +299,12 @@
   </data>
   <data name="toolStripMenuItem8.Text" xml:space="preserve">
     <value>Einfügen</value>
+  </data>
+  <data name="toolStripMenuItem16.Size" type="System.Drawing.Size, System.Drawing">
+    <value>269, 22</value>
+  </data>
+  <data name="toolStripMenuItem16.Text" xml:space="preserve">
+    <value>Als Link einfügen</value>
   </data>
   <data name="deleteToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
     <value>269, 22</value>
@@ -352,7 +364,7 @@
     <value>269, 22</value>
   </data>
   <data name="containerContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>270, 380</value>
+    <value>270, 402</value>
   </data>
   <data name="editToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
     <value>191, 22</value>
