@@ -1484,6 +1484,10 @@ namespace Ares.Editor
                 MessageBox.Show(this, StringResources.NoPasteableElements, StringResources.Ares, MessageBoxButtons.OK);
                 return;
             }
+            else
+            {
+                Ares.ModelInfo.ModelChecks.Instance.CheckAll();
+            }
         }
 
         private bool IsImportPossible(object parentElement, IXmlWritable element)
@@ -1693,6 +1697,7 @@ namespace Ares.Editor
                         }
                     }
                 }
+                Ares.ModelInfo.ModelChecks.Instance.CheckAll();
             }
             catch (Exception e)
             {
