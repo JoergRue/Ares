@@ -248,7 +248,7 @@ Click Next to continue or Cancel to exit Setup.</Value>
     <UpdateUrl />
     <Version>
       <Major>1</Major>
-      <Minor>3</Minor>
+      <Minor>4</Minor>
       <Build>0</Build>
       <Revision>0</Revision>
     </Version>
