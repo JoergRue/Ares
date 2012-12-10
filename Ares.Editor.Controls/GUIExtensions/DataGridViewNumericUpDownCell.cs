@@ -474,7 +474,6 @@ namespace DataGridViewNumericUpDownElements
             {
 
                 negativeSignKey = (Keys)(VkKeyScan(negativeSignStr[0]));
-                negativeSignKey = (Keys)(new System.Windows.Forms.KeysConverter()).ConvertFromString(negativeSignStr.Substring(0, 1));
             }
 #endif
 
