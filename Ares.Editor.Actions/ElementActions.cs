@@ -119,8 +119,8 @@ namespace Ares.Editor.Actions
             IModeElement element = (m_Node.Tag as IModeElement);
             (m_Parent.Tag as IMode).RemoveElement(element);
             Data.DataModule.ElementRepository.DeleteElement(element.Id);
-            Ares.ModelInfo.ModelChecks.Instance.CheckAll();
             ElementRemoval.NotifyRemoval(element);
+            Ares.ModelInfo.ModelChecks.Instance.CheckAll();
         }
 
         public override void Undo()
@@ -128,8 +128,8 @@ namespace Ares.Editor.Actions
             m_Parent.Nodes.Insert(m_Index, m_Node);
             Data.DataModule.ElementRepository.AddElement(m_Node.Tag as IModeElement);
             (m_Parent.Tag as IMode).InsertElement(m_Index, (m_Node.Tag as IModeElement));
-            Ares.ModelInfo.ModelChecks.Instance.CheckAll();
             ElementRemoval.NotifyUndo(m_Node.Tag as IElement);
+            Ares.ModelInfo.ModelChecks.Instance.CheckAll();
         }
 
         private TreeNode m_Parent;
@@ -340,9 +340,9 @@ namespace Ares.Editor.Actions
             m_Parent.Nodes.Remove(m_Node);
             m_Container.RemoveElement((m_Node.Tag as IElement).Id);
             Data.DataModule.ElementRepository.DeleteElement((m_Node.Tag as IElement).Id);
-            Ares.ModelInfo.ModelChecks.Instance.CheckAll();
             ElementRemoval.NotifyRemoval(m_Node.Tag as IElement);
             ElementChanges.Instance.ElementChanged(m_Container.Id);
+            Ares.ModelInfo.ModelChecks.Instance.CheckAll();
         }
 
         public override void Undo()
@@ -350,9 +350,9 @@ namespace Ares.Editor.Actions
             m_Parent.Nodes.Insert(m_Index, m_Node);
             m_Container.InsertGeneralElement(m_Index, m_Element);
             Data.DataModule.ElementRepository.AddElement(m_Element);
-            Ares.ModelInfo.ModelChecks.Instance.CheckAll();
             ElementRemoval.NotifyUndo(m_Element);
             ElementChanges.Instance.ElementChanged(m_Container.Id);
+            Ares.ModelInfo.ModelChecks.Instance.CheckAll();
         }
 
         private TreeNode m_Parent;

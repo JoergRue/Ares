@@ -50,14 +50,26 @@ namespace Ares.ModelInfo
 
         public void VisitSequentialContainer(ISequentialContainer sequentialContainer)
         {
+            foreach (ISequentialElement element in sequentialContainer.GetElements())
+            {
+                element.Visit(this);
+            }
         }
 
         public void VisitParallelContainer(IElementContainer<IParallelElement> parallelContainer)
         {
+            foreach (IParallelElement element in parallelContainer.GetElements())
+            {
+                element.Visit(this);
+            }
         }
 
         public void VisitChoiceContainer(IElementContainer<IChoiceElement> choiceContainer)
         {
+            foreach (IChoiceElement element in choiceContainer.GetElements())
+            {
+                element.Visit(this);
+            }
         }
 
         public void VisitSequentialMusicList(ISequentialBackgroundMusicList musicList)
