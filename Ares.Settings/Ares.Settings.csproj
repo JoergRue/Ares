@@ -119,6 +119,7 @@
     <ProjectReference Include="..\Ares.Ipc\Ares.Ipc.csproj">
       <Project>{07BE1372-C1D2-4E2A-9678-DC27BE0D9FF0}</Project>
       <Name>Ares.Ipc</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

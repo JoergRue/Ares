@@ -102,10 +102,12 @@
     <ProjectReference Include="..\Ares.Data\Ares.Data.csproj">
       <Project>{F64D6AF3-3543-47F0-A7B8-0336750B09C3}</Project>
       <Name>Ares.Data</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\Ares.Settings\Ares.Settings.csproj">
       <Project>{E99E229E-2D6A-4C49-8E6F-C06E3F346606}</Project>
       <Name>Ares.Settings</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

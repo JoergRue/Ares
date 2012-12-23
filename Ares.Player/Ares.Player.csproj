@@ -227,30 +227,37 @@
     <ProjectReference Include="..\Ares.Data\Ares.Data.csproj">
       <Project>{F64D6AF3-3543-47F0-A7B8-0336750B09C3}</Project>
       <Name>Ares.Data</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\Ares.Ipc\Ares.Ipc.csproj">
       <Project>{07BE1372-C1D2-4E2A-9678-DC27BE0D9FF0}</Project>
       <Name>Ares.Ipc</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\Ares.ModelChecks\Ares.ModelInfo.csproj">
       <Project>{50EA19EE-5337-499C-8B7B-1B22EA9E24A6}</Project>
       <Name>Ares.ModelInfo</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\Ares.Online\Ares.Online.csproj">
       <Project>{7550AD48-17A5-45BF-A632-B75EB82123DD}</Project>
       <Name>Ares.Online</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\Ares.Players\Ares.Players.csproj">
       <Project>{87F61D82-5515-48C4-94F5-FC5EF8435DBF}</Project>
       <Name>Ares.Players</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\Ares.Playing\Ares.Playing.csproj">
       <Project>{6C55F933-0F49-489C-AFF4-E0E0A8581E42}</Project>
       <Name>Ares.Playing</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\Ares.Settings\Ares.Settings.csproj">
       <Project>{E99E229E-2D6A-4C49-8E6F-C06E3F346606}</Project>
       <Name>Ares.Settings</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
