@@ -134,6 +134,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dialogs\AddTagDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\AddTagDialog.Designer.cs">
+      <DependentUpon>AddTagDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\FileTagsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\FileTagsDialog.Designer.cs">
+      <DependentUpon>FileTagsDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\ImportDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -262,6 +274,18 @@
     <Compile Include="VolumeWindow.Designer.cs">
       <DependentUpon>VolumeWindow.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Dialogs\AddTagDialog.de.resx">
+      <DependentUpon>AddTagDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\AddTagDialog.resx">
+      <DependentUpon>AddTagDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\FileTagsDialog.de.resx">
+      <DependentUpon>FileTagsDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\FileTagsDialog.resx">
+      <DependentUpon>FileTagsDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\ImportDialog.de.resx">
       <DependentUpon>ImportDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -442,6 +466,11 @@
     <ProjectReference Include="..\Ares.Settings\Ares.Settings.csproj">
       <Project>{E99E229E-2D6A-4C49-8E6F-C06E3F346606}</Project>
       <Name>Ares.Settings</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Ares.Tags\Ares.Tags.csproj">
+      <Project>{ED78886A-8674-499F-B0F9-98EB25322EBB}</Project>
+      <Name>Ares.Tags</Name>
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>

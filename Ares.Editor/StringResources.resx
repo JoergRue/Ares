@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="All" xml:space="preserve">
+    <value>All</value>
+  </data>
   <data name="Ares" xml:space="preserve">
     <value>Ares</value>
   </data>
@@ -160,6 +163,9 @@ Error message: {0}
   </data>
   <data name="CopyOrMoveParentIntoChild" xml:space="preserve">
     <value>A parent directory can't be copied or moved into one of its child directories.</value>
+  </data>
+  <data name="CorrectErrorsFirst" xml:space="preserve">
+    <value>Please correct the errors first. See the tooltip of the error symbol for more information.</value>
   </data>
   <data name="DeleteError" xml:space="preserve">
     <value>Error deleting files: {0}</value>
@@ -320,6 +326,16 @@ You should adapt some settings first.</value>
   </data>
   <data name="Sounds" xml:space="preserve">
     <value>Sounds</value>
+  </data>
+  <data name="TagMustHaveCategory" xml:space="preserve">
+    <value>The tag must have a category.</value>
+  </data>
+  <data name="TagMustHaveName" xml:space="preserve">
+    <value>The tag must have a name.</value>
+  </data>
+  <data name="TagsDbError" xml:space="preserve">
+    <value>Error accessing tags database:
+{0}</value>
   </data>
   <data name="TriggerEditorTitle" xml:space="preserve">
     <value>Start of {0}</value>

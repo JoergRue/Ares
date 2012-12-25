@@ -39,6 +39,8 @@ namespace Ares.Data
             set { m_Changed = value; }
         }
 
+        public int TagLanguageId { get; set; }
+
         public IMode AddMode(String title)
         {
             Mode mode = new Mode(title);
@@ -75,6 +77,7 @@ namespace Ares.Data
         {
             writer.WriteStartElement("Project");
             writer.WriteAttributeString("Title", Title);
+            writer.WriteAttributeString("LanguageId", TagLanguageId.ToString(System.Globalization.CultureInfo.InvariantCulture));
             writer.WriteStartElement("Modes");
             m_Modes.ForEach(e => e.WriteToXml(writer));
             writer.WriteEndElement();
@@ -86,6 +89,7 @@ namespace Ares.Data
             Title = title;
             m_Modes = new List<IMode>();
             FileName = "";
+            TagLanguageId = -1;
             Changed = true;
         }
 
@@ -98,6 +102,7 @@ namespace Ares.Data
                 XmlHelpers.ThrowException(String.Format(StringResources.ExpectedElement, "Project"), reader);
             }
             Title = reader.GetNonEmptyAttribute("Title");
+            TagLanguageId = reader.GetIntegerAttributeOrDefault("LanguageId", -1);
             if (!reader.IsEmptyElement)
             {
                 reader.Read();

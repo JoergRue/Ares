@@ -409,6 +409,14 @@ namespace Ares.Editor
             editToolStripMenuItem.Enabled = m_Parent != null && treeView1.SelectedNode != null && treeView1.SelectedNode.Tag != null &&
                 treeView1.SelectedNode.Tag is DraggedItem && ((DraggedItem)treeView1.SelectedNode.Tag).NodeType == DraggedItemType.File;
             pasteToolStripMenuItem.Enabled = Clipboard.ContainsFileDropList() || Clipboard.ContainsData(DataFormats.GetFormat("AresFilesList").Name);
+            tagsToolStripMenuItem.Visible = m_FileType == FileType.Music;
+            tagsToolStripMenuItem.Enabled = m_FileType == FileType.Music && treeView1.SelectedNodes.Count > 0;
+            if (tagsToolStripMenuItem.Enabled)
+            {
+                // Disable if called only on empty directories
+                if (GetSelectedFiles().Count == 0)
+                    tagsToolStripMenuItem.Enabled = false;
+            }
         }
 
         private void searchButton_Click(object sender, EventArgs e)
@@ -739,6 +747,42 @@ namespace Ares.Editor
             return items;
         }
 
+        private List<String> GetSelectedFiles()
+        {
+            List<String> files = new List<string>();
+            HashSet<string> foundFiles = new HashSet<string>();
+            foreach (TreeNode node in treeView1.SelectedNodes)
+            {
+                AddFilesOfNode(node, foundFiles);
+            }
+            files.AddRange(foundFiles);
+            return files;
+        }
+
+        private void AddFilesOfNode(TreeNode node, HashSet<String> foundFiles)
+        {
+            if (node.Tag is DraggedItem)
+            {
+                DraggedItem item = (DraggedItem)node.Tag;
+                switch (item.NodeType)
+                {
+                    case DraggedItemType.Directory:
+                        {
+                            foreach (TreeNode subNode in node.Nodes)
+                            {
+                                AddFilesOfNode(subNode, foundFiles);
+                            }
+                        }
+                        break;
+                    case DraggedItemType.File:
+                        foundFiles.Add(item.RelativePath);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
         private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             PasteFiles();
@@ -777,6 +821,44 @@ namespace Ares.Editor
         {
             splitContainer1.Panel2Collapsed = !splitContainer1.Panel2Collapsed;
             showInfoButton.Checked = !splitContainer1.Panel2Collapsed;
+        }
+
+        private void tagsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            List<String> files = GetSelectedFiles();
+            int languageId = Ares.ModelInfo.ModelChecks.Instance.Project.TagLanguageId;
+            if (languageId == -1)
+            {
+                try
+                {
+                    languageId = Ares.Tags.TagsModule.GetTagsDB().TranslationsInterface.GetIdOfCurrentUILanguage();
+                }
+                catch (Ares.Tags.TagsDbException ex)
+                {
+                    MessageBox.Show(this, String.Format(StringResources.TagsDbError, ex.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+            Dialogs.FileTagsDialog dialog = new Dialogs.FileTagsDialog();
+            dialog.LanguageId = languageId;
+            dialog.SetFiles(files);
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                ChangeTagsForFiles(files, dialog.AddedTags, dialog.RemovedTags, languageId);
+                Ares.ModelInfo.ModelChecks.Instance.Project.TagLanguageId = dialog.LanguageId;
+            }
+        }
+
+        private void ChangeTagsForFiles(List<String> files, HashSet<int> addedTags, HashSet<int> removedTags, int languageId)
+        {
+            try
+            {
+                Actions.Actions.Instance.AddNew(new Actions.ChangeFileTagsAction(files, addedTags, removedTags, languageId));
+            }
+            catch (Ares.Tags.TagsDbException ex)
+            {
+                MessageBox.Show(this, String.Format(StringResources.TagsDbError, ex.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
     }

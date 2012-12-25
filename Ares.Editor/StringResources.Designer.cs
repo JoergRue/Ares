@@ -61,6 +61,15 @@ namespace Ares.Editor {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die All ähnelt.
+        /// </summary>
+        internal static string All {
+            get {
+                return ResourceManager.GetString("All", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Ares ähnelt.
         /// </summary>
         internal static string Ares {
@@ -185,6 +194,15 @@ namespace Ares.Editor {
         internal static string CopyOrMoveParentIntoChild {
             get {
                 return ResourceManager.GetString("CopyOrMoveParentIntoChild", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Please correct the errors first. See the tooltip of the error symbol for more information. ähnelt.
+        /// </summary>
+        internal static string CorrectErrorsFirst {
+            get {
+                return ResourceManager.GetString("CorrectErrorsFirst", resourceCulture);
             }
         }
         
@@ -639,6 +657,34 @@ namespace Ares.Editor {
         internal static string Sounds {
             get {
                 return ResourceManager.GetString("Sounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The tag must have a category. ähnelt.
+        /// </summary>
+        internal static string TagMustHaveCategory {
+            get {
+                return ResourceManager.GetString("TagMustHaveCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The tag must have a name. ähnelt.
+        /// </summary>
+        internal static string TagMustHaveName {
+            get {
+                return ResourceManager.GetString("TagMustHaveName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Error accessing tags database:
+        ///{0} ähnelt.
+        /// </summary>
+        internal static string TagsDbError {
+            get {
+                return ResourceManager.GetString("TagsDbError", resourceCulture);
             }
         }
         

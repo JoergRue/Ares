@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="All" xml:space="preserve">
+    <value>Alle</value>
+  </data>
   <data name="Ares" xml:space="preserve">
     <value>Ares</value>
   </data>
@@ -160,6 +163,9 @@ Fehlermeldung: {0}
   </data>
   <data name="CopyOrMoveParentIntoChild" xml:space="preserve">
     <value>Ein Verzeichnis kann nicht in eines seiner Unterverzeichnisse kopiert oder verschoben werden.</value>
+  </data>
+  <data name="CorrectErrorsFirst" xml:space="preserve">
+    <value>Bitte korrigieren Sie erst die Fehler (siehe Tooltips der Fehlersymbole).</value>
   </data>
   <data name="DeleteError" xml:space="preserve">
     <value>Fehler beim Löschen der Dateien: {0}</value>
@@ -321,6 +327,16 @@ Soll es jetzt gespeichert werden?</value>
   </data>
   <data name="Sounds" xml:space="preserve">
     <value>Geräusche</value>
+  </data>
+  <data name="TagMustHaveCategory" xml:space="preserve">
+    <value>Der Tag muss eine Kategorie haben.</value>
+  </data>
+  <data name="TagMustHaveName" xml:space="preserve">
+    <value>Der Tag muss einen Namen haben.</value>
+  </data>
+  <data name="TagsDbError" xml:space="preserve">
+    <value>Fehler beim Zugriff auf die Tags-Datenbasis:
+{0}</value>
   </data>
   <data name="TriggerEditorTitle" xml:space="preserve">
     <value>Start von {0}</value>

@@ -91,6 +91,11 @@ namespace Ares.Data
         String FileName { get; set; }
 
         /// <summary>
+        /// Language Id for tags.
+        /// </summary>
+        int TagLanguageId { get; set; }
+
+        /// <summary>
         /// Whether the project has unsaved changes.
         /// </summary>
         bool Changed { get; set;  }

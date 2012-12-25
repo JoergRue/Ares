@@ -123,4 +123,10 @@
   <data name="NoKey" xml:space="preserve">
     <value>&lt;Keine Taste&gt;</value>
   </data>
+  <data name="RollingBack" xml:space="preserve">
+    <value>Nehme Änderungen zurück ...</value>
+  </data>
+  <data name="SettingTags" xml:space="preserve">
+    <value>Setze Tags ...</value>
+  </data>
 </root>

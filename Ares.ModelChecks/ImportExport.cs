@@ -659,7 +659,7 @@ namespace Ares.ModelInfo
 
     #region Progress
 
-    class ProgressMonitor
+    public class ProgressMonitor
     {
         private System.Timers.Timer timer;
         private bool canceled;

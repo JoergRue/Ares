@@ -51,6 +51,7 @@ namespace Ares.Editor
             {
                 throw new Ares.Ipc.ApplicationAlreadyStartedException();
             }
+
             InitializeComponent();
 #if MONO
             IsMdiContainer = true;
@@ -75,6 +76,22 @@ namespace Ares.Editor
             Ares.Settings.Settings settings = Ares.Settings.Settings.Instance;
             Actions.Playing.Instance.SetDirectories(Ares.Settings.Settings.Instance.MusicDirectory, Ares.Settings.Settings.Instance.SoundDirectory);
             Actions.FilesWatcher.Instance.SetDirectories(Ares.Settings.Settings.Instance.MusicDirectory, Ares.Settings.Settings.Instance.SoundDirectory);
+            Tags.TagsModule.GetTagsDB().FilesInterface.CloseDatabase();
+            LoadTagsDB();
+        }
+
+        private void LoadTagsDB()
+        {
+            try
+            {
+                Ares.Tags.ITagsDBFiles tagsDBFiles = Ares.Tags.TagsModule.GetTagsDB().FilesInterface;
+                String path = System.IO.Path.Combine(m_BasicSettings.GetSettingsDir(), tagsDBFiles.DefaultFileName);
+                tagsDBFiles.OpenOrCreateDatabase(path);
+            }
+            catch (Ares.Tags.TagsDbException ex)
+            {
+                MessageBox.Show(this, String.Format(StringResources.TagsDbError, ex.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void Shutdown()
@@ -82,6 +99,7 @@ namespace Ares.Editor
             Actions.FilesWatcher.Instance.DeInit();
             Settings.Settings.Instance.SettingsChanged -= new EventHandler<Settings.Settings.SettingsEventArgs>(SettingsChanged);
             Settings.Settings.Instance.Shutdown();
+            Tags.TagsModule.GetTagsDB().FilesInterface.CloseDatabase();
         }
 
         private void HandlePlayingError(Ares.Data.IElement element, String errorMessage)
@@ -398,6 +416,14 @@ namespace Ares.Editor
                 return;
             
             m_CurrentProject = Ares.Data.DataModule.ProjectManager.CreateProject(title);
+            try
+            {
+                m_CurrentProject.TagLanguageId = Ares.Tags.TagsModule.GetTagsDB().TranslationsInterface.GetIdOfCurrentUILanguage();
+            }
+            catch (Ares.Tags.TagsDbException ex)
+            {
+                MessageBox.Show(this, String.Format(StringResources.TagsDbError, ex.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             DoModelChecks();
 
             m_ProjectExplorer.SetProject(m_CurrentProject);
@@ -583,12 +609,26 @@ namespace Ares.Editor
 
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Actions.Actions.Instance.Undo();
+            try
+            {
+                Actions.Actions.Instance.Undo();
+            }
+            catch (Ares.Tags.TagsDbException ex)
+            {
+                MessageBox.Show(this, String.Format(StringResources.TagsDbError, ex.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void redoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Actions.Actions.Instance.Redo();
+            try
+            {
+                Actions.Actions.Instance.Redo();
+            }
+            catch (Ares.Tags.TagsDbException ex)
+            {
+                MessageBox.Show(this, String.Format(StringResources.TagsDbError, ex.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void editMenu_DropDownOpening(object sender, EventArgs e)
@@ -689,12 +729,26 @@ namespace Ares.Editor
 
         private void undoButton_Click(object sender, EventArgs e)
         {
-            Actions.Actions.Instance.Undo();
+            try
+            {
+                Actions.Actions.Instance.Undo();
+            }
+            catch (Ares.Tags.TagsDbException ex)
+            {
+                MessageBox.Show(this, String.Format(StringResources.TagsDbError, ex.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void redoButton_Click(object sender, EventArgs e)
         {
-            Actions.Actions.Instance.Redo();
+            try
+            {
+                Actions.Actions.Instance.Redo();
+            }
+            catch (Ares.Tags.TagsDbException ex)
+            {
+                MessageBox.Show(this, String.Format(StringResources.TagsDbError, ex.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void stopButton_Click(object sender, EventArgs e)
@@ -746,6 +800,7 @@ namespace Ares.Editor
             {
                 MessageBox.Show(this, StringResources.NoSettings, StringResources.Ares);
                 ShowSettingsDialog();
+                LoadTagsDB();
                 ShowVolumeWindow();
                 ShowProjectExplorer();
                 ShowFileExplorer(FileType.Music);
@@ -753,6 +808,7 @@ namespace Ares.Editor
             }
             else if (!String.IsNullOrEmpty(Ares.Settings.Settings.Instance.WindowLayout))
             {
+                LoadTagsDB();
                 System.IO.MemoryStream stream = new System.IO.MemoryStream(
                     System.Text.Encoding.UTF8.GetBytes(Ares.Settings.Settings.Instance.WindowLayout));
 #if !MONO
@@ -770,6 +826,7 @@ namespace Ares.Editor
             }
             else
             {
+                LoadTagsDB();
                 ShowProjectExplorer();
                 ShowVolumeWindow();
                 ShowFileExplorer(FileType.Music);
