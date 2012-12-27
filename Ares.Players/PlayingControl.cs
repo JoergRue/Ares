@@ -157,6 +157,26 @@ namespace Ares.Players
             PlayingModule.ProjectPlayer.RepeatCurrentMusic = repeat;
         }
 
+        public void AddMusicTag(int categoryId, int tagId)
+        {
+            PlayingModule.ProjectPlayer.AddMusicTag(categoryId, tagId);
+        }
+
+        public void RemoveMusicTag(int categoryId, int tagId)
+        {
+            PlayingModule.ProjectPlayer.RemoveMusicTag(categoryId, tagId);
+        }
+
+        public void RemoveAllMusicTags()
+        {
+            PlayingModule.ProjectPlayer.RemoveAllMusicTags();
+        }
+
+        public void SetMusicTagCategoriesOperator(bool isAndOperator)
+        {
+            PlayingModule.ProjectPlayer.SetMusicTagCategoriesOperator(isAndOperator);
+        }
+
         private Playing.StreamingParameters CreateStreamingParameters()
         {
             Playing.StreamingParameters result = new StreamingParameters();
@@ -409,6 +429,58 @@ namespace Ares.Players
             lock (syncObject)
             {
                 m_MusicRepeat = repeat;
+            }
+        }
+
+        private HashSet<int> m_CurrentMusicTags = new HashSet<int>();
+
+        public HashSet<int> GetCurrentMusicTags()
+        {
+            lock (syncObject)
+            {
+                return new HashSet<int>(m_CurrentMusicTags);
+            }
+        }
+
+        public void MusicTagAdded(int tagId)
+        {
+            lock (syncObject)
+            {
+                m_CurrentMusicTags.Add(tagId);
+            }
+        }
+
+        public void MusicTagRemoved(int tagId)
+        {
+            lock (syncObject)
+            {
+                m_CurrentMusicTags.Remove(tagId);
+            }
+        }
+
+        public void AllMusicTagsRemoved()
+        {
+            lock (syncObject)
+            {
+                m_CurrentMusicTags.Clear();
+            }
+        }
+
+        private bool m_MusicTagCategoriesOperatorIsAnd = false;
+
+        public bool IsMusicTagCategoriesOperatorAnd()
+        {
+            lock (syncObject)
+            {
+                return m_MusicTagCategoriesOperatorIsAnd;
+            }
+        }
+
+        public void MusicTagCategoriesOperatorChanged(bool isAndOperator)
+        {
+            lock (syncObject)
+            {
+                m_MusicTagCategoriesOperatorIsAnd = isAndOperator;
             }
         }
 

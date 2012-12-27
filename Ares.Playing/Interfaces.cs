@@ -140,6 +140,27 @@ namespace Ares.Playing
         /// Repeat mode for music was changed.
         /// </summary>
         void MusicRepeatChanged(bool repeat);
+
+        /// <summary>
+        /// A new tag was added to the set of possible tags.
+        /// </summary>
+        void MusicTagAdded(int tagId);
+
+        /// <summary>
+        /// A tag was removed from the set of possible tags.
+        /// </summary>
+        void MusicTagRemoved(int tagId);
+
+        /// <summary>
+        /// All tags were removed.
+        /// </summary>
+        void AllMusicTagsRemoved();
+
+        /// <summary>
+        /// Music tag categories operator was changed.
+        /// </summary>
+        void MusicTagCategoriesOperatorChanged(bool isAndOperator);
+
     }
 
     /// <summary>
@@ -259,6 +280,26 @@ namespace Ares.Playing
         /// Default is false.
         /// </summary>
         bool RepeatCurrentMusic { get; set; }
+
+        /// <summary>
+        /// Adds a music tag to the list of possible tags. If there is a file
+        /// with the tag and no tagged music was playing, starts tagged music.
+        /// </summary>
+        void AddMusicTag(int categoryId, int tagId);
+        /// <summary>
+        /// Removes a music tag from the list of possible tags. If there are no
+        /// files anymore with the current tags, stops playing tagged music.
+        /// </summary>
+        void RemoveMusicTag(int categoryId, int tagId);
+        /// <summary>
+        /// Removes all music tags. Stops playing tagged music.
+        /// </summary>
+        void RemoveAllMusicTags();
+        /// <summary>
+        /// Sets whether music tag categories are put together with
+        /// an and- or an or-operator
+        /// </summary>
+        void SetMusicTagCategoriesOperator(bool isAndOperator);
     }
 
     /// <summary>

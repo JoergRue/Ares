@@ -216,6 +216,58 @@ namespace Ares.Playing
                 callback.ErrorOccurred(elementId, errorMessage);
             }
         }
+
+        public void MusicTagAdded(int tagId)
+        {
+            List<IProjectPlayingCallbacks> copy = null;
+            lock (syncObject)
+            {
+                copy = new List<IProjectPlayingCallbacks>(m_Clients);
+            }
+            foreach (IProjectPlayingCallbacks callback in copy)
+            {
+                callback.MusicTagAdded(tagId);
+            }
+        }
+
+        public void MusicTagRemoved(int tagId)
+        {
+            List<IProjectPlayingCallbacks> copy = null;
+            lock (syncObject)
+            {
+                copy = new List<IProjectPlayingCallbacks>(m_Clients);
+            }
+            foreach (IProjectPlayingCallbacks callback in copy)
+            {
+                callback.MusicTagRemoved(tagId);
+            }
+        }
+
+        public void AllMusicTagsRemoved()
+        {
+            List<IProjectPlayingCallbacks> copy = null;
+            lock (syncObject)
+            {
+                copy = new List<IProjectPlayingCallbacks>(m_Clients);
+            }
+            foreach (IProjectPlayingCallbacks callback in copy)
+            {
+                callback.AllMusicTagsRemoved();
+            }
+        }
+
+        public void MusicTagCategoriesOperatorChanged(bool isAndOperator)
+        {
+            List<IProjectPlayingCallbacks> copy = null;
+            lock (syncObject)
+            {
+                copy = new List<IProjectPlayingCallbacks>(m_Clients);
+            }
+            foreach (IProjectPlayingCallbacks callback in copy)
+            {
+                callback.MusicTagCategoriesOperatorChanged(isAndOperator);
+            }
+        }
     }
 
     public static class PlayingModule

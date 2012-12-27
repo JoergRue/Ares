@@ -129,6 +129,18 @@ namespace Ares.Player
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.modesList = new System.Windows.Forms.ListBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.tagsPanel = new System.Windows.Forms.Panel();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.clearTagsButton = new System.Windows.Forms.Button();
+            this.tagSelectionPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.currentTagsLabel = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.tagCategoriesAndButton = new System.Windows.Forms.RadioButton();
+            this.tagCategoriesOrButton = new System.Windows.Forms.RadioButton();
+            this.musicTagCategoryBox = new System.Windows.Forms.ComboBox();
             this.elementsPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.musicList = new System.Windows.Forms.ListBox();
             this.groupBox2.SuspendLayout();
@@ -144,6 +156,9 @@ namespace Ares.Player
             this.menuStrip1.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox5.SuspendLayout();
+            this.tagsPanel.SuspendLayout();
+            this.groupBox7.SuspendLayout();
+            this.groupBox6.SuspendLayout();
             this.SuspendLayout();
             // 
             // projectNameLabel
@@ -154,13 +169,13 @@ namespace Ares.Player
             // 
             // groupBox2
             // 
+            resources.ApplyResources(this.groupBox2, "groupBox2");
             this.groupBox2.Controls.Add(this.soundVolumeBar);
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.musicVolumeBar);
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Controls.Add(this.overallVolumeBar);
             this.groupBox2.Controls.Add(this.label2);
-            resources.ApplyResources(this.groupBox2, "groupBox2");
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.TabStop = false;
             this.groupBox2.UseCompatibleTextRendering = true;
@@ -301,6 +316,7 @@ namespace Ares.Player
             // 
             // toolStrip1
             // 
+            resources.ApplyResources(this.toolStrip1, "toolStrip1");
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openButton,
             this.messagesButton,
@@ -312,75 +328,74 @@ namespace Ares.Player
             this.previousButton,
             this.nextButton,
             this.repeatButton});
-            resources.ApplyResources(this.toolStrip1, "toolStrip1");
             this.toolStrip1.Name = "toolStrip1";
             // 
             // openButton
             // 
-            this.openButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             resources.ApplyResources(this.openButton, "openButton");
+            this.openButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.openButton.Name = "openButton";
             this.openButton.Click += new System.EventHandler(this.openButton_Click);
             // 
             // messagesButton
             // 
+            resources.ApplyResources(this.messagesButton, "messagesButton");
             this.messagesButton.CheckOnClick = true;
             this.messagesButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            resources.ApplyResources(this.messagesButton, "messagesButton");
             this.messagesButton.Name = "messagesButton";
             this.messagesButton.CheckStateChanged += new System.EventHandler(this.messagesButton_CheckedChanged);
             // 
             // editorButton
             // 
-            this.editorButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             resources.ApplyResources(this.editorButton, "editorButton");
+            this.editorButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.editorButton.Name = "editorButton";
             this.editorButton.Click += new System.EventHandler(this.editorButton_Click);
             // 
             // settingsButton
             // 
-            this.settingsButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             resources.ApplyResources(this.settingsButton, "settingsButton");
+            this.settingsButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.settingsButton.Name = "settingsButton";
             this.settingsButton.Click += new System.EventHandler(this.settingsButton_Click);
             // 
             // aboutButton
             // 
-            this.aboutButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             resources.ApplyResources(this.aboutButton, "aboutButton");
+            this.aboutButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.aboutButton.Name = "aboutButton";
             this.aboutButton.Click += new System.EventHandler(this.aboutButton_Click);
             // 
             // toolStripSeparator1
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
             resources.ApplyResources(this.toolStripSeparator1, "toolStripSeparator1");
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
             // 
             // stopButton
             // 
-            this.stopButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             resources.ApplyResources(this.stopButton, "stopButton");
+            this.stopButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.stopButton.Name = "stopButton";
             this.stopButton.Click += new System.EventHandler(this.stopButton_Click);
             // 
             // previousButton
             // 
-            this.previousButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             resources.ApplyResources(this.previousButton, "previousButton");
+            this.previousButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.previousButton.Name = "previousButton";
             this.previousButton.Click += new System.EventHandler(this.previousButton_Click);
             // 
             // nextButton
             // 
-            this.nextButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             resources.ApplyResources(this.nextButton, "nextButton");
+            this.nextButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.nextButton.Name = "nextButton";
             this.nextButton.Click += new System.EventHandler(this.nextButton_Click);
             // 
             // repeatButton
             // 
-            this.repeatButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             resources.ApplyResources(this.repeatButton, "repeatButton");
+            this.repeatButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.repeatButton.Name = "repeatButton";
             this.repeatButton.Click += new System.EventHandler(this.repeatButton_Click);
             // 
@@ -402,9 +417,9 @@ namespace Ares.Player
             // 
             // ipAddressBox
             // 
+            resources.ApplyResources(this.ipAddressBox, "ipAddressBox");
             this.ipAddressBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ipAddressBox.FormattingEnabled = true;
-            resources.ApplyResources(this.ipAddressBox, "ipAddressBox");
             this.ipAddressBox.Name = "ipAddressBox";
             this.ipAddressBox.SelectedIndexChanged += new System.EventHandler(this.ipAddressBox_SelectedIndexChanged);
             // 
@@ -490,16 +505,17 @@ namespace Ares.Player
             // 
             // menuStrip1
             // 
+            resources.ApplyResources(this.menuStrip1, "menuStrip1");
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.projectToolStripMenuItem,
             this.playToolStripMenuItem,
             this.extrasToolStripMenuItem,
             this.helpToolStripMenuItem});
-            resources.ApplyResources(this.menuStrip1, "menuStrip1");
             this.menuStrip1.Name = "menuStrip1";
             // 
             // projectToolStripMenuItem
             // 
+            resources.ApplyResources(this.projectToolStripMenuItem, "projectToolStripMenuItem");
             this.projectToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openToolStripMenuItem,
             this.importToolStripMenuItem,
@@ -507,7 +523,6 @@ namespace Ares.Player
             this.toolStripSeparator2,
             this.exitToolStripMenuItem});
             this.projectToolStripMenuItem.Name = "projectToolStripMenuItem";
-            resources.ApplyResources(this.projectToolStripMenuItem, "projectToolStripMenuItem");
             // 
             // openToolStripMenuItem
             // 
@@ -517,43 +532,43 @@ namespace Ares.Player
             // 
             // importToolStripMenuItem
             // 
-            this.importToolStripMenuItem.Name = "importToolStripMenuItem";
             resources.ApplyResources(this.importToolStripMenuItem, "importToolStripMenuItem");
+            this.importToolStripMenuItem.Name = "importToolStripMenuItem";
             this.importToolStripMenuItem.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
             // 
             // recentToolStripMenuItem
             // 
+            resources.ApplyResources(this.recentToolStripMenuItem, "recentToolStripMenuItem");
             this.recentToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.dummyToolStripMenuItem});
             this.recentToolStripMenuItem.Name = "recentToolStripMenuItem";
-            resources.ApplyResources(this.recentToolStripMenuItem, "recentToolStripMenuItem");
             this.recentToolStripMenuItem.DropDownOpening += new System.EventHandler(this.recentToolStripMenuItem_DropDownOpening);
             // 
             // dummyToolStripMenuItem
             // 
-            this.dummyToolStripMenuItem.Name = "dummyToolStripMenuItem";
             resources.ApplyResources(this.dummyToolStripMenuItem, "dummyToolStripMenuItem");
+            this.dummyToolStripMenuItem.Name = "dummyToolStripMenuItem";
             // 
             // toolStripSeparator2
             // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
             resources.ApplyResources(this.toolStripSeparator2, "toolStripSeparator2");
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
             // 
             // exitToolStripMenuItem
             // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             resources.ApplyResources(this.exitToolStripMenuItem, "exitToolStripMenuItem");
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // playToolStripMenuItem
             // 
+            resources.ApplyResources(this.playToolStripMenuItem, "playToolStripMenuItem");
             this.playToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.stopAllToolStripMenuItem,
             this.previousMusicToolStripMenuItem,
             this.nextMusicTitleToolStripMenuItem,
             this.repeatCurrentMusicToolStripMenuItem});
             this.playToolStripMenuItem.Name = "playToolStripMenuItem";
-            resources.ApplyResources(this.playToolStripMenuItem, "playToolStripMenuItem");
             // 
             // stopAllToolStripMenuItem
             // 
@@ -569,9 +584,9 @@ namespace Ares.Player
             // 
             // nextMusicTitleToolStripMenuItem
             // 
+            resources.ApplyResources(this.nextMusicTitleToolStripMenuItem, "nextMusicTitleToolStripMenuItem");
             this.nextMusicTitleToolStripMenuItem.Image = global::Ares.Player.Properties.Resources.forward;
             this.nextMusicTitleToolStripMenuItem.Name = "nextMusicTitleToolStripMenuItem";
-            resources.ApplyResources(this.nextMusicTitleToolStripMenuItem, "nextMusicTitleToolStripMenuItem");
             this.nextMusicTitleToolStripMenuItem.Click += new System.EventHandler(this.nextButton_Click);
             // 
             // repeatCurrentMusicToolStripMenuItem
@@ -582,6 +597,7 @@ namespace Ares.Player
             // 
             // extrasToolStripMenuItem
             // 
+            resources.ApplyResources(this.extrasToolStripMenuItem, "extrasToolStripMenuItem");
             this.extrasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.startEditorToolStripMenuItem,
             this.messagesToolStripMenuItem,
@@ -591,7 +607,6 @@ namespace Ares.Player
             this.settingsToolStripMenuItem1,
             this.streamingToolStripMenuItem});
             this.extrasToolStripMenuItem.Name = "extrasToolStripMenuItem";
-            resources.ApplyResources(this.extrasToolStripMenuItem, "extrasToolStripMenuItem");
             this.extrasToolStripMenuItem.DropDownOpening += new System.EventHandler(this.extrasToolStripMenuItem_DropDownOpening);
             // 
             // startEditorToolStripMenuItem
@@ -608,21 +623,21 @@ namespace Ares.Player
             // 
             // toolStripSeparator3
             // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
             resources.ApplyResources(this.toolStripSeparator3, "toolStripSeparator3");
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
             // 
             // showKeysMenuItem
             // 
+            resources.ApplyResources(this.showKeysMenuItem, "showKeysMenuItem");
             this.showKeysMenuItem.CheckOnClick = true;
             this.showKeysMenuItem.Name = "showKeysMenuItem";
-            resources.ApplyResources(this.showKeysMenuItem, "showKeysMenuItem");
             this.showKeysMenuItem.CheckedChanged += new System.EventHandler(this.showKeysMenuItem_CheckedChanged);
             // 
             // globalKeyHookItem
             // 
+            resources.ApplyResources(this.globalKeyHookItem, "globalKeyHookItem");
             this.globalKeyHookItem.CheckOnClick = true;
             this.globalKeyHookItem.Name = "globalKeyHookItem";
-            resources.ApplyResources(this.globalKeyHookItem, "globalKeyHookItem");
             this.globalKeyHookItem.CheckedChanged += new System.EventHandler(this.globalKeyHookItem_CheckedChanged);
             // 
             // settingsToolStripMenuItem1
@@ -633,36 +648,36 @@ namespace Ares.Player
             // 
             // streamingToolStripMenuItem
             // 
-            this.streamingToolStripMenuItem.Name = "streamingToolStripMenuItem";
             resources.ApplyResources(this.streamingToolStripMenuItem, "streamingToolStripMenuItem");
+            this.streamingToolStripMenuItem.Name = "streamingToolStripMenuItem";
             this.streamingToolStripMenuItem.Click += new System.EventHandler(this.streamingToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
+            resources.ApplyResources(this.helpToolStripMenuItem, "helpToolStripMenuItem");
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.helpOnlineToolStripMenuItem,
             this.checkForUpdateToolStripMenuItem,
             this.toolStripSeparator4,
             this.aboutToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            resources.ApplyResources(this.helpToolStripMenuItem, "helpToolStripMenuItem");
             // 
             // helpOnlineToolStripMenuItem
             // 
-            this.helpOnlineToolStripMenuItem.Name = "helpOnlineToolStripMenuItem";
             resources.ApplyResources(this.helpOnlineToolStripMenuItem, "helpOnlineToolStripMenuItem");
+            this.helpOnlineToolStripMenuItem.Name = "helpOnlineToolStripMenuItem";
             this.helpOnlineToolStripMenuItem.Click += new System.EventHandler(this.helpOnlineToolStripMenuItem_Click);
             // 
             // checkForUpdateToolStripMenuItem
             // 
-            this.checkForUpdateToolStripMenuItem.Name = "checkForUpdateToolStripMenuItem";
             resources.ApplyResources(this.checkForUpdateToolStripMenuItem, "checkForUpdateToolStripMenuItem");
+            this.checkForUpdateToolStripMenuItem.Name = "checkForUpdateToolStripMenuItem";
             this.checkForUpdateToolStripMenuItem.Click += new System.EventHandler(this.checkForUpdateToolStripMenuItem_Click);
             // 
             // toolStripSeparator4
             // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
             resources.ApplyResources(this.toolStripSeparator4, "toolStripSeparator4");
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
             // 
             // aboutToolStripMenuItem
             // 
@@ -702,10 +717,96 @@ namespace Ares.Player
             // groupBox5
             // 
             resources.ApplyResources(this.groupBox5, "groupBox5");
+            this.groupBox5.Controls.Add(this.tagsPanel);
             this.groupBox5.Controls.Add(this.elementsPanel);
             this.groupBox5.Controls.Add(this.musicList);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.TabStop = false;
+            // 
+            // tagsPanel
+            // 
+            resources.ApplyResources(this.tagsPanel, "tagsPanel");
+            this.tagsPanel.Controls.Add(this.groupBox7);
+            this.tagsPanel.Controls.Add(this.groupBox6);
+            this.tagsPanel.Name = "tagsPanel";
+            // 
+            // groupBox7
+            // 
+            resources.ApplyResources(this.groupBox7, "groupBox7");
+            this.groupBox7.Controls.Add(this.clearTagsButton);
+            this.groupBox7.Controls.Add(this.tagSelectionPanel);
+            this.groupBox7.Controls.Add(this.currentTagsLabel);
+            this.groupBox7.Controls.Add(this.label15);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.TabStop = false;
+            // 
+            // clearTagsButton
+            // 
+            resources.ApplyResources(this.clearTagsButton, "clearTagsButton");
+            this.clearTagsButton.Name = "clearTagsButton";
+            this.clearTagsButton.UseVisualStyleBackColor = true;
+            this.clearTagsButton.Click += new System.EventHandler(this.clearTagsButton_Click);
+            // 
+            // tagSelectionPanel
+            // 
+            resources.ApplyResources(this.tagSelectionPanel, "tagSelectionPanel");
+            this.tagSelectionPanel.Name = "tagSelectionPanel";
+            // 
+            // currentTagsLabel
+            // 
+            resources.ApplyResources(this.currentTagsLabel, "currentTagsLabel");
+            this.currentTagsLabel.Name = "currentTagsLabel";
+            this.currentTagsLabel.UseCompatibleTextRendering = true;
+            // 
+            // label15
+            // 
+            resources.ApplyResources(this.label15, "label15");
+            this.label15.Name = "label15";
+            // 
+            // groupBox6
+            // 
+            resources.ApplyResources(this.groupBox6, "groupBox6");
+            this.groupBox6.Controls.Add(this.label14);
+            this.groupBox6.Controls.Add(this.label13);
+            this.groupBox6.Controls.Add(this.tagCategoriesAndButton);
+            this.groupBox6.Controls.Add(this.tagCategoriesOrButton);
+            this.groupBox6.Controls.Add(this.musicTagCategoryBox);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.TabStop = false;
+            // 
+            // label14
+            // 
+            resources.ApplyResources(this.label14, "label14");
+            this.label14.Name = "label14";
+            // 
+            // label13
+            // 
+            resources.ApplyResources(this.label13, "label13");
+            this.label13.Name = "label13";
+            // 
+            // tagCategoriesAndButton
+            // 
+            resources.ApplyResources(this.tagCategoriesAndButton, "tagCategoriesAndButton");
+            this.tagCategoriesAndButton.Name = "tagCategoriesAndButton";
+            this.tagCategoriesAndButton.TabStop = true;
+            this.tagCategoriesAndButton.UseVisualStyleBackColor = true;
+            this.tagCategoriesAndButton.CheckedChanged += new System.EventHandler(this.tagCategoriesAndButton_CheckedChanged);
+            // 
+            // tagCategoriesOrButton
+            // 
+            resources.ApplyResources(this.tagCategoriesOrButton, "tagCategoriesOrButton");
+            this.tagCategoriesOrButton.Name = "tagCategoriesOrButton";
+            this.tagCategoriesOrButton.TabStop = true;
+            this.tagCategoriesOrButton.UseVisualStyleBackColor = true;
+            this.tagCategoriesOrButton.CheckedChanged += new System.EventHandler(this.tagCategoriesOrButton_CheckedChanged);
+            // 
+            // musicTagCategoryBox
+            // 
+            resources.ApplyResources(this.musicTagCategoryBox, "musicTagCategoryBox");
+            this.musicTagCategoryBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.musicTagCategoryBox.FormattingEnabled = true;
+            this.musicTagCategoryBox.Name = "musicTagCategoryBox";
+            this.musicTagCategoryBox.SelectedIndexChanged += new System.EventHandler(this.musicTagCategoryBox_SelectedIndexChanged);
             // 
             // elementsPanel
             // 
@@ -714,8 +815,8 @@ namespace Ares.Player
             // 
             // musicList
             // 
-            this.musicList.FormattingEnabled = true;
             resources.ApplyResources(this.musicList, "musicList");
+            this.musicList.FormattingEnabled = true;
             this.musicList.Name = "musicList";
             this.musicList.SelectedIndexChanged += new System.EventHandler(this.musicList_SelectedIndexChanged);
             // 
@@ -755,6 +856,11 @@ namespace Ares.Player
             this.menuStrip1.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
+            this.tagsPanel.ResumeLayout(false);
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -838,6 +944,18 @@ namespace Ares.Player
         private System.Windows.Forms.ToolStripMenuItem globalKeyHookItem;
         private System.Windows.Forms.ToolStripButton repeatButton;
         private System.Windows.Forms.ToolStripMenuItem repeatCurrentMusicToolStripMenuItem;
+        private System.Windows.Forms.Panel tagsPanel;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.FlowLayoutPanel tagSelectionPanel;
+        private System.Windows.Forms.Label currentTagsLabel;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.RadioButton tagCategoriesAndButton;
+        private System.Windows.Forms.RadioButton tagCategoriesOrButton;
+        private System.Windows.Forms.ComboBox musicTagCategoryBox;
+        private System.Windows.Forms.Button clearTagsButton;
     }
 }
 

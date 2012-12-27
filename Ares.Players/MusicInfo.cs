@@ -40,6 +40,10 @@ namespace Ares.Players
             if (musicElementId != -1)
             {
                 IElement musicElement = Ares.Data.DataModule.ElementRepository.GetElement(musicElementId);
+                if (musicElement == null)
+                {
+                    return new MusicInfo(String.Empty, String.Empty);
+                }
                 IFileElement fileElement = musicElement as IFileElement;
                 String shortTitle = musicElement.Title;
                 String longTitle = musicElement.Title;

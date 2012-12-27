@@ -76,7 +76,17 @@ namespace Ares.Tags
         /// Returns all files which have at least one of the given tags.
         /// Files are returned as relative paths.
         /// </summary>
-        IList<String> GetAllFilesWithAnyTag(IList<int> tagIds);
+        IList<String> GetAllFilesWithAnyTag(HashSet<int> tagIds);
+
+        /// <summary>
+        /// Returns all files which have in each given category at least one of the given tags.
+        /// Files are returned as relative paths.
+        /// </summary>
+        /// <remarks>
+        /// Note: the categories could also be retrieved from the database. But clients know them
+        /// anyway.
+        /// </remarks>
+        IList<String> GetAllFilesWithAnyTagInEachCategory(IDictionary<int, HashSet<int>> tagsByCategory);
     }
 
     /// <summary>
@@ -122,6 +132,11 @@ namespace Ares.Tags
         /// Gets all languages which have a name in the given language.
         /// </summary>
         IList<LanguageForLanguage> GetAllLanguages();
+
+        /// <summary>
+        /// Gets information about the given tags.
+        /// </summary>
+        IList<TagInfoForLanguage> GetTagInfos(ICollection<int> tagIds);
     }
 
     /// <summary>

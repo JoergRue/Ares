@@ -974,6 +974,24 @@ namespace Ares.Players
             }
         }
 
+        public void MusicTagAdded(int tagId)
+        {
+#warning TODO Network Callbacks
+        }
+
+        public void MusicTagRemoved(int tagId)
+        {
+        }
+
+        public void AllMusicTagsRemoved()
+        {
+        }
+
+        public void MusicTagCategoriesOperatorChanged(bool isAndOperator)
+        {
+        }
+
+
         public void VolumeChanged(Ares.Playing.VolumeTarget target, int newValue)
         {
             /*

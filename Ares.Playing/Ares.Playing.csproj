@@ -102,6 +102,11 @@
       <Name>Ares.ModelInfo</Name>
       <Private>False</Private>
     </ProjectReference>
+    <ProjectReference Include="..\Ares.Tags\Ares.Tags.csproj">
+      <Project>{ED78886A-8674-499F-B0F9-98EB25322EBB}</Project>
+      <Name>Ares.Tags</Name>
+      <Private>False</Private>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="ares.snk" />

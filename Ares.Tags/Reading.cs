@@ -40,7 +40,7 @@ namespace Ares.Tags
             m_Connection = connection;
         }
 
-        public IList<string> GetAllFilesWithAnyTag(IList<int> tagIds)
+        public IList<string> GetAllFilesWithAnyTag(HashSet<int> tagIds)
         {
             if (m_Connection == null)
             {
@@ -48,7 +48,7 @@ namespace Ares.Tags
             }
             try
             {
-                return DoGetAllFilesWithAnyTag(tagIds);
+                return new List<String>(DoGetAllFilesWithAnyTag(tagIds));
             }
             catch (System.Data.DataException ex)
             {
@@ -60,25 +60,67 @@ namespace Ares.Tags
             }
         }
 
-        private IList<string> DoGetAllFilesWithAnyTag(IList<int> tagIds)
+        public IList<String> GetAllFilesWithAnyTagInEachCategory(IDictionary<int, HashSet<int>> tagsByCategory)
+        {
+            if (m_Connection == null)
+            {
+                throw new TagsDbException("No Connection to DB file!");
+            }
+            try
+            {
+                if (tagsByCategory.Count == 0)
+                {
+                    return new List<string>();
+                }
+                int[] categories = tagsByCategory.Keys.ToArray();
+                // get the files with tags in the first category
+                HashSet<String> files = DoGetAllFilesWithAnyTag(tagsByCategory[categories[0]]);
+                for (int i = 1; i < categories.Length; ++i)
+                {
+                    // no files left which match all categories
+                    if (files.Count == 0)
+                    {
+                        return new List<String>();
+                    }
+                    // get all files with tags in the next category
+                    HashSet<String> otherFiles = DoGetAllFilesWithAnyTag(tagsByCategory[categories[i]]);
+                    // make the intersection of both sets: a file must have a tag of both categories
+                    files.IntersectWith(otherFiles);
+                }
+                return new List<string>(files);
+                
+            }
+            catch (System.Data.DataException ex)
+            {
+                throw new TagsDbException(ex.Message, ex);
+            }
+            catch (SQLiteException ex)
+            {
+                throw new TagsDbException(ex.Message, ex);
+            }
+        }
+
+        private HashSet<string> DoGetAllFilesWithAnyTag(HashSet<int> tagIds)
         {
             if (tagIds.Count == 0)
             {
-                return new List<String>();
+                return new HashSet<String>();
             }
             String queryString = String.Format("SELECT DISTINCT {0}.{1} FROM {0}, {2} WHERE {0}.{3}={2}.{4} AND {2}.{5} IN (",
                 Schema.FILES_TABLE, Schema.PATH_COLUMN, Schema.FILETAGS_TABLE, Schema.ID_COLUMN, Schema.FILE_COLUMN, Schema.TAG_COLUMN);
-            for (int i = 0; i < tagIds.Count; ++i)
+            int i = 0;
+            foreach (int tagId in tagIds)
             {
-                queryString += tagIds[i];
+                queryString += tagId;
                 if (i != tagIds.Count - 1)
                     queryString += ",";
+                ++i;
             }
             queryString += ")";
             using (SQLiteCommand command = new SQLiteCommand(queryString, m_Connection))
             {
                 SQLiteDataReader reader = command.ExecuteReader();
-                List<String> result = new List<string>();
+                HashSet<String> result = new HashSet<string>();
                 while (reader.Read())
                 {
                     result.Add(reader.GetString(0));

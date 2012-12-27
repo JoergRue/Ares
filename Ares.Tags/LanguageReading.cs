@@ -143,6 +143,26 @@ namespace Ares.Tags
             }
         }
 
+        public IList<TagInfoForLanguage> GetTagInfos(ICollection<int> tagIds)
+        {
+            if (m_Connection == null)
+            {
+                throw new TagsDbException("No Connection to DB file!");
+            }
+            try
+            {
+                return DoGetTagInfos(tagIds);
+            }
+            catch (System.Data.DataException ex)
+            {
+                throw new TagsDbException(ex.Message, ex);
+            }
+            catch (SQLiteException ex)
+            {
+                throw new TagsDbException(ex.Message, ex);
+            }
+        }
+
         private IList<CategoryForLanguage> DoGetAllCategories()
         {
             String query = String.Format("SELECT {0}.{1}, {2}.{3} FROM {0}, {2} WHERE {0}.{1}={2}.{4} AND {2}.{5}=@LangId ORDER BY {2}.{3}",
@@ -269,6 +289,59 @@ namespace Ares.Tags
                 while (reader.Read())
                 {
                     result.Add(new LanguageForLanguage() { Id = (int)reader.GetInt64(0), Name = reader.GetString(1) });
+                }
+                return result;
+            }
+        }
+
+        private IList<TagInfoForLanguage> DoGetTagInfos(ICollection<int> tagIds)
+        {
+            if (tagIds.Count == 0)
+            {
+                return new List<TagInfoForLanguage>();
+            }
+
+            // 0: Tags; 2: TagNames; 4: Categories; 6: CategoryNames
+            // 1: Id; 3: Name; 5: Id; 7: Name; 8: Tag; 9: Category; 10: Language
+            String query = String.Format("SELECT {0}.{1}, {2}.{3}, {4}.{5}, {6}.{7} FROM {0}, {2}, {4}, {6} "
+                // Joins
+                + "WHERE {0}.{1}={2}.{8} AND {0}.{9}={4}.{1} AND {4}.{1}={6}.{9} "
+                // Languages
+                + "AND {2}.{10}=@LangId1 AND {6}.{10}=@LangId2 "
+                // IDs
+                + "AND {0}.{1} IN (",
+                // 0 - 4
+                Schema.TAGS_TABLE, Schema.ID_COLUMN, Schema.TAGNAMES_TABLE, Schema.NAME_COLUMN, Schema.CATEGORIES_TABLE,
+                // 5 - 8
+                Schema.ID_COLUMN, Schema.CATEGORYNAMES_TABLE, Schema.NAME_COLUMN, Schema.TAG_COLUMN,
+                // 9 - 10
+                Schema.CATEGORY_COLUMN, Schema.LANGUAGE_COLUMN);
+            // add ids
+            int i = 0;
+            foreach (int id in tagIds)
+            {
+                query += id;
+                if (i < tagIds.Count - 1)
+                    query += ",";
+                ++i;
+            }
+            query += String.Format(") ORDER BY {0}.{1}, {2}.{3}",
+                Schema.CATEGORYNAMES_TABLE, Schema.NAME_COLUMN, Schema.TAGNAMES_TABLE, Schema.NAME_COLUMN);
+            using (SQLiteCommand command = new SQLiteCommand(query, m_Connection))
+            {
+                command.Parameters.AddWithValue("@LangId1", m_LanguageId);
+                command.Parameters.AddWithValue("@LangId2", m_LanguageId);
+                List<TagInfoForLanguage> result = new List<TagInfoForLanguage>();
+                SQLiteDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    result.Add(new TagInfoForLanguage()
+                    {
+                        Id = (int)reader.GetInt64(0),
+                        Name = reader.GetString(1),
+                        CategoryId = (int)reader.GetInt64(2),
+                        Category = reader.GetString(3)
+                    });
                 }
                 return result;
             }

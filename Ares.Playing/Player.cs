@@ -835,9 +835,115 @@ namespace Ares.Playing
                 copy.AddRange(m_Players[key]);
             }
             copy.ForEach(player => player.Stop());
+            RemoveAllMusicTags();
             if (nrOfActivePlayers > 0)
             {
                 stoppingEvent.WaitOne();
+            }
+        }
+
+        private TagsMusicPlayer tagsPlayer = null;
+
+        public void AddMusicTag(int categoryId, int tagId)
+        {
+            if (tagsPlayer == null)
+            {
+                tagsPlayer = new TagsMusicPlayer();
+                bool dummy;
+                tagsPlayer.SetCategoriesOperator(m_MusicTagsCategoriesOperatorIsAnd, out dummy);
+            }
+            bool hadFiles = true;
+            bool mustChange = tagsPlayer.AddTag(categoryId, tagId, out hadFiles);
+            HandleTagChange(mustChange, hadFiles);
+            if (ProjectCallbacks != null)
+            {
+                ProjectCallbacks.MusicTagAdded(tagId);
+            }
+        }
+
+        public void RemoveMusicTag(int categoryId, int tagId)
+        {
+            if (tagsPlayer != null)
+            {
+                bool hadFiles = true;
+                bool mustChange = tagsPlayer.RemoveTag(categoryId, tagId, out hadFiles);
+                HandleTagChange(mustChange, hadFiles);
+            }
+            if (ProjectCallbacks != null)
+            {
+                ProjectCallbacks.MusicTagRemoved(tagId);
+            }
+        }
+
+        public void RemoveAllMusicTags()
+        {
+            DoRemoveAllMusicTags(true);
+        }
+
+        private bool m_MusicTagsCategoriesOperatorIsAnd = false;
+
+        public void SetMusicTagCategoriesOperator(bool isAndOperator)
+        {
+            m_MusicTagsCategoriesOperatorIsAnd = isAndOperator;
+            if (tagsPlayer != null)
+            {
+                bool hadFiles = true;
+                bool mustChange = tagsPlayer.SetCategoriesOperator(isAndOperator, out hadFiles);
+                HandleTagChange(mustChange, hadFiles);
+            }
+            if (ProjectCallbacks != null)
+            {
+                ProjectCallbacks.MusicTagCategoriesOperatorChanged(isAndOperator);
+            }
+        }
+
+        private void HandleTagChange(bool mustChangeTagMusic, bool wasPlayingTagMusic)
+        {
+            if (mustChangeTagMusic)
+            {
+                // either the currently played title isn't eligible any more
+                // or no title was playing and now there are titles
+                if (wasPlayingTagMusic)
+                {
+                    // music list has changed
+                    if (m_ActiveMusicPlayer != null)
+                    {
+                        m_ActiveMusicPlayer.ChangeRandomList(tagsPlayer.MusicList);
+                    }
+                    // and a new title must be selected, because the old one
+                    // isn't eligible any more
+                    NextMusicTitle();
+                }
+                else
+                {
+                    // no tag music was playing, but now we have files
+                    // --> start the player
+                    StartElement(tagsPlayer.ModeElement);
+                }
+            }
+            else
+            {
+                // either the currently played title is still eligible
+                // or there are still no titles to play
+                if (wasPlayingTagMusic && m_ActiveMusicPlayer != null)
+                {
+                    // music list has changed
+                    m_ActiveMusicPlayer.ChangeRandomList(tagsPlayer.MusicList);
+                }
+            }
+        }
+
+        private void DoRemoveAllMusicTags(bool stopMusic)
+        {
+            if (tagsPlayer != null)
+            {
+                bool hadFiles = true;
+                bool mustChange = tagsPlayer.RemoveAllTags(out hadFiles);
+                HandleTagChange(mustChange, hadFiles);
+            }
+            if (ProjectCallbacks != null)
+            {
+                ProjectCallbacks.AllMusicTagsRemoved();
             }
         }
 
@@ -1039,6 +1145,10 @@ namespace Ares.Playing
                         m_Players.Remove(element);
                     }
                     --nrOfActivePlayers;
+                    if (tagsPlayer != null && tagsPlayer.ModeElement == element)
+                    {
+                        DoRemoveAllMusicTags(false);
+                    }
                 }
             }
             if (nrOfActivePlayers <= 0)
@@ -1064,7 +1174,9 @@ namespace Ares.Playing
                 if (m_ActiveMusicPlayer != null && m_ActiveMusicPlayer != value)
                 {
                     if (!m_AllowTwoMusicPlayers)
+                    {
                         m_ActiveMusicPlayer.Stop();
+                    }
                     else
                         m_AllowTwoMusicPlayers = false;
                 }

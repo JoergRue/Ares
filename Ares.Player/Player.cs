@@ -248,6 +248,7 @@ namespace Ares.Player
 
         private void OpenProject(String filePath, bool onControllerRequest)
         {
+            StopAllPlaying();
             if (m_Project != null)
             {
                 if (onControllerRequest && m_Project.FileName.Equals(filePath, StringComparison.InvariantCultureIgnoreCase))
@@ -260,6 +261,7 @@ namespace Ares.Player
                 }
                 Ares.Data.DataModule.ProjectManager.UnloadProject(m_Project);
                 m_Project = null;
+                m_TagLanguageId = Ares.Tags.TagsModule.GetTagsDB().TranslationsInterface.GetIdOfCurrentUILanguage();
 #if !MONO
                 m_Instance.SetLoadedProject("-");
 #endif
@@ -267,6 +269,10 @@ namespace Ares.Player
             try
             {
                 m_Project = Ares.Data.DataModule.ProjectManager.LoadProject(filePath);
+                if (m_Project != null && m_Project.TagLanguageId != -1)
+                {
+                    m_TagLanguageId = m_Project.TagLanguageId;
+                }
                 Ares.Settings.Settings.Instance.RecentFiles.AddFile(new RecentFiles.ProjectEntry(m_Project.FileName, m_Project.Title));
             }
             catch (Exception e)
@@ -308,6 +314,10 @@ namespace Ares.Player
                 box.CheckedChanged -= m_CurrentButtons[box];
             }
             m_CurrentButtons.Clear();
+            foreach (CheckBox box in m_CurrentTagButtons.Keys)
+            {
+                box.CheckedChanged -= m_CurrentTagButtons[box];
+            }
             m_ButtonsForIds.Clear();
 
             modesList.BeginUpdate();
@@ -318,8 +328,9 @@ namespace Ares.Player
                 IList<Ares.Data.IMode> modes = m_Project.GetModes();
                 if (modes.Count == 0)
                     return;
-                modesList.Items.Add("Musikliste");
-                int i = 1;
+                modesList.Items.Add(StringResources.MusicList);
+                modesList.Items.Add(StringResources.MusicTags);
+                int i = 2;
                 int currentMode = 0;
                 bool showKeys = Settings.Settings.Instance.ShowKeysInButtons;
                 KeysConverter converter = new KeysConverter();
@@ -345,8 +356,14 @@ namespace Ares.Player
         }
 
         private Dictionary<CheckBox, EventHandler> m_CurrentButtons = new Dictionary<CheckBox, EventHandler>();
+        private Dictionary<CheckBox, EventHandler> m_CurrentTagButtons = new Dictionary<CheckBox, EventHandler>();
         private Dictionary<int, CheckBox> m_ButtonsForIds = new Dictionary<int, CheckBox>();
         private bool m_ButtonsActive = true;
+        private bool m_TagsControlsActive = false;
+
+        private int m_TagLanguageId;
+        private int m_LastTagCategoryId = -1;
+        IList<Ares.Tags.CategoryForLanguage> m_MusicTagCategories;
         
         private void UpdateElementsPanel()
         {
@@ -374,8 +391,162 @@ namespace Ares.Player
                 }
                 musicList.EndUpdate();
                 elementsPanel.Visible = false;
+                tagsPanel.Visible = false;
                 m_ButtonsActive = false;
+                m_TagsControlsActive = false;
                 musicList.Visible = true;
+            }
+            else if (modeIndex == 1)
+            {
+                foreach (CheckBox box in m_CurrentTagButtons.Keys)
+                {
+                    box.CheckedChanged -= m_CurrentTagButtons[box];
+                }
+                m_CurrentTagButtons.Clear();
+
+                m_TagsControlsActive = false;
+                Ares.Tags.ITagsDBReadByLanguage dbRead = Ares.Tags.TagsModule.GetTagsDB().GetReadInterfaceByLanguage(m_TagLanguageId);
+
+                musicTagCategoryBox.Items.Clear();
+                int selIndex = -1;
+                try
+                {
+                    m_MusicTagCategories = dbRead.GetAllCategories();
+                }
+                catch (Ares.Tags.TagsDbException ex)
+                {
+                    Messages.AddMessage(MessageType.Error, String.Format(StringResources.TagsDbError, ex.Message));
+                    m_MusicTagCategories = new List<Ares.Tags.CategoryForLanguage>();
+                }
+                foreach (var category in m_MusicTagCategories)
+                {
+                    musicTagCategoryBox.Items.Add(category.Name);
+                    if (category.Id == m_LastTagCategoryId)
+                        selIndex = musicTagCategoryBox.Items.Count - 1;
+                }
+                if (selIndex == -1 && musicTagCategoryBox.Items.Count > 0)
+                {
+                    selIndex = 0;
+                    m_LastTagCategoryId = m_MusicTagCategories[0].Id;
+                }
+                if (selIndex != -1)
+                {
+                    musicTagCategoryBox.SelectedIndex = selIndex;
+                }
+
+                HashSet<int> currentTags = m_PlayingControl.GetCurrentMusicTags();
+
+                tagSelectionPanel.Controls.Clear();
+                if (m_LastTagCategoryId != -1)
+                {
+                    IList<Ares.Tags.TagForLanguage> tags;
+                    try 
+                    {
+                        tags = dbRead.GetAllTags(m_LastTagCategoryId);
+                    }
+                    catch (Ares.Tags.TagsDbException ex)
+                    {
+                        Messages.AddMessage(MessageType.Error, String.Format(StringResources.TagsDbError, ex.Message));
+                        tags = new List<Ares.Tags.TagForLanguage>();
+                    }
+
+                    int maxWidth = 0;
+                    CheckBox checkBox = new CheckBox();
+                    checkBox.Appearance = Appearance.Button;
+                    for (int i = 0; i < tags.Count; ++i)
+                    {
+                        String text = tags[i].Name;
+                        checkBox.Text = text;
+                        int width = checkBox.PreferredSize.Width;
+                        if (width > maxWidth)
+                            maxWidth = width;
+                    }
+                    checkBox.Dispose();
+                    int count = 0;
+                    for (int i = 0; i < tags.Count; ++i)
+                    {
+                        //if (!elements[i].IsVisibleInPlayer)
+                        //    continue;
+                        ++count;
+                        int row = count / 4;
+                        int column = count % 4;
+                        checkBox = new CheckBox();
+                        String text = tags[i].Name;
+                        checkBox.Text = text;
+                        checkBox.Appearance = Appearance.Button;
+                        Size size = checkBox.PreferredSize;
+                        size.Width = maxWidth;
+                        checkBox.SetBounds(0, 0, size.Width, size.Height);
+                        checkBox.Checked = currentTags.Contains(tags[i].Id);
+                        int tagId = tags[i].Id;
+                        int categoryId = m_LastTagCategoryId;
+                        EventHandler handler = new EventHandler((Object sender, EventArgs args) =>
+                        {
+                            if (m_Listen && m_TagsControlsActive)
+                            {
+                                if ((sender as CheckBox).Checked)
+                                {
+                                    m_PlayingControl.AddMusicTag(categoryId, tagId);
+                                }
+                                else
+                                {
+                                    m_PlayingControl.RemoveMusicTag(categoryId, tagId);
+                                }
+                            }
+                        });
+                        checkBox.CheckedChanged += handler;
+                        m_CurrentTagButtons.Add(checkBox, handler);
+                        tagSelectionPanel.Controls.Add(checkBox);
+                    }
+                    if (count == 0)
+                    {
+                        Label label = new Label();
+                        label.Text = StringResources.NoTags;
+                        label.SetBounds(0, 0, label.PreferredSize.Width, label.PreferredSize.Height);
+                        tagSelectionPanel.Controls.Add(label);
+                    }
+                }
+
+                tagCategoriesAndButton.Checked = m_PlayingControl.IsMusicTagCategoriesOperatorAnd();
+                tagCategoriesOrButton.Checked = !tagCategoriesAndButton.Checked;
+
+                StringBuilder currentTagsBuilder = new StringBuilder();
+                IList<Ares.Tags.TagInfoForLanguage> currentTagInfos;
+                try 
+                { 
+                    currentTagInfos = dbRead.GetTagInfos(currentTags);
+                }
+                catch (Ares.Tags.TagsDbException ex)
+                {
+                    Messages.AddMessage(MessageType.Error, String.Format(StringResources.TagsDbError, ex.Message));
+                    currentTagInfos = new List<Ares.Tags.TagInfoForLanguage>();
+                }
+                int catId = -1;
+                foreach (var tagInfo in currentTagInfos)
+                {
+                    if (tagInfo.CategoryId != catId)
+                    {
+                        if (currentTagsBuilder.Length > 0)
+                        {
+                            currentTagsBuilder.Append("; ");
+                        }
+                        currentTagsBuilder.Append(tagInfo.Category);
+                        currentTagsBuilder.Append(": ");
+                        catId = tagInfo.CategoryId;
+                    }
+                    else
+                    {
+                        currentTagsBuilder.Append(", ");
+                    }
+                    currentTagsBuilder.Append(tagInfo.Name);
+                }
+                currentTagsLabel.Text = currentTagsBuilder.ToString();
+
+                elementsPanel.Visible = false;
+                tagsPanel.Visible = true;
+                m_TagsControlsActive = true;
+                m_ButtonsActive = false;
+                musicList.Visible = false;
             }
             else
             {
@@ -387,11 +558,11 @@ namespace Ares.Player
                 m_ButtonsForIds.Clear();
                 elementsPanel.Controls.Clear();
 
-                if (m_Project != null && m_Project.GetModes().Count >= modeIndex)
+                if (m_Project != null && m_Project.GetModes().Count > modeIndex - 2)
                 {
                     bool showKeys = Settings.Settings.Instance.ShowKeysInButtons;
                     KeysConverter converter = new KeysConverter();
-                    IList<Ares.Data.IModeElement> elements = m_Project.GetModes()[modeIndex - 1].GetElements();
+                    IList<Ares.Data.IModeElement> elements = m_Project.GetModes()[modeIndex - 2].GetElements();
                     int maxWidth = 0;
                     CheckBox checkBox = new CheckBox();
                     checkBox.Appearance = Appearance.Button;
@@ -404,7 +575,7 @@ namespace Ares.Player
                         {
                             int keyCode = (elements[i].Trigger as IKeyTrigger).KeyCode;
                             if (keyCode != 0)
-                            text += " (" + converter.ConvertToString((System.Windows.Forms.Keys)keyCode) + ")";
+                                text += " (" + converter.ConvertToString((System.Windows.Forms.Keys)keyCode) + ")";
                         }
                         checkBox.Text = text;
                         int width = checkBox.PreferredSize.Width;
@@ -464,6 +635,8 @@ namespace Ares.Player
                 }
                 m_ButtonsActive = true;
                 musicList.Visible = false;
+                tagsPanel.Visible = false;
+                m_TagsControlsActive = false;
                 elementsPanel.Visible = true;
             }
         }
@@ -505,6 +678,7 @@ namespace Ares.Player
         private int lastMusicElementId = -1;
         private String lastMode = String.Empty;
         private int lastMusicListId = -1;
+        private HashSet<int> lastTagIds = null;
 
         private void UpdateStatus()
         {
@@ -518,7 +692,7 @@ namespace Ares.Player
                 {
                     if (m_Project.GetModes()[i].Title == mode.Title)
                     {
-                        modesList.SelectedIndex = i + 1;
+                        modesList.SelectedIndex = i + 2;
                         break;
                     }
                 }
@@ -577,6 +751,25 @@ namespace Ares.Player
             if (control.CurrentMusicList != lastMusicListId && modesList.SelectedIndex == 0)
             {
                 UpdateElementsPanel();
+            }
+            else if (modesList.SelectedIndex == 1)
+            {
+                HashSet<int> tags = lastTagIds != null ? new HashSet<int>(lastTagIds) : new HashSet<int>();
+                HashSet<int> currentTags = control.GetCurrentMusicTags();
+                tags.SymmetricExceptWith(currentTags);
+                if (tags.Count > 0)
+                {
+                    // current tag set has changed
+                    lastTagIds = currentTags;
+                    UpdateElementsPanel();
+                }
+                else
+                {
+                    m_TagsControlsActive = false;
+                    tagCategoriesAndButton.Checked = m_PlayingControl.IsMusicTagCategoriesOperatorAnd();
+                    tagCategoriesOrButton.Checked = !tagCategoriesAndButton.Checked;
+                    m_TagsControlsActive = true;
+                }
             }
             lastMusicListId = control.CurrentMusicList;
             m_Listen = true;
@@ -743,6 +936,7 @@ namespace Ares.Player
             {
                 m_PlayingControl.KeyReceived((int)Ares.Data.Keys.Escape);
                 m_PlayingControl.UpdateDirectories();
+                LoadTagsDB();
             }
             listenForPorts = false;
             udpPortUpDown.Value = settings.UdpPort;
@@ -762,6 +956,20 @@ namespace Ares.Player
                 {
                     m_Network.DisconnectClient(true);
                 }
+            }
+        }
+
+        private void LoadTagsDB()
+        {
+            try
+            {
+                Ares.Tags.ITagsDBFiles tagsDBFiles = Ares.Tags.TagsModule.GetTagsDB().FilesInterface;
+                String path = System.IO.Path.Combine(Ares.Settings.Settings.Instance.MusicDirectory, tagsDBFiles.DefaultFileName);
+                tagsDBFiles.OpenOrCreateDatabase(path);
+            }
+            catch (Ares.Tags.TagsDbException ex)
+            {
+                MessageBox.Show(this, String.Format(StringResources.TagsDbError, ex.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -1171,9 +1379,9 @@ namespace Ares.Player
         {
             if (!m_Listen)
                 return;
-            if (modesList.SelectedIndex > 0 && m_Project != null && modesList.SelectedIndex <= m_Project.GetModes().Count)
+            if (modesList.SelectedIndex > 1 && m_Project != null && (modesList.SelectedIndex - 2) < m_Project.GetModes().Count)
             {
-                m_PlayingControl.SetMode(m_Project.GetModes()[modesList.SelectedIndex - 1]);
+                m_PlayingControl.SetMode(m_Project.GetModes()[modesList.SelectedIndex - 2]);
             }
             m_Listen = false;
             UpdateElementsPanel();
@@ -1225,6 +1433,39 @@ namespace Ares.Player
         private void repeatButton_Click(object sender, EventArgs e)
         {
             m_PlayingControl.SetRepeatCurrentMusic(!m_PlayingControl.MusicRepeat);
+        }
+
+        private void musicTagCategoryBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (m_TagsControlsActive)
+            {
+                m_LastTagCategoryId = m_MusicTagCategories[musicTagCategoryBox.SelectedIndex].Id;
+                UpdateElementsPanel();
+            }
+        }
+
+        private void clearTagsButton_Click(object sender, EventArgs e)
+        {
+            if (m_TagsControlsActive)
+            {
+                m_PlayingControl.RemoveAllMusicTags();
+            }
+        }
+
+        private void tagCategoriesOrButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (m_TagsControlsActive)
+            {
+                m_PlayingControl.SetMusicTagCategoriesOperator(!tagCategoriesOrButton.Checked);
+            }
+        }
+
+        private void tagCategoriesAndButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (m_TagsControlsActive)
+            {
+                m_PlayingControl.SetMusicTagCategoriesOperator(tagCategoriesAndButton.Checked);
+            }
         }
     }
 }

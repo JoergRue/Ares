@@ -213,4 +213,11 @@
   <data name="StreamingError" xml:space="preserve">
     <value>Streaming-Fehler: {0}</value>
   </data>
+  <data name="TagsDbError" xml:space="preserve">
+    <value>Fehler beim Zugriff auf die Tags-Datenbasis:
+{0}</value>
+  </data>
+  <data name="TaggedMusic" xml:space="preserve">
+    <value>Musik per Tags</value>
+  </data>
 </root>

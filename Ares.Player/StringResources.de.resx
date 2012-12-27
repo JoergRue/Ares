@@ -195,6 +195,12 @@ Fehlermeldung: {0}
   <data name="LoadError" xml:space="preserve">
     <value>Fehler beim Laden des Projektes: {0}</value>
   </data>
+  <data name="MusicList" xml:space="preserve">
+    <value>Musikliste</value>
+  </data>
+  <data name="MusicTags" xml:space="preserve">
+    <value>Musik-Tags</value>
+  </data>
   <data name="NoDevice" xml:space="preserve">
     <value>Keine Soundkarte gefunden.</value>
   </data>
@@ -213,6 +219,9 @@ Sie sollten zuerst ein paar Einstellungen vornehmen.</value>
   </data>
   <data name="NoStatusInfoError" xml:space="preserve">
     <value>Konnte keine Statusinformationen senden. Bitte überprüfen Sie die Netzwerkverbindung.</value>
+  </data>
+  <data name="NoTags" xml:space="preserve">
+    <value>Keine Tags vorhanden</value>
   </data>
   <data name="NotConnected" xml:space="preserve">
     <value>Nicht verbunden</value>
@@ -237,6 +246,10 @@ Sie sollten zuerst ein paar Einstellungen vornehmen.</value>
   </data>
   <data name="StartEditor" xml:space="preserve">
     <value>Editor öffnen</value>
+  </data>
+  <data name="TagsDbError" xml:space="preserve">
+    <value>Fehler beim Zugriff auf die Tags-Datenbasis:
+{0}</value>
   </data>
   <data name="WriteSettingsError" xml:space="preserve">
     <value>Einstellungen konnten nicht gespeichert werden. Grund:

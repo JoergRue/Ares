@@ -195,6 +195,12 @@ Error message: {0}
   <data name="LoadError" xml:space="preserve">
     <value>Error opening the project: {0}</value>
   </data>
+  <data name="MusicList" xml:space="preserve">
+    <value>Music List</value>
+  </data>
+  <data name="MusicTags" xml:space="preserve">
+    <value>Music Tags</value>
+  </data>
   <data name="NoDevice" xml:space="preserve">
     <value>No sound device found.</value>
   </data>
@@ -213,6 +219,9 @@ You should adapt some settings first.</value>
   </data>
   <data name="NoStatusInfoError" xml:space="preserve">
     <value>Couldn't send status info. Check network connection.</value>
+  </data>
+  <data name="NoTags" xml:space="preserve">
+    <value>There are no tags in this category</value>
   </data>
   <data name="NotConnected" xml:space="preserve">
     <value>Not connected</value>
@@ -237,6 +246,10 @@ You should adapt some settings first.</value>
   </data>
   <data name="StartEditor" xml:space="preserve">
     <value>Open Editor</value>
+  </data>
+  <data name="TagsDbError" xml:space="preserve">
+    <value>Error accessing tags database:
+{0}</value>
   </data>
   <data name="WriteSettingsError" xml:space="preserve">
     <value>Settings could not be saved. Reason:

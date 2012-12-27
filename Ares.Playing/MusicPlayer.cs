@@ -34,10 +34,15 @@ namespace Ares.Playing
         void SetMusicVolume(int volume);
         void PlayMusicTitle(Int32 elementId);
         bool RepeatCurrentMusic { set; }
+        void ChangeRandomList(IRandomBackgroundMusicList newList);
     }
 
     abstract class MusicPlayer : ElementPlayerBase, IMusicPlayer
     {
+        public virtual void ChangeRandomList(IRandomBackgroundMusicList newList)
+        {
+        }
+
         public override void VisitFileElement(IFileElement fileElement)
         {
             CurrentPlayedHandle = Client.PlayFile(fileElement, m_MusicFadeInTime, (success) =>
@@ -294,7 +299,7 @@ namespace Ares.Playing
     {
         public override void PlayMusicTitle(Int32 elementId)
         {
-            IList<IChoiceElement> elements = m_Container.GetElements();
+            IList<IChoiceElement> elements = RandomMusicList.GetElements();
             for (int i = 0; i < elements.Count; ++i)
             {
                 if (elements[i].InnerElement.Id == elementId)
@@ -314,6 +319,17 @@ namespace Ares.Playing
         {
             m_GoBack = true;
             Next();
+        }
+
+        protected IRandomBackgroundMusicList RandomMusicList 
+        { 
+            get 
+            {
+                lock (syncObject)
+                {
+                    return m_Container;
+                }
+            } 
         }
 
         public override void PlayNext()
@@ -336,7 +352,7 @@ namespace Ares.Playing
                 m_GoBack = false;
                 m_FixedNext = -1;
                 Monitor.Exit(syncObject);
-                Repeat(m_Container, element);
+                Repeat(RandomMusicList, element);
             }
             else if (m_GoBack && m_LastElementsStack.Count > 1)
             {
@@ -345,22 +361,34 @@ namespace Ares.Playing
                 m_GoBack = false;
                 m_FixedNext = -1;
                 Monitor.Exit(syncObject);
-                Repeat(m_Container, element);
+                Repeat(RandomMusicList, element);
             }
             else
             {
                 IChoiceElement element = SelectRandomElement(m_Container);
-                m_LastElementsStack.Add(element);
-                m_GoBack = false;
-                m_FixedNext = -1;
-                Monitor.Exit(syncObject);
-                Repeat(m_Container, element);
+                if (element != null)
+                {
+                    m_LastElementsStack.Add(element);
+                    m_GoBack = false;
+                    m_FixedNext = -1;
+                    Monitor.Exit(syncObject);
+                    Repeat(RandomMusicList, element);
+                }
+                else
+                {
+                    Monitor.Exit(syncObject);
+                    if (PlayingModule.ThePlayer.ProjectCallbacks != null)
+                    {
+                        PlayingModule.ThePlayer.ProjectCallbacks.MusicPlaylistFinished();
+                    }
+                    Client.SubPlayerFinished(this, stop);
+                }
             }
         }
 
         protected override bool IsSingleFileList()
         {
-            return ((IMusicList)m_Container).GetFileElements().Count < 2;
+            return ((IMusicList)RandomMusicList).GetFileElements().Count < 2;
         }
 
         public override void VisitRandomMusicList(IRandomBackgroundMusicList musicList)
@@ -371,7 +399,7 @@ namespace Ares.Playing
 
         public void Start(int musicFadeInTime)
         {
-            if (m_Container.GetElements().Count == 0)
+            if (RandomMusicList.GetElements().Count == 0)
             {
                 Client.SubPlayerFinished(this, false);
                 return;
@@ -379,7 +407,7 @@ namespace Ares.Playing
             PlayingModule.ThePlayer.ActiveMusicPlayer = this; // once early to stop previous music player
             if (PlayingModule.ThePlayer.ProjectCallbacks != null)
             {
-                PlayingModule.ThePlayer.ProjectCallbacks.MusicPlaylistStarted(m_Container.Id);
+                PlayingModule.ThePlayer.ProjectCallbacks.MusicPlaylistStarted(RandomMusicList.Id);
             }
             Monitor.Enter(syncObject);
             // Don't delay, start immediately (start delay was already processed by calling player)
@@ -390,24 +418,290 @@ namespace Ares.Playing
             Process(element, musicFadeInTime);
         }
 
+        public override void ChangeRandomList(IRandomBackgroundMusicList newList)
+        {
+            IRandomBackgroundMusicList list;
+            list = Ares.ModelInfo.Playlists.ExpandRandomMusicList(newList, (String error) =>
+                {
+                    ErrorHandling.ErrorOccurred(newList.Id, error);
+                });
+            if (PlayingModule.ThePlayer.ProjectCallbacks != null)
+            {
+                PlayingModule.ThePlayer.ProjectCallbacks.MusicPlaylistFinished();
+            }
+            lock (syncObject)
+            {
+                m_Container = list;
+            }
+            if (PlayingModule.ThePlayer.ProjectCallbacks != null)
+            {
+                PlayingModule.ThePlayer.ProjectCallbacks.MusicPlaylistStarted(RandomMusicList.Id);
+            }
+        }
+
         public RandomMusicPlayer(IRandomBackgroundMusicList list, WaitHandle stoppedEvent, IElementPlayerClient client)
             : base(stoppedEvent, client)
         {
-            m_Container = Ares.ModelInfo.Playlists.ExpandRandomMusicList(list, (String error) =>
-            {
-                ErrorHandling.ErrorOccurred(list.Id, error);
-            });
             m_LastElementsStack = new List<IChoiceElement>();
             m_GoBack = false;
             m_FixedNext = -1;
             m_RepeatCount = 0;
+            m_Container = Ares.ModelInfo.Playlists.ExpandRandomMusicList(list, (String error) =>
+            {
+                ErrorHandling.ErrorOccurred(list.Id, error);
+            });
         }
 
-        private IRandomBackgroundMusicList m_Container;
         private List<IChoiceElement> m_LastElementsStack;
         private bool m_GoBack;
         private int m_FixedNext;
         private int m_RepeatCount;
+        private IRandomBackgroundMusicList m_Container;
+    }
+
+    class TagsMusicPlayer : IProjectPlayingCallbacks, IDisposable
+    {
+        private HashSet<int> m_TagsSet = new HashSet<int>();
+        private Dictionary<int, HashSet<int>> m_TagsSetByCategory = new Dictionary<int, HashSet<int>>();
+        private IList<String> m_CurrentChoices;
+        private Object m_SyncObject = new Int32();
+        private String m_CurrentFile;
+        private int m_CurrentFileId;
+        private IRandomBackgroundMusicList m_MusicList;
+        private IModeElement m_ModeElement;
+
+        public bool AddTag(int categoryId, int tag, out bool hadFiles)
+        {
+            hadFiles = m_CurrentChoices.Count > 0;
+
+            m_TagsSet.Add(tag);
+            if (!m_TagsSetByCategory.ContainsKey(categoryId))
+            {
+                m_TagsSetByCategory[categoryId] = new HashSet<int>();
+            }
+            m_TagsSetByCategory[categoryId].Add(tag);
+            return RetrieveCurrentChoices();
+        }
+
+        public bool RemoveTag(int categoryId, int tag, out bool hadFiles)
+        {
+            hadFiles = m_CurrentChoices.Count > 0;
+
+            m_TagsSet.Remove(tag);
+            if (m_TagsSetByCategory.ContainsKey(categoryId))
+            {
+                m_TagsSetByCategory[categoryId].Remove(tag);
+                if (m_TagsSetByCategory[categoryId].Count == 0)
+                {
+                    m_TagsSetByCategory.Remove(categoryId);
+                }
+            }
+            if (m_TagsSet.Count == 0)
+            {
+                m_CurrentChoices.Clear();
+                UpdateMusicList();
+                return hadFiles;
+            }
+            else
+            {
+                return RetrieveCurrentChoices();
+            }
+        }
+
+        public bool RemoveAllTags(out bool hadFiles)
+        {
+            hadFiles = m_CurrentChoices.Count > 0;
+            m_TagsSet.Clear();
+            m_TagsSetByCategory.Clear();
+            m_CurrentChoices.Clear();
+            UpdateMusicList();
+            return hadFiles;
+        }
+
+        private bool m_CategoriesOperatorIsAnd = false;
+
+        public bool SetCategoriesOperator(bool isAnd, out bool hadFiles)
+        {
+            hadFiles = m_CurrentChoices.Count > 0;
+
+            if (m_CategoriesOperatorIsAnd == isAnd)
+            {
+                return false;
+            }
+
+            m_CategoriesOperatorIsAnd = isAnd;
+            return RetrieveCurrentChoices();
+        }
+
+        public IModeElement ModeElement { get { return m_ModeElement; } }
+
+        public IRandomBackgroundMusicList MusicList { get { return m_MusicList; } }
+
+        private String m_Title;
+
+        public TagsMusicPlayer()
+        {
+            m_CurrentFile = String.Empty;
+            m_CurrentFileId = -1;
+            m_Title = StringResources.TaggedMusic;
+            m_MusicList = Ares.Data.DataModule.ElementFactory.CreateRandomBackgroundMusicList(m_Title);
+            m_ModeElement = Ares.Data.DataModule.ElementFactory.CreateModeElement(m_Title, m_MusicList);
+            m_CurrentChoices = new List<String>();
+            ProjectCallbacks.Instance.AddCallbacks(this);
+        }
+
+        public void Dispose()
+        {
+            Ares.Data.DataModule.ElementRepository.DeleteElement(m_MusicList.Id);
+            ProjectCallbacks.Instance.RemoveCallbacks(this);
+        }
+
+        private bool RetrieveCurrentChoices()
+        {
+            IList<String> choices = null;
+            try
+            {
+                Ares.Tags.ITagsDBRead dbRead = Ares.Tags.TagsModule.GetTagsDB().ReadInterface;
+                if (!m_CategoriesOperatorIsAnd)
+                {
+                    choices = dbRead.GetAllFilesWithAnyTag(m_TagsSet);
+                }
+                else
+                {
+                    choices = dbRead.GetAllFilesWithAnyTagInEachCategory(m_TagsSetByCategory);
+                }
+            }
+            catch (Ares.Tags.TagsDbException ex)
+            {
+                ErrorHandling.ErrorOccurred(-1, String.Format(StringResources.TagsDbError, ex.Message));
+                choices = new List<String>();
+            }
+            bool mustChange = false;
+            lock (m_SyncObject)
+            {
+                m_CurrentChoices = choices;
+                // must change music if 
+                // either a title is playing which is not in the current choice list
+                if (!String.IsNullOrEmpty(m_CurrentFile) && !m_CurrentChoices.Contains(m_CurrentFile))
+                {
+                    mustChange = true;
+                }
+                // or no title is playing but there are some in the current choice list
+                else if (String.IsNullOrEmpty(m_CurrentFile) && m_CurrentChoices.Count > 0)
+                {
+                    mustChange = true;
+                }
+            }
+            UpdateMusicList();
+            return mustChange;
+        }
+
+        private void UpdateMusicList()
+        {
+            var newMusicList = Ares.Data.DataModule.ElementFactory.CreateRandomBackgroundMusicList(m_Title);
+            foreach (String file in m_CurrentChoices)
+            {
+                IFileElement fileElement = Ares.Data.DataModule.ElementFactory.CreateFileElement(file, Data.SoundFileType.Music);
+                newMusicList.AddElement(fileElement);
+            }
+            var newModeElement = Ares.Data.DataModule.ElementFactory.CreateModeElement(m_Title, newMusicList);
+
+            IRandomBackgroundMusicList oldMusicList;
+            lock (m_SyncObject)
+            {
+                oldMusicList = m_MusicList;
+                m_MusicList = newMusicList;
+                m_ModeElement = newModeElement;
+            }
+            if (oldMusicList != null)
+            {
+                foreach (IChoiceElement element in oldMusicList.GetElements())
+                {
+                    Ares.Data.DataModule.ElementRepository.DeleteElement(element.Id);
+                }
+                Ares.Data.DataModule.ElementRepository.DeleteElement(oldMusicList.Id);
+            }
+        }
+
+
+        public void ModeChanged(IMode newMode)
+        {
+        }
+
+        public void ModeElementStarted(IModeElement element)
+        {
+        }
+
+        public void ModeElementFinished(IModeElement element)
+        {
+        }
+
+        public void SoundStarted(int elementId)
+        {
+        }
+
+        public void SoundFinished(int elementId)
+        {
+        }
+
+        public void MusicStarted(int elementId)
+        {
+            m_CurrentFileId = elementId;
+            IElement element = Ares.Data.DataModule.ElementRepository.GetElement(elementId);
+            if (element != null && element is IFileElement)
+            {
+                m_CurrentFile = (element as IFileElement).FilePath;
+            }
+        }
+
+        public void MusicFinished(int elementId)
+        {
+            if (m_CurrentFileId == elementId)
+            {
+                m_CurrentFileId = -1;
+                m_CurrentFile = String.Empty;
+            }
+        }
+
+        public void VolumeChanged(VolumeTarget target, int newValue)
+        {
+        }
+
+        public void MusicPlaylistStarted(int elementId)
+        {
+        }
+
+        public void MusicPlaylistFinished()
+        {
+        }
+
+        public void MusicPlaylistChanged()
+        {
+        }
+
+        public void MusicRepeatChanged(bool repeat)
+        {
+        }
+
+        public void ErrorOccurred(int elementId, string errorMessage)
+        {
+        }
+
+        public void MusicTagAdded(int tagId)
+        {
+        }
+
+        public void MusicTagRemoved(int tagId)
+        {
+        }
+
+        public void AllMusicTagsRemoved()
+        {
+        }
+
+        public void MusicTagCategoriesOperatorChanged(bool isAndOperator)
+        {
+        }
     }
 
     class SingleMusicPlayer : MusicPlayer, IMusicPlayer

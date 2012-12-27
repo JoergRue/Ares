@@ -191,6 +191,22 @@ namespace Ares.Playing
         public void ErrorOccurred(int elementId, string errorMessage)
         {
         }
+
+        public void MusicTagAdded(int tagId)
+        {
+        }
+
+        public void MusicTagRemoved(int tagId)
+        {
+        }
+
+        public void AllMusicTagsRemoved()
+        {
+        }
+
+        public void MusicTagCategoriesOperatorChanged(bool isAndOperator)
+        {
+        }
     }
 
     class MacroPlayer : ElementPlayerBase, IMacroCommandVisitor
