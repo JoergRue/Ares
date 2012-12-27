@@ -38,10 +38,10 @@ namespace Ares.Editor.ElementEditorControls
             AttachGridEvents();
         }
 
-        public void SetContainer(IElementContainer<IChoiceElement> container)
+        public void SetContainer(IElementContainer<IChoiceElement> container, Ares.Data.IProject project)
         {
             m_Container = container;
-            ContainerSet();
+            ContainerSet(project);
         }
 
         private IElementContainer<IChoiceElement> m_Container;
@@ -53,7 +53,7 @@ namespace Ares.Editor.ElementEditorControls
             {
                 int chance = Convert.ToInt32(elementsGrid.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
                 Actions.Actions.Instance.AddNew(new Actions.ChoiceElementChangeAction(
-                    m_Container.GetElements()[e.RowIndex], chance));
+                    m_Container.GetElements()[e.RowIndex], chance), m_Project);
             }
             listen = true;
         }

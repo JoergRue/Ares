@@ -46,13 +46,13 @@ namespace Ares.Editor.ElementEditors
 
         private bool m_HasActiveElement = false;
 
-        public void SetContainer(Ares.Data.IElementContainer<Ares.Data.IParallelElement> container)
+        public void SetContainer(Ares.Data.IElementContainer<Ares.Data.IParallelElement> container, Ares.Data.IProject project)
         {
             ElementId = container.Id;
             m_Element = container;
-            parallelContainerControl.SetContainer(container);
-            volumeControl.SetElement(container);
-            ElementSet();
+            parallelContainerControl.SetContainer(container, project);
+            volumeControl.SetElement(container, project);
+            ElementSet(project);
             UpdateActiveElement();
             Actions.ElementChanges.Instance.AddListener(-1, Update);
         }
@@ -88,8 +88,8 @@ namespace Ares.Editor.ElementEditors
             if (element != null)
             {
                 m_HasActiveElement = true;
-                delayableControl.SetElement(element);
-                repeatableControl.SetElement(element);
+                delayableControl.SetElement(element, Project);
+                repeatableControl.SetElement(element, Project);
                 bool enabled = !Actions.Playing.Instance.IsElementOrSubElementPlaying(m_Element);
                 delayableControl.Enabled = enabled;
                 repeatableControl.Enabled = enabled;
@@ -97,8 +97,8 @@ namespace Ares.Editor.ElementEditors
             else
             {
                 m_HasActiveElement = false;
-                delayableControl.SetElement(null);
-                repeatableControl.SetElement(null);
+                delayableControl.SetElement(null, Project);
+                repeatableControl.SetElement(null, Project);
                 delayableControl.Enabled = false;
                 repeatableControl.Enabled = false;
             }

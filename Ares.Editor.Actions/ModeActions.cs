@@ -57,13 +57,13 @@ namespace Ares.Editor.Actions
             m_NewName = newName;
         }
 
-        public override void Do()
+        public override void Do(Ares.Data.IProject project)
         {
             m_Node.Text = m_NewName;
             (m_Node.Tag as IProject).Title = m_NewName;
         }
 
-        public override void Undo()
+        public override void Undo(Ares.Data.IProject project)
         {
             m_Node.Text = m_OldName;
             (m_Node.Tag as IProject).Title = m_OldName;
@@ -83,14 +83,14 @@ namespace Ares.Editor.Actions
             m_NewName = newName;
         }
 
-        public override void Do()
+        public override void Do(Ares.Data.IProject project)
         {
             IMode mode = m_Node.Tag as IMode;
             mode.Title = m_NewName;
             m_Node.Text = mode.GetNodeTitle();
         }
 
-        public override void Undo()
+        public override void Undo(Ares.Data.IProject project)
         {
             IMode mode = m_Node.Tag as IMode;
             mode.Title = m_OldName;
@@ -104,7 +104,7 @@ namespace Ares.Editor.Actions
 
     public class AddModeAction : Action
     {
-        public AddModeAction(TreeNode projectNode, out TreeNode modeNode)
+        public AddModeAction(Ares.Data.IProject project, TreeNode projectNode, out TreeNode modeNode)
         {
             String name = StringResources.NewMode;
             m_ProjectNode = projectNode;
@@ -114,7 +114,7 @@ namespace Ares.Editor.Actions
             m_ProjectNode.Nodes.Add(m_ModeNode);
             m_Index = m_ProjectNode.Nodes.Count - 1;
             modeNode = m_ModeNode;
-            Undo();
+            Undo(project);
         }
 
         public AddModeAction(TreeNode projectNode, IMode importedMode, out TreeNode modeNode)
@@ -127,14 +127,14 @@ namespace Ares.Editor.Actions
             modeNode = m_ModeNode;
         }
 
-        public override void Do()
+        public override void Do(Ares.Data.IProject project)
         {
             (m_ProjectNode.Tag as IProject).InsertMode(m_Index, m_ModeNode.Tag as IMode);
             m_ProjectNode.Nodes.Insert(m_Index, m_ModeNode);
             m_ProjectNode.Expand();
         }
 
-        public override void Undo()
+        public override void Undo(Ares.Data.IProject project)
         {
             (m_ProjectNode.Tag as IProject).RemoveMode(m_ModeNode.Tag as IMode);
             m_ProjectNode.Nodes.Remove(m_ModeNode);
@@ -155,24 +155,24 @@ namespace Ares.Editor.Actions
             m_Index = m_ProjectNode.Nodes.IndexOf(modeNode);
         }
 
-        public override void Do()
+        public override void Do(Ares.Data.IProject project)
         {
             (m_ProjectNode.Tag as IProject).RemoveMode(m_Mode);
             m_ProjectNode.Nodes.Remove(m_ModeNode);
             foreach (IModeElement modeElement in m_Mode.GetElements())
             {
                 Ares.Data.DataModule.ElementRepository.DeleteElement(modeElement.Id);
-                Ares.ModelInfo.ModelChecks.Instance.CheckAll();
+                Ares.ModelInfo.ModelChecks.Instance.CheckAll(project);
                 ElementRemoval.NotifyRemoval(modeElement);
             }
         }
 
-        public override void Undo()
+        public override void Undo(Ares.Data.IProject project)
         {
             foreach (IModeElement modeElement in m_Mode.GetElements())
             {
                 Ares.Data.DataModule.ElementRepository.AddElement(modeElement);
-                Ares.ModelInfo.ModelChecks.Instance.CheckAll();
+                Ares.ModelInfo.ModelChecks.Instance.CheckAll(project);
                 ElementRemoval.NotifyUndo(modeElement);
             }
             (m_ProjectNode.Tag as IProject).InsertMode(m_Index, m_Mode);
@@ -193,20 +193,20 @@ namespace Ares.Editor.Actions
             m_NewKey = newKey;
         }
 
-        public override void Do()
+        public override void Do(Ares.Data.IProject project)
         {
             IMode mode = m_Node.Tag as IMode;
             mode.KeyCode = m_NewKey;
             m_Node.Text = mode.GetNodeTitle();
-            Ares.ModelInfo.ModelChecks.Instance.Check(ModelInfo.CheckType.Key);
+            Ares.ModelInfo.ModelChecks.Instance.Check(ModelInfo.CheckType.Key, project);
         }
 
-        public override void Undo()
+        public override void Undo(Ares.Data.IProject project)
         {
             IMode mode = m_Node.Tag as IMode;
             mode.KeyCode = m_OldKey;
             m_Node.Text = mode.GetNodeTitle();
-            Ares.ModelInfo.ModelChecks.Instance.Check(ModelInfo.CheckType.Key);
+            Ares.ModelInfo.ModelChecks.Instance.Check(ModelInfo.CheckType.Key, project);
         }
 
         private TreeNode m_Node;

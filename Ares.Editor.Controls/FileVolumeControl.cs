@@ -41,9 +41,12 @@ namespace Ares.Editor.Controls
             fadeOutUnitBox.SelectedIndex = 0;
         }
 
-        public void SetContainer(Ares.Data.IGeneralElementContainer container)
+        private Ares.Data.IProject m_Project;
+
+        public void SetContainer(Ares.Data.IGeneralElementContainer container, Ares.Data.IProject project)
         {
             m_Container = container;
+            m_Project = project;
         }
 
         public void SetEffects(Ares.Data.IFileElement element)
@@ -100,7 +103,7 @@ namespace Ares.Editor.Controls
                         (int)maxRandomUpDown.Value,
                         TimeConversion.GetTimeInMillis(fadeInUpDown, fadeInUnitBox), 
                         TimeConversion.GetTimeInMillis(fadeOutUpDown, fadeOutUnitBox));
-                    eeca.Do();
+                    eeca.Do(m_Project);
                     listen = true;
                     return;
                 }
@@ -113,7 +116,8 @@ namespace Ares.Editor.Controls
                 (int)minRandomUpDown.Value,
                 (int)maxRandomUpDown.Value,
                 TimeConversion.GetTimeInMillis(fadeInUpDown, fadeInUnitBox),
-                TimeConversion.GetTimeInMillis(fadeOutUpDown, fadeOutUnitBox)));
+                TimeConversion.GetTimeInMillis(fadeOutUpDown, fadeOutUnitBox))
+              , m_Project);
             listen = true;
         }
 
@@ -136,7 +140,7 @@ namespace Ares.Editor.Controls
                 randomButton.Checked,
                 volumeBar.Value,
                 (int)minRandomUpDown.Value,
-                (int)maxRandomUpDown.Value));
+                (int)maxRandomUpDown.Value), m_Project);
             listen = true;
         }
 
@@ -148,7 +152,7 @@ namespace Ares.Editor.Controls
                 return;
             listen = false;
             Actions.Actions.Instance.AddNew(new Actions.AllFileElementsFadingChangeAction(m_Container,
-                TimeConversion.GetTimeInMillis(fadeInUpDown, fadeInUnitBox), true));
+                TimeConversion.GetTimeInMillis(fadeInUpDown, fadeInUnitBox), true), m_Project);
             listen = true;
         }
 
@@ -158,7 +162,7 @@ namespace Ares.Editor.Controls
                 return;
             listen = false;
             Actions.Actions.Instance.AddNew(new Actions.AllFileElementsFadingChangeAction(m_Container,
-                TimeConversion.GetTimeInMillis(fadeOutUpDown, fadeOutUnitBox), false));
+                TimeConversion.GetTimeInMillis(fadeOutUpDown, fadeOutUnitBox), false), m_Project);
             listen = true;
         }
 

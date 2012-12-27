@@ -53,15 +53,15 @@ namespace Ares.Editor.ElementEditors
             }
         }
 
-        public void SetPlaylist(ISequentialBackgroundMusicList playList)
+        public void SetPlaylist(ISequentialBackgroundMusicList playList, IProject project)
         {
             ElementId = playList.Id;
             m_Element = playList;
-            repeatableControl.SetElement(playList);
-            sequentialContainerControl.SetContainer(playList);
-            volumeControl.SetElement(playList);
+            repeatableControl.SetElement(playList, project);
+            sequentialContainerControl.SetContainer(playList, project);
+            volumeControl.SetElement(playList, project);
             label1.Text = String.Format(label1.Text, String.Format(StringResources.FileExplorerTitle, StringResources.Music));
-            ElementSet();
+            ElementSet(project);
         }
 
         protected override void DisableControls(bool allowStop)

@@ -47,6 +47,7 @@ namespace Ares.Editor
         }
 
         private IFileExplorerParent m_Parent;
+        private Ares.Data.IProject m_Project;
 
         public FileExplorer(FileType fileType, IFileExplorerParent parent)
         {
@@ -71,6 +72,11 @@ namespace Ares.Editor
                 splitContainer1.SplitterDistance = Height - 100;
             }
             Ares.Editor.Actions.ElementChanges.Instance.AddListener(-1, ElementChanged);
+        }
+
+        public void SetProject(Ares.Data.IProject project)
+        {
+            m_Project = project;
         }
 
         private void  DirChanged(object sender, EventArgs e)
@@ -290,7 +296,7 @@ namespace Ares.Editor
                     }
 
                     Ares.ModelInfo.FileSearch fileSearch = new ModelInfo.FileSearch();
-                    List<KeyValuePair<Ares.Data.IMode, List<Ares.Data.IModeElement>>> modeElements = fileSearch.GetRootElements(Ares.ModelInfo.ModelChecks.Instance.Project, item.RelativePath, soundFileType);
+                    List<KeyValuePair<Ares.Data.IMode, List<Ares.Data.IModeElement>>> modeElements = fileSearch.GetRootElements(m_Project, item.RelativePath, soundFileType);
                     if (modeElements.Count > 0)
                     {
                         StringBuilder builder = new StringBuilder();
@@ -644,7 +650,7 @@ namespace Ares.Editor
             }
 
             m_TreeLocked = true;
-            Ares.ModelInfo.FileOperations.CopyOrMove(this, uniqueElements, move, targetPath, () =>
+            Ares.ModelInfo.FileOperations.CopyOrMove(this, m_Project, uniqueElements, move, targetPath, () =>
                 {
                     m_TreeLocked = false;
                     ReFillTree();
@@ -826,7 +832,7 @@ namespace Ares.Editor
         private void tagsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             List<String> files = GetSelectedFiles();
-            int languageId = Ares.ModelInfo.ModelChecks.Instance.Project.TagLanguageId;
+            int languageId = m_Project != null ? m_Project.TagLanguageId : -1;
             if (languageId == -1)
             {
                 try
@@ -845,7 +851,10 @@ namespace Ares.Editor
             if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 ChangeTagsForFiles(files, dialog.AddedTags, dialog.RemovedTags, languageId);
-                Ares.ModelInfo.ModelChecks.Instance.Project.TagLanguageId = dialog.LanguageId;
+                if (m_Project != null)
+                {
+                    m_Project.TagLanguageId = dialog.LanguageId;
+                }
             }
         }
 
@@ -853,7 +862,7 @@ namespace Ares.Editor
         {
             try
             {
-                Actions.Actions.Instance.AddNew(new Actions.ChangeFileTagsAction(files, addedTags, removedTags, languageId));
+                Actions.Actions.Instance.AddNew(new Actions.ChangeFileTagsAction(files, addedTags, removedTags, languageId), m_Project);
             }
             catch (Ares.Tags.TagsDbException ex)
             {

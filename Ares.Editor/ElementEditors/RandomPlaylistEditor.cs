@@ -54,28 +54,28 @@ namespace Ares.Editor.ElementEditors
             }
         }
 
-        public void SetPlaylist(IRandomBackgroundMusicList playList)
+        public void SetPlaylist(IRandomBackgroundMusicList playList, IProject project)
         {
             ElementId = playList.Id;
             m_Element = playList;
-            delayableControl.SetElement(playList);
-            repeatableControl.SetElement(playList);
-            choiceContainerControl.SetContainer(playList);
-            volumeControl.SetElement(playList);
+            delayableControl.SetElement(playList, project);
+            repeatableControl.SetElement(playList, project);
+            choiceContainerControl.SetContainer(playList, project);
+            volumeControl.SetElement(playList, project);
             label1.Text = String.Format(label1.Text, String.Format(StringResources.FileExplorerTitle, StringResources.Music));
-            ElementSet();
+            ElementSet(project);
         }
 
-        public void SetBGSoundChoice(IBackgroundSoundChoice bgSoundChoice)
+        public void SetBGSoundChoice(IBackgroundSoundChoice bgSoundChoice, IProject project)
         {
             ElementId = bgSoundChoice.Id;
             m_Element = bgSoundChoice;
-            delayableControl.SetElement(bgSoundChoice);
-            repeatableControl.SetElement(bgSoundChoice);
-            choiceContainerControl.SetContainer(bgSoundChoice);
-            volumeControl.SetElement(bgSoundChoice);
+            delayableControl.SetElement(bgSoundChoice, project);
+            repeatableControl.SetElement(bgSoundChoice, project);
+            choiceContainerControl.SetContainer(bgSoundChoice, project);
+            volumeControl.SetElement(bgSoundChoice, project);
             label1.Text = String.Format(label1.Text, String.Format(StringResources.FileExplorerTitle, StringResources.Sounds));
-            ElementSet();
+            ElementSet(project);
         }
 
         protected override void DisableControls(bool allowStop)

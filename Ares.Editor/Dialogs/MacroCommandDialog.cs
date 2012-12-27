@@ -53,17 +53,17 @@ namespace Ares.Editor.Dialogs
                     case MacroCommandType.StartElement:
                         commandTypeCombo.SelectedIndex = 0;
                         m_CurrentCommandElement = ((IStartCommand)macroCommand).StartedElement;
-                        commandElementBox.Text = GetElementDisplayName(m_CurrentCommandElement);
+                        commandElementBox.Text = GetElementDisplayName(m_CurrentCommandElement, m_Project);
                         break;
                     case MacroCommandType.StopElement:
                         commandTypeCombo.SelectedIndex = 1;
                         m_CurrentCommandElement = ((IStopCommand)macroCommand).StoppedElement;
-                        commandElementBox.Text = GetElementDisplayName(m_CurrentCommandElement);
+                        commandElementBox.Text = GetElementDisplayName(m_CurrentCommandElement, m_Project);
                         break;
                     case MacroCommandType.WaitCondition:
                         commandTypeCombo.SelectedIndex = ((IWaitConditionCommand)macroCommand).AwaitedCondition.ConditionType == MacroConditionType.ElementRunning ? 2 : 3;
                         m_CurrentCommandElement = ((IWaitConditionCommand)macroCommand).AwaitedCondition.Conditional;
-                        commandElementBox.Text = GetElementDisplayName(m_CurrentCommandElement);
+                        commandElementBox.Text = GetElementDisplayName(m_CurrentCommandElement, m_Project);
                         break;
                     case MacroCommandType.WaitTime:
                         commandTypeCombo.SelectedIndex = 4;
@@ -74,7 +74,7 @@ namespace Ares.Editor.Dialogs
                     default:
                         commandTypeCombo.SelectedIndex = 0;
                         m_CurrentCommandElement = null;
-                        commandElementBox.Text = GetElementDisplayName(m_CurrentCommandElement);
+                        commandElementBox.Text = GetElementDisplayName(m_CurrentCommandElement, m_Project);
                         break;
                 }
                 m_CurrentConditionElement = macroCommand.Condition.Conditional;
@@ -82,11 +82,11 @@ namespace Ares.Editor.Dialogs
                 {
                     case MacroConditionType.ElementRunning:
                         conditionCombo.SelectedIndex = 1;
-                        conditionElementBox.Text = GetElementDisplayName(m_CurrentConditionElement);
+                        conditionElementBox.Text = GetElementDisplayName(m_CurrentConditionElement, m_Project);
                         break;
                     case MacroConditionType.ElementNotRunning:
                         conditionCombo.SelectedIndex = 2;
-                        conditionElementBox.Text = GetElementDisplayName(m_CurrentConditionElement);
+                        conditionElementBox.Text = GetElementDisplayName(m_CurrentConditionElement, m_Project);
                         break;
                     case MacroConditionType.None:
                         conditionCombo.SelectedIndex = 0;
@@ -150,19 +150,19 @@ namespace Ares.Editor.Dialogs
         }
 
 
-        private static String GetElementDisplayName(IModeElement modeElement)
+        private static String GetElementDisplayName(IModeElement modeElement, IProject project)
         {
             if (modeElement == null)
             {
                 return StringResources.InvalidModeElement;
             }
-            IMode mode = FindMode(modeElement);
+            IMode mode = FindMode(modeElement, project);
             return String.Format(StringResources.ModeElementDisplay, mode != null ? mode.Title : StringResources.InvalidModeElement, modeElement.Title);
         }
 
-        private static IMode FindMode(IModeElement modeElement)
+        private static IMode FindMode(IModeElement modeElement, IProject project)
         {
-            foreach (IMode mode in ModelInfo.ModelChecks.Instance.Project.GetModes())
+            foreach (IMode mode in project.GetModes())
             {
                 foreach (IModeElement element in mode.GetElements())
                 {
@@ -241,7 +241,7 @@ namespace Ares.Editor.Dialogs
             System.Windows.Forms.ContextMenu menu = CreateElementSelectionMenu((IModeElement element) => 
                 {
                     m_CurrentCommandElement = element;
-                    commandElementBox.Text = GetElementDisplayName(element);
+                    commandElementBox.Text = GetElementDisplayName(element, m_Project);
                     if (element != null && !String.IsNullOrEmpty(errorProvider.GetError(commandElementBox)))
                     {
                         errorProvider.SetError(commandElementBox, String.Empty);
@@ -293,7 +293,7 @@ namespace Ares.Editor.Dialogs
             System.Windows.Forms.ContextMenu menu = CreateElementSelectionMenu((IModeElement element) =>
             {
                 m_CurrentConditionElement = element;
-                conditionElementBox.Text = GetElementDisplayName(element);
+                conditionElementBox.Text = GetElementDisplayName(element, m_Project);
                 if (element != null && !String.IsNullOrEmpty(errorProvider.GetError(conditionElementBox)))
                 {
                     errorProvider.SetError(conditionElementBox, String.Empty);

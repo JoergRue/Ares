@@ -34,13 +34,13 @@ namespace Ares.Editor.Actions
             m_Element = element;
         }
 
-        public override void Do()
+        public override void Do(Ares.Data.IProject project)
         {
             m_Parent.Nodes.Add(m_Node);
             (m_Parent.Tag as IMode).AddElement(m_Element);
         }
 
-        public override void Undo()
+        public override void Undo(Ares.Data.IProject project)
         {
             (m_Parent.Tag as IMode).RemoveElement(m_Element);
             m_Parent.Nodes.Remove(m_Node);
@@ -113,23 +113,23 @@ namespace Ares.Editor.Actions
             m_Index = node.Parent.Nodes.IndexOf(node);
         }
 
-        public override void Do()
+        public override void Do(Ares.Data.IProject project)
         {
             m_Parent.Nodes.Remove(m_Node);
             IModeElement element = (m_Node.Tag as IModeElement);
             (m_Parent.Tag as IMode).RemoveElement(element);
             Data.DataModule.ElementRepository.DeleteElement(element.Id);
             ElementRemoval.NotifyRemoval(element);
-            Ares.ModelInfo.ModelChecks.Instance.CheckAll();
+            Ares.ModelInfo.ModelChecks.Instance.CheckAll(project);
         }
 
-        public override void Undo()
+        public override void Undo(Ares.Data.IProject project)
         {
             m_Parent.Nodes.Insert(m_Index, m_Node);
             Data.DataModule.ElementRepository.AddElement(m_Node.Tag as IModeElement);
             (m_Parent.Tag as IMode).InsertElement(m_Index, (m_Node.Tag as IModeElement));
             ElementRemoval.NotifyUndo(m_Node.Tag as IElement);
-            Ares.ModelInfo.ModelChecks.Instance.CheckAll();
+            Ares.ModelInfo.ModelChecks.Instance.CheckAll(project);
         }
 
         private TreeNode m_Parent;
@@ -146,25 +146,25 @@ namespace Ares.Editor.Actions
             m_Index = node.Parent.Nodes.IndexOf(node);
         }
 
-        public override void Do()
+        public override void Do(Ares.Data.IProject project)
         {
             m_Parent.Nodes.Remove(m_Node);
             IBackgroundSoundChoice soundChoice = (m_Node.Tag as IBackgroundSoundChoice);
             IBackgroundSounds bgSounds = m_Parent.Tag as IBackgroundSounds;
             bgSounds.RemoveElement(soundChoice.Id);
             Data.DataModule.ElementRepository.DeleteElement(soundChoice.Id);
-            Ares.ModelInfo.ModelChecks.Instance.CheckAll();
+            Ares.ModelInfo.ModelChecks.Instance.CheckAll(project);
             ElementRemoval.NotifyRemoval(soundChoice);
             ElementChanges.Instance.ElementChanged(bgSounds.Id);
         }
 
-        public override void Undo()
+        public override void Undo(Ares.Data.IProject project)
         {
             m_Parent.Nodes.Insert(m_Index, m_Node);
             IBackgroundSounds bgSounds = m_Parent.Tag as IBackgroundSounds;
             bgSounds.InsertElement(m_Index, (m_Node.Tag as IBackgroundSoundChoice));
             Data.DataModule.ElementRepository.AddElement((m_Node.Tag as IBackgroundSoundChoice));
-            Ares.ModelInfo.ModelChecks.Instance.CheckAll();
+            Ares.ModelInfo.ModelChecks.Instance.CheckAll(project);
             ElementRemoval.NotifyUndo(m_Node.Tag as IBackgroundSoundChoice);
             ElementChanges.Instance.ElementChanged(bgSounds.Id);
         }
@@ -183,7 +183,7 @@ namespace Ares.Editor.Actions
             m_NewName = newName;
         }
 
-        public override void Do()
+        public override void Do(Ares.Data.IProject project)
         {
             IModeElement modeElement = m_Node.Tag as IModeElement;
             modeElement.Title = m_NewName;
@@ -193,7 +193,7 @@ namespace Ares.Editor.Actions
             ElementChanges.Instance.ElementRenamed(modeElement.StartElement.Id);
         }
 
-        public override void Undo()
+        public override void Undo(Ares.Data.IProject project)
         {
             IModeElement modeElement = m_Node.Tag as IModeElement;
             modeElement.Title = m_OldName;
@@ -218,14 +218,14 @@ namespace Ares.Editor.Actions
             m_NewName = newName;
         }
 
-        public override void Do()
+        public override void Do(Ares.Data.IProject project)
         {
             IElement element = m_Node.Tag as IElement;
             element.Title = m_NewName;
             ElementChanges.Instance.ElementRenamed(element.Id);
         }
 
-        public override void Undo()
+        public override void Undo(Ares.Data.IProject project)
         {
             IElement element = m_Node.Tag as IElement;
             element.Title = m_OldName;
@@ -254,14 +254,14 @@ namespace Ares.Editor.Actions
             node = m_Node;
         }
 
-        public override void Do()
+        public override void Do(Ares.Data.IProject project)
         {
             m_Parent.Nodes.Add(m_Node);
             m_Container.InsertGeneralElement(m_ElementIndex, m_Element);
             ElementChanges.Instance.ElementChanged(m_Container.Id);
         }
 
-        public override void Undo()
+        public override void Undo(Ares.Data.IProject project)
         {
             m_Parent.Nodes.Remove(m_Node);
             m_Container.RemoveElement(m_Element.Id);
@@ -302,14 +302,14 @@ namespace Ares.Editor.Actions
             m_BGSounds = bgSounds;
         }
 
-        public override void Do()
+        public override void Do(Ares.Data.IProject project)
         {
             m_Parent.Nodes.Add(m_Node);
             m_BGSounds.InsertElement(m_Index, m_Element);
             ElementChanges.Instance.ElementChanged(m_BGSounds.Id);
         }
 
-        public override void Undo()
+        public override void Undo(Ares.Data.IProject project)
         {
             m_Parent.Nodes.Remove(m_Node);
             m_BGSounds.RemoveElement(m_Element.Id);
@@ -335,24 +335,24 @@ namespace Ares.Editor.Actions
             m_Element = m_Container.GetGeneralElements()[m_Index];
         }
 
-        public override void Do()
+        public override void Do(Ares.Data.IProject project)
         {
             m_Parent.Nodes.Remove(m_Node);
             m_Container.RemoveElement((m_Node.Tag as IElement).Id);
             Data.DataModule.ElementRepository.DeleteElement((m_Node.Tag as IElement).Id);
             ElementRemoval.NotifyRemoval(m_Node.Tag as IElement);
             ElementChanges.Instance.ElementChanged(m_Container.Id);
-            Ares.ModelInfo.ModelChecks.Instance.CheckAll();
+            Ares.ModelInfo.ModelChecks.Instance.CheckAll(project);
         }
 
-        public override void Undo()
+        public override void Undo(Ares.Data.IProject project)
         {
             m_Parent.Nodes.Insert(m_Index, m_Node);
             m_Container.InsertGeneralElement(m_Index, m_Element);
             Data.DataModule.ElementRepository.AddElement(m_Element);
             ElementRemoval.NotifyUndo(m_Element);
             ElementChanges.Instance.ElementChanged(m_Container.Id);
-            Ares.ModelInfo.ModelChecks.Instance.CheckAll();
+            Ares.ModelInfo.ModelChecks.Instance.CheckAll(project);
         }
 
         private TreeNode m_Parent;
@@ -386,7 +386,7 @@ namespace Ares.Editor.Actions
             }
         }
 
-        public override void Do()
+        public override void Do(Ares.Data.IProject project)
         {
             if (m_offset > 0)
                 MoveDown(m_offset);
@@ -395,7 +395,7 @@ namespace Ares.Editor.Actions
             ElementChanges.Instance.ElementChanged(m_Container.Id);
         }
 
-        public override void Undo()
+        public override void Undo(Ares.Data.IProject project)
         {
             if (m_offset > 0)
                 MoveUp(m_offset);

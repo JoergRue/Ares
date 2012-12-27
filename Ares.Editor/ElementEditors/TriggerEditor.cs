@@ -31,9 +31,10 @@ namespace Ares.Editor.ElementEditors
 {
     partial class TriggerEditor : EditorBase
     {
-        public TriggerEditor()
+        public TriggerEditor(Ares.Data.IProject project)
         {
             InitializeComponent();
+            m_Project = project;
             m_Tooltip = new ToolTip();
             m_Tooltip.SetToolTip(allCrossFadeButton, StringResources.SetFadingForAll);
         }
@@ -41,6 +42,7 @@ namespace Ares.Editor.ElementEditors
         private ToolTip m_Tooltip;
 
         private Ares.Data.IModeElement m_Element;
+        private Ares.Data.IProject m_Project;
 
         public void SetElement(Ares.Data.IModeElement element)
         {
@@ -133,7 +135,7 @@ namespace Ares.Editor.ElementEditors
             }
             else
             {
-                errorProvider.SetError(selectKeyButton, ModelChecks.Instance.GetErrorForKey(m_Element, keyCode));
+                errorProvider.SetError(selectKeyButton, ModelChecks.Instance.GetErrorForKey(m_Element, m_Project, keyCode));
             }
         }
 
@@ -189,7 +191,7 @@ namespace Ares.Editor.ElementEditors
                 trigger.CrossFadeMusic = crossFadeButton.Checked;
                 trigger.FadeMusic = fadeButton.Checked;
                 trigger.FadeMusicTime = (Int32)crossFadingUpDown.Value;
-                Ares.Editor.Actions.Actions.Instance.AddNew(new Ares.Editor.Actions.SetModeElementTriggerAction(m_Element, trigger));
+                Ares.Editor.Actions.Actions.Instance.AddNew(new Ares.Editor.Actions.SetModeElementTriggerAction(m_Element, trigger), m_Project);
             }
             else
             {
@@ -199,7 +201,7 @@ namespace Ares.Editor.ElementEditors
                 trigger.CrossFadeMusic = crossFadeButton.Checked;
                 trigger.FadeMusic = fadeButton.Checked;
                 trigger.FadeMusicTime = (Int32)crossFadingUpDown.Value;
-                Ares.Editor.Actions.Actions.Instance.AddNew(new Ares.Editor.Actions.SetModeElementTriggerAction(m_Element, trigger));
+                Ares.Editor.Actions.Actions.Instance.AddNew(new Ares.Editor.Actions.SetModeElementTriggerAction(m_Element, trigger), m_Project);
             }
         }
 
@@ -262,7 +264,7 @@ namespace Ares.Editor.ElementEditors
         private void allCrossFadeButton_Click(object sender, EventArgs e)
         {
             Ares.Editor.Actions.Actions.Instance.AddNew(new Ares.Editor.Actions.SetAllTriggerFadingAction(
-                fadeButton.Checked, crossFadeButton.Checked, (int)crossFadingUpDown.Value));
+                fadeButton.Checked, crossFadeButton.Checked, (int)crossFadingUpDown.Value, m_Project), m_Project);
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
@@ -270,7 +272,7 @@ namespace Ares.Editor.ElementEditors
             if (!listen)
                 return;
             Ares.Editor.Actions.Actions.Instance.AddNew(new Ares.Editor.Actions.SetModeElementVisibleAction(
-                m_Element, !hideInPlayerBox.Checked));
+                m_Element, !hideInPlayerBox.Checked), m_Project);
         }
 
 

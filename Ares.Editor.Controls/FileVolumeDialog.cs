@@ -16,10 +16,11 @@ namespace Ares.Editor.Controls
     {
         public ElementVolumeEffectsChangeAction Action { get; set; }
 
-        public FileVolumeDialog(IList<IFileElement> elements)
+        public FileVolumeDialog(IList<IFileElement> elements, IProject project)
         {
             InitializeComponent();
             Element = elements[0];
+            m_Project = project;
             Action = new ElementVolumeEffectsChangeAction(elements, Element.Effects.HasRandomVolume,
                 Element.Effects.Volume, Element.Effects.MinRandomVolume, Element.Effects.MaxRandomVolume,
                 Element.Effects.FadeInTime, Element.Effects.FadeOutTime);
@@ -35,6 +36,7 @@ namespace Ares.Editor.Controls
         }
 
         private IFileElement Element { get; set; }
+        private IProject m_Project;
 
         private void fixedVolumeButton_CheckedChanged(object sender, EventArgs e)
         {
@@ -85,11 +87,11 @@ namespace Ares.Editor.Controls
             m_InPlay = true;
             UpdateAction();
             UpdateControls();
-            Action.Do();
+            Action.Do(m_Project);
             Actions.Playing.Instance.PlayElement(Element, this, () =>
             {
                 m_InPlay = false;
-                Action.Undo();
+                Action.Undo(m_Project);
                 UpdateControls();
             }
             );

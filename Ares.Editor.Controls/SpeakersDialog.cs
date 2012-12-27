@@ -31,14 +31,16 @@ namespace Ares.Editor.Controls
     public partial class SpeakersDialog : Form
     {
         private Data.IFileElement Element { get; set; }
+        private Data.IProject m_Project;
         private bool m_InPlay = false;
 
         public Actions.SpeakerChangeAction Action { get; set; }
-        
-        public SpeakersDialog(IList<Data.IFileElement> elements)
+
+        public SpeakersDialog(IList<Data.IFileElement> elements, Ares.Data.IProject project)
         {
             InitializeComponent();
             Element = elements[0];
+            m_Project = project;
             Action = new Actions.SpeakerChangeAction(elements, true, Element.Effects.SpeakerAssignment.Random, Element.Effects.SpeakerAssignment.Assignment);
             if (Element.Effects.SpeakerAssignment.Random)
             {
@@ -267,11 +269,11 @@ namespace Ares.Editor.Controls
             m_InPlay = true;
             UpdateAction();
             UpdateControls();
-            Action.Do();
+            Action.Do(m_Project);
             Actions.Playing.Instance.PlayElement(Element, this, () =>
             {
                 m_InPlay = false;
-                Action.Undo();
+                Action.Undo(m_Project);
                 UpdateControls();
             }
             );

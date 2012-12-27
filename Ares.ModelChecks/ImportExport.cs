@@ -435,12 +435,13 @@ namespace Ares.ModelInfo
         private ProgressMonitor m_Monitor;
         private System.ComponentModel.BackgroundWorker m_Worker;
 
-        public static void CopyOrMove(System.Windows.Forms.Form parent, System.Collections.Generic.Dictionary<String, object> uniqueElements, bool move, String targetPath, Action completedAction)
+        public static void CopyOrMove(System.Windows.Forms.Form parent, Ares.Data.IProject project, System.Collections.Generic.Dictionary<String, object> uniqueElements, bool move, String targetPath, Action completedAction)
         {
             FileOperations privateInstance = new FileOperations(completedAction);
             FileOpData data = new FileOpData();
             data.TargetPath = targetPath;
             data.UniqueElements = uniqueElements;
+            data.Project = project;
             data.Move = move;
             privateInstance.DoCopyOrMove(parent, data);
         }
@@ -450,6 +451,7 @@ namespace Ares.ModelInfo
             public System.Collections.Generic.Dictionary<String, object> UniqueElements { get; set; }
             public bool Move { get; set; }
             public String TargetPath { get; set; }
+            public Ares.Data.IProject Project { get; set; }
         }
 
         private FileOperations(Action completedAction)
@@ -555,17 +557,17 @@ namespace Ares.ModelInfo
 
             if (data.Move)
             {
-                AdaptElementPaths(filesMoved);
+                AdaptElementPaths(filesMoved, data.Project);
             }
         }
 
-        private static void AdaptElementPaths(Dictionary<String, String> filesMoved)
+        private static void AdaptElementPaths(Dictionary<String, String> filesMoved, IProject project)
         {
-            if (ModelChecks.Instance.Project == null)
+            if (project == null)
                 return;
 
             FileLists lists = new FileLists();
-            IList<IFileElement> elements = lists.GetAllFiles(ModelChecks.Instance.Project);
+            IList<IFileElement> elements = lists.GetAllFiles(project);
             foreach (IFileElement element in elements)
             {
                 String basePath = element.SoundFileType == SoundFileType.Music ? Ares.Settings.Settings.Instance.MusicDirectory : Ares.Settings.Settings.Instance.SoundDirectory;

@@ -463,7 +463,7 @@ namespace Ares.Editor
             {
                 if (e.Label != null)
                 {
-                    Actions.Actions.Instance.AddNew(new RenameProjectAction(e.Node, text));
+                    Actions.Actions.Instance.AddNew(new RenameProjectAction(e.Node, text), m_Project);
                 }
             }
             else if (e.Node.Tag is IMode)
@@ -475,7 +475,7 @@ namespace Ares.Editor
                 else
                 {
                     IMode mode = e.Node.Tag as IMode;
-                    Actions.Actions.Instance.AddNew(new RenameModeAction(e.Node, text));
+                    Actions.Actions.Instance.AddNew(new RenameModeAction(e.Node, text), m_Project);
                     e.CancelEdit = true; // the text is already changed by the action
                 }
                 // TODO: check for empty or equal titles, output warning
@@ -489,7 +489,7 @@ namespace Ares.Editor
                 else
                 {
                     IModeElement modeElement = e.Node.Tag as IModeElement;
-                    Actions.Actions.Instance.AddNew(new RenameModeElementAction(e.Node, text));
+                    Actions.Actions.Instance.AddNew(new RenameModeElementAction(e.Node, text), m_Project);
                     e.CancelEdit = true; // the text is already changed by the action
                 }
             }
@@ -498,7 +498,7 @@ namespace Ares.Editor
                 if (e.Label != null)
                 {
                     IElement element = e.Node.Tag as IElement;
-                    Actions.Actions.Instance.AddNew(new RenameElementAction(e.Node, text));
+                    Actions.Actions.Instance.AddNew(new RenameElementAction(e.Node, text), m_Project);
                 }
             }
             projectTree.LabelEdit = false;
@@ -514,7 +514,7 @@ namespace Ares.Editor
         private void AddMode(bool immediateRename)
         {
             TreeNode modeNode;
-            Actions.Actions.Instance.AddNew(new AddModeAction(SelectedNode, out modeNode));
+            Actions.Actions.Instance.AddNew(new AddModeAction(m_Project, SelectedNode, out modeNode), m_Project);
             modeNode.ContextMenuStrip = modeContextMenu;
             modeNode.ImageIndex = modeNode.SelectedImageIndex = 8;
             SelectedNode = modeNode;
@@ -618,8 +618,8 @@ namespace Ares.Editor
             String name = StringResources.NewSoundChoice;
             TreeNode node;
             Actions.Actions.Instance.AddNew(new Actions.AddSoundChoiceAction(SelectedNode, 
-                GetElement(SelectedNode) as IBackgroundSounds, 
-                name, CreateElementNode, out node));
+                GetElement(SelectedNode) as IBackgroundSounds,
+                name, CreateElementNode, out node), m_Project);
             SelectedNode.Expand();
             SelectedNode = node;
             if (renameImmediately)
@@ -738,7 +738,7 @@ namespace Ares.Editor
         {
             IModeElement modeElement = DataModule.ElementFactory.CreateModeElement(title, startElement);
             TreeNode node = CreateModeElementNode(modeElement);
-            Actions.Actions.Instance.AddNew(new AddModeElementAction(SelectedNode, modeElement, node));
+            Actions.Actions.Instance.AddNew(new AddModeElementAction(SelectedNode, modeElement, node), m_Project);
             SelectedNode.Expand();
             SelectedNode = node;
         }
@@ -748,8 +748,8 @@ namespace Ares.Editor
             bool oldListen = listenForContainerChanges;
             listenForContainerChanges = false;
             TreeNode node;
-            Actions.Actions.Instance.AddNew(new AddElementAction(SelectedNode, 
-                GetElement(SelectedNode) as IGeneralElementContainer, element, CreateElementNode, out node));
+            Actions.Actions.Instance.AddNew(new AddElementAction(SelectedNode,
+                GetElement(SelectedNode) as IGeneralElementContainer, element, CreateElementNode, out node), m_Project);
             SelectedNode.Expand();
             SelectedNode = node;
             listenForContainerChanges = oldListen;
@@ -828,7 +828,7 @@ namespace Ares.Editor
         {
             if (node != null)
             {
-                Actions.Actions.Instance.AddNew(new DeleteModeAction(node));
+                Actions.Actions.Instance.AddNew(new DeleteModeAction(node), m_Project);
             }
         }
 
@@ -843,7 +843,7 @@ namespace Ares.Editor
             DialogResult result = Dialogs.KeyDialog.Show(this, out keyCode);
             if (result != DialogResult.Cancel)
             {
-                Actions.Actions.Instance.AddNew(new Actions.SetModeKeyAction(SelectedNode, keyCode));
+                Actions.Actions.Instance.AddNew(new Actions.SetModeKeyAction(SelectedNode, keyCode), m_Project);
             }
         }
 
@@ -867,7 +867,7 @@ namespace Ares.Editor
                 {
                     keyTrigger.StopMusic = keyTrigger.StopSounds = false;
                 }
-                Actions.Actions.Instance.AddNew(new Actions.SetModeElementTriggerAction(modeElement, keyTrigger));
+                Actions.Actions.Instance.AddNew(new Actions.SetModeElementTriggerAction(modeElement, keyTrigger), m_Project);
             }
         }
 
@@ -928,9 +928,9 @@ namespace Ares.Editor
         {
             IModeElement element = SelectedNode.Tag as IModeElement;
 #if !MONO
-            ElementEditors.Editors.ShowTriggerEditor(element, DockPanel);
+            ElementEditors.Editors.ShowTriggerEditor(element, m_Project, DockPanel);
 #else
-            ElementEditors.Editors.ShowTriggerEditor(element, MdiParent);
+            ElementEditors.Editors.ShowTriggerEditor(element, m_Project, MdiParent);
 #endif
         }
 
@@ -963,15 +963,15 @@ namespace Ares.Editor
             listenForContainerChanges = false;
             if (node.Parent.Tag is IMode)
             {
-                Actions.Actions.Instance.AddNew(new DeleteModeElementAction(node));
+                Actions.Actions.Instance.AddNew(new DeleteModeElementAction(node), m_Project);
             }
             else if (node.Parent.Tag is IBackgroundSounds)
             {
-                Actions.Actions.Instance.AddNew(new DeleteBackgroundSoundChoiceAction(node));
+                Actions.Actions.Instance.AddNew(new DeleteBackgroundSoundChoiceAction(node), m_Project);
             }
             else
             {
-                Actions.Actions.Instance.AddNew(new DeleteElementAction(node));
+                Actions.Actions.Instance.AddNew(new DeleteElementAction(node), m_Project);
             }
             listenForContainerChanges = oldListen;
         }
@@ -979,9 +979,9 @@ namespace Ares.Editor
         private void EditElement(IElement element)
         {
 #if !MONO
-            ElementEditors.Editors.ShowEditor(element, null, DockPanel);
+            ElementEditors.Editors.ShowEditor(element, null, m_Project, DockPanel);
 #else
-            ElementEditors.Editors.ShowEditor(element, null, MdiParent);
+            ElementEditors.Editors.ShowEditor(element, null, m_Project, MdiParent);
 #endif
         }
 
@@ -1304,6 +1304,24 @@ namespace Ares.Editor
                 {
                     item.Enabled = item.Enabled && m_ExportItems != null;
                 }
+                if (item.Tag != null && item.Tag.ToString().Contains("OnlyMusicLists"))
+                {
+                    if (!(projectTree.SelectedNode.Tag is IMusicList) && (!(projectTree.SelectedNode.Tag is IModeElement) || !((projectTree.SelectedNode.Tag as IModeElement).StartElement is IMusicList)))
+                    {
+                        item.Enabled = false;
+                        item.Visible = false;
+                    }
+                    else if (disable)
+                    {
+                        item.Enabled = false;
+                        item.Visible = true;
+                    }
+                    else
+                    {
+                        item.Enabled = true;
+                        item.Visible = true;
+                    }
+                }
             }
         }
 
@@ -1497,7 +1515,7 @@ namespace Ares.Editor
             }
             else
             {
-                Ares.ModelInfo.ModelChecks.Instance.CheckAll();
+                Ares.ModelInfo.ModelChecks.Instance.CheckAll(m_Project);
             }
         }
 
@@ -1535,6 +1553,65 @@ namespace Ares.Editor
                         AddLink(parentNode, parentNode.Tag, element);
                     }
                 }
+            }
+        }
+
+        private void SelectTagsForElement()
+        {
+            IMusicList musicList = SelectedNode.Tag as IMusicList;
+            if (musicList == null)
+            {
+                IModeElement modeElement = SelectedNode.Tag as IModeElement;
+                if (modeElement != null)
+                {
+                    musicList = modeElement.StartElement as IMusicList;
+                }
+            }
+            if (musicList != null)
+            {
+                var fileLists = new Ares.ModelInfo.FileLists(Ares.ModelInfo.DuplicateRemoval.PathBased);
+                var tempList = new List<IXmlWritable>();
+                tempList.Add(musicList as IXmlWritable);
+                var files = fileLists.GetAllFiles(tempList);
+                var pathList = new List<String>();
+                foreach (IFileElement element in files)
+                {
+                    pathList.Add(element.FilePath);
+                }
+
+                int languageId = m_Project.TagLanguageId;
+                if (languageId == -1)
+                {
+                    try
+                    {
+                        languageId = Ares.Tags.TagsModule.GetTagsDB().TranslationsInterface.GetIdOfCurrentUILanguage();
+                    }
+                    catch (Ares.Tags.TagsDbException ex)
+                    {
+                        MessageBox.Show(this, String.Format(StringResources.TagsDbError, ex.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+                Dialogs.FileTagsDialog dialog = new Dialogs.FileTagsDialog();
+                dialog.LanguageId = languageId;
+                dialog.SetFiles(pathList);
+                if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    ChangeTagsForFiles(pathList, dialog.AddedTags, dialog.RemovedTags, languageId);
+                    m_Project.TagLanguageId = dialog.LanguageId;
+                }
+            }
+        }
+
+        private void ChangeTagsForFiles(List<String> files, HashSet<int> addedTags, HashSet<int> removedTags, int languageId)
+        {
+            try
+            {
+                Actions.Actions.Instance.AddNew(new Actions.ChangeFileTagsAction(files, addedTags, removedTags, languageId), m_Project);
+            }
+            catch (Ares.Tags.TagsDbException ex)
+            {
+                MessageBox.Show(this, String.Format(StringResources.TagsDbError, ex.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -1611,7 +1688,7 @@ namespace Ares.Editor
                     }
                     IModeElement modeElement = DataModule.ElementFactory.CreateModeElement(newLink.Title, newLink);
                     TreeNode node = CreateModeElementNode(modeElement);
-                    Actions.Actions.Instance.AddNew(new AddModeElementAction(parent, modeElement, node));
+                    Actions.Actions.Instance.AddNew(new AddModeElementAction(parent, modeElement, node), m_Project);
                     AddSubElements(node, modeElement.StartElement); // though there shouldn't be any sub-elements in current design
                 }
             }
@@ -1640,7 +1717,7 @@ namespace Ares.Editor
                 listenForContainerChanges = false;
                 TreeNode newNode;
                 Actions.Actions.Instance.AddNew(new AddElementAction(parent, parentElement as IGeneralElementContainer, newLink,
-                    CreateElementNode, out newNode));
+                    CreateElementNode, out newNode), m_Project);
                 AddSubElements(newNode, newLink); // though there shouldn't be any sub-elements in current design
                 listenForContainerChanges = oldListen;
             }
@@ -1652,7 +1729,7 @@ namespace Ares.Editor
             {
                 TreeNode modeNode;
                 IMode mode = element as IMode;
-                Actions.Actions.Instance.AddNew(new AddModeAction(SelectedNode, mode, out modeNode));
+                Actions.Actions.Instance.AddNew(new AddModeAction(SelectedNode, mode, out modeNode), m_Project);
                 modeNode.ContextMenuStrip = modeContextMenu;
                 modeNode.ImageIndex = modeNode.SelectedImageIndex = 8;
                 foreach (IModeElement modeElement in mode.GetElements())
@@ -1666,14 +1743,14 @@ namespace Ares.Editor
                 {
                     IModeElement modeElement = element as IModeElement;
                     TreeNode newNode = CreateModeElementNode(modeElement);
-                    Actions.Actions.Instance.AddNew(new AddModeElementAction(parent, modeElement, newNode));
+                    Actions.Actions.Instance.AddNew(new AddModeElementAction(parent, modeElement, newNode), m_Project);
                     AddSubElements(newNode, modeElement.StartElement);
                 }
                 else
                 {
                     IModeElement modeElement = DataModule.ElementFactory.CreateModeElement(element.Title, element as IElement);
                     TreeNode node = CreateModeElementNode(modeElement);
-                    Actions.Actions.Instance.AddNew(new AddModeElementAction(parent, modeElement, node));
+                    Actions.Actions.Instance.AddNew(new AddModeElementAction(parent, modeElement, node), m_Project);
                     AddSubElements(node, modeElement.StartElement);
                 }
             }
@@ -1687,7 +1764,7 @@ namespace Ares.Editor
                 listenForContainerChanges = false;
                 TreeNode newNode;
                 Actions.Actions.Instance.AddNew(new AddSoundChoiceAction(parent, parentElement as IBackgroundSounds, element,
-                    CreateElementNode, out newNode));
+                    CreateElementNode, out newNode), m_Project);
                 listenForContainerChanges = oldListen;
             }
             else if (parentElement is IGeneralElementContainer)
@@ -1697,7 +1774,7 @@ namespace Ares.Editor
                 listenForContainerChanges = false;
                 TreeNode newNode;
                 Actions.Actions.Instance.AddNew(new AddElementAction(parent, parentElement as IGeneralElementContainer, elem,
-                    CreateElementNode, out newNode));
+                    CreateElementNode, out newNode), m_Project);
                 AddSubElements(newNode, elem);
                 listenForContainerChanges = oldListen;
             }
@@ -1761,7 +1838,7 @@ namespace Ares.Editor
                         }
                     }
                 }
-                Ares.ModelInfo.ModelChecks.Instance.CheckAll();
+                Ares.ModelInfo.ModelChecks.Instance.CheckAll(m_Project);
             }
             catch (Exception e)
             {
@@ -2068,6 +2145,11 @@ namespace Ares.Editor
         private void toolStripMenuItem16_Click(object sender, EventArgs e)
         {
             PasteElementsAsLink();
+        }
+
+        private void tagsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SelectTagsForElement();
         }
 
     }

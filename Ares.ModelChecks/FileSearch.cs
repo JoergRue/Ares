@@ -28,6 +28,10 @@ namespace Ares.ModelInfo
         public List<KeyValuePair<IMode,  List<IModeElement>>> GetRootElements(IProject project, String relativePath, SoundFileType soundFileType)
         {
             List<KeyValuePair<IMode,  List<IModeElement>>> resultList = new List<KeyValuePair<IMode,  List<IModeElement>>>();
+            if (project == null)
+            {
+                return resultList;
+            }
             m_CurrentModeElement = null;
             m_SearchedPath = GetAbsolutePath(relativePath, soundFileType);
             foreach (IMode mode in project.GetModes())

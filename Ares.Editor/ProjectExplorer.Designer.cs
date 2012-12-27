@@ -115,6 +115,7 @@ namespace Ares.Editor
             this.deleteToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.exportToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.tagsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bgSoundsContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.renameToolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
             this.selectBGSoundsKeyMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -524,7 +525,8 @@ namespace Ares.Editor
             this.toolStripMenuItem10,
             this.deleteToolStripMenuItem2,
             this.toolStripSeparator7,
-            this.exportToolStripMenuItem2});
+            this.exportToolStripMenuItem2,
+            this.tagsToolStripMenuItem});
             this.elementContextMenu.Name = "elementContextMenu";
             resources.ApplyResources(this.elementContextMenu, "elementContextMenu");
             this.elementContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.elementContextMenu_Opening);
@@ -591,6 +593,13 @@ namespace Ares.Editor
             resources.ApplyResources(this.exportToolStripMenuItem2, "exportToolStripMenuItem2");
             this.exportToolStripMenuItem2.Tag = "MultipleNodes";
             this.exportToolStripMenuItem2.Click += new System.EventHandler(this.exportToolStripMenuItem2_Click);
+            // 
+            // tagsToolStripMenuItem
+            // 
+            this.tagsToolStripMenuItem.Name = "tagsToolStripMenuItem";
+            resources.ApplyResources(this.tagsToolStripMenuItem, "tagsToolStripMenuItem");
+            this.tagsToolStripMenuItem.Tag = "OnlyMusicLists";
+            this.tagsToolStripMenuItem.Click += new System.EventHandler(this.tagsToolStripMenuItem_Click);
             // 
             // bgSoundsContextMenu
             // 
@@ -834,5 +843,6 @@ namespace Ares.Editor
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem14;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem15;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem16;
+        private System.Windows.Forms.ToolStripMenuItem tagsToolStripMenuItem;
     }
 }

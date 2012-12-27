@@ -38,13 +38,16 @@ namespace Ares.Editor.ElementEditors
             randomUnitBox.SelectedIndex = 0;
         }
 
-        public void SetElement(Ares.Data.IDelayableElement element)
+        private Ares.Data.IProject m_Project;
+
+        public void SetElement(Ares.Data.IDelayableElement element, Ares.Data.IProject project)
         {
             if (m_Element != null)
             {
                 Actions.ElementChanges.Instance.RemoveListener(m_Element.Id, Update);
             }
             m_Element = element;
+            m_Project = project;
             if (m_Element != null)
             {
                 Update(m_Element.Id, Actions.ElementChanges.ChangeType.Changed);
@@ -82,14 +85,14 @@ namespace Ares.Editor.ElementEditors
                     deca.SetData(
                         TimeConversion.GetTimeInMillis(fixedDelayUpDown, fixedUnitBox),
                         TimeConversion.GetTimeInMillis(maxDelayUpDown, randomUnitBox));
-                    deca.Do();
+                    deca.Do(m_Project);
                     listen = true;
                     return;
                 }
             }
             Actions.Actions.Instance.AddNew(new Actions.DelayableElementChangeAction(m_Element, 
                 TimeConversion.GetTimeInMillis(fixedDelayUpDown, fixedUnitBox),
-                TimeConversion.GetTimeInMillis(maxDelayUpDown, randomUnitBox)));
+                TimeConversion.GetTimeInMillis(maxDelayUpDown, randomUnitBox)), m_Project);
             listen = true;
         }
 

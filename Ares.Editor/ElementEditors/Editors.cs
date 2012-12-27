@@ -42,9 +42,9 @@ namespace Ares.Editor.ElementEditors
 #endif
 
 #if !MONO
-        public static void ShowEditor(Ares.Data.IElement element, Ares.Data.IGeneralElementContainer container, WeifenLuo.WinFormsUI.Docking.DockPanel parent)
+        public static void ShowEditor(Ares.Data.IElement element, Ares.Data.IGeneralElementContainer container, Ares.Data.IProject project, WeifenLuo.WinFormsUI.Docking.DockPanel parent)
 #else
-        public static void ShowEditor(Ares.Data.IElement element, Ares.Data.IGeneralElementContainer container, System.Windows.Forms.Form parent)
+        public static void ShowEditor(Ares.Data.IElement element, Ares.Data.IGeneralElementContainer container, Ares.Data.IProject project, System.Windows.Forms.Form parent)
 #endif
         {
             if (element == null)
@@ -59,43 +59,43 @@ namespace Ares.Editor.ElementEditors
                 if (element is Ares.Data.IRandomBackgroundMusicList)
                 {
                     RandomPlaylistOrBGSoundChoiceEditor editor = new RandomPlaylistOrBGSoundChoiceEditor();
-                    editor.SetPlaylist(element as Ares.Data.IRandomBackgroundMusicList);
+                    editor.SetPlaylist(element as Ares.Data.IRandomBackgroundMusicList, project);
                     ShowEditor(editor, parent);
                 }
                 else if (element is Ares.Data.IBackgroundSoundChoice)
                 {
                     RandomPlaylistOrBGSoundChoiceEditor editor = new RandomPlaylistOrBGSoundChoiceEditor();
-                    editor.SetBGSoundChoice(element as Ares.Data.IBackgroundSoundChoice);
+                    editor.SetBGSoundChoice(element as Ares.Data.IBackgroundSoundChoice, project);
                     ShowEditor(editor, parent);
                 }
                 else if (element is Ares.Data.ISequentialBackgroundMusicList)
                 {
                     SequentialPlaylistEditor editor = new SequentialPlaylistEditor();
-                    editor.SetPlaylist(element as Ares.Data.ISequentialBackgroundMusicList);
+                    editor.SetPlaylist(element as Ares.Data.ISequentialBackgroundMusicList, project);
                     ShowEditor(editor, parent);
                 }
                 else if (element is Ares.Data.IMacro)
                 {
                     MacroEditor editor = new MacroEditor();
-                    editor.SetContainer(element as Ares.Data.IMacro);
+                    editor.SetContainer(element as Ares.Data.IMacro, project);
                     ShowEditor(editor, parent);
                 }
                 else if (element is Ares.Data.IElementContainer<Ares.Data.IChoiceElement>)
                 {
                     ChoiceContainerEditor editor = new ChoiceContainerEditor();
-                    editor.SetContainer(element as Ares.Data.IElementContainer<Ares.Data.IChoiceElement>);
+                    editor.SetContainer(element as Ares.Data.IElementContainer<Ares.Data.IChoiceElement>, project);
                     ShowEditor(editor, parent);
                 }
                 else if (element is Ares.Data.ISequentialContainer)
                 {
                     SequentialContainerEditor editor = new SequentialContainerEditor();
-                    editor.SetContainer(element as Ares.Data.ISequentialContainer);
+                    editor.SetContainer(element as Ares.Data.ISequentialContainer, project);
                     ShowEditor(editor, parent);
                 }
                 else if (element is Ares.Data.IElementContainer<Ares.Data.IParallelElement>)
                 {
                     ParallelContainerEditor editor = new ParallelContainerEditor();
-                    editor.SetContainer(element as Ares.Data.IElementContainer<Ares.Data.IParallelElement>);
+                    editor.SetContainer(element as Ares.Data.IElementContainer<Ares.Data.IParallelElement>, project);
                     ShowEditor(editor, parent);
                 }
                 else if (element is Ares.Data.IReferenceElement)
@@ -103,7 +103,7 @@ namespace Ares.Editor.ElementEditors
                     Ares.Data.IElement referencedElement = Ares.Data.DataModule.ElementRepository.GetElement((element as Ares.Data.IReferenceElement).ReferencedId);
                     if (referencedElement != null)
                     {
-                        ShowEditor(referencedElement, container, parent);
+                        ShowEditor(referencedElement, container, project, parent);
                     }
                 }
                 else if (element is Ares.Data.IFileElement)
@@ -120,7 +120,7 @@ namespace Ares.Editor.ElementEditors
                     else
                     {
                         FileElementEditor editor = new FileElementEditor();
-                        editor.SetElement(element as Ares.Data.IFileElement, container);
+                        editor.SetElement(element as Ares.Data.IFileElement, container, project);
                         ShowEditor(editor, parent);
                     }
                 }
@@ -128,9 +128,9 @@ namespace Ares.Editor.ElementEditors
         }
 
 #if !MONO
-        public static void ShowTriggerEditor(Ares.Data.IModeElement element, WeifenLuo.WinFormsUI.Docking.DockPanel parent)
+        public static void ShowTriggerEditor(Ares.Data.IModeElement element, Ares.Data.IProject project, WeifenLuo.WinFormsUI.Docking.DockPanel parent)
 #else
-        public static void ShowTriggerEditor(Ares.Data.IModeElement element, System.Windows.Forms.Form parent)
+        public static void ShowTriggerEditor(Ares.Data.IModeElement element, Ares.Data.IProject project, System.Windows.Forms.Form parent)
 #endif
         {
             EditorBase existing = EditorRegistry.Instance.GetEditor(element.Id);
@@ -140,7 +140,7 @@ namespace Ares.Editor.ElementEditors
             }
             else
             {
-                TriggerEditor editor = new TriggerEditor();
+                TriggerEditor editor = new TriggerEditor(project);
                 editor.SetElement(element);
                 ShowEditor(editor, parent);
             }

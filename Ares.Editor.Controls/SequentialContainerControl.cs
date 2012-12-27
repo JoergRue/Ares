@@ -37,10 +37,10 @@ namespace Ares.Editor.Controls
             AttachGridEvents();
         }
 
-        public void SetContainer(ISequentialContainer container)
+        public void SetContainer(ISequentialContainer container, Ares.Data.IProject project)
         {
             m_Container = container;
-            ContainerSet();
+            ContainerSet(project);
             EnableUpDownButtons();
         }
 
@@ -87,7 +87,7 @@ namespace Ares.Editor.Controls
                 int fixedDelay = Convert.ToInt32(elementsGrid.Rows[e.RowIndex].Cells[1].Value);
                 int randomDelay = Convert.ToInt32(elementsGrid.Rows[e.RowIndex].Cells[2].Value);
                 Actions.Actions.Instance.AddNew(new Actions.SequentialElementChangeAction(
-                    m_Container.GetElements()[e.RowIndex], fixedDelay, randomDelay));
+                    m_Container.GetElements()[e.RowIndex], fixedDelay, randomDelay), m_Project);
             }
             listen = true;
         }
@@ -99,7 +99,7 @@ namespace Ares.Editor.Controls
             {
                 indices.Add(elementsGrid.SelectedRows[i].Index);
             }
-            Actions.Actions.Instance.AddNew(new Actions.ReorderElementsAction<ISequentialElement>(m_Container, indices, -1));
+            Actions.Actions.Instance.AddNew(new Actions.ReorderElementsAction<ISequentialElement>(m_Container, indices, -1), m_Project);
             // note: the action modified the list
             elementsGrid.ClearSelection();
             for (int i = 0; i < indices.Count; ++i)
@@ -115,7 +115,7 @@ namespace Ares.Editor.Controls
             {
                 indices.Add(elementsGrid.SelectedRows[i].Index);
             }
-            Actions.Actions.Instance.AddNew(new Actions.ReorderElementsAction<ISequentialElement>(m_Container, indices, 1));
+            Actions.Actions.Instance.AddNew(new Actions.ReorderElementsAction<ISequentialElement>(m_Container, indices, 1), m_Project);
             // note: the action modified the list
             elementsGrid.ClearSelection();
             for (int i = 0; i < indices.Count; ++i)

@@ -60,7 +60,7 @@ namespace Ares.Editor.Actions
             }
         }
 
-        public override void Do()
+        public override void Do(Ares.Data.IProject project)
         {
             m_Element.SetsMusicVolume = m_NewSetsMusic;
             m_Element.MusicVolume = m_NewMusic;
@@ -69,7 +69,7 @@ namespace Ares.Editor.Actions
             ElementChanges.Instance.ElementChanged(m_Element.Id);
         }
 
-        public override void Undo()
+        public override void Undo(Ares.Data.IProject project)
         {
             m_Element.SetsMusicVolume = m_OldSetsMusic;
             m_Element.SetsSoundVolume = m_OldSetsSound;
@@ -123,7 +123,7 @@ namespace Ares.Editor.Actions
             m_NewMaxRandom = maxRandomVolume;
         }
 
-        public override void Do()
+        public override void Do(Ares.Data.IProject project)
         {
             foreach (IFileElement element in m_FileElements)
             {
@@ -135,7 +135,7 @@ namespace Ares.Editor.Actions
             }
         }
 
-        public override void Undo()
+        public override void Undo(Ares.Data.IProject project)
         {
             for (int i = 0; i < m_FileElements.Count; ++i)
             {
@@ -167,7 +167,7 @@ namespace Ares.Editor.Actions
             m_FadeIn = fadeIn;
         }
 
-        public override void Do()
+        public override void Do(Ares.Data.IProject project)
         {
             foreach (IFileElement element in m_FileElements)
             {
@@ -183,7 +183,7 @@ namespace Ares.Editor.Actions
             }
         }
 
-        public override void Undo()
+        public override void Undo(Ares.Data.IProject project)
         {
             for (int i = 0; i < m_FileElements.Count; ++i)
             {
@@ -246,7 +246,7 @@ namespace Ares.Editor.Actions
             m_NewMaxRandom = maxRandomVolume;
         }
 
-        public override void Do()
+        public override void Do(Ares.Data.IProject project)
         {
             for (int i = 0; i < m_Elements.Count; ++i)
             {
@@ -260,7 +260,7 @@ namespace Ares.Editor.Actions
             }
         }
 
-        public override void Undo()
+        public override void Undo(Ares.Data.IProject project)
         {
             for (int i = 0; i < m_Elements.Count; ++i)
             {
@@ -305,13 +305,13 @@ namespace Ares.Editor.Actions
             m_NewName = newName;
         }
 
-        public override void Do()
+        public override void Do(Ares.Data.IProject project)
         {
             m_Element.Title = m_NewName;
             ElementChanges.Instance.ElementRenamed(m_Element.Id);
         }
 
-        public override void Undo()
+        public override void Undo(Ares.Data.IProject project)
         {
             m_Element.Title = m_OldName;
             ElementChanges.Instance.ElementRenamed(m_Element.Id);
@@ -347,14 +347,14 @@ namespace Ares.Editor.Actions
             m_NewMax = TimeSpan.FromMilliseconds(maxDelay);
         }
 
-        public override void Do()
+        public override void Do(Ares.Data.IProject project)
         {
             m_Element.FixedStartDelay = m_NewFixed;
             m_Element.MaximumRandomStartDelay = m_NewMax;
             ElementChanges.Instance.ElementChanged(m_Element.Id);
         }
 
-        public override void Undo()
+        public override void Undo(Ares.Data.IProject project)
         {
             m_Element.FixedStartDelay = m_OldFixed;
             m_Element.MaximumRandomStartDelay = m_OldMax;
@@ -396,7 +396,7 @@ namespace Ares.Editor.Actions
             m_NewRepeatCount = repeatCount;
         }
 
-        public override void Do()
+        public override void Do(Ares.Data.IProject project)
         {
             m_Element.RepeatCount = m_NewRepeatCount;
             m_Element.FixedIntermediateDelay = m_NewFixed;
@@ -404,7 +404,7 @@ namespace Ares.Editor.Actions
             ElementChanges.Instance.ElementChanged(m_Element.Id);
         }
 
-        public override void Undo()
+        public override void Undo(Ares.Data.IProject project)
         {
             m_Element.RepeatCount = m_OldRepeatCount;
             m_Element.FixedIntermediateDelay = m_OldFixed;
@@ -431,13 +431,13 @@ namespace Ares.Editor.Actions
             m_NewChance = chance;
         }
 
-        public override void Do()
+        public override void Do(Ares.Data.IProject project)
         {
             m_Element.RandomChance = m_NewChance;
             ElementChanges.Instance.ElementChanged(m_Element.Id);
         }
 
-        public override void Undo()
+        public override void Undo(Ares.Data.IProject project)
         {
             m_Element.RandomChance = m_OldChance;
             ElementChanges.Instance.ElementChanged(m_Element.Id);
@@ -459,14 +459,14 @@ namespace Ares.Editor.Actions
             m_NewRandom = TimeSpan.FromMilliseconds(newRandom);
         }
 
-        public override void Do()
+        public override void Do(Ares.Data.IProject project)
         {
             m_Element.FixedStartDelay = m_NewFixed;
             m_Element.MaximumRandomStartDelay = m_NewRandom;
             ElementChanges.Instance.ElementChanged(m_Element.Id);
         }
 
-        public override void Undo()
+        public override void Undo(Ares.Data.IProject project)
         {
             m_Element.FixedStartDelay = m_OldFixed;
             m_Element.MaximumRandomStartDelay = m_OldRandom;
@@ -496,27 +496,27 @@ namespace Ares.Editor.Actions
             }
         }
 
-        public override void Do()
+        public override void Do(Ares.Data.IProject project)
         {
             int index = m_InsertionIndex;
             foreach (IElement element in m_Elements)
             {
                 m_Container.InsertGeneralElement(index, element);
                 Data.DataModule.ElementRepository.AddElement(element);
-                Ares.ModelInfo.ModelChecks.Instance.CheckAll();
+                Ares.ModelInfo.ModelChecks.Instance.CheckAll(project);
                 ElementRemoval.NotifyUndo(element);
                 ++index;
             }
             ElementChanges.Instance.ElementChanged(m_Container.Id);
         }
 
-        public override void Undo()
+        public override void Undo(Ares.Data.IProject project)
         {
             foreach (IElement element in m_Elements)
             {
                 m_Container.RemoveElement(element.Id);
                 Data.DataModule.ElementRepository.DeleteElement(element.Id);
-                Ares.ModelInfo.ModelChecks.Instance.CheckAll();
+                Ares.ModelInfo.ModelChecks.Instance.CheckAll(project);
                 ElementRemoval.NotifyRemoval(element);
             }
             ElementChanges.Instance.ElementChanged(m_Container.Id);
@@ -546,27 +546,27 @@ namespace Ares.Editor.Actions
             }
         }
 
-        public override void Do()
+        public override void Do(Ares.Data.IProject project)
         {
             int index = m_InsertionIndex;
             foreach (IElement element in m_Elements)
             {
                 m_Container.InsertGeneralElement(index, element);
                 Data.DataModule.ElementRepository.AddElement(element);
-                Ares.ModelInfo.ModelChecks.Instance.CheckAll();
+                Ares.ModelInfo.ModelChecks.Instance.CheckAll(project);
                 ElementRemoval.NotifyUndo(element);
                 ++index;
             }
             ElementChanges.Instance.ElementChanged(m_Container.Id);
         }
 
-        public override void Undo()
+        public override void Undo(Ares.Data.IProject project)
         {
             foreach (IElement element in m_Elements)
             {
                 m_Container.RemoveElement(element.Id);
                 Data.DataModule.ElementRepository.DeleteElement(element.Id);
-                Ares.ModelInfo.ModelChecks.Instance.CheckAll();
+                Ares.ModelInfo.ModelChecks.Instance.CheckAll(project);
                 ElementRemoval.NotifyRemoval(element);
             }
             ElementChanges.Instance.ElementChanged(m_Container.Id);
@@ -586,26 +586,26 @@ namespace Ares.Editor.Actions
             m_Index = index;
         }
 
-        public override void Do()
+        public override void Do(Ares.Data.IProject project)
         {
             foreach (IElement element in m_Elements)
             {
                 m_Container.RemoveElement(element.Id);
                 Data.DataModule.ElementRepository.DeleteElement(element.Id);
-                Ares.ModelInfo.ModelChecks.Instance.CheckAll();
+                Ares.ModelInfo.ModelChecks.Instance.CheckAll(project);
                 ElementRemoval.NotifyRemoval(element);
             }
             ElementChanges.Instance.ElementChanged(m_Container.Id);
         }
 
-        public override void Undo()
+        public override void Undo(Ares.Data.IProject project)
         {
             int index = m_Index;
             foreach (IElement element in m_Elements)
             {
                 m_Container.InsertGeneralElement(index, element);
                 Data.DataModule.ElementRepository.AddElement(element);
-                Ares.ModelInfo.ModelChecks.Instance.CheckAll();
+                Ares.ModelInfo.ModelChecks.Instance.CheckAll(project);
                 ElementRemoval.NotifyUndo(element);
                 ++index;
             }
@@ -627,7 +627,7 @@ namespace Ares.Editor.Actions
             m_OriginalOrder = container.GetGeneralElements();
         }
 
-        public override void Do()
+        public override void Do(Ares.Data.IProject project)
         {
             IList<IContainerElement> elements = m_Container.GetGeneralElements();
             List<IContainerElement> elems = new List<IContainerElement>();
@@ -652,7 +652,7 @@ namespace Ares.Editor.Actions
             ElementChanges.Instance.ElementChanged(m_Container.Id);
         }
 
-        public override void Undo()
+        public override void Undo(Ares.Data.IProject project)
         {
             foreach (IContainerElement elem in m_OriginalOrder)
             {
@@ -682,13 +682,13 @@ namespace Ares.Editor.Actions
             m_NewVisible = visibleInPlayer;
         }
 
-        public override void Do()
+        public override void Do(Ares.Data.IProject project)
         {
             m_ModeElement.IsVisibleInPlayer = m_NewVisible;
             ElementChanges.Instance.ElementTriggerChanged(m_ModeElement.Id);
         }
 
-        public override void Undo()
+        public override void Undo(Ares.Data.IProject project)
         {
             m_ModeElement.IsVisibleInPlayer = m_OldVisible;
             ElementChanges.Instance.ElementTriggerChanged(m_ModeElement.Id);
@@ -708,18 +708,18 @@ namespace Ares.Editor.Actions
             m_NewTrigger = trigger;
         }
 
-        public override void Do()
+        public override void Do(Ares.Data.IProject project)
         {
             m_ModeElement.Trigger = m_NewTrigger;
             ElementChanges.Instance.ElementTriggerChanged(m_ModeElement.Id);
-            Ares.ModelInfo.ModelChecks.Instance.Check(ModelInfo.CheckType.Key);
+            Ares.ModelInfo.ModelChecks.Instance.Check(ModelInfo.CheckType.Key, project);
         }
 
-        public override void Undo()
+        public override void Undo(Ares.Data.IProject project)
         {
             m_ModeElement.Trigger = m_OldTrigger;
             ElementChanges.Instance.ElementTriggerChanged(m_ModeElement.Id);
-            Ares.ModelInfo.ModelChecks.Instance.Check(ModelInfo.CheckType.Key);
+            Ares.ModelInfo.ModelChecks.Instance.Check(ModelInfo.CheckType.Key, project);
         }
 
         private IModeElement m_ModeElement;
@@ -729,7 +729,7 @@ namespace Ares.Editor.Actions
 
     public class SetAllTriggerFadingAction : Action
     {
-        public SetAllTriggerFadingAction(bool fade, bool crossFade, int fadeTime)
+        public SetAllTriggerFadingAction(bool fade, bool crossFade, int fadeTime, Ares.Data.IProject project)
         {
             m_Fade = fade;
             m_CrossFade = crossFade;
@@ -742,7 +742,6 @@ namespace Ares.Editor.Actions
             m_Triggers = new List<ITrigger>();
             m_TriggeredElementIds = new List<int>();
 
-            Ares.Data.IProject project = Ares.ModelInfo.ModelChecks.Instance.Project;
             if (project != null)
             {
                 foreach (IMode mode in project.GetModes())
@@ -763,7 +762,7 @@ namespace Ares.Editor.Actions
             }
         }
 
-        public override void Do()
+        public override void Do(Ares.Data.IProject project)
         {
             foreach (ITrigger trigger in m_Triggers)
             {
@@ -778,7 +777,7 @@ namespace Ares.Editor.Actions
             }
         }
 
-        public override void Undo()
+        public override void Undo(Ares.Data.IProject project)
         {
             for (int i = 0; i < m_Triggers.Count; ++i)
             {

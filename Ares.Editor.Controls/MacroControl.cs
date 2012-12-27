@@ -37,24 +37,24 @@ namespace Ares.Editor.Controls
             AttachGridEvents();
         }
 
-        public void SetContainer(IMacro container)
+        public void SetContainer(IMacro container, IProject project)
         {
             m_Container = container;
-            ContainerSet();
+            ContainerSet(project);
             EnableUpDownButtons();
         }
 
         protected override void AddElementToGrid(IContainerElement element)
         {
             IMacroCommand c = (IMacroCommand)element.InnerElement;
-            elementsGrid.Rows.Add(new object[] { c.DisplayDescription(), c.Condition.DisplayDescription() });
+            elementsGrid.Rows.Add(new object[] { c.DisplayDescription(m_Project), c.Condition.DisplayDescription(m_Project) });
         }
 
         protected override void ChangeElementDataInGrid(int elementID, int row)
         {
             IMacroCommand c = (IMacroCommand)m_Container.GetElements()[row].InnerElement;
-            elementsGrid.Rows[row].Cells[0].Value = c.DisplayDescription();
-            elementsGrid.Rows[row].Cells[1].Value = c.Condition.DisplayDescription();
+            elementsGrid.Rows[row].Cells[0].Value = c.DisplayDescription(m_Project);
+            elementsGrid.Rows[row].Cells[1].Value = c.Condition.DisplayDescription(m_Project);
         }
 
         protected override IEnumerable<int> GetInterestingElementIds(IContainerElement element)
@@ -100,7 +100,7 @@ namespace Ares.Editor.Controls
             {
                 indices.Add(elementsGrid.SelectedRows[i].Index);
             }
-            Actions.Actions.Instance.AddNew(new Actions.ReorderElementsAction<IMacroElement>(m_Container, indices, -1));
+            Actions.Actions.Instance.AddNew(new Actions.ReorderElementsAction<IMacroElement>(m_Container, indices, -1), m_Project);
             // note: the action modified the list
             elementsGrid.ClearSelection();
             for (int i = 0; i < indices.Count; ++i)
@@ -116,7 +116,7 @@ namespace Ares.Editor.Controls
             {
                 indices.Add(elementsGrid.SelectedRows[i].Index);
             }
-            Actions.Actions.Instance.AddNew(new Actions.ReorderElementsAction<IMacroElement>(m_Container, indices, 1));
+            Actions.Actions.Instance.AddNew(new Actions.ReorderElementsAction<IMacroElement>(m_Container, indices, 1), m_Project);
             // note: the action modified the list
             elementsGrid.ClearSelection();
             for (int i = 0; i < indices.Count; ++i)
@@ -201,14 +201,14 @@ namespace Ares.Editor.Controls
 
     public static class MacroDisplay
     {
-        public static String DisplayDescription(this IMacroCommand command)
+        public static String DisplayDescription(this IMacroCommand command, IProject project)
         {
             switch (command.CommandType)
             {
                 case MacroCommandType.StartElement:
-                    return String.Format(StringResources.StartCommand, GetElementDisplayName(((IStartCommand)command).StartedElement));
+                    return String.Format(StringResources.StartCommand, GetElementDisplayName(((IStartCommand)command).StartedElement, project));
                 case MacroCommandType.StopElement:
-                    return String.Format(StringResources.StopCommand, GetElementDisplayName(((IStopCommand)command).StoppedElement));
+                    return String.Format(StringResources.StopCommand, GetElementDisplayName(((IStopCommand)command).StoppedElement, project));
                 case MacroCommandType.WaitTime:
                     return String.Format(StringResources.WaitTimeCommand, ((IWaitTimeCommand)command).TimeInMillis.ToString(System.Globalization.CultureInfo.CurrentUICulture));
                 case MacroCommandType.WaitCondition:
@@ -217,9 +217,9 @@ namespace Ares.Editor.Controls
                         switch (wcc.AwaitedCondition.ConditionType)
                         {
                             case MacroConditionType.ElementNotRunning:
-                                return String.Format(StringResources.WaitElementNotRunningCommand, GetElementDisplayName(wcc.AwaitedCondition.Conditional));
+                                return String.Format(StringResources.WaitElementNotRunningCommand, GetElementDisplayName(wcc.AwaitedCondition.Conditional, project));
                             case MacroConditionType.ElementRunning:
-                                return String.Format(StringResources.WaitElementRunningCommand, GetElementDisplayName(wcc.AwaitedCondition.Conditional));
+                                return String.Format(StringResources.WaitElementRunningCommand, GetElementDisplayName(wcc.AwaitedCondition.Conditional, project));
                             default:
                                 return StringResources.NoCondition;
                         }
@@ -229,32 +229,32 @@ namespace Ares.Editor.Controls
             }
         }
 
-        public static String DisplayDescription(this IMacroCondition condition)
+        public static String DisplayDescription(this IMacroCondition condition, IProject project)
         {
             switch (condition.ConditionType)
             {
                 case MacroConditionType.ElementRunning:
-                    return String.Format(StringResources.ElementRunningCondition, GetElementDisplayName(condition.Conditional));
+                    return String.Format(StringResources.ElementRunningCondition, GetElementDisplayName(condition.Conditional, project));
                 case MacroConditionType.ElementNotRunning:
-                    return String.Format(StringResources.ElementNotRunningCondition, GetElementDisplayName(condition.Conditional));
+                    return String.Format(StringResources.ElementNotRunningCondition, GetElementDisplayName(condition.Conditional, project));
                 default:
                     return StringResources.NoCondition;
             }
         }
 
-        private static String GetElementDisplayName(IModeElement modeElement)
+        private static String GetElementDisplayName(IModeElement modeElement, IProject project)
         {
             if (modeElement == null)
             {
                 return StringResources.InvalidModeElement;
             }
-            IMode mode = FindMode(modeElement);
+            IMode mode = FindMode(modeElement, project);
             return String.Format(StringResources.ModeElementDisplay, mode != null ? mode.Title : StringResources.InvalidModeElement, modeElement.Title);
         }
 
-        private static IMode FindMode(IModeElement modeElement)
+        private static IMode FindMode(IModeElement modeElement, IProject project)
         {
-            foreach (IMode mode in ModelInfo.ModelChecks.Instance.Project.GetModes())
+            foreach (IMode mode in project.GetModes())
             {
                 foreach (IModeElement element in mode.GetElements())
                 {

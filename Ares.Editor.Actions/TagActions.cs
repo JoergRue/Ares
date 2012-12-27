@@ -53,12 +53,12 @@ namespace Ares.Editor.Actions
             }
         }
 
-        public override void Do()
+        public override void Do(Ares.Data.IProject project)
         {
             SetFileTags(m_NewTags);
         }
 
-        public override void  Undo()
+        public override void Undo(Ares.Data.IProject project)
         {
             SetFileTags(m_OldTags);
         }

@@ -40,13 +40,16 @@ namespace Ares.Editor.ElementEditors
             randomUnitBox.SelectedIndex = 0;
         }
 
-        public void SetElement(IRepeatableElement element)
+        private Ares.Data.IProject m_Project;
+
+        public void SetElement(IRepeatableElement element, Ares.Data.IProject project)
         {
             if (m_Element != null)
             {
                 Actions.ElementChanges.Instance.RemoveListener(m_Element.Id, Update);
             }
             m_Element = element;
+            m_Project = project;
             if (m_Element != null)
             {
                 Update(element.Id, Actions.ElementChanges.ChangeType.Changed);
@@ -93,7 +96,7 @@ namespace Ares.Editor.ElementEditors
                     reca.SetData(repeatCount, 
                         TimeConversion.GetTimeInMillis(fixedDelayUpDown, fixedUnitBox),
                         TimeConversion.GetTimeInMillis(maxDelayUpDown, randomUnitBox));
-                    reca.Do();
+                    reca.Do(m_Project);
                     listen = true;
                     return;
                 }
@@ -101,7 +104,7 @@ namespace Ares.Editor.ElementEditors
             Actions.Actions.Instance.AddNew(new Actions.RepeatableElementChangeAction(m_Element,
                 repeatCount,
                 TimeConversion.GetTimeInMillis(fixedDelayUpDown, fixedUnitBox),
-                TimeConversion.GetTimeInMillis(maxDelayUpDown, randomUnitBox)));
+                TimeConversion.GetTimeInMillis(maxDelayUpDown, randomUnitBox)), m_Project);
             listen = true;
         }
 

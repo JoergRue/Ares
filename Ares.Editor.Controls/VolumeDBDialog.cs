@@ -35,10 +35,11 @@ namespace Ares.Editor.Controls
 
         public IntEffectChangeAction Action { get; set; }
 
-        public VolumeDBDialog(IList<IFileElement> elements)
+        public VolumeDBDialog(IList<IFileElement> elements, IProject project)
         {
             InitializeComponent();
             Element = elements[0];
+            m_Project = project;
             IIntEffect effect = elements[0].Effects.VolumeDB;
             List<IIntEffect> effects = new List<IIntEffect>();
             for (int i = 0; i < elements.Count; ++i)
@@ -86,6 +87,7 @@ namespace Ares.Editor.Controls
         }
 
         private IFileElement Element { get; set; }
+        private IProject m_Project;
 
         public void UpdateAction()
         {
@@ -103,11 +105,11 @@ namespace Ares.Editor.Controls
             m_InPlay = true;
             UpdateAction();
             UpdateControls();
-            Action.Do();
+            Action.Do(m_Project);
             Actions.Playing.Instance.PlayElement(Element, this, () =>
                 {
                     m_InPlay = false;
-                    Action.Undo();
+                    Action.Undo(m_Project);
                     UpdateControls();
                 }
             );

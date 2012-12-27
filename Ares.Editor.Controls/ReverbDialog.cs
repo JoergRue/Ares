@@ -32,12 +32,14 @@ namespace Ares.Editor.Controls
     public partial class ReverbDialog : Form
     {
         private IFileElement m_Element;
+        private IProject m_Project;
 
         public Actions.ReverbEffectChangeAction Action { get; set; }
 
-        public ReverbDialog(IList<IFileElement> elements)
+        public ReverbDialog(IList<IFileElement> elements, IProject project)
         {
             InitializeComponent();
+            m_Project = project;
             m_Element = elements[0];
             Action = new Actions.ReverbEffectChangeAction(elements, true);
             volumeUpDown.Value = m_Element.Effects.Reverb.Level;
@@ -62,11 +64,11 @@ namespace Ares.Editor.Controls
             m_InPlay = true;
             UpdateAction();
             UpdateControls();
-            Action.Do();
+            Action.Do(m_Project);
             Actions.Playing.Instance.PlayElement(m_Element, this, () =>
             {
                 m_InPlay = false;
-                Action.Undo();
+                Action.Undo(m_Project);
                 UpdateControls();
             }
             );

@@ -26,7 +26,7 @@ namespace Ares.Editor.Actions
 {
     public abstract class Action
     {
-        public abstract void Do();
-        public abstract void Undo();
+        public abstract void Do(Ares.Data.IProject project);
+        public abstract void Undo(Ares.Data.IProject project);
     }
 }

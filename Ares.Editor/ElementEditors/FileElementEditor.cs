@@ -37,16 +37,18 @@ namespace Ares.Editor.ElementEditors
         }
 
         private IFileElement m_Element;
+        private IProject m_Project;
         private bool listen = true;
 
-        public void SetElement(IFileElement element, IGeneralElementContainer container)
+        public void SetElement(IFileElement element, IGeneralElementContainer container, IProject project)
         {
             ElementId = element.Id;
             m_Element = element;
+            m_Project = project;
             fileVolumeControl.SetEffects(element);
-            fileVolumeControl.SetContainer(container);
+            fileVolumeControl.SetContainer(container, project);
             fileEffectsControl.SetEffects(element);
-            fileEffectsControl.SetContainer(container);
+            fileEffectsControl.SetContainer(container, project);
             UpdateStaticInfo();
             Update(m_Element.Id, Actions.ElementChanges.ChangeType.Renamed);
             Actions.ElementChanges.Instance.AddListener(ElementId, Update);
@@ -148,11 +150,11 @@ namespace Ares.Editor.ElementEditors
             if (action != null && action.Element == m_Element)
             {
                 action.SetName(newName);
-                action.Do();
+                action.Do(m_Project);
             }
             else
             {
-                Actions.Actions.Instance.AddNew(new Actions.ElementRenamedAction(m_Element, newName));
+                Actions.Actions.Instance.AddNew(new Actions.ElementRenamedAction(m_Element, newName), m_Project);
             }
             this.Text = newName;
             listen = true;

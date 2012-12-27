@@ -37,7 +37,7 @@ namespace Ares.Editor.Controls
         {
             listen = false;
             int index = ElementsContainer.GetGeneralElements().Count;
-            Actions.Actions.Instance.AddNew(new Actions.AddContainerElementsAction(ElementsContainer, elements, insertionRow));
+            Actions.Actions.Instance.AddNew(new Actions.AddContainerElementsAction(ElementsContainer, elements, insertionRow), m_Project);
             RefillGrid();
             if (Grid.Rows.Count > 0)
             {
@@ -55,7 +55,7 @@ namespace Ares.Editor.Controls
         {
             listen = false;
             int index = insertionRow;
-            Actions.Actions.Instance.AddNew(new Actions.AddImportedContainerElementsAction(ElementsContainer, elements, insertionRow));
+            Actions.Actions.Instance.AddNew(new Actions.AddImportedContainerElementsAction(ElementsContainer, elements, insertionRow), m_Project);
             RefillGrid();
             if (Grid.Rows.Count > 0)
             {
@@ -119,8 +119,11 @@ namespace Ares.Editor.Controls
             Grid.ContextMenuStrip = gridContextMenu;
         }
 
-        protected void ContainerSet()
+        protected Ares.Data.IProject m_Project;
+
+        protected void ContainerSet(IProject project)
         {
+            m_Project = project;
             Update(ElementsContainer.Id, Actions.ElementChanges.ChangeType.Changed);
             Actions.ElementChanges.Instance.AddListener(ElementsContainer.Id, Update);
         }
@@ -199,7 +202,7 @@ namespace Ares.Editor.Controls
             {
                 elements.Add(containerElements[e.RowIndex + i]);
             }
-            Actions.Actions.Instance.AddNew(new Actions.RemoveContainerElementsAction(ElementsContainer, elements, e.RowIndex));
+            Actions.Actions.Instance.AddNew(new Actions.RemoveContainerElementsAction(ElementsContainer, elements, e.RowIndex), m_Project);
             listen = true;
         }
 
@@ -376,7 +379,7 @@ namespace Ares.Editor.Controls
                 elements.Add(containerElements[row.Index]);
                 rows.Add(row);
             }
-            Actions.Actions.Instance.AddNew(new Actions.RemoveContainerElementsAction(ElementsContainer, elements, minIndex));
+            Actions.Actions.Instance.AddNew(new Actions.RemoveContainerElementsAction(ElementsContainer, elements, minIndex), m_Project);
             RefillGrid();
             listen = true;
         }
@@ -385,7 +388,7 @@ namespace Ares.Editor.Controls
         {
             listen = false;
             rows.Sort();
-            Actions.Actions.Instance.AddNew(new Actions.ReorderContainerElementsAction(ElementsContainer, rows, targetIndex));
+            Actions.Actions.Instance.AddNew(new Actions.ReorderContainerElementsAction(ElementsContainer, rows, targetIndex), m_Project);
             RefillGrid();
             listen = true;
         }
@@ -658,11 +661,11 @@ namespace Ares.Editor.Controls
         {
             var list = GetAllSelectedFileElements();
             if (list.Count == 0) return;
-            FileVolumeDialog dialog = new FileVolumeDialog(list);
+            FileVolumeDialog dialog = new FileVolumeDialog(list, m_Project);
             if (dialog.ShowDialog(Parent) == DialogResult.OK)
             {
                 dialog.UpdateAction();
-                Actions.Actions.Instance.AddNew(dialog.Action);
+                Actions.Actions.Instance.AddNew(dialog.Action, m_Project);
             }
         }
 
@@ -670,11 +673,11 @@ namespace Ares.Editor.Controls
         {
             var list = GetAllSelectedFileElements();
             if (list.Count == 0) return;
-            BalanceDialog dialog = new BalanceDialog(list);
+            BalanceDialog dialog = new BalanceDialog(list, m_Project);
             if (dialog.ShowDialog(Parent) == DialogResult.OK)
             {
                 dialog.UpdateAction();
-                Actions.Actions.Instance.AddNew(dialog.Action);
+                Actions.Actions.Instance.AddNew(dialog.Action, m_Project);
             }
         }
 
@@ -682,11 +685,11 @@ namespace Ares.Editor.Controls
         {
             var list = GetAllSelectedFileElements();
             if (list.Count == 0) return;
-            PitchDialog dialog = new PitchDialog(list);
+            PitchDialog dialog = new PitchDialog(list, m_Project);
             if (dialog.ShowDialog(Parent) == DialogResult.OK)
             {
                 dialog.UpdateAction();
-                Actions.Actions.Instance.AddNew(dialog.Action);
+                Actions.Actions.Instance.AddNew(dialog.Action, m_Project);
             }
         }
 
@@ -694,11 +697,11 @@ namespace Ares.Editor.Controls
         {
             var list = GetAllSelectedFileElements();
             if (list.Count == 0) return;
-            VolumeDBDialog dialog = new VolumeDBDialog(list);
+            VolumeDBDialog dialog = new VolumeDBDialog(list, m_Project);
             if (dialog.ShowDialog(Parent) == DialogResult.OK)
             {
                 dialog.UpdateAction();
-                Actions.Actions.Instance.AddNew(dialog.Action);
+                Actions.Actions.Instance.AddNew(dialog.Action, m_Project);
             }
         }
 
@@ -706,11 +709,11 @@ namespace Ares.Editor.Controls
         {
             var list = GetAllSelectedFileElements();
             if (list.Count == 0) return;
-            ReverbDialog dialog = new ReverbDialog(list);
+            ReverbDialog dialog = new ReverbDialog(list, m_Project);
             if (dialog.ShowDialog(Parent) == DialogResult.OK)
             {
                 dialog.UpdateAction();
-                Actions.Actions.Instance.AddNew(dialog.Action);
+                Actions.Actions.Instance.AddNew(dialog.Action, m_Project);
             }
         }
 
@@ -718,11 +721,11 @@ namespace Ares.Editor.Controls
         {
             var list = GetAllSelectedFileElements();
             if (list.Count == 0) return;
-            SpeakersDialog dialog = new SpeakersDialog(list);
+            SpeakersDialog dialog = new SpeakersDialog(list, m_Project);
             if (dialog.ShowDialog(Parent) == DialogResult.OK)
             {
                 dialog.UpdateAction();
-                Actions.Actions.Instance.AddNew(dialog.Action);
+                Actions.Actions.Instance.AddNew(dialog.Action, m_Project);
             }
         }
 
@@ -730,11 +733,11 @@ namespace Ares.Editor.Controls
         {
             var list = GetAllSelectedFileElements();
             if (list.Count == 0) return;
-            TempoDialog dialog = new TempoDialog(list);
+            TempoDialog dialog = new TempoDialog(list, m_Project);
             if (dialog.ShowDialog(Parent) == DialogResult.OK)
             {
                 dialog.UpdateAction();
-                Actions.Actions.Instance.AddNew(dialog.Action);
+                Actions.Actions.Instance.AddNew(dialog.Action, m_Project);
             }
         }
 

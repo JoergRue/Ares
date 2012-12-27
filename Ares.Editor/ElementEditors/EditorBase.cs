@@ -95,6 +95,8 @@ namespace Ares.Editor.ElementEditors
         {
         }
 
+        protected Ares.Data.IProject Project { get; set; }
+
         protected ContainerEditorBase()
             : base()
         {
@@ -130,8 +132,9 @@ namespace Ares.Editor.ElementEditors
             ContainerControl.AddImportedElements(elements, e.InsertionRow);
         }
 
-        protected void ElementSet()
+        protected void ElementSet(Ares.Data.IProject project)
         {
+            Project = project;
             Update(m_Element.Id, Actions.ElementChanges.ChangeType.Renamed);
             Actions.ElementChanges.Instance.AddListener(m_Element.Id, Update);
             if (Actions.Playing.Instance.IsElementPlaying(m_Element))
@@ -186,9 +189,9 @@ namespace Ares.Editor.ElementEditors
         private void ContainerControl_ElementDoubleClick(object sender, Controls.ElementDoubleClickEventArgs e)
         {
 #if !MONO
-            Editors.ShowEditor(e.Element.InnerElement, m_Element as Ares.Data.IGeneralElementContainer, this.DockPanel);
+            Editors.ShowEditor(e.Element.InnerElement, m_Element as Ares.Data.IGeneralElementContainer, Project, this.DockPanel);
 #else
-            Editors.ShowEditor(e.Element.InnerElement, m_Element as Ares.Data.IGeneralElementContainer, this.MdiParent);
+            Editors.ShowEditor(e.Element.InnerElement, m_Element as Ares.Data.IGeneralElementContainer, m_Project, this.MdiParent);
 #endif
         }
 

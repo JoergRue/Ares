@@ -35,10 +35,11 @@ namespace Ares.Editor.Controls
 
         public BalanceChangeAction Action { get; set; }
 
-        public BalanceDialog(IList<IFileElement> elements)
+        public BalanceDialog(IList<IFileElement> elements, IProject project)
         {
             InitializeComponent();
             Element = elements[0];
+            m_Project = project;
             IBalanceEffect effect = elements[0].Effects.Balance;
             Action = new BalanceChangeAction(elements, true);
             fixedButton.Checked = !effect.Random && !effect.IsPanning;
@@ -90,6 +91,7 @@ namespace Ares.Editor.Controls
         }
 
         private IFileElement Element { get; set; }
+        private IProject m_Project;
 
         public void UpdateAction()
         {
@@ -110,11 +112,11 @@ namespace Ares.Editor.Controls
             m_InPlay = true;
             UpdateAction();
             UpdateControls();
-            Action.Do();
+            Action.Do(m_Project);
             Actions.Playing.Instance.PlayElement(Element, this, () =>
                 {
                     m_InPlay = false;
-                    Action.Undo();
+                    Action.Undo(m_Project);
                     UpdateControls();
                 }
             );

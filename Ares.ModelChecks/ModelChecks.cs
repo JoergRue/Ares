@@ -104,11 +104,9 @@ namespace Ares.ModelInfo
             AddCheck(new ReferenceChecks());
         }
 
-        public IProject Project { get; set; }
-		
-        public String GetErrorForKey(IModeElement modeElement, int key)
+        public String GetErrorForKey(IModeElement modeElement, IProject project, int key)
         {
-            return KeyChecks.GetErrorForKey(Project, modeElement, key);
+            return KeyChecks.GetErrorForKey(project, modeElement, key);
         }
 
         public event EventHandler<EventArgs> ErrorsUpdated;
@@ -164,24 +162,24 @@ namespace Ares.ModelInfo
             return result;
         }
 
-        public void CheckAll()
+        public void CheckAll(IProject project)
         {
             foreach (CheckType type in m_ModelChecks.Keys)
             {
-                DoCheck(type);
+                DoCheck(type, project);
             }
             if (ErrorsUpdated != null)
                 ErrorsUpdated(this, new EventArgs());
         }
 
-        public void Check(CheckType checkType)
+        public void Check(CheckType checkType, IProject project)
         {
-            DoCheck(checkType);
+            DoCheck(checkType, project);
             if (ErrorsUpdated != null)
                 ErrorsUpdated(this, new EventArgs());
         }
 
-        private void DoCheck(CheckType checkType)
+        private void DoCheck(CheckType checkType, IProject project)
         {
             if (!m_ModelChecks.ContainsKey(checkType))
                 return;
@@ -192,9 +190,9 @@ namespace Ares.ModelInfo
                 RemoveError(error);
             }
             m_Errors[checkType].Clear();
-            if (Project != null)
+            if (project != null)
             {
-                m_ModelChecks[checkType].DoChecks(Project, this);
+                m_ModelChecks[checkType].DoChecks(project, this);
             }
         }
     }

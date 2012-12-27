@@ -125,19 +125,19 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="renameToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
+    <value>145, 22</value>
   </data>
   <data name="renameToolStripMenuItem.Text" xml:space="preserve">
     <value>Rename</value>
   </data>
   <data name="toolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
+    <value>145, 22</value>
   </data>
   <data name="toolStripMenuItem1.Text" xml:space="preserve">
     <value>Add Mode ...</value>
   </data>
   <data name="importToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
+    <value>145, 22</value>
   </data>
   <data name="importToolStripMenuItem1.Text" xml:space="preserve">
     <value>Import ...</value>
@@ -147,13 +147,13 @@
     <value>Strg+V</value>
   </data>
   <data name="pasteToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
+    <value>145, 22</value>
   </data>
   <data name="pasteToolStripMenuItem.Text" xml:space="preserve">
     <value>Paste</value>
   </data>
   <data name="projectContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>153, 114</value>
+    <value>146, 92</value>
   </data>
   <data name="&gt;&gt;projectContextMenu.Name" xml:space="preserve">
     <value>projectContextMenu</value>
@@ -468,7 +468,7 @@
     <value>Export ...</value>
   </data>
   <data name="containerContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>223, 424</value>
+    <value>223, 402</value>
   </data>
   <data name="&gt;&gt;containerContextMenu.Name" xml:space="preserve">
     <value>containerContextMenu</value>
@@ -548,8 +548,14 @@
   <data name="exportToolStripMenuItem2.Text" xml:space="preserve">
     <value>Export ...</value>
   </data>
+  <data name="tagsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>158, 22</value>
+  </data>
+  <data name="tagsToolStripMenuItem.Text" xml:space="preserve">
+    <value>Tags ...</value>
+  </data>
   <data name="elementContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>159, 192</value>
+    <value>159, 236</value>
   </data>
   <data name="&gt;&gt;elementContextMenu.Name" xml:space="preserve">
     <value>elementContextMenu</value>
@@ -1119,6 +1125,12 @@
     <value>exportToolStripMenuItem2</value>
   </data>
   <data name="&gt;&gt;exportToolStripMenuItem2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tagsToolStripMenuItem.Name" xml:space="preserve">
+    <value>tagsToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;tagsToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;renameToolStripMenuItem4.Name" xml:space="preserve">

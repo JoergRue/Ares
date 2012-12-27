@@ -39,9 +39,12 @@ namespace Ares.Editor.Controls
             volumeControlToolTip.SetToolTip(setsSoundBox, StringResources.SetGlobalSoundVolume);
         }
 
-        public void SetElement(Ares.Data.IElement element)
+        private Ares.Data.IProject m_Project;
+
+        public void SetElement(Ares.Data.IElement element, Ares.Data.IProject project)
         {
             m_Element = element;
+            m_Project = project;
             listen = false;
             UpdateData();
             Actions.ElementChanges.Instance.AddListener(m_Element.Id, Update);
@@ -97,13 +100,13 @@ namespace Ares.Editor.Controls
                 if (evca.Element == m_Element)
                 {
                     evca.SetData(setsMusicBox.Checked, setsSoundBox.Checked, musicVolumeBar.Value, soundVolumeBar.Value);
-                    evca.Do();
+                    evca.Do(m_Project);
                     listen = true;
                     return;
                 }
             }
             Actions.Actions.Instance.AddNew(new Actions.ElementVolumeChangeAction(m_Element, setsMusicBox.Checked, setsSoundBox.Checked,
-                musicVolumeBar.Value, soundVolumeBar.Value));
+                musicVolumeBar.Value, soundVolumeBar.Value), m_Project);
             listen = true;
         }
 

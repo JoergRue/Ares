@@ -51,7 +51,7 @@ namespace Ares.Editor.Actions
             m_NewAssignment = assignment;
         }
 
-        public override void Do()
+        public override void Do(Ares.Data.IProject project)
         {
             for (int i = 0; i < m_Elements.Count; ++i)
             {
@@ -65,7 +65,7 @@ namespace Ares.Editor.Actions
             }
         }
 
-        public override void Undo()
+        public override void Undo(Ares.Data.IProject project)
         {
             for (int i = 0; i < m_Elements.Count; ++i)
             {
@@ -130,7 +130,7 @@ namespace Ares.Editor.Actions
             m_NewDelay = delay;
         }
 
-        public override void Do()
+        public override void Do(Ares.Data.IProject project)
         {
             for (int i = 0; i < m_Elements.Count; ++i)
             {
@@ -142,7 +142,7 @@ namespace Ares.Editor.Actions
             }
         }
 
-        public override void Undo()
+        public override void Undo(Ares.Data.IProject project)
         {
             for (int i = 0; i < m_Elements.Count; ++i)
             {
@@ -207,7 +207,7 @@ namespace Ares.Editor.Actions
             m_NewMaxRandom = maxRandomValue;
         }
 
-        public override void Do()
+        public override void Do(Ares.Data.IProject project)
         {
             for (int i = 0; i < m_Effects.Count; ++i)
             {
@@ -220,7 +220,7 @@ namespace Ares.Editor.Actions
             }
         }
 
-        public override void Undo()
+        public override void Undo(Ares.Data.IProject project)
         {
             for (int i = 0; i < m_Effects.Count; ++i)
             {
@@ -289,7 +289,7 @@ namespace Ares.Editor.Actions
             m_NewPanningEnd = m_OldPanningEnd[0];
         }
 
-        public override void Do()
+        public override void Do(Ares.Data.IProject project)
         {
             for (int i = 0; i < m_Elements.Count; ++i)
             {
@@ -300,10 +300,10 @@ namespace Ares.Editor.Actions
                 effect.PanningStart = m_NewPanningStart;
                 effect.PanningEnd = m_NewPanningEnd;
             }
-            base.Do();
+            base.Do(project);
         }
 
-        public override void Undo()
+        public override void Undo(Ares.Data.IProject project)
         {
             for (int i = 0; i < m_Elements.Count; ++i)
             {
@@ -313,7 +313,7 @@ namespace Ares.Editor.Actions
                 effect.PanningStart = m_OldPanningStart[i];
                 effect.PanningEnd = m_OldPanningEnd[i];
             }
-            base.Undo();
+            base.Undo(project);
         }
 
         public void SetData(bool active, bool random, int fixValue, int minRandomValue, int maxRandomValue, bool pan, int panStart, int panEnd)
@@ -356,7 +356,7 @@ namespace Ares.Editor.Actions
             m_NewAssignment = assignment;
         }
 
-        public override void Do()
+        public override void Do(Ares.Data.IProject project)
         {
             foreach (IFileElement element in m_FileElements)
             {
@@ -370,7 +370,7 @@ namespace Ares.Editor.Actions
             }
         }
 
-        public override void Undo()
+        public override void Undo(Ares.Data.IProject project)
         {
             for (int i = 0; i < m_FileElements.Count; ++i)
             {
@@ -412,7 +412,7 @@ namespace Ares.Editor.Actions
             }
         }
 
-        public override void Do()
+        public override void Do(Ares.Data.IProject project)
         {
             foreach (IFileElement element in m_FileElements)
             {
@@ -424,7 +424,7 @@ namespace Ares.Editor.Actions
             }
         }
 
-        public override void Undo()
+        public override void Undo(Ares.Data.IProject project)
         {
             for (int i = 0; i < m_FileElements.Count; ++i)
             {
@@ -477,7 +477,7 @@ namespace Ares.Editor.Actions
             m_NewMaxRandom = maxRandomValue;
         }
 
-        public override void Do()
+        public override void Do(Ares.Data.IProject project)
         {
             foreach (IFileElement element in m_FileElements)
             {
@@ -491,7 +491,7 @@ namespace Ares.Editor.Actions
             }
         }
 
-        public override void Undo()
+        public override void Undo(Ares.Data.IProject project)
         {
             for (int i = 0; i < m_FileElements.Count; ++i)
             {
@@ -566,7 +566,7 @@ namespace Ares.Editor.Actions
             return element.Effects.Balance;
         }
 
-        public override void Do()
+        public override void Do(Ares.Data.IProject project)
         {
             foreach (IFileElement element in m_FileElements)
             {
@@ -579,10 +579,10 @@ namespace Ares.Editor.Actions
                 effect.PanningStart = m_NewPanningStart;
                 effect.PanningEnd = m_NewPanningEnd;
             }
-            base.Do();
+            base.Do(project);
         }
 
-        public override void Undo()
+        public override void Undo(Ares.Data.IProject project)
         {
             for (int i = 0; i < m_FileElements.Count; ++i)
             {
@@ -592,7 +592,7 @@ namespace Ares.Editor.Actions
                 effect.PanningStart = m_OldPanningStarts[i];
                 effect.PanningEnd = m_OldPanningEnds[i];
             }
-            base.Undo();
+            base.Undo(project);
         }
     }
 

@@ -52,14 +52,14 @@ namespace Ares.Editor.ElementEditors
             }
         }
 
-        public void SetContainer(Ares.Data.ISequentialContainer container)
+        public void SetContainer(Ares.Data.ISequentialContainer container, Ares.Data.IProject project)
         {
             ElementId = container.Id;
             m_Element = container;
-            sequentialContainerControl.SetContainer(container);
-            volumeControl.SetElement(container);
+            sequentialContainerControl.SetContainer(container, project);
+            volumeControl.SetElement(container, project);
             label1.Text = String.Format(label1.Text, String.Format(StringResources.FileExplorerTitle, StringResources.Music));
-            ElementSet();
+            ElementSet(project);
         }
 
         protected override void DisableControls(bool allowStop)

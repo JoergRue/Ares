@@ -34,14 +34,14 @@ namespace Ares.Editor.Actions
             macro.RemoveElement(m_MacroElement.Id);
         }
 
-        public override void Do()
+        public override void Do(Ares.Data.IProject project)
         {
             m_Macro.InsertGeneralElement(m_Index, m_MacroElement);
             ElementRemoval.NotifyUndo(m_MacroElement);
             ElementChanges.Instance.ElementChanged(m_Macro.Id);
         }
 
-        public override void Undo()
+        public override void Undo(Ares.Data.IProject project)
         {
             m_Macro.RemoveElement(m_MacroElement.Id);
             ElementRemoval.NotifyRemoval(m_MacroElement.InnerElement);
@@ -72,7 +72,7 @@ namespace Ares.Editor.Actions
             macro.RemoveElement(m_NewElement.Id);
         }
 
-        public override void Do()
+        public override void Do(Ares.Data.IProject project)
         {
             m_Macro.RemoveElement(m_OldElement.Id);
             m_Macro.InsertGeneralElement(m_Index, m_NewElement);
@@ -81,7 +81,7 @@ namespace Ares.Editor.Actions
             ElementChanges.Instance.ElementChanged(m_Macro.Id);
         }
 
-        public override void Undo()
+        public override void Undo(Ares.Data.IProject project)
         {
             m_Macro.RemoveElement(m_NewElement.Id);
             m_Macro.InsertGeneralElement(m_Index, m_OldElement);

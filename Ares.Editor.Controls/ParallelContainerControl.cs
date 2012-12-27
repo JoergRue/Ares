@@ -37,10 +37,10 @@ namespace Ares.Editor.Controls
             AttachGridEvents();
         }
 
-        public void SetContainer(IElementContainer<IParallelElement> container)
+        public void SetContainer(IElementContainer<IParallelElement> container, IProject project)
         {
             m_Container = container;
-            ContainerSet();
+            ContainerSet(project);
         }
 
         public event EventHandler ActiveRowChanged;

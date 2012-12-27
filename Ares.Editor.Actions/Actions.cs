@@ -42,7 +42,7 @@ namespace Ares.Editor.Actions
             }
         }
 
-        public void AddNew(Action action)
+        public void AddNew(Action action, Ares.Data.IProject project)
         {
             if (m_Actions.Count > m_Index)
             {
@@ -50,7 +50,7 @@ namespace Ares.Editor.Actions
             }
             m_Actions.Add(action);
             m_Index++;
-            action.Do();
+            action.Do(project);
             if (UpdateGUI != null) UpdateGUI();
         }
 
@@ -75,11 +75,11 @@ namespace Ares.Editor.Actions
             }
         }
 
-        public void Undo()
+        public void Undo(Ares.Data.IProject project)
         {
             if (CanUndo)
             {
-                m_Actions[--m_Index].Undo();
+                m_Actions[--m_Index].Undo(project);
                 if (UpdateGUI != null) UpdateGUI();
             }
         }
@@ -92,11 +92,11 @@ namespace Ares.Editor.Actions
             }
         }
 
-        public void Redo()
+        public void Redo(Ares.Data.IProject project)
         {
             if (CanRedo)
             {
-                m_Actions[m_Index++].Do();
+                m_Actions[m_Index++].Do(project);
                 if (UpdateGUI != null) UpdateGUI();
             }
         }

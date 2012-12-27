@@ -46,11 +46,12 @@ namespace Ares.Editor.ElementEditors
             }
         }
 
-        public void SetContainer(Ares.Data.IMacro container)
+        public void SetContainer(Ares.Data.IMacro container, Ares.Data.IProject project)
         {
             ElementId = container.Id;
             m_Element = container;
-            macroControl.SetContainer(container);
+            m_Project = project;
+            macroControl.SetContainer(container, project);
             ElementSet();
         }
 
@@ -85,10 +86,10 @@ namespace Ares.Editor.ElementEditors
         void macroControl_AddButtonClick(object sender, EventArgs e)
         {
             Dialogs.MacroCommandDialog dialog = new Dialogs.MacroCommandDialog();
-            dialog.SetData(null, ModelInfo.ModelChecks.Instance.Project, m_Element as Data.IMacro);
+            dialog.SetData(null, m_Project, m_Element as Data.IMacro);
             if (dialog.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
             {
-                Actions.Actions.Instance.AddNew(new Actions.AddMacroCommandAction((Ares.Data.IMacro)m_Element, dialog.MacroCommand));
+                Actions.Actions.Instance.AddNew(new Actions.AddMacroCommandAction((Ares.Data.IMacro)m_Element, dialog.MacroCommand), m_Project);
             }
         }
 
@@ -142,15 +143,16 @@ namespace Ares.Editor.ElementEditors
         private void ContainerControl_ElementDoubleClick(object sender, Controls.ElementDoubleClickEventArgs e)
         {
             Dialogs.MacroCommandDialog dialog = new Dialogs.MacroCommandDialog();
-            dialog.SetData((Ares.Data.IMacroCommand)e.Element.InnerElement, ModelInfo.ModelChecks.Instance.Project, m_Element as Data.IMacro);
+            dialog.SetData((Ares.Data.IMacroCommand)e.Element.InnerElement, m_Project, m_Element as Data.IMacro);
             if (dialog.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
             {
-                Actions.Actions.Instance.AddNew(new Actions.ReplaceMacroCommandAction((Ares.Data.IMacro)m_Element, e.Element.InnerElement.Id, dialog.MacroCommand));
+                Actions.Actions.Instance.AddNew(new Actions.ReplaceMacroCommandAction((Ares.Data.IMacro)m_Element, e.Element.InnerElement.Id, dialog.MacroCommand), m_Project);
             }
         }
 
         protected bool listen = true;
         protected Ares.Data.IElement m_Element;
+        protected Ares.Data.IProject m_Project;
 
         private void playButton_Click(object sender, EventArgs e)
         {

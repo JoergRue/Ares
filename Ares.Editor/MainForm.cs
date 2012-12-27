@@ -190,6 +190,7 @@ namespace Ares.Editor
             if (m_ProjectExplorer == null)
             {
                 m_ProjectExplorer = new ProjectExplorer();
+                m_ProjectExplorer.SetProject(m_CurrentProject);
 #if !MONO
                 m_ProjectExplorer.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockLeft;
                 m_ProjectExplorer.Show(dockPanel);
@@ -355,6 +356,7 @@ namespace Ares.Editor
             if (m_FileExplorers[index] == null)
             {
                 m_FileExplorers[index] = new FileExplorer(fileType, this);
+                m_FileExplorers[index].SetProject(m_CurrentProject);
 #if !MONO
                 m_FileExplorers[index].ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockRight;
                 m_FileExplorers[index].Show(dockPanel);
@@ -381,8 +383,7 @@ namespace Ares.Editor
 
         private void DoModelChecks()
         {
-            Ares.ModelInfo.ModelChecks.Instance.Project = m_CurrentProject;
-            Ares.ModelInfo.ModelChecks.Instance.CheckAll();
+            Ares.ModelInfo.ModelChecks.Instance.CheckAll(m_CurrentProject);
             if (Ares.ModelInfo.ModelChecks.Instance.GetErrorCount() > 0)
             {
                 if (m_ErrorWindow == null)
@@ -426,7 +427,15 @@ namespace Ares.Editor
             }
             DoModelChecks();
 
+            Ares.Editor.Actions.FilesWatcher.Instance.Project = m_CurrentProject;
             m_ProjectExplorer.SetProject(m_CurrentProject);
+            for (int i = 0; i < m_FileExplorers.Length; ++i)
+            {
+                if (m_FileExplorers[i] != null)
+                {
+                    m_FileExplorers[i].SetProject(m_CurrentProject);
+                }
+            }
 
 #if !MONO
             if (m_ProjectExplorer.IsHidden)
@@ -601,7 +610,15 @@ namespace Ares.Editor
                 m_CurrentProject = null;
             }
 
+            Ares.Editor.Actions.FilesWatcher.Instance.Project = m_CurrentProject;
             m_ProjectExplorer.SetProject(m_CurrentProject);
+            for (int i = 0; i < m_FileExplorers.Length; ++i)
+            {
+                if (m_FileExplorers[i] != null)
+                {
+                    m_FileExplorers[i].SetProject(m_CurrentProject);
+                }
+            }
             DoModelChecks();
             m_Instance.SetLoadedProject(filePath);
             UpdateGUI();
@@ -611,7 +628,7 @@ namespace Ares.Editor
         {
             try
             {
-                Actions.Actions.Instance.Undo();
+                Actions.Actions.Instance.Undo(m_CurrentProject);
             }
             catch (Ares.Tags.TagsDbException ex)
             {
@@ -623,7 +640,7 @@ namespace Ares.Editor
         {
             try
             {
-                Actions.Actions.Instance.Redo();
+                Actions.Actions.Instance.Redo(m_CurrentProject);
             }
             catch (Ares.Tags.TagsDbException ex)
             {
@@ -731,7 +748,7 @@ namespace Ares.Editor
         {
             try
             {
-                Actions.Actions.Instance.Undo();
+                Actions.Actions.Instance.Undo(m_CurrentProject);
             }
             catch (Ares.Tags.TagsDbException ex)
             {
@@ -743,7 +760,7 @@ namespace Ares.Editor
         {
             try
             {
-                Actions.Actions.Instance.Redo();
+                Actions.Actions.Instance.Redo(m_CurrentProject);
             }
             catch (Ares.Tags.TagsDbException ex)
             {
