@@ -61,6 +61,15 @@ namespace Ares.Editor {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Add category ähnelt.
+        /// </summary>
+        internal static string AddCategory {
+            get {
+                return ResourceManager.GetString("AddCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die All ähnelt.
         /// </summary>
         internal static string All {
@@ -185,6 +194,24 @@ namespace Ares.Editor {
         internal static string BassUnknown {
             get {
                 return ResourceManager.GetString("BassUnknown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die category ähnelt.
+        /// </summary>
+        internal static string Category {
+            get {
+                return ResourceManager.GetString("Category", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die There is already a category with this name. ähnelt.
+        /// </summary>
+        internal static string CategoryExists {
+            get {
+                return ResourceManager.GetString("CategoryExists", resourceCulture);
             }
         }
         
@@ -316,6 +343,60 @@ namespace Ares.Editor {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The language code must be two letters ähnelt.
+        /// </summary>
+        internal static string LangCodeWrong {
+            get {
+                return ResourceManager.GetString("LangCodeWrong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die language ähnelt.
+        /// </summary>
+        internal static string Language {
+            get {
+                return ResourceManager.GetString("Language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die There is already a language with this name. ähnelt.
+        /// </summary>
+        internal static string LanguageExists {
+            get {
+                return ResourceManager.GetString("LanguageExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die There is already a language with this code. Perhaps there&apos;s just no translation of its name into {0}. ähnelt.
+        /// </summary>
+        internal static string LanguageExists2 {
+            get {
+                return ResourceManager.GetString("LanguageExists2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The name can&apos;t be empty ähnelt.
+        /// </summary>
+        internal static string LanguageMustHaveName {
+            get {
+                return ResourceManager.GetString("LanguageMustHaveName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The name in the language itself can&apos;t be empty ähnelt.
+        /// </summary>
+        internal static string LanguageMustHaveTranslation {
+            get {
+                return ResourceManager.GetString("LanguageMustHaveTranslation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Length: {0} ähnelt.
         /// </summary>
         internal static string Length {
@@ -361,11 +442,47 @@ namespace Ares.Editor {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Name in {0}: ähnelt.
+        /// </summary>
+        internal static string NameInLanguage {
+            get {
+                return ResourceManager.GetString("NameInLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die New Background Sounds ähnelt.
         /// </summary>
         internal static string NewBackgroundSounds {
             get {
                 return ResourceManager.GetString("NewBackgroundSounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Name of the new category: ähnelt.
+        /// </summary>
+        internal static string NewCategoryName {
+            get {
+                return ResourceManager.GetString("NewCategoryName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die New name of the category: ähnelt.
+        /// </summary>
+        internal static string NewCategoryName2 {
+            get {
+                return ResourceManager.GetString("NewCategoryName2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die New name of the language: ähnelt.
+        /// </summary>
+        internal static string NewLanguageName {
+            get {
+                return ResourceManager.GetString("NewLanguageName", resourceCulture);
             }
         }
         
@@ -438,6 +555,15 @@ namespace Ares.Editor {
         internal static string NewSoundChoice {
             get {
                 return ResourceManager.GetString("NewSoundChoice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die New name of the tag: ähnelt.
+        /// </summary>
+        internal static string NewTagName {
+            get {
+                return ResourceManager.GetString("NewTagName", resourceCulture);
             }
         }
         
@@ -560,6 +686,15 @@ namespace Ares.Editor {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die No element selected ähnelt.
+        /// </summary>
+        internal static string NoTranslationsLabelText {
+            get {
+                return ResourceManager.GetString("NoTranslationsLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Could not open help web page. Reason:
         ///{0} ähnelt.
         /// </summary>
@@ -616,6 +751,69 @@ namespace Ares.Editor {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Deleting a category also deletes all its tags and it can&apos;t be undone. Are you sure? ähnelt.
+        /// </summary>
+        internal static string ReallyDeleteCategory {
+            get {
+                return ResourceManager.GetString("ReallyDeleteCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Deleting a language will also delete all translations of tags or categories in that language, and it can&apos;t be undone. Are you sure? ähnelt.
+        /// </summary>
+        internal static string ReallyDeleteLanguage {
+            get {
+                return ResourceManager.GetString("ReallyDeleteLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Deleting a tag can&apos;t be undone. Are you sure? ähnelt.
+        /// </summary>
+        internal static string ReallyDeleteTag {
+            get {
+                return ResourceManager.GetString("ReallyDeleteTag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Deleting a translation can&apos;t be undone. Are you sure? ähnelt.
+        /// </summary>
+        internal static string ReallyDeleteTranslation {
+            get {
+                return ResourceManager.GetString("ReallyDeleteTranslation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Rename category ähnelt.
+        /// </summary>
+        internal static string RenameCategory {
+            get {
+                return ResourceManager.GetString("RenameCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Rename language ähnelt.
+        /// </summary>
+        internal static string RenameLanguage {
+            get {
+                return ResourceManager.GetString("RenameLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Rename tag ähnelt.
+        /// </summary>
+        internal static string RenameTag {
+            get {
+                return ResourceManager.GetString("RenameTag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Error saving the project: {0} ähnelt.
         /// </summary>
         internal static string SaveError {
@@ -661,6 +859,24 @@ namespace Ares.Editor {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die tag ähnelt.
+        /// </summary>
+        internal static string Tag {
+            get {
+                return ResourceManager.GetString("Tag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die There is already a tag with this name. ähnelt.
+        /// </summary>
+        internal static string TagExists {
+            get {
+                return ResourceManager.GetString("TagExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die The tag must have a category. ähnelt.
         /// </summary>
         internal static string TagMustHaveCategory {
@@ -685,6 +901,33 @@ namespace Ares.Editor {
         internal static string TagsDbError {
             get {
                 return ResourceManager.GetString("TagsDbError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Translation of &apos;{0}&apos; ähnelt.
+        /// </summary>
+        internal static string TranslationBoxTitle {
+            get {
+                return ResourceManager.GetString("TranslationBoxTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The name can&apos;t be empty ähnelt.
+        /// </summary>
+        internal static string TranslationMustHaveName {
+            get {
+                return ResourceManager.GetString("TranslationMustHaveName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Translations for {0} &apos;{1}&apos;: ähnelt.
+        /// </summary>
+        internal static string TranslationsLabelText {
+            get {
+                return ResourceManager.GetString("TranslationsLabelText", resourceCulture);
             }
         }
         

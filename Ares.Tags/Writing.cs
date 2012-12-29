@@ -196,7 +196,7 @@ namespace Ares.Tags
             Object fileKey = DoFindFile(null, oldPath);
             if (fileKey != null)
             {
-                String commandString = String.Format("UPDATE TABLE {0} SET {1}=@NewPath WHERE {2}=@Id", Schema.FILES_TABLE, Schema.PATH_COLUMN, Schema.ID_COLUMN);
+                String commandString = String.Format("UPDATE {0} SET {1}=@NewPath WHERE {2}=@Id", Schema.FILES_TABLE, Schema.PATH_COLUMN, Schema.ID_COLUMN);
                 using (SQLiteCommand command = new SQLiteCommand(commandString, m_Connection))
                 {
                     command.Parameters.AddWithValue("@NewPath", newPath);
@@ -295,7 +295,7 @@ namespace Ares.Tags
                 // 2. Remove all tags for the category
                 DoRemoveTags(tagIds, transaction);
                 // 3. Remove all translations for the category
-                String deleteTransCommand = String.Format("DELETE FROM TABLE {0} WHERE {1}=@CatId", Schema.CATEGORYNAMES_TABLE, Schema.CATEGORY_COLUMN);
+                String deleteTransCommand = String.Format("DELETE FROM {0} WHERE {1}=@CatId", Schema.CATEGORYNAMES_TABLE, Schema.CATEGORY_COLUMN);
                 using (SQLiteCommand command = new SQLiteCommand(deleteTransCommand, m_Connection, transaction))
                 {
                     command.Parameters.AddWithValue("@CatId", categoryId);
@@ -303,7 +303,7 @@ namespace Ares.Tags
                 }
                  */
                 // 4. Remove the category itself
-                String deleteCatCommand = String.Format("DELETE FROM TABLE {0} WHERE {1}=@CatId", Schema.CATEGORIES_TABLE, Schema.ID_COLUMN);
+                String deleteCatCommand = String.Format("DELETE FROM {0} WHERE {1}=@CatId", Schema.CATEGORIES_TABLE, Schema.ID_COLUMN);
                 using (SQLiteCommand command = new SQLiteCommand(deleteCatCommand, m_Connection, transaction))
                 {
                     command.Parameters.AddWithValue("@CatId", categoryId);
@@ -326,7 +326,7 @@ namespace Ares.Tags
             }
         }
 
-        private static readonly String REMOVE_TAG_COMMAND = "DELETE FROM TABLE {0} WHERE {1}=@TagId";
+        private static readonly String REMOVE_TAG_COMMAND = "DELETE FROM {0} WHERE {1}=@TagId";
 
         private void DoRemoveTags(List<long> tagIds, SQLiteTransaction transaction)
         {

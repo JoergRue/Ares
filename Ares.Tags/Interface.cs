@@ -251,6 +251,24 @@ namespace Ares.Tags
         void SetLanguageName(int languageIdOfName, int languageIdOfLanguage, String name);
 
         /// <summary>
+        /// Removes a translation of a language.
+        /// </summary>
+        /// <param name="languageIdOfName">the language of the translation which will be removed</param>
+        /// <param name="languageIdOfLanguage">the translated language</param>
+        void RemoveLanguageTranslation(int languageIdOfName, int languageIdOfLanguage);
+
+
+        /// <summary>
+        /// Removes a language and all translations into that language.
+        /// </summary>
+        void RemoveLanguage(int languageId);
+
+        /// <summary>
+        /// Returns whether there exists a language for a specific code.
+        /// </summary>
+        bool HasLanguageForCode(String code);
+
+        /// <summary>
         /// Returns all translations for a tag.
         /// </summary>
         IDictionary<int, String> GetTagTranslations(int tagId);

@@ -142,6 +142,12 @@ namespace Ares.Editor
                 m_ErrorWindow.Client = this;
                 return m_ErrorWindow;
             }
+            else if (persistString == "TagsEditor")
+            {
+                m_TagsEditor = new ElementEditors.TagsEditor();
+                m_TagsEditor.SetProject(m_CurrentProject);
+                return m_TagsEditor;
+            }
             else
             {
                 return null;
@@ -205,6 +211,30 @@ namespace Ares.Editor
             else UpdateWindowState(m_ProjectExplorer);
             ActivateWindow(m_ProjectExplorer);
         }
+
+        private ElementEditors.TagsEditor m_TagsEditor;
+
+        private void ShowTagsEditor()
+        {
+            if (m_TagsEditor == null)
+            {
+                m_TagsEditor = new ElementEditors.TagsEditor();
+                m_TagsEditor.SetProject(m_CurrentProject);
+#if !MONO
+                m_TagsEditor.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Document;
+                m_TagsEditor.Show(dockPanel);
+#else
+                m_TagsEditor.Dock = DockStyle.Document;
+                m_TagsEditor.MdiParent = this;
+                m_TagsEditor.Location = new Point(0, 0);
+                m_TagsEditor.Height = MdiClientControl.Height - 10;
+                m_TagsEditor.Show();
+#endif
+            }
+            else UpdateWindowState(m_TagsEditor);
+            ActivateWindow(m_TagsEditor);
+        }
+
 
         private VolumeWindow m_VolumeWindow;
 
@@ -428,7 +458,14 @@ namespace Ares.Editor
             DoModelChecks();
 
             Ares.Editor.Actions.FilesWatcher.Instance.Project = m_CurrentProject;
-            m_ProjectExplorer.SetProject(m_CurrentProject);
+            if (m_ProjectExplorer != null)
+            {
+                m_ProjectExplorer.SetProject(m_CurrentProject);
+            }
+            if (m_TagsEditor != null)
+            {
+                m_TagsEditor.SetProject(m_CurrentProject);
+            }
             for (int i = 0; i < m_FileExplorers.Length; ++i)
             {
                 if (m_FileExplorers[i] != null)
@@ -611,7 +648,14 @@ namespace Ares.Editor
             }
 
             Ares.Editor.Actions.FilesWatcher.Instance.Project = m_CurrentProject;
-            m_ProjectExplorer.SetProject(m_CurrentProject);
+            if (m_ProjectExplorer != null)
+            {
+                m_ProjectExplorer.SetProject(m_CurrentProject);
+            }
+            if (m_TagsEditor != null)
+            {
+                m_TagsEditor.SetProject(m_CurrentProject);
+            }
             for (int i = 0; i < m_FileExplorers.Length; ++i)
             {
                 if (m_FileExplorers[i] != null)
@@ -701,12 +745,14 @@ namespace Ares.Editor
             soundFileExplorerToolStripMenuItem.Checked = m_FileExplorers[1] != null && !m_FileExplorers[1].IsHidden;
             volumesToolStripMenuItem.Checked = m_VolumeWindow != null && !m_VolumeWindow.IsHidden;
             projectErrorsToolStripMenuItem.Checked = m_ErrorWindow != null && !m_ErrorWindow.IsHidden;
+            tagsMenuItem.Checked = m_TagsEditor != null && !m_TagsEditor.IsHidden;
 #else
             projectExplorerToolStripMenuItem.Checked = m_ProjectExplorer != null && m_ProjectExplorer.Visible;
             fileExplorerToolStripMenuItem.Checked = m_FileExplorers[0] != null && m_FileExplorers[0].Visible;
             soundFileExplorerToolStripMenuItem.Checked = m_FileExplorers[1] != null && m_FileExplorers[1].Visible;
             volumesToolStripMenuItem.Checked = m_VolumeWindow != null && m_VolumeWindow.Visible;
             projectErrorsToolStripMenuItem.Checked = m_ErrorWindow != null && m_ErrorWindow.Visible;
+            tagsMenuItem.Checked = m_TagsEditor != null && m_TagsEditor.Visible;
 #endif
         }
 
@@ -872,12 +918,14 @@ namespace Ares.Editor
             projectExplorerToolStripMenuItem.Checked = !m_ProjectExplorer.IsHidden;
             volumesToolStripMenuItem.Checked = m_VolumeWindow != null && !m_VolumeWindow.IsHidden;
             projectErrorsToolStripMenuItem.Checked = m_ErrorWindow != null && !m_ErrorWindow.IsHidden;
+            tagsMenuItem.Checked = m_VolumeWindow != null && !m_VolumeWindow.IsHidden;
 #else
             fileExplorerToolStripMenuItem.Checked = true;
             soundFileExplorerToolStripMenuItem.Checked = true;
             projectExplorerToolStripMenuItem.Checked = true;
             volumesToolStripMenuItem.Checked = true;
             projectErrorsToolStripMenuItem.Checked = false;
+            tagsMenuItem.Checked = false;
 #endif
             Actions.Actions.Instance.UpdateGUI = UpdateGUI;
             Actions.Playing.Instance.SetDirectories(Ares.Settings.Settings.Instance.MusicDirectory, Ares.Settings.Settings.Instance.SoundDirectory);
@@ -1090,6 +1138,11 @@ namespace Ares.Editor
         public void SetEditor()
         {
             ShowToolsDialog();
+        }
+
+        private void tagsMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowTagsEditor();
         }
     }
 

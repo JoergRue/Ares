@@ -120,6 +120,72 @@ namespace Ares.Tags
             }
         }
 
+        public void RemoveLanguageTranslation(int languageIdOfName, int languageIdOfLanguage)
+        {
+            if (m_Connection == null)
+            {
+                throw new TagsDbException("No Connection to DB file!");
+            }
+            try
+            {
+                DoRemoveTranslation(m_Connection, null, Schema.LANGUAGENAMES_TABLE, Schema.NAMED_LANGUAGE_COLUMN, Schema.LANGUAGE_OF_NAME_COLUMN, 
+                    languageIdOfLanguage, languageIdOfName);
+            }
+            catch (System.Data.DataException ex)
+            {
+                throw new TagsDbException(ex.Message, ex);
+            }
+            catch (SQLiteException ex)
+            {
+                throw new TagsDbException(ex.Message, ex);
+            }
+        }
+
+        public void RemoveLanguage(int languageId)
+        {
+            if (m_Connection == null)
+            {
+                throw new TagsDbException("No Connection to DB file!");
+            }
+            try
+            {
+                DoRemoveLanguage(languageId);
+            }
+            catch (System.Data.DataException ex)
+            {
+                throw new TagsDbException(ex.Message, ex);
+            }
+            catch (SQLiteException ex)
+            {
+                throw new TagsDbException(ex.Message, ex);
+            }
+        }
+
+        public bool HasLanguageForCode(String languageCode)
+        {
+            if (String.IsNullOrEmpty(languageCode))
+            {
+                throw new ArgumentException("Value required", "languageCode");
+            }
+            if (m_Connection == null)
+            {
+                throw new TagsDbException("No Connection to DB file!");
+            }
+            try
+            {
+                int id;
+                return DoGetIdOfLanguage(languageCode, out id);
+            }
+            catch (System.Data.DataException ex)
+            {
+                throw new TagsDbException(ex.Message, ex);
+            }
+            catch (SQLiteException ex)
+            {
+                throw new TagsDbException(ex.Message, ex);
+            }
+        }
+
         public IDictionary<int, String> GetLanguageTranslations(int languageId)
         {
             if (m_Connection == null)
@@ -335,8 +401,21 @@ namespace Ares.Tags
             }
         }
 
+        private static String REMOVE_LANGUAGE_COMMAND = "DELETE FROM {0} WHERE {1}=@LangId";
+
+        private void DoRemoveLanguage(int languageId)
+        {
+            // translations are removed automatically through ON DELETE CASCADE
+            String removeLanguageCommand = String.Format(REMOVE_LANGUAGE_COMMAND, Schema.LANGUAGE_TABLE, Schema.ID_COLUMN);
+            using (SQLiteCommand command = new SQLiteCommand(removeLanguageCommand, m_Connection))
+            {
+                command.Parameters.AddWithValue("@LangId", languageId);
+                command.ExecuteNonQuery();
+            }
+        }
+
         private static String FIND_TRANSLATION_COMMAND = "SELECT {3} FROM {0} WHERE {1}=@RefId AND {2}=@LangId";
-        private static String SET_TRANSLATION_COMMAND = "UPDATE TABLE {0} SET {1}=@Name WHERE {2}=@Id";
+        private static String SET_TRANSLATION_COMMAND = "UPDATE {0} SET {1}=@Name WHERE {2}=@Id";
 
         internal static void DoSetTranslation(SQLiteConnection connection, String table, String refColName, String langColName, long refId, long langId, String name)
         {

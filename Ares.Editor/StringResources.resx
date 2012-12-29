@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddCategory" xml:space="preserve">
+    <value>Add category</value>
+  </data>
   <data name="All" xml:space="preserve">
     <value>All</value>
   </data>
@@ -160,6 +163,12 @@ Error message: {0}
   </data>
   <data name="BassUnknown" xml:space="preserve">
     <value>Unknown error. Are soundcard and speakers installed properly?</value>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>category</value>
+  </data>
+  <data name="CategoryExists" xml:space="preserve">
+    <value>There is already a category with this name.</value>
   </data>
   <data name="CopyOrMoveParentIntoChild" xml:space="preserve">
     <value>A parent directory can't be copied or moved into one of its child directories.</value>
@@ -210,6 +219,24 @@ Left      - Previous music title</value>
   <data name="InvalidModeElement" xml:space="preserve">
     <value>&lt;not found&gt;</value>
   </data>
+  <data name="LangCodeWrong" xml:space="preserve">
+    <value>The language code must be two letters</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>language</value>
+  </data>
+  <data name="LanguageExists" xml:space="preserve">
+    <value>There is already a language with this name.</value>
+  </data>
+  <data name="LanguageExists2" xml:space="preserve">
+    <value>There is already a language with this code. Perhaps there's just no translation of its name into {0}.</value>
+  </data>
+  <data name="LanguageMustHaveName" xml:space="preserve">
+    <value>The name can't be empty</value>
+  </data>
+  <data name="LanguageMustHaveTranslation" xml:space="preserve">
+    <value>The name in the language itself can't be empty</value>
+  </data>
   <data name="Length" xml:space="preserve">
     <value>Length: {0}</value>
   </data>
@@ -225,8 +252,20 @@ Left      - Previous music title</value>
   <data name="Music" xml:space="preserve">
     <value>Music</value>
   </data>
+  <data name="NameInLanguage" xml:space="preserve">
+    <value>Name in {0}:</value>
+  </data>
   <data name="NewBackgroundSounds" xml:space="preserve">
     <value>New Background Sounds</value>
+  </data>
+  <data name="NewCategoryName" xml:space="preserve">
+    <value>Name of the new category:</value>
+  </data>
+  <data name="NewCategoryName2" xml:space="preserve">
+    <value>New name of the category:</value>
+  </data>
+  <data name="NewLanguageName" xml:space="preserve">
+    <value>New name of the language:</value>
   </data>
   <data name="NewMacro" xml:space="preserve">
     <value>New Macro</value>
@@ -251,6 +290,9 @@ Left      - Previous music title</value>
   </data>
   <data name="NewSoundChoice" xml:space="preserve">
     <value>New Sound Choice</value>
+  </data>
+  <data name="NewTagName" xml:space="preserve">
+    <value>New name of the tag:</value>
   </data>
   <data name="NoDevice" xml:space="preserve">
     <value>No sound device found.</value>
@@ -292,6 +334,9 @@ You should adapt some settings first.</value>
   <data name="NoSoundFileEditor" xml:space="preserve">
     <value>No audio file editor has been configured yet. Do you wish to configure one now?</value>
   </data>
+  <data name="NoTranslationsLabelText" xml:space="preserve">
+    <value>No element selected</value>
+  </data>
   <data name="OpenHelpError" xml:space="preserve">
     <value>Could not open help web page. Reason:
 {0}</value>
@@ -312,6 +357,27 @@ You should adapt some settings first.</value>
   <data name="ReallyDelete" xml:space="preserve">
     <value>Files will be deleted permanently. Proceed?</value>
   </data>
+  <data name="ReallyDeleteCategory" xml:space="preserve">
+    <value>Deleting a category also deletes all its tags and it can't be undone. Are you sure?</value>
+  </data>
+  <data name="ReallyDeleteLanguage" xml:space="preserve">
+    <value>Deleting a language will also delete all translations of tags or categories in that language, and it can't be undone. Are you sure?</value>
+  </data>
+  <data name="ReallyDeleteTag" xml:space="preserve">
+    <value>Deleting a tag can't be undone. Are you sure?</value>
+  </data>
+  <data name="ReallyDeleteTranslation" xml:space="preserve">
+    <value>Deleting a translation can't be undone. Are you sure?</value>
+  </data>
+  <data name="RenameCategory" xml:space="preserve">
+    <value>Rename category</value>
+  </data>
+  <data name="RenameLanguage" xml:space="preserve">
+    <value>Rename language</value>
+  </data>
+  <data name="RenameTag" xml:space="preserve">
+    <value>Rename tag</value>
+  </data>
   <data name="SaveError" xml:space="preserve">
     <value>Error saving the project: {0}</value>
   </data>
@@ -327,6 +393,12 @@ You should adapt some settings first.</value>
   <data name="Sounds" xml:space="preserve">
     <value>Sounds</value>
   </data>
+  <data name="Tag" xml:space="preserve">
+    <value>tag</value>
+  </data>
+  <data name="TagExists" xml:space="preserve">
+    <value>There is already a tag with this name.</value>
+  </data>
   <data name="TagMustHaveCategory" xml:space="preserve">
     <value>The tag must have a category.</value>
   </data>
@@ -336,6 +408,15 @@ You should adapt some settings first.</value>
   <data name="TagsDbError" xml:space="preserve">
     <value>Error accessing tags database:
 {0}</value>
+  </data>
+  <data name="TranslationBoxTitle" xml:space="preserve">
+    <value>Translation of '{0}'</value>
+  </data>
+  <data name="TranslationMustHaveName" xml:space="preserve">
+    <value>The name can't be empty</value>
+  </data>
+  <data name="TranslationsLabelText" xml:space="preserve">
+    <value>Translations for {0} '{1}':</value>
   </data>
   <data name="TriggerEditorTitle" xml:space="preserve">
     <value>Start of {0}</value>

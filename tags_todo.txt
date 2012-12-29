@@ -1,0 +1,21 @@
+Tags TODO:
+
+- Hide Tags and Categories (per project? per database?)
+- Auto-Tagging (Author, Genre, ?)
+- Controllers
+- Create database by copying default file
+- Move database when music path is changed
+- More default tags
+- Macro commands
+- Filter in File Explorer
+- Mono / Linux
+- Import and Export
+
+Non-Tags TODO:
+
+- Open project arch. in Controllers
+- News from online file
+- Quotes in starting external editor
+- External player for music
+- Copyright year
+

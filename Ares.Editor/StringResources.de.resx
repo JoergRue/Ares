@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddCategory" xml:space="preserve">
+    <value>Kategorie hinzufügen</value>
+  </data>
   <data name="All" xml:space="preserve">
     <value>Alle</value>
   </data>
@@ -160,6 +163,12 @@ Fehlermeldung: {0}
   </data>
   <data name="BassUnknown" xml:space="preserve">
     <value>Unbekannter Fehler. Sind Soundkarte und Lautsprecher korrekt installiert?</value>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>der Kategorie</value>
+  </data>
+  <data name="CategoryExists" xml:space="preserve">
+    <value>Eine Kategorie mit diesem Namen existiert bereits.</value>
   </data>
   <data name="CopyOrMoveParentIntoChild" xml:space="preserve">
     <value>Ein Verzeichnis kann nicht in eines seiner Unterverzeichnisse kopiert oder verschoben werden.</value>
@@ -210,6 +219,24 @@ Pfeil nach links  - Vorheriges Musikstück</value>
   <data name="InvalidModeElement" xml:space="preserve">
     <value>&lt;nicht gefunden&gt;</value>
   </data>
+  <data name="LangCodeWrong" xml:space="preserve">
+    <value>Der Sprachcode muss aus zwei Buchstaben bestehen</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>der Sprache</value>
+  </data>
+  <data name="LanguageExists" xml:space="preserve">
+    <value>Eine Sprache mit diesem Namen existiert bereits.</value>
+  </data>
+  <data name="LanguageExists2" xml:space="preserve">
+    <value>Eine Sprache mit diesem Code existiert bereits. Vielleicht hat sie nur keine Übersetzung nach {0}.</value>
+  </data>
+  <data name="LanguageMustHaveName" xml:space="preserve">
+    <value>Der Name darf nicht leer sein</value>
+  </data>
+  <data name="LanguageMustHaveTranslation" xml:space="preserve">
+    <value>Der Name in der Sprache selbst darf nicht leer sein</value>
+  </data>
   <data name="Length" xml:space="preserve">
     <value>Länge: {0}</value>
   </data>
@@ -225,8 +252,20 @@ Pfeil nach links  - Vorheriges Musikstück</value>
   <data name="Music" xml:space="preserve">
     <value>Musik</value>
   </data>
+  <data name="NameInLanguage" xml:space="preserve">
+    <value>Name in {0}:</value>
+  </data>
   <data name="NewBackgroundSounds" xml:space="preserve">
     <value>Neue Hintergrundgeräusche</value>
+  </data>
+  <data name="NewCategoryName" xml:space="preserve">
+    <value>Name der neuen Kategorie:</value>
+  </data>
+  <data name="NewCategoryName2" xml:space="preserve">
+    <value>Neuer Name der Kategorie:</value>
+  </data>
+  <data name="NewLanguageName" xml:space="preserve">
+    <value>Neuer Name der Sprache:</value>
   </data>
   <data name="NewMacro" xml:space="preserve">
     <value>Neues Makro</value>
@@ -251,6 +290,9 @@ Pfeil nach links  - Vorheriges Musikstück</value>
   </data>
   <data name="NewSoundChoice" xml:space="preserve">
     <value>Neue Geräuschauswahl</value>
+  </data>
+  <data name="NewTagName" xml:space="preserve">
+    <value>Neuer Name des Tags:</value>
   </data>
   <data name="NoDevice" xml:space="preserve">
     <value>Keine Soundkarte gefunden.</value>
@@ -292,6 +334,9 @@ Sie sollten zuerst ein paar Einstellungen vornehmen.</value>
   <data name="NoSoundFileEditor" xml:space="preserve">
     <value>Es wurde noch kein Editor für Audiodateien konfiguriert. Möchten Sie jetzt einen konfigurieren?</value>
   </data>
+  <data name="NoTranslationsLabelText" xml:space="preserve">
+    <value>Kein Element ausgewählt</value>
+  </data>
   <data name="OpenHelpError" xml:space="preserve">
     <value>Konnte Hilfeseite nicht öffnen. Grund:
 {0}</value>
@@ -313,6 +358,27 @@ Soll es jetzt gespeichert werden?</value>
   <data name="ReallyDelete" xml:space="preserve">
     <value>Dateien werden permanent gelöscht. Fortsetzen?</value>
   </data>
+  <data name="ReallyDeleteCategory" xml:space="preserve">
+    <value>Es werden auch alle Tags der Kategorie gelöscht und das Löschen kann nicht rückgängig gemacht werden. Sind Sie sicher?</value>
+  </data>
+  <data name="ReallyDeleteLanguage" xml:space="preserve">
+    <value>Es werden auch alle Übersetzungen von Kategorien und Tags in die Sprache gelöscht und das Löschen kann nicht rückgängig gemacht werden. Sind Sie sicher?</value>
+  </data>
+  <data name="ReallyDeleteTag" xml:space="preserve">
+    <value>Das Löschen eines Tags kann nicht rückgängig gemacht werden. Sind Sie sicher?</value>
+  </data>
+  <data name="ReallyDeleteTranslation" xml:space="preserve">
+    <value>Das Löschen einer Übersetzung kann nicht rückgängig gemacht werden. Sind Sie sicher?</value>
+  </data>
+  <data name="RenameCategory" xml:space="preserve">
+    <value>Kategorie umbenennen</value>
+  </data>
+  <data name="RenameLanguage" xml:space="preserve">
+    <value>Sprache umbenennen</value>
+  </data>
+  <data name="RenameTag" xml:space="preserve">
+    <value>Tag umbenennen</value>
+  </data>
   <data name="SaveError" xml:space="preserve">
     <value>Fehler beim Speichern des Projektes: {0}</value>
   </data>
@@ -328,6 +394,12 @@ Soll es jetzt gespeichert werden?</value>
   <data name="Sounds" xml:space="preserve">
     <value>Geräusche</value>
   </data>
+  <data name="Tag" xml:space="preserve">
+    <value>des Tags</value>
+  </data>
+  <data name="TagExists" xml:space="preserve">
+    <value>Ein Tag mit diesem Namen existiert bereits.</value>
+  </data>
   <data name="TagMustHaveCategory" xml:space="preserve">
     <value>Der Tag muss eine Kategorie haben.</value>
   </data>
@@ -337,6 +409,15 @@ Soll es jetzt gespeichert werden?</value>
   <data name="TagsDbError" xml:space="preserve">
     <value>Fehler beim Zugriff auf die Tags-Datenbasis:
 {0}</value>
+  </data>
+  <data name="TranslationBoxTitle" xml:space="preserve">
+    <value>Übersetzung von "{0}"</value>
+  </data>
+  <data name="TranslationMustHaveName" xml:space="preserve">
+    <value>Der Name darf nicht leer sein</value>
+  </data>
+  <data name="TranslationsLabelText" xml:space="preserve">
+    <value>Übersetzungen {0} "{1}":</value>
   </data>
   <data name="TriggerEditorTitle" xml:space="preserve">
     <value>Start von {0}</value>

@@ -134,11 +134,23 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dialogs\AddLanguageDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\AddLanguageDialog.Designer.cs">
+      <DependentUpon>AddLanguageDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\AddTagDialog.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Dialogs\AddTagDialog.Designer.cs">
       <DependentUpon>AddTagDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\AddTranslationDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\AddTranslationDialog.Designer.cs">
+      <DependentUpon>AddTranslationDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\FileTagsDialog.cs">
       <SubType>Form</SubType>
@@ -151,6 +163,12 @@
     </Compile>
     <Compile Include="Dialogs\ImportDialog.Designer.cs">
       <DependentUpon>ImportDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\InputDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\InputDialog.Designer.cs">
+      <DependentUpon>InputDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\KeyDialog.cs">
       <SubType>Form</SubType>
@@ -218,6 +236,12 @@
     <Compile Include="ElementEditors\SequentialPlaylistEditor.Designer.cs">
       <DependentUpon>SequentialPlaylistEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="ElementEditors\TagsEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ElementEditors\TagsEditor.Designer.cs">
+      <DependentUpon>TagsEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="ElementEditors\TriggerEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -274,11 +298,23 @@
     <Compile Include="VolumeWindow.Designer.cs">
       <DependentUpon>VolumeWindow.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Dialogs\AddLanguageDialog.de.resx">
+      <DependentUpon>AddLanguageDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\AddLanguageDialog.resx">
+      <DependentUpon>AddLanguageDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\AddTagDialog.de.resx">
       <DependentUpon>AddTagDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\AddTagDialog.resx">
       <DependentUpon>AddTagDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\AddTranslationDialog.de.resx">
+      <DependentUpon>AddTranslationDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\AddTranslationDialog.resx">
+      <DependentUpon>AddTranslationDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\FileTagsDialog.de.resx">
       <DependentUpon>FileTagsDialog.cs</DependentUpon>
@@ -291,6 +327,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\ImportDialog.resx">
       <DependentUpon>ImportDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\InputDialog.de.resx">
+      <DependentUpon>InputDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\InputDialog.resx">
+      <DependentUpon>InputDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\KeyDialog.de.resx">
       <DependentUpon>KeyDialog.cs</DependentUpon>
@@ -348,6 +390,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ElementEditors\SequentialPlaylistEditor.resx">
       <DependentUpon>SequentialPlaylistEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ElementEditors\TagsEditor.de.resx">
+      <DependentUpon>TagsEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ElementEditors\TagsEditor.resx">
+      <DependentUpon>TagsEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ElementEditors\TriggerEditor.de.resx">
       <DependentUpon>TriggerEditor.cs</DependentUpon>
