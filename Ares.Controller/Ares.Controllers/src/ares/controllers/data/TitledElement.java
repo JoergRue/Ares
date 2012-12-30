@@ -19,12 +19,12 @@
  */
 package ares.controllers.data;
 
-public class MusicElement {
+public class TitledElement {
 
 	private String title;
 	private int id;
 	
-	public MusicElement(String title, int id)
+	public TitledElement(String title, int id)
 	{
 		this.title = title;
 		this.id = id;

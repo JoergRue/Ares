@@ -146,13 +146,14 @@ public abstract class ModeLikeFragment extends ConnectedFragment {
     		break;
     	case SHOW_MAIN:
     		showMainControls();
+    		break;
         }
     	return super.onOptionsItemSelected(menuItem);
     }
     
     private void showPreviousMode() {
     	int mode = mMode - 1;
-    	if (mode == -2) {
+    	if (mode == -3) {
     		mode = Control.getInstance().getConfiguration().getModes().size() - 1;
     	}
     	showMode(mode, ControllerActivity.ANIM_MOVE_LEFT);
@@ -164,7 +165,7 @@ public abstract class ModeLikeFragment extends ConnectedFragment {
     private void showNextMode() {
     	int mode = mMode + 1;
     	if (mode == Control.getInstance().getConfiguration().getModes().size()) {
-    		mode = -1;
+    		mode = -2;
     	}
     	showMode(mode, ControllerActivity.ANIM_MOVE_RIGHT);
     	if (!isOnXLargeScreen()) {
@@ -203,6 +204,13 @@ public abstract class ModeLikeFragment extends ConnectedFragment {
 				intent.putExtra(ControllerActivity.ANIMATION_TYPE, backAnimation);
 				startActivity(intent);		    	    		
 	    	}
+	    	else if (mode == -2) {
+	    		// special case: tags
+				Intent intent = new Intent(getActivity().getBaseContext(), TagsActivity.class);
+				intent.putExtra(ModeLikeActivity.MODE_INDEX, mode);
+				intent.putExtra(ControllerActivity.ANIMATION_TYPE, backAnimation);
+				startActivity(intent);		    	    		
+	    	}
 	    	else {
 				Intent intent = new Intent(getActivity().getBaseContext(), ModeActivity.class);
 				intent.putExtra(ModeLikeActivity.MODE_INDEX, mode);
@@ -211,7 +219,13 @@ public abstract class ModeLikeFragment extends ConnectedFragment {
 	    	}
     	}
     	else {
-    		ModeLikeFragment fragment = (mode == -1) ? new MusicListFragment() : new ModeFragment();
+    		ModeLikeFragment fragment = null;
+    		if (mode == -1) 
+    			fragment = new MusicListFragment();
+    		else if (mode == -2)
+    			fragment = new TagsFragment();
+    		else
+    			fragment = new ModeFragment();
 			fragment.setMode(mode);
 			FragmentTransaction transaction = getFragmentManager().beginTransaction();
 			transaction.replace(R.id.modeFragmentContainer, fragment);

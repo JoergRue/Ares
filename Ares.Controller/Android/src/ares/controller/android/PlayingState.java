@@ -20,12 +20,15 @@
 package ares.controller.android;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 import android.os.Handler;
 import ares.controllers.control.Control;
 import ares.controllers.data.Configuration;
-import ares.controllers.data.MusicElement;
+import ares.controllers.data.TitledElement;
 import ares.controllers.network.INetworkClient;
 
 public class PlayingState implements INetworkClient {
@@ -34,7 +37,7 @@ public class PlayingState implements INetworkClient {
 	private int musicVolume = 100;
 	private int soundVolume = 100;
 	
-	private List<MusicElement> musicList = null;
+	private List<TitledElement> musicList = null;
 		
 	private String mode = "";
 	private String musicPlayed = "";
@@ -45,6 +48,12 @@ public class PlayingState implements INetworkClient {
 	private ArrayList<String> modeElements = new ArrayList<String>();
 	
 	private String playerProject = "";
+	
+	private List<TitledElement> tagCategories = new ArrayList<TitledElement>();
+	private Map<Integer, List<TitledElement>> tags = new HashMap<Integer, List<TitledElement>>();
+	private HashSet<Integer> activeTags = new HashSet<Integer>();
+	
+	private boolean tagCategoryOperatorIsAnd = false;
 
 	public int getOverallVolume() {
 		return overallVolume;
@@ -74,12 +83,28 @@ public class PlayingState implements INetworkClient {
 		return playerProject;
 	}
 	
-	public List<MusicElement> getMusicList() {
+	public List<TitledElement> getMusicList() {
 		return musicList;
 	}
 	
 	public boolean isMusicRepeat() {
 		return isRepeat;
+	}
+	
+	public List<TitledElement> getTagCategories() {
+		return tagCategories;
+	}
+	
+	public Map<Integer, List<TitledElement>> getTags() {
+		return tags;
+	}
+	
+	public HashSet<Integer> getActiveTags() {
+		return activeTags;
+	}
+	
+	public boolean isTagCategoryOperatorAnd() {
+		return tagCategoryOperatorIsAnd;
 	}
 	
 	private static PlayingState sInstance = null;
@@ -298,8 +323,8 @@ public class PlayingState implements INetworkClient {
 	}
 
 	@Override
-	public void musicListChanged(List<MusicElement> newList) {
-		final List<MusicElement> l = newList;
+	public void musicListChanged(List<TitledElement> newList) {
+		final List<TitledElement> l = newList;
 		handler.post(new Runnable() {
 			public void run() {
 				musicList = l;
@@ -310,5 +335,65 @@ public class PlayingState implements INetworkClient {
 			}
 		});
 		
+	}
+
+	@Override
+	public void tagsChanged(final List<TitledElement> newCategories,
+			final Map<Integer, List<TitledElement>> newTagsPerCategory) {
+		handler.post(new Runnable() {
+			public void run() {
+				tagCategories = newCategories;
+				tags = newTagsPerCategory;
+				if (!hasClient())
+					return;
+				for (INetworkClient client : clients)
+					client.tagsChanged(newCategories, newTagsPerCategory);
+			}
+		});
+	}
+
+	@Override
+	public void activeTagsChanged(final List<Integer> newActiveTags) {
+		handler.post(new Runnable() {
+			public void run() {
+				activeTags.clear();
+				activeTags.addAll(newActiveTags);
+				if (!hasClient())
+					return;
+				for (INetworkClient client : clients)
+					client.activeTagsChanged(newActiveTags);
+			}
+		});
+	}
+
+	@Override
+	public void tagSwitched(final int tagId, final boolean isActive) {
+		handler.post(new Runnable() {
+			public void run() {
+				if (isActive) {
+					activeTags.add(tagId);
+				}
+				else {
+					activeTags.remove(tagId);
+				}
+				if (!hasClient())
+					return;
+				for (INetworkClient client : clients)
+					client.tagSwitched(tagId, isActive);
+			}
+		});
+	}
+	
+	@Override
+	public void tagCategoryOperatorChanged(final boolean operatorIsAnd) {
+		handler.post(new Runnable() {
+			public void run() {
+				tagCategoryOperatorIsAnd = operatorIsAnd;
+				if (!hasClient())
+					return;
+				for (INetworkClient client : clients)
+					client.tagCategoryOperatorChanged(operatorIsAnd);
+			}
+		});
 	}
 }

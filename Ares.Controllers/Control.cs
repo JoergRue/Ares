@@ -187,5 +187,41 @@ namespace Ares.Controllers
                 m_Connection.SetMusicRepeat(repeat);
             }
         }
+
+        public void SwitchTag(int categoryId, int tagId, bool active)
+        {
+            if (m_Connection == null || !m_Connection.Connected)
+            {
+                Messages.AddMessage(MessageType.Warning, StringResources.NoConnection);
+            }
+            else
+            {
+                m_Connection.SwitchMusicTag(categoryId, tagId, active);
+            }
+        }
+
+        public void RemoveAllTags()
+        {
+            if (m_Connection == null || !m_Connection.Connected)
+            {
+                Messages.AddMessage(MessageType.Warning, StringResources.NoConnection);
+            }
+            else
+            {
+                m_Connection.RemoveAllMusicTags();
+            }
+        }
+
+        public void SetTagCategoriesOperator(bool operatorIsAnd)
+        {
+            if (m_Connection == null || !m_Connection.Connected)
+            {
+                Messages.AddMessage(MessageType.Warning, StringResources.NoConnection);
+            }
+            else
+            {
+                m_Connection.SetMusicTagCategoryOperator(operatorIsAnd);
+            }
+        }
     }
 }

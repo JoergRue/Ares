@@ -20,6 +20,8 @@
 package ares.controller.android;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -57,6 +59,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.LinearLayout.LayoutParams;
 import ares.controllers.control.Control;
+import ares.controllers.data.TitledElement;
 import ares.controllers.network.INetworkClient;
 import ares.controllers.network.ServerInfo;
 
@@ -634,7 +637,7 @@ public class ControlFragment extends ConnectedFragment implements INetworkClient
 	}
 	
 	@Override
-	public void musicListChanged(java.util.List<ares.controllers.data.MusicElement> newList) {
+	public void musicListChanged(java.util.List<ares.controllers.data.TitledElement> newList) {
 		// nothing here
 	}
 	
@@ -644,6 +647,27 @@ public class ControlFragment extends ConnectedFragment implements INetworkClient
 			repeatButton.setSelected(repeat);
 			repeatButton.setImageBitmap(!repeat ? normalRepeatBmp : selectedRepeatBmp);
 		}
+	}
+
+	@Override
+	public void tagsChanged(List<TitledElement> newCategories,
+			Map<Integer, List<TitledElement>> newTagsPerCategory) {
+		// nothing here
+	}
+
+	@Override
+	public void activeTagsChanged(List<Integer> newActiveTags) {
+		// nothing here
+	}
+
+	@Override
+	public void tagSwitched(int tagId, boolean isActive) {
+		// nothing here
+	}
+
+	@Override
+	public void tagCategoryOperatorChanged(boolean operatorIsAnd) {
+		// nothing here
 	}
 	
 }

@@ -57,19 +57,35 @@
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.modesList = new System.Windows.Forms.ListBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.tagsPanel = new System.Windows.Forms.Panel();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.clearTagsButton = new System.Windows.Forms.Button();
+            this.tagSelectionPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.currentTagsLabel = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.tagCategoriesAndButton = new System.Windows.Forms.RadioButton();
+            this.tagCategoriesOrButton = new System.Windows.Forms.RadioButton();
+            this.musicTagCategoryBox = new System.Windows.Forms.ComboBox();
             this.elementsPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.musicList = new System.Windows.Forms.ListBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.overLayPanel = new System.Windows.Forms.Panel();
+            this.overlayOKButton = new System.Windows.Forms.Button();
+            this.overlayCloseButton = new System.Windows.Forms.Button();
             this.openButton = new System.Windows.Forms.ToolStripSplitButton();
             this.messagesButton = new System.Windows.Forms.ToolStripButton();
             this.settingsButton = new System.Windows.Forms.ToolStripButton();
             this.aboutButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.stopButton = new System.Windows.Forms.ToolStripButton();
             this.prevMusicButton = new System.Windows.Forms.ToolStripButton();
             this.nextMusicButton = new System.Windows.Forms.ToolStripButton();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.overLayPanel = new System.Windows.Forms.Panel();
+            this.repeatButton = new System.Windows.Forms.ToolStripButton();
             this.transparentFlowLayoutPanel2 = new Ares.MGPlugin.TransparentFlowLayoutPanel();
             this.overlayLabel5 = new Ares.MGPlugin.TransparentLabel();
             this.settingsLabel = new Ares.MGPlugin.TransparentLinkLabel();
@@ -82,12 +98,8 @@
             this.overlayLabel2 = new Ares.MGPlugin.TransparentLabel();
             this.homepageLabel = new Ares.MGPlugin.TransparentLinkLabel();
             this.overlayLabel9 = new Ares.MGPlugin.TransparentLabel();
-            this.overlayOKButton = new System.Windows.Forms.Button();
             this.overlayLabel7 = new Ares.MGPlugin.TransparentLabel();
             this.overlayLabel1 = new Ares.MGPlugin.TransparentLabel();
-            this.overlayCloseButton = new System.Windows.Forms.Button();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.repeatButton = new System.Windows.Forms.ToolStripButton();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.soundsBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.musicBar)).BeginInit();
@@ -96,6 +108,9 @@
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox5.SuspendLayout();
+            this.tagsPanel.SuspendLayout();
+            this.groupBox7.SuspendLayout();
+            this.groupBox6.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.overLayPanel.SuspendLayout();
             this.transparentFlowLayoutPanel2.SuspendLayout();
@@ -313,7 +328,7 @@
             this.groupBox4.Controls.Add(this.modesList);
             this.groupBox4.Location = new System.Drawing.Point(283, 40);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(200, 256);
+            this.groupBox4.Size = new System.Drawing.Size(200, 362);
             this.groupBox4.TabIndex = 3;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Modi";
@@ -326,7 +341,7 @@
             this.modesList.FormattingEnabled = true;
             this.modesList.Location = new System.Drawing.Point(6, 21);
             this.modesList.Name = "modesList";
-            this.modesList.Size = new System.Drawing.Size(188, 225);
+            this.modesList.Size = new System.Drawing.Size(188, 329);
             this.modesList.TabIndex = 0;
             this.modesList.SelectedIndexChanged += new System.EventHandler(this.modesList_SelectedIndexChanged);
             // 
@@ -335,14 +350,160 @@
             this.groupBox5.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox5.Controls.Add(this.tagsPanel);
             this.groupBox5.Controls.Add(this.elementsPanel);
             this.groupBox5.Controls.Add(this.musicList);
             this.groupBox5.Location = new System.Drawing.Point(489, 40);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(230, 256);
+            this.groupBox5.Size = new System.Drawing.Size(340, 362);
             this.groupBox5.TabIndex = 4;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Elemente";
+            // 
+            // tagsPanel
+            // 
+            this.tagsPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tagsPanel.Controls.Add(this.groupBox7);
+            this.tagsPanel.Controls.Add(this.groupBox6);
+            this.tagsPanel.Location = new System.Drawing.Point(1, 0);
+            this.tagsPanel.Name = "tagsPanel";
+            this.tagsPanel.Size = new System.Drawing.Size(333, 362);
+            this.tagsPanel.TabIndex = 3;
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox7.Controls.Add(this.clearTagsButton);
+            this.groupBox7.Controls.Add(this.tagSelectionPanel);
+            this.groupBox7.Controls.Add(this.currentTagsLabel);
+            this.groupBox7.Controls.Add(this.label15);
+            this.groupBox7.Location = new System.Drawing.Point(-1, 126);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(340, 236);
+            this.groupBox7.TabIndex = 4;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Tags";
+            // 
+            // clearTagsButton
+            // 
+            this.clearTagsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.clearTagsButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.clearTagsButton.Location = new System.Drawing.Point(221, 160);
+            this.clearTagsButton.Name = "clearTagsButton";
+            this.clearTagsButton.Size = new System.Drawing.Size(113, 23);
+            this.clearTagsButton.TabIndex = 11;
+            this.clearTagsButton.Text = "Alle Tags abwählen";
+            this.clearTagsButton.UseVisualStyleBackColor = true;
+            this.clearTagsButton.Click += new System.EventHandler(this.clearTagsButton_Click);
+            // 
+            // tagSelectionPanel
+            // 
+            this.tagSelectionPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tagSelectionPanel.AutoScroll = true;
+            this.tagSelectionPanel.Location = new System.Drawing.Point(6, 17);
+            this.tagSelectionPanel.Name = "tagSelectionPanel";
+            this.tagSelectionPanel.Size = new System.Drawing.Size(328, 133);
+            this.tagSelectionPanel.TabIndex = 10;
+            // 
+            // currentTagsLabel
+            // 
+            this.currentTagsLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.currentTagsLabel.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.currentTagsLabel.Location = new System.Drawing.Point(9, 188);
+            this.currentTagsLabel.Name = "currentTagsLabel";
+            this.currentTagsLabel.Size = new System.Drawing.Size(325, 36);
+            this.currentTagsLabel.TabIndex = 9;
+            this.currentTagsLabel.UseCompatibleTextRendering = true;
+            // 
+            // label15
+            // 
+            this.label15.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label15.AutoSize = true;
+            this.label15.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label15.Location = new System.Drawing.Point(6, 165);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(128, 13);
+            this.label15.TabIndex = 1;
+            this.label15.Text = "Aktuell verwendete Tags:";
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox6.Controls.Add(this.label14);
+            this.groupBox6.Controls.Add(this.label13);
+            this.groupBox6.Controls.Add(this.tagCategoriesAndButton);
+            this.groupBox6.Controls.Add(this.tagCategoriesOrButton);
+            this.groupBox6.Controls.Add(this.musicTagCategoryBox);
+            this.groupBox6.Location = new System.Drawing.Point(-1, 0);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(340, 130);
+            this.groupBox6.TabIndex = 1;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Kategorien";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label14.Location = new System.Drawing.Point(3, 22);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(96, 13);
+            this.label14.TabIndex = 4;
+            this.label14.Text = "Aktuelle Kategorie:";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label13.Location = new System.Drawing.Point(3, 48);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(260, 13);
+            this.label13.TabIndex = 3;
+            this.label13.Text = "Tags verschiedener Kategorien werden verknüpft mit:";
+            // 
+            // tagCategoriesAndButton
+            // 
+            this.tagCategoriesAndButton.AutoSize = true;
+            this.tagCategoriesAndButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.tagCategoriesAndButton.Location = new System.Drawing.Point(6, 85);
+            this.tagCategoriesAndButton.Name = "tagCategoriesAndButton";
+            this.tagCategoriesAndButton.Size = new System.Drawing.Size(279, 17);
+            this.tagCategoriesAndButton.TabIndex = 2;
+            this.tagCategoriesAndButton.TabStop = true;
+            this.tagCategoriesAndButton.Text = "UND: Musik muss einen Tag in jeder Kategorie haben";
+            this.tagCategoriesAndButton.UseVisualStyleBackColor = true;
+            this.tagCategoriesAndButton.CheckedChanged += new System.EventHandler(this.tagCategoriesAndButton_CheckedChanged);
+            // 
+            // tagCategoriesOrButton
+            // 
+            this.tagCategoriesOrButton.AutoSize = true;
+            this.tagCategoriesOrButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.tagCategoriesOrButton.Location = new System.Drawing.Point(6, 64);
+            this.tagCategoriesOrButton.Name = "tagCategoriesOrButton";
+            this.tagCategoriesOrButton.Size = new System.Drawing.Size(333, 17);
+            this.tagCategoriesOrButton.TabIndex = 1;
+            this.tagCategoriesOrButton.TabStop = true;
+            this.tagCategoriesOrButton.Text = "ODER: Musik muss irgendeinen Tag irgendeiner Kategorie haben";
+            this.tagCategoriesOrButton.UseVisualStyleBackColor = true;
+            this.tagCategoriesOrButton.CheckedChanged += new System.EventHandler(this.tagCategoriesOrButton_CheckedChanged);
+            // 
+            // musicTagCategoryBox
+            // 
+            this.musicTagCategoryBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.musicTagCategoryBox.FormattingEnabled = true;
+            this.musicTagCategoryBox.Location = new System.Drawing.Point(108, 19);
+            this.musicTagCategoryBox.Name = "musicTagCategoryBox";
+            this.musicTagCategoryBox.Size = new System.Drawing.Size(177, 21);
+            this.musicTagCategoryBox.TabIndex = 0;
+            this.musicTagCategoryBox.SelectedIndexChanged += new System.EventHandler(this.musicTagCategoryBox_SelectedIndexChanged);
             // 
             // elementsPanel
             // 
@@ -350,9 +511,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.elementsPanel.AutoScroll = true;
-            this.elementsPanel.Location = new System.Drawing.Point(6, 21);
+            this.elementsPanel.Location = new System.Drawing.Point(6, 19);
             this.elementsPanel.Name = "elementsPanel";
-            this.elementsPanel.Size = new System.Drawing.Size(218, 232);
+            this.elementsPanel.Size = new System.Drawing.Size(328, 333);
             this.elementsPanel.TabIndex = 2;
             // 
             // musicList
@@ -361,9 +522,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.musicList.FormattingEnabled = true;
-            this.musicList.Location = new System.Drawing.Point(6, 20);
+            this.musicList.Location = new System.Drawing.Point(4, 21);
             this.musicList.Name = "musicList";
-            this.musicList.Size = new System.Drawing.Size(218, 225);
+            this.musicList.Size = new System.Drawing.Size(330, 329);
             this.musicList.TabIndex = 1;
             this.musicList.Visible = false;
             this.musicList.SelectedIndexChanged += new System.EventHandler(this.musicList_SelectedIndexChanged);
@@ -383,8 +544,61 @@
             this.repeatButton});
             this.toolStrip1.Location = new System.Drawing.Point(3, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(242, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(211, 25);
             this.toolStrip1.TabIndex = 0;
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.DefaultExt = "ares";
+            this.openFileDialog1.Filter = "Ares Projekte|*.ares";
+            // 
+            // overLayPanel
+            // 
+            this.overLayPanel.BackgroundImage = global::Ares.MGPlugin.Properties.Resources.Controller_Overlay;
+            this.overLayPanel.Controls.Add(this.transparentFlowLayoutPanel2);
+            this.overLayPanel.Controls.Add(this.transparentFlowLayoutPanel1);
+            this.overLayPanel.Controls.Add(this.flowLayoutPanel1);
+            this.overLayPanel.Controls.Add(this.overlayLabel9);
+            this.overLayPanel.Controls.Add(this.overlayOKButton);
+            this.overLayPanel.Controls.Add(this.overlayLabel7);
+            this.overLayPanel.Controls.Add(this.overlayLabel1);
+            this.overLayPanel.Controls.Add(this.overlayCloseButton);
+            this.overLayPanel.Location = new System.Drawing.Point(3, 40);
+            this.overLayPanel.Name = "overLayPanel";
+            this.overLayPanel.Size = new System.Drawing.Size(968, 418);
+            this.overLayPanel.TabIndex = 5;
+            this.overLayPanel.Visible = false;
+            // 
+            // overlayOKButton
+            // 
+            this.overlayOKButton.Location = new System.Drawing.Point(735, 206);
+            this.overlayOKButton.Name = "overlayOKButton";
+            this.overlayOKButton.Size = new System.Drawing.Size(75, 23);
+            this.overlayOKButton.TabIndex = 11;
+            this.overlayOKButton.Text = "OK";
+            this.overlayOKButton.UseVisualStyleBackColor = true;
+            this.overlayOKButton.Click += new System.EventHandler(this.overlayOKButton_Click);
+            // 
+            // overlayCloseButton
+            // 
+            this.overlayCloseButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(177)))), ((int)(((byte)(177)))), ((int)(((byte)(177)))));
+            this.overlayCloseButton.FlatAppearance.BorderColor = System.Drawing.Color.Silver;
+            this.overlayCloseButton.FlatAppearance.BorderSize = 0;
+            this.overlayCloseButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Silver;
+            this.overlayCloseButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
+            this.overlayCloseButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.overlayCloseButton.Image = global::Ares.MGPlugin.Properties.Resources.eventlogError;
+            this.overlayCloseButton.Location = new System.Drawing.Point(795, 18);
+            this.overlayCloseButton.Name = "overlayCloseButton";
+            this.overlayCloseButton.Size = new System.Drawing.Size(30, 34);
+            this.overlayCloseButton.TabIndex = 0;
+            this.overlayCloseButton.UseVisualStyleBackColor = false;
+            this.overlayCloseButton.Click += new System.EventHandler(this.overlayCloseButton_Click);
             // 
             // openButton
             // 
@@ -427,11 +641,6 @@
             this.aboutButton.Text = "Über";
             this.aboutButton.Click += new System.EventHandler(this.aboutButton_Click);
             // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-            // 
             // stopButton
             // 
             this.stopButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -462,27 +671,15 @@
             this.nextMusicButton.Text = "Nächstes Musikstück";
             this.nextMusicButton.Click += new System.EventHandler(this.nextMusicButton_Click);
             // 
-            // openFileDialog1
+            // repeatButton
             // 
-            this.openFileDialog1.DefaultExt = "ares";
-            this.openFileDialog1.Filter = "Ares Projekte|*.ares";
-            // 
-            // overLayPanel
-            // 
-            this.overLayPanel.BackgroundImage = global::Ares.MGPlugin.Properties.Resources.Controller_Overlay;
-            this.overLayPanel.Controls.Add(this.transparentFlowLayoutPanel2);
-            this.overLayPanel.Controls.Add(this.transparentFlowLayoutPanel1);
-            this.overLayPanel.Controls.Add(this.flowLayoutPanel1);
-            this.overLayPanel.Controls.Add(this.overlayLabel9);
-            this.overLayPanel.Controls.Add(this.overlayOKButton);
-            this.overLayPanel.Controls.Add(this.overlayLabel7);
-            this.overLayPanel.Controls.Add(this.overlayLabel1);
-            this.overLayPanel.Controls.Add(this.overlayCloseButton);
-            this.overLayPanel.Location = new System.Drawing.Point(3, 40);
-            this.overLayPanel.Name = "overLayPanel";
-            this.overLayPanel.Size = new System.Drawing.Size(853, 295);
-            this.overLayPanel.TabIndex = 5;
-            this.overLayPanel.Visible = false;
+            this.repeatButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.repeatButton.Image = ((System.Drawing.Image)(resources.GetObject("repeatButton.Image")));
+            this.repeatButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.repeatButton.Name = "repeatButton";
+            this.repeatButton.Size = new System.Drawing.Size(23, 22);
+            this.repeatButton.Text = "Aktuelle Musik wiederholen";
+            this.repeatButton.Click += new System.EventHandler(this.repeatButton_Click);
             // 
             // transparentFlowLayoutPanel2
             // 
@@ -633,16 +830,6 @@
             this.overlayLabel9.TabIndex = 12;
             this.overlayLabel9.Text = "Ares Controller Plugin";
             // 
-            // overlayOKButton
-            // 
-            this.overlayOKButton.Location = new System.Drawing.Point(735, 206);
-            this.overlayOKButton.Name = "overlayOKButton";
-            this.overlayOKButton.Size = new System.Drawing.Size(75, 23);
-            this.overlayOKButton.TabIndex = 11;
-            this.overlayOKButton.Text = "OK";
-            this.overlayOKButton.UseVisualStyleBackColor = true;
-            this.overlayOKButton.Click += new System.EventHandler(this.overlayOKButton_Click);
-            // 
             // overlayLabel7
             // 
             this.overlayLabel7.AutoSize = true;
@@ -667,32 +854,6 @@
     "enspiels passende Musik und Geräusche abspielen kann. Mit diesem Plugin lässt si" +
     "ch der Ares Player steuern.";
             // 
-            // overlayCloseButton
-            // 
-            this.overlayCloseButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(177)))), ((int)(((byte)(177)))), ((int)(((byte)(177)))));
-            this.overlayCloseButton.FlatAppearance.BorderColor = System.Drawing.Color.Silver;
-            this.overlayCloseButton.FlatAppearance.BorderSize = 0;
-            this.overlayCloseButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Silver;
-            this.overlayCloseButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
-            this.overlayCloseButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.overlayCloseButton.Image = global::Ares.MGPlugin.Properties.Resources.eventlogError;
-            this.overlayCloseButton.Location = new System.Drawing.Point(816, 0);
-            this.overlayCloseButton.Name = "overlayCloseButton";
-            this.overlayCloseButton.Size = new System.Drawing.Size(30, 34);
-            this.overlayCloseButton.TabIndex = 0;
-            this.overlayCloseButton.UseVisualStyleBackColor = false;
-            this.overlayCloseButton.Click += new System.EventHandler(this.overlayCloseButton_Click);
-            // 
-            // repeatButton
-            // 
-            this.repeatButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.repeatButton.Image = ((System.Drawing.Image)(resources.GetObject("repeatButton.Image")));
-            this.repeatButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.repeatButton.Name = "repeatButton";
-            this.repeatButton.Size = new System.Drawing.Size(23, 22);
-            this.repeatButton.Text = "Aktuelle Musik wiederholen";
-            this.repeatButton.Click += new System.EventHandler(this.repeatButton_Click);
-            // 
             // Controller
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -705,7 +866,7 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Name = "Controller";
-            this.Size = new System.Drawing.Size(859, 351);
+            this.Size = new System.Drawing.Size(971, 505);
             this.Load += new System.EventHandler(this.Controller_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -718,6 +879,11 @@
             this.groupBox3.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
+            this.tagsPanel.ResumeLayout(false);
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.overLayPanel.ResumeLayout(false);
@@ -789,6 +955,18 @@
         private TransparentLinkLabel setupLabel;
         private TransparentLabel overlayLabel4;
         private System.Windows.Forms.ToolStripButton repeatButton;
+        private System.Windows.Forms.Panel tagsPanel;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.RadioButton tagCategoriesAndButton;
+        private System.Windows.Forms.RadioButton tagCategoriesOrButton;
+        private System.Windows.Forms.ComboBox musicTagCategoryBox;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.Button clearTagsButton;
+        private System.Windows.Forms.FlowLayoutPanel tagSelectionPanel;
+        private System.Windows.Forms.Label currentTagsLabel;
+        private System.Windows.Forms.Label label15;
 
     }
 }

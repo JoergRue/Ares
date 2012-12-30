@@ -39,7 +39,7 @@ import javax.swing.event.ListSelectionListener;
 import ares.controller.control.ComponentKeys;
 import ares.controller.util.Localization;
 import ares.controllers.control.Control;
-import ares.controllers.data.MusicElement;
+import ares.controllers.data.TitledElement;
 
 public class MusicListFrame extends SubFrame {
 
@@ -62,13 +62,13 @@ public class MusicListFrame extends SubFrame {
 		model = new DefaultListModel();
 	}
 	
-	public void setTitles(List<MusicElement> titles) {
-		List<MusicElement> copy = titles != null ? new ArrayList<MusicElement>(titles) : null;
+	public void setTitles(List<TitledElement> titles) {
+		List<TitledElement> copy = titles != null ? new ArrayList<TitledElement>(titles) : null;
 		musicTitles = titles;
 		listenForSelection = false;
 		model.clear();
 		if (titles != null && titles.size() > 0) {
-			for (MusicElement element : copy) {
+			for (TitledElement element : copy) {
 				model.addElement(element.getTitle());
 			}
 			if (!listShown) {
@@ -122,7 +122,7 @@ public class MusicListFrame extends SubFrame {
 						return;
 					int index = titlesList.getSelectedIndex();
 					if (index >= 0 && index < musicTitles.size()) {
-						MusicElement selected = musicTitles.get(index);
+						TitledElement selected = musicTitles.get(index);
 						Control.getInstance().setMusicTitle(selected.getId());
 					}
 				}
@@ -140,6 +140,6 @@ public class MusicListFrame extends SubFrame {
 	private JScrollPane titlesPane;
 	private JLabel noTitlesLabel;
 	private JPanel mainPanel;
-	private List<MusicElement> musicTitles;
+	private List<TitledElement> musicTitles;
 	private DefaultListModel model;
 }

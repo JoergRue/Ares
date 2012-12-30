@@ -62,6 +62,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.prefs.Preferences;
@@ -82,7 +83,7 @@ import ares.controllers.data.Command;
 import ares.controllers.data.Configuration;
 import ares.controllers.data.KeyStroke;
 import ares.controllers.data.Mode;
-import ares.controllers.data.MusicElement;
+import ares.controllers.data.TitledElement;
 import ares.controller.gui.util.ExampleFileFilter;
 import ares.controllers.messages.IMessageListener;
 import ares.controllers.messages.Message;
@@ -474,6 +475,7 @@ public final class MainFrame extends FrameController implements IMessageListener
 			  modeCommandsPanel = null;
 		  }
 		  getMusicListButton().setEnabled(false);
+		  getTagsButton().setEnabled(false);
 	  }
 	  else {
           Configuration config = Control.getInstance().getConfiguration();
@@ -486,8 +488,9 @@ public final class MainFrame extends FrameController implements IMessageListener
 		  {
         	  getModesPanel().remove(modeCommandsPanel);
 		  }
-          modeCommandsPanel = CommandsPanelCreator.createPanel(commands, this, getRootPane(), 3, getMusicListButton());
+          modeCommandsPanel = CommandsPanelCreator.createPanel(commands, this, getRootPane(), 3, getMusicListButton(), getTagsButton());
           getMusicListButton().setEnabled(true);
+          getTagsButton().setEnabled(true);
           getModesPanel().add(modeCommandsPanel, BorderLayout.CENTER);
           getModesPanel().setVisible(true);
 	  }
@@ -524,6 +527,38 @@ public final class MainFrame extends FrameController implements IMessageListener
 		  addButton(Localization.getString("MainFrame.MusicList"), musicListButton); //$NON-NLS-1$
 	  }
 	  return musicListButton;
+  }
+  
+  private JToggleButton tagsButton;
+  private TagsFrame tagsFrame;
+  
+  private JToggleButton getTagsButton() {
+	  if (tagsButton == null) {
+		  tagsButton = new JToggleButton();
+		  tagsButton.setAction(new AbstractAction() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (tagsFrame != null) {
+					tagsFrame.dispose();
+					tagsFrame = null;
+				}
+				else {
+					tagsFrame = new TagsFrame(Localization.getString("MainFrame.MusicTags")); //$NON-NLS-1$
+					tagsFrame.addWindowListener(new WindowAdapter() {
+		                public void windowClosing(java.awt.event.WindowEvent e) {
+		                	tagsFrame = null;
+		                }
+		              });
+					tagsFrame.setTags(currentCategories, currentTags);
+					tagsFrame.setActiveTags(currentActiveTags);
+					tagsFrame.setCategoryOperator(tagCategoryOperatorIsAnd);
+					tagsFrame.setVisible(true);
+				}
+			} 
+		  });
+		  tagsButton.setText(Localization.getString("MainFrame.MusicTags")); //$NON-NLS-1$
+		  addButton(Localization.getString("MainFrame.MusicTags"), tagsButton); //$NON-NLS-1$
+	  }
+	  return tagsButton;
   }
   
   private static void updateLastProjects(String path, String name) {
@@ -1296,15 +1331,76 @@ public final class MainFrame extends FrameController implements IMessageListener
 		});
 	}
 	
+	private List<TitledElement> currentCategories = new ArrayList<TitledElement>();
+	private Map<Integer, List<TitledElement>> currentTags = new HashMap<Integer, List<TitledElement>>();
+	private HashSet<Integer> currentActiveTags = new HashSet<Integer>();
+	
+	@Override
+	public void tagsChanged(final List<TitledElement> newCategories, final Map<Integer, List<TitledElement>> newTags) {
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				currentCategories = newCategories;
+				currentTags = newTags;
+				if (tagsFrame != null) {
+					tagsFrame.setTags(currentCategories, currentTags);
+				}
+			}
+		});
+	}
+	
+	@Override
+	public void activeTagsChanged(final List<Integer> newActiveTags) {
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				currentActiveTags.clear();
+				currentActiveTags.addAll(newActiveTags);
+				if (tagsFrame != null) {
+					tagsFrame.setActiveTags(currentActiveTags);
+				}
+			}
+		});
+	}
+	
+	@Override
+	public void tagSwitched(final int tagId, final boolean active) {
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				if (active) {
+					currentActiveTags.add(tagId);
+				}
+				else {
+					currentActiveTags.remove(tagId);
+				}
+				if (tagsFrame != null) {
+					tagsFrame.setTagActive(tagId, active);
+				}
+			}
+		});
+	}
+	
+	private boolean tagCategoryOperatorIsAnd = false;
+	
+	@Override
+	public void tagCategoryOperatorChanged(final boolean isAndOperator) {
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				tagCategoryOperatorIsAnd = isAndOperator;
+				if (tagsFrame != null) {
+					tagsFrame.setCategoryOperator(isAndOperator);
+				}
+			}
+		});
+	}
+	
 	public void toggleRepeat() {
 		boolean isRepeat = getRepeatButton().isSelected();
 		Control.getInstance().setMusicRepeat(!isRepeat);
 	}
 	
-	private List<MusicElement> currentMusicList = null;
+	private List<TitledElement> currentMusicList = null;
 	
 	@Override
-	public void musicListChanged(final List<MusicElement> newList) {
+	public void musicListChanged(final List<TitledElement> newList) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				currentMusicList = newList;

@@ -185,6 +185,33 @@ public final class Control {
 	  }	  	  
   }
   
+  public void switchTag(int categoryId, int tagId, boolean isActive) {
+	  if (connection == null || !connection.isConnected()) {
+		  Messages.addMessage(MessageType.Warning, Localization.getString("Control.noConnection")); //$NON-NLS-1$
+	  }
+	  else {
+		  connection.switchTag(categoryId, tagId, isActive);
+	  }	  	  	  
+  }
+  
+  public void removeAllTags() {
+	  if (connection == null || !connection.isConnected()) {
+		  Messages.addMessage(MessageType.Warning, Localization.getString("Control.noConnection")); //$NON-NLS-1$
+	  }
+	  else {
+		  connection.removeAllTags();
+	  }	  	  	  
+  }
+  
+  public void setTagCategoryOperator(boolean operatorIsAnd) {
+	  if (connection == null || !connection.isConnected()) {
+		  Messages.addMessage(MessageType.Warning, Localization.getString("Control.noConnection")); //$NON-NLS-1$
+	  }
+	  else {
+		  connection.setTagCategoryOperator(operatorIsAnd);
+	  }	  	  
+  }
+  
   public boolean isConnected() {
     return connection != null;
   }

@@ -41,7 +41,7 @@ final class ModeFrame extends FrameController implements CommandsPanelCreator.IA
   }
   
   protected void initialize(Mode mode) {
-    this.setContentPane(CommandsPanelCreator.createPanel(mode.getCommands(), this, getRootPane(), 2, null));
+    this.setContentPane(CommandsPanelCreator.createPanel(mode.getCommands(), this, getRootPane(), 2, null, null));
     this.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);                 
     pack();
   }

@@ -68,7 +68,8 @@ class CommandsPanelCreator {
    *  
    * @return javax.swing.JPanel 
    */
-  public static JPanel createPanel(List<Command> commands, IActionCreator actionCreator, JRootPane rootPane, int nrOfColumns, JToggleButton musicListButton) {
+  public static JPanel createPanel(List<Command> commands, IActionCreator actionCreator, JRootPane rootPane, int nrOfColumns, 
+		  JToggleButton musicListButton, JToggleButton tagsButton) {
       JPanel panel = new JPanel();
       panel.setLayout(new BorderLayout());
       JLabel label1 = new JLabel();
@@ -94,6 +95,9 @@ class CommandsPanelCreator {
       boolean showKeys = prefs.getBoolean("ShowKeys", false); //$NON-NLS-1$
       if (musicListButton != null) {
     	  buttonPane.add(musicListButton);
+      }
+      if (tagsButton != null) {
+    	  buttonPane.add(tagsButton);
       }
       for (Command command : commands) {
         AbstractButton button = new JToggleButton();

@@ -25,10 +25,22 @@ using System.Net.Sockets;
 
 namespace Ares.Controllers
 {
-    public class MusicListItem
+    public class ItemWithId
     {
         public int Id { get; set; }
         public String Title { get; set; }
+    }
+
+    public class MusicListItem : ItemWithId
+    {
+    }
+
+    public class MusicTagCategory : ItemWithId
+    {
+    }
+
+    public class MusicTag : ItemWithId
+    {
     }
 
     public interface INetworkClient
@@ -42,6 +54,11 @@ namespace Ares.Controllers
         void ProjectChanged(String newTitle);
         void MusicListChanged(List<MusicListItem> newList);
         void MusicRepeatChanged(bool repeat);
+
+        void TagsChanged(List<MusicTagCategory> categories, Dictionary<int, List<MusicTag>> tagsPerCategory);
+        void ActiveTagsChanged(List<int> activeTags);
+        void TagStateChanged(int tagId, bool isActive);
+        void TagCategoryOperatorChanged(bool operatorIsAnd);
 
         void Disconnect();
         void ConnectionFailed();
@@ -69,6 +86,12 @@ namespace Ares.Controllers
         private bool m_CheckedVersion = false;
 
         private List<MusicListItem> m_CurrentMusicList = new List<MusicListItem>();
+
+        private List<MusicTagCategory> m_CurrentTagCategories = new List<MusicTagCategory>();
+        private Dictionary<int, List<MusicTag>> m_CurrentTags = new Dictionary<int, List<MusicTag>>();
+        private List<MusicTag> m_CurrentTagList = new List<MusicTag>();
+
+        private List<int> m_CurrentActiveTags = new List<int>();
 
         public ControlConnection(ServerInfo server, INetworkClient client)
         {
@@ -280,6 +303,36 @@ namespace Ares.Controllers
             return System.Text.Encoding.UTF8.GetString(data);
         }
 
+        private bool ReadInt32(out Int32 value)
+        {
+            byte[] bytes = new byte[4];
+            bool success = m_Socket.Receive(bytes, RECEIVE_TIMEOUT);
+            if (!success)
+            {
+                HandleConnectionFailure(false);
+                value = 0;
+                return false;
+            }
+            if (BitConverter.IsLittleEndian)
+                Array.Reverse(bytes);
+            value = BitConverter.ToInt32(bytes, 0);
+            return true;
+        }
+
+        private bool ReadItemWithId<T>(byte[] buffer, T item) where T : ItemWithId
+        {
+            int id;
+            if (!ReadInt32(out id))
+                return false;
+            int count = m_Socket.Receive(buffer, 1, 2);
+            if (count < 2)
+                return false;
+            String title = ReadString(buffer);
+            item.Id = id;
+            item.Title = title;
+            return true;
+        }
+
         private void ListenForStatusUpdates()
         {
             bool goOn = true;
@@ -381,22 +434,9 @@ namespace Ares.Controllers
                                     }
                                     else if (subcommand == 1)
                                     {
-                                        byte[] bytes = new byte[4];
-                                        bool success = m_Socket.Receive(bytes, RECEIVE_TIMEOUT);
-                                        if (!success)
-                                        {
-                                            HandleConnectionFailure(false);
-                                            break;
-                                        }
-                                        count = m_Socket.Receive(buffer, 1, 2);
-                                        if (count < 2)
-                                            break;
-                                        String title = ReadString(buffer);
-                                        if (BitConverter.IsLittleEndian)
-                                            Array.Reverse(bytes);
                                         MusicListItem item = new MusicListItem();
-                                        item.Id =  BitConverter.ToInt32(bytes, 0);
-                                        item.Title = title;
+                                        if (!ReadItemWithId(buffer, item))
+                                            break;
                                         m_CurrentMusicList.Add(item);
                                     }
                                     else if (subcommand == 2)
@@ -435,6 +475,73 @@ namespace Ares.Controllers
                                 {
                                     int repeat = buffer[1];
                                     m_NetworkClient.MusicRepeatChanged(repeat == 1);
+                                    break;
+                                }
+                            case 11:
+                                {
+                                    int subcommand = buffer[1];
+                                    if (subcommand == 0)
+                                    {
+                                        m_CurrentTagCategories.Clear();
+                                        m_CurrentTags.Clear();
+                                        m_CurrentTagList = new List<MusicTag>();
+                                    }
+                                    else if (subcommand == 1)
+                                    {
+                                        MusicTagCategory category = new MusicTagCategory();
+                                        if (!ReadItemWithId(buffer, category))
+                                            break;
+                                        m_CurrentTagCategories.Add(category);
+                                        m_CurrentTagList = new List<MusicTag>();
+                                        m_CurrentTags[category.Id] = m_CurrentTagList;
+                                    }
+                                    else if (subcommand == 2)
+                                    {
+                                        MusicTag tag = new MusicTag();
+                                        if (!ReadItemWithId(buffer, tag))
+                                            break;
+                                        m_CurrentTagList.Add(tag);
+                                    }
+                                    else if (subcommand == 3)
+                                    {
+                                        m_CurrentTagList = new List<MusicTag>();
+                                        m_NetworkClient.TagsChanged(m_CurrentTagCategories, m_CurrentTags);
+                                    }
+                                    break;
+                                }
+                            case 12:
+                                {
+                                    int subcommand = buffer[1];
+                                    if (subcommand == 0)
+                                    {
+                                        m_CurrentActiveTags.Clear();
+                                    }
+                                    else if (subcommand == 1)
+                                    {
+                                        int tagId;
+                                        if (!ReadInt32(out tagId))
+                                            break;
+                                        m_CurrentActiveTags.Add(tagId);
+                                    }
+                                    else if (subcommand == 2)
+                                    {
+                                        m_NetworkClient.ActiveTagsChanged(m_CurrentActiveTags);
+                                    }
+                                    break;
+                                }
+                            case 13:
+                                {
+                                    bool active = buffer[1] == 1;
+                                    int tagId;
+                                    if (!ReadInt32(out tagId))
+                                        break;
+                                    m_NetworkClient.TagStateChanged(tagId, active);
+                                    break;
+                                }
+                            case 14:
+                                {
+                                    bool isAnd = buffer[1] == 1;
+                                    m_NetworkClient.TagCategoryOperatorChanged(isAnd);
                                     break;
                                 }
                             default:
@@ -592,10 +699,7 @@ namespace Ares.Controllers
             {
                 byte[] bytes = new byte[1 + 4];
                 bytes[0] = 7;
-                byte[] idBytes = BitConverter.GetBytes(elementId);
-                if (BitConverter.IsLittleEndian)
-                    Array.Reverse(idBytes);
-                Array.Copy(idBytes, 0, bytes, 1, 4);
+                AddInt32ToByteArray(bytes, 1, elementId);
                 m_Socket.Send(bytes);
             }
             catch (SocketException ex)
@@ -624,10 +728,7 @@ namespace Ares.Controllers
             {
                 byte[] bytes = new byte[1 + 4];
                 bytes[0] = 8;
-                byte[] idBytes = BitConverter.GetBytes(elementId);
-                if (BitConverter.IsLittleEndian)
-                    Array.Reverse(idBytes);
-                Array.Copy(idBytes, 0, bytes, 1, 4);
+                AddInt32ToByteArray(bytes, 1, elementId);
                 m_Socket.Send(bytes);
             }
             catch (SocketException ex)
@@ -657,10 +758,104 @@ namespace Ares.Controllers
                 Int32 val = repeat ? 1 : 0;
                 byte[] bytes = new byte[1 + 4];
                 bytes[0] = 9;
-                byte[] idBytes = BitConverter.GetBytes(val);
-                if (BitConverter.IsLittleEndian)
-                    Array.Reverse(idBytes);
-                Array.Copy(idBytes, 0, bytes, 1, 4);
+                AddInt32ToByteArray(bytes, 1, val);
+                m_Socket.Send(bytes);
+            }
+            catch (SocketException ex)
+            {
+                Messages.AddMessage(MessageType.Warning, ex.Message);
+                HandleConnectionFailure(true);
+            }
+        }
+
+        public void SwitchMusicTag(int categoryId, int tagId, bool active)
+        {
+            if (!Connected)
+            {
+                Messages.AddMessage(MessageType.Warning, StringResources.NoConnection);
+                return;
+            }
+            if (m_State == State.ConnectionFailure)
+            {
+                if (!TryReconnect())
+                {
+                    Messages.AddMessage(MessageType.Warning, StringResources.NoConnection);
+                    return;
+                }
+            }
+            try
+            {
+                byte[] bytes = new byte[1 + 3 * 4];
+                bytes[0] = 10;
+                AddInt32ToByteArray(bytes, 1, categoryId);
+                AddInt32ToByteArray(bytes, 1 + 4, tagId);
+                AddInt32ToByteArray(bytes, 1 + 2 * 4, active ? 1 : 0);
+                m_Socket.Send(bytes);
+            }
+            catch (SocketException ex)
+            {
+                Messages.AddMessage(MessageType.Warning, ex.Message);
+                HandleConnectionFailure(true);
+            }
+        }
+
+        public void RemoveAllMusicTags()
+        {
+            if (!Connected)
+            {
+                Messages.AddMessage(MessageType.Warning, StringResources.NoConnection);
+                return;
+            }
+            if (m_State == State.ConnectionFailure)
+            {
+                if (!TryReconnect())
+                {
+                    Messages.AddMessage(MessageType.Warning, StringResources.NoConnection);
+                    return;
+                }
+            }
+            try
+            {
+                byte[] bytes = new byte[1];
+                bytes[0] = 11;
+                m_Socket.Send(bytes);
+            }
+            catch (SocketException ex)
+            {
+                Messages.AddMessage(MessageType.Warning, ex.Message);
+                HandleConnectionFailure(true);
+            }
+        }
+
+        private void AddInt32ToByteArray(byte[] bytes, int offset, Int32 value)
+        {
+            byte[] ibytes = BitConverter.GetBytes(value);
+            if (BitConverter.IsLittleEndian)
+                Array.Reverse(ibytes);
+            Array.Copy(ibytes, 0, bytes, offset, ibytes.Length);
+        }
+
+        public void SetMusicTagCategoryOperator(bool operatorIsAnd)
+        {
+            if (!Connected)
+            {
+                Messages.AddMessage(MessageType.Warning, StringResources.NoConnection);
+                return;
+            }
+            if (m_State == State.ConnectionFailure)
+            {
+                if (!TryReconnect())
+                {
+                    Messages.AddMessage(MessageType.Warning, StringResources.NoConnection);
+                    return;
+                }
+            }
+            try
+            {
+                Int32 val = operatorIsAnd ? 1 : 0;
+                byte[] bytes = new byte[1 + 4];
+                bytes[0] = 12;
+                AddInt32ToByteArray(bytes, 1, val);
                 m_Socket.Send(bytes);
             }
             catch (SocketException ex)

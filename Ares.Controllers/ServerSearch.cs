@@ -174,7 +174,7 @@ namespace Ares.Controllers
             }
         }
 
-        public const int NEEDED_SERVER_VERSION = 1;
+        public const int NEEDED_SERVER_VERSION = 2;
 
         public static ServerInfo GetServerInfo(String text, String token)
         {

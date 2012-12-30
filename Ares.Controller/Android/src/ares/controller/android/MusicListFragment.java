@@ -20,6 +20,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 package ares.controller.android;
 
 import java.util.List;
+import java.util.Map;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -32,7 +33,7 @@ import android.widget.ListView;
 import android.widget.ViewSwitcher;
 
 import ares.controllers.control.Control;
-import ares.controllers.data.MusicElement;
+import ares.controllers.data.TitledElement;
 import ares.controllers.network.INetworkClient;
 
 public class MusicListFragment extends ModeLikeFragment implements INetworkClient {
@@ -124,7 +125,7 @@ public class MusicListFragment extends ModeLikeFragment implements INetworkClien
 	}
 	
 	private ViewSwitcher mViewSwitcher;
-	private List<MusicElement> mElements;
+	private List<TitledElement> mElements;
 	private boolean mListShown;
 
 	@Override
@@ -165,7 +166,7 @@ public class MusicListFragment extends ModeLikeFragment implements INetworkClien
 	}
 
 	@Override
-	public void musicListChanged(List<MusicElement> newList) {
+	public void musicListChanged(List<TitledElement> newList) {
 		mElements = newList;
 		updateList();
 		if (mElements == null || mElements.size() == 0) {
@@ -198,5 +199,22 @@ public class MusicListFragment extends ModeLikeFragment implements INetworkClien
 
 	@Override
 	public void connectionFailed() {
+	}
+
+	@Override
+	public void tagsChanged(List<TitledElement> newCategories,
+			Map<Integer, List<TitledElement>> newTagsPerCategory) {
+	}
+
+	@Override
+	public void activeTagsChanged(List<Integer> newActiveTags) {
+	}
+
+	@Override
+	public void tagSwitched(int tagId, boolean isActive) {
+	}
+
+	@Override
+	public void tagCategoryOperatorChanged(boolean operatorIsAnd) {
 	}
 }

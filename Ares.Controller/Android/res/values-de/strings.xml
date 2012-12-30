@@ -66,4 +66,10 @@
     <string name="file_system">Dateisystem</string>
     <string name="dropbox">Dropbox</string>
     <string name="no_mode">Kein Modus (kein Projekt geladen)</string>
+    <string name="musicTags">Musik-Tags</string>
+    <string name="Category">Kategorie:</string>
+    <string name="CategoryOperatorIsAnd">UND: Musik muss einen Tag in jeder Kategorie haben</string>
+    <string name="CategoryOperatorDesc">Verknüpfung von Tags verschiedener Kategorien mit:</string>
+    <string name="ClearTags">Alle Musik-Tags entfernen</string>
+    <string name="CategoryOperatorIsOr">ODER: Musik muss irgendeinen Tag haben</string>
 </resources>

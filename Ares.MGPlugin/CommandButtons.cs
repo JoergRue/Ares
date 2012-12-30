@@ -25,20 +25,11 @@ namespace Ares.MGPlugin
 
     sealed class CommandButtonMapping
     {
-        private CommandButtonMapping()
-        {
-        }
+        private bool m_ForTags = false;
 
-        private static CommandButtonMapping s_Instance = null;
-
-        public static CommandButtonMapping Instance
+        public CommandButtonMapping(bool forTags)
         {
-            get
-            {
-                if (s_Instance == null)
-                    s_Instance = new CommandButtonMapping();
-                return s_Instance;
-            }
+            m_ForTags = forTags;
         }
 
         private Dictionary<int, System.Windows.Forms.CheckBox> m_Buttons = new Dictionary<int, System.Windows.Forms.CheckBox>();
@@ -47,16 +38,23 @@ namespace Ares.MGPlugin
 
         public bool ButtonsActive { get; set; }
 
-        public void RegisterButton(int id, System.Windows.Forms.CheckBox button)
+        public void RegisterButton(int id, int secondId, System.Windows.Forms.CheckBox button)
         {
             m_Buttons[id] = button;
             if (m_ActiveCommands.Contains(id))
                 button.Checked = true;
-            EventHandler handler = new EventHandler((Object, EventArgs) =>
+            EventHandler handler = new EventHandler((Object sender, EventArgs args) =>
             {
                 if (ButtonsActive && m_Listen)
                 {
-                    Controllers.Control.Instance.SwitchElement(id);
+                    if (m_ForTags)
+                    {
+                        Controllers.Control.Instance.SwitchTag(secondId, id, (sender as System.Windows.Forms.CheckBox).Checked);
+                    }
+                    else
+                    {
+                        Controllers.Control.Instance.SwitchElement(id);
+                    }
                 }
             });
             m_Handlers[id] = handler;

@@ -31,11 +31,12 @@ import java.net.SocketTimeoutException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import ares.controllers.data.KeyStroke;
-import ares.controllers.data.MusicElement;
+import ares.controllers.data.TitledElement;
 import ares.controllers.messages.Messages;
 import ares.controllers.messages.Message.MessageType;
 import ares.controllers.util.Localization;
@@ -250,6 +251,17 @@ public final class ControlConnection {
 	  return new String(bytes, "UTF8"); //$NON-NLS-1$
   }
   
+  private static int readInt32(InputStream stream) throws IOException {
+	  java.nio.ByteBuffer buffer = java.nio.ByteBuffer.allocate(4);
+	  stream.read(buffer.array());
+	  return buffer.getInt(0);
+  }
+  
+  private static TitledElement readTitledElement(InputStream stream) throws IOException {
+	  int id = readInt32(stream);
+	  return new TitledElement(readString(stream), id); 	  
+  }
+  
   private void listenForStatusUpdates()
   {
 	  boolean goOn = true;
@@ -329,12 +341,10 @@ public final class ControlConnection {
 					  int subcommand = stream.read();
 					  stream.read();
 					  if (subcommand == 0) {
-						  currentMusicList.clear();
+						  currentMusicList = new ArrayList<TitledElement>();
 					  }
 					  else if (subcommand == 1) {
-						  java.nio.ByteBuffer buffer = java.nio.ByteBuffer.allocate(4);
-						  stream.read(buffer.array());
-						  currentMusicList.add(new MusicElement(readString(stream), buffer.getInt(0)));
+						  currentMusicList.add(readTitledElement(stream));
 					  }
 					  else if (subcommand == 2) {
 						  networkClient.musicListChanged(currentMusicList);
@@ -374,6 +384,73 @@ public final class ControlConnection {
 					  stream.read();
 					  boolean isRepeat = (val == 1);
 					  networkClient.musicRepeatChanged(isRepeat);
+					  break;
+				  }
+				  case 11:
+				  {
+					  // new tags
+					  int subcommand = stream.read();
+					  stream.read();
+					  if (subcommand == 0)
+					  {
+						  // start list
+						  currentCategoryList = new ArrayList<TitledElement>();
+						  currentTags = new HashMap<Integer, List<TitledElement>>();
+						  currentTagList = new ArrayList<TitledElement>();
+					  }
+					  else if (subcommand == 1)
+					  {
+						  // new category
+						  TitledElement category = readTitledElement(stream);
+						  currentCategoryList.add(category);
+						  currentTagList = new ArrayList<TitledElement>();
+						  currentTags.put(category.getId(), currentTagList);
+					  }
+					  else if (subcommand == 2)
+					  {
+						  // new tag
+						  currentTagList.add(readTitledElement(stream));
+					  }
+					  else if (subcommand == 3)
+					  {
+						  // done
+						  networkClient.tagsChanged(currentCategoryList, currentTags);
+					  }
+					  break;
+				  }
+				  case 12:
+				  {
+					  // new active tags
+					  int subcommand = stream.read();
+					  stream.read();
+					  if (subcommand == 0)
+					  {
+						  currentActiveTagList = new ArrayList<Integer>();
+					  }
+					  else if (subcommand == 1)
+					  {
+						  currentActiveTagList.add(readInt32(stream));
+					  }
+					  else if (subcommand == 2)
+					  {
+						  networkClient.activeTagsChanged(currentActiveTagList);
+					  }
+					  break;
+				  }
+				  case 13:
+				  {
+					  boolean isActive = stream.read() == 1;
+					  stream.read();
+					  int tagId = readInt32(stream);
+					  networkClient.tagSwitched(tagId, isActive);
+					  break;
+				  }
+				  case 14:
+				  {
+					  boolean isAndOperator = stream.read() == 1;
+					  stream.read();
+					  networkClient.tagCategoryOperatorChanged(isAndOperator);
+					  break;
 				  }
 				  default:
 					  break;
@@ -391,7 +468,12 @@ public final class ControlConnection {
 	  }
   }
   
-  private ArrayList<MusicElement> currentMusicList = new ArrayList<MusicElement>();
+  private ArrayList<TitledElement> currentMusicList = new ArrayList<TitledElement>();
+  
+  private ArrayList<TitledElement> currentCategoryList = new ArrayList<TitledElement>();
+  private HashMap<Integer, List<TitledElement>> currentTags = new HashMap<Integer, List<TitledElement>>();
+  private ArrayList<TitledElement> currentTagList = new ArrayList<TitledElement>();
+  private ArrayList<Integer> currentActiveTagList = new ArrayList<Integer>();
   
   public boolean isConnected() {
     return state != State.NotConnected;
@@ -556,6 +638,78 @@ public final class ControlConnection {
 		  bytes[0] = 9;
 		  java.nio.ByteBuffer buffer = java.nio.ByteBuffer.wrap(bytes);
 		  buffer.putInt(1, repeat ? 1 : 0);
+		  socket.getOutputStream().write(bytes);
+	  }
+	  catch (IOException e) {
+		  Messages.addMessage(MessageType.Warning, e.getLocalizedMessage());
+          handleConnectionFailure(true);
+	  }	  
+  }
+  
+  public void switchTag(int categoryId, int tagId, boolean active) {
+	    if (!isConnected()) {
+	        Messages.addMessage(MessageType.Warning, Localization.getString("ControlConnection.NoConnection")); //$NON-NLS-1$
+	        return;
+	      }
+	      if (state == State.ConnectionFailure) {
+	      	if (!tryReconnect()) {
+	      	      Messages.addMessage(MessageType.Warning, Localization.getString("ControlConnection.NoConnection")); //$NON-NLS-1$
+	      	      return;    		
+	      	}
+	      }
+	  try {
+		  byte[] bytes = new byte[1 + 4 + 4 + 4];
+		  bytes[0] = 10;
+		  java.nio.ByteBuffer buffer = java.nio.ByteBuffer.wrap(bytes);
+		  buffer.putInt(1, categoryId);
+		  buffer.putInt(1 + 4, tagId);
+		  buffer.putInt(1 + 4 + 4, active ? 1 : 0);
+		  socket.getOutputStream().write(bytes);
+	  }
+	  catch (IOException e) {
+		  Messages.addMessage(MessageType.Warning, e.getLocalizedMessage());
+          handleConnectionFailure(true);
+	  }
+  }
+  
+  public void removeAllTags() {
+	    if (!isConnected()) {
+	        Messages.addMessage(MessageType.Warning, Localization.getString("ControlConnection.NoConnection")); //$NON-NLS-1$
+	        return;
+	      }
+	      if (state == State.ConnectionFailure) {
+	      	if (!tryReconnect()) {
+	      	      Messages.addMessage(MessageType.Warning, Localization.getString("ControlConnection.NoConnection")); //$NON-NLS-1$
+	      	      return;    		
+	      	}
+	      }
+	  try {
+		  byte[] bytes = new byte[1];
+		  bytes[0] = 11;
+		  socket.getOutputStream().write(bytes);
+	  }
+	  catch (IOException e) {
+		  Messages.addMessage(MessageType.Warning, e.getLocalizedMessage());
+          handleConnectionFailure(true);
+	  }	  
+  }
+  
+  public void setTagCategoryOperator(boolean operatorIsAnd) {
+	    if (!isConnected()) {
+	        Messages.addMessage(MessageType.Warning, Localization.getString("ControlConnection.NoConnection")); //$NON-NLS-1$
+	        return;
+	      }
+	      if (state == State.ConnectionFailure) {
+	      	if (!tryReconnect()) {
+	      	      Messages.addMessage(MessageType.Warning, Localization.getString("ControlConnection.NoConnection")); //$NON-NLS-1$
+	      	      return;    		
+	      	}
+	      }
+	  try {
+		  byte[] bytes = new byte[1 + 4];
+		  bytes[0] = 12;
+		  java.nio.ByteBuffer buffer = java.nio.ByteBuffer.wrap(bytes);
+		  buffer.putInt(1, operatorIsAnd ? 1 : 0);
 		  socket.getOutputStream().write(bytes);
 	  }
 	  catch (IOException e) {

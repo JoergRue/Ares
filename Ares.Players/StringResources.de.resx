@@ -165,6 +165,9 @@
   <data name="StopBroadcast" xml:space="preserve">
     <value>Stoppe UDP-Broadcast</value>
   </data>
+  <data name="TagsDbError" xml:space="preserve">
+    <value>Fehler beim Zugriff auf die Tags-Datenbasis: {0}</value>
+  </data>
   <data name="UDPError" xml:space="preserve">
     <value>Fehler beim Senden eines UDP-Pakets: </value>
   </data>

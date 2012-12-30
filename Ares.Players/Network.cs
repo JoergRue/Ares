@@ -33,6 +33,9 @@ namespace Ares.Players
         void PlayOtherMusic(Int32 elementId);
         void SwitchElement(Int32 elementId);
         void SetMusicRepeat(bool repeat);
+        void SwitchTag(Int32 categoryId, Int32 tagId, bool tagIsActive);
+        void DeactivateAllTags();
+        void SetTagCategoryOperator(bool operatorIsAnd);
     }
 
     public class Network : Ares.Playing.IProjectPlayingCallbacks
@@ -144,10 +147,27 @@ namespace Ares.Players
             InformMusicList(musicListId);
         }
 
+        public void InformClientOfPossibleTags(int languageId)
+        {
+            InformPossibleTags(languageId);
+        }
+
+        public void InformClientOfActiveTags(System.Collections.Generic.IList<int> activeTags)
+        {
+            InformActiveTags(activeTags);
+        }
+
+        public void InformClientOfTagCategoryOperator(bool operatorIsAnd)
+        {
+            InformCategoryOperatorChanged(operatorIsAnd);
+        }
+
         public void InformClientOfEverything(int overallVolume, int musicVolume, int soundVolume, Ares.Data.IMode mode, MusicInfo music,
-            System.Collections.Generic.IList<Ares.Data.IModeElement> elements, String projectName, Int32 musicListId, bool musicRepeat)
+            System.Collections.Generic.IList<Ares.Data.IModeElement> elements, String projectName, Int32 musicListId, bool musicRepeat,
+            int tagLanguageId, System.Collections.Generic.IList<int> activeTags, bool tagCategoryOperatorIsAnd)
         {
             InformProjectChange(projectName);
+            InformPossibleTags(tagLanguageId);
             InformVolume(Playing.VolumeTarget.Both, overallVolume);
             InformVolume(Playing.VolumeTarget.Music, musicVolume);
             InformVolume(Playing.VolumeTarget.Sounds, soundVolume);
@@ -159,6 +179,8 @@ namespace Ares.Players
             }
             InformMusicList(musicListId);
             InformRepeatChanged(musicRepeat);
+            InformActiveTags(activeTags);
+            InformCategoryOperatorChanged(tagCategoryOperatorIsAnd);
         }
 
         public void ListenInThread()
@@ -414,6 +436,26 @@ namespace Ares.Players
             }
         }
 
+        private bool ReadInt32(out Int32 value)
+        {
+            Byte[] data = new Byte[4];
+            lock (syncObject)
+            {
+                bool success = client != null && ReadFromStream(client.GetStream(), data, 4, 500);
+                if (success)
+                {
+                    if (BitConverter.IsLittleEndian)
+                        Array.Reverse(data);
+                    value = BitConverter.ToInt32(data, 0);
+                }
+                else
+                {
+                    value = -1;
+                }
+                return success;
+            }
+        }
+
         private void ListenForCommands()
         {
             try
@@ -523,19 +565,8 @@ namespace Ares.Players
                     }
                     else if (command == 7)
                     {
-                        Byte[] data = new Byte[4];
-                        bool success = false;
                         Int32 newMusicId = -1;
-                        lock (syncObject)
-                        {
-                            success = client != null && ReadFromStream(client.GetStream(), data, 4, 500);
-                            if (success)
-                            {
-                                if (BitConverter.IsLittleEndian)
-                                    Array.Reverse(data);
-                                newMusicId = BitConverter.ToInt32(data, 0);
-                            }
-                        }
+                        bool success = ReadInt32(out newMusicId);
                         if (success && newMusicId != -1)
                         {
                             networkClient.PlayOtherMusic(newMusicId);
@@ -543,19 +574,8 @@ namespace Ares.Players
                     }
                     else if (command == 8)
                     {
-                        Byte[] data = new Byte[4];
-                        bool success = false;
                         Int32 elementId = -1;
-                        lock (syncObject)
-                        {
-                            success = client != null && ReadFromStream(client.GetStream(), data, 4, 500);
-                            if (success)
-                            {
-                                if (BitConverter.IsLittleEndian)
-                                    Array.Reverse(data);
-                                elementId = BitConverter.ToInt32(data, 0);
-                            }
-                        }
+                        bool success = ReadInt32(out elementId);
                         if (success && elementId != -1)
                         {
                             networkClient.SwitchElement(elementId);
@@ -563,22 +583,43 @@ namespace Ares.Players
                     }
                     else if (command == 9)
                     {
-                        Byte[] data = new Byte[4];
-                        bool success = false;
                         Int32 repeatValue = 0;
-                        lock (syncObject)
-                        {
-                            success = client != null && ReadFromStream(client.GetStream(), data, 4, 500);
-                            if (success)
-                            {
-                                if (BitConverter.IsLittleEndian)
-                                    Array.Reverse(data);
-                                repeatValue = BitConverter.ToInt32(data, 0);
-                            }
-                        }
+                        bool success = ReadInt32(out repeatValue);
                         if (success)
                         {
                             networkClient.SetMusicRepeat(repeatValue == 1);
+                        }
+                    }
+                    else if (command == 10)
+                    {
+                        Int32 categoryId = -1;
+                        Int32 tagId = -1;
+                        Int32 onOff = -1;
+                        bool success = ReadInt32(out categoryId);
+                        if (success)
+                        {
+                            success = ReadInt32(out tagId);
+                        }
+                        if (success)
+                        {
+                            success = ReadInt32(out onOff);
+                        }
+                        if (success)
+                        {
+                            networkClient.SwitchTag(categoryId, tagId, onOff == 1);
+                        }
+                    }
+                    else if (command == 11)
+                    {
+                        networkClient.DeactivateAllTags();
+                    }
+                    else if (command == 12)
+                    {
+                        Int32 isAnd = -1;
+                        bool success = ReadInt32(out isAnd);
+                        if (success)
+                        {
+                            networkClient.SetTagCategoryOperator(isAnd == 1);
                         }
                     }
                     lock (syncObject)
@@ -602,7 +643,7 @@ namespace Ares.Players
             }
         }
 
-        private static readonly int PLAYER_VERSION = 1;
+        private static readonly int PLAYER_VERSION = 2;
 
         public void InitConnectionData()
         {
@@ -680,6 +721,26 @@ namespace Ares.Players
             }
         }
 
+        private void SendStringAndInt32(byte commandId, byte subCommandId, String s, Int32 i)
+        {
+            byte[] sa = System.Text.Encoding.UTF8.GetBytes(s);
+            byte[] ia = BitConverter.GetBytes(i);
+            if (BitConverter.IsLittleEndian)
+                Array.Reverse(ia);
+            byte[] elementPackage = new byte[3 + ia.Length + 2 + sa.Length];
+            elementPackage[0] = commandId;
+            elementPackage[1] = subCommandId;
+            elementPackage[2] = 0;
+            Array.Copy(ia, 0, elementPackage, 3, ia.Length);
+            elementPackage[3 + ia.Length] = (byte)(sa.Length / (1 << 8));
+            elementPackage[3 + ia.Length + 1] = (byte)(sa.Length % (1 << 8));
+            Array.Copy(sa, 0, elementPackage, 3 + ia.Length + 2, sa.Length);
+            lock (syncObject)
+            {
+                client.GetStream().Write(elementPackage, 0, elementPackage.Length);
+            }
+        }
+
         private void InformMusicList(Int32 musicListId)
         {
             if (ClientConnected)
@@ -700,26 +761,125 @@ namespace Ares.Players
                 {
                     foreach (Ares.Data.IFileElement fileElement in musicList.GetFileElements())
                     {
-                        byte[] title = System.Text.Encoding.UTF8.GetBytes(fileElement.Title);
-                        byte[] elementId = BitConverter.GetBytes(fileElement.Id);
-                        if (BitConverter.IsLittleEndian)
-                            Array.Reverse(elementId);
-                        byte[] elementPackage = new byte[3 + elementId.Length + 2 + title.Length];
-                        elementPackage[0] = 8;
-                        elementPackage[1] = 1;
-                        elementPackage[2] = 0;
-                        Array.Copy(elementId, 0, elementPackage, 3, elementId.Length);
-                        elementPackage[3 + elementId.Length] = (byte)(title.Length / (1 << 8));
-                        elementPackage[3 + elementId.Length + 1] = (byte)(title.Length % (1 << 8));
-                        Array.Copy(title, 0, elementPackage, 3 + elementId.Length + 2, title.Length);
-                        lock (syncObject)
-                        {
-                            client.GetStream().Write(elementPackage, 0, elementPackage.Length);
-                        }
+                        SendStringAndInt32(8, 1, fileElement.Title, fileElement.Id);
                     }
                 }
                 // end packet
                 package[1] = 2;
+                lock (syncObject)
+                {
+                    client.GetStream().Write(package, 0, package.Length);
+                }
+            }
+        }
+
+        private void InformPossibleTags(int languageId)
+        {
+            if (ClientConnected)
+            {
+                try
+                {
+                    var dbRead = Ares.Tags.TagsModule.GetTagsDB().GetReadInterfaceByLanguage(languageId);
+                    var categories = dbRead.GetAllCategories();
+                    // start packet for categories
+                    byte[] package = new byte[3];
+                    package[0] = 11;
+                    package[1] = 0;
+                    package[2] = 0;
+                    lock (syncObject)
+                    {
+                        client.GetStream().Write(package, 0, package.Length);
+                    }
+                    foreach (var category in categories)
+                    {
+                        // category packet
+                        SendStringAndInt32(11, 1, category.Name, category.Id);
+                        // all tags for the category
+                        var tags = dbRead.GetAllTags(category.Id);
+                        foreach (var tag in tags)
+                        {
+                            // tag packet
+                            SendStringAndInt32(11, 2, tag.Name, tag.Id);
+                        }
+                    }
+                    // end packet
+                    package[1] = 3;
+                    lock (syncObject)
+                    {
+                        client.GetStream().Write(package, 0, package.Length);
+                    }
+                }
+                catch (Ares.Tags.TagsDbException ex)
+                {
+                    Messages.AddMessage(MessageType.Error, String.Format(StringResources.TagsDbError, ex.Message));
+                }
+            }
+        }
+
+        private void InformActiveTags(System.Collections.Generic.IList<Int32> tags)
+        {
+            if (ClientConnected)
+            {
+                // start packet for tags
+                byte[] package = new byte[3];
+                package[0] = 12;
+                package[1] = 0;
+                package[2] = 0;
+                lock (syncObject)
+                {
+                    client.GetStream().Write(package, 0, package.Length);
+                }
+                foreach (Int32 tagId in tags)
+                {
+                    byte[] ia = BitConverter.GetBytes(tagId);
+                    if (BitConverter.IsLittleEndian)
+                        Array.Reverse(ia);
+                    byte[] elementPackage = new byte[3 + ia.Length];
+                    elementPackage[0] = 12;
+                    elementPackage[1] = 1;
+                    elementPackage[2] = 0;
+                    Array.Copy(ia, 0, elementPackage, 3, ia.Length);
+                    lock (syncObject)
+                    {
+                        client.GetStream().Write(elementPackage, 0, elementPackage.Length);
+                    }
+                }
+                // end packet
+                package[1] = 2;
+                lock (syncObject)
+                {
+                    client.GetStream().Write(package, 0, package.Length);
+                }
+            }
+        }
+
+        private void InformTagChanged(Int32 tagId, bool active)
+        {
+            if (ClientConnected)
+            {
+                byte[] ia = BitConverter.GetBytes(tagId);
+                if (BitConverter.IsLittleEndian)
+                    Array.Reverse(ia);
+                byte[] package = new byte[3 + ia.Length];
+                package[0] = 13;
+                package[1] = (byte) (active ? 1 : 0);
+                package[2] = 0;
+                Array.Copy(ia, 0, package, 3, ia.Length);
+                lock (syncObject)
+                {
+                    client.GetStream().Write(package, 0, package.Length);
+                }
+            }
+        }
+
+        private void InformCategoryOperatorChanged(bool isAndOperator)
+        {
+            if (ClientConnected)
+            {
+                byte[] package = new byte[3];
+                package[0] = 14;
+                package[1] = (byte)(isAndOperator ? 1 : 0);
+                package[2] = 0;
                 lock (syncObject)
                 {
                     client.GetStream().Write(package, 0, package.Length);
@@ -976,19 +1136,55 @@ namespace Ares.Players
 
         public void MusicTagAdded(int tagId)
         {
-#warning TODO Network Callbacks
+            try
+            {
+                InformTagChanged(tagId, true);
+            }
+            catch (System.IO.IOException e)
+            {
+                Messages.AddMessage(MessageType.Warning, e.Message);
+                DoDisconnect(true);
+            }
         }
 
         public void MusicTagRemoved(int tagId)
         {
+            try
+            {
+                InformTagChanged(tagId, false);
+            }
+            catch (System.IO.IOException e)
+            {
+                Messages.AddMessage(MessageType.Warning, e.Message);
+                DoDisconnect(true);
+            }
+
         }
 
         public void AllMusicTagsRemoved()
         {
+            try
+            {
+                InformActiveTags(new System.Collections.Generic.List<int>());
+            }
+            catch (System.IO.IOException e)
+            {
+                Messages.AddMessage(MessageType.Warning, e.Message);
+                DoDisconnect(true);
+            }
         }
 
         public void MusicTagCategoriesOperatorChanged(bool isAndOperator)
         {
+            try
+            {
+                InformCategoryOperatorChanged(isAndOperator);
+            }
+            catch (System.IO.IOException e)
+            {
+                Messages.AddMessage(MessageType.Warning, e.Message);
+                DoDisconnect(true);
+            }
         }
 
 

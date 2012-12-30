@@ -240,11 +240,13 @@ namespace Ares.Player
                 }
                 path = oldPath + System.IO.Path.DirectorySeparatorChar + fileName;
             }
-            if (System.IO.File.Exists(path))
+            if (System.IO.File.Exists(path) && !path.Equals(m_CurrentProjectPath, StringComparison.OrdinalIgnoreCase))
             {
                 OpenProject(path, true);
             }
         }
+
+        private String m_CurrentProjectPath = String.Empty;
 
         private void OpenProject(String filePath, bool onControllerRequest)
         {
@@ -269,9 +271,14 @@ namespace Ares.Player
             try
             {
                 m_Project = Ares.Data.DataModule.ProjectManager.LoadProject(filePath);
+                m_CurrentProjectPath = filePath;
                 if (m_Project != null && m_Project.TagLanguageId != -1)
                 {
                     m_TagLanguageId = m_Project.TagLanguageId;
+                }
+                else
+                {
+                    m_TagLanguageId = Ares.Tags.TagsModule.GetTagsDB().TranslationsInterface.GetIdOfCurrentUILanguage();
                 }
                 Ares.Settings.Settings.Instance.RecentFiles.AddFile(new RecentFiles.ProjectEntry(m_Project.FileName, m_Project.Title));
             }
@@ -1072,6 +1079,28 @@ namespace Ares.Player
             m_PlayingControl.SetRepeatCurrentMusic(repeat);
         }
 
+        public void SwitchTag(Int32 categoryId, Int32 tagId, bool active)
+        {
+            if (active)
+            {
+                m_PlayingControl.AddMusicTag(categoryId, tagId);
+            }
+            else
+            {
+                m_PlayingControl.RemoveMusicTag(categoryId, tagId);
+            }
+        }
+
+        public void DeactivateAllTags()
+        {
+            m_PlayingControl.RemoveAllMusicTags();
+        }
+
+        public void SetTagCategoryOperator(bool operatorIsAnd)
+        {
+            m_PlayingControl.SetMusicTagCategoriesOperator(operatorIsAnd);
+        }
+
         private bool m_WasConnected = false;
 
         private void UpdateClientData()
@@ -1083,7 +1112,8 @@ namespace Ares.Player
                 m_Network.InformClientOfEverything(m_PlayingControl.GlobalVolume, m_PlayingControl.MusicVolume,
                     m_PlayingControl.SoundVolume, m_PlayingControl.CurrentMode, MusicInfo.GetInfo(m_PlayingControl.CurrentMusicElement),
                     m_PlayingControl.CurrentModeElements, m_Project != null ? m_Project.Title : String.Empty, 
-                    m_PlayingControl.CurrentMusicList, m_PlayingControl.MusicRepeat);
+                    m_PlayingControl.CurrentMusicList, m_PlayingControl.MusicRepeat,
+                    m_TagLanguageId, new List<int>(m_PlayingControl.GetCurrentMusicTags()), m_PlayingControl.IsMusicTagCategoriesOperatorAnd());
                 disconnectButton.Text = StringResources.Disconnect;
                 m_WasConnected = true;
             }

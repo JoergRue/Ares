@@ -121,7 +121,7 @@ namespace Ares.MGPlugin
             m_ModeElements.Clear();
             foreach (int id in m_CurrentButtons)
             {
-                CommandButtonMapping.Instance.UnregisterButton(id);
+                m_NormalCommands.UnregisterButton(id);
             }
             m_CurrentButtons.Clear();
             if (enabled)
@@ -133,7 +133,8 @@ namespace Ares.MGPlugin
                 if (modes.Count == 0)
                     return;
                 modesList.Items.Add("Musikliste");
-                int i = 1;
+                modesList.Items.Add("Musik-Tags");
+                int i = 2;
                 int currentMode = 0;
                 foreach (Ares.Data.IMode mode in modes)
                 {
@@ -570,7 +571,7 @@ namespace Ares.MGPlugin
         {
             DispatchToUIThread(() =>
                 {
-                    CommandButtonMapping.Instance.CommandStateChanged(element, true);
+                    m_NormalCommands.CommandStateChanged(element, true);
                     Ares.Data.IElement dataElement = Ares.Data.DataModule.ElementRepository.GetElement(element);
                     if (dataElement != null)
                     {
@@ -585,7 +586,7 @@ namespace Ares.MGPlugin
         {
             DispatchToUIThread(() =>
             {
-                CommandButtonMapping.Instance.CommandStateChanged(element, false);
+                m_NormalCommands.CommandStateChanged(element, false);
                 Ares.Data.IElement dataElement = Ares.Data.DataModule.ElementRepository.GetElement(element);
                 if (dataElement != null)
                 {
@@ -600,7 +601,7 @@ namespace Ares.MGPlugin
         {
             DispatchToUIThread(() =>
             {
-                CommandButtonMapping.Instance.AllCommandsInactive();
+                m_NormalCommands.AllCommandsInactive();
                 m_ModeElements.Clear();
                 UpdateModeElements();
             }
@@ -686,6 +687,61 @@ namespace Ares.MGPlugin
             );
         }
 
+        List<Controllers.MusicTagCategory> m_CurrentTagCategories = new List<Controllers.MusicTagCategory>();
+        Dictionary<int, List<Controllers.MusicTag>> m_CurrentMusicTags = new Dictionary<int, List<Controllers.MusicTag>>();
+
+        public void TagsChanged(List<Controllers.MusicTagCategory> categories, Dictionary<int, List<Controllers.MusicTag>> tagsByCategory)
+        {
+            DispatchToUIThread(() =>
+                {
+                    m_TagCommands.AllCommandsInactive();
+                    m_CurrentTagCategories = categories;
+                    m_CurrentMusicTags = tagsByCategory;
+                    if (modesList.SelectedIndex == 1)
+                        UpdateElementsPanel();
+                }
+            );
+        }
+
+        public void ActiveTagsChanged(List<int> activeTags)
+        {
+            DispatchToUIThread(() =>
+                {
+                    m_TagCommands.AllCommandsInactive();
+                    foreach (int tagId in activeTags)
+                    {
+                        m_TagCommands.CommandStateChanged(tagId, true);
+                    }
+                    if (modesList.SelectedIndex == 1)
+                        UpdateElementsPanel();
+                }
+            );
+        }
+
+        public void TagStateChanged(int tagId, bool isActive)
+        {
+            DispatchToUIThread(() =>
+                {
+                    m_TagCommands.CommandStateChanged(tagId, isActive);
+                    if (modesList.SelectedIndex == 1)
+                        UpdateElementsPanel();
+                }
+            );
+        }
+
+        bool m_TagCategoryOperatorIsAnd = false;
+
+        public void TagCategoryOperatorChanged(bool operatorIsAnd)
+        {
+            DispatchToUIThread(() =>
+                {
+                    m_TagCategoryOperatorIsAnd = operatorIsAnd;
+                    if (modesList.SelectedIndex == 1)
+                        UpdateElementsPanel();
+                }
+            );
+        }
+
         public void Disconnect()
         {
             DispatchToUIThread(() =>
@@ -722,6 +778,13 @@ namespace Ares.MGPlugin
         }
 
         private List<int> m_CurrentButtons = new List<int>();
+        private List<int> m_CurrentTagButtons = new List<int>();
+
+        private CommandButtonMapping m_NormalCommands = new CommandButtonMapping(false);
+        private CommandButtonMapping m_TagCommands = new CommandButtonMapping(true);
+
+        private int m_CurrentTagCategory = -1;
+        private bool m_ListenToTagControls = true;
 
         private void UpdateElementsPanel()
         {
@@ -738,17 +801,130 @@ namespace Ares.MGPlugin
                 }
                 musicList.EndUpdate();
                 elementsPanel.Visible = false;
-                CommandButtonMapping.Instance.ButtonsActive = false;
+                m_NormalCommands.ButtonsActive = false;
+                m_TagCommands.ButtonsActive = false;
                 musicList.Visible = true;
+                tagsPanel.Visible = false;
+            }
+            else if (modeIndex == 1)
+            {
+                m_ListenToTagControls = false;
+
+                foreach (int id in m_CurrentTagButtons)
+                {
+                    m_TagCommands.UnregisterButton(id);
+                }
+                m_CurrentTagButtons.Clear();
+                tagSelectionPanel.Controls.Clear();
+
+                musicTagCategoryBox.Items.Clear();
+                int selIndex = -1;
+                foreach (var category in m_CurrentTagCategories)
+                {
+                    musicTagCategoryBox.Items.Add(category.Title);
+                    if (category.Id == m_CurrentTagCategory)
+                        selIndex = musicTagCategoryBox.Items.Count - 1;
+                }
+                if (selIndex == -1 && m_CurrentTagCategories.Count > 0)
+                {
+                    selIndex = 0;
+                    m_CurrentTagCategory = m_CurrentTagCategories[0].Id;
+                }
+                if (selIndex != -1)
+                    musicTagCategoryBox.SelectedIndex = selIndex;
+
+                tagCategoriesAndButton.Checked = m_TagCategoryOperatorIsAnd;
+                tagCategoriesOrButton.Checked = !m_TagCategoryOperatorIsAnd;
+
+                if (m_CurrentTagCategory != -1 && m_CurrentMusicTags.ContainsKey(m_CurrentTagCategory))
+                {
+                    var tags = m_CurrentMusicTags[m_CurrentTagCategory];
+                    int maxWidth = 0;
+                    CheckBox checkBox = new CheckBox();
+                    checkBox.Appearance = Appearance.Button;
+                    for (int i = 0; i < tags.Count; ++i)
+                    {
+                        checkBox.Text = tags[i].Title;
+                        int width = checkBox.PreferredSize.Width + 15;
+                        if (width > maxWidth)
+                            maxWidth = width;
+                    }
+                    checkBox.Dispose();
+                    int count = 0;
+                    for (int i = 0; i < tags.Count; ++i)
+                    {
+                        ++count;
+                        int row = count / 4;
+                        int column = count % 4;
+                        checkBox = new CheckBox();
+                        checkBox.Text = tags[i].Title;
+                        checkBox.Appearance = Appearance.Button;
+                        Size size = checkBox.PreferredSize;
+                        size.Width = maxWidth;
+                        checkBox.SetBounds(0, 0, size.Width, size.Height);
+                        m_TagCommands.RegisterButton(tags[i].Id, m_CurrentTagCategory, checkBox);
+                        m_CurrentButtons.Add(tags[i].Id);
+                        tagSelectionPanel.Controls.Add(checkBox);
+                    }
+                    if (count == 0)
+                    {
+                        Label label = new Label();
+                        label.Text = "Keine Tags vorhanden";
+                        label.SetBounds(0, 0, label.PreferredSize.Width + 15, label.PreferredSize.Height);
+                        tagSelectionPanel.Controls.Add(label);
+                    }
+                }
+                else
+                {
+                    Label label = new Label();
+                    label.Text = "Keine Tags vorhanden";
+                    label.SetBounds(0, 0, label.PreferredSize.Width + 15, label.PreferredSize.Height);
+                    tagSelectionPanel.Controls.Add(label);
+                }
+
+                StringBuilder activeTagsBuilder = new StringBuilder();
+                foreach (var category in m_CurrentTagCategories)
+                {
+                    bool hasTag = false;
+                    foreach (var tag in m_CurrentMusicTags[category.Id])
+                    {
+                        if (m_TagCommands.IsCommandActive(tag.Id))
+                        {
+                            if (!hasTag)
+                            {
+                                if (activeTagsBuilder.Length > 0)
+                                    activeTagsBuilder.Append("; ");
+                                activeTagsBuilder.Append(category.Title);
+                                activeTagsBuilder.Append(": ");
+                                hasTag = true;
+                            }
+                            else
+                            {
+                                activeTagsBuilder.Append(", ");
+                            }
+                            activeTagsBuilder.Append(tag.Title);
+                        }
+                    }
+                }
+                currentTagsLabel.Text = activeTagsBuilder.ToString();
+
+                elementsPanel.Visible = false;
+                m_NormalCommands.ButtonsActive = false;
+                m_TagCommands.ButtonsActive = true;
+                musicList.Visible = false;
+                tagsPanel.Visible = true;
+
+                m_ListenToTagControls = true;
             }
             else
             {
                 foreach (int id in m_CurrentButtons)
                 {
-                    CommandButtonMapping.Instance.UnregisterButton(id);
+                    m_NormalCommands.UnregisterButton(id);
                 }
                 m_CurrentButtons.Clear();
                 elementsPanel.Controls.Clear();
+                musicTagCategoryBox.Items.Clear();
 
                 if (Controllers.Control.Instance.Project != null &&
                     Controllers.Control.Instance.Project.GetModes().Count >= modeIndex)
@@ -781,7 +957,7 @@ namespace Ares.MGPlugin
                         Size size = checkBox.PreferredSize;
                         size.Width = maxWidth;
                         checkBox.SetBounds(0, 0, size.Width, size.Height);
-                        CommandButtonMapping.Instance.RegisterButton(elements[i].Id, checkBox);
+                        m_NormalCommands.RegisterButton(elements[i].Id, 0, checkBox);
                         m_CurrentButtons.Add(elements[i].Id);
                         elementsPanel.Controls.Add(checkBox);
                     }
@@ -800,9 +976,11 @@ namespace Ares.MGPlugin
                     label.SetBounds(0, 0, label.PreferredSize.Width + 15, label.PreferredSize.Height);
                     elementsPanel.Controls.Add(label);
                 }
-                CommandButtonMapping.Instance.ButtonsActive = true;
+                m_NormalCommands.ButtonsActive = true;
+                m_TagCommands.ButtonsActive = false;
                 musicList.Visible = false;
                 elementsPanel.Visible = true;
+                tagsPanel.Visible = false;
             }
         }
 
@@ -940,5 +1118,35 @@ namespace Ares.MGPlugin
         {
             Ares.Controllers.Control.Instance.SetMusicRepeat(!m_IsMusicRepeat);
         }
+
+        private void musicTagCategoryBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!m_ListenToTagControls)
+                return;
+            m_CurrentTagCategory = m_CurrentTagCategories[musicTagCategoryBox.SelectedIndex].Id;
+            UpdateElementsPanel();
+        }
+
+        private void tagCategoriesOrButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!m_ListenToTagControls)
+                return;
+            Controllers.Control.Instance.SetTagCategoriesOperator(!tagCategoriesOrButton.Checked);
+        }
+
+        private void tagCategoriesAndButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!m_ListenToTagControls)
+                return;
+            Controllers.Control.Instance.SetTagCategoriesOperator(tagCategoriesAndButton.Checked);
+        }
+
+        private void clearTagsButton_Click(object sender, EventArgs e)
+        {
+            if (!m_ListenToTagControls)
+                return;
+            Controllers.Control.Instance.RemoveAllTags();
+        }
+
     }
 }

@@ -158,7 +158,7 @@ public class ModesFragment extends ConnectedFragment {
 	private void showFirstMode() {
 		if (Control.getInstance().getConfiguration() == null)
 			return;
-		showMode(-1, ControllerActivity.ANIM_MOVE_RIGHT);
+		showMode(-2, ControllerActivity.ANIM_MOVE_RIGHT);
 		if (!isOnXLargeScreen()) { 
 			getActivity().overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
 		}
@@ -173,6 +173,13 @@ public class ModesFragment extends ConnectedFragment {
 				intent.putExtra(ControllerActivity.ANIMATION_TYPE, animation);
 				startActivity(intent);		    	    		
 	    	}
+	    	else if (index == -2) {
+	    		// special case: tags
+				Intent intent = new Intent(getActivity().getBaseContext(), TagsActivity.class);
+				intent.putExtra(ModeLikeActivity.MODE_INDEX, index);
+				intent.putExtra(ControllerActivity.ANIMATION_TYPE, animation);
+				startActivity(intent);		    	    		
+	    	} 
 	    	else {
 				Intent intent = new Intent(getActivity().getBaseContext(), ModeActivity.class);
 				intent.putExtra(ModeLikeActivity.MODE_INDEX, index);
@@ -181,7 +188,13 @@ public class ModesFragment extends ConnectedFragment {
 	    	}
 		}
 		else {
-    		ModeLikeFragment fragment = (index == -1) ? new MusicListFragment() : new ModeFragment();
+    		ModeLikeFragment fragment = null;
+    		if (index == -1) 
+    			fragment = new MusicListFragment();
+    		else if (index == -2)
+    			fragment = new TagsFragment();
+    		else
+    			fragment = new ModeFragment();
 			fragment.setMode(index);
 			FragmentTransaction transaction = getFragmentManager().beginTransaction();
 			transaction.replace(R.id.modeFragmentContainer, fragment);
@@ -219,6 +232,12 @@ public class ModesFragment extends ConnectedFragment {
 					intent.putExtra(ModeLikeActivity.MODE_INDEX, mMode);
 					startActivity(intent);		    	    		
 		    	}
+		    	else if (mMode == -2) {
+		    		// special case: tags
+					Intent intent = new Intent(getActivity().getBaseContext(), TagsActivity.class);
+					intent.putExtra(ModeLikeActivity.MODE_INDEX, mMode);
+					startActivity(intent);		    	    		
+		    	}
 		    	else {
 					Intent intent = new Intent(getActivity().getBaseContext(), ModeActivity.class);
 					intent.putExtra(ModeLikeActivity.MODE_INDEX, mMode);
@@ -226,7 +245,13 @@ public class ModesFragment extends ConnectedFragment {
 		    	}
 			}
 			else {
-	    		ModeLikeFragment fragment = (mMode == -1) ? new MusicListFragment() : new ModeFragment();
+	    		ModeLikeFragment fragment = null;
+	    		if (mMode == -1) 
+	    			fragment = new MusicListFragment();
+	    		else if (mMode == -2)
+	    			fragment = new TagsFragment();
+	    		else
+	    			fragment = new ModeFragment();
 				fragment.setMode(mMode);
 				FragmentTransaction transaction = getFragmentManager().beginTransaction();
 				transaction.replace(R.id.modeFragmentContainer, fragment);
@@ -249,7 +274,7 @@ public class ModesFragment extends ConnectedFragment {
 			if (Control.getInstance().getConfiguration() == null)
 				return 0;
 			else 
-				return Control.getInstance().getConfiguration().getModes().size() + 1;
+				return Control.getInstance().getConfiguration().getModes().size() + 2;
 		}
 
 		public Object getItem(int position) {
@@ -273,12 +298,15 @@ public class ModesFragment extends ConnectedFragment {
 					//button.setLayoutParams(new GridView.LayoutParams(80, 20));
 					button.setPadding(5, 5, 5, 5);
 					if (position == 0) {
+						button.setText(R.string.musicTags);
+					}
+					else if (position == 1) {
 						button.setText(R.string.musicList);
 					}
 					else {
-						button.setText(Control.getInstance().getConfiguration().getModes().get(position - 1).getTitle());
+						button.setText(Control.getInstance().getConfiguration().getModes().get(position - 2).getTitle());
 					}
-					button.setOnClickListener(new ModeSwitcher(position - 1));
+					button.setOnClickListener(new ModeSwitcher(position - 2));
 					mButtons.put(position, button);
 					return button;
 				}
