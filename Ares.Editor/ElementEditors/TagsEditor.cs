@@ -217,6 +217,7 @@ namespace Ares.Editor.ElementEditors
                 m_Listen = false;
                 UpdateTags();
                 UpdateTranslations();
+                categoryHiddenBox.Checked = m_Project != null && m_Project.GetHiddenTagCategories().Contains(m_LastCategoryId);
                 m_Listen = true;
             }
         }
@@ -230,6 +231,7 @@ namespace Ares.Editor.ElementEditors
             {
                 deleteCategoryButton.Enabled = false;
                 renameCategoryButton.Enabled = false;
+                categoryHiddenBox.Enabled = false;
                 m_LastCategoryId = -1;
                 categoriesList.EndUpdate();
                 return;
@@ -254,15 +256,22 @@ namespace Ares.Editor.ElementEditors
                 {
                     m_LastCategoryId = m_Categories[selIndex].Id;
                     categoriesList.SelectedIndex = selIndex;
+                    categoryHiddenBox.Checked = m_Project != null && m_Project.GetHiddenTagCategories().Contains(m_LastCategoryId);
+                }
+                else
+                {
+                    categoryHiddenBox.Checked = false;
                 }
                 deleteCategoryButton.Enabled = m_Categories.Count > 0;
                 renameCategoryButton.Enabled = m_Categories.Count > 0;
+                categoryHiddenBox.Enabled = m_Project != null && m_Categories.Count > 0;
             }
             catch (Ares.Tags.TagsDbException ex)
             {
                 MessageBox.Show(this, String.Format(StringResources.TagsDbError, ex.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 deleteCategoryButton.Enabled = false;
                 renameCategoryButton.Enabled = false;
+                categoryHiddenBox.Enabled = false;
             }
             categoriesList.EndUpdate();
         }
@@ -278,6 +287,7 @@ namespace Ares.Editor.ElementEditors
                 m_LastTranslationType = TranslationType.Tag;
                 m_Listen = false;
                 UpdateTranslations();
+                tagHiddenBox.Checked = m_Project != null && m_Project.GetHiddenTags().Contains(m_LastTagId);
                 m_Listen = true;
             }
         }
@@ -292,6 +302,7 @@ namespace Ares.Editor.ElementEditors
             {
                 deleteTagButton.Enabled = false;
                 renameTagButton.Enabled = false;
+                tagHiddenBox.Enabled = false;
                 m_LastTagId = -1;
                 tagsList.EndUpdate();
                 return;
@@ -312,9 +323,15 @@ namespace Ares.Editor.ElementEditors
                 {
                     m_LastTagId = m_Tags[selIndex].Id;
                     tagsList.SelectedIndex = selIndex;
+                    tagHiddenBox.Checked = m_Project != null && m_Project.GetHiddenTags().Contains(m_LastTagId);
+                }
+                else
+                {
+                    tagHiddenBox.Checked = false;
                 }
                 deleteTagButton.Enabled = m_Tags.Count > 0;
                 renameTagButton.Enabled = m_Tags.Count > 0;
+                tagHiddenBox.Enabled = m_Project != null && m_Tags.Count > 0;
             }
             catch (Ares.Tags.TagsDbException ex)
             {
@@ -559,7 +576,11 @@ namespace Ares.Editor.ElementEditors
                     UpdateTags();
                     UpdateTranslations();
                     m_Listen = true;
-                    Ares.ModelInfo.ModelChecks.Instance.CheckAll(m_Project);
+                    if (m_Project != null)
+                    {
+                        Ares.ModelInfo.ModelChecks.Instance.AdaptHiddenTags(m_Project);
+                        Ares.ModelInfo.ModelChecks.Instance.CheckAll(m_Project);
+                    }
                 }
                 catch (Ares.Tags.TagsDbException ex)
                 {
@@ -697,7 +718,11 @@ namespace Ares.Editor.ElementEditors
                     UpdateTags();
                     UpdateTranslations();
                     m_Listen = true;
-                    Ares.ModelInfo.ModelChecks.Instance.CheckAll(m_Project);
+                    if (m_Project != null)
+                    {
+                        Ares.ModelInfo.ModelChecks.Instance.AdaptHiddenTags(m_Project);
+                        Ares.ModelInfo.ModelChecks.Instance.CheckAll(m_Project);
+                    }
                 }
                 catch (Ares.Tags.TagsDbException ex)
                 {
@@ -823,6 +848,11 @@ namespace Ares.Editor.ElementEditors
                     m_Listen = false;
                     UpdateTranslations();
                     m_Listen = true;
+                    if (m_Project != null)
+                    {
+                        Ares.ModelInfo.ModelChecks.Instance.AdaptHiddenTags(m_Project);
+                        Ares.ModelInfo.ModelChecks.Instance.CheckAll(m_Project);
+                    }
                 }
                 catch (Ares.Tags.TagsDbException ex)
                 {
@@ -946,11 +976,36 @@ namespace Ares.Editor.ElementEditors
                     UpdateLanguages();
                     UpdateTranslations();
                     m_Listen = true;
+                    if (m_Project != null)
+                    {
+                        Ares.ModelInfo.ModelChecks.Instance.AdaptHiddenTags(m_Project);
+                        Ares.ModelInfo.ModelChecks.Instance.CheckAll(m_Project);
+                    }
                 }
                 catch (Ares.Tags.TagsDbException ex)
                 {
                     MessageBox.Show(this, String.Format(StringResources.TagsDbError, ex.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+            }
+        }
+
+        private void categoryHiddenBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!m_Listen)
+                return;
+            if (m_Project != null)
+            {
+                Ares.Editor.Actions.Actions.Instance.AddNew(new Ares.Editor.Actions.HideCategoryAction(m_LastCategoryId, categoryHiddenBox.Checked, m_Project), m_Project);
+            }
+        }
+
+        private void tagHiddenBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!m_Listen)
+                return;
+            if (m_Project != null)
+            {
+                Ares.Editor.Actions.Actions.Instance.AddNew(new Ares.Editor.Actions.HideTagAction(m_LastTagId, tagHiddenBox.Checked, m_Project), m_Project);
             }
         }
 

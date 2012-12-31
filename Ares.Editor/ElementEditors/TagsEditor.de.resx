@@ -127,6 +127,18 @@
   <data name="languageSelectionBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>251, 6</value>
   </data>
+  <data name="groupBox1.Text" xml:space="preserve">
+    <value>Kategorien</value>
+  </data>
+  <data name="categoryHiddenBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>71, 17</value>
+  </data>
+  <data name="categoryHiddenBox.Text" xml:space="preserve">
+    <value>Versteckt</value>
+  </data>
+  <data name="categoryHiddenBox.ToolTip" xml:space="preserve">
+    <value>Zeigt die Kategorie beim aktuellen Projekt im  Player / Controller nicht an</value>
+  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="deleteCategoryButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -146,8 +158,8 @@
   <data name="addCategoryButton.Text" xml:space="preserve">
     <value>Neu ...</value>
   </data>
-  <data name="groupBox1.Text" xml:space="preserve">
-    <value>Kategorien</value>
+  <data name="groupBox4.Text" xml:space="preserve">
+    <value>Übersetzungen</value>
   </data>
   <data name="langColHeader.Text" xml:space="preserve">
     <value>Sprache</value>
@@ -161,8 +173,8 @@
   <data name="addTranslationButton.Text" xml:space="preserve">
     <value>Neu ...</value>
   </data>
-  <data name="groupBox4.Text" xml:space="preserve">
-    <value>Übersetzungen</value>
+  <data name="groupBox3.Text" xml:space="preserve">
+    <value>Sprachen</value>
   </data>
   <data name="deleteLanguageButton.Text" xml:space="preserve">
     <value>Löschen ...</value>
@@ -173,8 +185,14 @@
   <data name="addLanguageButton.Text" xml:space="preserve">
     <value>Neu ...</value>
   </data>
-  <data name="groupBox3.Text" xml:space="preserve">
-    <value>Sprachen</value>
+  <data name="tagHiddenBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>71, 17</value>
+  </data>
+  <data name="tagHiddenBox.Text" xml:space="preserve">
+    <value>Versteckt</value>
+  </data>
+  <data name="tagHiddenBox.ToolTip" xml:space="preserve">
+    <value>Zeigt den Tag beim aktuellen Projekt im  Player / Controller nicht an</value>
   </data>
   <data name="deleteTagButton.Text" xml:space="preserve">
     <value>Löschen ...</value>

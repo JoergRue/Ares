@@ -195,6 +195,52 @@ namespace Ares.ModelInfo
                 m_ModelChecks[checkType].DoChecks(project, this);
             }
         }
+
+        public void AdaptHiddenTags(IProject project)
+        {
+            HashSet<int> hiddenCategories = project.GetHiddenTagCategories();
+            HashSet<int> hiddenTags = project.GetHiddenTags();
+            if (hiddenCategories.Count == 0 && hiddenTags.Count == 0)
+                return;
+
+            try
+            {
+                int languageId = project.TagLanguageId;
+                if (languageId == -1)
+                    languageId = Ares.Tags.TagsModule.GetTagsDB().TranslationsInterface.GetIdOfCurrentUILanguage();
+                var dbRead = Ares.Tags.TagsModule.GetTagsDB().GetReadInterfaceByLanguage(languageId);
+
+                if (hiddenCategories.Count > 0)
+                {
+                    var existingCategories = dbRead.GetAllCategories();
+                    HashSet<int> existing = new HashSet<int>();
+                    foreach (var category in existingCategories)
+                        existing.Add(category.Id);
+                    foreach (int catId in hiddenCategories)
+                    {
+                        if (!existing.Contains(catId))
+                            project.SetTagCategoryHidden(catId, false);
+                    }
+                }
+
+                if (hiddenTags.Count > 0)
+                {
+                    var tagInfos = dbRead.GetTagInfos(hiddenTags);
+                    HashSet<int> existing = new HashSet<int>();
+                    foreach (var tag in tagInfos)
+                        existing.Add(tag.Id);
+                    foreach (int tagId in hiddenTags)
+                    {
+                        if (!existing.Contains(tagId))
+                            project.SetTagHidden(tagId, false);
+                    }
+                }
+            }
+            catch (Ares.Tags.TagsDbException)
+            {
+                // ignore here
+            }
+        }
     }
 
 }

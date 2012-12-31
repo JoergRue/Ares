@@ -21,6 +21,7 @@ using System;
 using System.Text;
 using System.Net.Sockets;
 using System.Net;
+using System.Collections.Generic;
 
 namespace Ares.Players
 {
@@ -147,9 +148,9 @@ namespace Ares.Players
             InformMusicList(musicListId);
         }
 
-        public void InformClientOfPossibleTags(int languageId)
+        public void InformClientOfPossibleTags(int languageId, Ares.Data.IProject project)
         {
-            InformPossibleTags(languageId);
+            InformPossibleTags(languageId, project);
         }
 
         public void InformClientOfActiveTags(System.Collections.Generic.IList<int> activeTags)
@@ -163,11 +164,11 @@ namespace Ares.Players
         }
 
         public void InformClientOfEverything(int overallVolume, int musicVolume, int soundVolume, Ares.Data.IMode mode, MusicInfo music,
-            System.Collections.Generic.IList<Ares.Data.IModeElement> elements, String projectName, Int32 musicListId, bool musicRepeat,
+            System.Collections.Generic.IList<Ares.Data.IModeElement> elements, Ares.Data.IProject project, Int32 musicListId, bool musicRepeat,
             int tagLanguageId, System.Collections.Generic.IList<int> activeTags, bool tagCategoryOperatorIsAnd)
         {
-            InformProjectChange(projectName);
-            InformPossibleTags(tagLanguageId);
+            InformProjectChange(project != null ? project.Title : String.Empty);
+            InformPossibleTags(tagLanguageId, project);
             InformVolume(Playing.VolumeTarget.Both, overallVolume);
             InformVolume(Playing.VolumeTarget.Music, musicVolume);
             InformVolume(Playing.VolumeTarget.Sounds, soundVolume);
@@ -773,7 +774,7 @@ namespace Ares.Players
             }
         }
 
-        private void InformPossibleTags(int languageId)
+        private void InformPossibleTags(int languageId, Ares.Data.IProject project)
         {
             if (ClientConnected)
             {
@@ -781,6 +782,8 @@ namespace Ares.Players
                 {
                     var dbRead = Ares.Tags.TagsModule.GetTagsDB().GetReadInterfaceByLanguage(languageId);
                     var categories = dbRead.GetAllCategories();
+                    HashSet<int> hiddenCategories = project != null ? project.GetHiddenTagCategories() : new HashSet<int>();
+                    HashSet<int> hiddenTags = project != null ? project.GetHiddenTags() : new HashSet<int>();
                     // start packet for categories
                     byte[] package = new byte[3];
                     package[0] = 11;
@@ -792,12 +795,16 @@ namespace Ares.Players
                     }
                     foreach (var category in categories)
                     {
+                        if (hiddenCategories.Contains(category.Id))
+                            continue;
                         // category packet
                         SendStringAndInt32(11, 1, category.Name, category.Id);
                         // all tags for the category
                         var tags = dbRead.GetAllTags(category.Id);
                         foreach (var tag in tags)
                         {
+                            if (hiddenTags.Contains(tag.Id))
+                                continue;
                             // tag packet
                             SendStringAndInt32(11, 2, tag.Name, tag.Id);
                         }

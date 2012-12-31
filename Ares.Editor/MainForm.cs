@@ -666,6 +666,7 @@ namespace Ares.Editor
                 }
             }
             DoModelChecks();
+            Ares.ModelInfo.ModelChecks.Instance.AdaptHiddenTags(m_CurrentProject);
             m_Instance.SetLoadedProject(filePath);
             UpdateGUI();
         }

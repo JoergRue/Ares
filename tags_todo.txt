@@ -1,6 +1,5 @@
 Tags TODO:
 
-- Hide Tags and Categories (per project? per database?)
 - Auto-Tagging (Author, Genre, ?)
 - Filter in File Explorer
 - Mono / Linux

@@ -73,14 +73,68 @@ namespace Ares.Data
             return m_Modes.Find(m => m.KeyCode == keyCode);
         }
 
+        public void SetTagCategoryHidden(int categoryId, bool isHidden)
+        {
+            if (isHidden)
+            {
+                m_HiddenTagCategories.Add(categoryId);
+            }
+            else
+            {
+                m_HiddenTagCategories.Remove(categoryId);
+            }
+        }
+
+        public void SetTagHidden(int tagId, bool isHidden)
+        {
+            if (isHidden)
+            {
+                m_HiddenTags.Add(tagId);
+            }
+            else
+            {
+                m_HiddenTags.Remove(tagId);
+            }
+        }
+
+        public HashSet<int> GetHiddenTagCategories()
+        {
+            return new HashSet<int>(m_HiddenTagCategories);
+        }
+
+        public HashSet<int> GetHiddenTags()
+        {
+            return new HashSet<int>(m_HiddenTags);
+        }
+
         public void WriteToXml(System.Xml.XmlWriter writer)
         {
             writer.WriteStartElement("Project");
             writer.WriteAttributeString("Title", Title);
             writer.WriteAttributeString("LanguageId", TagLanguageId.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            
             writer.WriteStartElement("Modes");
             m_Modes.ForEach(e => e.WriteToXml(writer));
             writer.WriteEndElement();
+            
+            writer.WriteStartElement("HiddenTagCategories");
+            foreach (int categoryId in m_HiddenTagCategories)
+            {
+                writer.WriteStartElement("TagCategory");
+                writer.WriteAttributeString("id", categoryId.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+            
+            writer.WriteStartElement("HiddenTags");
+            foreach (int tagId in m_HiddenTags)
+            {
+                writer.WriteStartElement("Tag");
+                writer.WriteAttributeString("id", tagId.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+
             writer.WriteEndElement();
         }
 
@@ -124,6 +178,34 @@ namespace Ares.Data
                         }
                         reader.ReadEndElement();
                     }
+                    else if (reader.IsStartElement("HiddenTagCategories") && !reader.IsEmptyElement)
+                    {
+                        reader.Read();
+                        while (reader.IsStartElement())
+                        {
+                            if (reader.IsStartElement("TagCategory"))
+                            {
+                                int id = reader.GetIntegerAttribute("id");
+                                m_HiddenTagCategories.Add(id);
+                            }
+                            reader.ReadOuterXml();
+                        }
+                        reader.ReadEndElement();
+                    }
+                    else if (reader.IsStartElement("HiddenTags") && !reader.IsEmptyElement)
+                    {
+                        reader.Read();
+                        while (reader.IsStartElement())
+                        {
+                            if (reader.IsStartElement("Tag"))
+                            {
+                                int id = reader.GetIntegerAttribute("id");
+                                m_HiddenTags.Add(id);
+                            }
+                            reader.ReadOuterXml();
+                        }
+                        reader.ReadEndElement();
+                    }
                     else
                     {
                         reader.ReadOuterXml();
@@ -140,6 +222,8 @@ namespace Ares.Data
         }
 
         private List<IMode> m_Modes;
+        private HashSet<int> m_HiddenTagCategories = new HashSet<int>();
+        private HashSet<int> m_HiddenTags = new HashSet<int>();
 
         [NonSerialized]
         private String m_FileName;

@@ -48,10 +48,12 @@ namespace Ares.Editor.ElementEditors
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TagsEditor));
             this.label1 = new System.Windows.Forms.Label();
             this.languageSelectionBox = new System.Windows.Forms.ComboBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.categoryHiddenBox = new System.Windows.Forms.CheckBox();
             this.deleteCategoryButton = new System.Windows.Forms.Button();
             this.renameCategoryButton = new System.Windows.Forms.Button();
             this.addCategoryButton = new System.Windows.Forms.Button();
@@ -71,10 +73,12 @@ namespace Ares.Editor.ElementEditors
             this.addLanguageButton = new System.Windows.Forms.Button();
             this.languagesList = new System.Windows.Forms.ListBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.tagHiddenBox = new System.Windows.Forms.CheckBox();
             this.deleteTagButton = new System.Windows.Forms.Button();
             this.renameTagButton = new System.Windows.Forms.Button();
             this.addTagButton = new System.Windows.Forms.Button();
             this.tagsList = new System.Windows.Forms.ListBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -86,6 +90,7 @@ namespace Ares.Editor.ElementEditors
             // 
             resources.ApplyResources(this.label1, "label1");
             this.label1.Name = "label1";
+            this.toolTip1.SetToolTip(this.label1, resources.GetString("label1.ToolTip"));
             // 
             // languageSelectionBox
             // 
@@ -93,22 +98,34 @@ namespace Ares.Editor.ElementEditors
             this.languageSelectionBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.languageSelectionBox.FormattingEnabled = true;
             this.languageSelectionBox.Name = "languageSelectionBox";
+            this.toolTip1.SetToolTip(this.languageSelectionBox, resources.GetString("languageSelectionBox.ToolTip"));
             this.languageSelectionBox.SelectedIndexChanged += new System.EventHandler(this.languageSelectionBox_SelectedIndexChanged);
             // 
             // groupBox1
             // 
             resources.ApplyResources(this.groupBox1, "groupBox1");
+            this.groupBox1.Controls.Add(this.categoryHiddenBox);
             this.groupBox1.Controls.Add(this.deleteCategoryButton);
             this.groupBox1.Controls.Add(this.renameCategoryButton);
             this.groupBox1.Controls.Add(this.addCategoryButton);
             this.groupBox1.Controls.Add(this.categoriesList);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
+            this.toolTip1.SetToolTip(this.groupBox1, resources.GetString("groupBox1.ToolTip"));
+            // 
+            // categoryHiddenBox
+            // 
+            resources.ApplyResources(this.categoryHiddenBox, "categoryHiddenBox");
+            this.categoryHiddenBox.Name = "categoryHiddenBox";
+            this.toolTip1.SetToolTip(this.categoryHiddenBox, resources.GetString("categoryHiddenBox.ToolTip"));
+            this.categoryHiddenBox.UseVisualStyleBackColor = true;
+            this.categoryHiddenBox.CheckedChanged += new System.EventHandler(this.categoryHiddenBox_CheckedChanged);
             // 
             // deleteCategoryButton
             // 
             resources.ApplyResources(this.deleteCategoryButton, "deleteCategoryButton");
             this.deleteCategoryButton.Name = "deleteCategoryButton";
+            this.toolTip1.SetToolTip(this.deleteCategoryButton, resources.GetString("deleteCategoryButton.ToolTip"));
             this.deleteCategoryButton.UseVisualStyleBackColor = true;
             this.deleteCategoryButton.Click += new System.EventHandler(this.deleteCategoryButton_Click);
             // 
@@ -116,6 +133,7 @@ namespace Ares.Editor.ElementEditors
             // 
             resources.ApplyResources(this.renameCategoryButton, "renameCategoryButton");
             this.renameCategoryButton.Name = "renameCategoryButton";
+            this.toolTip1.SetToolTip(this.renameCategoryButton, resources.GetString("renameCategoryButton.ToolTip"));
             this.renameCategoryButton.UseVisualStyleBackColor = true;
             this.renameCategoryButton.Click += new System.EventHandler(this.renameCategoryButton_Click);
             // 
@@ -123,6 +141,7 @@ namespace Ares.Editor.ElementEditors
             // 
             resources.ApplyResources(this.addCategoryButton, "addCategoryButton");
             this.addCategoryButton.Name = "addCategoryButton";
+            this.toolTip1.SetToolTip(this.addCategoryButton, resources.GetString("addCategoryButton.ToolTip"));
             this.addCategoryButton.UseVisualStyleBackColor = true;
             this.addCategoryButton.Click += new System.EventHandler(this.addCategoryButton_Click);
             // 
@@ -131,6 +150,7 @@ namespace Ares.Editor.ElementEditors
             resources.ApplyResources(this.categoriesList, "categoriesList");
             this.categoriesList.FormattingEnabled = true;
             this.categoriesList.Name = "categoriesList";
+            this.toolTip1.SetToolTip(this.categoriesList, resources.GetString("categoriesList.ToolTip"));
             this.categoriesList.SelectedIndexChanged += new System.EventHandler(this.categoriesList_SelectedIndexChanged);
             // 
             // tableLayoutPanel1
@@ -141,6 +161,7 @@ namespace Ares.Editor.ElementEditors
             this.tableLayoutPanel1.Controls.Add(this.groupBox2, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.groupBox1, 0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.toolTip1.SetToolTip(this.tableLayoutPanel1, resources.GetString("tableLayoutPanel1.ToolTip"));
             // 
             // groupBox4
             // 
@@ -152,11 +173,13 @@ namespace Ares.Editor.ElementEditors
             this.groupBox4.Controls.Add(this.addTranslationButton);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.TabStop = false;
+            this.toolTip1.SetToolTip(this.groupBox4, resources.GetString("groupBox4.ToolTip"));
             // 
             // translationsLabel
             // 
             resources.ApplyResources(this.translationsLabel, "translationsLabel");
             this.translationsLabel.Name = "translationsLabel";
+            this.toolTip1.SetToolTip(this.translationsLabel, resources.GetString("translationsLabel.ToolTip"));
             // 
             // translationsList
             // 
@@ -169,6 +192,7 @@ namespace Ares.Editor.ElementEditors
             this.translationsList.HideSelection = false;
             this.translationsList.MultiSelect = false;
             this.translationsList.Name = "translationsList";
+            this.toolTip1.SetToolTip(this.translationsList, resources.GetString("translationsList.ToolTip"));
             this.translationsList.UseCompatibleStateImageBehavior = false;
             this.translationsList.View = System.Windows.Forms.View.Details;
             this.translationsList.SelectedIndexChanged += new System.EventHandler(this.translationsList_SelectedIndexChanged);
@@ -185,6 +209,7 @@ namespace Ares.Editor.ElementEditors
             // 
             resources.ApplyResources(this.deleteTranslationButton, "deleteTranslationButton");
             this.deleteTranslationButton.Name = "deleteTranslationButton";
+            this.toolTip1.SetToolTip(this.deleteTranslationButton, resources.GetString("deleteTranslationButton.ToolTip"));
             this.deleteTranslationButton.UseVisualStyleBackColor = true;
             this.deleteTranslationButton.Click += new System.EventHandler(this.deleteTranslationButton_Click);
             // 
@@ -192,6 +217,7 @@ namespace Ares.Editor.ElementEditors
             // 
             resources.ApplyResources(this.renameTranslationButton, "renameTranslationButton");
             this.renameTranslationButton.Name = "renameTranslationButton";
+            this.toolTip1.SetToolTip(this.renameTranslationButton, resources.GetString("renameTranslationButton.ToolTip"));
             this.renameTranslationButton.UseVisualStyleBackColor = true;
             this.renameTranslationButton.Click += new System.EventHandler(this.renameTranslationButton_Click);
             // 
@@ -199,6 +225,7 @@ namespace Ares.Editor.ElementEditors
             // 
             resources.ApplyResources(this.addTranslationButton, "addTranslationButton");
             this.addTranslationButton.Name = "addTranslationButton";
+            this.toolTip1.SetToolTip(this.addTranslationButton, resources.GetString("addTranslationButton.ToolTip"));
             this.addTranslationButton.UseVisualStyleBackColor = true;
             this.addTranslationButton.Click += new System.EventHandler(this.addTranslationButton_Click);
             // 
@@ -211,11 +238,13 @@ namespace Ares.Editor.ElementEditors
             this.groupBox3.Controls.Add(this.languagesList);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.TabStop = false;
+            this.toolTip1.SetToolTip(this.groupBox3, resources.GetString("groupBox3.ToolTip"));
             // 
             // deleteLanguageButton
             // 
             resources.ApplyResources(this.deleteLanguageButton, "deleteLanguageButton");
             this.deleteLanguageButton.Name = "deleteLanguageButton";
+            this.toolTip1.SetToolTip(this.deleteLanguageButton, resources.GetString("deleteLanguageButton.ToolTip"));
             this.deleteLanguageButton.UseVisualStyleBackColor = true;
             this.deleteLanguageButton.Click += new System.EventHandler(this.deleteLanguageButton_Click);
             // 
@@ -223,6 +252,7 @@ namespace Ares.Editor.ElementEditors
             // 
             resources.ApplyResources(this.renameLanguageButton, "renameLanguageButton");
             this.renameLanguageButton.Name = "renameLanguageButton";
+            this.toolTip1.SetToolTip(this.renameLanguageButton, resources.GetString("renameLanguageButton.ToolTip"));
             this.renameLanguageButton.UseVisualStyleBackColor = true;
             this.renameLanguageButton.Click += new System.EventHandler(this.renameLanguageButton_Click);
             // 
@@ -230,6 +260,7 @@ namespace Ares.Editor.ElementEditors
             // 
             resources.ApplyResources(this.addLanguageButton, "addLanguageButton");
             this.addLanguageButton.Name = "addLanguageButton";
+            this.toolTip1.SetToolTip(this.addLanguageButton, resources.GetString("addLanguageButton.ToolTip"));
             this.addLanguageButton.UseVisualStyleBackColor = true;
             this.addLanguageButton.Click += new System.EventHandler(this.addLanguageButton_Click);
             // 
@@ -238,22 +269,34 @@ namespace Ares.Editor.ElementEditors
             resources.ApplyResources(this.languagesList, "languagesList");
             this.languagesList.FormattingEnabled = true;
             this.languagesList.Name = "languagesList";
+            this.toolTip1.SetToolTip(this.languagesList, resources.GetString("languagesList.ToolTip"));
             this.languagesList.SelectedIndexChanged += new System.EventHandler(this.languagesList_SelectedIndexChanged);
             // 
             // groupBox2
             // 
             resources.ApplyResources(this.groupBox2, "groupBox2");
+            this.groupBox2.Controls.Add(this.tagHiddenBox);
             this.groupBox2.Controls.Add(this.deleteTagButton);
             this.groupBox2.Controls.Add(this.renameTagButton);
             this.groupBox2.Controls.Add(this.addTagButton);
             this.groupBox2.Controls.Add(this.tagsList);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.TabStop = false;
+            this.toolTip1.SetToolTip(this.groupBox2, resources.GetString("groupBox2.ToolTip"));
+            // 
+            // tagHiddenBox
+            // 
+            resources.ApplyResources(this.tagHiddenBox, "tagHiddenBox");
+            this.tagHiddenBox.Name = "tagHiddenBox";
+            this.toolTip1.SetToolTip(this.tagHiddenBox, resources.GetString("tagHiddenBox.ToolTip"));
+            this.tagHiddenBox.UseVisualStyleBackColor = true;
+            this.tagHiddenBox.CheckedChanged += new System.EventHandler(this.tagHiddenBox_CheckedChanged);
             // 
             // deleteTagButton
             // 
             resources.ApplyResources(this.deleteTagButton, "deleteTagButton");
             this.deleteTagButton.Name = "deleteTagButton";
+            this.toolTip1.SetToolTip(this.deleteTagButton, resources.GetString("deleteTagButton.ToolTip"));
             this.deleteTagButton.UseVisualStyleBackColor = true;
             this.deleteTagButton.Click += new System.EventHandler(this.deleteTagButton_Click);
             // 
@@ -261,6 +304,7 @@ namespace Ares.Editor.ElementEditors
             // 
             resources.ApplyResources(this.renameTagButton, "renameTagButton");
             this.renameTagButton.Name = "renameTagButton";
+            this.toolTip1.SetToolTip(this.renameTagButton, resources.GetString("renameTagButton.ToolTip"));
             this.renameTagButton.UseVisualStyleBackColor = true;
             this.renameTagButton.Click += new System.EventHandler(this.renameTagButton_Click);
             // 
@@ -268,6 +312,7 @@ namespace Ares.Editor.ElementEditors
             // 
             resources.ApplyResources(this.addTagButton, "addTagButton");
             this.addTagButton.Name = "addTagButton";
+            this.toolTip1.SetToolTip(this.addTagButton, resources.GetString("addTagButton.ToolTip"));
             this.addTagButton.UseVisualStyleBackColor = true;
             this.addTagButton.Click += new System.EventHandler(this.addTagButton_Click);
             // 
@@ -276,6 +321,7 @@ namespace Ares.Editor.ElementEditors
             resources.ApplyResources(this.tagsList, "tagsList");
             this.tagsList.FormattingEnabled = true;
             this.tagsList.Name = "tagsList";
+            this.toolTip1.SetToolTip(this.tagsList, resources.GetString("tagsList.ToolTip"));
             this.tagsList.SelectedIndexChanged += new System.EventHandler(this.tagsList_SelectedIndexChanged);
             // 
             // TagsEditor
@@ -288,12 +334,15 @@ namespace Ares.Editor.ElementEditors
             this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.Document)));
             this.Name = "TagsEditor";
             this.ShowInTaskbar = false;
+            this.toolTip1.SetToolTip(this, resources.GetString("$this.ToolTip"));
             this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -327,5 +376,8 @@ namespace Ares.Editor.ElementEditors
         private System.Windows.Forms.ColumnHeader langColHeader;
         private System.Windows.Forms.ColumnHeader nameColHeader;
         private System.Windows.Forms.Label translationsLabel;
+        private System.Windows.Forms.CheckBox categoryHiddenBox;
+        private System.Windows.Forms.CheckBox tagHiddenBox;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

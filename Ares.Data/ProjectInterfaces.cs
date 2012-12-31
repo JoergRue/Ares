@@ -129,5 +129,27 @@ namespace Ares.Data
         /// Returns the mode for a certain key.
         /// </summary>
         IMode GetMode(Int32 keyCode);
+
+        /// <summary>
+        /// Sets whether a music tag category shall be shown in 
+        /// player / controllers.
+        /// </summary>
+        void SetTagCategoryHidden(int categoryId, bool isHidden);
+        /// <summary>
+        /// Sets whether a music tag shall be shown in 
+        /// player / controllers.
+        /// </summary>
+        void SetTagHidden(int tagId, bool isHidden);
+
+        /// <summary>
+        /// Returns the music tag categories which shall be hidden in 
+        /// player / controllers.
+        /// </summary>
+        HashSet<int> GetHiddenTagCategories();
+        /// <summary>
+        /// Returns the music tags which shall be hidden in 
+        /// player / controllers.
+        /// </summary>
+        HashSet<int> GetHiddenTags();
     }
 }

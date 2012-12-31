@@ -309,6 +309,10 @@ namespace Ares.Player
             if (m_Network != null)
             {
                 m_Network.InformClientOfProject(m_Project != null ? m_Project.Title : String.Empty);
+                if (m_Project != null)
+                {
+                    m_Network.InformClientOfPossibleTags(m_TagLanguageId, m_Project);
+                }
             }
             UpdateModesList();
         }
@@ -426,6 +430,17 @@ namespace Ares.Player
                     Messages.AddMessage(MessageType.Error, String.Format(StringResources.TagsDbError, ex.Message));
                     m_MusicTagCategories = new List<Ares.Tags.CategoryForLanguage>();
                 }
+                if (m_Project != null && m_Project.GetHiddenTagCategories().Count > 0)
+                {
+                    HashSet<int> hiddenCategories = m_Project.GetHiddenTagCategories();
+                    List<Ares.Tags.CategoryForLanguage> filteredCategories = new List<Tags.CategoryForLanguage>();
+                    foreach (var category in m_MusicTagCategories)
+                    {
+                        if (!hiddenCategories.Contains(category.Id))
+                            filteredCategories.Add(category);
+                    }
+                    m_MusicTagCategories = filteredCategories;
+                }
                 foreach (var category in m_MusicTagCategories)
                 {
                     musicTagCategoryBox.Items.Add(category.Name);
@@ -441,6 +456,8 @@ namespace Ares.Player
                 {
                     musicTagCategoryBox.SelectedIndex = selIndex;
                 }
+                if (musicTagCategoryBox.Items.Count == 0)
+                    m_LastTagCategoryId = -1;
 
                 HashSet<int> currentTags = m_PlayingControl.GetCurrentMusicTags();
 
@@ -456,6 +473,17 @@ namespace Ares.Player
                     {
                         Messages.AddMessage(MessageType.Error, String.Format(StringResources.TagsDbError, ex.Message));
                         tags = new List<Ares.Tags.TagForLanguage>();
+                    }
+                    if (m_Project != null && m_Project.GetHiddenTags().Count > 0)
+                    {
+                        HashSet<int> hiddenTags = m_Project.GetHiddenTags();
+                        List<Tags.TagForLanguage> filteredTags = new List<Tags.TagForLanguage>();
+                        foreach (var tag in tags)
+                        {
+                            if (!hiddenTags.Contains(tag.Id))
+                                filteredTags.Add(tag);
+                        }
+                        tags = filteredTags;
                     }
 
                     int maxWidth = 0;
@@ -473,8 +501,6 @@ namespace Ares.Player
                     int count = 0;
                     for (int i = 0; i < tags.Count; ++i)
                     {
-                        //if (!elements[i].IsVisibleInPlayer)
-                        //    continue;
                         ++count;
                         int row = count / 4;
                         int column = count % 4;
@@ -1112,7 +1138,7 @@ namespace Ares.Player
                 clientStateLabel.ForeColor = System.Drawing.Color.DarkGreen;
                 m_Network.InformClientOfEverything(m_PlayingControl.GlobalVolume, m_PlayingControl.MusicVolume,
                     m_PlayingControl.SoundVolume, m_PlayingControl.CurrentMode, MusicInfo.GetInfo(m_PlayingControl.CurrentMusicElement),
-                    m_PlayingControl.CurrentModeElements, m_Project != null ? m_Project.Title : String.Empty, 
+                    m_PlayingControl.CurrentModeElements, m_Project, 
                     m_PlayingControl.CurrentMusicList, m_PlayingControl.MusicRepeat,
                     m_TagLanguageId, new List<int>(m_PlayingControl.GetCurrentMusicTags()), m_PlayingControl.IsMusicTagCategoriesOperatorAnd());
                 disconnectButton.Text = StringResources.Disconnect;

@@ -98,4 +98,56 @@ namespace Ares.Editor.Actions
             dbWrite.SetFileTags(m_Files, tags);
         }
     }
+
+    public class HideCategoryAction : Action
+    {
+        private int m_CategoryId;
+        private bool m_Hidden;
+        private bool m_OldValue;
+
+        public HideCategoryAction(int categoryId, bool isHidden, Ares.Data.IProject project)
+        {
+            m_CategoryId = categoryId;
+            m_Hidden = isHidden;
+            m_OldValue = project.GetHiddenTagCategories().Contains(categoryId);
+        }
+
+        public override void Do(Data.IProject project)
+        {
+            project.SetTagCategoryHidden(m_CategoryId, m_Hidden);
+            TagChanges.Instance.FireTagsDBChanged();
+        }
+
+        public override void Undo(Data.IProject project)
+        {
+            project.SetTagCategoryHidden(m_CategoryId, m_OldValue);
+            TagChanges.Instance.FireTagsDBChanged();
+        }
+    }
+
+    public class HideTagAction : Action
+    {
+        private int m_TagId;
+        private bool m_Hidden;
+        private bool m_OldValue;
+
+        public HideTagAction(int tagId, bool isHidden, Ares.Data.IProject project)
+        {
+            m_TagId = tagId;
+            m_Hidden = isHidden;
+            m_OldValue = project.GetHiddenTags().Contains(m_TagId);
+        }
+
+        public override void Do(Data.IProject project)
+        {
+            project.SetTagHidden(m_TagId, m_Hidden);
+            TagChanges.Instance.FireTagsDBChanged();
+        }
+
+        public override void Undo(Data.IProject project)
+        {
+            project.SetTagHidden(m_TagId, m_OldValue);
+            TagChanges.Instance.FireTagsDBChanged();
+        }
+    }
 }
