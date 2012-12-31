@@ -224,6 +224,12 @@ namespace Ares.Editor.Controls
                                 return StringResources.NoCondition;
                         }
                     }
+                case MacroCommandType.AddTag:
+                    return String.Format(StringResources.AddTagCommand, GetTagName(((ITagCommand)command).TagId, project));
+                case MacroCommandType.RemoveTag:
+                    return String.Format(StringResources.RemoveTagCommand, GetTagName(((ITagCommand)command).TagId, project));
+                case MacroCommandType.RemoveAllTags:
+                    return StringResources.RemoveAllTagsCommand;
                 default:
                     return String.Empty;
             }
@@ -250,6 +256,29 @@ namespace Ares.Editor.Controls
             }
             IMode mode = FindMode(modeElement, project);
             return String.Format(StringResources.ModeElementDisplay, mode != null ? mode.Title : StringResources.InvalidModeElement, modeElement.Title);
+        }
+
+        private static String GetTagName(int tagId, IProject project)
+        {
+            try
+            {
+                int languageId = project.TagLanguageId;
+                if (languageId == -1)
+                {
+                    languageId = Ares.Tags.TagsModule.GetTagsDB().TranslationsInterface.GetIdOfCurrentUILanguage();
+                }
+                List<int> tagIds = new List<int>();
+                tagIds.Add(tagId);
+                var tagInfos = Ares.Tags.TagsModule.GetTagsDB().GetReadInterfaceByLanguage(languageId).GetTagInfos(tagIds);
+                if (tagInfos.Count == 0)
+                    return StringResources.InvalidModeElement;
+                else
+                    return tagInfos[0].Name;
+            }
+            catch (Ares.Tags.TagsDbException /*ex*/)
+            {
+                return StringResources.InvalidModeElement;
+            }
         }
 
         private static IMode FindMode(IModeElement modeElement, IProject project)

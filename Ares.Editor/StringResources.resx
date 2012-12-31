@@ -351,6 +351,9 @@ You should adapt some settings first.</value>
   <data name="PleaseSelectElement" xml:space="preserve">
     <value>Please select an element</value>
   </data>
+  <data name="PleaseSelectTag" xml:space="preserve">
+    <value>Please select a tag</value>
+  </data>
   <data name="ProjectChanged" xml:space="preserve">
     <value>The current project has unsaved changes. Shall it be saved now?</value>
   </data>

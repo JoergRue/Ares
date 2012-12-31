@@ -320,5 +320,14 @@ namespace Ares.ModelInfo {
                 return ResourceManager.GetString("StoppedElementNotFound", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Tag to add / remove not found. ähnelt.
+        /// </summary>
+        internal static string TagNotFound {
+            get {
+                return ResourceManager.GetString("TagNotFound", resourceCulture);
+            }
+        }
     }
 }

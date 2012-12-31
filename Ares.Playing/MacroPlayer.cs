@@ -326,6 +326,29 @@ namespace Ares.Playing
             }
         }
 
+        public void VisitTagCommand(ITagCommand tagCommand)
+        {
+            if (Client.Stopped)
+                return;
+            if (IsConditionFulfilled(tagCommand.Condition))
+            {
+                if (tagCommand.CommandType == MacroCommandType.AddTag)
+                    PlayingModule.ProjectPlayer.AddMusicTag(tagCommand.CategoryId, tagCommand.TagId);
+                else
+                    PlayingModule.ProjectPlayer.RemoveMusicTag(tagCommand.CategoryId, tagCommand.TagId);
+            }
+        }
+
+        public void VisitRemoveAllTagsCommand(IRemoveAllTagsCommand tagCommand)
+        {
+            if (Client.Stopped)
+                return;
+            if (IsConditionFulfilled(tagCommand.Condition))
+            {
+                PlayingModule.ProjectPlayer.RemoveAllMusicTags();
+            }
+        }
+
         public override void VisitFileElement(IFileElement fileElement)
         {
         }

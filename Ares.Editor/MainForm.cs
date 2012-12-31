@@ -464,7 +464,7 @@ namespace Ares.Editor
             }
             if (m_TagsEditor != null)
             {
-                m_TagsEditor.SetProject(m_CurrentProject);
+                m_TagsEditor = null;
             }
             for (int i = 0; i < m_FileExplorers.Length; ++i)
             {
@@ -654,7 +654,7 @@ namespace Ares.Editor
             }
             if (m_TagsEditor != null)
             {
-                m_TagsEditor.SetProject(m_CurrentProject);
+                m_TagsEditor = null;
             }
             for (int i = 0; i < m_FileExplorers.Length; ++i)
             {

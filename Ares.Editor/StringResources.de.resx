@@ -351,6 +351,9 @@ Sie sollten zuerst ein paar Einstellungen vornehmen.</value>
   <data name="PleaseSelectElement" xml:space="preserve">
     <value>Bitte ein Element auswählen.</value>
   </data>
+  <data name="PleaseSelectTag" xml:space="preserve">
+    <value>Bitte einen Tag auswählen</value>
+  </data>
   <data name="ProjectChanged" xml:space="preserve">
     <value>Das aktuelle Projekt hat ungespeicherte Änderungen.
 Soll es jetzt gespeichert werden?</value>

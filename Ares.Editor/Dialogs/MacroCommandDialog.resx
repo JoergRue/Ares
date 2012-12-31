@@ -118,181 +118,42 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="commandGroupBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
+  <data name="label4.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
   </data>
-  <data name="waitUnitCombo.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="waitUnitCombo.Items" xml:space="preserve">
-    <value>ms</value>
-  </data>
-  <data name="waitUnitCombo.Items1" xml:space="preserve">
-    <value>s</value>
-  </data>
-  <data name="waitUnitCombo.Items2" xml:space="preserve">
-    <value>min</value>
+  <data name="label3.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="waitUnitCombo.Location" type="System.Drawing.Point, System.Drawing">
-    <value>194, 77</value>
-  </data>
-  <data name="waitUnitCombo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>62, 21</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="waitUnitCombo.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
-  </data>
-  <data name="&gt;&gt;waitUnitCombo.Name" xml:space="preserve">
-    <value>waitUnitCombo</value>
-  </data>
-  <data name="&gt;&gt;waitUnitCombo.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;waitUnitCombo.Parent" xml:space="preserve">
-    <value>commandGroupBox</value>
-  </data>
-  <data name="&gt;&gt;waitUnitCombo.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="label3.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 79</value>
-  </data>
   <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
     <value>54, 13</value>
   </data>
-  <data name="label3.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
+  <data name="commandGroupBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 12</value>
   </data>
-  <data name="label3.Text" xml:space="preserve">
-    <value>Wait time:</value>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Action:</value>
   </data>
-  <data name="&gt;&gt;label3.Name" xml:space="preserve">
-    <value>label3</value>
-  </data>
-  <data name="&gt;&gt;label3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label3.Parent" xml:space="preserve">
-    <value>commandGroupBox</value>
-  </data>
-  <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="waitTimeUpDown.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
-  <data name="waitTimeUpDown.Location" type="System.Drawing.Point, System.Drawing">
-    <value>82, 77</value>
-  </data>
-  <data name="waitTimeUpDown.Size" type="System.Drawing.Size, System.Drawing">
-    <value>106, 20</value>
-  </data>
-  <data name="waitTimeUpDown.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;waitTimeUpDown.Name" xml:space="preserve">
-    <value>waitTimeUpDown</value>
-  </data>
-  <data name="&gt;&gt;waitTimeUpDown.Type" xml:space="preserve">
-    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;waitTimeUpDown.Parent" xml:space="preserve">
-    <value>commandGroupBox</value>
-  </data>
-  <data name="&gt;&gt;waitTimeUpDown.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="selectCommandElementButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="selectCommandElementButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>262, 49</value>
-  </data>
-  <data name="selectCommandElementButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>38, 23</value>
-  </data>
-  <data name="selectCommandElementButton.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="selectCommandElementButton.Text" xml:space="preserve">
-    <value>...</value>
-  </data>
-  <data name="&gt;&gt;selectCommandElementButton.Name" xml:space="preserve">
-    <value>selectCommandElementButton</value>
-  </data>
-  <data name="&gt;&gt;selectCommandElementButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;selectCommandElementButton.Parent" xml:space="preserve">
-    <value>commandGroupBox</value>
-  </data>
-  <data name="&gt;&gt;selectCommandElementButton.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="commandElementBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
-  <metadata name="errorProvider.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 13</value>
-  </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>333, 255</value>
+  <data name="commandTypeCombo.Items7" xml:space="preserve">
+    <value>Remove all music tags</value>
   </data>
   <data name="okButton.Location" type="System.Drawing.Point, System.Drawing">
     <value>165, 219</value>
   </data>
-  <data name="okButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
+  <data name="&gt;&gt;label1.Name" xml:space="preserve">
+    <value>label1</value>
   </data>
-  <data name="okButton.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+  <data name="&gt;&gt;label5.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="okButton.Text" xml:space="preserve">
-    <value>OK</value>
+  <data name="commandElementBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>82, 51</value>
   </data>
-  <data name="&gt;&gt;okButton.Name" xml:space="preserve">
-    <value>okButton</value>
-  </data>
-  <data name="&gt;&gt;okButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;okButton.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;okButton.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="cancelButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+  <data name="selectConditionElementButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
-  <data name="cancelButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>246, 219</value>
-  </data>
-  <data name="cancelButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
-  </data>
-  <data name="cancelButton.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="cancelButton.Text" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="&gt;&gt;cancelButton.Name" xml:space="preserve">
-    <value>cancelButton</value>
-  </data>
-  <data name="&gt;&gt;cancelButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;selectConditionElementButton.Parent" xml:space="preserve">
+    <value>conditionGroupBox</value>
   </data>
   <data name="&gt;&gt;cancelButton.Parent" xml:space="preserve">
     <value>$this</value>
@@ -300,182 +161,159 @@
   <data name="&gt;&gt;cancelButton.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="conditionGroupBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
-  <data name="selectConditionElementButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="selectConditionElementButton.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="selectConditionElementButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="selectConditionElementButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>262, 44</value>
-  </data>
-  <data name="selectConditionElementButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>38, 23</value>
-  </data>
-  <data name="selectConditionElementButton.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
+  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="label3.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
   <data name="selectConditionElementButton.Text" xml:space="preserve">
     <value>...</value>
   </data>
-  <data name="&gt;&gt;selectConditionElementButton.Name" xml:space="preserve">
-    <value>selectConditionElementButton</value>
-  </data>
-  <data name="&gt;&gt;selectConditionElementButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;selectConditionElementButton.Parent" xml:space="preserve">
-    <value>conditionGroupBox</value>
-  </data>
-  <data name="&gt;&gt;selectConditionElementButton.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="conditionElementBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
-  <data name="conditionElementBox.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
-    <value>MiddleLeft</value>
-  </data>
-  <data name="conditionElementBox.IconPadding" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="conditionElementBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>82, 46</value>
-  </data>
-  <data name="conditionElementBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>174, 20</value>
-  </data>
-  <data name="conditionElementBox.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;conditionElementBox.Name" xml:space="preserve">
-    <value>conditionElementBox</value>
-  </data>
-  <data name="&gt;&gt;conditionElementBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;conditionElementBox.Parent" xml:space="preserve">
-    <value>conditionGroupBox</value>
-  </data>
-  <data name="&gt;&gt;conditionElementBox.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="label5.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label5.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label5.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 49</value>
-  </data>
-  <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>48, 13</value>
-  </data>
-  <data name="label5.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="label5.Text" xml:space="preserve">
-    <value>Element:</value>
-  </data>
-  <data name="&gt;&gt;label5.Name" xml:space="preserve">
-    <value>label5</value>
-  </data>
-  <data name="&gt;&gt;label5.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label5.Parent" xml:space="preserve">
-    <value>conditionGroupBox</value>
-  </data>
-  <data name="&gt;&gt;label5.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="label4.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 22</value>
-  </data>
-  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>49, 13</value>
-  </data>
-  <data name="label4.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="label4.Text" xml:space="preserve">
-    <value>Execute:</value>
-  </data>
-  <data name="&gt;&gt;label4.Name" xml:space="preserve">
-    <value>label4</value>
-  </data>
-  <data name="&gt;&gt;label4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label4.Parent" xml:space="preserve">
-    <value>conditionGroupBox</value>
-  </data>
-  <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="conditionCombo.Items" xml:space="preserve">
-    <value>Always</value>
-  </data>
-  <data name="conditionCombo.Items1" xml:space="preserve">
-    <value>If Element is running</value>
-  </data>
-  <data name="conditionCombo.Items2" xml:space="preserve">
-    <value>If Element is not running</value>
-  </data>
-  <data name="conditionCombo.Location" type="System.Drawing.Point, System.Drawing">
-    <value>82, 19</value>
-  </data>
-  <data name="conditionCombo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>174, 21</value>
-  </data>
-  <data name="conditionCombo.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+  <data name="commandTypeCombo.Items4" xml:space="preserve">
+    <value>Wait for a fixed time</value>
   </data>
   <data name="&gt;&gt;conditionCombo.Name" xml:space="preserve">
     <value>conditionCombo</value>
   </data>
-  <data name="&gt;&gt;conditionCombo.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="label5.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="commandGroupBox.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="label5.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;commandElementBox.Parent" xml:space="preserve">
+    <value>commandGroupBox</value>
+  </data>
+  <data name="commandTypeCombo.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
   </data>
   <data name="&gt;&gt;conditionCombo.Parent" xml:space="preserve">
     <value>conditionGroupBox</value>
   </data>
-  <data name="&gt;&gt;conditionCombo.ZOrder" xml:space="preserve">
+  <data name="waitUnitCombo.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;label2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;commandTypeCombo.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="cancelButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="commandTypeCombo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>82, 19</value>
+  </data>
+  <data name="&gt;&gt;label3.Parent" xml:space="preserve">
+    <value>commandGroupBox</value>
+  </data>
+  <data name="selectConditionElementButton.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="cancelButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="commandElementBox.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;commandTypeCombo.Parent" xml:space="preserve">
+    <value>commandGroupBox</value>
+  </data>
+  <data name="&gt;&gt;selectConditionElementButton.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="waitUnitCombo.Items2" xml:space="preserve">
+    <value>min</value>
+  </data>
+  <data name="selectCommandElementButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>38, 23</value>
+  </data>
+  <data name="commandTypeCombo.Items6" xml:space="preserve">
+    <value>Remove music tag</value>
+  </data>
+  <data name="&gt;&gt;commandElementBox.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
-  <data name="conditionGroupBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 133</value>
+  <data name="waitUnitCombo.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;label2.Name" xml:space="preserve">
+    <value>label2</value>
+  </data>
+  <data name="conditionCombo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>174, 21</value>
+  </data>
+  <data name="conditionGroupBox.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
+  <data name="okButton.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Macro Command</value>
+  </data>
+  <data name="&gt;&gt;waitTimeUpDown.Name" xml:space="preserve">
+    <value>waitTimeUpDown</value>
+  </data>
+  <data name="&gt;&gt;conditionElementBox.Parent" xml:space="preserve">
+    <value>conditionGroupBox</value>
+  </data>
+  <data name="conditionCombo.Items" xml:space="preserve">
+    <value>Always</value>
   </data>
   <data name="conditionGroupBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>309, 80</value>
   </data>
+  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;selectCommandElementButton.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="commandGroupBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
   <data name="conditionGroupBox.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="conditionGroupBox.Text" xml:space="preserve">
-    <value>Condition</value>
+  <data name="selectCommandElementButton.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
-  <data name="&gt;&gt;conditionGroupBox.Name" xml:space="preserve">
-    <value>conditionGroupBox</value>
+  <data name="waitTimeUpDown.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
-  <data name="&gt;&gt;conditionGroupBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="label3.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
   </data>
-  <data name="&gt;&gt;conditionGroupBox.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="waitTimeUpDown.Size" type="System.Drawing.Size, System.Drawing">
+    <value>106, 20</value>
   </data>
-  <data name="&gt;&gt;conditionGroupBox.ZOrder" xml:space="preserve">
-    <value>2</value>
+  <data name="&gt;&gt;waitTimeUpDown.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="waitTimeUpDown.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="commandTypeCombo.Items1" xml:space="preserve">
+    <value>Stop Element</value>
+  </data>
+  <data name="conditionCombo.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;waitTimeUpDown.Parent" xml:space="preserve">
+    <value>commandGroupBox</value>
+  </data>
+  <data name="label1.Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;okButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 13</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -519,166 +357,475 @@
         AP//gAD//8AB///gA///+Af/
 </value>
   </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>Macro Command</value>
+  <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>48, 13</value>
   </data>
-  <data name="&gt;&gt;errorProvider.Name" xml:space="preserve">
-    <value>errorProvider</value>
+  <data name="selectCommandElementButton.Error" xml:space="preserve">
+    <value />
   </data>
-  <data name="&gt;&gt;errorProvider.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ErrorProvider, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="label5.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>MacroCommandDialog</value>
-  </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="commandElementBox.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
-    <value>MiddleLeft</value>
-  </data>
-  <data name="commandElementBox.IconPadding" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="commandElementBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>82, 51</value>
+  <data name="label2.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
   <data name="commandElementBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>174, 20</value>
   </data>
-  <data name="commandElementBox.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+  <data name="okButton.Text" xml:space="preserve">
+    <value>OK</value>
   </data>
-  <data name="&gt;&gt;commandElementBox.Name" xml:space="preserve">
-    <value>commandElementBox</value>
+  <data name="&gt;&gt;errorProvider.Name" xml:space="preserve">
+    <value>errorProvider</value>
   </data>
-  <data name="&gt;&gt;commandElementBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="label3.Text" xml:space="preserve">
+    <value>Wait time:</value>
   </data>
-  <data name="&gt;&gt;commandElementBox.Parent" xml:space="preserve">
-    <value>commandGroupBox</value>
-  </data>
-  <data name="&gt;&gt;commandElementBox.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;conditionCombo.ZOrder" xml:space="preserve">
     <value>4</value>
+  </data>
+  <data name="selectCommandElementButton.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
   </data>
   <data name="label2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 54</value>
+  <data name="&gt;&gt;commandGroupBox.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
-  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>48, 13</value>
+  <data name="selectConditionElementButton.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
-  <data name="label2.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
+  <data name="label3.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
-  <data name="label2.Text" xml:space="preserve">
-    <value>Element:</value>
+  <data name="label4.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
   </data>
-  <data name="&gt;&gt;label2.Name" xml:space="preserve">
-    <value>label2</value>
+  <data name="label4.Error" xml:space="preserve">
+    <value />
   </data>
-  <data name="&gt;&gt;label2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;label5.Parent" xml:space="preserve">
+    <value>conditionGroupBox</value>
   </data>
-  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
-    <value>commandGroupBox</value>
+  <data name="conditionGroupBox.Error" xml:space="preserve">
+    <value />
   </data>
   <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
-  <data name="commandTypeCombo.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
+  <data name="&gt;&gt;okButton.Name" xml:space="preserve">
+    <value>okButton</value>
   </data>
-  <data name="commandTypeCombo.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
-    <value>MiddleLeft</value>
-  </data>
-  <data name="commandTypeCombo.Items" xml:space="preserve">
-    <value>Start Element</value>
-  </data>
-  <data name="commandTypeCombo.Items1" xml:space="preserve">
-    <value>Stop Element</value>
-  </data>
-  <data name="commandTypeCombo.Items2" xml:space="preserve">
-    <value>Wait until Element is running</value>
-  </data>
-  <data name="commandTypeCombo.Items3" xml:space="preserve">
-    <value>Wait until Element has stopped</value>
-  </data>
-  <data name="commandTypeCombo.Items4" xml:space="preserve">
-    <value>Wait for a fixed time</value>
-  </data>
-  <data name="commandTypeCombo.Location" type="System.Drawing.Point, System.Drawing">
-    <value>82, 19</value>
-  </data>
-  <data name="commandTypeCombo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>174, 21</value>
-  </data>
-  <data name="commandTypeCombo.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;commandTypeCombo.Name" xml:space="preserve">
-    <value>commandTypeCombo</value>
-  </data>
-  <data name="&gt;&gt;commandTypeCombo.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;commandTypeCombo.Parent" xml:space="preserve">
-    <value>commandGroupBox</value>
-  </data>
-  <data name="&gt;&gt;commandTypeCombo.ZOrder" xml:space="preserve">
-    <value>6</value>
+  <data name="commandElementBox.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
   </data>
   <data name="label1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 25</value>
+  <data name="label4.Text" xml:space="preserve">
+    <value>Execute:</value>
   </data>
-  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>40, 13</value>
+  <data name="&gt;&gt;selectCommandElementButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="label1.TabIndex" type="System.Int32, mscorlib">
+  <data name="selectConditionElementButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>262, 44</value>
+  </data>
+  <data name="okButton.IconPadding" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="label1.Text" xml:space="preserve">
-    <value>Action:</value>
+  <data name="&gt;&gt;label5.Name" xml:space="preserve">
+    <value>label5</value>
   </data>
-  <data name="&gt;&gt;label1.Name" xml:space="preserve">
-    <value>label1</value>
+  <data name="selectCommandElementButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>262, 49</value>
   </data>
-  <data name="&gt;&gt;label1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="waitUnitCombo.Items" xml:space="preserve">
+    <value>ms</value>
   </data>
-  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
-    <value>commandGroupBox</value>
+  <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 22</value>
   </data>
-  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="commandGroupBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 12</value>
+  <data name="conditionElementBox.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
   </data>
   <data name="commandGroupBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>309, 115</value>
   </data>
-  <data name="commandGroupBox.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+  <data name="selectConditionElementButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>38, 23</value>
   </data>
-  <data name="commandGroupBox.Text" xml:space="preserve">
-    <value>Command</value>
+  <data name="waitTimeUpDown.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>MacroCommandDialog</value>
+  </data>
+  <data name="&gt;&gt;label4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="commandGroupBox.Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;conditionElementBox.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="waitUnitCombo.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="selectConditionElementButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="waitUnitCombo.Items1" xml:space="preserve">
+    <value>s</value>
   </data>
   <data name="&gt;&gt;commandGroupBox.Name" xml:space="preserve">
     <value>commandGroupBox</value>
   </data>
-  <data name="&gt;&gt;commandGroupBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
+    <value>3</value>
   </data>
-  <data name="&gt;&gt;commandGroupBox.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="&gt;&gt;label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="commandElementBox.IconPadding" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="cancelButton.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;selectCommandElementButton.Name" xml:space="preserve">
+    <value>selectCommandElementButton</value>
+  </data>
+  <data name="&gt;&gt;waitTimeUpDown.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="conditionGroupBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 133</value>
+  </data>
+  <data name="label2.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="cancelButton.Text" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="conditionCombo.Items1" xml:space="preserve">
+    <value>If Element is running</value>
+  </data>
+  <data name="conditionGroupBox.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
   <data name="&gt;&gt;commandGroupBox.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
+  <data name="conditionCombo.Items2" xml:space="preserve">
+    <value>If Element is not running</value>
+  </data>
+  <data name="&gt;&gt;waitUnitCombo.Name" xml:space="preserve">
+    <value>waitUnitCombo</value>
+  </data>
+  <data name="conditionElementBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="label5.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 49</value>
+  </data>
+  <data name="&gt;&gt;okButton.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;selectConditionElementButton.Name" xml:space="preserve">
+    <value>selectConditionElementButton</value>
+  </data>
+  <data name="selectConditionElementButton.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="okButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="&gt;&gt;okButton.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="conditionCombo.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="commandTypeCombo.Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;conditionCombo.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="commandElementBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
+    <value>commandGroupBox</value>
+  </data>
+  <data name="cancelButton.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
+  <data name="commandTypeCombo.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="&gt;&gt;commandTypeCombo.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="conditionGroupBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="label5.Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="waitUnitCombo.Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="conditionCombo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>82, 19</value>
+  </data>
+  <data name="&gt;&gt;label4.Name" xml:space="preserve">
+    <value>label4</value>
+  </data>
+  <data name="waitTimeUpDown.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;conditionGroupBox.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="conditionElementBox.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="label1.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="conditionElementBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>82, 46</value>
+  </data>
+  <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 79</value>
+  </data>
+  <data name="&gt;&gt;errorProvider.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ErrorProvider, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="label2.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;selectCommandElementButton.Parent" xml:space="preserve">
+    <value>commandGroupBox</value>
+  </data>
+  <data name="commandTypeCombo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>174, 21</value>
+  </data>
+  <data name="commandGroupBox.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
+  <data name="commandGroupBox.Text" xml:space="preserve">
+    <value>Command</value>
+  </data>
+  <data name="conditionElementBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>174, 20</value>
+  </data>
+  <data name="waitUnitCombo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>194, 77</value>
+  </data>
+  <data name="waitUnitCombo.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="&gt;&gt;conditionGroupBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="cancelButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>246, 219</value>
+  </data>
+  <data name="commandTypeCombo.Items" xml:space="preserve">
+    <value>Start Element</value>
+  </data>
+  <data name="commandGroupBox.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="commandElementBox.Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 25</value>
+  </data>
+  <data name="&gt;&gt;waitUnitCombo.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="cancelButton.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="waitTimeUpDown.Location" type="System.Drawing.Point, System.Drawing">
+    <value>82, 77</value>
+  </data>
+  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
+    <value>commandGroupBox</value>
+  </data>
+  <data name="conditionCombo.Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;selectConditionElementButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>Element:</value>
+  </data>
+  <data name="&gt;&gt;commandGroupBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="commandTypeCombo.Items3" xml:space="preserve">
+    <value>Wait until Element has stopped</value>
+  </data>
+  <data name="&gt;&gt;waitUnitCombo.Parent" xml:space="preserve">
+    <value>commandGroupBox</value>
+  </data>
+  <data name="&gt;&gt;conditionElementBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="selectCommandElementButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="&gt;&gt;label5.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="commandTypeCombo.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;conditionGroupBox.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>40, 13</value>
+  </data>
+  <data name="label1.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
+  <data name="selectConditionElementButton.Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;waitUnitCombo.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="commandTypeCombo.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="label5.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="selectCommandElementButton.Text" xml:space="preserve">
+    <value>...</value>
+  </data>
+  <data name="conditionCombo.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="label5.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="commandTypeCombo.Items5" xml:space="preserve">
+    <value>Add music tag</value>
+  </data>
+  <data name="conditionElementBox.Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;label3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="okButton.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
+  <data name="cancelButton.Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;commandElementBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="label4.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>333, 255</value>
+  </data>
+  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 54</value>
+  </data>
+  <data name="waitTimeUpDown.Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="waitUnitCombo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>62, 21</value>
+  </data>
+  <data name="selectConditionElementButton.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;cancelButton.Name" xml:space="preserve">
+    <value>cancelButton</value>
+  </data>
+  <data name="&gt;&gt;commandTypeCombo.Name" xml:space="preserve">
+    <value>commandTypeCombo</value>
+  </data>
+  <data name="&gt;&gt;conditionGroupBox.Name" xml:space="preserve">
+    <value>conditionGroupBox</value>
+  </data>
+  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>48, 13</value>
+  </data>
+  <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="conditionGroupBox.Text" xml:space="preserve">
+    <value>Condition</value>
+  </data>
+  <data name="label2.Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="conditionElementBox.IconPadding" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="label1.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="label3.Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="selectCommandElementButton.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="label5.Text" xml:space="preserve">
+    <value>Element:</value>
+  </data>
+  <data name="okButton.Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>49, 13</value>
+  </data>
+  <data name="&gt;&gt;label4.Parent" xml:space="preserve">
+    <value>conditionGroupBox</value>
+  </data>
+  <data name="&gt;&gt;cancelButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="commandTypeCombo.Items2" xml:space="preserve">
+    <value>Wait until Element is running</value>
+  </data>
+  <data name="&gt;&gt;commandElementBox.Name" xml:space="preserve">
+    <value>commandElementBox</value>
+  </data>
+  <data name="label4.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;conditionElementBox.Name" xml:space="preserve">
+    <value>conditionElementBox</value>
+  </data>
+  <data name="&gt;&gt;label3.Name" xml:space="preserve">
+    <value>label3</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="errorProvider.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
 </root>

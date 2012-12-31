@@ -117,42 +117,74 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="okButton.Error" xml:space="preserve">
+    <value />
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="okButton.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="okButton.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="cancelButton.Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cancelButton.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
+  <data name="cancelButton.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="cancelButton.Text" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
+  <data name="selectConditionElementButton.Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="selectConditionElementButton.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
+  <data name="selectConditionElementButton.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="conditionElementBox.Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label5.Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label5.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
+  <data name="label5.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="label4.Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label4.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
+  <data name="label4.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>55, 13</value>
-  </data>
-  <data name="label3.Text" xml:space="preserve">
-    <value>Wartezeit:</value>
-  </data>
-  <data name="commandTypeCombo.Items" xml:space="preserve">
-    <value>Starte Element</value>
-  </data>
-  <data name="commandTypeCombo.Items1" xml:space="preserve">
-    <value>Stoppe Element</value>
-  </data>
-  <data name="commandTypeCombo.Items2" xml:space="preserve">
-    <value>Warte bis Element läuft</value>
-  </data>
-  <data name="commandTypeCombo.Items3" xml:space="preserve">
-    <value>Warte bis Element gestoppt ist</value>
-  </data>
-  <data name="commandTypeCombo.Items4" xml:space="preserve">
-    <value>Warte eine feste Zeit</value>
-  </data>
-  <data name="label1.Text" xml:space="preserve">
-    <value>Aktion:</value>
-  </data>
-  <data name="groupBox1.Text" xml:space="preserve">
-    <value>Anweisung</value>
-  </data>
-  <data name="groupBox2.Text" xml:space="preserve">
-    <value>Bedingung</value>
-  </data>
   <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
     <value>58, 13</value>
   </data>
   <data name="label4.Text" xml:space="preserve">
     <value>Ausführen:</value>
+  </data>
+  <data name="conditionCombo.Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="conditionCombo.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
+  <data name="conditionCombo.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
   <data name="conditionCombo.Items" xml:space="preserve">
     <value>Immer</value>
@@ -163,8 +195,14 @@
   <data name="conditionCombo.Items2" xml:space="preserve">
     <value>Wenn Element nicht läuft</value>
   </data>
-  <data name="cancelButton.Text" xml:space="preserve">
-    <value>Abbrechen</value>
+  <data name="conditionGroupBox.Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="conditionGroupBox.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
+  <data name="conditionGroupBox.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -210,5 +248,110 @@
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Makro-Anweisung</value>
+  </data>
+  <data name="waitUnitCombo.Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="waitUnitCombo.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
+  <data name="waitUnitCombo.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="label3.Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label3.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
+  <data name="label3.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>55, 13</value>
+  </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>Wartezeit:</value>
+  </data>
+  <data name="waitTimeUpDown.Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="waitTimeUpDown.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
+  <data name="waitTimeUpDown.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="selectCommandElementButton.Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="selectCommandElementButton.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
+  <data name="selectCommandElementButton.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="commandElementBox.Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label2.Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label2.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
+  <data name="label2.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="commandTypeCombo.Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="commandTypeCombo.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="commandTypeCombo.Items" xml:space="preserve">
+    <value>Starte Element</value>
+  </data>
+  <data name="commandTypeCombo.Items1" xml:space="preserve">
+    <value>Stoppe Element</value>
+  </data>
+  <data name="commandTypeCombo.Items2" xml:space="preserve">
+    <value>Warte bis Element läuft</value>
+  </data>
+  <data name="commandTypeCombo.Items3" xml:space="preserve">
+    <value>Warte bis Element gestoppt ist</value>
+  </data>
+  <data name="commandTypeCombo.Items4" xml:space="preserve">
+    <value>Warte eine feste Zeit</value>
+  </data>
+  <data name="commandTypeCombo.Items5" xml:space="preserve">
+    <value>Füge Musik-Tag hinzu</value>
+  </data>
+  <data name="commandTypeCombo.Items6" xml:space="preserve">
+    <value>Entferne Musik-Tag</value>
+  </data>
+  <data name="commandTypeCombo.Items7" xml:space="preserve">
+    <value>Entferne alle Musik-Tags</value>
+  </data>
+  <data name="label1.Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label1.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
+  <data name="label1.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Aktion:</value>
+  </data>
+  <data name="commandGroupBox.Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="commandGroupBox.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
+  <data name="commandGroupBox.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
 </root>

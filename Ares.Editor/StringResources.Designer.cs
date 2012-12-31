@@ -733,6 +733,15 @@ namespace Ares.Editor {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Please select a tag ähnelt.
+        /// </summary>
+        internal static string PleaseSelectTag {
+            get {
+                return ResourceManager.GetString("PleaseSelectTag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die The current project has unsaved changes. Shall it be saved now? ähnelt.
         /// </summary>
         internal static string ProjectChanged {

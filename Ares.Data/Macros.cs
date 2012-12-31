@@ -29,7 +29,10 @@ namespace Ares.Data
         WaitTime,
         WaitCondition,
         StartElement,
-        StopElement
+        StopElement,
+        AddTag,
+        RemoveTag,
+        RemoveAllTags
     }
 
     public interface IMacroCommand : IElement
@@ -75,6 +78,16 @@ namespace Ares.Data
         int StoppedElementId { get; }
     }
 
+    public interface ITagCommand : IMacroCommand
+    {
+        int CategoryId { get; }
+        int TagId { get; }
+    }
+
+    public interface IRemoveAllTagsCommand : IMacroCommand
+    {
+    }
+
     public interface IMacroElement : IContainerElement
     {
     }
@@ -85,6 +98,8 @@ namespace Ares.Data
         void VisitStopCommand(IStopCommand stopCommand);
         void VisitWaitTimeCommand(IWaitTimeCommand waitTimeCommand);
         void VisitWaitConditionCommand(IWaitConditionCommand waitConditionCommand);
+        void VisitTagCommand(ITagCommand tagCommand);
+        void VisitRemoveAllTagsCommand(IRemoveAllTagsCommand removeAllTagsCommand);
     }
 
     public interface IMacro : IReorderableContainer<IMacroElement>
@@ -99,6 +114,8 @@ namespace Ares.Data
         IWaitConditionCommand CreateWaitCondition(MacroConditionType awaitedConditionType, IModeElement awaitedConditionElement, MacroConditionType conditionType, IModeElement conditionElement);
         IStartCommand CreateStartCommand(IModeElement startedElement, MacroConditionType conditionType, IModeElement conditionElement);
         IStopCommand CreateStopCommand(IModeElement startedElement, MacroConditionType conditionType, IModeElement conditionElement);
+        ITagCommand CreateTagCommand(int categoryId, int tagId, bool addTag, MacroConditionType conditionType, IModeElement conditionElement);
+        IRemoveAllTagsCommand CreateRemoveAllTagsCommand(MacroConditionType conditionType, IModeElement conditionElement);
     }
 
 #endregion
@@ -387,6 +404,88 @@ namespace Ares.Data
         private ReferenceHolder m_StoppedElement;
     }
 
+    [Serializable]
+    class TagCommand : MacroCommand, ITagCommand
+    {
+        public override void VisitMacroCommand(IMacroCommandVisitor commandVisitor)
+        {
+            commandVisitor.VisitTagCommand(this);
+        }
+
+        public override MacroCommandType CommandType
+        {
+            get { return m_AddTag ? MacroCommandType.AddTag : MacroCommandType.RemoveTag; }
+        }
+
+        public int CategoryId { get { return m_CategoryId; } }
+        public int TagId { get { return m_TagId; } }
+
+        public TagCommand(int categoryId, int tagId, bool addTag, MacroConditionType conditionType, IModeElement conditionElement)
+            : base(conditionType, conditionElement)
+        {
+            Title = addTag ? "AddTag" : "RemoveTag";
+            m_CategoryId = categoryId;
+            m_TagId = tagId;
+            m_AddTag = addTag;
+        }
+
+        public TagCommand(System.Xml.XmlReader reader)
+            : base(reader)
+        {
+            m_CategoryId = reader.GetIntegerAttribute("categoryId");
+            m_TagId = reader.GetIntegerAttribute("tagId");
+            m_AddTag = reader.GetBooleanAttribute("addTag");
+            ReadToEndOfElement(reader);
+        }
+
+        public override void WriteToXml(System.Xml.XmlWriter writer)
+        {
+            writer.WriteStartElement("TagCommand");
+            writer.WriteAttributeString("categoryId", m_CategoryId.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            writer.WriteAttributeString("tagId", m_TagId.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            writer.WriteAttributeString("addTag", m_AddTag ? "true" : "false");
+            DoWriteToXml(writer);
+            writer.WriteEndElement();
+        }
+
+        private int m_CategoryId;
+        private int m_TagId;
+        private bool m_AddTag;
+    }
+
+    [Serializable]
+    class RemoveAllTagsCommand : MacroCommand, IRemoveAllTagsCommand
+    {
+        public override void VisitMacroCommand(IMacroCommandVisitor commandVisitor)
+        {
+            commandVisitor.VisitRemoveAllTagsCommand(this);
+        }
+
+        public override MacroCommandType CommandType
+        {
+            get { return MacroCommandType.RemoveAllTags; }
+        }
+
+        public RemoveAllTagsCommand(MacroConditionType conditionType, IModeElement conditionElement)
+            : base(conditionType, conditionElement)
+        {
+            Title = "RemoveAllTags";
+        }
+
+        public RemoveAllTagsCommand(System.Xml.XmlReader reader)
+            : base(reader)
+        {
+            ReadToEndOfElement(reader);
+        }
+
+        public override void WriteToXml(System.Xml.XmlWriter writer)
+        {
+            writer.WriteStartElement("RemoveAllTagsCommand");
+            DoWriteToXml(writer);
+            writer.WriteEndElement();
+        }
+    }
+
     class MacroElement : ContainerElement, IMacroElement
     {
         public void WriteToXml(System.Xml.XmlWriter writer)
@@ -488,6 +587,16 @@ namespace Ares.Data
             return new StopCommand(startedElement, conditionType, conditionElement);
         }
 
+        public ITagCommand CreateTagCommand(int categoryId, int tagId, bool addTag, MacroConditionType conditionType, IModeElement conditionElement)
+        {
+            return new TagCommand(categoryId, tagId, addTag, conditionType, conditionElement);
+        }
+
+        public IRemoveAllTagsCommand CreateRemoveAllTagsCommand(MacroConditionType conditionType, IModeElement conditionElement)
+        {
+            return new RemoveAllTagsCommand(conditionType, conditionElement);
+        }
+
         public IMacroCommand CreateMacroCommand(System.Xml.XmlReader reader)
         {
             if (reader.IsStartElement("WaitTimeCommand"))
@@ -498,6 +607,10 @@ namespace Ares.Data
                 return new StartCommand(reader);
             else if (reader.IsStartElement("StopCommand"))
                 return new StopCommand(reader);
+            else if (reader.IsStartElement("TagCommand"))
+                return new TagCommand(reader);
+            else if (reader.IsStartElement("RemoveAllTagsCommand"))
+                return new RemoveAllTagsCommand(reader);
             else
             {
                 reader.ReadOuterXml();

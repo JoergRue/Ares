@@ -41,11 +41,16 @@ namespace Ares.Editor.Dialogs
         private IModeElement m_CurrentCommandElement;
         private IModeElement m_CurrentConditionElement;
 
+        private int m_CurrentTagId = -1;
+        private int m_CurrentCategoryId = -1;
+
         public void SetData(IMacroCommand macroCommand, IProject project, IMacro containingMacro)
         {
             m_Project = project;
             m_ContainingMacro = containingMacro;
             waitUnitCombo.SelectedIndex = 0;
+            m_CurrentTagId = -1;
+            m_CurrentCategoryId = -1;
             if (macroCommand != null)
             {
                 switch (macroCommand.CommandType)
@@ -70,6 +75,25 @@ namespace Ares.Editor.Dialogs
                         m_CurrentCommandElement = null;
                         commandElementBox.Text = String.Empty;
                         waitTimeUpDown.Value = ((IWaitTimeCommand)macroCommand).TimeInMillis;
+                        break;
+                    case MacroCommandType.AddTag:
+                        commandTypeCombo.SelectedIndex = 5;
+                        m_CurrentCommandElement = null;
+                        commandElementBox.Text = GetTagName(macroCommand as ITagCommand, m_Project);
+                        m_CurrentCategoryId = (macroCommand as ITagCommand).CategoryId;
+                        m_CurrentTagId = (macroCommand as ITagCommand).TagId;
+                        break;
+                    case MacroCommandType.RemoveTag:
+                        commandTypeCombo.SelectedIndex = 6;
+                        m_CurrentCommandElement = null;
+                        commandElementBox.Text = GetTagName(macroCommand as ITagCommand, m_Project);
+                        m_CurrentCategoryId = (macroCommand as ITagCommand).CategoryId;
+                        m_CurrentTagId = (macroCommand as ITagCommand).TagId;
+                        break;
+                    case MacroCommandType.RemoveAllTags:
+                        commandTypeCombo.SelectedIndex = 7;
+                        m_CurrentCommandElement = null;
+                        commandElementBox.Text = String.Empty;
                         break;
                     default:
                         commandTypeCombo.SelectedIndex = 0;
@@ -122,12 +146,26 @@ namespace Ares.Editor.Dialogs
 
         private void commandTypeCombo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            bool hasElement = commandTypeCombo.SelectedIndex < 4;
+            bool hasElement = commandTypeCombo.SelectedIndex < 4 || commandTypeCombo.SelectedIndex == 5 || commandTypeCombo.SelectedIndex == 6;
             selectCommandElementButton.Enabled = hasElement;
             commandElementBox.Enabled = hasElement;
             if (!hasElement)
             {
                 commandElementBox.Text = String.Empty;
+            }
+            if (hasElement && m_CurrentCommandElement != null && (commandTypeCombo.SelectedIndex == 5 || commandTypeCombo.SelectedIndex == 6))
+            {
+                commandElementBox.Text = String.Empty;
+                m_CurrentCommandElement = null;
+                m_CurrentCategoryId = -1;
+                m_CurrentTagId = -1;
+            }
+            else if (hasElement && m_CurrentTagId != -1 && commandTypeCombo.SelectedIndex < 4)
+            {
+                commandElementBox.Text = String.Empty;
+                m_CurrentCommandElement = null;
+                m_CurrentCategoryId = -1;
+                m_CurrentTagId = -1;
             }
             waitTimeUpDown.Enabled = !hasElement;
             if (!String.IsNullOrEmpty(errorProvider.GetError(commandElementBox)) && !hasElement)
@@ -160,6 +198,34 @@ namespace Ares.Editor.Dialogs
             return String.Format(StringResources.ModeElementDisplay, mode != null ? mode.Title : StringResources.InvalidModeElement, modeElement.Title);
         }
 
+        private static String GetTagName(ITagCommand tagCommand, IProject project)
+        {
+            return GetTagName(tagCommand.TagId, project);
+        }
+
+        private static String GetTagName(int tagId, IProject project)
+        {
+            try
+            {
+                int languageId = project.TagLanguageId;
+                if (languageId == -1)
+                {
+                    languageId = Ares.Tags.TagsModule.GetTagsDB().TranslationsInterface.GetIdOfCurrentUILanguage();
+                }
+                List<int> tagIds = new List<int>();
+                tagIds.Add(tagId);
+                var tagInfos = Ares.Tags.TagsModule.GetTagsDB().GetReadInterfaceByLanguage(languageId).GetTagInfos(tagIds);
+                if (tagInfos.Count == 0)
+                    return StringResources.InvalidModeElement;
+                else
+                    return tagInfos[0].Name;
+            }
+            catch (Ares.Tags.TagsDbException /*ex*/)
+            {
+                return StringResources.InvalidModeElement;
+            }
+        }
+
         private static IMode FindMode(IModeElement modeElement, IProject project)
         {
             foreach (IMode mode in project.GetModes())
@@ -179,9 +245,15 @@ namespace Ares.Editor.Dialogs
         {
             bool hasError = false;
             bool needsCommandElement = commandTypeCombo.SelectedIndex < 4;
+            bool needsTag = commandTypeCombo.SelectedIndex > 4 && commandTypeCombo.SelectedIndex < 7;
             if (needsCommandElement && m_CurrentCommandElement == null)
             {
                 errorProvider.SetError(commandElementBox, StringResources.PleaseSelectElement);
+                hasError = true;
+            }
+            if (needsTag && m_CurrentTagId == -1)
+            {
+                errorProvider.SetError(commandElementBox, StringResources.PleaseSelectTag);
                 hasError = true;
             }
             bool needsConditionElement = conditionCombo.SelectedIndex > 0;
@@ -230,6 +302,15 @@ namespace Ares.Editor.Dialogs
                     int time = (int)waitTimeUpDown.Value * factors[(int)m_CurrentUnit];
                     MacroCommand = DataModule.MacroFactory.CreateWaitTime(time, conditionType, m_CurrentConditionElement);
                     break;
+                case 5:
+                    MacroCommand = DataModule.MacroFactory.CreateTagCommand(m_CurrentCategoryId, m_CurrentTagId, true, conditionType, m_CurrentConditionElement);
+                    break;
+                case 6:
+                    MacroCommand = DataModule.MacroFactory.CreateTagCommand(m_CurrentCategoryId, m_CurrentTagId, false, conditionType, m_CurrentConditionElement);
+                    break;
+                case 7:
+                    MacroCommand = DataModule.MacroFactory.CreateRemoveAllTagsCommand(conditionType, m_CurrentConditionElement);
+                    break;
                 default:
                     DialogResult = DialogResult.None;
                     break;
@@ -238,7 +319,9 @@ namespace Ares.Editor.Dialogs
 
         private void selectCommandElementButton_Click(object sender, EventArgs e)
         {
-            System.Windows.Forms.ContextMenu menu = CreateElementSelectionMenu((IModeElement element) => 
+            System.Windows.Forms.ContextMenu menu;
+            if (commandTypeCombo.SelectedIndex < 4)
+                menu = CreateElementSelectionMenu((IModeElement element) =>
                 {
                     m_CurrentCommandElement = element;
                     commandElementBox.Text = GetElementDisplayName(element, m_Project);
@@ -247,6 +330,17 @@ namespace Ares.Editor.Dialogs
                         errorProvider.SetError(commandElementBox, String.Empty);
                     }
                 });
+            else
+                menu = CreateTagSelectionMenu((int categoryId, int tagId) =>
+                    {
+                        m_CurrentTagId = tagId;
+                        m_CurrentCategoryId = categoryId;
+                        commandElementBox.Text = GetTagName(tagId, m_Project);
+                        if (m_CurrentTagId != -1 && !String.IsNullOrEmpty(errorProvider.GetError(commandElementBox)))
+                        {
+                            errorProvider.SetError(commandElementBox, String.Empty);
+                        }
+                    }, m_Project);
             menu.Show(commandGroupBox, new Point(selectCommandElementButton.Left, selectCommandElementButton.Bottom));
         }
 
@@ -284,6 +378,55 @@ namespace Ares.Editor.Dialogs
                     menuItem.MenuItems.Add(elementItem);
                 }
                 menu.MenuItems.Add(menuItem);
+            }
+            return menu;
+        }
+
+        private class TagSelectionHandler
+        {
+            public TagSelectionHandler(Action<int, int> tagSelectionAction, int categoryId, int tagId)
+            {
+                m_SelectionAction = tagSelectionAction;
+                m_CategoryId = categoryId;
+                m_TagId = tagId;
+            }
+
+            public void HandleEvent(Object o, EventArgs args)
+            {
+                m_SelectionAction(m_CategoryId, m_TagId);
+            }
+
+            private Action<int, int> m_SelectionAction;
+            private int m_CategoryId;
+            private int m_TagId;
+        }
+
+        private ContextMenu CreateTagSelectionMenu(Action<int, int> tagSelectionAction, IProject project)
+        {
+            ContextMenu menu = new ContextMenu();
+            try
+            {
+                int languageId = project.TagLanguageId;
+                if (languageId == -1)
+                {
+                    languageId = Ares.Tags.TagsModule.GetTagsDB().TranslationsInterface.GetIdOfCurrentUILanguage();
+                }
+                var dbRead = Ares.Tags.TagsModule.GetTagsDB().GetReadInterfaceByLanguage(languageId);
+                foreach (var category in dbRead.GetAllCategories())
+                {
+                    MenuItem menuItem = new MenuItem(category.Name);
+                    foreach (var tag in dbRead.GetAllTags(category.Id))
+                    {
+                        TagSelectionHandler handler = new TagSelectionHandler(tagSelectionAction, category.Id, tag.Id);
+                        MenuItem tagItem = new MenuItem(tag.Name, new EventHandler(handler.HandleEvent));
+                        menuItem.MenuItems.Add(tagItem);
+                    }
+                    menu.MenuItems.Add(menuItem);
+                }
+            }
+            catch (Ares.Tags.TagsDbException)
+            {
+                // ignore here
             }
             return menu;
         }

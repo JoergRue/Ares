@@ -204,4 +204,7 @@
   <data name="ReferencedElementNotFound" xml:space="preserve">
     <value>Verlinktes Element wurde nicht gefunden.</value>
   </data>
+  <data name="TagNotFound" xml:space="preserve">
+    <value>Hinzuzufügender / zu löschender Tag wurde nicht gefunden.</value>
+  </data>
 </root>

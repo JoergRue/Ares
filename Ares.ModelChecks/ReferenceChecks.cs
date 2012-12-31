@@ -31,10 +31,12 @@ namespace Ares.ModelInfo
         }
 
         private IModelErrors m_ModelErrors;
+        private int m_TagLanguage = -1;
 
         public override void DoChecks(IProject project, IModelErrors errors)
         {
             m_ModelErrors = errors;
+            m_TagLanguage = project.TagLanguageId;
             foreach (IMode mode in project.GetModes())
             {
                 foreach (IModeElement element in mode.GetElements())
@@ -145,6 +147,33 @@ namespace Ares.ModelInfo
             {
                 AddError(m_ModelErrors, ModelError.ErrorSeverity.Error, StringResources.AwaitedElementNotFound, waitConditionCommand);
             }
+        }
+
+        public void VisitTagCommand(ITagCommand tagCommand)
+        {
+            CheckCondition(tagCommand);
+            try
+            {
+                int languageId = m_TagLanguage;
+                if (m_TagLanguage == -1)
+                    m_TagLanguage = Ares.Tags.TagsModule.GetTagsDB().TranslationsInterface.GetIdOfCurrentUILanguage();
+                List<int> tagIds = new List<int>();
+                tagIds.Add(tagCommand.TagId);
+                var tagInfos = Ares.Tags.TagsModule.GetTagsDB().GetReadInterfaceByLanguage(m_TagLanguage).GetTagInfos(tagIds);
+                if (tagInfos.Count == 0)
+                {
+                    AddError(m_ModelErrors, ModelError.ErrorSeverity.Error, StringResources.TagNotFound, tagCommand);
+                }
+            }
+            catch (Ares.Tags.TagsDbException)
+            {
+                // ignore here
+            }
+        }
+
+        public void VisitRemoveAllTagsCommand(IRemoveAllTagsCommand command)
+        {
+            CheckCondition(command);
         }
     }
 }

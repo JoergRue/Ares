@@ -413,8 +413,11 @@ namespace Ares.Editor.ElementEditors
                 addTranslationButton.Enabled = m_Languages.Count > translationsList.Items.Count + 1;
                 deleteTranslationButton.Enabled = m_LastTranslationType != TranslationType.Language ||  m_LastTranslationId != m_LastLanguageId;
                 renameTranslationButton.Enabled = true;
-                translationsList.Columns[0].Width = -1;
-                translationsList.Columns[1].Width = -1;
+                if (translationsList != null && translationsList.Columns.Count > 0)
+                {
+                    translationsList.Columns[0].Width = -1;
+                    translationsList.Columns[1].Width = -1;
+                }
             }
             translationsList.EndUpdate();
         }
