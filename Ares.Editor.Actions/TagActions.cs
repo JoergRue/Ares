@@ -25,6 +25,35 @@ using Ares.Tags;
 
 namespace Ares.Editor.Actions
 {
+    public class TagChanges
+    {
+        public event EventHandler<EventArgs> TagsDBChanged;
+
+        public void FireTagsDBChanged()
+        {
+            if (TagsDBChanged != null)
+            {
+                TagsDBChanged(this, new EventArgs());
+            }
+        }
+
+        public static TagChanges Instance
+        {
+            get
+            {
+                if (sInstance == null)
+                    sInstance = new TagChanges();
+                return sInstance;
+            }
+        }
+
+        private static TagChanges sInstance;
+
+        private TagChanges()
+        {
+        }
+    }
+
     public class ChangeFileTagsAction : Action
     {
         private List<String> m_Files;

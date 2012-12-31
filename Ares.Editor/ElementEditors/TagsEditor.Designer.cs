@@ -35,6 +35,7 @@ namespace Ares.Editor.ElementEditors
             if (disposing && (components != null))
             {
                 components.Dispose();
+                Ares.Editor.Actions.TagChanges.Instance.TagsDBChanged -= new System.EventHandler<System.EventArgs>(TagsDBChanged);
             }
             base.Dispose(disposing);
         }

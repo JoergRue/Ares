@@ -147,6 +147,7 @@ namespace Ares.Editor.ElementEditors
             if (dialog.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
             {
                 Actions.Actions.Instance.AddNew(new Actions.ReplaceMacroCommandAction((Ares.Data.IMacro)m_Element, e.Element.InnerElement.Id, dialog.MacroCommand), m_Project);
+                Ares.ModelInfo.ModelChecks.Instance.CheckAll(m_Project);
             }
         }
 

@@ -39,6 +39,12 @@ namespace Ares.Editor.ElementEditors
         {
             HideOnClose = true;
             InitializeComponent();
+            Ares.Editor.Actions.TagChanges.Instance.TagsDBChanged += new EventHandler<EventArgs>(TagsDBChanged);
+        }
+
+        void TagsDBChanged(object sender, EventArgs e)
+        {
+            UpdateAll();
         }
 
 #if !MONO
@@ -553,6 +559,7 @@ namespace Ares.Editor.ElementEditors
                     UpdateTags();
                     UpdateTranslations();
                     m_Listen = true;
+                    Ares.ModelInfo.ModelChecks.Instance.CheckAll(m_Project);
                 }
                 catch (Ares.Tags.TagsDbException ex)
                 {
@@ -690,6 +697,7 @@ namespace Ares.Editor.ElementEditors
                     UpdateTags();
                     UpdateTranslations();
                     m_Listen = true;
+                    Ares.ModelInfo.ModelChecks.Instance.CheckAll(m_Project);
                 }
                 catch (Ares.Tags.TagsDbException ex)
                 {
