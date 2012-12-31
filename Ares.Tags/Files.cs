@@ -261,7 +261,7 @@ namespace Ares.Tags
             LanguageWriting fr = new LanguageWriting(frId, m_Connection);
             LanguageWriting es = new LanguageWriting(esId, m_Connection);
 
-            int atmId = AddDefaultCategory("Atmosphere", "Stimmung", "Ambiance", "Ambiente", en, de, fr, es, transaction);
+            int atmId = AddDefaultCategory("Mood", "Stimmung", "Ambiance", "Ambiente", en, de, fr, es, transaction);
             int sitId = AddDefaultCategory("Situation", "Situation", "Situation", "Situación", en, de, fr, es, transaction);
             int placeId = AddDefaultCategory("Place", "Ort", "Lieu", "Lugar", en, de, fr, es, transaction);
 

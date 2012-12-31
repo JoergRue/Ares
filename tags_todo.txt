@@ -1,6 +1,5 @@
 Tags TODO:
 
-- Auto-Tagging (Author, Genre, ?)
 - Filter in File Explorer
 - Mono / Linux
 - MediaPortal
@@ -28,4 +27,4 @@ Inform 11/0/0: Start tag info
 12/1/0: tag id
 12/2/0: done with active tag info
 13/?/0: tag id, ? == 1 ==> tag active
-14/?/0: category operator, ? == 1 ==> operator is and
+14/?/0: category operator, ? == 1 ==> operator is and6

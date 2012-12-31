@@ -58,6 +58,10 @@
     <Optimize>false</Optimize>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Bass.Net, Version=2.4.7.4, Culture=neutral, PublicKeyToken=b7566c273e6ef480, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libraries\Bass.Net.dll</HintPath>
+    </Reference>
     <Reference Include="ICSharpCode.SharpZipLib, Version=0.84.0.0, Culture=neutral, PublicKeyToken=1b03e6acf1164f73">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Libraries\ICSharpCode.SharpZipLib.dll</HintPath>
@@ -94,6 +98,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>StringResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Tags.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ares.snk" />
@@ -116,6 +121,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ProgressDialog.de.resx">
+      <DependentUpon>ProgressDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ProgressDialog.resx">
       <DependentUpon>ProgressDialog.cs</DependentUpon>
     </EmbeddedResource>

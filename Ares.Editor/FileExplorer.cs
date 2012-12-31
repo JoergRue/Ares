@@ -115,6 +115,7 @@ namespace Ares.Editor
             m_Root = new TreeNode(m_FileType == FileType.Music ? StringResources.Music : StringResources.Sounds);
             m_Root.SelectedImageIndex = m_Root.ImageIndex = 0;
             m_Root.Tag = new DraggedItem { NodeType = DraggedItemType.Directory, ItemType = m_FileType, RelativePath = String.Empty };
+            m_Root.ContextMenuStrip = fileNodeContextMenu;
             String directory = m_FileType == FileType.Music ? Ares.Settings.Settings.Instance.MusicDirectory : Ares.Settings.Settings.Instance.SoundDirectory;
             FillTreeNode(m_Root, directory, directory, m_FileType, states);
             treeView1.Nodes.Add(m_Root);
@@ -464,6 +465,8 @@ namespace Ares.Editor
                 if (GetSelectedFiles().Count == 0)
                     tagsToolStripMenuItem.Enabled = false;
             }
+            id3TagsMenuItem.Visible = m_FileType == FileType.Music;
+            id3TagsMenuItem.Enabled = tagsToolStripMenuItem.Enabled;
         }
 
         private void searchButton_Click(object sender, EventArgs e)
@@ -944,6 +947,46 @@ namespace Ares.Editor
             catch (Ares.Tags.TagsDbException ex)
             {
                 MessageBox.Show(this, String.Format(StringResources.TagsDbError, ex.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void id3TagsMenuItem_Click(object sender, EventArgs e)
+        {
+            List<String> files = GetSelectedFiles();
+            if (files.Count == 0)
+                return;
+
+            Dialogs.AddID3TagsDialog dialog = new Dialogs.AddID3TagsDialog();
+            if (dialog.ShowDialog(this) == DialogResult.OK)
+            {
+                bool interpret = dialog.Interpret;
+                bool album = dialog.Album;
+                bool genre = dialog.Genre;
+                bool mood = dialog.Mood;
+                if (!interpret && !album && !genre && !mood)
+                    return;
+
+                int languageId = m_Project != null ? m_Project.TagLanguageId : -1;
+                if (languageId == -1)
+                {
+                    try
+                    {
+                        languageId = Ares.Tags.TagsModule.GetTagsDB().TranslationsInterface.GetIdOfCurrentUILanguage();
+                    }
+                    catch (Ares.Tags.TagsDbException ex)
+                    {
+                        MessageBox.Show(this, String.Format(StringResources.TagsDbError, ex.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+
+                Ares.ModelInfo.TagExtractor.ExtractTags(this, files, languageId, interpret, album, genre, mood, (success) =>
+                    {
+                        if (success)
+                        {
+                            Ares.Editor.Actions.TagChanges.Instance.FireTagsDBChanged();
+                        }
+                    });
             }
         }
 

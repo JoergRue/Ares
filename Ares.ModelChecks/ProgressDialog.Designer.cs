@@ -50,52 +50,40 @@ namespace Ares.ModelInfo
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProgressDialog));
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.cancelButton = new System.Windows.Forms.Button();
-            this.descriptionLabel = new PathLabel();
+            this.descriptionLabel = new Ares.ModelInfo.PathLabel();
             this.SuspendLayout();
             // 
             // progressBar
             // 
-            this.progressBar.Location = new System.Drawing.Point(12, 29);
+            resources.ApplyResources(this.progressBar, "progressBar");
             this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(273, 23);
             this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-            this.progressBar.TabIndex = 0;
             // 
             // cancelButton
             // 
+            resources.ApplyResources(this.cancelButton, "cancelButton");
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(108, 62);
             this.cancelButton.Name = "cancelButton";
-            this.cancelButton.Size = new System.Drawing.Size(75, 23);
-            this.cancelButton.TabIndex = 2;
-            this.cancelButton.Text = "Cancel";
             this.cancelButton.UseCompatibleTextRendering = true;
             this.cancelButton.UseVisualStyleBackColor = true;
             // 
             // descriptionLabel
             // 
-            this.descriptionLabel.Location = new System.Drawing.Point(12, 9);
+            resources.ApplyResources(this.descriptionLabel, "descriptionLabel");
             this.descriptionLabel.Name = "descriptionLabel";
-            this.descriptionLabel.Size = new System.Drawing.Size(273, 17);
-            this.descriptionLabel.TabIndex = 3;
-            this.descriptionLabel.Text = "pathLabel1";
             this.descriptionLabel.UseCompatibleTextRendering = true;
             // 
             // ProgressDialog
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(297, 97);
             this.Controls.Add(this.descriptionLabel);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.progressBar);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ProgressDialog";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Progress";
             this.ResumeLayout(false);
 
         }

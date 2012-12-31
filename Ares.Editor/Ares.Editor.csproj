@@ -134,6 +134,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dialogs\AddID3TagsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\AddID3TagsDialog.Designer.cs">
+      <DependentUpon>AddID3TagsDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\AddLanguageDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -298,6 +304,12 @@
     <Compile Include="VolumeWindow.Designer.cs">
       <DependentUpon>VolumeWindow.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Dialogs\AddID3TagsDialog.de.resx">
+      <DependentUpon>AddID3TagsDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\AddID3TagsDialog.resx">
+      <DependentUpon>AddID3TagsDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\AddLanguageDialog.de.resx">
       <DependentUpon>AddLanguageDialog.cs</DependentUpon>
     </EmbeddedResource>

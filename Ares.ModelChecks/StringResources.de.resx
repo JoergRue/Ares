@@ -207,4 +207,28 @@
   <data name="TagNotFound" xml:space="preserve">
     <value>Hinzuzufügender / zu löschender Tag wurde nicht gefunden.</value>
   </data>
+  <data name="AddingTags" xml:space="preserve">
+    <value>Füge Tags hinzu</value>
+  </data>
+  <data name="Album" xml:space="preserve">
+    <value>Album</value>
+  </data>
+  <data name="ExtractingTags" xml:space="preserve">
+    <value>Extrahiere Tags ...</value>
+  </data>
+  <data name="Genre" xml:space="preserve">
+    <value>Genre</value>
+  </data>
+  <data name="Interpret" xml:space="preserve">
+    <value>Interpret</value>
+  </data>
+  <data name="Mood" xml:space="preserve">
+    <value>Stimmung</value>
+  </data>
+  <data name="SettingFileTags" xml:space="preserve">
+    <value>Setze Datei-Tags</value>
+  </data>
+  <data name="TagExtractionError" xml:space="preserve">
+    <value>Fehler beim Extrahieren der Tags: {0}</value>
+  </data>
 </root>
