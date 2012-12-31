@@ -87,6 +87,7 @@ namespace Ares.Editor
                 Ares.Tags.ITagsDBFiles tagsDBFiles = Ares.Tags.TagsModule.GetTagsDB().FilesInterface;
                 String path = System.IO.Path.Combine(Ares.Settings.Settings.Instance.MusicDirectory, tagsDBFiles.DefaultFileName);
                 tagsDBFiles.OpenOrCreateDatabase(path);
+                Ares.Editor.Actions.TagChanges.Instance.FireTagsDBChanged();
             }
             catch (Ares.Tags.TagsDbException ex)
             {
@@ -161,8 +162,7 @@ namespace Ares.Editor
             SettingsDialog dialog = new SettingsDialog(Ares.Settings.Settings.Instance, m_BasicSettings);
             if (dialog.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
             {
-                Actions.Playing.Instance.SetDirectories(Ares.Settings.Settings.Instance.MusicDirectory, Ares.Settings.Settings.Instance.SoundDirectory);
-                Actions.FilesWatcher.Instance.SetDirectories(Ares.Settings.Settings.Instance.MusicDirectory, Ares.Settings.Settings.Instance.SoundDirectory);
+                SettingsChanged(true);
                 WriteSettings();
             }
         }

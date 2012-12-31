@@ -270,32 +270,46 @@ namespace Ares.Tags
         {
             using (SQLiteTransaction transaction = m_Connection.BeginTransaction())
             {
-                // insert into language table
-                long newId = DoInsertLanguage(transaction, code);
-                
-                // insert translation
-                DoAddTranslation(m_Connection, transaction, Schema.LANGUAGENAMES_TABLE, Schema.NAMED_LANGUAGE_COLUMN, Schema.LANGUAGE_OF_NAME_COLUMN, newId, newId, name);
+                int newId = DoAddLanguage(code, name, transaction);
 
                 transaction.Commit();
 
-                return (int)newId;
+                return newId;
             }
+        }
+
+        internal int DoAddLanguage(string code, string name, SQLiteTransaction transaction)
+        {
+            // insert into language table
+            long newId = DoInsertLanguage(transaction, code);
+
+            // insert translation
+            DoAddTranslation(m_Connection, transaction, Schema.LANGUAGENAMES_TABLE, Schema.NAMED_LANGUAGE_COLUMN, Schema.LANGUAGE_OF_NAME_COLUMN, newId, newId, name);
+
+            return (int)newId;
         }
 
         internal int DoAddLanguage(string code, string name, int languageId)
         {
             using (SQLiteTransaction transaction = m_Connection.BeginTransaction())
             {
-                // insert into language table
-                long newId = DoInsertLanguage(transaction, code);
-
-                // insert translation
-                DoAddTranslation(m_Connection, transaction, Schema.LANGUAGENAMES_TABLE, Schema.NAMED_LANGUAGE_COLUMN, Schema.LANGUAGE_OF_NAME_COLUMN, newId, languageId, name);
+                int newId = DoAddLanguage(code, name, languageId, transaction);
 
                 transaction.Commit();
 
-                return (int)newId;
+                return newId;
             }
+        }
+
+        internal int DoAddLanguage(string code, string name, int languageId, SQLiteTransaction transaction)
+        {
+            // insert into language table
+            long newId = DoInsertLanguage(transaction, code);
+
+            // insert translation
+            DoAddTranslation(m_Connection, transaction, Schema.LANGUAGENAMES_TABLE, Schema.NAMED_LANGUAGE_COLUMN, Schema.LANGUAGE_OF_NAME_COLUMN, newId, languageId, name);
+
+            return (int)newId;
         }
 
         private long DoInsertLanguage(SQLiteTransaction transaction, string code)
@@ -319,6 +333,12 @@ namespace Ares.Tags
         internal void DoSetLanguageName(int languageIdOfName, int languageIdOfLanguage, string name)
         {
             DoSetTranslation(m_Connection, Schema.LANGUAGENAMES_TABLE, Schema.NAMED_LANGUAGE_COLUMN, Schema.LANGUAGE_OF_NAME_COLUMN, languageIdOfLanguage, languageIdOfName, name);
+        }
+
+        internal void DoSetLanguageName(int languageIdOfName, int languageIdOfLanguage, string name, SQLiteTransaction transaction)
+        {
+            DoSetTranslation(m_Connection, Schema.LANGUAGENAMES_TABLE, Schema.NAMED_LANGUAGE_COLUMN, Schema.LANGUAGE_OF_NAME_COLUMN, 
+                languageIdOfLanguage, languageIdOfName, name, transaction);
         }
 
         private static String GET_TRANSLATIONS_COMMAND = "SELECT {0}, {1} FROM {2} WHERE {3}=@RefId";
@@ -419,9 +439,15 @@ namespace Ares.Tags
 
         internal static void DoSetTranslation(SQLiteConnection connection, String table, String refColName, String langColName, long refId, long langId, String name)
         {
+            DoSetTranslation(connection, table, refColName, langColName, refId, langId, name, null);
+        }
+
+        internal static void DoSetTranslation(SQLiteConnection connection, String table, String refColName, String langColName, 
+            long refId, long langId, String name, SQLiteTransaction transaction)
+        {
             // First find an existing entry (if any)
             String queryLanguageCommand = String.Format(FIND_TRANSLATION_COMMAND, table, refColName, langColName, Schema.ID_COLUMN);
-            using (SQLiteCommand queryCommand = new SQLiteCommand(queryLanguageCommand, connection))
+            using (SQLiteCommand queryCommand = new SQLiteCommand(queryLanguageCommand, connection, transaction))
             {
                 queryCommand.Parameters.AddWithValue("@RefId", refId);
                 queryCommand.Parameters.AddWithValue("@LangId", langId);
@@ -430,7 +456,7 @@ namespace Ares.Tags
                 {
                     // entry exists, just change its name
                     String updateLanguageCommand = String.Format(SET_TRANSLATION_COMMAND, table, Schema.NAME_COLUMN, Schema.ID_COLUMN);
-                    using (SQLiteCommand updateCommand = new SQLiteCommand(updateLanguageCommand, connection))
+                    using (SQLiteCommand updateCommand = new SQLiteCommand(updateLanguageCommand, connection, transaction))
                     {
                         updateCommand.Parameters.AddWithValue("@Name", name);
                         updateCommand.Parameters.AddWithValue("@Id", res);
@@ -440,7 +466,7 @@ namespace Ares.Tags
                 else
                 {
                     // entry doesn't exist, insert it
-                    DoAddTranslation(connection, null, table, refColName, langColName, refId, langId, name);
+                    DoAddTranslation(connection, transaction, table, refColName, langColName, refId, langId, name);
                 }
             }
         }

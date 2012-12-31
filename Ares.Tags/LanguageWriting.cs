@@ -183,26 +183,33 @@ namespace Ares.Tags
         {
             using (SQLiteTransaction transaction = m_Connection.BeginTransaction())
             {
-                // Insert into categories table
-                String insertCommand = String.Format("INSERT INTO {0} ({1}) VALUES (@Id)", Schema.CATEGORIES_TABLE, Schema.ID_COLUMN);
-                using (SQLiteCommand command = new SQLiteCommand(insertCommand, m_Connection, transaction))
-                {
-                    command.Parameters.AddWithValue("@Id", DBNull.Value);
-                    int res = command.ExecuteNonQuery();
-                    if (res != 1)
-                    {
-                        throw new TagsDbException("Insertion into Category table failed.");
-                    }
-                }
-                long newId = m_Connection.LastInsertRowId;
-
-                // Insert name into translation table
-                TagsTranslations.DoAddTranslation(m_Connection, transaction, Schema.CATEGORYNAMES_TABLE, Schema.CATEGORY_COLUMN, Schema.LANGUAGE_COLUMN, newId, m_LanguageId, name);
+                int newId = DoAddCategory(name, transaction);
 
                 transaction.Commit();
 
-                return (int)newId;
+                return newId;
             }
+        }
+
+        internal int DoAddCategory(String name, SQLiteTransaction transaction)
+        {
+            // Insert into categories table
+            String insertCommand = String.Format("INSERT INTO {0} ({1}) VALUES (@Id)", Schema.CATEGORIES_TABLE, Schema.ID_COLUMN);
+            using (SQLiteCommand command = new SQLiteCommand(insertCommand, m_Connection, transaction))
+            {
+                command.Parameters.AddWithValue("@Id", DBNull.Value);
+                int res = command.ExecuteNonQuery();
+                if (res != 1)
+                {
+                    throw new TagsDbException("Insertion into Category table failed.");
+                }
+            }
+            long newId = m_Connection.LastInsertRowId;
+
+            // Insert name into translation table
+            TagsTranslations.DoAddTranslation(m_Connection, transaction, Schema.CATEGORYNAMES_TABLE, Schema.CATEGORY_COLUMN, Schema.LANGUAGE_COLUMN, newId, m_LanguageId, name);
+
+            return (int)newId;
         }
 
         private void DoSetCategoryName(int categoryId, String name)
@@ -210,36 +217,55 @@ namespace Ares.Tags
             TagsTranslations.DoSetTranslation(m_Connection, Schema.CATEGORYNAMES_TABLE, Schema.CATEGORY_COLUMN, Schema.LANGUAGE_COLUMN, categoryId, m_LanguageId, name);
         }
 
+        internal void DoSetCategoryName(int categoryId, String name, SQLiteTransaction transaction)
+        {
+            TagsTranslations.DoSetTranslation(m_Connection, Schema.CATEGORYNAMES_TABLE, Schema.CATEGORY_COLUMN, Schema.LANGUAGE_COLUMN, 
+                categoryId, m_LanguageId, name, transaction);
+        }
+
         private int DoAddTag(int categoryId, string name)
         {
             using (SQLiteTransaction transaction = m_Connection.BeginTransaction())
             {
-                // Insert into names table
-                String insertCommand = String.Format("INSERT INTO {0} ({1}, {2}) VALUES (@Id, @Category)", Schema.TAGS_TABLE, Schema.ID_COLUMN, Schema.CATEGORY_COLUMN);
-                using (SQLiteCommand command = new SQLiteCommand(insertCommand, m_Connection, transaction))
-                {
-                    command.Parameters.AddWithValue("@Id", DBNull.Value);
-                    command.Parameters.AddWithValue("@Category", categoryId);
-                    int res = command.ExecuteNonQuery();
-                    if (res != 1)
-                    {
-                        throw new TagsDbException("Insertion into Tags table failed.");
-                    }
-                }
-                long newId = m_Connection.LastInsertRowId;
-
-                // Insert name into translation table
-                TagsTranslations.DoAddTranslation(m_Connection, transaction, Schema.TAGNAMES_TABLE, Schema.TAG_COLUMN, Schema.LANGUAGE_COLUMN, newId, m_LanguageId, name);
+                int newId = DoAddTag(categoryId, name, transaction);
 
                 transaction.Commit();
 
-                return (int)newId;
+                return newId;
             }
         }
+
+        internal int DoAddTag(int categoryId, string name, SQLiteTransaction transaction)
+        {
+            // Insert into names table
+            String insertCommand = String.Format("INSERT INTO {0} ({1}, {2}) VALUES (@Id, @Category)", Schema.TAGS_TABLE, Schema.ID_COLUMN, Schema.CATEGORY_COLUMN);
+            using (SQLiteCommand command = new SQLiteCommand(insertCommand, m_Connection, transaction))
+            {
+                command.Parameters.AddWithValue("@Id", DBNull.Value);
+                command.Parameters.AddWithValue("@Category", categoryId);
+                int res = command.ExecuteNonQuery();
+                if (res != 1)
+                {
+                    throw new TagsDbException("Insertion into Tags table failed.");
+                }
+            }
+            long newId = m_Connection.LastInsertRowId;
+
+            // Insert name into translation table
+            TagsTranslations.DoAddTranslation(m_Connection, transaction, Schema.TAGNAMES_TABLE, Schema.TAG_COLUMN, Schema.LANGUAGE_COLUMN, newId, m_LanguageId, name);
+
+            return (int)newId;
+        }
+
 
         private void DoSetTagName(int tagId, String name)
         {
             TagsTranslations.DoSetTranslation(m_Connection, Schema.TAGNAMES_TABLE, Schema.TAG_COLUMN, Schema.LANGUAGE_COLUMN, tagId, m_LanguageId, name);
+        }
+
+        internal void DoSetTagName(int tagId, String name, SQLiteTransaction transaction)
+        {
+            TagsTranslations.DoSetTranslation(m_Connection, Schema.TAGNAMES_TABLE, Schema.TAG_COLUMN, Schema.LANGUAGE_COLUMN, tagId, m_LanguageId, name, transaction);
         }
 
         private void DoRemoveCategory(int categoryId)

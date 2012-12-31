@@ -2,14 +2,10 @@ Tags TODO:
 
 - Hide Tags and Categories (per project? per database?)
 - Auto-Tagging (Author, Genre, ?)
-- Create database by copying default file
-- Move database when music path is changed
-- More default tags
 - Filter in File Explorer
 - Mono / Linux
 - MediaPortal
 - Import and Export
-- Update tags editor on tag changes from other sources
 
 Non-Tags TODO:
 

@@ -191,6 +191,7 @@ namespace Ares.Player
             if (dialog.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
             {
                 m_PlayingControl.UpdateDirectories();
+                LoadTagsDB();
             }
         }
 
