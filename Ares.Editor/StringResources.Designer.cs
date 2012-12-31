@@ -686,6 +686,15 @@ namespace Ares.Editor {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die No tags set for the file ähnelt.
+        /// </summary>
+        internal static string NoTags {
+            get {
+                return ResourceManager.GetString("NoTags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die No element selected ähnelt.
         /// </summary>
         internal static string NoTranslationsLabelText {
@@ -900,6 +909,15 @@ namespace Ares.Editor {
         internal static string TagMustHaveName {
             get {
                 return ResourceManager.GetString("TagMustHaveName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Tags:  ähnelt.
+        /// </summary>
+        internal static string Tags {
+            get {
+                return ResourceManager.GetString("Tags", resourceCulture);
             }
         }
         

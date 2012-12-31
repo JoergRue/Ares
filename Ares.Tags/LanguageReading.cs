@@ -214,7 +214,7 @@ namespace Ares.Tags
                 + "AND {4}.{12}=@LangId2 " // Category Language
                 + "AND {8}.{13}=@Path "    // File Path
                 // sorting
-                + "ORDER BY {2}.{3} ",
+                + "ORDER BY {4}.{5}, {2}.{3} ",
                 // 0 - 4
                 Schema.TAGS_TABLE, Schema.ID_COLUMN, Schema.TAGNAMES_TABLE, Schema.NAME_COLUMN, Schema.CATEGORYNAMES_TABLE,
                 // 5 - 9

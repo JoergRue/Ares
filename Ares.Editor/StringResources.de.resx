@@ -334,6 +334,9 @@ Sie sollten zuerst ein paar Einstellungen vornehmen.</value>
   <data name="NoSoundFileEditor" xml:space="preserve">
     <value>Es wurde noch kein Editor für Audiodateien konfiguriert. Möchten Sie jetzt einen konfigurieren?</value>
   </data>
+  <data name="NoTags" xml:space="preserve">
+    <value>Keine Tags für die Datei gesetzt</value>
+  </data>
   <data name="NoTranslationsLabelText" xml:space="preserve">
     <value>Kein Element ausgewählt</value>
   </data>
@@ -408,6 +411,9 @@ Soll es jetzt gespeichert werden?</value>
   </data>
   <data name="TagMustHaveName" xml:space="preserve">
     <value>Der Tag muss einen Namen haben.</value>
+  </data>
+  <data name="Tags" xml:space="preserve">
+    <value>Tags: </value>
   </data>
   <data name="TagsDbError" xml:space="preserve">
     <value>Fehler beim Zugriff auf die Tags-Datenbasis:

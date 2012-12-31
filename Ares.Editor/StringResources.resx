@@ -334,6 +334,9 @@ You should adapt some settings first.</value>
   <data name="NoSoundFileEditor" xml:space="preserve">
     <value>No audio file editor has been configured yet. Do you wish to configure one now?</value>
   </data>
+  <data name="NoTags" xml:space="preserve">
+    <value>No tags set for the file</value>
+  </data>
   <data name="NoTranslationsLabelText" xml:space="preserve">
     <value>No element selected</value>
   </data>
@@ -407,6 +410,9 @@ You should adapt some settings first.</value>
   </data>
   <data name="TagMustHaveName" xml:space="preserve">
     <value>The tag must have a name.</value>
+  </data>
+  <data name="Tags" xml:space="preserve">
+    <value>Tags: </value>
   </data>
   <data name="TagsDbError" xml:space="preserve">
     <value>Error accessing tags database:

@@ -316,6 +316,47 @@ namespace Ares.Editor
                     {
                         msg += Environment.NewLine + " " + Environment.NewLine + String.Format(StringResources.NoElementsFound, node.Text);
                     }
+
+                    if (soundFileType == Data.SoundFileType.Music)
+                    {
+                        try
+                        {
+                            int languageId = m_Project.TagLanguageId;
+                            if (languageId == -1)
+                                languageId = Ares.Tags.TagsModule.GetTagsDB().TranslationsInterface.GetIdOfCurrentUILanguage();
+                            var tags = Ares.Tags.TagsModule.GetTagsDB().GetReadInterfaceByLanguage(languageId).GetTagsForFile(item.RelativePath);
+                            StringBuilder builder = new StringBuilder();
+                            int lastCatId = -1;
+                            foreach (var tagInfo in tags)
+                            {
+                                if (tagInfo.CategoryId != lastCatId)
+                                {
+                                    if (builder.Length > 0)
+                                        builder.Append(";");
+                                    builder.Append(tagInfo.Category);
+                                    builder.Append(": ");
+                                    lastCatId = tagInfo.CategoryId;
+                                }
+                                else
+                                {
+                                    builder.Append(", ");
+                                }
+                                builder.Append(tagInfo.Name);
+                            }
+                            if (tags.Count > 0)
+                            {
+                                msg += Environment.NewLine + StringResources.Tags + builder.ToString();
+                            }
+                            else
+                            {
+                                msg += Environment.NewLine + StringResources.NoTags;
+                            }
+                        }
+                        catch (Ares.Tags.TagsDbException /*ex*/)
+                        {
+                            // ignore here
+                        }
+                    }
                 }
             }
             informationBox.Text = msg;
@@ -890,6 +931,7 @@ namespace Ares.Editor
                 {
                     m_Project.TagLanguageId = dialog.LanguageId;
                 }
+                updateInformationPanel();
             }
         }
 
