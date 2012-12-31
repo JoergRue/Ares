@@ -525,9 +525,9 @@ namespace Ares.ModelInfo
                 }
                 if (System.IO.Directory.Exists(file))
                 {
+                    AddMovedFiles(file, fileTargetPath, filesMoved);
                     if (data.Move)
                     {
-                        AddMovedFiles(file, fileTargetPath, filesMoved);
                         System.IO.Directory.Move(file, fileTargetPath);
                         currentBytes += GetBytes(fileTargetPath);
                         ReportProgress(currentBytes, allBytes, ref lastPercent, fileTargetPath);
@@ -539,9 +539,9 @@ namespace Ares.ModelInfo
                 }
                 else if (System.IO.File.Exists(file))
                 {
+                    filesMoved[file] = fileTargetPath;
                     if (data.Move)
                     {
-                        filesMoved[file] = fileTargetPath;
                         System.IO.File.Move(file, fileTargetPath);
                     }
                     else
@@ -558,6 +558,46 @@ namespace Ares.ModelInfo
             if (data.Move)
             {
                 AdaptElementPaths(filesMoved, data.Project);
+            }
+            AdaptTags(filesMoved, data.Move);
+        }
+
+        private static void AdaptTags(Dictionary<String, String> files, bool filesMoved)
+        {
+            String basePath = Ares.Settings.Settings.Instance.MusicDirectory;
+            Dictionary<String, String> adaptedFiles = new Dictionary<string, string>();
+            List<String> removedFiles = new List<string>();
+            foreach (var entry in files)
+            {
+                if (entry.Key.StartsWith(basePath, StringComparison.OrdinalIgnoreCase))
+                {
+                    if (entry.Value.StartsWith(basePath, StringComparison.OrdinalIgnoreCase))
+                    {
+                        adaptedFiles[entry.Key.Substring(basePath.Length + 1)] = entry.Value.Substring(basePath.Length + 1);
+                    }
+                    else if (filesMoved)
+                    {
+                        removedFiles.Add(entry.Key.Substring(basePath.Length + 1));
+                    }
+                }
+            }
+            try
+            {
+                var dbWrite = Ares.Tags.TagsModule.GetTagsDB().WriteInterface;
+                if (filesMoved)
+                {
+                    dbWrite.MoveFiles(adaptedFiles);
+                    if (removedFiles.Count > 0)
+                        dbWrite.RemoveFiles(removedFiles);
+                }
+                else
+                {
+                    dbWrite.CopyFiles(adaptedFiles);
+                }
+            }
+            catch (Ares.Tags.TagsDbException /*ex*/)
+            {
+                throw;
             }
         }
 

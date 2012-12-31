@@ -72,6 +72,10 @@ namespace Ares.Editor.Actions
 
         private void m_MusicWatcher_Changed(object sender, System.IO.FileSystemEventArgs e)
         {
+            if (e.FullPath.EndsWith("sqlite-journal", StringComparison.OrdinalIgnoreCase))
+                return;
+            if (e.FullPath.EndsWith("sqlite", StringComparison.OrdinalIgnoreCase))
+                return;
             m_MusicWatcher.EnableRaisingEvents = false;
             Ares.ModelInfo.ModelChecks.Instance.Check(Ares.ModelInfo.CheckType.File, Project);
             if (MusicDirChanges != null) MusicDirChanges(this, new EventArgs());
@@ -81,6 +85,10 @@ namespace Ares.Editor.Actions
 
         private void m_SoundWatcher_Changed(object sender, System.IO.FileSystemEventArgs e)
         {
+            if (e.FullPath.EndsWith("sqlite-journal", StringComparison.OrdinalIgnoreCase))
+                return;
+            if (e.FullPath.EndsWith("sqlite", StringComparison.OrdinalIgnoreCase))
+                return;
             m_SoundWatcher.EnableRaisingEvents = false;
             Ares.ModelInfo.ModelChecks.Instance.Check(Ares.ModelInfo.CheckType.File, Project);
             if (SoundDirChanges != null) SoundDirChanges(this, new EventArgs());

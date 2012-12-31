@@ -695,25 +695,60 @@ namespace Ares.Editor
             DeleteFiles();
         }
 
+        private void AddFilesToList(List<String> files, String directory)
+        {
+            System.IO.DirectoryInfo info = new System.IO.DirectoryInfo(directory);
+            foreach (System.IO.DirectoryInfo subDir in info.GetDirectories())
+            {
+                AddFilesToList(files, subDir.FullName);
+            }
+            foreach (System.IO.FileInfo file in info.GetFiles())
+            {
+                files.Add(file.FullName);
+            }
+        }
+
         private void DeleteFiles()
         {
             List<String> files = GetFilesForClipboard();
             if (MessageBox.Show(this, StringResources.ReallyDelete, StringResources.Ares, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
             {
                 Dictionary<String, object> uniqueParents = GetUniqueParents(files);
+                List<String> deletedFiles = new List<string>();
                 try
                 {
                     foreach (String file in uniqueParents.Keys)
                     {
                         if (System.IO.Directory.Exists(file))
+                        {
+                            AddFilesToList(deletedFiles, file);
                             System.IO.Directory.Delete(file, true);
+                        }
                         else if (System.IO.File.Exists(file))
+                        {
+                            deletedFiles.Add(file);
                             System.IO.File.Delete(file);
+                        }
+                    }
+                    String basePath = Ares.Settings.Settings.Instance.MusicDirectory;
+                    List<string> adaptedFiles = new List<string>();
+                    foreach (string file in deletedFiles)
+                    {
+                        if (file.StartsWith(basePath, StringComparison.OrdinalIgnoreCase))
+                            adaptedFiles.Add(file.Substring(basePath.Length + 1));
+                    }
+                    if (adaptedFiles.Count > 0)
+                    {
+                        Ares.Tags.TagsModule.GetTagsDB().WriteInterface.RemoveFiles(adaptedFiles);
                     }
                 }
                 catch (System.IO.IOException ex)
                 {
-                    MessageBox.Show(this, String.Format(StringResources.DeleteError, ex.Message), StringResources.Ares, MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Error);
+                    MessageBox.Show(this, String.Format(StringResources.DeleteError, ex.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                catch (Ares.Tags.TagsDbException ex)
+                {
+                    MessageBox.Show(this, String.Format(StringResources.TagsDbError, ex.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 treeView1.SelectedNode = m_Root;
             }

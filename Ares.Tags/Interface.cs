@@ -157,9 +157,14 @@ namespace Ares.Tags
         void RemoveFiles(IList<String> relativePaths);
 
         /// <summary>
-        /// Changes the path of a file.
+        /// Changes the path of files.
         /// </summary>
-        void MoveFile(String oldPath, String newPath);
+        void MoveFiles(IDictionary<String, String> oldPathToNewPath);
+
+        /// <summary>
+        /// Copies files with their tags.
+        /// </summary>
+        void CopyFiles(IDictionary<String, String> oldPathToNewPath);
 
         /// <summary>
         /// Removes the tag for all languages.

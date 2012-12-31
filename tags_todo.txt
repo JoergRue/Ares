@@ -2,13 +2,13 @@ Tags TODO:
 
 - Hide Tags and Categories (per project? per database?)
 - Auto-Tagging (Author, Genre, ?)
-- Controllers
 - Create database by copying default file
 - Move database when music path is changed
 - More default tags
 - Macro commands
 - Filter in File Explorer
 - Mono / Linux
+- MediaPortal
 - Import and Export
 
 Non-Tags TODO:
@@ -19,3 +19,18 @@ Non-Tags TODO:
 - External player for music
 - Copyright year
 
+---------------------
+
+Command 10: categoryId, tagId, active (3x Int32; switch tag)
+Command 11: - (turn off all tags)
+Command 12: isAnd (Int32; switch category operator)
+
+Inform 11/0/0: Start tag info
+11/1/0: category Id + name
+11/2/0: tag Id + name
+11/3/0: done with tag info
+12/0/0: Start active tag info
+12/1/0: tag id
+12/2/0: done with active tag info
+13/?/0: tag id, ? == 1 ==> tag active
+14/?/0: category operator, ? == 1 ==> operator is and

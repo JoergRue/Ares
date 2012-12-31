@@ -104,7 +104,7 @@ namespace Ares.Tags
             }
         }
 
-        public void MoveFile(String oldPath, String newPath)
+        public void MoveFiles(IDictionary<String, String> oldPathsToNewPaths)
         {
             if (m_Connection == null)
             {
@@ -112,7 +112,45 @@ namespace Ares.Tags
             }
             try
             {
-                DoMoveFile(oldPath, newPath);
+                if (oldPathsToNewPaths.Count == 0)
+                    return;
+                using (SQLiteTransaction transaction = m_Connection.BeginTransaction())
+                {
+                    foreach (var entry in oldPathsToNewPaths)
+                    {
+                        DoMoveFile(entry.Key, entry.Value, transaction);
+                    }
+                    transaction.Commit();
+                }
+            }
+            catch (System.Data.DataException ex)
+            {
+                throw new TagsDbException(ex.Message, ex);
+            }
+            catch (SQLiteException ex)
+            {
+                throw new TagsDbException(ex.Message, ex);
+            }
+        }
+
+        public void CopyFiles(IDictionary<String, String> oldPathsToNewPaths)
+        {
+            if (m_Connection == null)
+            {
+                throw new TagsDbException("No Connection to DB file!");
+            }
+            try
+            {
+                if (oldPathsToNewPaths.Count == 0)
+                    return;
+                using (SQLiteTransaction transaction = m_Connection.BeginTransaction())
+                {
+                    foreach (var entry in oldPathsToNewPaths)
+                    {
+                        DoCopyFile(entry.Key, entry.Value, transaction);
+                    }
+                    transaction.Commit();
+                }
             }
             catch (System.Data.DataException ex)
             {
@@ -191,13 +229,13 @@ namespace Ares.Tags
             }
         }
 
-        private void DoMoveFile(String oldPath, String newPath)
+        private void DoMoveFile(String oldPath, String newPath, SQLiteTransaction transaction)
         {
             Object fileKey = DoFindFile(null, oldPath);
             if (fileKey != null)
             {
                 String commandString = String.Format("UPDATE {0} SET {1}=@NewPath WHERE {2}=@Id", Schema.FILES_TABLE, Schema.PATH_COLUMN, Schema.ID_COLUMN);
-                using (SQLiteCommand command = new SQLiteCommand(commandString, m_Connection))
+                using (SQLiteCommand command = new SQLiteCommand(commandString, m_Connection, transaction))
                 {
                     command.Parameters.AddWithValue("@NewPath", newPath);
                     command.Parameters.AddWithValue("@Id", fileKey);
@@ -206,6 +244,28 @@ namespace Ares.Tags
                     {
                         throw new TagsDbException("Updating Files table failed.");
                     }
+                }
+            }
+        }
+
+        private void DoCopyFile(String oldPath, String newPath, SQLiteTransaction transaction)
+        {
+            Object fileKey = DoFindFile(transaction, oldPath);
+            if (fileKey != null)
+            {
+                String queryString = String.Format("SELECT {0} FROM {1} WHERE {2}=@FileKey", Schema.TAG_COLUMN, Schema.FILETAGS_TABLE, Schema.FILE_COLUMN);
+                using (SQLiteCommand command = new SQLiteCommand(queryString, m_Connection, transaction))
+                {
+                    command.Parameters.AddWithValue("@FileKey", fileKey);
+                    SQLiteDataReader reader = command.ExecuteReader();
+                    if (!reader.HasRows)
+                        return;
+                    List<int> tags = new List<int>();
+                    while (reader.Read())
+                    {
+                        tags.Add((int)reader.GetInt64(0));
+                    }
+                    DoSetFileTags(transaction, newPath, tags);
                 }
             }
         }
@@ -278,38 +338,12 @@ namespace Ares.Tags
         {
             using (SQLiteTransaction transaction = m_Connection.BeginTransaction())
             {
-                /*
-                 * Not necessary because of ON DELETE CASCADE
-                // 1. Find all tags for the category
-                List<long> tagIds = new List<long>();
-                String findTagsQuery = String.Format("SELECT {0} FROM {1} WHERE {2}=@CatId", Schema.ID_COLUMN, Schema.TAGS_TABLE, Schema.CATEGORY_COLUMN);
-                using (SQLiteCommand command = new SQLiteCommand(findTagsQuery, m_Connection, transaction))
-                {
-                    command.Parameters.AddWithValue("@CatId", categoryId);
-                    SQLiteDataReader reader = command.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        tagIds.Add(reader.GetInt64(0));
-                    }
-                }
-                // 2. Remove all tags for the category
-                DoRemoveTags(tagIds, transaction);
-                // 3. Remove all translations for the category
-                String deleteTransCommand = String.Format("DELETE FROM {0} WHERE {1}=@CatId", Schema.CATEGORYNAMES_TABLE, Schema.CATEGORY_COLUMN);
-                using (SQLiteCommand command = new SQLiteCommand(deleteTransCommand, m_Connection, transaction))
-                {
-                    command.Parameters.AddWithValue("@CatId", categoryId);
-                    command.ExecuteNonQuery();
-                }
-                 */
-                // 4. Remove the category itself
                 String deleteCatCommand = String.Format("DELETE FROM {0} WHERE {1}=@CatId", Schema.CATEGORIES_TABLE, Schema.ID_COLUMN);
                 using (SQLiteCommand command = new SQLiteCommand(deleteCatCommand, m_Connection, transaction))
                 {
                     command.Parameters.AddWithValue("@CatId", categoryId);
                     command.ExecuteNonQuery();
                 }
-                // 5. Commit
                 transaction.Commit();
             }
         }
@@ -335,36 +369,6 @@ namespace Ares.Tags
                 return;
             }
 
-            /* 
-             * Not necessary because of ON DELETE CASCADE
-             * 
-            // 1. Remove from FileTags table
-            using (SQLiteCommand command1 = new SQLiteCommand(String.Format(REMOVE_TAG_COMMAND, Schema.FILETAGS_TABLE, Schema.TAG_COLUMN), m_Connection, transaction))
-            {
-                SQLiteParameter param1 = command1.Parameters.Add("@TagId", System.Data.DbType.Int64);
-                // 2. Remove from Names table
-                using (SQLiteCommand command2 = new SQLiteCommand(String.Format(REMOVE_TAG_COMMAND, Schema.TAGNAMES_TABLE, Schema.TAG_COLUMN), m_Connection, transaction))
-                {
-                    SQLiteParameter param2 = command2.Parameters.Add("@TagId", System.Data.DbType.Int64);
-                    // 3. Remove from Tags table
-                    using (SQLiteCommand command3 = new SQLiteCommand(String.Format(REMOVE_TAG_COMMAND, Schema.TAGS_TABLE, Schema.ID_COLUMN), m_Connection, transaction))
-                    {
-                        SQLiteParameter param3 = command3.Parameters.Add("@TagId", System.Data.DbType.Int64);
-
-                        // ... do it for all tags
-                        foreach (long tagId in tagIds)
-                        {
-                            param1.Value = tagId;
-                            command1.ExecuteNonQuery();
-                            param2.Value = tagId;
-                            command2.ExecuteNonQuery();
-                            param3.Value = tagId;
-                            command3.ExecuteNonQuery();
-                        }
-                    }
-                }
-            }
-             */
             // Remove from Tags table
             using (SQLiteCommand command3 = new SQLiteCommand(String.Format(REMOVE_TAG_COMMAND, Schema.TAGS_TABLE, Schema.ID_COLUMN), m_Connection, transaction))
             {
