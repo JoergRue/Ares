@@ -73,6 +73,34 @@
               <ZipFileName>Installer{CopyFile}\{a9e4591b-f68f-41a0-b2c5-f519bd13a111}-oggenc2.exe</ZipFileName>
               <DestinationFilename>%Base%\plugins\Windows\oggenc2.exe</DestinationFilename>
             </FileItem>
+            <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
+              <Param1 />
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
+              <LocalFileName>..\bin\Release_MediaPortal\Ares.Tags.dll</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{2063616a-434e-4942-8177-797d8b7ba474}-Ares.Tags.dll</ZipFileName>
+              <DestinationFilename>%Base%\plugins\Windows\Ares.Tags.dll</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
+              <Param1 />
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
+              <LocalFileName>..\bin\Release_MediaPortal\System.Data.SQLite.dll</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{847caf6b-7267-49cb-8020-dfcd00f70c4a}-System.Data.SQLite.dll</ZipFileName>
+              <DestinationFilename>%Base%\plugins\Windows\System.Data.SQLite.dll</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
+              <Param1 />
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
+              <LocalFileName>..\bin\Release_MediaPortal\SQLite.Interop.dll</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{7eb37207-e8fc-4a49-8eb6-3f51209b7601}-SQLite.Interop.dll</ZipFileName>
+              <DestinationFilename>%Base%\plugins\Windows\SQLite.Interop.dll</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
+              <Param1 />
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
+              <LocalFileName>..\bin\Release_MediaPortal\sqlite3.dll</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{d93d6b64-1c38-4c9e-b848-4e79a523ccdf}-sqlite3.dll</ZipFileName>
+              <DestinationFilename>%Base%\sqlite3.dll</DestinationFilename>
+            </FileItem>
           </Items>
         </Files>
       </GroupItem>
@@ -247,8 +275,8 @@ Click Next to continue or Cancel to exit Setup.</Value>
     <ForumPage />
     <UpdateUrl />
     <Version>
-      <Major>1</Major>
-      <Minor>4</Minor>
+      <Major>2</Major>
+      <Minor>0</Minor>
       <Build>0</Build>
       <Revision>0</Revision>
     </Version>
@@ -357,6 +385,34 @@ Makes sense only in conjunction with the Ares Controller.</ExtensionDescription>
         <LocalFileName>..\bin\Release_MediaPortal\oggenc2.exe</LocalFileName>
         <ZipFileName>Installer{CopyFile}\{a9e4591b-f68f-41a0-b2c5-f519bd13a111}-oggenc2.exe</ZipFileName>
         <DestinationFilename>%Base%\plugins\Windows\oggenc2.exe</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
+        <Param1 />
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
+        <LocalFileName>..\bin\Release_MediaPortal\Ares.Tags.dll</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{2063616a-434e-4942-8177-797d8b7ba474}-Ares.Tags.dll</ZipFileName>
+        <DestinationFilename>%Base%\plugins\Windows\Ares.Tags.dll</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
+        <Param1 />
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
+        <LocalFileName>..\bin\Release_MediaPortal\System.Data.SQLite.dll</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{847caf6b-7267-49cb-8020-dfcd00f70c4a}-System.Data.SQLite.dll</ZipFileName>
+        <DestinationFilename>%Base%\plugins\Windows\System.Data.SQLite.dll</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
+        <Param1 />
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
+        <LocalFileName>..\bin\Release_MediaPortal\SQLite.Interop.dll</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{7eb37207-e8fc-4a49-8eb6-3f51209b7601}-SQLite.Interop.dll</ZipFileName>
+        <DestinationFilename>%Base%\plugins\Windows\SQLite.Interop.dll</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
+        <Param1 />
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
+        <LocalFileName>..\bin\Release_MediaPortal\sqlite3.dll</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{d93d6b64-1c38-4c9e-b848-4e79a523ccdf}-sqlite3.dll</ZipFileName>
+        <DestinationFilename>%Base%\sqlite3.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="true">
         <Param1 />

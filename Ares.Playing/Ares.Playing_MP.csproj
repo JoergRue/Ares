@@ -99,6 +99,10 @@
       <Project>{50EA19EE-5337-499C-8B7B-1B22EA9E24A6}</Project>
       <Name>Ares.ModelInfo</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Ares.Tags\Ares.Tags.csproj">
+      <Project>{ED78886A-8674-499F-B0F9-98EB25322EBB}</Project>
+      <Name>Ares.Tags</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="ares.snk" />

@@ -1,7 +1,7 @@
 Tags TODO:
 
 - Mono / Linux
-- MediaPortal
+- Scroll pane in Java Controller
 - Import and Export
 
 Non-Tags TODO:
@@ -10,7 +10,6 @@ Non-Tags TODO:
 - News from online file
 - Quotes in starting external editor
 - External player for music
-- Copyright year
 
 ---------------------
 

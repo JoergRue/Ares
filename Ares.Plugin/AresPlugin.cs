@@ -278,6 +278,12 @@ namespace Ares.Plugin
             try
             {
                 m_Project = Ares.Data.DataModule.ProjectManager.LoadProject(filePath);
+                if (m_Project.TagLanguageId != -1)
+                {
+                    m_TagLanguageId = m_Project.TagLanguageId;
+                }
+                else
+                    m_TagLanguageId = Ares.Tags.TagsModule.GetTagsDB().TranslationsInterface.GetIdOfCurrentUILanguage();
             }
             catch (Exception e)
             {
@@ -301,8 +307,7 @@ namespace Ares.Plugin
 
         private void DoModelChecks()
         {
-            Ares.ModelInfo.ModelChecks.Instance.Project = m_Project;
-            Ares.ModelInfo.ModelChecks.Instance.CheckAll();
+            Ares.ModelInfo.ModelChecks.Instance.CheckAll(m_Project);
             String modelErrors = String.Empty;
             foreach (Ares.ModelInfo.ModelError error in Ares.ModelInfo.ModelChecks.Instance.GetAllErrors())
             {
@@ -373,6 +378,8 @@ namespace Ares.Plugin
             }
         }
 
+        private int m_TagLanguageId = -1;
+
         private void UpdateClientData()
         {
             if (m_Network.ClientConnected)
@@ -380,8 +387,9 @@ namespace Ares.Plugin
                 networkLabel.Label = StringResources.ConnectedWith + m_Network.ClientName;
                 m_Network.InformClientOfEverything(m_PlayingControl.GlobalVolume, m_PlayingControl.MusicVolume,
                     m_PlayingControl.SoundVolume, m_PlayingControl.CurrentMode, MusicInfo.GetInfo(m_PlayingControl.CurrentMusicElement),
-                    m_PlayingControl.CurrentModeElements, m_Project != null ? m_Project.Title : String.Empty,
-                    m_PlayingControl.CurrentMusicList, m_PlayingControl.MusicRepeat);
+                    m_PlayingControl.CurrentModeElements, m_Project,
+                    m_PlayingControl.CurrentMusicList, m_PlayingControl.MusicRepeat, m_TagLanguageId, 
+                    new List<int>(m_PlayingControl.GetCurrentMusicTags()), m_PlayingControl.IsMusicTagCategoriesOperatorAnd());
                 disconnectButton.IsEnabled = true;
             }
             else
@@ -425,6 +433,18 @@ namespace Ares.Plugin
             
             hasInitedBass = Un4seen.Bass.Bass.BASS_Init(-1, 44100, Un4seen.Bass.BASSInit.BASS_DEVICE_DEFAULT, IntPtr.Zero);
             Un4seen.Bass.AddOn.Fx.BassFx.LoadMe();
+
+            try
+            {
+                var tagsDBFiles = Ares.Tags.TagsModule.GetTagsDB().FilesInterface;
+                String path = System.IO.Path.Combine(Ares.Settings.Settings.Instance.MusicDirectory, tagsDBFiles.DefaultFileName);
+                tagsDBFiles.OpenOrCreateDatabase(path);
+                m_TagLanguageId = Ares.Tags.TagsModule.GetTagsDB().TranslationsInterface.GetIdOfCurrentUILanguage();
+            }
+            catch (Ares.Tags.TagsDbException ex)
+            {
+                ShowErrorDialog(ex.Message, false);
+            }
             
             m_PlayingControl = new PlayingControl();
             m_PlayingControl.UpdateDirectories();
@@ -483,6 +503,9 @@ namespace Ares.Plugin
             AresSettings.SaveToConfigFile();
 
             m_PlayingControl.Dispose();
+
+            Ares.Tags.TagsModule.GetTagsDB().FilesInterface.CloseDatabase();
+
             if (hasInitedBass)
             {
                 Un4seen.Bass.Bass.BASS_Free();
@@ -646,6 +669,28 @@ namespace Ares.Plugin
         public void SetMusicRepeat(bool repeat)
         {
             m_PlayingControl.SetRepeatCurrentMusic(repeat);
+        }
+
+        public void SetTagCategoryOperator(bool isAndOperator)
+        {
+            m_PlayingControl.SetMusicTagCategoriesOperator(isAndOperator);
+        }
+
+        public void SwitchTag(int categoryId, int tagId, bool isActive)
+        {
+            if (isActive)
+            {
+                m_PlayingControl.AddMusicTag(categoryId, tagId);
+            }
+            else
+            {
+                m_PlayingControl.RemoveMusicTag(categoryId, tagId);
+            }
+        }
+
+        public void DeactivateAllTags()
+        {
+            m_PlayingControl.RemoveAllMusicTags();
         }
     }
 }

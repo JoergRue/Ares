@@ -99,6 +99,10 @@
       <Project>{E99E229E-2D6A-4C49-8E6F-C06E3F346606}</Project>
       <Name>Ares.Settings</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Ares.Tags\Ares.Tags.csproj">
+      <Project>{ED78886A-8674-499F-B0F9-98EB25322EBB}</Project>
+      <Name>Ares.Tags</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="StringResources.de.resx" />
