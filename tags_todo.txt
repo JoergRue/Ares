@@ -8,7 +8,6 @@ Non-Tags TODO:
 
 - Open project arch. in Controllers
 - News from online file
-- Quotes in starting external editor
 - External player for music
 
 ---------------------

@@ -461,7 +461,7 @@ namespace Ares.Editor
                 String filePath = System.IO.Path.Combine(basePath, item.RelativePath);
                 try
                 {
-                    System.Diagnostics.Process.Start(editor, filePath);
+                    System.Diagnostics.Process.Start(editor, "\"" + filePath + "\"");
                 }
                 catch (Exception ex)
                 {
