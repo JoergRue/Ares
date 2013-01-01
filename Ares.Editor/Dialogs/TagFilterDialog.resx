@@ -1,0 +1,474 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="okButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="okButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="okButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>273, 311</value>
+  </data>
+  <data name="okButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="okButton.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="okButton.Text" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="&gt;&gt;okButton.Name" xml:space="preserve">
+    <value>okButton</value>
+  </data>
+  <data name="&gt;&gt;okButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;okButton.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;okButton.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="cancelButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="cancelButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cancelButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>354, 311</value>
+  </data>
+  <data name="cancelButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="cancelButton.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
+  </data>
+  <data name="cancelButton.Text" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="&gt;&gt;cancelButton.Name" xml:space="preserve">
+    <value>cancelButton</value>
+  </data>
+  <data name="&gt;&gt;cancelButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cancelButton.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;cancelButton.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="groupBox2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="tagsBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="tagsBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 16</value>
+  </data>
+  <data name="tagsBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>209, 216</value>
+  </data>
+  <data name="tagsBox.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;tagsBox.Name" xml:space="preserve">
+    <value>tagsBox</value>
+  </data>
+  <data name="&gt;&gt;tagsBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckedListBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tagsBox.Parent" xml:space="preserve">
+    <value>groupBox2</value>
+  </data>
+  <data name="&gt;&gt;tagsBox.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="groupBox2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>217, 7</value>
+  </data>
+  <data name="groupBox2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>215, 235</value>
+  </data>
+  <data name="groupBox2.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="groupBox2.Text" xml:space="preserve">
+    <value>Tags</value>
+  </data>
+  <data name="&gt;&gt;groupBox2.Name" xml:space="preserve">
+    <value>groupBox2</value>
+  </data>
+  <data name="&gt;&gt;groupBox2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;groupBox2.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;groupBox2.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="groupBox1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left</value>
+  </data>
+  <data name="categoriesBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="categoriesBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 16</value>
+  </data>
+  <data name="categoriesBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>194, 219</value>
+  </data>
+  <data name="categoriesBox.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;categoriesBox.Name" xml:space="preserve">
+    <value>categoriesBox</value>
+  </data>
+  <data name="&gt;&gt;categoriesBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ListBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;categoriesBox.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;categoriesBox.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>11, 7</value>
+  </data>
+  <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>200, 238</value>
+  </data>
+  <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="groupBox1.Text" xml:space="preserve">
+    <value>Categories</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.Name" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="label13.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="label13.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label13.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label13.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 248</value>
+  </data>
+  <data name="label13.Size" type="System.Drawing.Size, System.Drawing">
+    <value>220, 13</value>
+  </data>
+  <data name="label13.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="label13.Text" xml:space="preserve">
+    <value>Tags of different categories are combined by:</value>
+  </data>
+  <data name="&gt;&gt;label13.Name" xml:space="preserve">
+    <value>label13</value>
+  </data>
+  <data name="&gt;&gt;label13.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label13.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;label13.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="tagCategoriesAndButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="tagCategoriesAndButton.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="tagCategoriesAndButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="tagCategoriesAndButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>15, 287</value>
+  </data>
+  <data name="tagCategoriesAndButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>295, 17</value>
+  </data>
+  <data name="tagCategoriesAndButton.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="tagCategoriesAndButton.Text" xml:space="preserve">
+    <value>AND: Music must have at least one tag in ALL categories</value>
+  </data>
+  <data name="&gt;&gt;tagCategoriesAndButton.Name" xml:space="preserve">
+    <value>tagCategoriesAndButton</value>
+  </data>
+  <data name="&gt;&gt;tagCategoriesAndButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tagCategoriesAndButton.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;tagCategoriesAndButton.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="tagCategoriesOrButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="tagCategoriesOrButton.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="tagCategoriesOrButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="tagCategoriesOrButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>15, 264</value>
+  </data>
+  <data name="tagCategoriesOrButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>283, 17</value>
+  </data>
+  <data name="tagCategoriesOrButton.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
+  </data>
+  <data name="tagCategoriesOrButton.Text" xml:space="preserve">
+    <value>OR: Music must have at least one tag in ANY category</value>
+  </data>
+  <data name="&gt;&gt;tagCategoriesOrButton.Name" xml:space="preserve">
+    <value>tagCategoriesOrButton</value>
+  </data>
+  <data name="&gt;&gt;tagCategoriesOrButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tagCategoriesOrButton.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;tagCategoriesOrButton.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="button1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>14, 311</value>
+  </data>
+  <data name="button1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="button1.TabIndex" type="System.Int32, mscorlib">
+    <value>17</value>
+  </data>
+  <data name="button1.Text" xml:space="preserve">
+    <value>Clear Tags</value>
+  </data>
+  <data name="&gt;&gt;button1.Name" xml:space="preserve">
+    <value>button1</value>
+  </data>
+  <data name="&gt;&gt;button1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;button1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;button1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 13</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>444, 342</value>
+  </data>
+  <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        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
+        AP//gAD//8AB///gA///+Af/
+</value>
+  </data>
+  <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>450, 350</value>
+  </data>
+  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
+    <value>CenterParent</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Filter through Tags</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>TagFilterDialog</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+</root>

@@ -56,10 +56,16 @@ namespace Ares.Editor
             this.Text = String.Format(StringResources.FileExplorerTitle, fileType == FileType.Music ? StringResources.Music : StringResources.Sounds);
             m_FileType = fileType;
             treeView1.ImageList = sImageList;
+            if (fileType != FileType.Music)
+            {
+                tagFilterButton.Enabled = false;
+                tagFilterButton.Visible = false;
+            }
             ReFillTree();
             if (fileType == FileType.Music)
             {
                 Actions.FilesWatcher.Instance.MusicDirChanges += new EventHandler<EventArgs>(DirChanged);
+                Actions.TagChanges.Instance.TagsDBChanged += new EventHandler<EventArgs>(Instance_TagsDBChanged);
                 this.Icon = ImageResources.musicIcon;
             }
             else
@@ -72,6 +78,15 @@ namespace Ares.Editor
                 splitContainer1.SplitterDistance = Height - 100;
             }
             Ares.Editor.Actions.ElementChanges.Instance.AddListener(-1, ElementChanged);
+        }
+
+        void Instance_TagsDBChanged(object sender, EventArgs e)
+        {
+            if (m_IsTagFilterActive)
+            {
+                RetrieveFilteredFiles();
+                ReFillTree();
+            }
         }
 
         public void SetProject(Ares.Data.IProject project)
@@ -148,11 +163,14 @@ namespace Ares.Editor
                     String relativeDir = subDir.Substring(rootLength);
                     subNode.Tag = new DraggedItem { NodeType = DraggedItemType.Directory, ItemType = dirType, RelativePath = relativeDir };
                     FillTreeNode(subNode, subDir, root, dirType, states);
-                    subNode.ContextMenuStrip = fileNodeContextMenu;
-                    node.Nodes.Add(subNode);
-                    if (states.ContainsKey(relativeDir) && states[relativeDir])
+                    if (!m_IsTagFilterActive || subNode.Nodes.Count > 0)
                     {
-                        subNode.Expand();
+                        subNode.ContextMenuStrip = fileNodeContextMenu;
+                        node.Nodes.Add(subNode);
+                        if (states.ContainsKey(relativeDir) && states[relativeDir])
+                        {
+                            subNode.Expand();
+                        }
                     }
                 }
                 List<string> files = new List<string>();
@@ -160,9 +178,11 @@ namespace Ares.Editor
                 files.Sort(StringComparer.CurrentCulture);
                 foreach (String file in files)
                 {
+                    String relativeDir = file.Substring(rootLength);
+                    if (m_IsTagFilterActive && !m_FilteredFiles.Contains(relativeDir))
+                        continue;
                     TreeNode subNode = new TreeNode(file.Substring(subLength));
                     subNode.ImageIndex = subNode.SelectedImageIndex = (dirType == FileType.Sound ? 1 : 2);
-                    String relativeDir = file.Substring(rootLength);
                     subNode.Tag = new DraggedItem { NodeType = DraggedItemType.File, ItemType = dirType, RelativePath = relativeDir };
                     subNode.ContextMenuStrip = fileNodeContextMenu;
                     node.Nodes.Add(subNode);
@@ -934,6 +954,11 @@ namespace Ares.Editor
                 {
                     m_Project.TagLanguageId = dialog.LanguageId;
                 }
+                if (m_IsTagFilterActive)
+                {
+                    RetrieveFilteredFiles();
+                    ReFillTree();
+                }
                 updateInformationPanel();
             }
         }
@@ -984,9 +1009,82 @@ namespace Ares.Editor
                     {
                         if (success)
                         {
-                            Ares.Editor.Actions.TagChanges.Instance.FireTagsDBChanged();
+                            Ares.Editor.Actions.TagChanges.Instance.FireTagsDBChanged(this);
                         }
                     });
+            }
+        }
+
+        private bool m_IsTagFilterActive = false;
+        private HashSet<String> m_FilteredFiles = new HashSet<string>(StringComparer.CurrentCultureIgnoreCase);
+        private Dictionary<int, HashSet<int>> m_FilterTagsByCategories = new Dictionary<int, HashSet<int>>();
+        private bool m_CombineFilterCategoriesWithAnd = false;
+
+        private void RetrieveFilteredFiles()
+        {
+            try
+            {
+                int languageId = m_Project != null ? m_Project.TagLanguageId : -1;
+                if (languageId == -1)
+                    languageId = Ares.Tags.TagsModule.GetTagsDB().TranslationsInterface.GetIdOfCurrentUILanguage();
+                var dbRead = Ares.Tags.TagsModule.GetTagsDB().ReadInterface;
+                IList<String> files;
+                if (m_CombineFilterCategoriesWithAnd)
+                {
+                    files = dbRead.GetAllFilesWithAnyTagInEachCategory(m_FilterTagsByCategories);
+                }
+                else
+                {
+                    HashSet<int> allTags = new HashSet<int>();
+                    foreach (var entry in m_FilterTagsByCategories)
+                    {
+                        allTags.UnionWith(entry.Value);
+                    }
+                    files = dbRead.GetAllFilesWithAnyTag(allTags);
+                }
+                m_FilteredFiles.Clear();
+                if (files != null)
+                {
+                    m_FilteredFiles.UnionWith(files);
+                }
+            }
+            catch (Ares.Tags.TagsDbException ex)
+            {
+                MessageBox.Show(this, String.Format(StringResources.TagsDbError, ex.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void tagFilterButton_Click(object sender, EventArgs e)
+        {
+            Dialogs.TagFilterDialog dialog = new Dialogs.TagFilterDialog();
+            int languageId = m_Project != null ? m_Project.TagLanguageId : -1;
+            if (languageId == -1)
+            {
+                try
+                {
+                    languageId = Ares.Tags.TagsModule.GetTagsDB().TranslationsInterface.GetIdOfCurrentUILanguage();
+                }
+                catch (Ares.Tags.TagsDbException ex)
+                {
+                    MessageBox.Show(this, String.Format(StringResources.TagsDbError, ex.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+            dialog.LanguageId = languageId;
+            dialog.CombineCategoriesWithAnd = m_CombineFilterCategoriesWithAnd;
+            dialog.TagsByCategory = m_FilterTagsByCategories;
+            if (dialog.ShowDialog(this) == DialogResult.OK)
+            {
+                m_Project.TagLanguageId = dialog.LanguageId;
+                m_CombineFilterCategoriesWithAnd = dialog.CombineCategoriesWithAnd;
+                m_FilterTagsByCategories = dialog.TagsByCategory;
+                tagFilterButton.Checked = m_FilterTagsByCategories.Count > 0;
+                m_IsTagFilterActive = m_FilterTagsByCategories.Count > 0;
+                if (m_IsTagFilterActive)
+                {
+                    RetrieveFilteredFiles();
+                }
+                ReFillTree();
             }
         }
 

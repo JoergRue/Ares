@@ -301,7 +301,7 @@ namespace Ares.Editor.Dialogs
                     m_FileTags[tagId] = m_Files.Count;
                     m_AddedTags.Add(tagId);
                     UpdateControls();
-                    Ares.Editor.Actions.TagChanges.Instance.FireTagsDBChanged();
+                    Ares.Editor.Actions.TagChanges.Instance.FireTagsDBChanged(this);
                 }
             }
             catch (Ares.Tags.TagsDbException ex)

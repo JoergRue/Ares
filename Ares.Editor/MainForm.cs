@@ -87,7 +87,7 @@ namespace Ares.Editor
                 Ares.Tags.ITagsDBFiles tagsDBFiles = Ares.Tags.TagsModule.GetTagsDB().FilesInterface;
                 String path = System.IO.Path.Combine(Ares.Settings.Settings.Instance.MusicDirectory, tagsDBFiles.DefaultFileName);
                 tagsDBFiles.OpenOrCreateDatabase(path);
-                Ares.Editor.Actions.TagChanges.Instance.FireTagsDBChanged();
+                Ares.Editor.Actions.TagChanges.Instance.FireTagsDBChanged(this);
             }
             catch (Ares.Tags.TagsDbException ex)
             {

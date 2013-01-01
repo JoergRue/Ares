@@ -43,6 +43,7 @@ namespace Ares.Editor
                 if (m_FileType == FileType.Music)
                 {
                     Actions.FilesWatcher.Instance.MusicDirChanges -= new EventHandler<EventArgs>(DirChanged);
+                    Actions.TagChanges.Instance.TagsDBChanged -= new EventHandler<EventArgs>(Instance_TagsDBChanged);
                 }
                 else
                 {
@@ -63,6 +64,10 @@ namespace Ares.Editor
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FileExplorer));
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.treeView1 = new MultiSelectTreeview.MultiSelectTreeview();
+            this.informationBox = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.playButton = new System.Windows.Forms.ToolStripButton();
             this.stopButton = new System.Windows.Forms.ToolStripButton();
@@ -70,7 +75,7 @@ namespace Ares.Editor
             this.searchBox = new System.Windows.Forms.ToolStripTextBox();
             this.searchButton = new System.Windows.Forms.ToolStripButton();
             this.showInfoButton = new System.Windows.Forms.ToolStripButton();
-            this.treeView1 = new MultiSelectTreeview.MultiSelectTreeview();
+            this.tagFilterButton = new System.Windows.Forms.ToolStripButton();
             this.fileNodeContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.playToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -82,15 +87,56 @@ namespace Ares.Editor
             this.copyToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.informationBox = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.toolStrip1.SuspendLayout();
-            this.fileNodeContextMenu.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
+            this.fileNodeContextMenu.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // splitContainer1
+            // 
+            resources.ApplyResources(this.splitContainer1, "splitContainer1");
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            resources.ApplyResources(this.splitContainer1.Panel1, "splitContainer1.Panel1");
+            this.splitContainer1.Panel1.Controls.Add(this.treeView1);
+            // 
+            // splitContainer1.Panel2
+            // 
+            resources.ApplyResources(this.splitContainer1.Panel2, "splitContainer1.Panel2");
+            this.splitContainer1.Panel2.Controls.Add(this.informationBox);
+            this.splitContainer1.Panel2.Controls.Add(this.label1);
+            // 
+            // treeView1
+            // 
+            resources.ApplyResources(this.treeView1, "treeView1");
+            this.treeView1.AllowDrop = true;
+            this.treeView1.Name = "treeView1";
+            this.treeView1.SelectedNodes = ((System.Collections.Generic.List<System.Windows.Forms.TreeNode>)(resources.GetObject("treeView1.SelectedNodes")));
+            this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
+            this.treeView1.DragDrop += new System.Windows.Forms.DragEventHandler(this.treeView1_DragDrop);
+            this.treeView1.DragEnter += new System.Windows.Forms.DragEventHandler(this.treeView1_DragEnter);
+            this.treeView1.DragOver += new System.Windows.Forms.DragEventHandler(this.treeView1_DragOver);
+            this.treeView1.DragLeave += new System.EventHandler(this.treeView1_DragLeave);
+            this.treeView1.DoubleClick += new System.EventHandler(this.treeView1_DoubleClick);
+            this.treeView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView1_KeyDown);
+            this.treeView1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.treeView1_MouseDown);
+            this.treeView1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.treeView1_MouseMove);
+            this.treeView1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.treeView1_MouseUp);
+            // 
+            // informationBox
+            // 
+            resources.ApplyResources(this.informationBox, "informationBox");
+            this.informationBox.Name = "informationBox";
+            this.informationBox.ReadOnly = true;
+            // 
+            // label1
+            // 
+            resources.ApplyResources(this.label1, "label1");
+            this.label1.Name = "label1";
             // 
             // toolStrip1
             // 
@@ -101,7 +147,8 @@ namespace Ares.Editor
             this.refreshButton,
             this.searchBox,
             this.searchButton,
-            this.showInfoButton});
+            this.showInfoButton,
+            this.tagFilterButton});
             this.toolStrip1.Name = "toolStrip1";
             // 
             // playButton
@@ -149,22 +196,12 @@ namespace Ares.Editor
             this.showInfoButton.Name = "showInfoButton";
             this.showInfoButton.Click += new System.EventHandler(this.showInfoButton_Click);
             // 
-            // treeView1
+            // tagFilterButton
             // 
-            resources.ApplyResources(this.treeView1, "treeView1");
-            this.treeView1.AllowDrop = true;
-            this.treeView1.Name = "treeView1";
-            this.treeView1.SelectedNodes = ((System.Collections.Generic.List<System.Windows.Forms.TreeNode>)(resources.GetObject("treeView1.SelectedNodes")));
-            this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
-            this.treeView1.DragDrop += new System.Windows.Forms.DragEventHandler(this.treeView1_DragDrop);
-            this.treeView1.DragEnter += new System.Windows.Forms.DragEventHandler(this.treeView1_DragEnter);
-            this.treeView1.DragOver += new System.Windows.Forms.DragEventHandler(this.treeView1_DragOver);
-            this.treeView1.DragLeave += new System.EventHandler(this.treeView1_DragLeave);
-            this.treeView1.DoubleClick += new System.EventHandler(this.treeView1_DoubleClick);
-            this.treeView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView1_KeyDown);
-            this.treeView1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.treeView1_MouseDown);
-            this.treeView1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.treeView1_MouseMove);
-            this.treeView1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.treeView1_MouseUp);
+            resources.ApplyResources(this.tagFilterButton, "tagFilterButton");
+            this.tagFilterButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tagFilterButton.Name = "tagFilterButton";
+            this.tagFilterButton.Click += new System.EventHandler(this.tagFilterButton_Click);
             // 
             // fileNodeContextMenu
             // 
@@ -242,33 +279,6 @@ namespace Ares.Editor
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
-            // informationBox
-            // 
-            resources.ApplyResources(this.informationBox, "informationBox");
-            this.informationBox.Name = "informationBox";
-            this.informationBox.ReadOnly = true;
-            // 
-            // label1
-            // 
-            resources.ApplyResources(this.label1, "label1");
-            this.label1.Name = "label1";
-            // 
-            // splitContainer1
-            // 
-            resources.ApplyResources(this.splitContainer1, "splitContainer1");
-            this.splitContainer1.Name = "splitContainer1";
-            // 
-            // splitContainer1.Panel1
-            // 
-            resources.ApplyResources(this.splitContainer1.Panel1, "splitContainer1.Panel1");
-            this.splitContainer1.Panel1.Controls.Add(this.treeView1);
-            // 
-            // splitContainer1.Panel2
-            // 
-            resources.ApplyResources(this.splitContainer1.Panel2, "splitContainer1.Panel2");
-            this.splitContainer1.Panel2.Controls.Add(this.informationBox);
-            this.splitContainer1.Panel2.Controls.Add(this.label1);
-            // 
             // FileExplorer
             // 
             resources.ApplyResources(this, "$this");
@@ -276,13 +286,13 @@ namespace Ares.Editor
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.toolStrip1);
             this.Name = "FileExplorer";
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
-            this.fileNodeContextMenu.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.Panel2.PerformLayout();
             this.splitContainer1.ResumeLayout(false);
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
+            this.fileNodeContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -312,5 +322,6 @@ namespace Ares.Editor
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.ToolStripMenuItem tagsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem id3TagsMenuItem;
+        private System.Windows.Forms.ToolStripButton tagFilterButton;
     }
 }

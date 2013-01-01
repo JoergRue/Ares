@@ -188,6 +188,12 @@
     <Compile Include="Dialogs\MacroCommandDialog.Designer.cs">
       <DependentUpon>MacroCommandDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\TagFilterDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\TagFilterDialog.Designer.cs">
+      <DependentUpon>TagFilterDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\ToolsDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -357,6 +363,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\MacroCommandDialog.resx">
       <DependentUpon>MacroCommandDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\TagFilterDialog.de.resx">
+      <DependentUpon>TagFilterDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\TagFilterDialog.resx">
+      <DependentUpon>TagFilterDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\ToolsDialog.de.resx">
       <DependentUpon>ToolsDialog.cs</DependentUpon>

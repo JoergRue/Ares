@@ -29,11 +29,11 @@ namespace Ares.Editor.Actions
     {
         public event EventHandler<EventArgs> TagsDBChanged;
 
-        public void FireTagsDBChanged()
+        public void FireTagsDBChanged(Object sender)
         {
             if (TagsDBChanged != null)
             {
-                TagsDBChanged(this, new EventArgs());
+                TagsDBChanged(sender, new EventArgs());
             }
         }
 
@@ -115,13 +115,13 @@ namespace Ares.Editor.Actions
         public override void Do(Data.IProject project)
         {
             project.SetTagCategoryHidden(m_CategoryId, m_Hidden);
-            TagChanges.Instance.FireTagsDBChanged();
+            TagChanges.Instance.FireTagsDBChanged(null);
         }
 
         public override void Undo(Data.IProject project)
         {
             project.SetTagCategoryHidden(m_CategoryId, m_OldValue);
-            TagChanges.Instance.FireTagsDBChanged();
+            TagChanges.Instance.FireTagsDBChanged(null);
         }
     }
 
@@ -141,13 +141,13 @@ namespace Ares.Editor.Actions
         public override void Do(Data.IProject project)
         {
             project.SetTagHidden(m_TagId, m_Hidden);
-            TagChanges.Instance.FireTagsDBChanged();
+            TagChanges.Instance.FireTagsDBChanged(null);
         }
 
         public override void Undo(Data.IProject project)
         {
             project.SetTagHidden(m_TagId, m_OldValue);
-            TagChanges.Instance.FireTagsDBChanged();
+            TagChanges.Instance.FireTagsDBChanged(null);
         }
     }
 }

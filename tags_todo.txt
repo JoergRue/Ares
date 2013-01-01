@@ -1,6 +1,5 @@
 Tags TODO:
 
-- Filter in File Explorer
 - Mono / Linux
 - MediaPortal
 - Import and Export

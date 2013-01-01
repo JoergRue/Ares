@@ -44,7 +44,10 @@ namespace Ares.Editor.ElementEditors
 
         void TagsDBChanged(object sender, EventArgs e)
         {
-            UpdateAll();
+            if (sender != this)
+            {
+                UpdateAll();
+            }
         }
 
 #if !MONO
@@ -499,6 +502,7 @@ namespace Ares.Editor.ElementEditors
                     int newId = Ares.Tags.TagsModule.GetTagsDB().GetWriteInterfaceByLanguage(m_LanguageId).AddCategory(newName);
                     m_LastCategoryId = newId;
                     m_LastTranslationType = TranslationType.Category;
+                    Ares.Editor.Actions.TagChanges.Instance.FireTagsDBChanged(this);
                     m_Listen = false;
                     UpdateCategories();
                     UpdateTags();
@@ -543,6 +547,7 @@ namespace Ares.Editor.ElementEditors
                 {
                     Ares.Tags.TagsModule.GetTagsDB().GetWriteInterfaceByLanguage(m_LanguageId).SetCategoryName(m_LastCategoryId, newName);
                     m_LastTranslationType = TranslationType.Category;
+                    Ares.Editor.Actions.TagChanges.Instance.FireTagsDBChanged(this);
                     m_Listen = false;
                     UpdateCategories();
                     UpdateTranslations();
@@ -571,6 +576,7 @@ namespace Ares.Editor.ElementEditors
                 {
                     Ares.Tags.TagsModule.GetTagsDB().WriteInterface.RemoveCategory(m_LastCategoryId);
                     m_LastCategoryId = -1;
+                    Ares.Editor.Actions.TagChanges.Instance.FireTagsDBChanged(this);
                     m_Listen = false;
                     UpdateCategories();
                     UpdateTags();
@@ -637,6 +643,7 @@ namespace Ares.Editor.ElementEditors
                     {
                         m_LastTagId = dbWrite.AddTag(catId, tagName);
                     }
+                    Ares.Editor.Actions.TagChanges.Instance.FireTagsDBChanged(this);
                     m_Listen = false;
                     if (m_LastCategoryId != catId)
                     {
@@ -686,6 +693,7 @@ namespace Ares.Editor.ElementEditors
                 {
                     Ares.Tags.TagsModule.GetTagsDB().GetWriteInterfaceByLanguage(m_LanguageId).SetTagName(m_LastTagId, newName);
                     m_LastTranslationType = TranslationType.Tag;
+                    Ares.Editor.Actions.TagChanges.Instance.FireTagsDBChanged(this);
                     m_Listen = false;
                     UpdateTags();
                     UpdateTranslations();
@@ -714,6 +722,7 @@ namespace Ares.Editor.ElementEditors
                 {
                     Ares.Tags.TagsModule.GetTagsDB().WriteInterface.RemoveTag(m_LastTagId);
                     m_LastTagId = -1;
+                    Ares.Editor.Actions.TagChanges.Instance.FireTagsDBChanged(this);
                     m_Listen = false;
                     UpdateTags();
                     UpdateTranslations();
@@ -782,6 +791,7 @@ namespace Ares.Editor.ElementEditors
                         default:
                             break;
                     }
+                    Ares.Editor.Actions.TagChanges.Instance.FireTagsDBChanged(this);
                     m_Listen = false;
                     UpdateTranslations();
                     m_Listen = true;
@@ -845,6 +855,7 @@ namespace Ares.Editor.ElementEditors
                             return;
                     }
                     m_LastTranslationId = -1;
+                    Ares.Editor.Actions.TagChanges.Instance.FireTagsDBChanged(this);
                     m_Listen = false;
                     UpdateTranslations();
                     m_Listen = true;
@@ -895,6 +906,7 @@ namespace Ares.Editor.ElementEditors
                     }
                     int newId = dbIf.AddLanguage(langCode, nameInNewLanguage);
                     dbIf.SetLanguageName(m_LanguageId, newId, name);
+                    Ares.Editor.Actions.TagChanges.Instance.FireTagsDBChanged(this);
                     m_Listen = false;
                     m_LastTranslationType = TranslationType.Language;
                     m_LastLanguageId = newId;
@@ -941,6 +953,7 @@ namespace Ares.Editor.ElementEditors
                 {
                     Ares.Tags.TagsModule.GetTagsDB().TranslationsInterface.SetLanguageName(m_LanguageId, m_LastLanguageId, newName);
                     m_LastTranslationType = TranslationType.Language;
+                    Ares.Editor.Actions.TagChanges.Instance.FireTagsDBChanged(this);
                     m_Listen = false;
                     UpdateLanguageSelectionBox();
                     UpdateLanguages();
@@ -971,6 +984,7 @@ namespace Ares.Editor.ElementEditors
                 {
                     Ares.Tags.TagsModule.GetTagsDB().TranslationsInterface.RemoveLanguage(m_LastLanguageId);
                     m_LastLanguageId = -1;
+                    Ares.Editor.Actions.TagChanges.Instance.FireTagsDBChanged(this);
                     m_Listen = false;
                     UpdateLanguageSelectionBox();
                     UpdateLanguages();
