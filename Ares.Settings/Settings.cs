@@ -49,6 +49,8 @@ namespace Ares.Settings
 
         public String SoundFileEditor { get; set; }
 
+        public String ExternalMusicPlayer { get; set; }
+
         public int MessageFilterLevel { get; set; }
 
         public bool UseStreaming { get; set; }
@@ -92,6 +94,8 @@ namespace Ares.Settings
         public int Version { get { return Data.Version; } set { Data.Version = value; } }
 
         public String SoundFileEditor { get { return Data.SoundFileEditor; } set { Data.SoundFileEditor = value; } }
+
+        public String ExternalMusicPlayer { get { return Data.ExternalMusicPlayer; } set { Data.ExternalMusicPlayer = value; } }
 
         public int MessageFilterLevel { get { return Data.MessageFilterLevel; } set { Data.MessageFilterLevel = value; } }
 
@@ -288,6 +292,7 @@ namespace Ares.Settings
             IPAddress = String.Empty;
             CheckForUpdate = true;
             SoundFileEditor = String.Empty;
+            ExternalMusicPlayer = String.Empty;
             MessageFilterLevel = 2; // warning
             UseStreaming = false;
             StreamingServerAddress = "localhost";
@@ -323,6 +328,7 @@ namespace Ares.Settings
             RecentFiles.WriteFiles(writer);
             writer.WriteStartElement("Tools");
             writer.WriteElementString("SoundFileEditor", SoundFileEditor);
+            writer.WriteElementString("ExternalMusicPlayer", ExternalMusicPlayer);
             writer.WriteEndElement();
             writer.WriteStartElement("Options");
             writer.WriteAttributeString("MessageFilterLevel", MessageFilterLevel.ToString(System.Globalization.CultureInfo.InvariantCulture));
@@ -418,6 +424,10 @@ namespace Ares.Settings
                         if (reader.IsStartElement("SoundFileEditor"))
                         {
                             SoundFileEditor = reader.ReadElementString();
+                        }
+                        else if (reader.IsStartElement("ExternalMusicPlayer"))
+                        {
+                            ExternalMusicPlayer = reader.ReadElementString();
                         }
                         else
                         {

@@ -123,7 +123,19 @@
   <data name="cancelButton.Text" xml:space="preserve">
     <value>Abbrechen</value>
   </data>
+  <data name="groupBox2.Text" xml:space="preserve">
+    <value>Externer Musik-Player</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>335, 28</value>
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>Er wird nicht für Geräusche, Musiklisten oder vom Ares Player verwendet.</value>
+  </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Falls ein externer Musik-Player festgelegt wird, wird er zum Abspielen von Dateien vom Musik-Explorer aus verwendet.</value>
+  </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAEAICAAAAEACACoCAAAFgAAACgAAAAgAAAAQAAAAAEACAAAAAAAgAQAAAAAAAAAAAAAAAEAAAAA

@@ -35,7 +35,13 @@
             this.cancelButton = new System.Windows.Forms.Button();
             this.okButton = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.selectMusicPlayerButton = new System.Windows.Forms.Button();
+            this.musicPlayerBox = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -81,10 +87,45 @@
             // 
             resources.ApplyResources(this.openFileDialog1, "openFileDialog1");
             // 
+            // groupBox2
+            // 
+            resources.ApplyResources(this.groupBox2, "groupBox2");
+            this.groupBox2.Controls.Add(this.label2);
+            this.groupBox2.Controls.Add(this.label1);
+            this.groupBox2.Controls.Add(this.selectMusicPlayerButton);
+            this.groupBox2.Controls.Add(this.musicPlayerBox);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.TabStop = false;
+            this.groupBox2.UseCompatibleTextRendering = true;
+            // 
+            // label2
+            // 
+            resources.ApplyResources(this.label2, "label2");
+            this.label2.Name = "label2";
+            // 
+            // label1
+            // 
+            resources.ApplyResources(this.label1, "label1");
+            this.label1.Name = "label1";
+            // 
+            // selectMusicPlayerButton
+            // 
+            resources.ApplyResources(this.selectMusicPlayerButton, "selectMusicPlayerButton");
+            this.selectMusicPlayerButton.Name = "selectMusicPlayerButton";
+            this.selectMusicPlayerButton.UseCompatibleTextRendering = true;
+            this.selectMusicPlayerButton.UseVisualStyleBackColor = true;
+            this.selectMusicPlayerButton.Click += new System.EventHandler(this.selectMusicPlayerButton_Click);
+            // 
+            // musicPlayerBox
+            // 
+            resources.ApplyResources(this.musicPlayerBox, "musicPlayerBox");
+            this.musicPlayerBox.Name = "musicPlayerBox";
+            // 
             // ToolsDialog
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.okButton);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.groupBox1);
@@ -93,6 +134,8 @@
             this.Name = "ToolsDialog";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -105,5 +148,10 @@
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button selectMusicPlayerButton;
+        private System.Windows.Forms.TextBox musicPlayerBox;
+        private System.Windows.Forms.Label label2;
     }
 }

@@ -191,6 +191,9 @@ Error message: {0}
   <data name="ElementIsSingle" xml:space="preserve">
     <value>A second key press starts the element a second time.</value>
   </data>
+  <data name="ExternalPlayerStartFail" xml:space="preserve">
+    <value>Couldn''t start external player. Error message: {0}</value>
+  </data>
   <data name="FileExplorerTitle" xml:space="preserve">
     <value>{0} Explorer</value>
   </data>

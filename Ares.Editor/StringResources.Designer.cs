@@ -279,6 +279,15 @@ namespace Ares.Editor {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Couldn&apos;&apos;t start external player. Error message: {0} ähnelt.
+        /// </summary>
+        internal static string ExternalPlayerStartFail {
+            get {
+                return ResourceManager.GetString("ExternalPlayerStartFail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {0} Explorer ähnelt.
         /// </summary>
         internal static string FileExplorerTitle {

@@ -191,6 +191,9 @@ Fehlermeldung: {0}
   <data name="ElementIsSingle" xml:space="preserve">
     <value>Ein erneuter Tastendruck startet das Element ein weiteres Mal.</value>
   </data>
+  <data name="ExternalPlayerStartFail" xml:space="preserve">
+    <value>Externer Player konnte nicht gestartet werden. Fehlermeldung: {0}</value>
+  </data>
   <data name="FileExplorerTitle" xml:space="preserve">
     <value>{0}-Explorer</value>
   </data>

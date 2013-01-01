@@ -240,6 +240,24 @@ namespace Ares.Editor
         {
             TreeNode node = treeView1.SelectedNode;
             DraggedItem item = node.Tag as DraggedItem;
+            if (item.ItemType == FileType.Music)
+            {
+                String player = Ares.Settings.Settings.Instance.ExternalMusicPlayer;
+                if (!String.IsNullOrEmpty(player))
+                {
+                    String basePath = Settings.Settings.Instance.MusicDirectory;
+                    String filePath = System.IO.Path.Combine(basePath, item.RelativePath);
+                    try
+                    {
+                        System.Diagnostics.Process.Start(player, "\"" + filePath + "\"");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(this, String.Format(StringResources.ExternalPlayerStartFail, ex.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    return;
+                }
+            }
             m_PlayedElement = Actions.Playing.Instance.PlayFile(item.RelativePath, item.ItemType == FileType.Music, this, () =>
                 {
                     m_PlayedElement = null;
