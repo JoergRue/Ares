@@ -40,6 +40,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JToggleButton;
 
 import ares.controller.control.ComponentKeys;
@@ -260,7 +261,8 @@ public class TagsFrame extends SubFrame {
 		tagsPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), Localization.getString("TagsFrame.Tags"))); //$NON-NLS-1$
 		tagsPanel.setLayout(new BorderLayout());
 		tagSelectionPanel = new JPanel(new BorderLayout());
-		tagsPanel.add(tagSelectionPanel, BorderLayout.CENTER);
+		JScrollPane scrollPane = new JScrollPane(tagSelectionPanel);
+		tagsPanel.add(scrollPane, BorderLayout.CENTER);
 		activeTagsPanel = new JPanel();
 		activeTagsPanel.setLayout(new BorderLayout(5, 5));
 		activeTagsPanel1 = new JPanel();
