@@ -136,14 +136,9 @@ public class ModesFragment extends ConnectedFragment {
     }
     
     public void projectLoaded() {
-    	if (mAdapter != null) {
-    		mAdapter.notifyDataSetChanged();
-    	}
-    	else {
-        	GridView buttonGrid = (GridView)getActivity().findViewById(R.id.buttonGrid);
-        	mAdapter = new ButtonAdapter(getActivity());
-        	buttonGrid.setAdapter(mAdapter);    		
-    	}
+    	GridView buttonGrid = (GridView)getActivity().findViewById(R.id.buttonGrid);
+    	mAdapter = new ButtonAdapter(getActivity());
+    	buttonGrid.setAdapter(mAdapter);    		
     }
     
 	private void showLastMode() {

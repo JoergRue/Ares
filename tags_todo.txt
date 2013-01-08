@@ -2,10 +2,10 @@ Tags TODO:
 
 - Mono / Linux
 - Import and Export
+- Help
 
 Non-Tags TODO:
 
-- Open project arch. in Controllers
 - News from online file
 
 ---------------------
@@ -14,7 +14,6 @@ Command 10: categoryId, tagId, active (3x Int32; switch tag)
 Command 11: - (turn off all tags)
 Command 12: isAnd (Int32; switch category operator)
 Command 13: get projects
-Command 14: get project model
 
 Inform 11/0/0: Start tag info
 11/1/0: category Id + name
@@ -26,9 +25,11 @@ Inform 11/0/0: Start tag info
 13/?/0: tag id, ? == 1 ==> tag active
 14/?/0: category operator, ? == 1 ==> operator is and6
 15/0/0: Start projects
-15/1/0: Project file (+ unused Int32)
+15/1/0: unused Int32 + project file
 15/2/0: End projects
-16/0/0: Start project model
+16/0/0: Start project model + name + fileName
+16/0/1: No project
 16/1/0: Mode + name + key
 16/2/0: Element + name + id + key
 16/3/0: End project model
+16/0/1: No current project

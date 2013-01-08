@@ -30,7 +30,9 @@ namespace Ares.Players
         void KeyReceived(int key);
         void VolumeReceived(Ares.Playing.VolumeTarget target, int value);
         void ClientDataChanged();
+        String GetProjectsDirectory();
         void ProjectShallChange(String newProjectFile);
+        Ares.Data.IProject GetCurrentProject();
         void PlayOtherMusic(Int32 elementId);
         void SwitchElement(Int32 elementId);
         void SetMusicRepeat(bool repeat);
@@ -138,9 +140,9 @@ namespace Ares.Players
             InformVolume(target, value);
         }
 
-        public void InformClientOfProject(String newProject)
+        public void InformClientOfProject(Ares.Data.IProject newProject)
         {
-            InformProjectChange(newProject);
+            InformProjectModel(newProject);
         }
 
         public void InformClientOfMusicList(Int32 musicListId)
@@ -167,7 +169,7 @@ namespace Ares.Players
             System.Collections.Generic.IList<Ares.Data.IModeElement> elements, Ares.Data.IProject project, Int32 musicListId, bool musicRepeat,
             int tagLanguageId, System.Collections.Generic.IList<int> activeTags, bool tagCategoryOperatorIsAnd)
         {
-            InformProjectChange(project != null ? project.Title : String.Empty);
+            InformProjectModel(project);
             InformPossibleTags(tagLanguageId, project);
             InformVolume(Playing.VolumeTarget.Both, overallVolume);
             InformVolume(Playing.VolumeTarget.Music, musicVolume);
@@ -357,6 +359,78 @@ namespace Ares.Players
             }
         }
 
+        private int[][] m_BytesToKeys;
+        private Dictionary<int, byte[]> m_KeysToBytes;
+
+        private void PrepareKeysMaps()
+        {
+            m_BytesToKeys = new int[4][];
+            m_BytesToKeys[0] = null;
+
+            m_BytesToKeys[1] = new int[13];
+            m_BytesToKeys[1][0] = 0;
+            m_BytesToKeys[1][1] = (int)Ares.Data.Keys.F1;
+            m_BytesToKeys[1][2] = (int)Ares.Data.Keys.F2;
+            m_BytesToKeys[1][3] = (int)Ares.Data.Keys.F3;
+            m_BytesToKeys[1][4] = (int)Ares.Data.Keys.F4;
+            m_BytesToKeys[1][5] = (int)Ares.Data.Keys.F5;
+            m_BytesToKeys[1][6] = (int)Ares.Data.Keys.F6;
+            m_BytesToKeys[1][7] = (int)Ares.Data.Keys.F7;
+            m_BytesToKeys[1][8] = (int)Ares.Data.Keys.F8;
+            m_BytesToKeys[1][9] = (int)Ares.Data.Keys.F9;
+            m_BytesToKeys[1][10] = (int)Ares.Data.Keys.F10;
+            m_BytesToKeys[1][11] = (int)Ares.Data.Keys.F11;
+            m_BytesToKeys[1][12] = (int)Ares.Data.Keys.F12;
+
+            m_BytesToKeys[2] = new int[10];
+            m_BytesToKeys[2][0] = (int)Ares.Data.Keys.NumPad0;
+            m_BytesToKeys[2][1] = (int)Ares.Data.Keys.NumPad1;
+            m_BytesToKeys[2][2] = (int)Ares.Data.Keys.NumPad2;
+            m_BytesToKeys[2][3] = (int)Ares.Data.Keys.NumPad3;
+            m_BytesToKeys[2][4] = (int)Ares.Data.Keys.NumPad4;
+            m_BytesToKeys[2][5] = (int)Ares.Data.Keys.NumPad5;
+            m_BytesToKeys[2][6] = (int)Ares.Data.Keys.NumPad6;
+            m_BytesToKeys[2][7] = (int)Ares.Data.Keys.NumPad7;
+            m_BytesToKeys[2][8] = (int)Ares.Data.Keys.NumPad8;
+            m_BytesToKeys[2][9] = (int)Ares.Data.Keys.NumPad9;
+
+            m_BytesToKeys[3] = new int[22];
+            m_BytesToKeys[3][0] = (int)Ares.Data.Keys.Insert;
+            m_BytesToKeys[3][1] = (int)Ares.Data.Keys.Delete;
+            m_BytesToKeys[3][2] = (int)Ares.Data.Keys.Home;
+            m_BytesToKeys[3][3] = (int)Ares.Data.Keys.End;
+            m_BytesToKeys[3][4] = (int)Ares.Data.Keys.PageUp;
+            m_BytesToKeys[3][5] = (int)Ares.Data.Keys.PageDown;
+            m_BytesToKeys[3][6] = (int)Ares.Data.Keys.Left;
+            m_BytesToKeys[3][7] = (int)Ares.Data.Keys.Right;
+            m_BytesToKeys[3][8] = (int)Ares.Data.Keys.Up;
+            m_BytesToKeys[3][9] = (int)Ares.Data.Keys.Down;
+            m_BytesToKeys[3][10] = (int)Ares.Data.Keys.Space;
+            m_BytesToKeys[3][11] = (int)Ares.Data.Keys.Return;
+            m_BytesToKeys[3][12] = (int)Ares.Data.Keys.Escape;
+            m_BytesToKeys[3][13] = (int)Ares.Data.Keys.Tab;
+            m_BytesToKeys[3][14] = (int)Ares.Data.Keys.Back;
+            m_BytesToKeys[3][15] = (int)Ares.Data.Keys.OemPeriod;
+            m_BytesToKeys[3][16] = (int)Ares.Data.Keys.OemSemicolon;
+            m_BytesToKeys[3][17] = (int)Ares.Data.Keys.Oem4;
+            m_BytesToKeys[3][18] = (int)Ares.Data.Keys.OemComma;
+            m_BytesToKeys[3][19] = (int)Ares.Data.Keys.Oem2;
+            m_BytesToKeys[3][20] = (int)Ares.Data.Keys.OemMinus;
+            m_BytesToKeys[3][21] = (int)Ares.Data.Keys.Oem3;
+
+            m_KeysToBytes = new Dictionary<int, byte[]>();
+            for (byte i = 1; i < m_BytesToKeys.Length; ++i)
+            {
+                for (byte j = 0; j < m_BytesToKeys[i].Length; ++j)
+                {
+                    byte[] bytes = new byte[2];
+                    bytes[0] = i;
+                    bytes[1] = j;
+                    m_KeysToBytes[m_BytesToKeys[i][j]] = bytes;
+                }
+            }
+        }
+
         private int MapKeyCodeToKey(Byte[] keyCode)
         {
             try
@@ -366,66 +440,16 @@ namespace Ares.Players
                     String s = System.Text.Encoding.ASCII.GetString(keyCode, 1, 1);
                     return (int)s[0];
                 }
-                else if (keyCode[0] == 1)
+                if (m_BytesToKeys == null)
                 {
-                    switch (keyCode[1])
-                    {
-                        case 1: return (int)Ares.Data.Keys.F1;
-                        case 2: return (int)Ares.Data.Keys.F2;
-                        case 3: return (int)Ares.Data.Keys.F3;
-                        case 4: return (int)Ares.Data.Keys.F4;
-                        case 5: return (int)Ares.Data.Keys.F5;
-                        case 6: return (int)Ares.Data.Keys.F6;
-                        case 7: return (int)Ares.Data.Keys.F7;
-                        case 8: return (int)Ares.Data.Keys.F8;
-                        case 9: return (int)Ares.Data.Keys.F9;
-                        case 10: return (int)Ares.Data.Keys.F10;
-                        case 11: return (int)Ares.Data.Keys.F11;
-                        case 12: return (int)Ares.Data.Keys.F12;
-                    }
+                    PrepareKeysMaps();
                 }
-                else if (keyCode[0] == 2)
+                if (keyCode[0] < m_BytesToKeys.Length)
                 {
-                    switch (keyCode[1])
+                    int[] subArray = m_BytesToKeys[keyCode[0]];
+                    if (keyCode[1] < subArray.Length)
                     {
-                        case 0: return (int)Ares.Data.Keys.NumPad0;
-                        case 1: return (int)Ares.Data.Keys.NumPad1;
-                        case 2: return (int)Ares.Data.Keys.NumPad2;
-                        case 3: return (int)Ares.Data.Keys.NumPad3;
-                        case 4: return (int)Ares.Data.Keys.NumPad4;
-                        case 5: return (int)Ares.Data.Keys.NumPad5;
-                        case 6: return (int)Ares.Data.Keys.NumPad6;
-                        case 7: return (int)Ares.Data.Keys.NumPad7;
-                        case 8: return (int)Ares.Data.Keys.NumPad8;
-                        case 9: return (int)Ares.Data.Keys.NumPad9;
-                    }
-                }
-                else if (keyCode[0] == 3)
-                {
-                    switch (keyCode[1])
-                    {
-                        case 0: return (int)Ares.Data.Keys.Insert;
-                        case 1: return (int)Ares.Data.Keys.Delete;
-                        case 2: return (int)Ares.Data.Keys.Home;
-                        case 3: return (int)Ares.Data.Keys.End;
-                        case 4: return (int)Ares.Data.Keys.PageUp;
-                        case 5: return (int)Ares.Data.Keys.PageDown;
-                        case 6: return (int)Ares.Data.Keys.Left;
-                        case 7: return (int)Ares.Data.Keys.Right;
-                        case 8: return (int)Ares.Data.Keys.Up;
-                        case 9: return (int)Ares.Data.Keys.Down;
-                        case 10: return (int)Ares.Data.Keys.Space;
-                        case 11: return (int)Ares.Data.Keys.Return;
-                        case 12: return (int)Ares.Data.Keys.Escape;
-                        case 13: return (int)Ares.Data.Keys.Tab;
-                        case 14: return (int)Ares.Data.Keys.Back;
-                        case 15: return (int)Ares.Data.Keys.OemPeriod;
-                        case 16: return (int)Ares.Data.Keys.OemSemicolon;
-                        case 17: return (int)Ares.Data.Keys.Oem4;
-                        case 18: return (int)Ares.Data.Keys.OemComma;
-                        case 19: return (int)Ares.Data.Keys.Oem2;
-                        case 20: return (int)Ares.Data.Keys.OemMinus;
-                        case 21: return (int)Ares.Data.Keys.Oem3;
+                        return subArray[keyCode[1]];
                     }
                 }
                 return (int)Ares.Data.Keys.Escape;
@@ -434,6 +458,31 @@ namespace Ares.Players
             {
                 Messages.AddMessage(MessageType.Error, String.Format(StringResources.InvalidKeyCode, e.Message));
                 return (int)Ares.Data.Keys.Escape;
+            }
+        }
+
+        private byte[] MapKeyToKeyCode(int key)
+        {
+            if (key == 0)
+            {
+                return new byte[] { 0, 0 };
+            }
+            if (m_KeysToBytes == null)
+            {
+                PrepareKeysMaps();
+            }
+            if (m_KeysToBytes.ContainsKey(key))
+            {
+                return m_KeysToBytes[key];
+            }
+            else
+            {
+                char[] chars = new char[1];
+                chars[0] = (char)key;
+                byte[] bytes = new byte[2];
+                bytes[0] = 0;
+                bytes[1] = System.Text.Encoding.ASCII.GetBytes(chars)[0];
+                return bytes;
             }
         }
 
@@ -622,6 +671,10 @@ namespace Ares.Players
                         {
                             networkClient.SetTagCategoryOperator(isAnd == 1);
                         }
+                    }
+                    else if (command == 13)
+                    {
+                        InformPossibleProjects();
                     }
                     lock (syncObject)
                     {
@@ -990,6 +1043,136 @@ namespace Ares.Players
             }
         }
 
+        private void InformPossibleProjects()
+        {
+            if (ClientConnected)
+            {
+                String directory = networkClient.GetProjectsDirectory();
+                String[] files1 = System.IO.Directory.GetFiles(directory, "*.ares");
+                String[] files = new String[files1.Length];
+                for (int i = 0; i < files1.Length; ++i)
+                {
+                    files[i] = System.IO.Path.GetFileName(files1[i]);
+                }
+                Array.Sort(files, StringComparer.CurrentCultureIgnoreCase);
+                // start packet for project files
+                byte[] package = new byte[3];
+                package[0] = 15;
+                package[1] = 0;
+                package[2] = 0;
+                lock (syncObject)
+                {
+                    client.GetStream().Write(package, 0, package.Length);
+                }
+                foreach (String file in files)
+                {
+                    // category packet
+                    SendStringAndInt32(15, 1, file, 0);
+                }
+                // end packet
+                package[1] = 2;
+                lock (syncObject)
+                {
+                    client.GetStream().Write(package, 0, package.Length);
+                }
+            }
+        }
+
+        private void InformProjectModel()
+        {
+            Ares.Data.IProject project = networkClient.GetCurrentProject();
+            InformProjectModel(project);
+        }
+
+        private void InformProjectModel(Ares.Data.IProject project)
+        {
+            if (ClientConnected)
+            {
+                // start packet for project
+                if (project == null)
+                {
+                    byte[] package = new byte[3];
+                    package[0] = 16;
+                    package[1] = 0;
+                    package[2] = 1;
+                    lock (syncObject)
+                    {
+                        client.GetStream().Write(package, 0, package.Length);
+                    }
+                    return;
+                }
+                String filePath = project.FileName;
+                String fileName = System.IO.Path.GetFileName(filePath);
+                byte[] pa = System.Text.Encoding.UTF8.GetBytes(fileName);
+                byte[] na = System.Text.Encoding.UTF8.GetBytes(project.Title);
+                byte[] startPackage = new byte[3 + 2 + na.Length + 2 + pa.Length];
+                startPackage[0] = 16;
+                startPackage[1] = 0;
+                startPackage[2] = 0;
+                startPackage[3] = (byte)(na.Length / (1 << 8));
+                startPackage[3 + 1] = (byte)(na.Length % (1 << 8));
+                Array.Copy(na, 0, startPackage, 3 + 2, na.Length);
+                startPackage[3 + 2 + na.Length] = (byte)(pa.Length / (1 << 8));
+                startPackage[3 + 2 + na.Length + 1] = (byte)(pa.Length % (1 << 8));
+                Array.Copy(pa, 0, startPackage, 3 + 2 + na.Length + 2, pa.Length);
+                lock (syncObject)
+                {
+                    client.GetStream().Write(startPackage, 0, startPackage.Length);
+                }
+                foreach (Ares.Data.IMode mode in project.GetModes())
+                {
+                    // mode package
+                    byte[] sa = System.Text.Encoding.UTF8.GetBytes(mode.Title);
+                    byte[] modePackage = new byte[3 + 2 + sa.Length + 2];
+                    modePackage[0] = 16;
+                    modePackage[1] = 1;
+                    modePackage[2] = 0;
+                    modePackage[3] = (byte)(sa.Length / (1 << 8));
+                    modePackage[3 + 1] = (byte)(sa.Length % (1 << 8));
+                    Array.Copy(sa, 0, modePackage, 3 + 2, sa.Length);
+                    Array.Copy(MapKeyToKeyCode(mode.KeyCode), 0, modePackage, 3 + 2 + sa.Length, 2);
+                    lock (syncObject)
+                    {
+                        client.GetStream().Write(modePackage, 0, modePackage.Length);
+                    }
+                    foreach (Ares.Data.IModeElement modeElement in mode.GetElements())
+                    {
+                        if (!modeElement.IsVisibleInPlayer)
+                            continue;
+                        // element package
+                        byte[] sa2 = System.Text.Encoding.UTF8.GetBytes(modeElement.Title);
+                        byte[] ia = BitConverter.GetBytes(modeElement.Id);
+                        if (BitConverter.IsLittleEndian)
+                            Array.Reverse(ia);
+                        byte[] keyCode = modeElement.Trigger != null && modeElement.Trigger.TriggerType == Ares.Data.TriggerType.Key ?
+                            MapKeyToKeyCode(((Ares.Data.IKeyTrigger)modeElement.Trigger).KeyCode) : new byte[] { 0, 0 };
+                        byte[] elementPackage = new byte[3 + 2 + sa2.Length + ia.Length + 2];
+                        elementPackage[0] = 16;
+                        elementPackage[1] = 2;
+                        elementPackage[2] = 0;
+                        elementPackage[3] = (byte)(sa2.Length / (1 << 8));
+                        elementPackage[3 + 1] = (byte)(sa2.Length % (1 << 8));
+                        Array.Copy(sa2, 0, elementPackage, 3 + 2, sa2.Length);
+                        Array.Copy(ia, 0, elementPackage, 3 + 2 + sa2.Length, ia.Length);
+                        Array.Copy(keyCode, 0, elementPackage, 3 + 2 + sa2.Length + ia.Length, 2);
+                        lock (syncObject)
+                        {
+                            client.GetStream().Write(elementPackage, 0, elementPackage.Length);
+                        }
+                    }
+                }
+                // end package
+                byte[] endPackage = new byte[3];
+                endPackage[0] = 16;
+                endPackage[1] = 3;
+                endPackage[2] = 1;
+                lock (syncObject)
+                {
+                    client.GetStream().Write(endPackage, 0, endPackage.Length);
+                }
+            }
+        }
+
         private void SendPing()
         {
             if (ClientConnected)
@@ -1215,9 +1398,16 @@ namespace Ares.Players
         {
             try
             {
-                Ares.Data.IElement element = Ares.Data.DataModule.ElementRepository.GetElement(elementId);
-                String message = String.Format(StringResources.PlayError, element.Title, errorMessage);
-                InformError(message);
+                if (elementId != -1)
+                {
+                    Ares.Data.IElement element = Ares.Data.DataModule.ElementRepository.GetElement(elementId);
+                    String message = String.Format(StringResources.PlayError, element.Title, errorMessage);
+                    InformError(message);
+                }
+                else
+                {
+                    InformError(errorMessage);
+                }
             }
             catch (System.IO.IOException e)
             {

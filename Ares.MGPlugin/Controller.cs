@@ -35,7 +35,6 @@ namespace Ares.MGPlugin
 
         private bool m_HasLocalPlayer;
         private bool m_IsLocalPlayer;
-        private String m_PlayerProject = String.Empty;
 
 
         private System.Windows.Forms.Timer m_FirstTimer;
@@ -126,17 +125,17 @@ namespace Ares.MGPlugin
             m_CurrentButtons.Clear();
             if (enabled)
             {
-                Ares.Data.IProject project = Controllers.Control.Instance.Project;
+                Controllers.Configuration project = Controllers.Control.Instance.Project;
                 if (project == null)
                     return;
-                IList<Ares.Data.IMode> modes = project.GetModes();
+                IList<Controllers.Mode> modes = project.Modes;
                 if (modes.Count == 0)
                     return;
                 modesList.Items.Add("Musikliste");
                 modesList.Items.Add("Musik-Tags");
                 int i = 2;
                 int currentMode = 0;
-                foreach (Ares.Data.IMode mode in modes)
+                foreach (Controllers.Mode mode in modes)
                 {
                     modesList.Items.Add(mode.Title);
                     if (mode.Title == m_CurrentMode)
@@ -222,9 +221,6 @@ namespace Ares.MGPlugin
 
         public void OpenFile(String fileName)
         {
-            if (!System.IO.File.Exists(fileName))
-                return;
-
             try
             {
                 Controllers.Control.Instance.OpenFile(fileName);
@@ -233,12 +229,22 @@ namespace Ares.MGPlugin
             {
                 Controllers.Messages.AddMessage(Controllers.MessageType.Error, e.Message);
             }
-            if (Controllers.Control.Instance.Project != null)
+        }
+
+        private void ProjectOpened(Controllers.Configuration configuration, String fileName)
+        {
+            if (fileName == Controllers.Control.Instance.FileName)
+                return;
+            Controllers.Control.Instance.SetProject(configuration, fileName);
+            if (configuration != null)
             {
                 EnableProjectSpecificControls(true);
-                Settings.Default.LastProjectFile = fileName;
-                Settings.Default.Save();
-                UpdateLastProjects(fileName, Controllers.Control.Instance.Project.Title);
+                if (Controllers.Control.Instance.FilePath.EndsWith(fileName))
+                {
+                    Settings.Default.LastProjectFile = fileName;
+                    Settings.Default.Save();
+                    UpdateLastProjects(Controllers.Control.Instance.FilePath, Controllers.Control.Instance.Project.Title);
+                }
             }
             else
             {
@@ -252,15 +258,11 @@ namespace Ares.MGPlugin
             if (Controllers.Control.Instance.Project != null)
             {
                 String text = Controllers.Control.Instance.Project.Title;
-                if (text != m_PlayerProject && Controllers.Control.Instance.IsConnected)
-                {
-                    text += StringResources.ProjectsDifferent;
-                }
                 projectLabel.Text = text;
             }
             else
             {
-                projectLabel.Text = "- (bitte zuerst ein Projekt öffnen)";
+                projectLabel.Text = "- (bitte zuerst mit Player verbinden)";
             }
         }
 
@@ -322,9 +324,37 @@ namespace Ares.MGPlugin
 
         private void SelectFile()
         {
-            if (openFileDialog1.ShowDialog(this) == DialogResult.OK)
+            if (m_IsLocalPlayer)
             {
-                OpenFile(openFileDialog1.FileName);
+                if (openFileDialog1.ShowDialog(this) == DialogResult.OK)
+                {
+                    OpenFile(openFileDialog1.FileName);
+                }
+            }
+            else
+            {
+                Controllers.Control.Instance.RequestProjectFiles();
+            }
+        }
+
+        private void SelectFileFromRemotePlayer(List<String> files)
+        {
+            if (files.Count == 0)
+            {
+                MessageBox.Show(this, "Es gibt derzeit keine für den Player verfügbaren Projekte.", "Ares", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                FileSelectionDialog dialog = new FileSelectionDialog();
+                dialog.SetFiles(files);
+                if (dialog.ShowDialog(this) == DialogResult.OK)
+                {
+                    String selectedFile = dialog.SelectedFile;
+                    if (!String.IsNullOrEmpty(selectedFile))
+                    {
+                        OpenFile(Controllers.Control.REMOTE_FILE_TAG + selectedFile);
+                    }
+                }
             }
         }
 
@@ -411,6 +441,7 @@ namespace Ares.MGPlugin
             {
                 m_ServerSearch.StopSearch();
                 connectButton.Text = StringResources.Disconnect;
+                openButton.Enabled = true;
             }
             else
             {
@@ -418,6 +449,7 @@ namespace Ares.MGPlugin
                 serverBox.Items.Clear();
                 connectButton.Enabled = m_HasLocalPlayer;
                 connectButton.Text = StringResources.Connect;
+                openButton.Enabled = false;
                 m_ServerSearch.StartSearch();
             }
         }
@@ -486,6 +518,7 @@ namespace Ares.MGPlugin
                 }
                 m_HasLocalPlayer = FindLocalPlayer() != null;
                 connectButton.Enabled = m_HasLocalPlayer || Controllers.Control.Instance.IsConnected;
+                openButton.Enabled = Controllers.Control.Instance.IsConnected;
                 if (!Controllers.Control.Instance.IsConnected && m_HasLocalPlayer && Settings.Default.StartLocalPlayer)
                 {
                     m_FirstTimer = new Timer();
@@ -567,15 +600,16 @@ namespace Ares.MGPlugin
             );
         }
 
+        private Dictionary<int, String> m_ModeElementTitles = new Dictionary<int, string>();
+
         public void ModeElementStarted(int element)
         {
             DispatchToUIThread(() =>
                 {
                     m_NormalCommands.CommandStateChanged(element, true);
-                    Ares.Data.IElement dataElement = Ares.Data.DataModule.ElementRepository.GetElement(element);
-                    if (dataElement != null)
+                    if (m_ModeElementTitles.ContainsKey(element))
                     {
-                        m_ModeElements.Add(dataElement.Title);
+                        m_ModeElements.Add(m_ModeElementTitles[element]);
                         UpdateModeElements();
                     }
                 }
@@ -587,10 +621,9 @@ namespace Ares.MGPlugin
             DispatchToUIThread(() =>
             {
                 m_NormalCommands.CommandStateChanged(element, false);
-                Ares.Data.IElement dataElement = Ares.Data.DataModule.ElementRepository.GetElement(element);
-                if (dataElement != null)
+                if (m_ModeElementTitles.ContainsKey(element))
                 {
-                    m_ModeElements.Remove(dataElement.Title);
+                    m_ModeElements.Remove(m_ModeElementTitles[element]);
                     UpdateModeElements();
                 }
             }
@@ -648,16 +681,6 @@ namespace Ares.MGPlugin
                     }
                 }
                 m_Listen = true;
-            }
-            );
-        }
-
-        public void ProjectChanged(string newTitle)
-        {
-            DispatchToUIThread(() =>
-            {
-                m_PlayerProject = newTitle;
-                UpdateProjectTitle();
             }
             );
         }
@@ -740,6 +763,22 @@ namespace Ares.MGPlugin
                         UpdateElementsPanel();
                 }
             );
+        }
+
+        public void ConfigurationChanged(Ares.Controllers.Configuration config, String fileName)
+        {
+            DispatchToUIThread(() =>
+                {
+                    ProjectOpened(config, fileName);
+                });
+        }
+
+        public void ProjectFilesRetrieved(List<string> files)
+        {
+            DispatchToUIThread(() =>
+                {
+                    SelectFileFromRemotePlayer(files);
+                });
         }
 
         public void Disconnect()
@@ -927,16 +966,14 @@ namespace Ares.MGPlugin
                 musicTagCategoryBox.Items.Clear();
 
                 if (Controllers.Control.Instance.Project != null &&
-                    Controllers.Control.Instance.Project.GetModes().Count >= modeIndex)
+                    Controllers.Control.Instance.Project.Modes.Count > modeIndex - 2)
                 {
-                    IList<Ares.Data.IModeElement> elements = Controllers.Control.Instance.Project.GetModes()[modeIndex - 1].GetElements();
+                    IList<Controllers.ModeElement> elements = Controllers.Control.Instance.Project.Modes[modeIndex - 2].Elements;
                     int maxWidth = 0;
                     CheckBox checkBox = new CheckBox();
                     checkBox.Appearance = Appearance.Button;
                     for (int i = 0; i < elements.Count; ++i)
                     {
-                        if (!elements[i].IsVisibleInPlayer)
-                            continue;
                         checkBox.Text = elements[i].Title;
                         int width = checkBox.PreferredSize.Width + 15;
                         if (width > maxWidth)
@@ -946,8 +983,6 @@ namespace Ares.MGPlugin
                     int count = 0;
                     for (int i = 0; i < elements.Count; ++i)
                     {
-                        if (!elements[i].IsVisibleInPlayer)
-                            continue;
                         ++count;
                         int row = count / 4;
                         int column = count % 4;
@@ -1064,6 +1099,8 @@ namespace Ares.MGPlugin
 
             m_HasLocalPlayer = FindLocalPlayer() != null;
             connectButton.Enabled = m_HasLocalPlayer;
+            openButton.Enabled = Controllers.Control.Instance.IsConnected;
+            UpdateProjectTitle();
 
             m_ServerSearch = new Controllers.ServerSearch(Settings.Default.ServerSearchPort);
             m_ServerSearch.ServerFound += new EventHandler<Controllers.ServerEventArgs>(m_ServerSearch_ServerFound);

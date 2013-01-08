@@ -33,6 +33,7 @@ import android.widget.ListView;
 import android.widget.ViewSwitcher;
 
 import ares.controllers.control.Control;
+import ares.controllers.data.Configuration;
 import ares.controllers.data.TitledElement;
 import ares.controllers.network.INetworkClient;
 
@@ -162,10 +163,6 @@ public class MusicListFragment extends ModeLikeFragment implements INetworkClien
 	}
 
 	@Override
-	public void projectChanged(String newTitle) {
-	}
-
-	@Override
 	public void musicListChanged(List<TitledElement> newList) {
 		mElements = newList;
 		updateList();
@@ -216,5 +213,15 @@ public class MusicListFragment extends ModeLikeFragment implements INetworkClien
 
 	@Override
 	public void tagCategoryOperatorChanged(boolean operatorIsAnd) {
+	}
+
+	@Override
+	public void projectFilesRetrieved(List<String> files) {
+	}
+
+	@Override
+	public void configurationChanged(Configuration newConfiguration,
+			String fileName) {
+		// music list change is reported separately
 	}
 }

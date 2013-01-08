@@ -35,7 +35,10 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import ares.controllers.data.Command;
+import ares.controllers.data.Configuration;
 import ares.controllers.data.KeyStroke;
+import ares.controllers.data.Mode;
 import ares.controllers.data.TitledElement;
 import ares.controllers.messages.Messages;
 import ares.controllers.messages.Message.MessageType;
@@ -326,7 +329,7 @@ public final class ControlConnection {
 					  break;
 				  case 6:
 				  {
-					  networkClient.projectChanged(readString(stream));
+					  // networkClient.projectChanged(readString(stream));
 					  break;
 				  }
 				  case 7:
@@ -452,6 +455,64 @@ public final class ControlConnection {
 					  networkClient.tagCategoryOperatorChanged(isAndOperator);
 					  break;
 				  }
+				  case 15:
+				  {
+					  // project files
+					  int subCommand = stream.read();
+					  stream.read();
+					  if (subCommand == 0) {
+						  currentProjectFileList = new ArrayList<String>();
+					  }
+					  else if (subCommand == 1) {
+						  readInt32(stream);
+						  currentProjectFileList.add(readString(stream));
+					  }
+					  else if (subCommand == 2) {
+						  networkClient.projectFilesRetrieved(currentProjectFileList);
+					  }
+					  break;
+				  }
+				  case 16:
+				  {
+					  // new project structure
+					  int subcommand = stream.read();
+					  int second = stream.read();
+					  if (subcommand == 0) {
+						  if (second == 1) {
+							  currentConfiguration = null;
+							  networkClient.configurationChanged(currentConfiguration, "");
+						  }
+						  else {
+							  currentConfiguration = new Configuration();
+							  currentConfiguration.setTitle(readString(stream));
+							  currentConfigFileName = readString(stream);
+						  }
+					  }
+					  else if (subcommand == 1) {
+						  String name = readString(stream);
+						  byte[] bytes = new byte[2];
+						  bytes[0] = (byte)stream.read();
+						  bytes[1] = (byte)stream.read();
+						  KeyStroke stroke = MapBytesToKeyStroke(bytes, 0);
+						  currentMode = new Mode(name, stroke != null ? stroke.getKeyCode() : 0, stroke);
+						  if (currentConfiguration != null)
+							  currentConfiguration.addMode(currentMode);
+					  }
+					  else if (subcommand == 2) {
+						  String name = readString(stream);
+						  int id = readInt32(stream);
+						  byte[] bytes = new byte[2];
+						  bytes[0] = (byte)stream.read();
+						  bytes[1] = (byte)stream.read();
+						  KeyStroke stroke = MapBytesToKeyStroke(bytes, 0);
+						  if (currentMode != null)
+							  currentMode.addCommand(new Command(name, id, stroke));
+					  }
+					  else if (subcommand == 3) {
+						  networkClient.configurationChanged(currentConfiguration, currentConfigFileName);
+					  }
+					  break;
+				  }
 				  default:
 					  break;
 				  }
@@ -474,6 +535,12 @@ public final class ControlConnection {
   private HashMap<Integer, List<TitledElement>> currentTags = new HashMap<Integer, List<TitledElement>>();
   private ArrayList<TitledElement> currentTagList = new ArrayList<TitledElement>();
   private ArrayList<Integer> currentActiveTagList = new ArrayList<Integer>();
+  
+  private ArrayList<String> currentProjectFileList = new ArrayList<String>();
+  
+  private Configuration currentConfiguration = null;
+  private Mode currentMode = null;
+  private String currentConfigFileName = "";
   
   public boolean isConnected() {
     return state != State.NotConnected;
@@ -718,10 +785,34 @@ public final class ControlConnection {
 	  }	  
   }
   
+  public void requestProjectFiles() {
+	    if (!isConnected()) {
+	        Messages.addMessage(MessageType.Warning, Localization.getString("ControlConnection.NoConnection")); //$NON-NLS-1$
+	        return;
+	      }
+	      if (state == State.ConnectionFailure) {
+	      	if (!tryReconnect()) {
+	      	      Messages.addMessage(MessageType.Warning, Localization.getString("ControlConnection.NoConnection")); //$NON-NLS-1$
+	      	      return;    		
+	      	}
+	      }
+	  try {
+		  byte[] bytes = new byte[1];
+		  bytes[0] = 13;
+		  socket.getOutputStream().write(bytes);
+	  }
+	  catch (IOException e) {
+		  Messages.addMessage(MessageType.Warning, e.getLocalizedMessage());
+          handleConnectionFailure(true);
+	  }	  	  
+  }
+  
   private HashMap<KeyStroke, byte[]> commandMap = null;
+  private HashMap<Byte, HashMap<Byte, KeyStroke>> inverseCommandMap = null;
   
   private void createCommandMap() {
     commandMap = new HashMap<KeyStroke, byte[]>();
+    inverseCommandMap = new HashMap<Byte, HashMap<Byte, KeyStroke>>();
     try {
       KeyStroke keyStroke;
       byte[] bytes;
@@ -1129,6 +1220,13 @@ public final class ControlConnection {
     catch (UnsupportedEncodingException e) {
       Messages.addMessage(MessageType.Error, e.getLocalizedMessage());
     }
+    for (KeyStroke stroke : commandMap.keySet()) {
+    	byte[] bytes = commandMap.get(stroke);
+    	if (!inverseCommandMap.containsKey(bytes[0])) {
+    		inverseCommandMap.put(bytes[0], new HashMap<Byte, KeyStroke>());
+    	}
+    	inverseCommandMap.get(bytes[0]).put(bytes[1], stroke);
+    }
   }
 
   private boolean MapKeyStrokeToBytes(KeyStroke keyStroke, byte[] bytes) {
@@ -1143,6 +1241,25 @@ public final class ControlConnection {
     }
     else
       return false;
+  }
+  
+  private KeyStroke MapBytesToKeyStroke(byte[] bytes, int index) {
+	  if (bytes == null || bytes.length < index + 2) {
+		  return null;
+	  }
+	  if (bytes[index] == 0 && bytes[index + 1] == 0) {
+		  return null;
+	  }
+	  if (inverseCommandMap == null) {
+		  createCommandMap();
+	  }
+	  if (inverseCommandMap.containsKey(bytes[index])) {
+		  HashMap<Byte, KeyStroke> subMap = inverseCommandMap.get(bytes[index]);
+		  if (subMap.containsKey(bytes[index + 1])) {
+			  return subMap.get(bytes[index + 1]);
+		  }
+	  }
+	  return null;
   }
   
   

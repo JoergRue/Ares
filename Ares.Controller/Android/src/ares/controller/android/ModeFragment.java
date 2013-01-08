@@ -134,14 +134,8 @@ public class ModeFragment extends ModeLikeFragment {
 		public int getCount() {
 			if (mMode != null)
 			{
-				int count = 0;
 				List<Command> commands = mMode.getCommands();
-				for (int i = 0; i < commands.size(); ++i) {
-					if (commands.get(i).isVisible()) {
-						++count;
-					}
-				}
-				return count;
+				return commands.size();
 			}
 			else
 				return 0;
@@ -166,19 +160,7 @@ public class ModeFragment extends ModeLikeFragment {
 				else {
 					button = new ToggleButton(mContext);
 					List<Command> commands = mMode.getCommands();
-					int count = 0; 
-					Command command = null;
-					for (int i = 0; i < commands.size(); ++i) {
-						if (commands.get(i).isVisible()) {
-							if (count == position) {
-								command = commands.get(i);
-								break;
-							}
-							else {
-								++count;
-							}
-						}
-					}
+					Command command = position < commands.size() ? commands.get(position) : null;
 					button.setPadding(5, 5, 5, 5);
 					if (command != null) {
 						button.setText(command.getTitle());

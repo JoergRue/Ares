@@ -271,15 +271,17 @@ public final class MainFrame extends FrameController implements IMessageListener
   }
   
   private JMenu recentMenu;
+  private JMenuItem openItem;
   
   private JMenu getFileMenu() {
 	  JMenu fileMenu = new JMenu(Localization.getString("MainFrame.Project")); //$NON-NLS-1$
-	  JMenuItem openItem = new JMenuItem(Localization.getString("MainFrame.OpenMenu")); //$NON-NLS-1$
+	  openItem = new JMenuItem(Localization.getString("MainFrame.OpenMenu")); //$NON-NLS-1$
 	  openItem.addActionListener(new ActionListener() {
 		  public void actionPerformed(ActionEvent e) {
 			  selectFile();
 		  }
 	  });
+	  openItem.setEnabled(Control.getInstance().isConnected());
 	  recentMenu = new JMenu(Localization.getString("MainFrame.Recent")); //$NON-NLS-1$
 	  JMenuItem exitItem = new JMenuItem(Localization.getString("MainFrame.Exit")); //$NON-NLS-1$
 	  exitItem.addActionListener(new ActionListener() {
@@ -518,6 +520,9 @@ public final class MainFrame extends FrameController implements IMessageListener
 		                public void windowClosing(java.awt.event.WindowEvent e) {
 		                	musicListFrame = null;
 		                }
+		                public void windowClosed(java.awt.event.WindowEvent e) {
+		                	musicListFrame = null;
+		                }
 		              });
 					musicListFrame.setVisible(true);
 				}
@@ -545,6 +550,9 @@ public final class MainFrame extends FrameController implements IMessageListener
 					tagsFrame = new TagsFrame(Localization.getString("MainFrame.MusicTags")); //$NON-NLS-1$
 					tagsFrame.addWindowListener(new WindowAdapter() {
 		                public void windowClosing(java.awt.event.WindowEvent e) {
+		                	tagsFrame = null;
+		                }
+		                public void windowClosed(java.awt.event.WindowEvent e) {
 		                	tagsFrame = null;
 		                }
 		              });
@@ -587,10 +595,16 @@ public final class MainFrame extends FrameController implements IMessageListener
   }
 
   public void openFile(String fileName) {
-    File file = new File(fileName);
-    if (!file.exists()) return;
-    
+    Control.getInstance().openFile(fileName);
+  }
+  
+  private void projectOpened(Configuration config, String fileName) {
+	if (fileName.equals(Control.getInstance().getFileName())) {
+		return;
+	}
     storeLayout();
+	Control.getInstance().setConfiguration(config, fileName);
+	
 
     List<SubFrame> openFrames = new ArrayList<SubFrame>();
     openFrames.add(this);
@@ -599,11 +613,10 @@ public final class MainFrame extends FrameController implements IMessageListener
     openFrames.toArray(frames);
     FrameManagement.getInstance().closeAllFrames(frames);
       
-    Control.getInstance().openFile(file);
     if (Control.getInstance().getConfiguration() != null) {
       enableProjectSpecificControls(true);
       
-      File layoutsFile = new File(Directories.getUserDataPath() + file.getName() + ".layout"); //$NON-NLS-1$
+      File layoutsFile = new File(Directories.getUserDataPath() + fileName + ".layout"); //$NON-NLS-1$
       if (layoutsFile.exists()) try {
         FrameLayouts.getInstance().readFromFile(layoutsFile.getAbsolutePath());
         FrameLayouts.getInstance().restoreLastLayout();
@@ -611,23 +624,24 @@ public final class MainFrame extends FrameController implements IMessageListener
       catch (IOException e) {
         Messages.addMessage(MessageType.Warning, Localization.getString("MainFrame.LayoutReadError")); //$NON-NLS-1$
       }
-      
-      Preferences.userNodeForPackage(MainFrame.class).put("LastConfiguration", fileName); //$NON-NLS-1$
-      updateLastProjects(fileName, Control.getInstance().getConfiguration().getTitle());
-      rebuildLastProjectsMenu();
+
+      String filePath = Control.getInstance().getFilePath();
+      if (filePath.endsWith(fileName)) {
+    	  Preferences.userNodeForPackage(MainFrame.class).put("LastConfiguration", filePath); //$NON-NLS-1$
+    	  updateLastProjects(filePath, Control.getInstance().getConfiguration().getTitle());
+    	  rebuildLastProjectsMenu();
+      }
     }
     else {
       enableProjectSpecificControls(false);
     }
     updateProjectTitle();
+    pack();
   }
   
   private void updateProjectTitle() {
 	    if (Control.getInstance().getConfiguration() != null) {
 	    	String text = Control.getInstance().getConfiguration().getTitle();
-	    	if (!text.equals(playerProject) && Control.getInstance().isConnected()) {
-	    		text += Localization.getString("MainFrame.projectsDifferent"); //$NON-NLS-1$
-	    	}
 	        projectLabel.setText(text);
 	    }
 	    else {
@@ -810,21 +824,40 @@ public final class MainFrame extends FrameController implements IMessageListener
           selectFile();
         }
       });
+      fileButton.setEnabled(Control.getInstance().isConnected());
     }
     return fileButton;
   }
   
   private void selectFile() {
-    JFileChooser chooser = new JFileChooser();
-    chooser.setAcceptAllFileFilterUsed(true);
-    chooser.setFileFilter(new ExampleFileFilter("ares", Localization.getString("MainFrame.ConfigFiles"))); //$NON-NLS-1$ //$NON-NLS-2$
-    chooser.setCurrentDirectory(Directories.getLastUsedDirectory(this, "ConfigurationFiles")); //$NON-NLS-1$
-    chooser.setMultiSelectionEnabled(false);
-    if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-      File file = chooser.getSelectedFile();
-      Directories.setLastUsedDirectory(this, "ConfigurationFiles", file); //$NON-NLS-1$
-   	  openFile(file.getAbsolutePath());
-    }
+	if (isLocalPlayer) {
+	    JFileChooser chooser = new JFileChooser();
+	    chooser.setAcceptAllFileFilterUsed(true);
+	    chooser.setFileFilter(new ExampleFileFilter("ares", Localization.getString("MainFrame.ConfigFiles"))); //$NON-NLS-1$ //$NON-NLS-2$
+	    chooser.setCurrentDirectory(Directories.getLastUsedDirectory(this, "ConfigurationFiles")); //$NON-NLS-1$
+	    chooser.setMultiSelectionEnabled(false);
+	    if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+	      File file = chooser.getSelectedFile();
+	      Directories.setLastUsedDirectory(this, "ConfigurationFiles", file); //$NON-NLS-1$
+	   	  openFile(file.getAbsolutePath());
+	    }
+	}
+	else {
+		Control.getInstance().requestProjectFiles();
+	}
+  }
+  
+  public void selectFileFromRemotePlayer(List<String> files) {
+	  if (files.size() == 0) {
+		  JOptionPane.showMessageDialog(this, Localization.getString("MainFrame.NoAvailableProjects"), Localization.getString("MainFrame.Ares"), JOptionPane.INFORMATION_MESSAGE); //$NON-NLS-1$ //$NON-NLS-2$
+		  return;
+	  }
+	  FileSelectionDialog dialog = new FileSelectionDialog(this, files);
+	  dialog.setVisible(true);
+	  String file = dialog.getSelectedFile();
+	  if (file != null && file.length() > 0) {
+		  openFile(Control.REMOTE_FILE_TAG + file);
+	  }
   }
 
   /**
@@ -942,6 +975,11 @@ public final class MainFrame extends FrameController implements IMessageListener
     if (Control.getInstance().isConnected()) {
       serverSearch.stopSearch();
       getConnectButton().setText(Localization.getString("MainFrame.Disconnect")); //$NON-NLS-1$
+      getFileButton().setEnabled(true);
+      openItem.setEnabled(true);
+      for (JMenuItem item : lastProjectItems) {
+    	  item.setEnabled(true);
+      }
     }
     else {
       servers.clear();
@@ -949,6 +987,11 @@ public final class MainFrame extends FrameController implements IMessageListener
       getConnectButton().setEnabled(hasLocalPlayer);
       getConnectButton().setText(Localization.getString("MainFrame.Connect")); //$NON-NLS-1$
       serverSearch.startSearch();
+      getFileButton().setEnabled(false);
+      openItem.setEnabled(false);
+      for (JMenuItem item : lastProjectItems) {
+    	  item.setEnabled(false);
+      }
     }
   }
 
@@ -1212,15 +1255,6 @@ public final class MainFrame extends FrameController implements IMessageListener
 		});
 	}
 	
-	String playerProject = ""; //$NON-NLS-1$
-
-	@Override
-	public void projectChanged(String newTitle) {
-		playerProject = newTitle;
-		updateProjectTitle();
-	}
-
-
 	@Override
 	public void volumeChanged(final int index, final int value) {
 		SwingUtilities.invokeLater(new Runnable() {
@@ -1412,6 +1446,24 @@ public final class MainFrame extends FrameController implements IMessageListener
 	}
 	
 	@Override
+	public void configurationChanged(final Configuration newConfiguration, final String fileName) {
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				MainFrame.this.projectOpened(newConfiguration, fileName);
+			}
+		});
+	}
+	
+	@Override
+	public void projectFilesRetrieved(final List<String> files) {
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				MainFrame.this.selectFileFromRemotePlayer(files);
+			}
+		});
+	}
+	
+	@Override
 	public void disconnect() {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
@@ -1486,6 +1538,8 @@ public final class MainFrame extends FrameController implements IMessageListener
 		}
 	}
 	
+	private List<JMenuItem> lastProjectItems = new ArrayList<JMenuItem>();
+	
 	private void buildLastProjectsMenu() {
 		java.util.prefs.Preferences prefs = java.util.prefs.Preferences
 		.userNodeForPackage(getClass());
@@ -1508,12 +1562,15 @@ public final class MainFrame extends FrameController implements IMessageListener
 			lastProjectItem.setMnemonic(java.awt.event.KeyEvent.VK_1 + i);
 			lastProjectItem.addActionListener(new LastProjectsActionListener(prefs.get(
 					"LastUsedProjectFile" + i, ""))); //$NON-NLS-1$ //$NON-NLS-2$
+			lastProjectItem.setEnabled(Control.getInstance().isConnected());
+			lastProjectItems.add(lastProjectItem);
 			recentMenu.add(lastProjectItem);
 		}
 	}
 
 	private void rebuildLastProjectsMenu() {
 		recentMenu.removeAll();
+		lastProjectItems.clear();
 		buildLastProjectsMenu();
 	}
 

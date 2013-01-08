@@ -60,7 +60,7 @@
     <string name="modes">Modi</string>
     <string name="player_connection">Verbindung zum Player</string>
     <string name="invalid_player_connection_format">Ungültiges Format für Player-Verbindung!\nMuss Name,Port,IP-Adresse sein (oder auto).</string>
-    <string name="projectsDifferent"> (anders im Player!)</string>
+    <string name="connectFirst">- (erst mit Player verbinden)</string>
     <string name="no_music_list">Keine Musikliste wird gespielt.</string>
     <string name="musicList">Musikliste</string>
     <string name="file_system">Dateisystem</string>
@@ -72,4 +72,6 @@
     <string name="CategoryOperatorDesc">Verknüpfung von Tags verschiedener Kategorien mit:</string>
     <string name="ClearTags">Alle Musik-Tags entfernen</string>
     <string name="CategoryOperatorIsOr">ODER: Musik muss irgendeinen Tag haben</string>
+    <string name="SelectProject">Projekt auswählen:</string>
+    <string name="NoProjects">Derzeit sind im Player keine Projekte verfügbar.</string>
 </resources>

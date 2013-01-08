@@ -59,6 +59,12 @@
     <Compile Include="Controller.Designer.cs">
       <DependentUpon>Controller.cs</DependentUpon>
     </Compile>
+    <Compile Include="FileSelectionDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FileSelectionDialog.Designer.cs">
+      <DependentUpon>FileSelectionDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="MessagesForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -98,6 +104,9 @@
     <EmbeddedResource Include="Controller.resx">
       <DependentUpon>Controller.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FileSelectionDialog.resx">
+      <DependentUpon>FileSelectionDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MessagesForm.de.resx">
       <DependentUpon>MessagesForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -120,10 +129,6 @@
     <ProjectReference Include="..\Ares.Controllers\Ares.Controllers.csproj">
       <Project>{81481CB6-C6EE-4734-8D41-09202342E1B9}</Project>
       <Name>Ares.Controllers</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Ares.Data\Ares.Data.csproj">
-      <Project>{F64D6AF3-3543-47F0-A7B8-0336750B09C3}</Project>
-      <Name>Ares.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\Ares.Online\Ares.Online.csproj">
       <Project>{7550AD48-17A5-45BF-A632-B75EB82123DD}</Project>

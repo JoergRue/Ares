@@ -41,7 +41,7 @@ namespace Ares.Controllers
         {
             FileName = String.Empty;
             FilePath = String.Empty;
-            Project = null;
+            m_Project = null;
             m_Connection = null;
             ServerName = String.Empty;
         }
@@ -50,23 +50,39 @@ namespace Ares.Controllers
 
         public String FilePath { get; private set; }
 
-        public Ares.Data.IProject Project { get; private set; }
+        private Configuration m_Project;
+
+        public Configuration Project 
+        {
+            get
+            {
+                return m_Project;
+            }
+        }
+
+        public void SetProject(Configuration project, String fileName)
+        {
+            m_Project = project;
+            FileName = fileName;
+        }
 
         public String ServerName { get; private set; }
 
+        public static readonly String REMOTE_FILE_TAG = "remote://";
+
         public void OpenFile(String path)
         {
-            if (Project != null)
+            FilePath = path;
+            if (path.StartsWith(REMOTE_FILE_TAG))
+                path = path.Substring(REMOTE_FILE_TAG.Length);
+            if (IsConnected)
             {
-                Ares.Data.DataModule.ProjectManager.UnloadProject(Project);
-                Project = null;
+                m_Connection.SendProjectOpenRequest(path, !m_IsLocalPlayer);
             }
-            Project = Ares.Data.DataModule.ProjectManager.LoadProject(path);
             if (Project != null)
             {
                 System.IO.FileInfo file = new System.IO.FileInfo(path);
                 FilePath = file.FullName;
-                FileName = file.Name;
                 if (IsConnected)
                 {
                     SendKey(System.Windows.Forms.Keys.Escape);
@@ -87,9 +103,12 @@ namespace Ares.Controllers
             m_Connection.Connect();
             ServerName = server.Name;
             m_IsLocalPlayer = isLocalPlayer;
-            if (Project != null && m_Connection != null)
+            if (m_Connection != null && !String.IsNullOrEmpty(FilePath))
             {
-                m_Connection.SendProjectOpenRequest(FilePath, !m_IsLocalPlayer);
+                String path = FilePath;
+                if (path.StartsWith(REMOTE_FILE_TAG))
+                    path = path.Substring(REMOTE_FILE_TAG.Length);
+                m_Connection.SendProjectOpenRequest(path, !m_IsLocalPlayer);
             }
         }
 
@@ -221,6 +240,18 @@ namespace Ares.Controllers
             else
             {
                 m_Connection.SetMusicTagCategoryOperator(operatorIsAnd);
+            }
+        }
+
+        public void RequestProjectFiles()
+        {
+            if (m_Connection == null || !m_Connection.Connected)
+            {
+                Messages.AddMessage(MessageType.Warning, StringResources.NoConnection);
+            }
+            else
+            {
+                m_Connection.RequestProjectFiles();
             }
         }
     }

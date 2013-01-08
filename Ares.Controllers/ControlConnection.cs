@@ -43,6 +43,32 @@ namespace Ares.Controllers
     {
     }
 
+    public class ModeElement : ItemWithId
+    {
+    }
+
+    public class Mode : ItemWithId
+    {
+        private List<ModeElement> m_Elements = new List<ModeElement>();
+
+        public List<ModeElement> Elements { get { return m_Elements; } }
+
+        public void AddElement(ModeElement element) { m_Elements.Add(element); }
+    }
+
+    public class Configuration
+    {
+        public String Title { get; set; }
+
+        public String FileName { get; set; }
+
+        private List<Mode> m_Modes = new List<Mode>();
+
+        public List<Mode> Modes { get { return m_Modes; } }
+
+        public void AddMode(Mode mode) { m_Modes.Add(mode); }
+    }
+
     public interface INetworkClient
     {
         void ModeChanged(String newMode);
@@ -51,7 +77,6 @@ namespace Ares.Controllers
         void AllModeElementsStopped();
         void VolumeChanged(int index, int volume);
         void MusicChanged(String newMusic, String shortTitle);
-        void ProjectChanged(String newTitle);
         void MusicListChanged(List<MusicListItem> newList);
         void MusicRepeatChanged(bool repeat);
 
@@ -59,6 +84,9 @@ namespace Ares.Controllers
         void ActiveTagsChanged(List<int> activeTags);
         void TagStateChanged(int tagId, bool isActive);
         void TagCategoryOperatorChanged(bool operatorIsAnd);
+
+        void ProjectFilesRetrieved(List<String> files);
+        void ConfigurationChanged(Configuration newConfiguration, String fileName);
 
         void Disconnect();
         void ConnectionFailed();
@@ -92,6 +120,10 @@ namespace Ares.Controllers
         private List<MusicTag> m_CurrentTagList = new List<MusicTag>();
 
         private List<int> m_CurrentActiveTags = new List<int>();
+
+        private Configuration m_CurrentConfiguration = new Configuration();
+        private Mode m_CurrentMode = new Mode();
+        private List<String> m_CurrentProjectFiles = new List<string>();
 
         public ControlConnection(ServerInfo server, INetworkClient client)
         {
@@ -417,7 +449,7 @@ namespace Ares.Controllers
                                 }
                             case 6:
                                 {
-                                    m_NetworkClient.ProjectChanged(ReadString(buffer));
+                                    // m_NetworkClient.ProjectChanged(ReadString(buffer));
                                     break;
                                 }
                             case 7:
@@ -542,6 +574,79 @@ namespace Ares.Controllers
                                 {
                                     bool isAnd = buffer[1] == 1;
                                     m_NetworkClient.TagCategoryOperatorChanged(isAnd);
+                                    break;
+                                }
+                            case 15:
+                                {
+                                    int subcommand = buffer[1];
+                                    if (subcommand == 0)
+                                    {
+                                        m_CurrentProjectFiles = new List<string>();
+                                    }
+                                    else if (subcommand == 1)
+                                    {
+                                        ItemWithId temp = new ItemWithId();
+                                        bool success = ReadItemWithId(buffer, temp);
+                                        m_CurrentProjectFiles.Add(temp.Title);
+                                    }
+                                    else if (subcommand == 2)
+                                    {
+                                        m_NetworkClient.ProjectFilesRetrieved(m_CurrentProjectFiles);
+                                    }
+                                    break;
+                                }
+                            case 16:
+                                {
+                                    int subcommand = buffer[1];
+                                    if (subcommand == 0)
+                                    {
+                                        if (buffer[2] == 1)
+                                        {
+                                            m_CurrentConfiguration = new Configuration();
+                                            m_NetworkClient.ConfigurationChanged(null, String.Empty);
+                                        }
+                                        else
+                                        {
+                                            m_CurrentConfiguration = new Configuration();
+                                            count = m_Socket.Receive(buffer, 1, 2);
+                                            if (count < 2)
+                                                break;
+                                            m_CurrentConfiguration.Title = ReadString(buffer);
+                                            count = m_Socket.Receive(buffer, 1, 2);
+                                            if (count < 2)
+                                                break;
+                                            m_CurrentConfiguration.FileName = ReadString(buffer);
+                                        }
+                                    }
+                                    else if (subcommand == 1)
+                                    {
+                                        m_CurrentMode = new Mode();
+                                        count = m_Socket.Receive(buffer, 1, 2);
+                                        if (count < 2)
+                                            break;
+                                        m_CurrentMode.Title = ReadString(buffer);
+                                        m_Socket.Receive(buffer, 1, 2); // keycode
+                                        m_CurrentConfiguration.AddMode(m_CurrentMode);
+                                    }
+                                    else if (subcommand == 2)
+                                    {
+                                        count = m_Socket.Receive(buffer, 1, 2);
+                                        if (count < 2)
+                                            break;
+                                        ModeElement element = new ModeElement();
+                                        element.Title = ReadString(buffer);
+                                        Int32 id;
+                                        bool success = ReadInt32(out id);
+                                        if (!success)
+                                            break;
+                                        element.Id = id;
+                                        m_Socket.Receive(buffer, 1, 2); // keycode
+                                        m_CurrentMode.AddElement(element);
+                                    }
+                                    else if (subcommand == 3)
+                                    {
+                                        m_NetworkClient.ConfigurationChanged(m_CurrentConfiguration, m_CurrentConfiguration.FileName);
+                                    }
                                     break;
                                 }
                             default:
@@ -856,6 +961,34 @@ namespace Ares.Controllers
                 byte[] bytes = new byte[1 + 4];
                 bytes[0] = 12;
                 AddInt32ToByteArray(bytes, 1, val);
+                m_Socket.Send(bytes);
+            }
+            catch (SocketException ex)
+            {
+                Messages.AddMessage(MessageType.Warning, ex.Message);
+                HandleConnectionFailure(true);
+            }
+        }
+
+        public void RequestProjectFiles()
+        {
+            if (!Connected)
+            {
+                Messages.AddMessage(MessageType.Warning, StringResources.NoConnection);
+                return;
+            }
+            if (m_State == State.ConnectionFailure)
+            {
+                if (!TryReconnect())
+                {
+                    Messages.AddMessage(MessageType.Warning, StringResources.NoConnection);
+                    return;
+                }
+            }
+            try
+            {
+                byte[] bytes = new byte[1];
+                bytes[0] = 13;
                 m_Socket.Send(bytes);
             }
             catch (SocketException ex)

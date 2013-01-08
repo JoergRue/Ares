@@ -26,7 +26,6 @@ import java.util.Map;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.DialogInterface.OnDismissListener;
@@ -39,13 +38,11 @@ import android.gesture.GestureOverlayView.OnGesturePerformedListener;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.View;
@@ -59,6 +56,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.LinearLayout.LayoutParams;
 import ares.controllers.control.Control;
+import ares.controllers.data.Configuration;
 import ares.controllers.data.TitledElement;
 import ares.controllers.network.INetworkClient;
 import ares.controllers.network.ServerInfo;
@@ -88,6 +86,7 @@ public class ControlFragment extends ConnectedFragment implements INetworkClient
 	
 	private final String LAST_PROJECT = "LastProject";
 	
+	private ImageButton openButton;
 	private ImageButton stopButton;
 	private ImageButton forwardButton;
 	private ImageButton backButton;
@@ -181,12 +180,13 @@ public class ControlFragment extends ConnectedFragment implements INetworkClient
 		        });
 	        }
         }
-        ImageButton openButton = (ImageButton)getActivity().findViewById(R.id.openProjectButton);
+        openButton = (ImageButton)getActivity().findViewById(R.id.openProjectButton);
         openButton.setOnClickListener(new OnClickListener() {
         	public void onClick(View v) {
         		openProject();
         	}
         });
+        openButton.setEnabled(connected);
         stopButton = (ImageButton)getActivity().findViewById(R.id.stopButton);
         forwardButton = (ImageButton)getActivity().findViewById(R.id.forwardButton);
         backButton = (ImageButton)getActivity().findViewById(R.id.backButton);
@@ -236,11 +236,6 @@ public class ControlFragment extends ConnectedFragment implements INetworkClient
     	if (fileToOpenDelayed != null) {
     		String path = fileToOpenDelayed;
     		fileToOpenDelayed = null;
-    		if (Dropbox.getInstance().isWaiting()) {
-    			if (!Dropbox.getInstance().finishConnection(getActivity())) {
-    				return;
-    			}
-    		}
 			openProject(path, getActivity());
     	}
     }
@@ -311,60 +306,11 @@ public class ControlFragment extends ConnectedFragment implements INetworkClient
     
     private String fileToOpenDelayed = null;
     
-    private ProgressDialog mProgressDialog;
-    private OpenProjectTask mTask;
-    
-    private class OpenProjectTask extends AsyncTask<String, Void, Boolean>
-    {
-        private boolean doOpenDropboxProject(String path) {
-			byte[] content = Dropbox.getInstance().getEntryContent(getActivity(), path);
-			if (content != null) {
-				Control.getInstance().openFile(content, path);
-				return true;
-			}
-			else {
-				return false;
-			}
-	    }
-	    
-	    private boolean doOpenLocalProject(String path) {
-	    	Control.getInstance().openFile(new java.io.File(path));
-	    	return true;
-	    }
-	    
-	    private String mPath;
-
-		@Override
-		protected Boolean doInBackground(String... arg0) {
-			try {
-				mPath = arg0[0];
-				if (mPath.startsWith(Control.DB_ROOT_ID))
-				{
-					return doOpenDropboxProject(mPath);
-				}
-				else
-				{
-					return doOpenLocalProject(mPath);
-				}
-			}
-			catch (Exception e) {
-				Log.e(getClass().getName(), e.getMessage() != null ? e.getMessage() : "Unknown error.");
-				return false;
-			}
-		}
-		
-		protected void onPostExecute(Boolean result) {
-			mProgressDialog.dismiss();
-			if (result)
-			{
-				ControlFragment.this.projectOpened(mPath);
-			}
-			mTask = null;
-		}
-    }
-    
-    private void projectOpened(String path) {
-    	getActivity().getPreferences(Activity.MODE_PRIVATE).edit().putString(LAST_PROJECT, path).commit();
+    private void projectOpened(Configuration config, String fileName) {
+    	if (Control.getInstance().getFilePath().startsWith(fileName)) {
+    		getActivity().getPreferences(Activity.MODE_PRIVATE).edit().putString(LAST_PROJECT, Control.getInstance().getFilePath()).commit();
+    	}
+    	Control.getInstance().setConfiguration(config, fileName);
 		updateProjectTitle();
 		if (modesButton != null) {
 			modesButton.setEnabled(Control.getInstance().getConfiguration() != null);
@@ -384,36 +330,22 @@ public class ControlFragment extends ConnectedFragment implements INetworkClient
     }
     
     public void openProject(String path, Activity activity) {
-    	if (path.startsWith(Control.DB_ROOT_ID)) {
-    		if (!Dropbox.getInstance().connectToDropbox(activity)) {
-    			// must authenticate first
-    			fileToOpenDelayed = path;
-    			return;
-    		}
-    	}
-  	  	mProgressDialog = ProgressDialog.show(activity, "", "Opening Project...", true);
-  	  	mTask = new OpenProjectTask();
-  	  	mTask.execute(path);
+    	Control.getInstance().openFile(path);
     }
     
     private void updateProjectTitle() {
 		TextView projectView = (TextView)getActivity().findViewById(R.id.projectTextView);
 		if (Control.getInstance().getConfiguration() != null) {
 			String title = Control.getInstance().getConfiguration().getTitle();
-			if (Control.getInstance().isConnected() && !title.equals(PlayingState.getInstance().getPlayerProject())) {
-				title += getString(R.string.projectsDifferent);
-			}
 			projectView.setText(title);
 		}
 		else {
-			projectView.setText("");
+			projectView.setText(R.string.connectFirst);
 		}
     }
     
 	private void openProject() {
-		Intent intent = new Intent(getActivity().getBaseContext(), FileDialog.class);
-		intent.putExtra(FileDialog.START_PATH, Control.getInstance().getFilePath());
-		getActivity().startActivityForResult(intent, REQUEST_OPEN);
+		Control.getInstance().requestProjectFiles();
 	}
 	
 	private void showModes(boolean moveUp) {
@@ -567,7 +499,8 @@ public class ControlFragment extends ConnectedFragment implements INetworkClient
 		backButton.setEnabled(true);
 		forwardButton.setEnabled(true);
 		repeatButton.setEnabled(true);
-}
+		openButton.setEnabled(true);
+	}
 	
 	protected void onDisconnect(boolean startServerSearch) {
 		super.onDisconnect(startServerSearch);
@@ -576,6 +509,7 @@ public class ControlFragment extends ConnectedFragment implements INetworkClient
 		backButton.setEnabled(false);
 		forwardButton.setEnabled(false);
 		repeatButton.setEnabled(false);
+		openButton.setEnabled(false);
 		updateAll();
 	}
 
@@ -632,11 +566,6 @@ public class ControlFragment extends ConnectedFragment implements INetworkClient
 	}
 
 	@Override
-	public void projectChanged(String newTitle) {
-		updateProjectTitle();
-	}
-	
-	@Override
 	public void musicListChanged(java.util.List<ares.controllers.data.TitledElement> newList) {
 		// nothing here
 	}
@@ -668,6 +597,26 @@ public class ControlFragment extends ConnectedFragment implements INetworkClient
 	@Override
 	public void tagCategoryOperatorChanged(boolean operatorIsAnd) {
 		// nothing here
+	}
+
+	@Override
+	public void projectFilesRetrieved(List<String> files) {
+		if (files.size() > 0) {
+			Intent intent = new Intent(getActivity().getBaseContext(), FileDialog.class);
+			ArrayList<String> list = new ArrayList<String>(files);
+			intent.putStringArrayListExtra(FileDialog.POSSIBLE_FILES, list);
+			getActivity().startActivityForResult(intent, REQUEST_OPEN);
+		}
+		else {
+			Toast.makeText(getActivity(), R.string.NoProjects, Toast.LENGTH_LONG).show();
+		}
+			
+	}
+
+	@Override
+	public void configurationChanged(Configuration newConfiguration,
+			String fileName) {
+		projectOpened(newConfiguration, fileName);
 	}
 	
 }

@@ -13,11 +13,11 @@
     <string name="Network">Network</string>
     <string name="Server">Server:</string>
     <string name="NetworkLabel">Network:</string>
-    <string name="ShowModes">Modes...</string>
-    <string name="Connect">Connect With Player...</string>
+    <string name="ShowModes">Modes…</string>
+    <string name="Connect">Connect With Player…</string>
     <string name="Disconnect">Disconnect</string>
-    <string name="About">About...</string>
-    <string name="OpenProject">Open Project...</string>
+    <string name="About">About…</string>
+    <string name="OpenProject">Open Project…</string>
     <string name="open">Open</string>
     <string name="connected_with">Connected with %s</string>
     <string name="disconnected">Not connected</string>
@@ -25,7 +25,7 @@
     <string name="no_player">No Player found. Is there a network problem?</string>
     <string name="select_player">Select a Player</string>
     <string name="show_main">Main Control</string>
-    <string name="points">...</string>
+    <string name="points">…</string>
     <string name="udp_port">Player UDP Port</string>
     <string name="volume_keys">Volume Keys</string>
     <string name="volume_keys_summary">Action to take for volume keys</string>
@@ -60,7 +60,7 @@
     <string name="modes">Modes</string>
     <string name="player_connection">Player Connection</string>
     <string name="invalid_player_connection_format">Invalid format for Player connection!\nMust be name,port,ipaddress (or auto).</string>
-    <string name="projectsDifferent"> (different in Player!)</string>
+    <string name="connectFirst">- (connect with Player first)</string>
     <string name="no_music_list">No Music List Playing</string>
     <string name="musicList">Music List</string>
     <string name="file_system">File System</string>
@@ -72,4 +72,6 @@
     <string name="ClearTags">Clear music tags</string>
     <string name="CategoryOperatorDesc">Combination of different categories by:</string>
     <string name="CategoryOperatorIsOr">OR: Music must have at least one tag in ANY category</string>
+    <string name="SelectProject">Select Project:</string>
+    <string name="NoProjects">There are currently no projects available for the Player.</string>
 </resources>

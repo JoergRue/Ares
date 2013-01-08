@@ -85,11 +85,7 @@ class CommandsPanelCreator {
       label4.setPreferredSize(new java.awt.Dimension(5, 5));
       panel.add(label4, BorderLayout.WEST);
       JPanel buttonPane = new JPanel();
-      int count = 0;
-      for (Command command : commands) {
-    	  if (command.isVisible())
-    		  ++count;
-      }
+      int count = commands.size();
       buttonPane.setLayout(new GridLayout((int)Math.ceil(count / (float)nrOfColumns), nrOfColumns, 10, 10));
       Preferences prefs = Preferences.userNodeForPackage(OptionsDialog.class);
       boolean showKeys = prefs.getBoolean("ShowKeys", false); //$NON-NLS-1$
@@ -103,10 +99,7 @@ class CommandsPanelCreator {
         AbstractButton button = new JToggleButton();
         AbstractAction action = actionCreator.createAction(command, button); 
         button.setAction(action);
-        if (command.isVisible())
-        {
-        	buttonPane.add(button);
-        }
+    	buttonPane.add(button);
         String title = command.getTitle();
         if (command.getKeyStroke() != null) {
         	javax.swing.KeyStroke swingStroke = javax.swing.KeyStroke.getKeyStroke(command.getKeyStroke().getKeyCode(), 0);

@@ -258,7 +258,7 @@ namespace Ares.Player
                 {
                     if (m_Network != null)
                     {
-                        m_Network.InformClientOfProject(m_Project.Title);
+                        m_Network.InformClientOfProject(m_Project);
                     }
                     return;
                 }
@@ -308,7 +308,7 @@ namespace Ares.Player
 #endif
             if (m_Network != null)
             {
-                m_Network.InformClientOfProject(m_Project != null ? m_Project.Title : String.Empty);
+                m_Network.InformClientOfProject(m_Project);
                 if (m_Project != null)
                 {
                     m_Network.InformClientOfPossibleTags(m_TagLanguageId, m_Project);
@@ -1086,9 +1086,24 @@ namespace Ares.Player
             this.Invoke(new MethodInvoker(UpdateClientData));
         }
 
+        public String GetProjectsDirectory()
+        {
+            String oldPath = m_Project != null ? m_Project.FileName : System.Environment.CurrentDirectory;
+            if (m_Project != null)
+            {
+                oldPath = System.IO.Directory.GetParent(oldPath).FullName;
+            }
+            return oldPath;
+        }
+
         public void ProjectShallChange(String newProjectPath)
         {
             OpenProjectFromController(newProjectPath);
+        }
+
+        public IProject GetCurrentProject()
+        {
+            return m_Project;
         }
 
         public void PlayOtherMusic(Int32 id)

@@ -29,7 +29,7 @@ public final class Mode extends Command {
   private Map<Integer, Command> commands;
 
   public Mode(String title, int id, KeyStroke keyStroke) {
-    super(title, id, keyStroke, true);
+    super(title, id, keyStroke);
     commands = new HashMap<Integer, Command>();
   }
   

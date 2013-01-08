@@ -20,7 +20,6 @@
  package ares.controllers.control;
 
 import ares.controllers.data.Configuration;
-import ares.controllers.data.FileParser;
 import ares.controllers.data.KeyStroke;
 import ares.controllers.messages.Messages;
 import ares.controllers.messages.Message.MessageType;
@@ -59,42 +58,25 @@ public final class Control {
     return configuration;
   }
   
-  public void openFile(java.io.File file) {
-    configuration = FileParser.parseFile(file);
-    if (configuration != null) {
-      this.filePath = file.getAbsolutePath();
-      int pos = filePath.lastIndexOf(java.io.File.separator);
-      if (pos == -1) {
-        fileName = filePath;
-      }
-      else {
-        fileName = filePath.substring(pos + 1);
-      }
-      if (isConnected()) {
-    	  connection.sendProjectOpenRequest(filePath, !isLocalPlayer);
-      }
-    }
+  public void setConfiguration(Configuration config, String fileName) {
+	  configuration = config;
+	  this.fileName = fileName;
   }
   
-  public void openFile(byte[] contents, String path) {
-	 int pos = path.lastIndexOf("/");
-	 String name = path;
-	 if (pos != -1) {
-		 name = path.substring(pos + 1);
-	 }
-	 configuration = FileParser.parseBytes(contents, name);
-	 if (configuration != null) {
-		  this.filePath = path;
-		  this.fileName = name;
-	      if (isConnected()) {
-	    	  connection.sendProjectOpenRequest(fileName, !isLocalPlayer);
-	      }		 
-	 }
+  public static String REMOTE_FILE_TAG = "remote://";
+  
+  public void openFile(String path) {
+	  this.filePath = path;
+	  if (path.startsWith(REMOTE_FILE_TAG)) {
+		  path = path.substring(REMOTE_FILE_TAG.length());
+	  }
+	  if (isConnected()) {
+		  connection.sendProjectOpenRequest(path, !isLocalPlayer);
+	  }
   }
   
   private String serverName = ""; //$NON-NLS-1$
   private boolean isLocalPlayer = false;
-  public static final String DB_ROOT_ID = "dropbox:";
  
   
   public void connect(ServerInfo server, INetworkClient client, boolean isLocalPlayer) {
@@ -106,12 +88,11 @@ public final class Control {
     serverName = server.getName();
     this.isLocalPlayer = isLocalPlayer;
     if (getConfiguration() != null) {
-    	if (getFilePath().startsWith(DB_ROOT_ID)) {
-    		connection.sendProjectOpenRequest(getFileName(), !isLocalPlayer);
-    	}
-    	else {
-    		connection.sendProjectOpenRequest(getFilePath(), !isLocalPlayer);
-    	}
+    	String path = getFilePath();
+  	  if (path.startsWith(REMOTE_FILE_TAG)) {
+		  path = path.substring(REMOTE_FILE_TAG.length());
+	  }
+		connection.sendProjectOpenRequest(path, !isLocalPlayer);
     }
   }
   
@@ -210,6 +191,15 @@ public final class Control {
 	  else {
 		  connection.setTagCategoryOperator(operatorIsAnd);
 	  }	  	  
+  }
+  
+  public void requestProjectFiles() {
+	  if (connection == null || !connection.isConnected()) {
+		  Messages.addMessage(MessageType.Warning, Localization.getString("Control.noConnection")); //$NON-NLS-1$
+	  }
+	  else {
+		  connection.requestProjectFiles();
+	  }	  	  	  
   }
   
   public boolean isConnected() {

@@ -22,6 +22,7 @@ package ares.controllers.network;
 import java.util.List;
 import java.util.Map;
 
+import ares.controllers.data.Configuration;
 import ares.controllers.data.TitledElement;
 
 public interface INetworkClient {
@@ -32,13 +33,15 @@ public interface INetworkClient {
 	void allModeElementsStopped();
 	void volumeChanged(int index, int value);
 	void musicChanged(String newMusic, String shortTitle);
-	void projectChanged(String newTitle);
 	void musicListChanged(List<TitledElement> newList);
 	
 	void tagsChanged(List<TitledElement> newCategories, Map<Integer, List<TitledElement>> newTagsPerCategory);
 	void activeTagsChanged(List<Integer> newActiveTags);
 	void tagSwitched(int tagId, boolean isActive);
 	void tagCategoryOperatorChanged(boolean operatorIsAnd);
+	
+	void projectFilesRetrieved(List<String> files);
+	void configurationChanged(Configuration newConfiguration, String fileName);
 
 	void disconnect();
 	void connectionFailed();

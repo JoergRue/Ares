@@ -43,6 +43,7 @@ import android.widget.ToggleButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.Spinner;
 import ares.controllers.control.Control;
+import ares.controllers.data.Configuration;
 import ares.controllers.data.TitledElement;
 import ares.controllers.network.INetworkClient;
 
@@ -205,10 +206,6 @@ public class TagsFragment extends ModeLikeFragment implements INetworkClient {
 	}
 
 	@Override
-	public void projectChanged(String newTitle) {
-	}
-
-	@Override
 	public void musicListChanged(List<TitledElement> newList) {
 	}
 
@@ -355,4 +352,14 @@ public class TagsFragment extends ModeLikeFragment implements INetworkClient {
 			}
 		}
     }
+
+	@Override
+	public void projectFilesRetrieved(List<String> files) {
+	}
+
+	@Override
+	public void configurationChanged(Configuration newConfiguration,
+			String fileName) {
+		// tags change will be reported separately
+	}
 }

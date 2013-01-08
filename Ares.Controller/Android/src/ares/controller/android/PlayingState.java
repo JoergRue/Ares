@@ -47,13 +47,14 @@ public class PlayingState implements INetworkClient {
 	
 	private ArrayList<String> modeElements = new ArrayList<String>();
 	
-	private String playerProject = "";
-	
 	private List<TitledElement> tagCategories = new ArrayList<TitledElement>();
 	private Map<Integer, List<TitledElement>> tags = new HashMap<Integer, List<TitledElement>>();
 	private HashSet<Integer> activeTags = new HashSet<Integer>();
 	
 	private boolean tagCategoryOperatorIsAnd = false;
+	
+	private String currentFileName = "";
+	private Configuration currentConfiguration = null;
 
 	public int getOverallVolume() {
 		return overallVolume;
@@ -79,10 +80,6 @@ public class PlayingState implements INetworkClient {
 		return shortMusicPlayed;
 	}
 	
-	public String getPlayerProject() {
-		return playerProject;
-	}
-	
 	public List<TitledElement> getMusicList() {
 		return musicList;
 	}
@@ -105,6 +102,14 @@ public class PlayingState implements INetworkClient {
 	
 	public boolean isTagCategoryOperatorAnd() {
 		return tagCategoryOperatorIsAnd;
+	}
+	
+	public String getCurrentFileName() {
+		return currentFileName;
+	}
+	
+	public Configuration getCurrentConfiguration() {
+		return currentConfiguration;
 	}
 	
 	private static PlayingState sInstance = null;
@@ -309,20 +314,6 @@ public class PlayingState implements INetworkClient {
 	}
 
 	@Override
-	public void projectChanged(String newTitle) {
-		final String t = newTitle; 
-		handler.post(new Runnable() {
-			public void run() {
-				playerProject = t;
-				if (!hasClient())
-					return;
-				for (INetworkClient client : clients)
-					client.projectChanged(t);
-			}
-		});
-	}
-
-	@Override
 	public void musicListChanged(List<TitledElement> newList) {
 		final List<TitledElement> l = newList;
 		handler.post(new Runnable() {
@@ -393,6 +384,33 @@ public class PlayingState implements INetworkClient {
 					return;
 				for (INetworkClient client : clients)
 					client.tagCategoryOperatorChanged(operatorIsAnd);
+			}
+		});
+	}
+
+	@Override
+	public void projectFilesRetrieved(final List<String> files) {
+		handler.post(new Runnable() {
+			public void run() {
+				if (!hasClient())
+					return;
+				for (INetworkClient client : clients)
+					client.projectFilesRetrieved(files);
+			}
+		});
+	}
+
+	@Override
+	public void configurationChanged(final Configuration newConfiguration,
+			final String fileName) {
+		handler.post(new Runnable() {
+			public void run() {
+				currentConfiguration = newConfiguration;
+				currentFileName = fileName;
+				if (!hasClient())
+					return;
+				for (INetworkClient client : clients) 
+					client.configurationChanged(newConfiguration, fileName);
 			}
 		});
 	}
