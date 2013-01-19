@@ -15,7 +15,6 @@
 	<property name="mgoutput.dir" value="MGPlugin" />
 	
     <target name="clean" description="Delete all previously compiled binaries.">
-	<!--
         <delete>
             <fileset>
                 <include name="bin/**" />
@@ -24,7 +23,6 @@
 				<exclude name="**/bass_fx.dll" />
             </fileset>
         </delete>
-	-->
     </target>
     
     <property name="solutionFile" value="Ares.sln" />
