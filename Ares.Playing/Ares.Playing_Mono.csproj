@@ -26,7 +26,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Mono_Release|AnyCPU' ">
     <DebugType>none</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\bin\Mono Release</OutputPath>
+    <OutputPath>..\bin\Mono_Release</OutputPath>
     <DefineConstants>MONO</DefineConstants>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -82,6 +82,10 @@
     <ProjectReference Include="..\Ares.Data\Ares.Data_Mono.csproj">
       <Project>{F64D6AF3-3543-47F0-A7B8-0336750B09C3}</Project>
       <Name>Ares.Data_Mono</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ares.Tags\Ares.Tags_Mono.csproj">
+      <Project>{42A8F91D-6E6B-4740-AC3F-99A34074E695}</Project>
+      <Name>Ares.Tags_Mono</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

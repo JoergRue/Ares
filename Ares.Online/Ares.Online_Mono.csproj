@@ -26,7 +26,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Mono_Release|AnyCPU' ">
     <DebugType>none</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\bin\Mono Release</OutputPath>
+    <OutputPath>..\bin\Mono_Release</OutputPath>
     <DefineConstants>MONO</DefineConstants>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -37,6 +37,9 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="HtmlRenderer">
+      <HintPath>..\Libraries_Linux\HtmlRenderer.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChangeLogDialog.cs">
@@ -64,9 +67,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>StringResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="NewsDialog.cs" />
+    <Compile Include="NewsDialog.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ares.snk" />
+    <None Include="NewsDialog.de.resx" />
+    <None Include="NewsDialog.resx" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ChangeLogDialog.de.resx">

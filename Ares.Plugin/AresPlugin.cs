@@ -260,6 +260,21 @@ namespace Ares.Plugin
             m_PlayingControl.SelectMusicElement(musicId);
         }
 
+        public Ares.Data.IProject GetCurrentProject()
+        {
+            return m_Project;
+        }
+
+        public String GetProjectsDirectory()
+        {
+            String oldPath = m_Project != null ? m_Project.FileName : System.Environment.CurrentDirectory;
+            if (m_Project != null)
+            {
+                oldPath = System.IO.Directory.GetParent(oldPath).FullName;
+            }
+            return oldPath;
+        }
+
         private void OpenProject(String filePath, bool fromController)
         {
             if (m_Project != null)
@@ -268,7 +283,7 @@ namespace Ares.Plugin
                 {
                     if (m_Network != null)
                     {
-                        m_Network.InformClientOfProject(m_Project.Title);
+                        m_Network.InformClientOfProject(m_Project);
                     }
                     return;
                 }
@@ -301,7 +316,11 @@ namespace Ares.Plugin
             DoModelChecks();
             if (m_Network != null)
             {
-                m_Network.InformClientOfProject(m_Project != null ? m_Project.Title : String.Empty);
+                m_Network.InformClientOfProject(m_Project);
+                if (m_Project != null)
+                {
+                    m_Network.InformClientOfPossibleTags(m_TagLanguageId, m_Project);
+                }
             }
         }
 

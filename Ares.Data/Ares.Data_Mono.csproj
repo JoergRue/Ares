@@ -73,7 +73,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Mono_Release|AnyCPU' ">
     <DebugType>none</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\bin\Mono Release</OutputPath>
+    <OutputPath>..\bin\Mono_Release</OutputPath>
     <DefineConstants>MONO</DefineConstants>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>

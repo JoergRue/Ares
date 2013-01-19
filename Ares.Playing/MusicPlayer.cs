@@ -576,6 +576,12 @@ namespace Ares.Playing
                 ErrorHandling.ErrorOccurred(-1, String.Format(StringResources.TagsDbError, ex.Message));
                 choices = new List<String>();
             }
+            List<String> newChoices = new List<string>();
+            foreach (String file in choices)
+            {
+                newChoices.Add(file.Replace('\\', System.IO.Path.DirectorySeparatorChar));
+            }
+            choices = newChoices;
             bool mustChange = false;
             lock (m_SyncObject)
             {

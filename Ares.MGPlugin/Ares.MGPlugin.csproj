@@ -160,8 +160,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>"c:\program files (x86)\microsoft\ilmerge\ilmerge.exe" /copyattrs /internalize /keyfile:$(ProjectDir)Ares.snk /targetplatform:v4 /out:$(TargetDir)Ares.MeisterGeisterPlugin.dll $(TargetDir)Ares.MGPlugin.dll $(TargetDir)Ares.Data.dll $(TargetDir)Ares.Online.dll $(TargetDir)Ares.Controllers.dll
-"c:\program files (x86)\microsoft\ilmerge\ilmerge.exe" /copyattrs /internalize /keyfile:$(ProjectDir)Ares.snk /targetplatform:v4 /out:$(TargetDir)de\Ares.MeisterGeisterPlugin.resources.dll $(TargetDir)de\Ares.MGPlugin.resources.dll $(TargetDir)de\Ares.Data.resources.dll $(TargetDir)de\Ares.Online.resources.dll</PostBuildEvent>
+    <PostBuildEvent>"c:\program files (x86)\microsoft\ilmerge\ilmerge.exe" /copyattrs /internalize /keyfile:$(ProjectDir)Ares.snk /targetplatform:v4 /out:$(TargetDir)Ares.MeisterGeisterPlugin.dll $(TargetDir)Ares.MGPlugin.dll $(TargetDir)Ares.Online.dll $(TargetDir)Ares.Controllers.dll
+"c:\program files (x86)\microsoft\ilmerge\ilmerge.exe" /copyattrs /internalize /keyfile:$(ProjectDir)Ares.snk /targetplatform:v4 /out:$(TargetDir)de\Ares.MeisterGeisterPlugin.resources.dll $(TargetDir)de\Ares.MGPlugin.resources.dll $(TargetDir)de\Ares.Online.resources.dll</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

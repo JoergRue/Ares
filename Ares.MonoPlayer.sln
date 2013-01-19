@@ -15,12 +15,24 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ares.Player_Mono", "Ares.Pl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ares.Online_Mono", "Ares.Online\Ares.Online_Mono.csproj", "{7550AD48-17A5-45BF-A632-B75EB82123DD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ares.Tags_Mono", "Ares.Tags\Ares.Tags_Mono.csproj", "{42A8F91D-6E6B-4740-AC3F-99A34074E695}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Mono_Debug|Any CPU = Mono_Debug|Any CPU
 		Mono_Release|Any CPU = Mono_Release|Any CPU
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{42A8F91D-6E6B-4740-AC3F-99A34074E695}.Debug|Any CPU.ActiveCfg = Mono_Debug|Any CPU
+		{42A8F91D-6E6B-4740-AC3F-99A34074E695}.Debug|Any CPU.Build.0 = Mono_Debug|Any CPU
+		{42A8F91D-6E6B-4740-AC3F-99A34074E695}.Mono_Debug|Any CPU.ActiveCfg = Mono_Debug|Any CPU
+		{42A8F91D-6E6B-4740-AC3F-99A34074E695}.Mono_Debug|Any CPU.Build.0 = Mono_Debug|Any CPU
+		{42A8F91D-6E6B-4740-AC3F-99A34074E695}.Mono_Release|Any CPU.ActiveCfg = Mono_Release|Any CPU
+		{42A8F91D-6E6B-4740-AC3F-99A34074E695}.Mono_Release|Any CPU.Build.0 = Mono_Release|Any CPU
+		{42A8F91D-6E6B-4740-AC3F-99A34074E695}.Release|Any CPU.ActiveCfg = Mono_Release|Any CPU
+		{42A8F91D-6E6B-4740-AC3F-99A34074E695}.Release|Any CPU.Build.0 = Mono_Release|Any CPU
 		{50EA19EE-5337-499C-8B7B-1B22EA9E24A6}.Mono_Debug|Any CPU.ActiveCfg = Mono_Debug|Any CPU
 		{50EA19EE-5337-499C-8B7B-1B22EA9E24A6}.Mono_Debug|Any CPU.Build.0 = Mono_Debug|Any CPU
 		{50EA19EE-5337-499C-8B7B-1B22EA9E24A6}.Mono_Release|Any CPU.ActiveCfg = Mono_Release|Any CPU
