@@ -309,7 +309,7 @@ namespace Ares.Tags
         /// Adds all entries of the given database
         /// to the currently opened database.
         /// </summary>
-        void ImportDatabase(String filePath);
+        void ImportDatabase(String filePath, System.IO.TextWriter logStream);
 
         /// <summary>
         /// Exports the part of the database relevant to the given files.

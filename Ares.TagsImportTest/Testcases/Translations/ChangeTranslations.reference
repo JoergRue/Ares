@@ -1,0 +1,45 @@
+Found language en (imported id 1) with id 1
+Found language de (imported id 2) with id 2
+Found language fr (imported id 3) with id 3
+Found language es (imported id 4) with id 4
+Translation 'English' for language 1 already exists
+Translation 'Englisch' for language 1 already exists
+Changing language translation for language 1 into language 3 from 'Anglais' to 'Anglais2'
+Translation 'Inglés' for language 1 already exists
+Changing language translation for language 2 into language 1 from 'German' to 'German2'
+Changing language translation for language 2 into language 2 from 'Deutsch' to 'Deutsch2'
+Changing language translation for language 2 into language 3 from 'Allemand' to 'Allemand2'
+Changing language translation for language 2 into language 4 from 'Aléman' to 'Aléman2'
+Translation 'French' for language 3 already exists
+Translation 'Französisch' for language 3 already exists
+Changing language translation for language 3 into language 3 from 'Français' to 'Français2'
+Translation 'Francés' for language 3 already exists
+Translation 'Spanish' for language 4 already exists
+Translation 'Spanisch' for language 4 already exists
+Changing language translation for language 4 into language 3 from 'Espagnol' to 'Espagnol2'
+Translation 'Castellano' for language 4 already exists
+Found existing category 3 for imported category 3
+Translation 'Place' for category 3 already exists
+Changing category translation for language 3 into language 2 from 'Ort' to 'Ort2'
+Translation 'Lieu' for category 3 already exists
+Translation 'Lugar' for category 3 already exists
+Added category Situation2 (language 1, new Id 4) for Id 2
+Translation 'Situation2' for category 4 already exists
+Adding category translation 'Situation2' for language 4 into language 2
+Adding category translation 'Situation2' for language 4 into language 3
+Adding category translation 'Situación2' for language 4 into language 4
+Found existing tag 7 for imported tag 7
+Translation 'Orient' for tag 7 already exists
+Translation 'Orient' for tag 7 already exists
+Translation 'Orient' for tag 7 already exists
+Changing tag translation for language 7 into language 4 from 'Oriente' to 'Oriente2'
+Added tag Fight2 (language 1, new Id 10) for Id 4
+Translation 'Fight2' for tag 10 already exists
+Adding tag translation 'Kampf2' for language 10 into language 2
+Adding tag translation 'Combat2' for language 10 into language 3
+Adding tag translation 'Combate2' for language 10 into language 4
+Found existing id 21 for imported file Erdenstern\Into The Gold\21 - Guardian.mp3
+Found existing id 11 for imported file Erdenstern\Into The Gold\11 - Mirage.mp3
+Tag 7 already assigned to file 11
+Tag 7 already assigned to file 21
+Assigned tag 10 to file 21

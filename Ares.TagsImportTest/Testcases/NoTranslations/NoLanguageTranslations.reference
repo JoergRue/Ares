@@ -1,0 +1,3 @@
+Found language en (imported id 1) with id 1
+Found language de (imported id 2) with id 2
+Exception occured: Ares.Tags.TagsDbException; A language must have a name in its own language

@@ -1,0 +1,49 @@
+Found language en (imported id 0) with id 1
+Found language de (imported id 2) with id 2
+Found language fr (imported id 3) with id 3
+Found language es (imported id 4) with id 4
+WARNING: Language id 1 for language translation 'English' not found
+Translation 'Englisch' for language 1 already exists
+Translation 'Anglais' for language 1 already exists
+Translation 'Inglés' for language 1 already exists
+WARNING: Language id 1 for language translation 'German' not found
+Translation 'Deutsch' for language 2 already exists
+Translation 'Allemand' for language 2 already exists
+Translation 'Aléman' for language 2 already exists
+WARNING: Language id 1 for language translation 'French' not found
+Translation 'Französisch' for language 3 already exists
+Translation 'Français' for language 3 already exists
+Translation 'Francés' for language 3 already exists
+WARNING: Language id 1 for language translation 'Spanish' not found
+Translation 'Spanisch' for language 4 already exists
+Translation 'Espagnol' for language 4 already exists
+Translation 'Castellano' for language 4 already exists
+WARNING: Language id 1 for category translation 'Place' not found
+Found existing category 3 for imported category 3
+WARNING: Language id 1 for category translation 'Place' not found
+Translation 'Ort' for category 3 already exists
+Translation 'Lieu' for category 3 already exists
+Translation 'Lugar' for category 3 already exists
+WARNING: Language id 1 for category translation 'Situation' not found
+Found existing category 2 for imported category 2
+WARNING: Language id 1 for category translation 'Situation' not found
+Translation 'Situation' for category 2 already exists
+Translation 'Situation' for category 2 already exists
+Translation 'Situación' for category 2 already exists
+WARNING: Language id 1 for tag translation 'Orient' not found
+Found existing tag 7 for imported tag 7
+WARNING: Language id 1 for tag translation 'Orient' not found
+Translation 'Orient' for tag 7 already exists
+Translation 'Orient' for tag 7 already exists
+Translation 'Oriente' for tag 7 already exists
+WARNING: Language id 1 for tag translation 'Fight' not found
+Found existing tag 4 for imported tag 4
+WARNING: Language id 1 for tag translation 'Fight' not found
+Translation 'Kampf' for tag 4 already exists
+Translation 'Combat' for tag 4 already exists
+Translation 'Combate' for tag 4 already exists
+Found existing id 21 for imported file Erdenstern\Into The Gold\21 - Guardian.mp3
+Found existing id 11 for imported file Erdenstern\Into The Gold\11 - Mirage.mp3
+Tag 7 already assigned to file 11
+Tag 7 already assigned to file 21
+Tag 4 already assigned to file 21

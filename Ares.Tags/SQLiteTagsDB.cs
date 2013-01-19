@@ -42,6 +42,7 @@ namespace Ares.Tags
         public static readonly String TAGS_TABLE = "Tags";
         public static readonly String TAGNAMES_TABLE = "TagNames";
         public static readonly String FILETAGS_TABLE = "FileTags";
+        public static readonly String FILEEXPORT_TABLE = "FileExport";
 
         public static readonly String VERSION_COLUMN = "version";
 

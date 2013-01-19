@@ -1,0 +1,35 @@
+Found language en (imported id 1) with id 1
+Found language de (imported id 2) with id 2
+Found language fr (imported id 3) with id 3
+Found language es (imported id 4) with id 4
+Translation 'English' for language 1 already exists
+Translation 'Englisch' for language 1 already exists
+Translation 'Anglais' for language 1 already exists
+Translation 'Inglés' for language 1 already exists
+Translation 'German' for language 2 already exists
+Translation 'Deutsch' for language 2 already exists
+Translation 'Allemand' for language 2 already exists
+Translation 'Aléman' for language 2 already exists
+Translation 'French' for language 3 already exists
+Translation 'Französisch' for language 3 already exists
+Translation 'Français' for language 3 already exists
+Translation 'Francés' for language 3 already exists
+Translation 'Spanish' for language 4 already exists
+Translation 'Spanisch' for language 4 already exists
+Translation 'Espagnol' for language 4 already exists
+Translation 'Castellano' for language 4 already exists
+Found existing category 3 for imported category 3
+Translation 'Place' for category 3 already exists
+Translation 'Ort' for category 3 already exists
+Translation 'Lieu' for category 3 already exists
+Translation 'Lugar' for category 3 already exists
+Found existing category 2 for imported category 2
+Translation 'Situation' for category 2 already exists
+Translation 'Situation' for category 2 already exists
+Translation 'Situation' for category 2 already exists
+Translation 'Situación' for category 2 already exists
+Found existing id 21 for imported file Erdenstern\Into The Gold\21 - Guardian.mp3
+Found existing id 11 for imported file Erdenstern\Into The Gold\11 - Mirage.mp3
+WARNING: Unknown tag 7 for file 11; ignoring assignment
+WARNING: Unknown tag 7 for file 21; ignoring assignment
+WARNING: Unknown tag 4 for file 21; ignoring assignment

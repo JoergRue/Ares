@@ -1,0 +1,45 @@
+Found language en (imported id 10) with id 1
+Found language de (imported id 20) with id 2
+Found language fr (imported id 30) with id 3
+Found language es (imported id 40) with id 4
+WARNING: Language id 1 for language translation 'English' not found
+WARNING: Language id 2 for language translation 'Englisch' not found
+WARNING: Language id 3 for language translation 'Anglais' not found
+WARNING: Language id 4 for language translation 'Inglés' not found
+WARNING: Language id 1 for language translation 'German' not found
+WARNING: Language id 2 for language translation 'Deutsch' not found
+WARNING: Language id 3 for language translation 'Allemand' not found
+WARNING: Language id 4 for language translation 'Aléman' not found
+WARNING: Language id 1 for language translation 'French' not found
+WARNING: Language id 2 for language translation 'Französisch' not found
+WARNING: Language id 3 for language translation 'Français' not found
+WARNING: Language id 4 for language translation 'Francés' not found
+WARNING: Language id 1 for language translation 'Spanish' not found
+WARNING: Language id 2 for language translation 'Spanisch' not found
+WARNING: Language id 3 for language translation 'Espagnol' not found
+WARNING: Language id 4 for language translation 'Castellano' not found
+WARNING: Language id 1 for category translation 'Place' not found
+WARNING: Language id 2 for category translation 'Ort' not found
+WARNING: Language id 3 for category translation 'Lieu' not found
+WARNING: Language id 4 for category translation 'Lugar' not found
+WARNING: No usable translation found for category 3; ignoring category
+WARNING: Language id 1 for category translation 'Situation' not found
+WARNING: Language id 2 for category translation 'Situation' not found
+WARNING: Language id 3 for category translation 'Situation' not found
+WARNING: Language id 4 for category translation 'Situación' not found
+WARNING: No usable translation found for category 2; ignoring category
+WARNING: Language id 1 for tag translation 'Orient' not found
+WARNING: Language id 2 for tag translation 'Orient' not found
+WARNING: Language id 3 for tag translation 'Orient' not found
+WARNING: Language id 4 for tag translation 'Oriente' not found
+WARNING: Unknown category 3 for imported tag 7 and no matching tags found. Skipping tag.
+WARNING: Language id 1 for tag translation 'Fight' not found
+WARNING: Language id 2 for tag translation 'Kampf' not found
+WARNING: Language id 3 for tag translation 'Combat' not found
+WARNING: Language id 4 for tag translation 'Combate' not found
+WARNING: Unknown category 2 for imported tag 4 and no matching tags found. Skipping tag.
+Found existing id 21 for imported file Erdenstern\Into The Gold\21 - Guardian.mp3
+Found existing id 11 for imported file Erdenstern\Into The Gold\11 - Mirage.mp3
+WARNING: Unknown tag 7 for file 11; ignoring assignment
+WARNING: Unknown tag 7 for file 21; ignoring assignment
+WARNING: Unknown tag 4 for file 21; ignoring assignment

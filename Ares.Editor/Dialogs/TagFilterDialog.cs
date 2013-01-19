@@ -93,7 +93,6 @@ namespace Ares.Editor.Dialogs
 
         private IList<CategoryForLanguage> m_Categories;
         private IList<TagForLanguage> m_Tags;
-        private IList<LanguageForLanguage> m_Languages;
         private int m_SelectedCategoryId = -1;
 
         private void UpdateControls()

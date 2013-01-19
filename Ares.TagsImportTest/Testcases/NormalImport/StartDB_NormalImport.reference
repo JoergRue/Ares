@@ -1,0 +1,316 @@
+Found language en (imported id 1) with id 1
+Found language de (imported id 2) with id 2
+Found language fr (imported id 3) with id 3
+Found language es (imported id 4) with id 4
+Translation 'English' for language 1 already exists
+Translation 'Englisch' for language 1 already exists
+Translation 'Anglais' for language 1 already exists
+Translation 'Inglés' for language 1 already exists
+Translation 'German' for language 2 already exists
+Translation 'Deutsch' for language 2 already exists
+Translation 'Allemand' for language 2 already exists
+Translation 'Aléman' for language 2 already exists
+Translation 'French' for language 3 already exists
+Translation 'Französisch' for language 3 already exists
+Translation 'Français' for language 3 already exists
+Translation 'Francés' for language 3 already exists
+Translation 'Spanish' for language 4 already exists
+Translation 'Spanisch' for language 4 already exists
+Translation 'Espagnol' for language 4 already exists
+Translation 'Castellano' for language 4 already exists
+Added category Interpret (language 2, new Id 4) for Id 4
+Translation 'Interpret' for category 4 already exists
+Added category Album (language 2, new Id 5) for Id 5
+Translation 'Album' for category 5 already exists
+Added category Genre (language 2, new Id 6) for Id 6
+Translation 'Genre' for category 6 already exists
+Added tag Christoph Sachal (language 2, new Id 10) for Id 14
+Translation 'Christoph Sachal' for tag 10 already exists
+Added tag Shades Of Death (language 2, new Id 11) for Id 136
+Translation 'Shades Of Death' for tag 11 already exists
+Added tag Instrumental (language 2, new Id 12) for Id 255
+Translation 'Instrumental' for tag 12 already exists
+Added tag Das schwarze Auge (language 2, new Id 13) for Id 18
+Translation 'Das schwarze Auge' for tag 13 already exists
+Added tag Das schwarze Auge  -Drakensang Soundtrack (language 2, new Id 14) for Id 137
+Translation 'Das schwarze Auge  -Drakensang Soundtrack' for tag 14 already exists
+Added tag soundtrack (language 2, new Id 15) for Id 252
+Translation 'soundtrack' for tag 15 already exists
+Added tag DSA3 - Schatten über Riva (language 2, new Id 16) for Id 159
+Translation 'DSA3 - Schatten über Riva' for tag 16 already exists
+Added tag Fantasy (language 2, new Id 17) for Id 258
+Translation 'Fantasy' for tag 17 already exists
+Added tag Soundtracks (language 2, new Id 18) for Id 13
+Translation 'Soundtracks' for tag 18 already exists
+Added tag Earthsea (language 2, new Id 19) for Id 172
+Translation 'Earthsea' for tag 19 already exists
+Added tag Erdenstern (language 2, new Id 20) for Id 72
+Translation 'Erdenstern' for tag 20 already exists
+Added tag Die Chronik Aventuriens (language 2, new Id 21) for Id 180
+Translation 'Die Chronik Aventuriens' for tag 21 already exists
+Added tag Alan Stivell (language 2, new Id 22) for Id 80
+Translation 'Alan Stivell' for tag 22 already exists
+Added tag Renaissance Of The Celtic Harp (language 2, new Id 23) for Id 195
+Translation 'Renaissance Of The Celtic Harp' for tag 23 already exists
+Added tag Folk (language 2, new Id 24) for Id 265
+Translation 'Folk' for tag 24 already exists
+Added tag Will Loconto (language 2, new Id 25) for Id 53
+Translation 'Will Loconto' for tag 25 already exists
+Added tag Daikatana (language 2, new Id 26) for Id 163
+Translation 'Daikatana' for tag 26 already exists
+Added tag Unknown (language 2, new Id 27) for Id 250
+Translation 'Unknown' for tag 27 already exists
+Added tag Enya (language 2, new Id 28) for Id 81
+Translation 'Enya' for tag 28 already exists
+Added tag The Celts (language 2, new Id 29) for Id 196
+Translation 'The Celts' for tag 29 already exists
+Added tag New Age (language 2, new Id 30) for Id 266
+Translation 'New Age' for tag 30 already exists
+Added tag Lands of Lore III (language 2, new Id 31) for Id 197
+Translation 'Lands of Lore III' for tag 31 already exists
+Added tag Tangerine Dream (language 2, new Id 32) for Id 55
+Translation 'Tangerine Dream' for tag 32 already exists
+Added tag Legend Soundtrack (language 2, new Id 33) for Id 165
+Translation 'Legend Soundtrack' for tag 33 already exists
+Added tag Earwax Studios (language 2, new Id 34) for Id 82
+Translation 'Earwax Studios' for tag 34 already exists
+Added tag Loom - The Audio Drama CD (language 2, new Id 35) for Id 198
+Translation 'Loom - The Audio Drama CD' for tag 35 already exists
+Added tag George A. Sanger (language 2, new Id 36) for Id 83
+Translation 'George A. Sanger' for tag 36 already exists
+Added tag Loom (language 2, new Id 37) for Id 199
+Translation 'Loom' for tag 37 already exists
+Added tag Might and Magic 6 (language 2, new Id 38) for Id 47
+Translation 'Might and Magic 6' for tag 38 already exists
+Added tag Mandate of Heaven (language 2, new Id 39) for Id 151
+Translation 'Mandate of Heaven' for tag 39 already exists
+Added tag Peter Gabriel (language 2, new Id 40) for Id 56
+Translation 'Peter Gabriel' for tag 40 already exists
+Added tag Birdy (language 2, new Id 41) for Id 167
+Translation 'Birdy' for tag 41 already exists
+Added tag www.dynamedion.com (language 2, new Id 42) for Id 84
+Translation 'www.dynamedion.com' for tag 42 already exists
+Added tag Origin Systems (language 2, new Id 43) for Id 59
+Translation 'Origin Systems' for tag 43 already exists
+Added tag Ultima IX Ascension Soundtrack (language 2, new Id 44) for Id 171
+Translation 'Ultima IX Ascension Soundtrack' for tag 44 already exists
+Added tag Kevin Manthei, kmmproductions.com (language 2, new Id 45) for Id 85
+Translation 'Kevin Manthei, kmmproductions.com' for tag 45 already exists
+Added tag Wizardry 8 Game Soundtrack (language 2, new Id 46) for Id 200
+Translation 'Wizardry 8 Game Soundtrack' for tag 46 already exists
+Added tag Game (language 2, new Id 47) for Id 259
+Translation 'Game' for tag 47 already exists
+Added tag Into The Green (language 2, new Id 48) for Id 203
+Translation 'Into The Green' for tag 48 already exists
+Added tag Into The Red (language 2, new Id 49) for Id 204
+Translation 'Into The Red' for tag 49 already exists
+Added tag Knut A. Haugen (language 2, new Id 50) for Id 95
+Translation 'Knut A. Haugen' for tag 50 already exists
+Added tag Age of Conan CE Soundtrack (language 2, new Id 51) for Id 213
+Translation 'Age of Conan CE Soundtrack' for tag 51 already exists
+Added tag Matthias Harnitz (language 2, new Id 52) for Id 102
+Translation 'Matthias Harnitz' for tag 52 already exists
+Added tag Geistersang & Lautenklang (language 2, new Id 53) for Id 218
+Translation 'Geistersang & Lautenklang' for tag 53 already exists
+Added tag Various Artists (language 2, new Id 54) for Id 57
+Translation 'Various Artists' for tag 54 already exists
+Added tag Mythos Alte Musik (language 2, new Id 55) for Id 239
+Translation 'Mythos Alte Musik' for tag 55 already exists
+Added tag Classical (language 2, new Id 56) for Id 257
+Translation 'Classical' for tag 56 already exists
+Added tag Rob Roy (language 2, new Id 57) for Id 191
+Translation 'Rob Roy' for tag 57 already exists
+Added tag Poeta Magica (language 2, new Id 58) for Id 119
+Translation 'Poeta Magica' for tag 58 already exists
+Added tag Minne Mystik Meistersang (language 2, new Id 59) for Id 240
+Translation 'Minne Mystik Meistersang' for tag 59 already exists
+Added tag Carsten Kaiser (language 2, new Id 60) for Id 40
+Translation 'Carsten Kaiser' for tag 60 already exists
+Added tag Schwerterstich & Fackellicht (language 2, new Id 61) for Id 153
+Translation 'Schwerterstich & Fackellicht' for tag 61 already exists
+Added tag Ultima 9 (language 2, new Id 62) for Id 154
+Translation 'Ultima 9' for tag 62 already exists
+Added tag Ultima X- Odyssey (language 2, new Id 63) for Id 123
+Translation 'Ultima X- Odyssey' for tag 63 already exists
+Added tag Soundtrack (language 2, new Id 64) for Id 174
+Translation 'Soundtrack' for tag 64 already exists
+Added tag genre (language 2, new Id 65) for Id 271
+Translation 'genre' for tag 65 already exists
+Added tag Vangelis (language 2, new Id 66) for Id 124
+Translation 'Vangelis' for tag 66 already exists
+Added tag Portraits {So Long Ago, So Clear} (language 2, new Id 67) for Id 245
+Translation 'Portraits {So Long Ago, So Clear}' for tag 67 already exists
+Insert new file Matthias Harnitz\Geistersang & Lautenklang\08 - Zum Schwarzen Keiler.mp3 with id 1 (imported id 571)
+Insert new file Christoph Sachal\Trailermusic.mp3 with id 2 (imported id 1558)
+Insert new file uxo\Townlife.mp3 with id 3 (imported id 143)
+Insert new file uxo\Rule City.mp3 with id 4 (imported id 140)
+Insert new file Into The Green\03 - The Tavern.mp3 with id 5 (imported id 828)
+Insert new file Into The Green\05 - At The Fair.mp3 with id 6 (imported id 830)
+Insert new file Into The Red\03 - Dances.mp3 with id 7 (imported id 787)
+Insert new file Earthsea\Earthsea-19-Wonderful Friend.mp3 with id 8 (imported id 85)
+Insert new file Tavern\Earthsea-19-Wonderful Friend.mp3 with id 9 (imported id 258)
+Insert new file Tavern\Ens Unicorn - Saltarello 2.mp3 with id 10 (imported id 259)
+Insert new file Tavern\OST-RobRoy-06-The Gaelic Reels [perf. by Capercaillie].mp3 with id 11 (imported id 260)
+Insert new file Tavern\OST-RobRoy-12-The Blunt Reels [perf. by Capercaillie].mp3 with id 12 (imported id 261)
+Insert new file Tavern\Poeta Magica - MMM - 12 Brudmarsch fran Dalsland.mp3 with id 13 (imported id 262)
+Insert new file Tavern\Schwerterstich&Fackellicht-01-Tanz auf dem Marktplatz.mp3 with id 14 (imported id 263)
+Insert new file Tavern\Ultima9 - PubTune.mp3 with id 15 (imported id 264)
+Insert new file Das schwarze Auge\Das schwarze Auge  -Drakensang Soundtrack\05-Spelunken und Tavernen.mp3 with id 16 (imported id 1478)
+Insert new file Erdenstern\Die Chronik Aventuriens\02 Im Wirtshaus zum Schwarzen Keiler.mp3 with id 17 (imported id 992)
+Insert new file DSA3 - Schatten Über Riva\06 Taverne.mp3 with id 18 (imported id 1188)
+Insert new file Christoph Sachal\End Credits.mp3 with id 19 (imported id 1551)
+Insert new file Matthias Harnitz\Geistersang & Lautenklang\07 - Gebet und Heilung.mp3 with id 20 (imported id 570)
+Insert new file Vangelis\Portraits {So Long Ago, So Clear}\11 - Hymn.mp3 with id 21 (imported id 138)
+Insert new file Vangelis\Portraits {So Long Ago, So Clear}\10 - Conquest Of Paradise.mp3 with id 22 (imported id 137)
+Insert new file Into The Green\04 - The Quest.mp3 with id 23 (imported id 829)
+Insert new file Into The Green\07 - Lore.mp3 with id 24 (imported id 832)
+Insert new file Into The Red\15 - House of Healing.ogg with id 25 (imported id 811)
+Insert new file Earthsea\Earthsea-03-Ged And His Teacher.mp3 with id 26 (imported id 77)
+Insert new file Earthsea\Earthsea-04-Follow Your Path.mp3 with id 27 (imported id 78)
+Insert new file Earthsea\Earthsea-12-Atuan.mp3 with id 28 (imported id 81)
+Insert new file Earthsea\Earthsea-15-Fireside.mp3 with id 29 (imported id 82)
+Insert new file Earthsea\Earthsea-30-My Successor.mp3 with id 30 (imported id 94)
+Insert new file Earthsea\Earthsea-31-The Last Song.mp3 with id 31 (imported id 95)
+Insert new file Healer,Prayer,Rest\Alan Stivell - RotCH - 02 Marv Pontkalleg.mp3 with id 32 (imported id 885)
+Insert new file Healer,Prayer,Rest\Daikatana - Choice of Path.mp3 with id 33 (imported id 886)
+Insert new file Healer,Prayer,Rest\Enya - The Celts - 12 Boadicae.mp3 with id 34 (imported id 887)
+Insert new file Healer,Prayer,Rest\Lands of Lore III.mp3 with id 35 (imported id 888)
+Insert new file Healer,Prayer,Rest\Legend - 03 Cottage.mp3 with id 36 (imported id 889)
+Insert new file Healer,Prayer,Rest\Loom - Flight Of The Swan.mp3 with id 37 (imported id 890)
+Insert new file Healer,Prayer,Rest\Loom - The Cathedral.mp3 with id 38 (imported id 891)
+Insert new file Healer,Prayer,Rest\MM6 - Track 17.mp3 with id 39 (imported id 892)
+Insert new file Healer,Prayer,Rest\Peter Gabriel - Birdy - 03 - Quiet And Alone-Healer,Prayer.mp3 with id 40 (imported id 893)
+Insert new file Healer,Prayer,Rest\Peter Gabriel - Birdy - 08 - Slow Marimbas-Healer,Prayer.mp3 with id 41 (imported id 894)
+Insert new file Healer,Prayer,Rest\Spellforce-Sharrowdale.mp3 with id 42 (imported id 895)
+Insert new file Healer,Prayer,Rest\Ultima9 - Walking.mp3 with id 43 (imported id 896)
+Insert new file Healer,Prayer,Rest\Wizardry8 - Arnika Theme.mp3 with id 44 (imported id 897)
+Insert new file Das schwarze Auge\Das schwarze Auge  -Drakensang Soundtrack\24-Prehnshain.mp3 with id 45 (imported id 1497)
+Insert new file Knut A. Haugen\Age of Conan CE Soundtrack\07-The Vista from Mount Crom.mp3 with id 46 (imported id 637)
+Assigned tag 18 to file 26
+Assigned tag 19 to file 26
+Assigned tag 15 to file 26
+Assigned tag 18 to file 27
+Assigned tag 19 to file 27
+Assigned tag 15 to file 27
+Assigned tag 18 to file 28
+Assigned tag 19 to file 28
+Assigned tag 15 to file 28
+Assigned tag 18 to file 29
+Assigned tag 19 to file 29
+Assigned tag 15 to file 29
+Assigned tag 18 to file 8
+Assigned tag 19 to file 8
+Assigned tag 15 to file 8
+Assigned tag 18 to file 30
+Assigned tag 19 to file 30
+Assigned tag 15 to file 30
+Assigned tag 18 to file 31
+Assigned tag 19 to file 31
+Assigned tag 15 to file 31
+Assigned tag 66 to file 22
+Assigned tag 67 to file 22
+Assigned tag 30 to file 22
+Assigned tag 66 to file 21
+Assigned tag 67 to file 21
+Assigned tag 30 to file 21
+Assigned tag 63 to file 4
+Assigned tag 64 to file 4
+Assigned tag 65 to file 4
+Assigned tag 63 to file 3
+Assigned tag 64 to file 3
+Assigned tag 65 to file 3
+Assigned tag 18 to file 9
+Assigned tag 19 to file 9
+Assigned tag 15 to file 9
+Assigned tag 54 to file 10
+Assigned tag 55 to file 10
+Assigned tag 56 to file 10
+Assigned tag 18 to file 11
+Assigned tag 57 to file 11
+Assigned tag 15 to file 11
+Assigned tag 18 to file 12
+Assigned tag 57 to file 12
+Assigned tag 15 to file 12
+Assigned tag 58 to file 13
+Assigned tag 59 to file 13
+Assigned tag 27 to file 13
+Assigned tag 60 to file 14
+Assigned tag 61 to file 14
+Assigned tag 15 to file 14
+Assigned tag 62 to file 15
+Assigned tag 27 to file 15
+Assigned tag 52 to file 20
+Assigned tag 53 to file 20
+Assigned tag 27 to file 20
+Assigned tag 52 to file 1
+Assigned tag 53 to file 1
+Assigned tag 27 to file 1
+Assigned tag 50 to file 46
+Assigned tag 51 to file 46
+Assigned tag 15 to file 46
+Assigned tag 20 to file 7
+Assigned tag 49 to file 7
+Assigned tag 20 to file 25
+Assigned tag 49 to file 25
+Assigned tag 20 to file 5
+Assigned tag 48 to file 5
+Assigned tag 20 to file 23
+Assigned tag 48 to file 23
+Assigned tag 20 to file 6
+Assigned tag 48 to file 6
+Assigned tag 20 to file 24
+Assigned tag 48 to file 24
+Assigned tag 22 to file 32
+Assigned tag 23 to file 32
+Assigned tag 24 to file 32
+Assigned tag 25 to file 33
+Assigned tag 26 to file 33
+Assigned tag 27 to file 33
+Assigned tag 28 to file 34
+Assigned tag 29 to file 34
+Assigned tag 30 to file 34
+Assigned tag 31 to file 35
+Assigned tag 27 to file 35
+Assigned tag 32 to file 36
+Assigned tag 33 to file 36
+Assigned tag 27 to file 36
+Assigned tag 34 to file 37
+Assigned tag 35 to file 37
+Assigned tag 15 to file 37
+Assigned tag 36 to file 38
+Assigned tag 37 to file 38
+Assigned tag 15 to file 38
+Assigned tag 38 to file 39
+Assigned tag 39 to file 39
+Assigned tag 27 to file 39
+Assigned tag 40 to file 40
+Assigned tag 41 to file 40
+Assigned tag 15 to file 40
+Assigned tag 40 to file 41
+Assigned tag 41 to file 41
+Assigned tag 15 to file 41
+Assigned tag 42 to file 42
+Assigned tag 15 to file 42
+Assigned tag 43 to file 43
+Assigned tag 44 to file 43
+Assigned tag 15 to file 43
+Assigned tag 45 to file 44
+Assigned tag 46 to file 44
+Assigned tag 47 to file 44
+Assigned tag 20 to file 17
+Assigned tag 21 to file 17
+Assigned tag 15 to file 17
+Assigned tag 13 to file 18
+Assigned tag 16 to file 18
+Assigned tag 17 to file 18
+Assigned tag 13 to file 16
+Assigned tag 14 to file 16
+Assigned tag 15 to file 16
+Assigned tag 13 to file 45
+Assigned tag 14 to file 45
+Assigned tag 15 to file 45
+Assigned tag 10 to file 19
+Assigned tag 11 to file 19
+Assigned tag 12 to file 19
+Assigned tag 10 to file 2
+Assigned tag 12 to file 2

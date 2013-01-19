@@ -58,16 +58,6 @@ namespace Ares.Tags
             NotifyConnectionChanged();
         }
 
-        public void ImportDatabase(string filePath)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ExportDatabase(IList<String> filePaths, String targetFileName)
-        {
-            throw new NotImplementedException();
-        }
-
         public string DefaultFileName
         {
             get { return "Ares.sqlite"; }
@@ -120,6 +110,8 @@ namespace Ares.Tags
             
             m_Connection.Open();
         }
+
+        #region New DB Initialization
 
         private void CreateSchema(SQLiteTransaction transaction)
         {
@@ -228,6 +220,17 @@ namespace Ares.Tags
             {
                 command.ExecuteNonQuery();
             }
+
+            // FileExport table (see export for explanation)
+            using (SQLiteCommand command = new SQLiteCommand(
+                String.Format(createTableCommand, Schema.FILEEXPORT_TABLE)
+                + String.Format(idColumnCommand, Schema.ID_COLUMN) + ", "
+                + String.Format(idRefColumnCommand, Schema.FILE_COLUMN, Schema.FILES_TABLE, Schema.ID_COLUMN) + ", "
+                + String.Format("{0} VARCHAR(500) NOT NULL", Schema.PATH_COLUMN)
+                + ");", m_Connection, transaction))
+            {
+                command.ExecuteNonQuery();
+            }
         }
 
         private void InsertDefaultValues(SQLiteTransaction transaction)
@@ -320,6 +323,8 @@ namespace Ares.Tags
             frWrite.DoSetTagName(id, fr, transaction);
             esWrite.DoSetTagName(id, es, transaction);
         }
+
+        #endregion
 
         private SQLiteConnection m_Connection;
     }

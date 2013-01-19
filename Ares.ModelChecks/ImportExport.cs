@@ -67,7 +67,8 @@ namespace Ares.ModelInfo
                         ZipEntry entry = file[i];
                         if (entry.IsDirectory)
                             continue;
-                        String fileName = GetFileName(entry);
+                        bool isTagsDbFile;
+                        String fileName = GetFileName(entry, out isTagsDbFile);
                         if (fileName == String.Empty)
                         {
                             if (hasInnerFile)
@@ -79,6 +80,10 @@ namespace Ares.ModelInfo
                                 hasInnerFile = true;
                                 overallSize += entry.Size;
                             }
+                        }
+                        else if (isTagsDbFile)
+                        {
+                            overallSize += entry.Size;
                         }
                         else if (System.IO.File.Exists(fileName))
                         {
@@ -163,6 +168,7 @@ namespace Ares.ModelInfo
         void m_Worker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
             ImportData data = (ImportData)e.Argument;
+            String tagsDbFile = String.Empty;
             using (ZipInputStream stream = new ZipInputStream(System.IO.File.OpenRead(data.ImportFile)))
             {
                 ZipEntry entry;
@@ -172,10 +178,15 @@ namespace Ares.ModelInfo
                 String lastFile = String.Empty;
                 while ((entry = stream.GetNextEntry()) != null)
                 {
-                    String fileName = GetFileName(entry);
+                    bool isTagsDBFile;
+                    String fileName = GetFileName(entry, out isTagsDBFile);
                     if (fileName == String.Empty)
                     {
                         fileName = data.TargetFile;
+                    }
+                    else if (isTagsDBFile)
+                    {
+                        tagsDbFile = fileName;
                     }
                     else if (!data.Overwrite && System.IO.File.Exists(fileName))
                     {
@@ -209,6 +220,14 @@ namespace Ares.ModelInfo
                     }
                 }
             }
+            if (!String.IsNullOrEmpty(tagsDbFile))
+            {
+                String logFileName = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "arestagsdbimport.log");
+                using (System.IO.StreamWriter writer = new System.IO.StreamWriter(logFileName))
+                {
+                    Ares.Tags.TagsModule.GetTagsDB().FilesInterface.ImportDatabase(tagsDbFile, writer);
+                }
+            }
         }
 
         class ImportData
@@ -219,20 +238,34 @@ namespace Ares.ModelInfo
             public long OverallSize { get; set; }
         }
 
-        private String GetFileName(ZipEntry entry)
+        private String GetFileName(ZipEntry entry, out bool isTagsDBFile)
         {
             String fileName = String.Empty;
             if (entry.Name.StartsWith(Exporter.MUSIC_DIR))
             {
                 fileName = entry.Name.Substring(Exporter.MUSIC_DIR.Length + 1);
-                fileName = fileName.Replace('/', System.IO.Path.DirectorySeparatorChar);
-                fileName = System.IO.Path.Combine(Settings.Settings.Instance.MusicDirectory, fileName);
+                if (fileName.Equals("aresmusictags.jsv", StringComparison.OrdinalIgnoreCase))
+                {
+                    fileName = System.IO.Path.GetTempFileName();
+                    isTagsDBFile = true;
+                }
+                else
+                {
+                    fileName = fileName.Replace('/', System.IO.Path.DirectorySeparatorChar);
+                    fileName = System.IO.Path.Combine(Settings.Settings.Instance.MusicDirectory, fileName);
+                    isTagsDBFile = false;
+                }
             }
             else if (entry.Name.StartsWith(Exporter.SOUND_DIR))
             {
                 fileName = entry.Name.Substring(Exporter.SOUND_DIR.Length + 1);
                 fileName = fileName.Replace('/', System.IO.Path.DirectorySeparatorChar);
                 fileName = System.IO.Path.Combine(Settings.Settings.Instance.SoundDirectory, fileName);
+                isTagsDBFile = false;
+            }
+            else
+            {
+                isTagsDBFile = false;
             }
             return fileName;
         }
@@ -331,6 +364,8 @@ namespace Ares.ModelInfo
             zipSizes[entry] = size;
             overallSize += size;
 
+            List<String> musicFiles = new List<string>();
+
             // entries for the music and sound files
             Ares.ModelInfo.FileLists fileLists = new Ares.ModelInfo.FileLists();
             foreach (IFileElement element in fileLists.GetAllFiles(data.Data))
@@ -363,6 +398,10 @@ namespace Ares.ModelInfo
                             {
                                 name = element.SoundFileType == SoundFileType.Music ? MUSIC_DIR : SOUND_DIR;
                                 name = System.IO.Path.Combine(name, playlistFile.Substring(pathStart.Length + 1));
+                                if (element.SoundFileType == SoundFileType.Music)
+                                {
+                                    musicFiles.Add(playlistFile.Substring(pathStart.Length + 1));
+                                }
                                 ZipEntry playlistFileEntry = new ZipEntry(ZipEntry.CleanName(name));
                                 SetZipEntryAttributes(playlistFileEntry, playlistFile, out size);
                                 zipEntries[playlistFileEntry] = playlistFile;
@@ -372,7 +411,21 @@ namespace Ares.ModelInfo
                         }
                     }
                 }
+                else if (element.SoundFileType == SoundFileType.Music)
+                {
+                    musicFiles.Add(element.FilePath);
+                }
             }
+
+            // export tags database
+            String tagFileName = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "aresmusictags.jsv");
+            Ares.Tags.TagsModule.GetTagsDB().FilesInterface.ExportDatabase(musicFiles, tagFileName);
+            String tagFileEntryName = System.IO.Path.Combine(MUSIC_DIR, "aresmusictags.jsv");
+            ZipEntry tagFileEntry = new ZipEntry(ZipEntry.CleanName(tagFileEntryName));
+            SetZipEntryAttributes(tagFileEntry, tagFileName, out size);
+            zipEntries[tagFileEntry] = tagFileName;
+            zipSizes[tagFileEntry] = size;
+            overallSize += size;
 
             // now write zip file
             long writtenSize = 0;

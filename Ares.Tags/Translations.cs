@@ -345,8 +345,13 @@ namespace Ares.Tags
 
         private IDictionary<int, String> DoGetTranslations(String tableName, String refColName, String langColName, long refId)
         {
+            return DoGetTranslations(tableName, refColName, langColName, refId, m_Connection, null);
+        }
+
+        internal static IDictionary<int, String> DoGetTranslations(String tableName, String refColName, String langColName, long refId, SQLiteConnection connection, SQLiteTransaction transaction)
+        {
             String getTranslationsCommand = String.Format(GET_TRANSLATIONS_COMMAND, langColName, Schema.NAME_COLUMN, tableName, refColName);
-            using (SQLiteCommand queryCommand = new SQLiteCommand(getTranslationsCommand, m_Connection))
+            using (SQLiteCommand queryCommand = new SQLiteCommand(getTranslationsCommand, connection, transaction))
             {
                 queryCommand.Parameters.AddWithValue("@RefId", refId);
                 SQLiteDataReader reader = queryCommand.ExecuteReader();
@@ -382,8 +387,16 @@ namespace Ares.Tags
 
         private bool DoGetIdOfLanguage(String languageCode, out int id)
         {
+            long lid;
+            bool res = DoGetIdOfLanguage(languageCode, out lid, m_Connection, null);
+            id = (int)lid;
+            return res;
+        }
+
+        internal static bool DoGetIdOfLanguage(String languageCode, out long id, SQLiteConnection connection, SQLiteTransaction transaction)
+        {
             String findLanguageCommand = String.Format(FIND_LANGUAGE_COMMAND, Schema.ID_COLUMN, Schema.LANGUAGE_TABLE, Schema.LC_COLUMN);
-            using (SQLiteCommand command = new SQLiteCommand(findLanguageCommand, m_Connection))
+            using (SQLiteCommand command = new SQLiteCommand(findLanguageCommand, connection))
             {
                 command.Parameters.AddWithValue("@Code", languageCode);
                 Object res = command.ExecuteScalar();

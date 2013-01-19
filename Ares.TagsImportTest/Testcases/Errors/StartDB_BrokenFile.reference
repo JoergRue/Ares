@@ -1,0 +1,134 @@
+Found language en (imported id 1) with id 1
+Found language de (imported id 2) with id 2
+Found language fr (imported id 3) with id 3
+Found language es (imported id 4) with id 4
+Translation 'English' for language 1 already exists
+Translation 'Englisch' for language 1 already exists
+Translation 'Anglais' for language 1 already exists
+Translation 'Inglés' for language 1 already exists
+Translation 'German' for language 2 already exists
+Translation 'Deutsch' for language 2 already exists
+Translation 'Allemand' for language 2 already exists
+Translation 'Aléman' for language 2 already exists
+Translation 'French' for language 3 already exists
+Translation 'Französisch' for language 3 already exists
+Translation 'Français' for language 3 already exists
+Translation 'Francés' for language 3 already exists
+Translation 'Spanish' for language 4 already exists
+Translation 'Spanisch' for language 4 already exists
+Translation 'Espagnol' for language 4 already exists
+Translation 'Castellano' for language 4 already exists
+Added category Interpret (language 2, new Id 4) for Id 4
+Translation 'Interpret' for category 4 already exists
+Added category Album (language 2, new Id 5) for Id 5
+Translation 'Album' for category 5 already exists
+Added category Genre (language 2, new Id 6) for Id 6
+Translation 'Genre' for category 6 already exists
+Added tag Christoph Sachal (language 2, new Id 10) for Id 14
+Translation 'Christoph Sachal' for tag 10 already exists
+Added tag Shades Of Death (language 2, new Id 11) for Id 136
+Translation 'Shades Of Death' for tag 11 already exists
+Added tag Instrumental (language 2, new Id 12) for Id 255
+Translation 'Instrumental' for tag 12 already exists
+Added tag Das schwarze Auge (language 2, new Id 13) for Id 18
+Translation 'Das schwarze Auge' for tag 13 already exists
+Added tag Das schwarze Auge  -Drakensang Soundtrack (language 2, new Id 14) for Id 137
+Translation 'Das schwarze Auge  -Drakensang Soundtrack' for tag 14 already exists
+Added tag soundtrack (language 2, new Id 15) for Id 252
+Translation 'soundtrack' for tag 15 already exists
+Added tag DSA3 - Schatten über Riva (language 2, new Id 16) for Id 159
+Translation 'DSA3 - Schatten über Riva' for tag 16 already exists
+Added tag Fantasy (language 2, new Id 17) for Id 258
+Translation 'Fantasy' for tag 17 already exists
+Added tag Soundtracks (language 2, new Id 18) for Id 13
+Translation 'Soundtracks' for tag 18 already exists
+Added tag Earthsea (language 2, new Id 19) for Id 172
+Translation 'Earthsea' for tag 19 already exists
+Added tag Erdenstern (language 2, new Id 20) for Id 72
+Translation 'Erdenstern' for tag 20 already exists
+Added tag Die Chronik Aventuriens (language 2, new Id 21) for Id 180
+Translation 'Die Chronik Aventuriens' for tag 21 already exists
+Added tag Alan Stivell (language 2, new Id 22) for Id 80
+Translation 'Alan Stivell' for tag 22 already exists
+Added tag Renaissance Of The Celtic Harp (language 2, new Id 23) for Id 195
+Translation 'Renaissance Of The Celtic Harp' for tag 23 already exists
+Added tag Folk (language 2, new Id 24) for Id 265
+Translation 'Folk' for tag 24 already exists
+Added tag Will Loconto (language 2, new Id 25) for Id 53
+Translation 'Will Loconto' for tag 25 already exists
+Added tag Daikatana (language 2, new Id 26) for Id 163
+Translation 'Daikatana' for tag 26 already exists
+Added tag Unknown (language 2, new Id 27) for Id 250
+Translation 'Unknown' for tag 27 already exists
+Added tag Enya (language 2, new Id 28) for Id 81
+Translation 'Enya' for tag 28 already exists
+Added tag The Celts (language 2, new Id 29) for Id 196
+Translation 'The Celts' for tag 29 already exists
+Added tag New Age (language 2, new Id 30) for Id 266
+Translation 'New Age' for tag 30 already exists
+Added tag Lands of Lore III (language 2, new Id 31) for Id 197
+Translation 'Lands of Lore III' for tag 31 already exists
+Added tag Tangerine Dream (language 2, new Id 32) for Id 55
+Translation 'Tangerine Dream' for tag 32 already exists
+Added tag Legend Soundtrack (language 2, new Id 33) for Id 165
+Translation 'Legend Soundtrack' for tag 33 already exists
+Added tag Earwax Studios (language 2, new Id 34) for Id 82
+Translation 'Earwax Studios' for tag 34 already exists
+Added tag Loom - The Audio Drama CD (language 2, new Id 35) for Id 198
+Translation 'Loom - The Audio Drama CD' for tag 35 already exists
+Added tag George A. Sanger (language 2, new Id 36) for Id 83
+Translation 'George A. Sanger' for tag 36 already exists
+Added tag Loom (language 2, new Id 37) for Id 199
+Translation 'Loom' for tag 37 already exists
+Added tag Might and Magic 6 (language 2, new Id 38) for Id 47
+Translation 'Might and Magic 6' for tag 38 already exists
+Added tag Mandate of Heaven (language 2, new Id 39) for Id 151
+Translation 'Mandate of Heaven' for tag 39 already exists
+Added tag Peter Gabriel (language 2, new Id 40) for Id 56
+Translation 'Peter Gabriel' for tag 40 already exists
+Added tag Birdy (language 2, new Id 41) for Id 167
+Translation 'Birdy' for tag 41 already exists
+Added tag www.dynamedion.com (language 2, new Id 42) for Id 84
+Translation 'www.dynamedion.com' for tag 42 already exists
+Added tag Origin Systems (language 2, new Id 43) for Id 59
+Translation 'Origin Systems' for tag 43 already exists
+Added tag Ultima IX Ascension Soundtrack (language 2, new Id 44) for Id 171
+Translation 'Ultima IX Ascension Soundtrack' for tag 44 already exists
+Added tag Kevin Manthei, kmmproductions.com (language 2, new Id 45) for Id 85
+Translation 'Kevin Manthei, kmmproductions.com' for tag 45 already exists
+Added tag Wizardry 8 Game Soundtrack (language 2, new Id 46) for Id 200
+Translation 'Wizardry 8 Game Soundtrack' for tag 46 already exists
+Added tag Game (language 2, new Id 47) for Id 259
+Translation 'Game' for tag 47 already exists
+Added tag Into The Green (language 2, new Id 48) for Id 203
+Translation 'Into The Green' for tag 48 already exists
+Added tag Into The Red (language 2, new Id 49) for Id 204
+Translation 'Into The Red' for tag 49 already exists
+Added tag Knut A. Haugen (language 2, new Id 50) for Id 95
+Translation 'Knut A. Haugen' for tag 50 already exists
+Added tag Age of Conan CE Soundtrack (language 2, new Id 51) for Id 213
+Translation 'Age of Conan CE Soundtrack' for tag 51 already exists
+Added tag Matthias Harnitz (language 2, new Id 52) for Id 102
+Translation 'Matthias Harnitz' for tag 52 already exists
+Added tag Geistersang & Lautenklang (language 2, new Id 53) for Id 218
+Translation 'Geistersang & Lautenklang' for tag 53 already exists
+Added tag Various Artists (language 2, new Id 54) for Id 57
+Translation 'Various Artists' for tag 54 already exists
+Added tag Mythos Alte Musik (language 2, new Id 55) for Id 239
+Translation 'Mythos Alte Musik' for tag 55 already exists
+Added tag Classical (language 2, new Id 56) for Id 257
+Translation 'Classical' for tag 56 already exists
+Added tag Rob Roy (language 2, new Id 57) for Id 191
+Translation 'Rob Roy' for tag 57 already exists
+Added tag Poeta Magica (language 2, new Id 58) for Id 119
+Translation 'Poeta Magica' for tag 58 already exists
+Added tag Minne Mystik Meistersang (language 2, new Id 59) for Id 240
+Translation 'Minne Mystik Meistersang' for tag 59 already exists
+Added tag Carsten Kaiser (language 2, new Id 60) for Id 40
+Translation 'Carsten Kaiser' for tag 60 already exists
+Added tag Schwerterstich & Fackellicht (language 2, new Id 61) for Id 153
+Translation 'Schwerterstich & Fackellicht' for tag 61 already exists
+Added tag Ultima 9 (language 2, new Id 62) for Id 154
+Translation 'Ultima 9' for tag 62 already exists
+WARNING: Ignoring empty name for tag 123 translation into language 2
+WARNING: No usable translation found for tag 123; ignoring tag
