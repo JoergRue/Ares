@@ -1,3 +1,20 @@
+Version 2.0.0
+----------------------------------------------------------------------------------
+- General: Support for music tags
+  - Editor: Tag management window (F5), Set tags through Music Explorer
+    and for music lists, filter Music Explorer through tags
+  - Player / Controllers: Select tags for random music
+  - Macro commands to select tags
+- Editor / Player: faster start when online checking for update is enabled
+- Editor: possibility to use external player for 'preview' playing in 
+  Music Explorer (Extras -> Tools)
+- Editor: can load and show general news from web server at program start
+- Editor: Missing references in inner lists are shown as errors
+- Editor: Bugfix: Crash when starting to edit a random value by keyboard
+- Editor: Bugfix: missing quotes in call of sound file editor 
+- Controllers: get project information from player; in particular makes
+  the Android Controller start faster
+
 Version 1.4.0
 ----------------------------------------------------------------------------------
 - General: Links to lists can be created (Ctrl+Shift+Drag in Project Explorer or 

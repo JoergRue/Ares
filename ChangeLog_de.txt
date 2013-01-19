@@ -1,3 +1,21 @@
+Version 2.0.0
+----------------------------------------------------------------------------------
+- Allgemein: Unterstützung von Musik-Tags
+  - Editor: Fenster zur Tagverwaltung (F5), Setzen von Tags über Musik-Explorer
+    und Musik-Listen, Filtern im Musik-Explorer mittls Tags
+  - Player / Controller: Auswahl von zufälliger Musik über Tags
+  - Makro-Befehle um Tags auszuwählen
+- Editor / Player: schnellerer Start wenn online nach neuer Version gesucht wird
+- Editor: externer Player kann für 'Vorschau'-Hören im Musik-Explorer verwendet
+  werden (Extras -> Werkzeuge)
+- Editor: kann beim Programmstart Neuigkeiten vom Webserver laden und anzeigen
+- Editor: Fehlende Referenzen in verschachtelten Listen werden als Fehler gezeigt
+- Editor: Bugfix: Absturz, wenn man anfing, einen Zufallswert per Tastatur zu 
+  bearbeiten
+- Editor: Bugfix: fehlende Anführungszeichen beim Aufruf des externen Editors
+- Controller: bekommen Projektstruktur vom Player; macht insbesondere den 
+  Start des Android-Controllers deutlich schneller
+
 Version 1.4.0
 ----------------------------------------------------------------------------------
 - Allgemein: Links zu Listen können erstellt werden (Strg+Shift+Drag im Projekt-
