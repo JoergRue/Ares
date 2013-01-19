@@ -69,6 +69,9 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HtmlRenderer">
+      <HintPath>..\Libraries\HtmlRenderer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
     </Reference>
@@ -83,6 +86,12 @@
     </Compile>
     <Compile Include="ChangeLogDialog.Designer.cs">
       <DependentUpon>ChangeLogDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewsDialog.Designer.cs">
+      <DependentUpon>NewsDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="NewVersionDialog.cs">
       <SubType>Form</SubType>
@@ -114,11 +123,20 @@
     <EmbeddedResource Include="ChangeLogDialog.resx">
       <DependentUpon>ChangeLogDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="NewsDialog.de.resx">
+      <DependentUpon>NewsDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewsDialog.resx">
+      <DependentUpon>NewsDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="NewVersionDialog.de.resx">
       <DependentUpon>NewVersionDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="NewVersionDialog.resx">
       <DependentUpon>NewVersionDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProgressDialog.de.resx">
+      <DependentUpon>ProgressDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProgressDialog.resx">
       <DependentUpon>ProgressDialog.cs</DependentUpon>

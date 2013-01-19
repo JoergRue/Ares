@@ -1,12 +1,9 @@
 Tags TODO:
 
 - Mono / Linux
-- Import and Export
 - Help
 
 Non-Tags TODO:
-
-- News from online file
 
 ---------------------
 

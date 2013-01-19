@@ -148,6 +148,9 @@
     <value>Konnte Webseite nicht öffnen. Grund:
 {0}</value>
   </data>
+  <data name="SearchingNews" xml:space="preserve">
+    <value>Suche Neuigkeiten ...</value>
+  </data>
   <data name="SearchingVersion" xml:space="preserve">
     <value>Suche neue Version ...</value>
   </data>

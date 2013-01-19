@@ -953,6 +953,7 @@ namespace Ares.Editor
             if (Settings.Settings.Instance.CheckForUpdate)
             {
                 Ares.Online.OnlineOperations.CheckForUpdate(this, false);
+                Ares.Online.OnlineOperations.CheckForNews(this);
             }
         }
 

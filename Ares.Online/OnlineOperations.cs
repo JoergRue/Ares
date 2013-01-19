@@ -60,10 +60,17 @@ namespace Ares.Online
             DoCheckForUpdate(parent, false, true, false);
         }
 
+        public static void CheckForNews(Form parent)
+        {
+            String url = GetUrlBase() + "ares_news.html";
+            FileDownloader<bool> downloader = new FileDownloader<bool>(parent, false, false);
+            downloader.Download(url, StringResources.SearchingNews, NewsDownloaded);
+        }
+
         private static void DoCheckForUpdate(Form parent, bool mainProgram, bool verbose, bool directDownload)
         {
             String url = GetUrlBase() + "ares_version.txt";
-            FileDownloader<bool> downloader = new FileDownloader<bool>(parent, verbose);
+            FileDownloader<bool> downloader = new FileDownloader<bool>(parent, verbose, verbose);
             if (mainProgram && directDownload)
                 downloader.Download(url, StringResources.SearchingVersion, DownloadMainSetup);
             else if (mainProgram && !directDownload)
@@ -164,6 +171,56 @@ namespace Ares.Online
             DoDownloadSetup(parent, result.Result, main, false);
         }
 
+        private static void NewsDownloaded(System.Net.DownloadStringCompletedEventArgs result, Form parent, bool unused)
+        {
+            if (result.Cancelled)
+                return;
+            if (result.Error != null)
+                return;
+            if (String.IsNullOrEmpty(result.Result))
+                return;
+            bool hasNews = false;
+            String fileName = System.IO.Path.Combine(System.Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Ares");
+            fileName = System.IO.Path.Combine(fileName, "ares_news.html");
+            if (System.IO.File.Exists(fileName))
+            {
+                String fileContent = String.Empty;
+                try
+                {
+                    using (System.IO.StreamReader reader = new System.IO.StreamReader(fileName))
+                    {
+                        fileContent = reader.ReadToEnd();
+                        hasNews = fileContent != result.Result;
+                    }
+                }
+                catch (System.IO.IOException /*ex*/)
+                {
+                    hasNews = true;
+                }
+            }
+            else
+            {
+                hasNews = true;
+            }
+            if (hasNews)
+            {
+                try
+                {
+                    using (System.IO.StreamWriter writer = new System.IO.StreamWriter(fileName))
+                    {
+                        writer.Write(result.Result);
+                        writer.Flush();
+                    }
+                }
+                catch (System.IO.IOException /*ex*/)
+                {
+                }
+                NewsDialog dialog = new NewsDialog();
+                dialog.SetNews(result.Result);
+                dialog.ShowDialog(parent);
+            }
+        }
+
         private static void ChangeLogDownloaded(System.Net.DownloadStringCompletedEventArgs result, Form parent, String version, bool mainProgram)
         {
             if (result.Cancelled)
@@ -223,7 +280,7 @@ namespace Ares.Online
                 if (dialog.ShowChangeLog)
                 {
                     String url = GetUrlBase() + StringResources.ChangeLogFile;
-                    FileDownloader<String> downloader = new FileDownloader<String>(parent, result.Result);
+                    FileDownloader<String> downloader = new FileDownloader<String>(parent, result.Result, true);
                     if (mainProgram)
                         downloader.Download(url, StringResources.GettingChangeLog, ChangeLogDownloadedMain);
                     else
@@ -249,11 +306,13 @@ namespace Ares.Online
             private Action<System.Net.DownloadStringCompletedEventArgs, Form, T> mCompletedFct;
             private ProgressMonitor mMonitor;
             private System.Net.WebClient mWebClient;
+            private bool mShowDialog;
 
-            public FileDownloader(Form parent, T t)
+            public FileDownloader(Form parent, T t, bool showDialog)
             {
                 mParent = parent;
                 mParam = t;
+                mShowDialog = showDialog;
             }
 
             public void Download(String url, String text, Action<System.Net.DownloadStringCompletedEventArgs, Form, T> completedFct)
@@ -273,23 +332,39 @@ namespace Ares.Online
                 }
                 else
                 {
-                    mMonitor = new ProgressMonitor(mParent, text);
-                    mWebClient.DownloadStringAsync(uri);
+                    // use bg thread because first DwnloadStringAsync call is slow due to proxy detection
+                    if (mShowDialog)
+                    {
+                        mMonitor = new ProgressMonitor(mParent, text);
+                    }
+                    System.Threading.ThreadPool.QueueUserWorkItem(new System.Threading.WaitCallback((object o) =>
+                        {
+                            mWebClient.Proxy = System.Net.WebRequest.GetSystemWebProxy();
+                            mWebClient.DownloadStringAsync((Uri)o);
+                        }), uri);
                 }
             }
 
             void webClient_DownloadStringCompleted(object sender, System.Net.DownloadStringCompletedEventArgs e)
             {
-                mMonitor.Close(new Action(() => { mCompletedFct(e, mParent, mParam); }));
+                if (mMonitor != null)
+                    mMonitor.Close(new Action(() => { mCompletedFct(e, mParent, mParam); }));
+                else if (mParent.InvokeRequired)
+                    mParent.Invoke(new Action(() => { mCompletedFct(e, mParent, mParam); }));
+                else
+                    mCompletedFct(e, mParent, mParam);
             }
 
             void webClient_DownloadProgressChanged(object sender, System.Net.DownloadProgressChangedEventArgs e)
             {
-                mMonitor.SetProgress(e.ProgressPercentage);
-                if (mMonitor.Canceled)
+                if (mMonitor != null)
                 {
-                    mWebClient.CancelAsync();
-                }
+                    mMonitor.SetProgress(e.ProgressPercentage);
+                    if (mMonitor.Canceled)
+                    {
+                        mWebClient.CancelAsync();
+                    }
+                    }
             }
 
         }
