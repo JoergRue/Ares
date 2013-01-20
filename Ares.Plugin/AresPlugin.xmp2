@@ -101,6 +101,13 @@
               <ZipFileName>Installer{CopyFile}\{d93d6b64-1c38-4c9e-b848-4e79a523ccdf}-sqlite3.dll</ZipFileName>
               <DestinationFilename>%Base%\sqlite3.dll</DestinationFilename>
             </FileItem>
+            <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
+              <Param1 />
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
+              <LocalFileName>..\bin\Release_MediaPortal\ServiceStack.Text.dll</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{7e70f0c2-5e60-480e-a81d-5b022427cf35}-ServiceStack.Text.dll</ZipFileName>
+              <DestinationFilename>%Base%\plugins\Windows\ServiceStack.Text.dll</DestinationFilename>
+            </FileItem>
           </Items>
         </Files>
       </GroupItem>
@@ -413,6 +420,13 @@ Makes sense only in conjunction with the Ares Controller.</ExtensionDescription>
         <LocalFileName>..\bin\Release_MediaPortal\sqlite3.dll</LocalFileName>
         <ZipFileName>Installer{CopyFile}\{d93d6b64-1c38-4c9e-b848-4e79a523ccdf}-sqlite3.dll</ZipFileName>
         <DestinationFilename>%Base%\sqlite3.dll</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
+        <Param1 />
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
+        <LocalFileName>..\bin\Release_MediaPortal\ServiceStack.Text.dll</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{7e70f0c2-5e60-480e-a81d-5b022427cf35}-ServiceStack.Text.dll</ZipFileName>
+        <DestinationFilename>%Base%\plugins\Windows\ServiceStack.Text.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="true">
         <Param1 />
