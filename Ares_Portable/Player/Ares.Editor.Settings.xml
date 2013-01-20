@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Settings Version="1">
-  <MusicDirectory>..\Music</MusicDirectory>
-  <SoundsDirectory>..\Sounds</SoundsDirectory>
+  <MusicDirectory>../Music</MusicDirectory>
+  <SoundsDirectory>../Sounds</SoundsDirectory>
   <Network TcpPort="11112" UdpPort="8009" />
 </Settings>
