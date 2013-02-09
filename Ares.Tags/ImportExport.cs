@@ -27,56 +27,6 @@ using System.Data.SQLite;
 
 namespace Ares.Tags
 {
-    #region Data Types
-
-    class TranslationExchange
-    {
-        public long LanguageId { get; set; }
-        public String Name { get; set; }
-    }
-
-    class LanguageExchange
-    {
-        public String ISO6391Code { get; set; }
-        public long Id { get; set; }
-        public List<TranslationExchange> Names { get; set; }
-    }
-
-    class CategoryExchange
-    {
-        public long Id { get; set; }
-        public List<TranslationExchange> Names { get; set; }
-    }
-
-    class TagExchange
-    {
-        public long Id { get; set; }
-        public long CategoryId { get; set; }
-        public List<TranslationExchange> Names { get; set; }
-    }
-
-    class TagsForFileExchange
-    {
-        public long FileId { get; set; }
-        public List<long> TagIds { get; set; }
-    }
-
-    class FileExchange
-    {
-        public String RelativePath { get; set; }
-        public long Id { get; set; }
-    }
-
-    class TagsExportedData
-    {
-        public List<LanguageExchange> Languages { get; set; }
-        public List<CategoryExchange> Categories { get; set; }
-        public List<TagExchange> Tags { get; set; }
-        public List<FileExchange> Files { get; set; }
-        public List<TagsForFileExchange> TagsForFiles { get; set; }
-    }
-
-    #endregion
 
     partial class SQLiteTagsDB
     {
@@ -111,9 +61,33 @@ namespace Ares.Tags
             }
         }
 
+        public TagsExportedData ExportDatabaseForGlobalDB(IList<String> filePaths)
+        {
+            if (filePaths == null)
+            {
+                throw new ArgumentException("File paths must be given", "filePaths");
+            }
+            if (m_Connection == null)
+            {
+                throw new TagsDbException("No Connection to DB file!");
+            }
+            try
+            {
+                return CreateExportedData(filePaths, true);
+            }
+            catch (System.Data.DataException ex)
+            {
+                throw new TagsDbException(ex.Message, ex);
+            }
+            catch (SQLiteException ex)
+            {
+                throw new TagsDbException(ex.Message, ex);
+            }
+        }
+
         private void DoExportDatabase(IList<String> filePaths, String targetFileName)
         {
-            TagsExportedData data = CreateExportedData(filePaths);
+            TagsExportedData data = CreateExportedData(filePaths, false);
             WriteDataToFile(data, targetFileName);
         }
 
@@ -136,16 +110,18 @@ namespace Ares.Tags
         }
 
 
-        private TagsExportedData CreateExportedData(IList<String> filePaths)
+        private TagsExportedData CreateExportedData(IList<String> filePaths, bool excludeGlobalDBData)
         {
             TagsExportedData data = new TagsExportedData();
             
             // Use temporary table with all file IDs. This is so we don't have to
             // use a "where File.Path in (........)" in each query or even manually
             // iterate over each file.
+            // Use another temporary table which holds all tags which are either assigned
+            // or removed from any of the files.
             using (SQLiteTransaction transaction = m_Connection.BeginTransaction())
             {
-                // no need to clear export table: transaction will always be rolled back
+                // no need to clear export tables: transaction will always be rolled back
                 String moveCommand = String.Format("INSERT INTO {0} ({1}, {2}) SELECT {3}, {4} FROM {5} WHERE {4} = @FilePath",
                     Schema.FILEEXPORT_TABLE, Schema.FILE_COLUMN, Schema.PATH_COLUMN, Schema.ID_COLUMN, Schema.PATH_COLUMN, Schema.FILES_TABLE, Schema.PATH_COLUMN);
                 using (SQLiteCommand command = new SQLiteCommand(moveCommand, m_Connection, transaction))
@@ -158,22 +134,61 @@ namespace Ares.Tags
                     }
                 }
 
+                String moveCommand2 = String.Format("INSERT INTO {0} ({2}) SELECT DISTINCT {3}.{4} FROM {3},{5},{6} WHERE {3}.{4}={5}.{7} AND {5}.{8}={6}.{9}",
+                    Schema.TAGEXPORT_TABLE, Schema.ID_COLUMN, Schema.TAG_COLUMN, Schema.TAGS_TABLE, Schema.ID_COLUMN,
+                    Schema.FILETAGS_TABLE, Schema.FILEEXPORT_TABLE, Schema.TAG_COLUMN, Schema.FILE_COLUMN, Schema.FILE_COLUMN);
+                if (excludeGlobalDBData)
+                {
+                    moveCommand2 += String.Format(" AND {0}.{1}!='{2}'", Schema.FILETAGS_TABLE, Schema.USER_COLUMN, Schema.GLOBAL_DB_USER);
+                }
+                using (SQLiteCommand command = new SQLiteCommand(moveCommand2, m_Connection, transaction))
+                {
+                    command.ExecuteNonQuery();
+                }
+
+                String moveCommand3 = String.Format("INSERT INTO {0} ({2}) SELECT DISTINCT {3}.{4} FROM {3},{5},{6} WHERE {3}.{4}={5}.{7} AND {5}.{8}={6}.{9}",
+                    Schema.TAGEXPORT_TABLE, Schema.ID_COLUMN, Schema.TAG_COLUMN, Schema.TAGS_TABLE, Schema.ID_COLUMN,
+                    Schema.REMOVEDTAGS_TABLE, Schema.FILEEXPORT_TABLE, Schema.TAG_COLUMN, Schema.FILE_COLUMN, Schema.FILE_COLUMN);
+                if (excludeGlobalDBData)
+                {
+                    moveCommand3 += String.Format(" AND {0}.{1}!='{2}'", Schema.REMOVEDTAGS_TABLE, Schema.USER_COLUMN, Schema.GLOBAL_DB_USER);
+                }
+                using (SQLiteCommand command = new SQLiteCommand(moveCommand3, m_Connection, transaction))
+                {
+                    command.ExecuteNonQuery();
+                }
+
                 // file information
-                String fileInfo = String.Format("SELECT {0}, {1} FROM {2}", Schema.FILE_COLUMN, Schema.PATH_COLUMN, Schema.FILEEXPORT_TABLE);
-                List<FileExchange> fileExchange = new List<FileExchange>();
+                String fileInfo = String.Format("SELECT {6}.{0}, {6}.{1}, {6}.{2}, {6}.{3}, {6}.{4}, {6}.{5} FROM {6},{7} WHERE {6}.{0}={7}.{8}", 
+                    Schema.ID_COLUMN, Schema.PATH_COLUMN, Schema.ARTIST_COLUMN, Schema.ALBUM_COLUMN, Schema.TITLE_COLUMN, Schema.ACOUST_ID_COLUMN,
+                    Schema.FILES_TABLE, Schema.FILEEXPORT_TABLE, Schema.FILE_COLUMN);
+                List<FileIdentification> fileExchange = new List<FileIdentification>();
                 using (SQLiteCommand fileCommand = new SQLiteCommand(fileInfo, m_Connection, transaction))
                 {
                     SQLiteDataReader reader = fileCommand.ExecuteReader();
                     while (reader.Read())
                     {
-                        fileExchange.Add(new FileExchange() { Id = reader.GetInt64(0), RelativePath = reader.GetString(1) });
+                        fileExchange.Add(new FileExchange() 
+                        { 
+                            Id = (int)reader.GetInt64(0), 
+                            RelativePath = reader.GetString(1),
+                            Artist = reader.GetStringOrEmpty(2),
+                            Album = reader.GetStringOrEmpty(3),
+                            Title = reader.GetStringOrEmpty(4),
+                            AcoustId = reader.GetStringOrEmpty(5)
+                        });
                     }
                 }
                 data.Files = fileExchange;
 
                 // file tags information
-                String fileTagsInfo = String.Format("SELECT {0}.{1}, {0}.{2} FROM {0}, {3} WHERE {0}.{1} = {3}.{4} ORDER BY {0}.{1}",
+                String fileTagsInfo = String.Format("SELECT {0}.{1}, {0}.{2} FROM {0}, {3} WHERE {0}.{1} = {3}.{4}",
                     Schema.FILETAGS_TABLE, Schema.FILE_COLUMN, Schema.TAG_COLUMN, Schema.FILEEXPORT_TABLE, Schema.FILE_COLUMN);
+                if (excludeGlobalDBData)
+                {
+                    fileTagsInfo += String.Format(" AND {0}.{1}!='{2}'", Schema.FILETAGS_TABLE, Schema.USER_COLUMN, Schema.GLOBAL_DB_USER);
+                }
+                fileTagsInfo += String.Format(" ORDER BY {0}.{1}", Schema.FILETAGS_TABLE, Schema.FILE_COLUMN);
                 List<TagsForFileExchange> tagsForFileExchange = new List<TagsForFileExchange>();
                 using (SQLiteCommand fileTagsCommand = new SQLiteCommand(fileTagsInfo, m_Connection, transaction))
                 {
@@ -192,9 +207,35 @@ namespace Ares.Tags
                 }
                 data.TagsForFiles = tagsForFileExchange;
 
+                // removed tags information
+                String removedTagsInfo = String.Format("SELECT {0}.{1}, {0}.{2} FROM {0}, {3} WHERE {0}.{1} = {3}.{4}",
+                    Schema.REMOVEDTAGS_TABLE, Schema.FILE_COLUMN, Schema.TAG_COLUMN, Schema.FILEEXPORT_TABLE, Schema.FILE_COLUMN);
+                if (excludeGlobalDBData)
+                {
+                    removedTagsInfo += String.Format(" AND {0}.{1}!='{2}'", Schema.REMOVEDTAGS_TABLE, Schema.USER_COLUMN, Schema.GLOBAL_DB_USER);
+                }
+                removedTagsInfo += String.Format(" ORDER BY {0}.{1}", Schema.REMOVEDTAGS_TABLE, Schema.FILE_COLUMN);
+                List<TagsForFileExchange> removedTags = new List<TagsForFileExchange>();
+                using (SQLiteCommand removedTagsCommand = new SQLiteCommand(removedTagsInfo, m_Connection, transaction))
+                {
+                    SQLiteDataReader reader = removedTagsCommand.ExecuteReader();
+                    TagsForFileExchange tagsForFiles = null;
+                    while (reader.Read())
+                    {
+                        long fileId = reader.GetInt64(0);
+                        if (tagsForFiles == null || fileId != tagsForFiles.FileId)
+                        {
+                            tagsForFiles = new TagsForFileExchange() { FileId = fileId, TagIds = new List<long>() };
+                            removedTags.Add(tagsForFiles);
+                        }
+                        tagsForFiles.TagIds.Add(reader.GetInt64(1));
+                    }
+                }
+                data.RemovedTags = removedTags;
+
                 // tags information
-                String tagsInfo = String.Format("SELECT DISTINCT {0}.{1}, {0}.{2} FROM {0}, {3}, {4} WHERE {0}.{1} = {3}.{5} AND {3}.{6} = {4}.{7}",
-                    Schema.TAGS_TABLE, Schema.ID_COLUMN, Schema.CATEGORY_COLUMN, Schema.FILETAGS_TABLE, Schema.FILEEXPORT_TABLE, Schema.TAG_COLUMN, Schema.FILE_COLUMN, Schema.FILE_COLUMN);
+                String tagsInfo = String.Format("SELECT DISTINCT {0}.{1}, {0}.{2} FROM {0}, {3} WHERE {0}.{1} = {3}.{4}",
+                    Schema.TAGS_TABLE, Schema.ID_COLUMN, Schema.CATEGORY_COLUMN, Schema.TAGEXPORT_TABLE, Schema.TAG_COLUMN);
                 List<TagExchange> tags = new List<TagExchange>();
                 using (SQLiteCommand tagsInfoCommand = new SQLiteCommand(tagsInfo, m_Connection, transaction))
                 {
@@ -221,8 +262,8 @@ namespace Ares.Tags
                 data.Tags = tags;
 
                 // category information (no need for category table, just select distinct category ids from tags table)
-                String categoryInfo = String.Format("SELECT DISTINCT {0}.{2} FROM {0}, {3}, {4} WHERE {0}.{1} = {3}.{5} AND {3}.{6} = {4}.{7}",
-                    Schema.TAGS_TABLE, Schema.ID_COLUMN, Schema.CATEGORY_COLUMN, Schema.FILETAGS_TABLE, Schema.FILEEXPORT_TABLE, Schema.TAG_COLUMN, Schema.FILE_COLUMN, Schema.FILE_COLUMN);
+                String categoryInfo = String.Format("SELECT DISTINCT {0}.{2} FROM {0}, {3} WHERE {0}.{1} = {3}.{4}",
+                    Schema.TAGS_TABLE, Schema.ID_COLUMN, Schema.CATEGORY_COLUMN, Schema.TAGEXPORT_TABLE, Schema.TAG_COLUMN);
                 List<CategoryExchange> categories = new List<CategoryExchange>();
                 using (SQLiteCommand categoryInfoCommand = new SQLiteCommand(categoryInfo, m_Connection, transaction))
                 {
@@ -312,10 +353,38 @@ namespace Ares.Tags
             }
         }
 
+        public void ImportDataFromGlobalDB(TagsExportedData data, TextWriter logStream)
+        {
+            if (data == null)
+                return;
+            if (logStream == null)
+            {
+                // use dummy
+                logStream = new StringWriter();
+            }
+            try
+            {
+                ImportExportedData(data, logStream, Schema.GLOBAL_DB_USER);
+            }
+            catch (System.Runtime.Serialization.SerializationException ex)
+            {
+                throw new TagsDbException(ex.Message, ex);
+            }
+            catch (System.Data.DataException ex)
+            {
+                throw new TagsDbException(ex.Message, ex);
+            }
+            catch (SQLiteException ex)
+            {
+                throw new TagsDbException(ex.Message, ex);
+            }
+
+        }
+
         private void DoImportDatabase(String filePath, TextWriter logStream)
         {
             TagsExportedData data = ReadTagsExportedData(filePath);
-            ImportExportedData(data, logStream);
+            ImportExportedData(data, logStream, System.IO.Path.GetFileName(filePath));
         }
 
         private TagsExportedData ReadTagsExportedData(String filePath)
@@ -326,7 +395,7 @@ namespace Ares.Tags
             }
         }
 
-        private void ImportExportedData(TagsExportedData data, TextWriter logStream)
+        private void ImportExportedData(TagsExportedData data, TextWriter logStream, String user)
         {
             if (data == null)
                 return;
@@ -338,7 +407,7 @@ namespace Ares.Tags
                     return;
 
                 ImportHelper helper = new ImportHelper(this, m_Connection, transaction, logStream);
-                helper.ImportExportedData(data);
+                helper.ImportExportedData(data, user);
 
                 transaction.Commit();
             }            
@@ -364,13 +433,14 @@ namespace Ares.Tags
                 m_Connection = connection;
             }
 
-            public void ImportExportedData(TagsExportedData data)
+            public void ImportExportedData(TagsExportedData data, String user)
             {
                 ImportLanguages(data.Languages);
                 ImportCategories(data.Categories);
                 ImportTags(data.Tags);
-                ImportFiles(data.Files);
-                ImportFileTags(data.TagsForFiles);
+                ImportFiles(data.Files, user);
+                ImportFileTags(data.TagsForFiles, user);
+                ImportRemovedTags(data.RemovedTags, user);
             }
 
             private void ImportLanguages(List<LanguageExchange> languages)
@@ -689,109 +759,416 @@ namespace Ares.Tags
                 ImportTranslations(te.Names, tagId, Schema.TAGNAMES_TABLE, Schema.TAG_COLUMN, Schema.LANGUAGE_COLUMN, "tag");
             }
 
-            private void ImportFiles(List<FileExchange> files)
+            private void ImportFiles(List<FileIdentification> files, String user)
             {
                 if (files == null)
                     return;
                 String fileQuery = String.Format("SELECT {0} FROM {1} WHERE {2}=@FilePath", Schema.ID_COLUMN, Schema.FILES_TABLE, Schema.PATH_COLUMN);
-                String insertString = String.Format("INSERT INTO {0} ({1}, {2}) VALUES (@Id, @Path)", Schema.FILES_TABLE, Schema.ID_COLUMN, Schema.PATH_COLUMN);
-                using (SQLiteCommand command = new SQLiteCommand(fileQuery, m_Connection, m_Transaction))
+                String fileQueryByAcoustId = String.Format("SELECT {0} FROM {1} WHERE {2}=@AcoustId", Schema.ID_COLUMN, Schema.FILES_TABLE, Schema.ACOUST_ID_COLUMN);
+                String fileQueryById = String.Format("SELECT {0} FROM {1} WHERE {2}=@Id", Schema.ID_COLUMN, Schema.FILES_TABLE, Schema.ID_COLUMN); // just to check existance
+                String insertString = String.Format("INSERT INTO {0} ({1}, {2}, {3}, {4}, {5}, {6}) VALUES (@Id, @Path, @Artist, @Album, @Title, @AcoustId)", 
+                    Schema.FILES_TABLE, Schema.ID_COLUMN, Schema.PATH_COLUMN, Schema.ARTIST_COLUMN, Schema.ALBUM_COLUMN, Schema.TITLE_COLUMN, Schema.ACOUST_ID_COLUMN);
+                using (SQLiteCommand command = new SQLiteCommand(fileQuery, m_Connection, m_Transaction),
+                       command2 = new SQLiteCommand(fileQueryByAcoustId, m_Connection, m_Transaction),
+                       command3 = new SQLiteCommand(fileQueryById, m_Connection, m_Transaction),
+                       insertCommand = new SQLiteCommand(insertString, m_Connection, m_Transaction))
                 {
                     SQLiteParameter param = command.Parameters.Add("@FilePath", System.Data.DbType.String);
-                    using (SQLiteCommand insertCommand = new SQLiteCommand(insertString, m_Connection, m_Transaction))
+                    SQLiteParameter param2 = command.Parameters.Add("@AcoustId", System.Data.DbType.String);
+                    SQLiteParameter param3 = command.Parameters.Add("@Id", System.Data.DbType.Int64);
+                    insertCommand.Parameters.AddWithValue("@Id", DBNull.Value);
+                    SQLiteParameter pathInsertParam = insertCommand.Parameters.Add("@Path", System.Data.DbType.String);
+                    SQLiteParameter artistInsertParam = insertCommand.Parameters.Add("@Artist", System.Data.DbType.String);
+                    SQLiteParameter albumInsertParam = insertCommand.Parameters.Add("@Album", System.Data.DbType.String);
+                    SQLiteParameter titleInsertParam = insertCommand.Parameters.Add("@Title", System.Data.DbType.String);
+                    SQLiteParameter acoustIdInsertParam = insertCommand.Parameters.Add("@AcoustId", System.Data.DbType.String);
+                    foreach (FileIdentification file in files)
                     {
-                        insertCommand.Parameters.AddWithValue("@Id", DBNull.Value);
-                        SQLiteParameter insertParam = insertCommand.Parameters.Add("@Path", System.Data.DbType.String);
-                        foreach (FileExchange file in files)
+                        FileExchange fileExchange = file as FileExchange;
+                        String filePath = String.Empty;
+                        if (fileExchange != null)
                         {
-                            if (String.IsNullOrEmpty(file.RelativePath))
+                            filePath = fileExchange.RelativePath;
+                        }
+                        Object existingId = null;
+                        if (user != Schema.GLOBAL_DB_USER && !String.IsNullOrEmpty(filePath))
+                        {
+                            param.Value = filePath;
+                            existingId = command.ExecuteScalar();
+                        }
+                        else if (user == Schema.GLOBAL_DB_USER && file.Id != -1)
+                        {
+                            param3.Value = file.Id;
+                            existingId = command.ExecuteScalar();
+                        }
+                        // not found? Try to find through acoustId.
+                        if (existingId == null && !String.IsNullOrEmpty(file.AcoustId))
+                        {
+                            param2.Value = file.AcoustId;
+                            existingId = command2.ExecuteScalar();
+                        }
+                        
+                        // found?
+                        if (existingId != null)
+                        {
+                            if (user != Schema.GLOBAL_DB_USER && !String.IsNullOrEmpty(filePath))
                             {
-                                m_LogStream.WriteLine(String.Format("WARNING: Ignoring file {0} with missing path", file.Id));
-                                continue;
+                                m_LogStream.WriteLine(String.Format("Found existing id {0} for imported file {1}", existingId, filePath));
                             }
-                            param.Value = file.RelativePath;
-                            Object existingId = command.ExecuteScalar();
-                            if (existingId != null)
+                            else if (user == Schema.GLOBAL_DB_USER && file.Id != -1)
                             {
-                                m_LogStream.WriteLine(String.Format("Found existing id {0} for imported file {1}", existingId, file.RelativePath));
-                                m_FilesMap[file.Id] = (long)existingId;
+                                m_LogStream.WriteLine(String.Format("Found existing file {0} in database", existingId));
                             }
                             else
                             {
-                                insertParam.Value = file.RelativePath;
-                                insertCommand.ExecuteNonQuery();
-                                long id = m_Connection.LastInsertRowId;
-                                m_FilesMap[file.Id] = id;
-                                m_LogStream.WriteLine(String.Format("Insert new file {0} with id {1} (imported id {2})", file.RelativePath, id, file.Id));
+                                m_LogStream.WriteLine(String.Format("Found existing file {0} for acoust Id {1}", existingId, file.AcoustId));
                             }
+                            m_FilesMap[file.Id] = (long)existingId;
+                            UpdateFile((long)existingId, file);
+                        }
+                        else if (user != Schema.GLOBAL_DB_USER && !String.IsNullOrEmpty(filePath))
+                        {
+                            pathInsertParam.Value = filePath;
+                            artistInsertParam.Value = String.IsNullOrEmpty(file.Artist) ? String.Empty : file.Artist;
+                            albumInsertParam.Value = String.IsNullOrEmpty(file.Album) ? String.Empty : file.Album;
+                            titleInsertParam.Value = String.IsNullOrEmpty(file.Title) ? String.Empty : file.Title;
+                            acoustIdInsertParam.Value = String.IsNullOrEmpty(file.AcoustId) ? String.Empty : file.AcoustId;
+                            insertCommand.ExecuteNonQuery();
+                            long id = m_Connection.LastInsertRowId;
+                            m_FilesMap[file.Id] = id;
+                            m_LogStream.WriteLine(String.Format("Insert new file {0} with id {1} (imported id {2})", filePath, id, file.Id));
+                        }
+                        else
+                        {
+                            m_LogStream.Write("WARNING: ignoring imported file {0}, acoust Id not found in database", file.Id);
                         }
                     }
                 }
             }
 
-            private void ImportFileTags(List<TagsForFileExchange> tags)
+            private void UpdateFile(long existingId, FileIdentification file)
+            {
+                bool needsUpdate = false;
+                String newArtist, newAlbum, newTitle, newAcoustId;
+
+                String query = String.Format("SELECT {0}, {1}, {2}, {3} FROM {4} WHERE {5}=@Id",
+                    Schema.ARTIST_COLUMN, Schema.ALBUM_COLUMN, Schema.TITLE_COLUMN, Schema.ACOUST_ID_COLUMN, Schema.FILES_TABLE, Schema.ID_COLUMN);
+                using (SQLiteCommand queryCommand = new SQLiteCommand(query, m_Connection, m_Transaction))
+                {
+                    queryCommand.Parameters.AddWithValue("@Id", existingId);
+                    using (SQLiteDataReader reader = queryCommand.ExecuteReader())
+                    {
+                        if (!reader.Read())
+                        {
+                            m_LogStream.WriteLine("WARNING: file entry to update not found. Concurrent transaction?");
+                            return;
+                        }
+                        String oldArtist = reader.GetStringOrEmpty(0);
+                        // Update only if old artist is empty and new artist isn't empty
+                        newArtist = String.IsNullOrEmpty(file.Artist) || !String.IsNullOrEmpty(oldArtist) ? oldArtist : file.Artist;
+                        if (newArtist != oldArtist)
+                        {
+                            m_LogStream.WriteLine(String.Format("Update Artist of file {0} to {1}", existingId, newArtist));
+                            needsUpdate = true;
+                        }
+                        String oldAlbum = reader.GetStringOrEmpty(1);
+                        newAlbum = String.IsNullOrEmpty(file.Album) || !String.IsNullOrEmpty(oldAlbum) ? oldAlbum : file.Album;
+                        if (newAlbum != oldAlbum)
+                        {
+                            m_LogStream.WriteLine(String.Format("Update Album of file {0} to {1}", existingId, newAlbum));
+                            needsUpdate = true;
+                        }
+                        String oldTitle = reader.GetStringOrEmpty(2);
+                        newTitle = String.IsNullOrEmpty(file.Title) || !String.IsNullOrEmpty(oldTitle) ? oldTitle : file.Title;
+                        if (newTitle != oldTitle)
+                        {
+                            m_LogStream.WriteLine(String.Format("Update Title of file {0} to {1}", existingId, newTitle));
+                            needsUpdate = true;
+                        }
+                        String oldAcoustId = reader.GetStringOrEmpty(3);
+                        if (!String.IsNullOrEmpty(oldAcoustId) && !String.IsNullOrEmpty(file.AcoustId) && file.AcoustId != oldAcoustId)
+                        {
+                            m_LogStream.WriteLine(String.Format("WARNING: acoust id of file {0} differs!", existingId));
+                        }
+                        newAcoustId = String.IsNullOrEmpty(file.AcoustId) || !String.IsNullOrEmpty(oldAcoustId) ? oldAcoustId : file.AcoustId;
+                        if (newAcoustId != oldAcoustId)
+                        {
+                            m_LogStream.WriteLine(String.Format("Update acoust id of file {0}", existingId));
+                            needsUpdate = true;
+                        }
+                    }
+                }
+                if (!needsUpdate)
+                    return;
+
+                String updateString = String.Format("UPDATE {0} SET {1}=@Artist, {2}=@Album, {3}=@Title, {4}=@AcoustId WHERE {5}=@Id",
+                    Schema.FILES_TABLE, Schema.ARTIST_COLUMN, Schema.ALBUM_COLUMN, Schema.TITLE_COLUMN, Schema.ACOUST_ID_COLUMN);
+                using (SQLiteCommand command = new SQLiteCommand(updateString, m_Connection, m_Transaction))
+                {
+                    command.Parameters.AddWithValue("@Artist", newArtist);
+                    command.Parameters.AddWithValue("@Album", newAlbum);
+                    command.Parameters.AddWithValue("@Title", newTitle);
+                    command.Parameters.AddWithValue("@AcoustId", newAcoustId);
+                    command.Parameters.AddWithValue("@Id", existingId);
+                    command.ExecuteNonQuery();
+                }
+            }
+
+            private void ImportFileTags(List<TagsForFileExchange> tags, String user)
             {
                 if (tags == null)
                     return;
+
                 String tagsQuery = String.Format("SELECT DISTINCT {0} FROM {1} WHERE {2}=@FileId", Schema.TAG_COLUMN, Schema.FILETAGS_TABLE, Schema.FILE_COLUMN);
-                String insertString = String.Format("INSERT INTO {0} ({1}, {2}, {3}) VALUES (@NewId, @FileId, @TagId)",
-                    Schema.FILETAGS_TABLE, Schema.ID_COLUMN, Schema.FILE_COLUMN, Schema.TAG_COLUMN);
-                using (SQLiteCommand command = new SQLiteCommand(tagsQuery, m_Connection, m_Transaction))
+                String userQuery = String.Format("SELECT {0} FROM {1} WHERE {2}=@TagId AND {3}=@FileId", Schema.USER_COLUMN, Schema.FILETAGS_TABLE, Schema.TAG_COLUMN, Schema.FILE_COLUMN);
+                String removedQuery = String.Format("SELECT DISTINCT {0}, {3} FROM {1} WHERE {2}=@FileId", Schema.TAG_COLUMN, Schema.REMOVEDTAGS_TABLE, Schema.FILE_COLUMN, Schema.USER_COLUMN);
+                String insertString = String.Format("INSERT INTO {0} ({1}, {2}, {3}, {4}) VALUES (@NewId, @FileId, @TagId, @User)",
+                    Schema.FILETAGS_TABLE, Schema.ID_COLUMN, Schema.FILE_COLUMN, Schema.TAG_COLUMN, Schema.USER_COLUMN);
+                String removeRemovedString = String.Format("DELETE FROM {0} WHERE {1}=@FileId AND {2}=@TagId", Schema.REMOVEDTAGS_TABLE, Schema.FILE_COLUMN, Schema.TAG_COLUMN);
+                String updateString = String.Format("UPDATE {0} SET {1}=@User WHERE {2}=@TagId AND {3}=@FileId", Schema.FILETAGS_TABLE, Schema.USER_COLUMN, Schema.TAG_COLUMN, Schema.FILE_COLUMN);
+                
+                using (SQLiteCommand tagsQueryCommand = new SQLiteCommand(tagsQuery, m_Connection, m_Transaction), 
+                       userQueryCommand = new SQLiteCommand(userQuery, m_Connection, m_Transaction),
+                       removedQueryCommand = new SQLiteCommand(removedQuery, m_Connection, m_Transaction),
+                       removeRemovedCommand = new SQLiteCommand(removeRemovedString, m_Connection, m_Transaction),
+                       updateCommand = new SQLiteCommand(updateString, m_Connection, m_Transaction),
+                       insertCommand = new SQLiteCommand(insertString, m_Connection, m_Transaction))
                 {
-                    SQLiteParameter param = command.Parameters.Add("@FileId", System.Data.DbType.Int64);
-                    using (SQLiteCommand insertCommand = new SQLiteCommand(insertString, m_Connection, m_Transaction))
+                    SQLiteParameter queryTagsFileParam = tagsQueryCommand.Parameters.Add("@FileId", System.Data.DbType.Int64);
+
+                    SQLiteParameter queryUserFileParam = userQueryCommand.Parameters.Add("@FileId", System.Data.DbType.Int64);
+                    SQLiteParameter queryUserTagParam = userQueryCommand.Parameters.Add("@TagId", System.Data.DbType.Int64);
+                    
+                    SQLiteParameter queryRemovedFileParam = removedQueryCommand.Parameters.Add("@FileId", System.Data.DbType.Int64);
+                    
+                    insertCommand.Parameters.AddWithValue("@NewId", DBNull.Value);
+                    SQLiteParameter fileInsertParam = insertCommand.Parameters.Add("@FileId", System.Data.DbType.Int64);
+                    SQLiteParameter tagInsertParam = insertCommand.Parameters.Add("@TagId", System.Data.DbType.Int64);
+                    insertCommand.Parameters.AddWithValue("@User", user);
+
+                    SQLiteParameter removeRemovedFileParam = removeRemovedCommand.Parameters.Add("@FileId", System.Data.DbType.Int64);
+                    SQLiteParameter tagidParam3 = removeRemovedCommand.Parameters.Add("@TagId", System.Data.DbType.Int64);
+
+                    updateCommand.Parameters.AddWithValue("@User", user);
+                    SQLiteParameter updateFileParam = updateCommand.Parameters.Add("@FileId", System.Data.DbType.Int64);
+                    SQLiteParameter updateTagParam = updateCommand.Parameters.Add("@TagId", System.Data.DbType.Int64);
+
+                    foreach (TagsForFileExchange fileTags in tags)
                     {
-                        insertCommand.Parameters.AddWithValue("@NewId", DBNull.Value);
-                        SQLiteParameter fileInsertParam = insertCommand.Parameters.Add("@FileId", System.Data.DbType.Int64);
-                        SQLiteParameter tagInsertParam = insertCommand.Parameters.Add("@TagId", System.Data.DbType.Int64);
-                        foreach (TagsForFileExchange fileTags in tags)
+                        if (m_FilesMap.ContainsKey(fileTags.FileId))
                         {
-                            if (m_FilesMap.ContainsKey(fileTags.FileId))
+                            long fileId = m_FilesMap[fileTags.FileId];
+                            // find tags to add
+                            HashSet<long> importedTags = new HashSet<long>();
+                            foreach (long tagId in fileTags.TagIds)
                             {
-                                long fileId = m_FilesMap[fileTags.FileId];
-                                // find tags to add
-                                HashSet<long> importedTags = new HashSet<long>();
-                                foreach (long tagId in fileTags.TagIds)
+                                if (m_TagsMap.ContainsKey(tagId))
                                 {
-                                    if (m_TagsMap.ContainsKey(tagId))
-                                    {
-                                        importedTags.Add(m_TagsMap[tagId]);
-                                    }
-                                    else
-                                    {
-                                        m_LogStream.WriteLine(String.Format("WARNING: Unknown tag {0} for file {1}; ignoring assignment", tagId, fileTags.FileId));
-                                    }
+                                    importedTags.Add(m_TagsMap[tagId]);
                                 }
-                                // find existing tags --> those don't need to be added
-                                param.Value = fileId;
-                                using (SQLiteDataReader reader = command.ExecuteReader())
+                                else
                                 {
-                                    while (reader.Read())
+                                    m_LogStream.WriteLine(String.Format("WARNING: Unknown tag {0} for file {1}; ignoring assignment", tagId, fileTags.FileId));
+                                }
+                            }
+                            // find existing tags --> those don't need to be added
+                            queryTagsFileParam.Value = fileId;
+                            using (SQLiteDataReader reader = tagsQueryCommand.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    long tagId = reader.GetInt64(0);
+                                    if (importedTags.Contains(tagId))
                                     {
-                                        long tagId = reader.GetInt64(0);
-                                        if (importedTags.Contains(tagId))
+                                        m_LogStream.WriteLine(String.Format("Tag {0} already assigned to file {1}", tagId, fileId));
+                                        importedTags.Remove(tagId);
+
+                                        // check whether the existing tag was set from the global DB and is now set by a file
+                                        // if so, change the user
+                                        if (user != Schema.GLOBAL_DB_USER && !String.IsNullOrEmpty(user))
                                         {
-                                            m_LogStream.WriteLine(String.Format("Tag {0} already assigned to file {1}", tagId, fileId));
-                                            importedTags.Remove(tagId);
+                                            queryUserFileParam.Value = fileId;
+                                            queryUserTagParam.Value = tagId;
+                                            Object currentUser = userQueryCommand.ExecuteScalar();
+                                            if (currentUser != null && currentUser != DBNull.Value && ((String)currentUser == Schema.GLOBAL_DB_USER))
+                                            {
+                                                updateFileParam.Value = fileId;
+                                                updateTagParam.Value = tagId;
+                                                updateCommand.ExecuteNonQuery();
+                                                m_LogStream.WriteLine("Updated user of assignment from global db to file");
+                                            }
                                         }
                                     }
                                 }
-                                // insert remaining tags
-                                if (importedTags.Count > 0)
+                            }
+                            // find tags removed by user himself --> those must not be added
+                            queryRemovedFileParam.Value = fileId;
+                            using (SQLiteDataReader reader = removedQueryCommand.ExecuteReader())
+                            {
+                                while (reader.Read())
                                 {
-                                    fileInsertParam.Value = fileId;
-                                    foreach (Int64 tagId in importedTags)
+                                    long tagId = reader.GetInt64(0);
+                                    String currentUser = reader.GetString(1);
+                                    if (importedTags.Contains(tagId) && currentUser != Schema.GLOBAL_DB_USER)
                                     {
-                                        tagInsertParam.Value = tagId;
-                                        insertCommand.ExecuteNonQuery();
-                                        m_LogStream.WriteLine(String.Format("Assigned tag {0} to file {1}", tagId, fileId));
+                                        m_LogStream.WriteLine(String.Format("Tag {0} was removed from file {1} and will not be assigned to it", tagId, fileId));
+                                        importedTags.Remove(tagId);
+                                    }
+                                    else if (importedTags.Contains(tagId))
+                                    {
+                                        // remove from removedtags table
+                                        m_LogStream.WriteLine(String.Format("Tag {0} was removed from file {1} by global db and will now be reassigned", tagId, fileId));
+                                        removeRemovedFileParam.Value = fileId;
+                                        tagidParam3.Value = tagId;
+                                        removeRemovedCommand.ExecuteNonQuery();
                                     }
                                 }
                             }
-                            else
+                            // insert remaining tags
+                            if (importedTags.Count > 0)
                             {
-                                m_LogStream.WriteLine(String.Format("WARNING: Unknown file {0} in tags; ignoring assignment", fileTags.FileId));
+                                fileInsertParam.Value = fileId;
+                                foreach (Int64 tagId in importedTags)
+                                {
+                                    tagInsertParam.Value = tagId;
+                                    insertCommand.ExecuteNonQuery();
+                                    m_LogStream.WriteLine(String.Format("Assigned tag {0} to file {1}", tagId, fileId));
+                                }
                             }
+                        }
+                        else
+                        {
+                            m_LogStream.WriteLine(String.Format("WARNING: Unknown file {0} in tags; ignoring assignment", fileTags.FileId));
+                        }
+                    }
+                }
+            }
+
+            private void ImportRemovedTags(List<TagsForFileExchange> tags, String user)
+            {
+                if (tags == null || tags.Count == 0)
+                    return;
+
+                String tagsQuery = String.Format("SELECT DISTINCT {0} FROM {1} WHERE {2}=@FileId", Schema.TAG_COLUMN, Schema.REMOVEDTAGS_TABLE, Schema.FILE_COLUMN);
+                String userQuery = String.Format("SELECT {0} FROM {1} WHERE {2}=@TagId AND {3}=@FileId", Schema.USER_COLUMN, Schema.REMOVEDTAGS_TABLE, Schema.TAG_COLUMN, Schema.FILE_COLUMN);
+                String assignedQuery = String.Format("SELECT DISTINCT {0}, {3} FROM {1} WHERE {2}=@FileId", Schema.TAG_COLUMN, Schema.FILETAGS_TABLE, Schema.FILE_COLUMN, Schema.USER_COLUMN);
+                String insertString = String.Format("INSERT INTO {0} ({1}, {2}, {3}, {4}) VALUES (@NewId, @FileId, @TagId, @User)",
+                    Schema.REMOVEDTAGS_TABLE, Schema.ID_COLUMN, Schema.FILE_COLUMN, Schema.TAG_COLUMN, Schema.USER_COLUMN);
+                String removeAssignedString = String.Format("DELETE FROM {0} WHERE {1}=@FileId AND {2}=@TagId", Schema.FILETAGS_TABLE, Schema.FILE_COLUMN, Schema.TAG_COLUMN);
+                String updateString = String.Format("UPDATE {0} SET {1}=@User WHERE {2}=@TagId AND {3}=@FileId", Schema.REMOVEDTAGS_TABLE, Schema.USER_COLUMN, Schema.TAG_COLUMN, Schema.FILE_COLUMN);
+
+                using (SQLiteCommand tagsQueryCommand = new SQLiteCommand(tagsQuery, m_Connection, m_Transaction),
+                       userQueryCommand = new SQLiteCommand(userQuery, m_Connection, m_Transaction),
+                       assignedQueryCommand = new SQLiteCommand(assignedQuery, m_Connection, m_Transaction),
+                       removeAssignedCommand = new SQLiteCommand(removeAssignedString, m_Connection, m_Transaction),
+                       updateCommand = new SQLiteCommand(updateString, m_Connection, m_Transaction),
+                       insertCommand = new SQLiteCommand(insertString, m_Connection, m_Transaction))
+                {
+                    SQLiteParameter queryTagsFileParam = tagsQueryCommand.Parameters.Add("@FileId", System.Data.DbType.Int64);
+
+                    SQLiteParameter queryUserFileParam = userQueryCommand.Parameters.Add("@FileId", System.Data.DbType.Int64);
+                    SQLiteParameter queryUserTagParam = userQueryCommand.Parameters.Add("@TagId", System.Data.DbType.Int64);
+
+                    SQLiteParameter queryAssignedFileParam = assignedQueryCommand.Parameters.Add("@FileId", System.Data.DbType.Int64);
+
+                    insertCommand.Parameters.AddWithValue("@NewId", DBNull.Value);
+                    SQLiteParameter fileInsertParam = insertCommand.Parameters.Add("@FileId", System.Data.DbType.Int64);
+                    SQLiteParameter tagInsertParam = insertCommand.Parameters.Add("@TagId", System.Data.DbType.Int64);
+                    insertCommand.Parameters.AddWithValue("@User", user);
+
+                    SQLiteParameter removeAssignedFileParam = removeAssignedCommand.Parameters.Add("@FileId", System.Data.DbType.Int64);
+                    SQLiteParameter removeAssignedTagParam = removeAssignedCommand.Parameters.Add("@TagId", System.Data.DbType.Int64);
+
+                    updateCommand.Parameters.AddWithValue("@User", user);
+                    SQLiteParameter updateFileParam = updateCommand.Parameters.Add("@FileId", System.Data.DbType.Int64);
+                    SQLiteParameter updateTagParam = updateCommand.Parameters.Add("@TagId", System.Data.DbType.Int64);
+
+                    foreach (TagsForFileExchange fileTags in tags)
+                    {
+                        if (m_FilesMap.ContainsKey(fileTags.FileId))
+                        {
+                            long fileId = m_FilesMap[fileTags.FileId];
+                            // find tags to add
+                            HashSet<long> importedTags = new HashSet<long>();
+                            foreach (long tagId in fileTags.TagIds)
+                            {
+                                if (m_TagsMap.ContainsKey(tagId))
+                                {
+                                    importedTags.Add(m_TagsMap[tagId]);
+                                }
+                                else
+                                {
+                                    m_LogStream.WriteLine(String.Format("WARNING: Unknown tag {0} for file {1}; ignoring removal", tagId, fileTags.FileId));
+                                }
+                            }
+                            // find existing tags --> those don't need to be added to the removed-table
+                            queryTagsFileParam.Value = fileId;
+                            using (SQLiteDataReader reader = tagsQueryCommand.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    long tagId = reader.GetInt64(0);
+                                    if (importedTags.Contains(tagId))
+                                    {
+                                        m_LogStream.WriteLine(String.Format("Tag {0} already removed from file {1}", tagId, fileId));
+                                        importedTags.Remove(tagId);
+
+                                        // check whether the existing tag was set from the global DB and is now set by a file
+                                        // if so, change the user
+                                        if (user != Schema.GLOBAL_DB_USER && !String.IsNullOrEmpty(user))
+                                        {
+                                            queryUserFileParam.Value = fileId;
+                                            queryUserTagParam.Value = tagId;
+                                            Object currentUser = userQueryCommand.ExecuteScalar();
+                                            if (currentUser != null && currentUser != DBNull.Value && ((String)currentUser == Schema.GLOBAL_DB_USER))
+                                            {
+                                                updateFileParam.Value = fileId;
+                                                updateTagParam.Value = tagId;
+                                                updateCommand.ExecuteNonQuery();
+                                                m_LogStream.WriteLine("Updated user of assignment from global db to file");
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            // find tags assigned by user himself --> those must not be removed
+                            queryAssignedFileParam.Value = fileId;
+                            using (SQLiteDataReader reader = assignedQueryCommand.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    long tagId = reader.GetInt64(0);
+                                    String currentUser = reader.GetString(1);
+                                    if (importedTags.Contains(tagId) && currentUser != Schema.GLOBAL_DB_USER)
+                                    {
+                                        m_LogStream.WriteLine(String.Format("Tag {0} was assigned to file {1} and will not be removed from it", tagId, fileId));
+                                        importedTags.Remove(tagId);
+                                    }
+                                    else if (importedTags.Contains(tagId))
+                                    {
+                                        // remove from filetags table: was assigned by global DB, but removed by this import
+                                        m_LogStream.WriteLine(String.Format("Tag {0} was assigned to file {1} by global db and will now be removed", tagId, fileId));
+                                        removeAssignedFileParam.Value = fileId;
+                                        removeAssignedTagParam.Value = tagId;
+                                        removeAssignedCommand.ExecuteNonQuery();
+                                    }
+                                }
+                            }
+                            // insert remaining tags
+                            if (importedTags.Count > 0)
+                            {
+                                fileInsertParam.Value = fileId;
+                                foreach (Int64 tagId in importedTags)
+                                {
+                                    tagInsertParam.Value = tagId;
+                                    insertCommand.ExecuteNonQuery();
+                                    m_LogStream.WriteLine(String.Format("Removed tag {0} from file {1}", tagId, fileId));
+                                }
+                            }
+                        }
+                        else
+                        {
+                            m_LogStream.WriteLine(String.Format("WARNING: Unknown file {0} in tags; ignoring assignment", fileTags.FileId));
                         }
                     }
                 }
@@ -842,5 +1219,13 @@ namespace Ares.Tags
 
         #endregion
 
+    }
+
+    public static class DBReaderExtension
+    {
+        public static String GetStringOrEmpty(this SQLiteDataReader reader, int columnIndex)
+        {
+            return reader.IsDBNull(columnIndex) ? String.Empty : reader.GetString(columnIndex);
+        }
     }
 }

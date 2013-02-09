@@ -187,7 +187,7 @@ namespace Ares.Player
         {
             StopAllPlaying();
             Ares.Settings.Settings settings = Ares.Settings.Settings.Instance;
-            Ares.Settings.SettingsDialog dialog = new Ares.Settings.SettingsDialog(Ares.Settings.Settings.Instance, m_BasicSettings);
+            Ares.CommonGUI.SettingsDialog dialog = new Ares.CommonGUI.SettingsDialog(Ares.Settings.Settings.Instance, m_BasicSettings);
             if (dialog.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
             {
                 m_PlayingControl.UpdateDirectories();
@@ -868,7 +868,7 @@ namespace Ares.Player
 
         private void aboutButton_Click(object sender, EventArgs e)
         {
-            Settings.AboutDialog dialog = new AboutDialog();
+            CommonGUI.AboutDialog dialog = new CommonGUI.AboutDialog();
             dialog.ShowDialog(this);
         }
 
@@ -1432,8 +1432,20 @@ namespace Ares.Player
             if (result != System.Windows.Forms.DialogResult.OK)
                 return;
 
-            Ares.ModelInfo.Importer.Import(this, fileName, saveFileDialog.FileName, 
-                () => OpenProject(saveFileDialog.FileName, false));
+            Ares.CommonGUI.ProgressMonitor monitor = new Ares.CommonGUI.ProgressMonitor(this, StringResources.Importing);
+            Ares.ModelInfo.Importer.Import(monitor, fileName, saveFileDialog.FileName, (error, cancelled) => 
+            {
+                monitor.Close();
+                if (error != null)
+                {
+                    System.Windows.Forms.MessageBox.Show(String.Format(StringResources.ImportError, error.Message), StringResources.Ares,
+                        System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                }
+                else if (!cancelled)
+                {
+                    OpenProject(saveFileDialog.FileName, false);
+                }
+            });
         }
 
         private void streamingToolStripMenuItem_Click(object sender, EventArgs e)

@@ -216,6 +216,15 @@ namespace Ares.Editor {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Copying ... ähnelt.
+        /// </summary>
+        internal static string Copying {
+            get {
+                return ResourceManager.GetString("Copying", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die A parent directory can&apos;t be copied or moved into one of its child directories. ähnelt.
         /// </summary>
         internal static string CopyOrMoveParentIntoChild {
@@ -279,6 +288,24 @@ namespace Ares.Editor {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Error exporting the project: {0} ähnelt.
+        /// </summary>
+        internal static string ExportError {
+            get {
+                return ResourceManager.GetString("ExportError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Exporting ... ähnelt.
+        /// </summary>
+        internal static string Exporting {
+            get {
+                return ResourceManager.GetString("Exporting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Couldn&apos;&apos;t start external player. Error message: {0} ähnelt.
         /// </summary>
         internal static string ExternalPlayerStartFail {
@@ -288,11 +315,38 @@ namespace Ares.Editor {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Getting music ids ... ähnelt.
+        /// </summary>
+        internal static string ExtractingMusicIds {
+            get {
+                return ResourceManager.GetString("ExtractingMusicIds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Extracting tags ... ähnelt.
+        /// </summary>
+        internal static string ExtractingTags {
+            get {
+                return ResourceManager.GetString("ExtractingTags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {0} Explorer ähnelt.
         /// </summary>
         internal static string FileExplorerTitle {
             get {
                 return ResourceManager.GetString("FileExplorerTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Error during file operation: {0} ähnelt.
+        /// </summary>
+        internal static string FileOpError {
+            get {
+                return ResourceManager.GetString("FileOpError", resourceCulture);
             }
         }
         
@@ -330,6 +384,24 @@ namespace Ares.Editor {
         internal static string HelpPage {
             get {
                 return ResourceManager.GetString("HelpPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Error importing the project: {0} ähnelt.
+        /// </summary>
+        internal static string ImportError {
+            get {
+                return ResourceManager.GetString("ImportError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Importing ... ähnelt.
+        /// </summary>
+        internal static string Importing {
+            get {
+                return ResourceManager.GetString("Importing", resourceCulture);
             }
         }
         
@@ -442,11 +514,29 @@ namespace Ares.Editor {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Moving ... ähnelt.
+        /// </summary>
+        internal static string Moving {
+            get {
+                return ResourceManager.GetString("Moving", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Music ähnelt.
         /// </summary>
         internal static string Music {
             get {
                 return ResourceManager.GetString("Music", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Error getting music ids: {0} ähnelt.
+        /// </summary>
+        internal static string MusicIdExtractionError {
+            get {
+                return ResourceManager.GetString("MusicIdExtractionError", resourceCulture);
             }
         }
         
@@ -900,6 +990,15 @@ namespace Ares.Editor {
         internal static string TagExists {
             get {
                 return ResourceManager.GetString("TagExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Error extracting the tags: {0} ähnelt.
+        /// </summary>
+        internal static string TagExtractionError {
+            get {
+                return ResourceManager.GetString("TagExtractionError", resourceCulture);
             }
         }
         

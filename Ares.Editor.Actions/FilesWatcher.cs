@@ -46,10 +46,43 @@ namespace Ares.Editor.Actions
 
         public event EventHandler<EventArgs> AnyDirChanges;
 
+        public bool Enabled 
+        {
+            get { return m_Enabled; }
+            set 
+            {
+                m_Enabled = value;
+                if (m_Enabled)
+                {
+                    if (HadMusicChangesWhileDisabled || HadSoundChangesWhileDisabled)
+                    {
+                        m_MusicWatcher.EnableRaisingEvents = false;
+                        m_SoundWatcher.EnableRaisingEvents = false;
+                        Ares.ModelInfo.ModelChecks.Instance.Check(Ares.ModelInfo.CheckType.File, Project);
+                        if (MusicDirChanges != null && HadMusicChangesWhileDisabled) MusicDirChanges(this, new EventArgs());
+                        if (SoundDirChanges != null && HadSoundChangesWhileDisabled) SoundDirChanges(this, new EventArgs());
+                        if (AnyDirChanges != null) AnyDirChanges(this, new EventArgs());
+                        HadMusicChangesWhileDisabled = false;
+                        HadSoundChangesWhileDisabled = false;
+                        m_MusicWatcher.EnableRaisingEvents = true;
+                        m_SoundWatcher.EnableRaisingEvents = true;
+                    }
+                }
+            }
+        }
+
+        private bool m_Enabled;
+
+        private bool HadMusicChangesWhileDisabled { get; set; }
+        private bool HadSoundChangesWhileDisabled { get; set; }
+
         public Ares.Data.IProject Project { get; set; }
 
         private FilesWatcher()
         {
+            Enabled = true;
+            HadMusicChangesWhileDisabled = false;
+            HadSoundChangesWhileDisabled = false;
         }
 
         private void Init()
@@ -72,6 +105,11 @@ namespace Ares.Editor.Actions
 
         private void m_MusicWatcher_Changed(object sender, System.IO.FileSystemEventArgs e)
         {
+            if (!Enabled)
+            {
+                HadMusicChangesWhileDisabled = true;
+                return;
+            }
             if (e.FullPath.EndsWith("sqlite-journal", StringComparison.OrdinalIgnoreCase))
                 return;
             if (e.FullPath.EndsWith("sqlite", StringComparison.OrdinalIgnoreCase))
@@ -85,6 +123,11 @@ namespace Ares.Editor.Actions
 
         private void m_SoundWatcher_Changed(object sender, System.IO.FileSystemEventArgs e)
         {
+            if (!Enabled)
+            {
+                HadSoundChangesWhileDisabled = true;
+                return;
+            }
             if (e.FullPath.EndsWith("sqlite-journal", StringComparison.OrdinalIgnoreCase))
                 return;
             if (e.FullPath.EndsWith("sqlite", StringComparison.OrdinalIgnoreCase))

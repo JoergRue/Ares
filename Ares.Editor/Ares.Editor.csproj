@@ -127,6 +127,11 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Threading, Version=1.0.2856.102, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libraries\System.Threading.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="WeifenLuo.WinFormsUI.Docking">
@@ -500,6 +505,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Ares.CommonGUI\Ares.CommonGUI.csproj">
+      <Project>{ED16F93E-23F3-4075-B72D-F64E49D08E2D}</Project>
+      <Name>Ares.CommonGUI</Name>
+      <Private>False</Private>
+    </ProjectReference>
     <ProjectReference Include="..\Ares.Data\Ares.Data.csproj">
       <Project>{F64D6AF3-3543-47F0-A7B8-0336750B09C3}</Project>
       <Name>Ares.Data</Name>
@@ -538,6 +548,11 @@
     <ProjectReference Include="..\Ares.Settings\Ares.Settings.csproj">
       <Project>{E99E229E-2D6A-4C49-8E6F-C06E3F346606}</Project>
       <Name>Ares.Settings</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Ares.TagsImport\Ares.TagsImport.csproj">
+      <Project>{5F09CB94-0FC1-4F91-90AD-C6F08A89C146}</Project>
+      <Name>Ares.TagsImport</Name>
       <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\Ares.Tags\Ares.Tags.csproj">

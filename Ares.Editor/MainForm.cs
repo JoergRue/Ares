@@ -159,7 +159,7 @@ namespace Ares.Editor
 
         private void ShowSettingsDialog()
         {
-            SettingsDialog dialog = new SettingsDialog(Ares.Settings.Settings.Instance, m_BasicSettings);
+            CommonGUI.SettingsDialog dialog = new CommonGUI.SettingsDialog(Ares.Settings.Settings.Instance, m_BasicSettings);
             if (dialog.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
             {
                 SettingsChanged(true);
@@ -846,7 +846,7 @@ namespace Ares.Editor
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Ares.Settings.AboutDialog dialog = new Ares.Settings.AboutDialog();
+            Ares.CommonGUI.AboutDialog dialog = new Ares.CommonGUI.AboutDialog();
             dialog.ShowDialog(this);
         }
 
@@ -1099,7 +1099,16 @@ namespace Ares.Editor
             if (result != System.Windows.Forms.DialogResult.OK)
                 return;
 
-            Ares.ModelInfo.Exporter.Export(this, m_CurrentProject, m_CurrentProject.FileName, exportFileDialog.FileName);
+            Ares.CommonGUI.ProgressMonitor monitor = new Ares.CommonGUI.ProgressMonitor(this, StringResources.Exporting);
+            Ares.ModelInfo.Exporter.Export(monitor, m_CurrentProject, m_CurrentProject.FileName, exportFileDialog.FileName, error =>
+            {
+                monitor.Close();
+                if (error != null)
+                {
+                    System.Windows.Forms.MessageBox.Show(String.Format(StringResources.ExportError, error.Message), StringResources.Ares,
+                        System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                }
+            });
         }
 
         private void importToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1125,7 +1134,22 @@ namespace Ares.Editor
             if (result != System.Windows.Forms.DialogResult.OK)
                 return;
 
-            Ares.ModelInfo.Importer.Import(this, fileName, saveFileDialog.FileName, () => OpenProject(saveFileDialog.FileName));
+            Ares.Editor.Actions.FilesWatcher.Instance.Enabled = false;
+            Ares.CommonGUI.ProgressMonitor monitor = new Ares.CommonGUI.ProgressMonitor(this, StringResources.Importing);
+            Ares.ModelInfo.Importer.Import(monitor, fileName, saveFileDialog.FileName, (error, cancelled) => 
+            {
+                monitor.Close();
+                if (error != null)
+                {
+                    System.Windows.Forms.MessageBox.Show(String.Format(StringResources.ImportError, error.Message), StringResources.Ares,
+                        System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                }
+                else if (!cancelled)
+                {
+                    OpenProject(saveFileDialog.FileName);
+                }
+            });
+            Ares.Editor.Actions.FilesWatcher.Instance.Enabled = true;
         }
 
         private void toolsToolStripMenuItem_Click(object sender, EventArgs e)

@@ -100,6 +100,26 @@ namespace Ares.Tags
             }
         }
 
+        public IList<FileIdentification> GetIdentificationForFiles(IList<String> filePaths)
+        {
+            if (m_Connection == null)
+            {
+                throw new TagsDbException("No Connection to DB file!");
+            }
+            try
+            {
+                return DoGetIdentificationForFiles(filePaths);
+            }
+            catch (System.Data.DataException ex)
+            {
+                throw new TagsDbException(ex.Message, ex);
+            }
+            catch (SQLiteException ex)
+            {
+                throw new TagsDbException(ex.Message, ex);
+            }
+        }
+
         private HashSet<string> DoGetAllFilesWithAnyTag(HashSet<int> tagIds)
         {
             if (tagIds.Count == 0)
@@ -127,6 +147,49 @@ namespace Ares.Tags
                 }
                 return result;
             }
+        }
+
+        private IList<FileIdentification> DoGetIdentificationForFiles(IList<String> filePaths)
+        {
+            List<FileIdentification> result = new List<FileIdentification>();
+            if (filePaths == null || filePaths.Count == 0)
+                return result;
+            String queryString = String.Format("SELECT {0}, {1}, {2}, {3}, {4} FROM {5} WHERE {6}=@Path",
+                Schema.ID_COLUMN, Schema.ARTIST_COLUMN, Schema.ALBUM_COLUMN, Schema.TITLE_COLUMN, Schema.ACOUST_ID_COLUMN, Schema.FILES_TABLE, Schema.PATH_COLUMN);
+            using (SQLiteCommand queryCommand = new SQLiteCommand(queryString, m_Connection))
+            {
+                SQLiteParameter param = queryCommand.Parameters.Add("@Path", System.Data.DbType.String);
+                foreach (String filePath in filePaths)
+                {
+                    param.Value = filePath;
+                    using (SQLiteDataReader reader = queryCommand.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            result.Add(new FileIdentification()
+                            {
+                                Id = (int)reader.GetInt64(0),
+                                Artist = reader.GetStringOrEmpty(1),
+                                Album = reader.GetStringOrEmpty(2),
+                                Title = reader.GetStringOrEmpty(3),
+                                AcoustId = reader.GetStringOrEmpty(4)
+                            });
+                        }
+                        else
+                        {
+                            result.Add(new FileIdentification()
+                            {
+                                Id = -1,
+                                Artist = String.Empty,
+                                Album = String.Empty,
+                                Title = String.Empty,
+                                AcoustId = String.Empty
+                            });
+                        }
+                    }
+                }
+            }
+            return result;
         }
     }
 }

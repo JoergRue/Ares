@@ -192,6 +192,12 @@ Error message: {0}
   <data name="HelpPage" xml:space="preserve">
     <value>http://aresrpg.sourceforge.net/en/hilfe/Player.html</value>
   </data>
+  <data name="ImportError" xml:space="preserve">
+    <value>Error importing the project: {0}</value>
+  </data>
+  <data name="Importing" xml:space="preserve">
+    <value>Importing ...</value>
+  </data>
   <data name="LoadError" xml:space="preserve">
     <value>Error opening the project: {0}</value>
   </data>

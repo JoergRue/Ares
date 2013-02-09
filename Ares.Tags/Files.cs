@@ -35,6 +35,7 @@ namespace Ares.Tags
                 if (System.IO.File.Exists(filePath))
                 {
                     DoOpenDatabase(filePath);
+                    UpdateDatabase();
                 }
                 else
                 {
@@ -110,6 +111,118 @@ namespace Ares.Tags
             
             m_Connection.Open();
         }
+
+        #region DB Update
+
+        private void UpdateDatabase()
+        {
+            using (SQLiteCommand command = new SQLiteCommand(String.Format("SELECT {0} FROM {1}", Schema.VERSION_COLUMN, Schema.DBINFO_TABLE), m_Connection))
+            {
+                object version = command.ExecuteScalar();
+                int v = 0;
+                if (version != null)
+                {
+                    v = (int)(long)version;
+                }
+                if (v == 0)
+                {
+                    using (SQLiteTransaction transaction = m_Connection.BeginTransaction())
+                    {
+                        CreateSchema(transaction);
+                        InsertDefaultValues(transaction);
+                        transaction.Commit();
+                    }
+                }
+                else if (v == 1)
+                {
+                    using (SQLiteTransaction transaction = m_Connection.BeginTransaction())
+                    {
+                        UpdateSchemaFromVersion1(transaction);
+                        transaction.Commit();
+                    }
+                }
+            }
+        }
+
+        private void UpdateSchemaFromVersion1(SQLiteTransaction transaction)
+        {
+            String alterTableCommand = "ALTER TABLE {0} ADD COLUMN ";
+            String createTableCommand = "CREATE TABLE IF NOT EXISTS {0} ( ";
+            String idColumnCommand = "{0} INTEGER NOT NULL PRIMARY KEY";
+            String idRefColumnCommand = "{0} INTEGER NOT NULL REFERENCES {1} ({2}) ON DELETE CASCADE";
+
+            // update files table
+            using (SQLiteCommand command = new SQLiteCommand(
+                String.Format(alterTableCommand, Schema.FILES_TABLE) +
+                String.Format("{0} VARCHAR(500)", Schema.ARTIST_COLUMN), 
+                m_Connection, transaction))
+            {
+                command.ExecuteNonQuery();
+            }
+            using (SQLiteCommand command = new SQLiteCommand(
+                String.Format(alterTableCommand, Schema.FILES_TABLE) +
+                String.Format("{0} VARCHAR(500)", Schema.ALBUM_COLUMN), 
+                m_Connection, transaction))
+            {
+                command.ExecuteNonQuery();
+            }
+            using (SQLiteCommand command = new SQLiteCommand(
+                String.Format(alterTableCommand, Schema.FILES_TABLE) +
+                String.Format("{0} VARCHAR(500)", Schema.TITLE_COLUMN), 
+                m_Connection, transaction))
+            {
+                command.ExecuteNonQuery();
+            }
+            using (SQLiteCommand command = new SQLiteCommand(
+                String.Format(alterTableCommand, Schema.FILES_TABLE) +
+                String.Format("{0} VARCHAR(500)", Schema.ACOUST_ID_COLUMN), 
+                m_Connection, transaction))
+            {
+                command.ExecuteNonQuery();
+            }
+
+            // update filetags table
+            using (SQLiteCommand command = new SQLiteCommand(
+                String.Format(alterTableCommand, Schema.FILETAGS_TABLE) +
+                String.Format("{0} VARCHAR(100)", Schema.USER_COLUMN),
+                m_Connection, transaction))
+            {
+                command.ExecuteNonQuery();
+            }
+
+            // create removedtags table
+            using (SQLiteCommand command = new SQLiteCommand(
+                String.Format(createTableCommand, Schema.REMOVEDTAGS_TABLE)
+                + String.Format(idColumnCommand, Schema.ID_COLUMN) + ", "
+                + String.Format(idRefColumnCommand, Schema.FILE_COLUMN, Schema.FILES_TABLE, Schema.ID_COLUMN) + ", "
+                + String.Format(idRefColumnCommand, Schema.TAG_COLUMN, Schema.TAGS_TABLE, Schema.ID_COLUMN) + ", "
+                + String.Format("{0} VARCHAR(100)", Schema.USER_COLUMN)
+                + ");", m_Connection, transaction))
+            {
+                command.ExecuteNonQuery();
+            }
+
+            // create tagexport table
+            using (SQLiteCommand command = new SQLiteCommand(
+                String.Format(createTableCommand, Schema.TAGEXPORT_TABLE)
+                + String.Format(idColumnCommand, Schema.ID_COLUMN) + ", "
+                + String.Format(idRefColumnCommand, Schema.TAG_COLUMN, Schema.TAGS_TABLE, Schema.ID_COLUMN)
+                + ");", m_Connection, transaction))
+            {
+                command.ExecuteNonQuery();
+            }
+
+
+            // update version info
+            using (SQLiteCommand command = new SQLiteCommand(
+                String.Format("UPDATE {0} SET {1}=@version", Schema.DBINFO_TABLE, Schema.VERSION_COLUMN), m_Connection, transaction))
+            {
+                command.Parameters.AddWithValue("@version", Schema.DB_VERSION);
+                command.ExecuteNonQuery();
+            }
+        }
+
+        #endregion
 
         #region New DB Initialization
 
@@ -204,7 +317,11 @@ namespace Ares.Tags
             using (SQLiteCommand command = new SQLiteCommand(
                 String.Format(createTableCommand, Schema.FILES_TABLE)
                 + String.Format(idColumnCommand, Schema.ID_COLUMN) + ", "
-                + String.Format("{0} VARCHAR(500) NOT NULL", Schema.PATH_COLUMN)
+                + String.Format("{0} VARCHAR(500) NOT NULL", Schema.PATH_COLUMN) + ", "
+                + String.Format("{0} VARCHAR(500)", Schema.ARTIST_COLUMN) + ", "
+                + String.Format("{0} VARCHAR(500)", Schema.ALBUM_COLUMN) + ", "
+                + String.Format("{0} VARCHAR(500)", Schema.TITLE_COLUMN) + ", "
+                + String.Format("{0} VARCHAR(500)", Schema.ACOUST_ID_COLUMN)
                 + ");", m_Connection, transaction))
             {
                 command.ExecuteNonQuery();
@@ -215,7 +332,20 @@ namespace Ares.Tags
                 String.Format(createTableCommand, Schema.FILETAGS_TABLE)
                 + String.Format(idColumnCommand, Schema.ID_COLUMN) + ", "
                 + String.Format(idRefColumnCommand, Schema.FILE_COLUMN, Schema.FILES_TABLE, Schema.ID_COLUMN) + ", "
-                + String.Format(idRefColumnCommand, Schema.TAG_COLUMN, Schema.TAGS_TABLE, Schema.ID_COLUMN)
+                + String.Format(idRefColumnCommand, Schema.TAG_COLUMN, Schema.TAGS_TABLE, Schema.ID_COLUMN) + ", "
+                + String.Format("{0} VARCHAR(100)", Schema.USER_COLUMN) 
+                + ");", m_Connection, transaction))
+            {
+                command.ExecuteNonQuery();
+            }
+
+            // RemovedTags table
+            using (SQLiteCommand command = new SQLiteCommand(
+                String.Format(createTableCommand, Schema.REMOVEDTAGS_TABLE)
+                + String.Format(idColumnCommand, Schema.ID_COLUMN) + ", "
+                + String.Format(idRefColumnCommand, Schema.FILE_COLUMN, Schema.FILES_TABLE, Schema.ID_COLUMN) + ", "
+                + String.Format(idRefColumnCommand, Schema.TAG_COLUMN, Schema.TAGS_TABLE, Schema.ID_COLUMN) + ", "
+                + String.Format("{0} VARCHAR(100)", Schema.USER_COLUMN)
                 + ");", m_Connection, transaction))
             {
                 command.ExecuteNonQuery();
@@ -227,6 +357,16 @@ namespace Ares.Tags
                 + String.Format(idColumnCommand, Schema.ID_COLUMN) + ", "
                 + String.Format(idRefColumnCommand, Schema.FILE_COLUMN, Schema.FILES_TABLE, Schema.ID_COLUMN) + ", "
                 + String.Format("{0} VARCHAR(500) NOT NULL", Schema.PATH_COLUMN)
+                + ");", m_Connection, transaction))
+            {
+                command.ExecuteNonQuery();
+            }
+
+            // TagExport table (see export for explanation)
+            using (SQLiteCommand command = new SQLiteCommand(
+                String.Format(createTableCommand, Schema.TAGEXPORT_TABLE)
+                + String.Format(idColumnCommand, Schema.ID_COLUMN) + ", "
+                + String.Format(idRefColumnCommand, Schema.TAG_COLUMN, Schema.TAGS_TABLE, Schema.ID_COLUMN) 
                 + ");", m_Connection, transaction))
             {
                 command.ExecuteNonQuery();

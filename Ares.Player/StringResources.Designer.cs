@@ -280,6 +280,24 @@ namespace Ares.Player {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Error importing the project: {0} ähnelt.
+        /// </summary>
+        internal static string ImportError {
+            get {
+                return ResourceManager.GetString("ImportError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Importing ... ähnelt.
+        /// </summary>
+        internal static string Importing {
+            get {
+                return ResourceManager.GetString("Importing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Error opening the project: {0} ähnelt.
         /// </summary>
         internal static string LoadError {

@@ -170,6 +170,9 @@ Error message: {0}
   <data name="CategoryExists" xml:space="preserve">
     <value>There is already a category with this name.</value>
   </data>
+  <data name="Copying" xml:space="preserve">
+    <value>Copying ...</value>
+  </data>
   <data name="CopyOrMoveParentIntoChild" xml:space="preserve">
     <value>A parent directory can't be copied or moved into one of its child directories.</value>
   </data>
@@ -191,11 +194,26 @@ Error message: {0}
   <data name="ElementIsSingle" xml:space="preserve">
     <value>A second key press starts the element a second time.</value>
   </data>
+  <data name="ExportError" xml:space="preserve">
+    <value>Error exporting the project: {0}</value>
+  </data>
+  <data name="Exporting" xml:space="preserve">
+    <value>Exporting ...</value>
+  </data>
   <data name="ExternalPlayerStartFail" xml:space="preserve">
     <value>Couldn''t start external player. Error message: {0}</value>
   </data>
+  <data name="ExtractingMusicIds" xml:space="preserve">
+    <value>Getting music ids ...</value>
+  </data>
+  <data name="ExtractingTags" xml:space="preserve">
+    <value>Extracting tags ...</value>
+  </data>
   <data name="FileExplorerTitle" xml:space="preserve">
     <value>{0} Explorer</value>
+  </data>
+  <data name="FileOpError" xml:space="preserve">
+    <value>Error during file operation: {0}</value>
   </data>
   <data name="FilePlayed" xml:space="preserve">
     <value>Error at file: {0}</value>
@@ -215,6 +233,12 @@ Left      - Previous music title</value>
   </data>
   <data name="HelpPage" xml:space="preserve">
     <value>http://aresrpg.sourceforge.net/en/hilfe/Editor.html</value>
+  </data>
+  <data name="ImportError" xml:space="preserve">
+    <value>Error importing the project: {0}</value>
+  </data>
+  <data name="Importing" xml:space="preserve">
+    <value>Importing ...</value>
   </data>
   <data name="InsufficientCommandData" xml:space="preserve">
     <value>The command still needs some data. Please select the necessary element(s).</value>
@@ -252,8 +276,14 @@ Left      - Previous music title</value>
   <data name="ModeIntro" xml:space="preserve">
     <value>Mode '{0}': </value>
   </data>
+  <data name="Moving" xml:space="preserve">
+    <value>Moving ...</value>
+  </data>
   <data name="Music" xml:space="preserve">
     <value>Music</value>
+  </data>
+  <data name="MusicIdExtractionError" xml:space="preserve">
+    <value>Error getting music ids: {0}</value>
   </data>
   <data name="NameInLanguage" xml:space="preserve">
     <value>Name in {0}:</value>
@@ -407,6 +437,9 @@ You should adapt some settings first.</value>
   </data>
   <data name="TagExists" xml:space="preserve">
     <value>There is already a tag with this name.</value>
+  </data>
+  <data name="TagExtractionError" xml:space="preserve">
+    <value>Error extracting the tags: {0}</value>
   </data>
   <data name="TagMustHaveCategory" xml:space="preserve">
     <value>The tag must have a category.</value>

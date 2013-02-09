@@ -61,24 +61,6 @@ namespace Ares.ModelInfo {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Adding tags ähnelt.
-        /// </summary>
-        internal static string AddingTags {
-            get {
-                return ResourceManager.GetString("AddingTags", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Album ähnelt.
-        /// </summary>
-        internal static string Album {
-            get {
-                return ResourceManager.GetString("Album", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Ares ähnelt.
         /// </summary>
         internal static string Ares {
@@ -115,15 +97,6 @@ namespace Ares.ModelInfo {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Copying ... ähnelt.
-        /// </summary>
-        internal static string Copying {
-            get {
-                return ResourceManager.GetString("Copying", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Key {0} is used for elements {1} and {2} ähnelt.
         /// </summary>
         internal static string DuplicateModeElementKey {
@@ -151,33 +124,6 @@ namespace Ares.ModelInfo {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Error exporting the project: {0} ähnelt.
-        /// </summary>
-        internal static string ExportError {
-            get {
-                return ResourceManager.GetString("ExportError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Exporting ... ähnelt.
-        /// </summary>
-        internal static string Exporting {
-            get {
-                return ResourceManager.GetString("Exporting", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Extracting tags ... ähnelt.
-        /// </summary>
-        internal static string ExtractingTags {
-            get {
-                return ResourceManager.GetString("ExtractingTags", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die File {0} not found ähnelt.
         /// </summary>
         internal static string FileNotFound {
@@ -187,56 +133,11 @@ namespace Ares.ModelInfo {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Error during file operation: {0} ähnelt.
-        /// </summary>
-        internal static string FileOpError {
-            get {
-                return ResourceManager.GetString("FileOpError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Genre ähnelt.
-        /// </summary>
-        internal static string Genre {
-            get {
-                return ResourceManager.GetString("Genre", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Error importing the project: {0} ähnelt.
-        /// </summary>
-        internal static string ImportError {
-            get {
-                return ResourceManager.GetString("ImportError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Importing ... ähnelt.
-        /// </summary>
-        internal static string Importing {
-            get {
-                return ResourceManager.GetString("Importing", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Some imported files already exist on disk. Overwrite these with the imported ones? ähnelt.
         /// </summary>
         internal static string ImportOverwrite {
             get {
                 return ResourceManager.GetString("ImportOverwrite", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Interpreter ähnelt.
-        /// </summary>
-        internal static string Interpret {
-            get {
-                return ResourceManager.GetString("Interpret", resourceCulture);
             }
         }
         
@@ -322,24 +223,6 @@ namespace Ares.ModelInfo {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Mood ähnelt.
-        /// </summary>
-        internal static string Mood {
-            get {
-                return ResourceManager.GetString("Mood", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Moving ... ähnelt.
-        /// </summary>
-        internal static string Moving {
-            get {
-                return ResourceManager.GetString("Moving", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Playlist {0} not found. ähnelt.
         /// </summary>
         internal static string PlaylistNotFound {
@@ -358,15 +241,6 @@ namespace Ares.ModelInfo {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Setting file tags ähnelt.
-        /// </summary>
-        internal static string SettingFileTags {
-            get {
-                return ResourceManager.GetString("SettingFileTags", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Element to start not found. ähnelt.
         /// </summary>
         internal static string StartedElementNotFound {
@@ -381,15 +255,6 @@ namespace Ares.ModelInfo {
         internal static string StoppedElementNotFound {
             get {
                 return ResourceManager.GetString("StoppedElementNotFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Error extracting the tags: {0} ähnelt.
-        /// </summary>
-        internal static string TagExtractionError {
-            get {
-                return ResourceManager.GetString("TagExtractionError", resourceCulture);
             }
         }
         

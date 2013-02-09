@@ -170,6 +170,9 @@ Fehlermeldung: {0}
   <data name="CategoryExists" xml:space="preserve">
     <value>Eine Kategorie mit diesem Namen existiert bereits.</value>
   </data>
+  <data name="Copying" xml:space="preserve">
+    <value>Kopiere ...</value>
+  </data>
   <data name="CopyOrMoveParentIntoChild" xml:space="preserve">
     <value>Ein Verzeichnis kann nicht in eines seiner Unterverzeichnisse kopiert oder verschoben werden.</value>
   </data>
@@ -191,11 +194,26 @@ Fehlermeldung: {0}
   <data name="ElementIsSingle" xml:space="preserve">
     <value>Ein erneuter Tastendruck startet das Element ein weiteres Mal.</value>
   </data>
+  <data name="ExportError" xml:space="preserve">
+    <value>Fehler beim Exportieren des Projektes: {0}</value>
+  </data>
+  <data name="Exporting" xml:space="preserve">
+    <value>Exportiere ...</value>
+  </data>
   <data name="ExternalPlayerStartFail" xml:space="preserve">
     <value>Externer Player konnte nicht gestartet werden. Fehlermeldung: {0}</value>
   </data>
+  <data name="ExtractingMusicIds" xml:space="preserve">
+    <value>Ermittle Musik-Ids ...</value>
+  </data>
+  <data name="ExtractingTags" xml:space="preserve">
+    <value>Extrahiere Tags ...</value>
+  </data>
   <data name="FileExplorerTitle" xml:space="preserve">
     <value>{0}-Explorer</value>
+  </data>
+  <data name="FileOpError" xml:space="preserve">
+    <value>Fehler bei Dateioperation: {0}</value>
   </data>
   <data name="FlePlayed" xml:space="preserve">
     <value>Fehler bei Datei: {0}</value>
@@ -215,6 +233,12 @@ Pfeil nach links  - Vorheriges Musikstück</value>
   </data>
   <data name="HelpPage" xml:space="preserve">
     <value>http://aresrpg.sourceforge.net/hilfe/Editor.html</value>
+  </data>
+  <data name="ImportError" xml:space="preserve">
+    <value>Fehler beim Importieren des Projektes: {0}</value>
+  </data>
+  <data name="Importing" xml:space="preserve">
+    <value>Importiere ...</value>
   </data>
   <data name="InsufficientCommandData" xml:space="preserve">
     <value>Die Anweisung braucht noch weitere Daten. Bitte die notwendigen Elemente auswählen.</value>
@@ -252,8 +276,14 @@ Pfeil nach links  - Vorheriges Musikstück</value>
   <data name="ModeIntro" xml:space="preserve">
     <value>Modus "{0}": </value>
   </data>
+  <data name="Moving" xml:space="preserve">
+    <value>Verschiebe ...</value>
+  </data>
   <data name="Music" xml:space="preserve">
     <value>Musik</value>
+  </data>
+  <data name="MusicIdExtractionError" xml:space="preserve">
+    <value>Fehler beim Ermitteln der Musik-Ids: {0}</value>
   </data>
   <data name="NameInLanguage" xml:space="preserve">
     <value>Name in {0}:</value>
@@ -408,6 +438,9 @@ Soll es jetzt gespeichert werden?</value>
   </data>
   <data name="TagExists" xml:space="preserve">
     <value>Ein Tag mit diesem Namen existiert bereits.</value>
+  </data>
+  <data name="TagExtractionError" xml:space="preserve">
+    <value>Fehler beim Extrahieren der Tags: {0}</value>
   </data>
   <data name="TagMustHaveCategory" xml:space="preserve">
     <value>Der Tag muss eine Kategorie haben.</value>

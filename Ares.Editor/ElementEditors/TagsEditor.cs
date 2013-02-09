@@ -29,10 +29,11 @@ using System.Windows.Forms;
 namespace Ares.Editor.ElementEditors
 {
 
+    public partial class TagsEditor
 #if !MONO
-    public partial class TagsEditor : WeifenLuo.WinFormsUI.Docking.DockContent
+        : WeifenLuo.WinFormsUI.Docking.DockContent
 #else
-    public partial class TagsEditor : Form
+        : Form
 #endif
     {
         public TagsEditor()

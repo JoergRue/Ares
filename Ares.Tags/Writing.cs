@@ -202,6 +202,38 @@ namespace Ares.Tags
             }
         }
 
+        public void SetFileIdentifications(IList<String> files, IList<FileIdentification> identifications)
+        {
+            if (files == null)
+            {
+                throw new ArgumentNullException("files");
+            }
+            if (identifications == null)
+            {
+                throw new ArgumentNullException("identifications");
+            }
+            if (files.Count != identifications.Count)
+            {
+                throw new ArgumentException("file count must match identifications count");
+            }
+            if (m_Connection == null)
+            {
+                throw new TagsDbException("No Connection to DB file!");
+            }
+            try
+            {
+                DoSetFileIdentifications(files, identifications);
+            }
+            catch (System.Data.DataException ex)
+            {
+                throw new TagsDbException(ex.Message, ex);
+            }
+            catch (SQLiteException ex)
+            {
+                throw new TagsDbException(ex.Message, ex);
+            }
+        }
+
         private void DoSetFileTags(SQLiteTransaction transaction, String path, IList<int> tagIds)
         {
             if (tagIds.Count == 0)
@@ -381,6 +413,69 @@ namespace Ares.Tags
                     command3.ExecuteNonQuery();
                 }
             }
+        }
+
+        private void DoSetFileIdentifications(IList<String> files, IList<FileIdentification> identifications)
+        {
+            if (identifications == null || identifications.Count == 0)
+                return;
+            String updateString = String.Format("UPDATE {0} SET {1}=@Artist, {2}=@Album, {3}=@Title, {4}=@AcoustId WHERE {5}=@Id",
+                Schema.FILES_TABLE, Schema.ARTIST_COLUMN, Schema.ALBUM_COLUMN, Schema.TITLE_COLUMN, Schema.ACOUST_ID_COLUMN, Schema.ID_COLUMN);
+            String insertString = String.Format("INSERT INTO {0} ({1}, {2}, {3}, {4}, {5}, {6}) VALUES (@Id, @Path, @Artist, @Album, @Title, @AcoustId)",
+                Schema.FILES_TABLE, Schema.ID_COLUMN, Schema.PATH_COLUMN, Schema.ARTIST_COLUMN, Schema.ALBUM_COLUMN, Schema.TITLE_COLUMN, Schema.ACOUST_ID_COLUMN);
+            using (SQLiteTransaction transaction = m_Connection.BeginTransaction())
+            {
+                using (SQLiteCommand updateCommand = new SQLiteCommand(updateString, m_Connection, transaction),
+                                     insertCommand = new SQLiteCommand(insertString, m_Connection, transaction))
+                {
+                    SQLiteParameter artistParam = updateCommand.Parameters.Add("@Artist", System.Data.DbType.String);
+                    SQLiteParameter albumParam = updateCommand.Parameters.Add("@Album", System.Data.DbType.String);
+                    SQLiteParameter titleParam = updateCommand.Parameters.Add("@Title", System.Data.DbType.String);
+                    SQLiteParameter acoustIdParam = updateCommand.Parameters.Add("@AcoustId", System.Data.DbType.String);
+                    SQLiteParameter idParam = updateCommand.Parameters.Add("@Id", System.Data.DbType.Int64);
+
+                    SQLiteParameter artistParam2 = insertCommand.Parameters.Add("@Artist", System.Data.DbType.String);
+                    SQLiteParameter albumParam2 = insertCommand.Parameters.Add("@Album", System.Data.DbType.String);
+                    SQLiteParameter titleParam2 = insertCommand.Parameters.Add("@Title", System.Data.DbType.String);
+                    SQLiteParameter acoustIdParam2 = insertCommand.Parameters.Add("@AcoustId", System.Data.DbType.String);
+                    SQLiteParameter idParam2 = insertCommand.Parameters.AddWithValue("@Id", System.DBNull.Value);
+                    SQLiteParameter pathParam2 = insertCommand.Parameters.Add("@Path", System.Data.DbType.String);
+
+                    for (int i = 0; i < identifications.Count; ++i)
+                    {
+                        FileIdentification file = identifications[i];
+                        if (file.Id != -1)
+                        {
+                            // update existing file
+                            AssignStringOrNull(artistParam, file.Artist);
+                            AssignStringOrNull(albumParam, file.Album);
+                            AssignStringOrNull(titleParam, file.Title);
+                            AssignStringOrNull(acoustIdParam, file.AcoustId);
+                            idParam.Value = file.Id;
+                            updateCommand.ExecuteNonQuery();
+                        }
+                        else
+                        {
+                            // insert new file
+                            AssignStringOrNull(artistParam2, file.Artist);
+                            AssignStringOrNull(albumParam2, file.Album);
+                            AssignStringOrNull(titleParam2, file.Title);
+                            AssignStringOrNull(acoustIdParam2, file.AcoustId);
+                            pathParam2.Value = files[i];
+                            insertCommand.ExecuteNonQuery();
+                        }
+                    }
+                }
+                transaction.Commit();
+            }
+        }
+
+        private static void AssignStringOrNull(SQLiteParameter param, String value)
+        {
+            if (value == null)
+                param.Value = DBNull.Value;
+            else
+                param.Value = value;
         }
 
     }

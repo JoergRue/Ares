@@ -123,7 +123,4 @@
   <data name="ExpectedInteger" xml:space="preserve">
     <value>Number expected for attribute {0}.</value>
   </data>
-  <data name="NeedDirectory" xml:space="preserve">
-    <value>Please choose a directory for the settings.</value>
-  </data>
 </root>

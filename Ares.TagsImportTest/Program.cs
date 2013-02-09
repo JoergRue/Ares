@@ -66,7 +66,6 @@ namespace Ares.TagsImportTest
                             catch (Exception ex)
                             {
                                 writer.WriteLine("Exception occured: " + ex.GetType() + "; " + ex.Message);
-                                throw;
                             }
                             finally
                             {

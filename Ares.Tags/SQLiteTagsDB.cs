@@ -31,7 +31,7 @@ namespace Ares.Tags
 
     class Schema
     {
-        public static readonly int DB_VERSION = 1;
+        public static readonly int DB_VERSION = 2;
 
         public static readonly String DBINFO_TABLE = "DBInfo";
         public static readonly String LANGUAGE_TABLE = "Languages";
@@ -42,7 +42,9 @@ namespace Ares.Tags
         public static readonly String TAGS_TABLE = "Tags";
         public static readonly String TAGNAMES_TABLE = "TagNames";
         public static readonly String FILETAGS_TABLE = "FileTags";
+        public static readonly String REMOVEDTAGS_TABLE = "RemovedTags";
         public static readonly String FILEEXPORT_TABLE = "FileExport";
+        public static readonly String TAGEXPORT_TABLE = "TagExport";
 
         public static readonly String VERSION_COLUMN = "version";
 
@@ -60,6 +62,14 @@ namespace Ares.Tags
 
         public static readonly String FILE_COLUMN = "file";
         public static readonly String PATH_COLUMN = "relativePath";
+        public static readonly String ARTIST_COLUMN = "artist";
+        public static readonly String ALBUM_COLUMN = "album";
+        public static readonly String TITLE_COLUMN = "title";
+        public static readonly String ACOUST_ID_COLUMN = "acoustId";
+
+        public static readonly String USER_COLUMN = "user";
+
+        public static readonly String GLOBAL_DB_USER = "__global database rpgmusictags.de__";
     }
 
     partial class SQLiteTagsDB : ITagsDB, ITagsDBFiles

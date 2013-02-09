@@ -126,20 +126,8 @@
   <data name="DuplicateModeKey" xml:space="preserve">
     <value>Key {0} is used for modes {1} and {2}</value>
   </data>
-  <data name="ExportError" xml:space="preserve">
-    <value>Error exporting the project: {0}</value>
-  </data>
-  <data name="Exporting" xml:space="preserve">
-    <value>Exporting ...</value>
-  </data>
   <data name="FileNotFound" xml:space="preserve">
     <value>File {0} not found</value>
-  </data>
-  <data name="ImportError" xml:space="preserve">
-    <value>Error importing the project: {0}</value>
-  </data>
-  <data name="Importing" xml:space="preserve">
-    <value>Importing ...</value>
   </data>
   <data name="ImportOverwrite" xml:space="preserve">
     <value>Some imported files already exist on disk. Overwrite these with the imported ones?</value>
@@ -171,15 +159,6 @@
   <data name="ModeNoKey" xml:space="preserve">
     <value>No key defined for mode {0}</value>
   </data>
-  <data name="Copying" xml:space="preserve">
-    <value>Copying ...</value>
-  </data>
-  <data name="FileOpError" xml:space="preserve">
-    <value>Error during file operation: {0}</value>
-  </data>
-  <data name="Moving" xml:space="preserve">
-    <value>Moving ...</value>
-  </data>
   <data name="CannotPlayURLS" xml:space="preserve">
     <value>URLs can't be used in playlists. Entry {0} ignored.</value>
   </data>
@@ -206,29 +185,5 @@
   </data>
   <data name="TagNotFound" xml:space="preserve">
     <value>Tag to add / remove not found.</value>
-  </data>
-  <data name="AddingTags" xml:space="preserve">
-    <value>Adding tags</value>
-  </data>
-  <data name="Album" xml:space="preserve">
-    <value>Album</value>
-  </data>
-  <data name="ExtractingTags" xml:space="preserve">
-    <value>Extracting tags ...</value>
-  </data>
-  <data name="Genre" xml:space="preserve">
-    <value>Genre</value>
-  </data>
-  <data name="Interpret" xml:space="preserve">
-    <value>Interpreter</value>
-  </data>
-  <data name="Mood" xml:space="preserve">
-    <value>Mood</value>
-  </data>
-  <data name="SettingFileTags" xml:space="preserve">
-    <value>Setting file tags</value>
-  </data>
-  <data name="TagExtractionError" xml:space="preserve">
-    <value>Error extracting the tags: {0}</value>
   </data>
 </root>

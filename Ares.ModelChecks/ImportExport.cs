@@ -31,28 +31,27 @@ namespace Ares.ModelInfo
 
     public class Importer
     {
-        private ProgressMonitor m_Monitor;
+        private IProgressMonitor m_Monitor;
         private System.ComponentModel.BackgroundWorker m_Worker;
-        private System.Action m_DataLoadedFunc;
+        private System.Action<Exception, bool> m_DataLoadedFunc;
 		
-        public static void Import(
-							      System.Windows.Forms.Form parent, 
+        public static void Import(IProgressMonitor monitor, 
 		                          String importFileName, String targetFileName,
-            					  System.Action dataLoaded)
+            					  System.Action<Exception, bool> dataLoaded)
         {
             Importer importer = new Importer();
-            importer.DoImport(parent, importFileName, targetFileName, dataLoaded);
+            importer.DoImport(monitor, importFileName, targetFileName, dataLoaded);
         }
 
         private Importer()
         {
         }
 
-        private void DoImport(
-						      System.Windows.Forms.Form parent, 
+        private void DoImport(IProgressMonitor monitor, 
 		                      String importFileName, String targetFileName,
-            				  System.Action dataLoaded)
+            				  System.Action<Exception, bool> dataLoaded)
         {
+            m_Monitor = monitor;
             m_DataLoadedFunc = dataLoaded;
             try
             {
@@ -128,28 +127,23 @@ namespace Ares.ModelInfo
                 m_Worker.DoWork += new System.ComponentModel.DoWorkEventHandler(m_Worker_DoWork);
                 m_Worker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(m_Worker_ProgressChanged);
                 m_Worker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(m_Worker_RunWorkerCompleted);
-                m_Monitor = new ProgressMonitor(parent, StringResources.Importing);
+                m_Monitor.IncreaseProgress(0.0);
                 m_Worker.RunWorkerAsync(data);
-
             }
             catch (Exception ex)
             {
-                System.Windows.Forms.MessageBox.Show(String.Format(StringResources.ImportError, ex.Message), StringResources.Ares,
-                    System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                if (dataLoaded != null)
+                {
+                    dataLoaded(ex, false);
+                }
             }
         }
 
         void m_Worker_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
-            m_Monitor.Close();
-            if (e.Error != null)
+            if (m_DataLoadedFunc != null)
             {
-                System.Windows.Forms.MessageBox.Show(String.Format(StringResources.ImportError, e.Error.Message), StringResources.Ares,
-                    System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
-            }
-            else if (!e.Cancelled)
-            {
-                m_DataLoadedFunc();
+                m_DataLoadedFunc(e.Error, e.Cancelled);
             }
         }
 
@@ -161,7 +155,7 @@ namespace Ares.ModelInfo
             }
             else
             {
-                m_Monitor.SetProgress(e.ProgressPercentage, e.UserState.ToString());
+                m_Monitor.IncreaseProgress(e.ProgressPercentage, e.UserState.ToString());
             }
         }
 
@@ -205,9 +199,10 @@ namespace Ares.ModelInfo
                                 int currentPercent = (int)(((double)currentSize / (double)data.OverallSize) * 100.0);
                                 if (currentPercent != lastPercent || e2.Name != lastFile)
                                 {
+                                    int inc = currentPercent - lastPercent;
                                     lastPercent = currentPercent;
                                     lastFile = e2.Name;
-                                    m_Worker.ReportProgress(lastPercent, lastFile);
+                                    m_Worker.ReportProgress(inc, lastFile);
                                     e2.ContinueRunning = !m_Worker.CancellationPending;
                                 }
                             }), TimeSpan.FromMilliseconds(50), entry, fileName, entry.Size);
@@ -279,29 +274,28 @@ namespace Ares.ModelInfo
 	
     public class Exporter
     {
-        private ProgressMonitor m_Monitor;
+        private IProgressMonitor m_Monitor;
         private System.ComponentModel.BackgroundWorker m_Worker;
+        private Action<Exception> m_FinishedAction;
 
         public static String MUSIC_DIR = "Music";
         public static String SOUND_DIR = "Sounds";
 
-        public static void Export(System.Windows.Forms.Form parent, Object data, String innerFileName, String exportFileName)
+        public static void Export(IProgressMonitor monitor, Object data, String innerFileName, String exportFileName, Action<Exception> finishedAction)
         {
             Exporter exporter = new Exporter();
             ExportData exportData = new ExportData();
             exportData.Data = data;
             exportData.InnerFileName = innerFileName;
             exportData.ExportFileName = exportFileName;
-            exporter.DoExport(parent, exportData);
+            exporter.DoExport(monitor, exportData, finishedAction);
         }
 
         private void m_Worker_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
-            m_Monitor.Close();
-            if (e.Error != null)
+            if (m_FinishedAction != null)
             {
-                System.Windows.Forms.MessageBox.Show(String.Format(StringResources.ExportError, e.Error.Message), StringResources.Ares,
-                    System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                m_FinishedAction(e.Error);
             }
         }
 
@@ -313,7 +307,7 @@ namespace Ares.ModelInfo
             }
             else
             {
-                m_Monitor.SetProgress(e.ProgressPercentage, e.UserState.ToString());
+                m_Monitor.IncreaseProgress(e.ProgressPercentage, e.UserState.ToString());
             }
         }
 
@@ -331,15 +325,17 @@ namespace Ares.ModelInfo
             public Object Data { get; set; }
         }
 
-        private void DoExport(System.Windows.Forms.Form parent, ExportData exportData)
+        private void DoExport(IProgressMonitor monitor, ExportData exportData, Action<Exception> finishedAction)
         {
+            m_FinishedAction = finishedAction;
             m_Worker = new System.ComponentModel.BackgroundWorker();
             m_Worker.WorkerReportsProgress = true;
             m_Worker.WorkerSupportsCancellation = true;
             m_Worker.DoWork += new System.ComponentModel.DoWorkEventHandler(m_Worker_DoWork);
             m_Worker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(m_Worker_ProgressChanged);
             m_Worker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(m_Worker_RunWorkerCompleted);
-            m_Monitor = new ProgressMonitor(parent, StringResources.Exporting);
+            m_Monitor = monitor;
+            m_Monitor.IncreaseProgress(0.0);
             m_Worker.RunWorkerAsync(exportData);
         }
 
@@ -447,9 +443,10 @@ namespace Ares.ModelInfo
                             int currentPercent = (int)(((double)currentSize / (double)overallSize) * 100.0);
                             if (currentPercent != lastPercent || e2.Name != lastFile)
                             {
+                                int inc = currentPercent - lastPercent;
                                 lastPercent = currentPercent;
                                 lastFile = e2.Name;
-                                m_Worker.ReportProgress(lastPercent, lastFile);
+                                m_Worker.ReportProgress(inc, lastFile);
                                 e2.ContinueRunning = !m_Worker.CancellationPending;
                             }
                         }), TimeSpan.FromMilliseconds(50), zipEntry.Key, zipEntry.Value, zipEntry.Key.Size);
@@ -479,396 +476,4 @@ namespace Ares.ModelInfo
 
     #endregion
 	
-#if !MONO
-
-    #region Copy / Move
-
-    public class FileOperations
-    {
-        private ProgressMonitor m_Monitor;
-        private System.ComponentModel.BackgroundWorker m_Worker;
-
-        public static void CopyOrMove(System.Windows.Forms.Form parent, Ares.Data.IProject project, System.Collections.Generic.Dictionary<String, object> uniqueElements, bool move, String targetPath, Action completedAction)
-        {
-            FileOperations privateInstance = new FileOperations(completedAction);
-            FileOpData data = new FileOpData();
-            data.TargetPath = targetPath;
-            data.UniqueElements = uniqueElements;
-            data.Project = project;
-            data.Move = move;
-            privateInstance.DoCopyOrMove(parent, data);
-        }
-
-        private class FileOpData
-        {
-            public System.Collections.Generic.Dictionary<String, object> UniqueElements { get; set; }
-            public bool Move { get; set; }
-            public String TargetPath { get; set; }
-            public Ares.Data.IProject Project { get; set; }
-        }
-
-        private FileOperations(Action completedAction)
-        {
-            m_CompletedAction = completedAction;
-        }
-
-        private Action m_CompletedAction;
-
-
-        private void DoCopyOrMove(System.Windows.Forms.Form parent, FileOpData data)
-        {
-            m_Monitor = new ProgressMonitor(parent, data.Move ? StringResources.Moving : StringResources.Copying);
-            m_Worker = new System.ComponentModel.BackgroundWorker();
-            m_Worker.WorkerReportsProgress = true;
-            m_Worker.WorkerSupportsCancellation = true;
-            m_Worker.DoWork += new System.ComponentModel.DoWorkEventHandler(m_Worker_DoWork);
-            m_Worker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(m_Worker_ProgressChanged);
-            m_Worker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(m_Worker_RunWorkerCompleted);
-            m_Worker.RunWorkerAsync(data);
-        }
-
-        void m_Worker_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
-        {
-            m_Monitor.Close();
-            if (e.Error != null)
-            {
-                System.Windows.Forms.MessageBox.Show(String.Format(StringResources.FileOpError, e.Error.Message), StringResources.Ares,
-                    System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
-            }
-            if (m_CompletedAction != null)
-                m_CompletedAction();
-        }
-
-        void m_Worker_ProgressChanged(object sender, System.ComponentModel.ProgressChangedEventArgs e)
-        {
-            if (m_Monitor.Canceled)
-            {
-                m_Worker.CancelAsync();
-            }
-            else
-            {
-                m_Monitor.SetProgress(e.ProgressPercentage, e.UserState.ToString());
-            }
-        }
-
-        private void m_Worker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
-        {
-            FileOpData data = (FileOpData)e.Argument;
-
-            // determine amount to copy / move
-            long allBytes = 0;
-            foreach (String file in data.UniqueElements.Keys)
-            {
-                allBytes += GetBytes(file);
-            }
-
-            System.Collections.Generic.Dictionary<String, String> filesMoved = new Dictionary<String, String>();
-
-            long currentBytes = 0;
-            int lastPercent = -1;
-            foreach (String file in data.UniqueElements.Keys)
-            {
-                String nameOnly = System.IO.Path.GetFileName(file);
-                String fileTargetPath = System.IO.Path.Combine(data.TargetPath, nameOnly);
-                if (file.Equals(fileTargetPath, StringComparison.InvariantCultureIgnoreCase))
-                {
-                    currentBytes += GetBytes(fileTargetPath);
-                    ReportProgress(currentBytes, allBytes, ref lastPercent, fileTargetPath);
-                    continue;
-                }
-                if (System.IO.Directory.Exists(file))
-                {
-                    AddMovedFiles(file, fileTargetPath, filesMoved);
-                    if (data.Move)
-                    {
-                        System.IO.Directory.Move(file, fileTargetPath);
-                        currentBytes += GetBytes(fileTargetPath);
-                        ReportProgress(currentBytes, allBytes, ref lastPercent, fileTargetPath);
-                    }
-                    else
-                    {
-                        CopyDirectory(file, fileTargetPath, ref currentBytes, allBytes, ref lastPercent);
-                    }
-                }
-                else if (System.IO.File.Exists(file))
-                {
-                    filesMoved[file] = fileTargetPath;
-                    if (data.Move)
-                    {
-                        System.IO.File.Move(file, fileTargetPath);
-                    }
-                    else
-                    {
-                        System.IO.File.Copy(file, fileTargetPath, true);
-                    }
-                    currentBytes += GetBytes(fileTargetPath);
-                    ReportProgress(currentBytes, allBytes, ref lastPercent, fileTargetPath);
-                }
-                if (m_Worker.CancellationPending)
-                    return;
-            }
-
-            if (data.Move)
-            {
-                AdaptElementPaths(filesMoved, data.Project);
-            }
-            AdaptTags(filesMoved, data.Move);
-        }
-
-        private static void AdaptTags(Dictionary<String, String> files, bool filesMoved)
-        {
-            String basePath = Ares.Settings.Settings.Instance.MusicDirectory;
-            Dictionary<String, String> adaptedFiles = new Dictionary<string, string>();
-            List<String> removedFiles = new List<string>();
-            foreach (var entry in files)
-            {
-                if (entry.Key.StartsWith(basePath, StringComparison.OrdinalIgnoreCase))
-                {
-                    if (entry.Value.StartsWith(basePath, StringComparison.OrdinalIgnoreCase))
-                    {
-                        adaptedFiles[entry.Key.Substring(basePath.Length + 1)] = entry.Value.Substring(basePath.Length + 1);
-                    }
-                    else if (filesMoved)
-                    {
-                        removedFiles.Add(entry.Key.Substring(basePath.Length + 1));
-                    }
-                }
-            }
-            try
-            {
-                var dbWrite = Ares.Tags.TagsModule.GetTagsDB().WriteInterface;
-                if (filesMoved)
-                {
-                    dbWrite.MoveFiles(adaptedFiles);
-                    if (removedFiles.Count > 0)
-                        dbWrite.RemoveFiles(removedFiles);
-                }
-                else
-                {
-                    dbWrite.CopyFiles(adaptedFiles);
-                }
-            }
-            catch (Ares.Tags.TagsDbException /*ex*/)
-            {
-                throw;
-            }
-        }
-
-        private static void AdaptElementPaths(Dictionary<String, String> filesMoved, IProject project)
-        {
-            if (project == null)
-                return;
-
-            FileLists lists = new FileLists();
-            IList<IFileElement> elements = lists.GetAllFiles(project);
-            foreach (IFileElement element in elements)
-            {
-                String basePath = element.SoundFileType == SoundFileType.Music ? Ares.Settings.Settings.Instance.MusicDirectory : Ares.Settings.Settings.Instance.SoundDirectory;
-                String currentPath = System.IO.Path.Combine(basePath, element.FilePath);
-                if (filesMoved.ContainsKey(currentPath))
-                {
-                    String newPath = filesMoved[currentPath];
-                    if (newPath.StartsWith(basePath, StringComparison.InvariantCultureIgnoreCase))
-                    {
-                        element.FilePath = newPath.Substring(basePath.Length + 1);
-                    }
-                }
-            }
-        }
-
-        private void ReportProgress(long currentBytes, long allBytes, ref int lastPercent, String file)
-        {
-            int currentPercent = (int)(((double)currentBytes / (double)allBytes) * 100.0);
-            if (currentPercent != lastPercent)
-            {
-                lastPercent = currentPercent;
-                m_Worker.ReportProgress(lastPercent, System.IO.Path.GetFileName(file));
-            }
-        }
-
-        private static long GetBytes(String file)
-        {
-            if (System.IO.Directory.Exists(file))
-            {
-                System.IO.DirectoryInfo info = new System.IO.DirectoryInfo(file);
-                return GetBytes(info);
-            }
-            else if (System.IO.File.Exists(file))
-            {
-                return (new System.IO.FileInfo(file)).Length;
-            }
-            else
-                return 0;
-        }
-
-        private static long GetBytes(System.IO.DirectoryInfo directoryInfo)
-        {
-            long sum = 0;
-            foreach (System.IO.DirectoryInfo info in directoryInfo.GetDirectories())
-                sum += GetBytes(info);
-            foreach (System.IO.FileInfo info in directoryInfo.GetFiles())
-                sum += info.Length;
-            return sum;
-        }
-
-        private void CopyDirectory(String source, String destination, ref long currentBytes, long allBytes, ref int lastPercent)
-        {
-            if (!System.IO.Directory.Exists(destination))
-            {
-                System.IO.Directory.CreateDirectory(destination);
-                System.IO.DirectoryInfo info = new System.IO.DirectoryInfo(source);
-                foreach (System.IO.DirectoryInfo subDir in info.GetDirectories())
-                {
-                    CopyDirectory(subDir.FullName, System.IO.Path.Combine(destination, subDir.Name), ref currentBytes, allBytes, ref lastPercent);
-                    if (m_Worker.CancellationPending)
-                        return;
-                }
-                foreach (System.IO.FileInfo file in info.GetFiles())
-                {
-                    System.IO.File.Copy(file.FullName, System.IO.Path.Combine(destination, file.Name), true);
-                    currentBytes += GetBytes(file.FullName);
-                    ReportProgress(currentBytes, allBytes, ref lastPercent, file.FullName);
-                    if (m_Worker.CancellationPending)
-                        return;
-                }
-            }
-        }
-
-        private static void AddMovedFiles(String source, String destination, Dictionary<String, String> movedFiles)
-        {
-            System.IO.DirectoryInfo info = new System.IO.DirectoryInfo(source);
-            foreach (System.IO.DirectoryInfo subDir in info.GetDirectories())
-            {
-                AddMovedFiles(subDir.FullName, System.IO.Path.Combine(destination, subDir.Name), movedFiles);
-            }
-            foreach (System.IO.FileInfo file in info.GetFiles())
-            {
-                movedFiles[file.FullName] = System.IO.Path.Combine(destination, file.Name);
-            }
-        }
-    }
-
-    #endregion
-	
-#endif
-
-    #region Progress
-
-    public class ProgressMonitor
-    {
-        private System.Timers.Timer timer;
-        private bool canceled;
-        private bool closed;
-        private ProgressDialog dialog;
-        private System.Windows.Forms.Form parent;
-
-        private const int DELAY = 700;
-
-        private Object syncObject = new object();
-		
-        public ProgressMonitor(System.Windows.Forms.Form parent, String text)
-        {
-            dialog = new ProgressDialog(text);
-            dialog.Text = text;
-            closed = false;
-            canceled = false;
-            this.parent = parent;
-            timer = new System.Timers.Timer(DELAY);
-            timer.AutoReset = false;
-            timer.Elapsed += new System.Timers.ElapsedEventHandler(timer_Elapsed);
-            timer.Start();
-        }
-
-        private void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
-        {
-            lock (syncObject)
-            {
-                if (closed)
-                    return;
-            }
-            if (parent.InvokeRequired)
-            {
-                parent.Invoke(new Action(() => { OpenDialog(); }));
-            }
-            else
-            {
-                OpenDialog();
-            }
-        }
-
-        private void OpenDialog()
-        {
-            lock (syncObject)
-            {
-                if (closed)
-                    return;
-            }
-			dialog.ShowDialog(parent);
-			DialogClosed();
-        }
-
-        private void DialogClosed()
-        {
-            lock (syncObject)
-            {
-                if (!closed)
-                    canceled = true;
-            }
-        }
-
-        public bool Canceled
-        {
-            get
-            {
-                lock (syncObject)
-                {
-                    return canceled;
-                }
-            }
-        }
-
-        public void Close()
-        {
-            lock (syncObject)
-            {
-                closed = true;
-                if (timer.Enabled)
-                {
-                    timer.Stop();
-                }
-            }
-            if (dialog != null && dialog.InvokeRequired)
-            {
-                dialog.Invoke(new Action(() => { DoClose(); }));
-            }
-            else
-            {
-				DoClose();
-            }
-        }
-		
-		private void DoClose()
-		{
-            if (dialog != null && dialog.Visible)
-            {
-                dialog.Visible = false;
-                dialog.Close();
-            }
-            timer.Dispose();
-		}
-
-        public void SetProgress(int progress, String text)
-        {
-            if (dialog.InvokeRequired)
-            {
-                dialog.Invoke(new Action(() => { dialog.SetProgress(progress, text); }));
-            }
-            else
-            {
-                dialog.SetProgress(progress, text);
-            }
-        }
-    }
-
-    #endregion
 }

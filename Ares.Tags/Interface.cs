@@ -66,6 +66,66 @@ namespace Ares.Tags
         public int CategoryId { get; internal set; }
     }
 
+    #region Data Types for Import / Export
+
+    public class FileIdentification
+    {
+        public int Id { get; set; }
+        public String Artist { get; set; }
+        public String Album { get; set; }
+        public String Title { get; set; }
+        public String AcoustId { get; set; }
+    }
+
+    public class TranslationExchange
+    {
+        public long LanguageId { get; set; }
+        public String Name { get; set; }
+    }
+
+    public class LanguageExchange
+    {
+        public String ISO6391Code { get; set; }
+        public long Id { get; set; }
+        public List<TranslationExchange> Names { get; set; }
+    }
+
+    public class CategoryExchange
+    {
+        public long Id { get; set; }
+        public List<TranslationExchange> Names { get; set; }
+    }
+
+    public class TagExchange
+    {
+        public long Id { get; set; }
+        public long CategoryId { get; set; }
+        public List<TranslationExchange> Names { get; set; }
+    }
+
+    public class TagsForFileExchange
+    {
+        public long FileId { get; set; }
+        public List<long> TagIds { get; set; }
+    }
+
+    public class FileExchange : FileIdentification
+    {
+        public String RelativePath { get; set; }
+    }
+
+    public class TagsExportedData
+    {
+        public List<LanguageExchange> Languages { get; set; }
+        public List<CategoryExchange> Categories { get; set; }
+        public List<TagExchange> Tags { get; set; }
+        public List<FileIdentification> Files { get; set; }
+        public List<TagsForFileExchange> TagsForFiles { get; set; }
+        public List<TagsForFileExchange> RemovedTags { get; set; }
+    }
+
+    #endregion
+
     /// <summary>
     /// Read-interface for the tags database, independent of language,
     /// only for playing.
@@ -87,6 +147,11 @@ namespace Ares.Tags
         /// anyway.
         /// </remarks>
         IList<String> GetAllFilesWithAnyTagInEachCategory(IDictionary<int, HashSet<int>> tagsByCategory);
+
+        /// <summary>
+        /// Returns the stored identification for the given files.
+        /// </summary>
+        IList<FileIdentification> GetIdentificationForFiles(IList<String> filePaths);
     }
 
     /// <summary>
@@ -175,6 +240,11 @@ namespace Ares.Tags
         /// Remove the category and its tags for all languages.
         /// </summary>
         void RemoveCategory(int categoryId);
+
+        /// <summary>
+        /// Sets the identification for the given files.
+        /// </summary>
+        void SetFileIdentifications(IList<String> files, IList<FileIdentification> identifications);
     }
 
     /// <summary>
@@ -306,15 +376,27 @@ namespace Ares.Tags
         void CloseDatabase();
 
         /// <summary>
-        /// Adds all entries of the given database
-        /// to the currently opened database.
+        /// Adds all entries of the given file (which was exported by a 
+        /// call to ExportDatabase) to the currently opened database.
         /// </summary>
         void ImportDatabase(String filePath, System.IO.TextWriter logStream);
+
+        /// <summary>
+        /// Adds entries retrieved from the global database to the currently
+        /// opened database.
+        /// </summary>
+        void ImportDataFromGlobalDB(TagsExportedData data, System.IO.TextWriter logStream);
 
         /// <summary>
         /// Exports the part of the database relevant to the given files.
         /// </summary>
         void ExportDatabase(IList<String> filePaths, String targetFilePath);
+
+        /// <summary>
+        /// Exports the part of the database relevant to the given files. 
+        /// Does not export parts which come from the global database.
+        /// </summary>
+        TagsExportedData ExportDatabaseForGlobalDB(IList<String> filePaths);
 
         /// <summary>
         /// The default file name for the tags database.

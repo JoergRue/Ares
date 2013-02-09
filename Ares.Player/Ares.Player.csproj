@@ -224,6 +224,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Ares.CommonGUI\Ares.CommonGUI.csproj">
+      <Project>{ED16F93E-23F3-4075-B72D-F64E49D08E2D}</Project>
+      <Name>Ares.CommonGUI</Name>
+      <Private>False</Private>
+    </ProjectReference>
     <ProjectReference Include="..\Ares.Data\Ares.Data.csproj">
       <Project>{F64D6AF3-3543-47F0-A7B8-0336750B09C3}</Project>
       <Name>Ares.Data</Name>

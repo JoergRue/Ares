@@ -495,7 +495,7 @@ namespace Ares.Editor
             editToolStripMenuItem.Enabled = m_Parent != null && treeView1.SelectedNode != null && treeView1.SelectedNode.Tag != null &&
                 treeView1.SelectedNode.Tag is DraggedItem && ((DraggedItem)treeView1.SelectedNode.Tag).NodeType == DraggedItemType.File;
             pasteToolStripMenuItem.Enabled = Clipboard.ContainsFileDropList() || Clipboard.ContainsData(DataFormats.GetFormat("AresFilesList").Name);
-            tagsToolStripMenuItem.Visible = m_FileType == FileType.Music;
+            tagsSubMenu.Visible = m_FileType == FileType.Music;
             tagsToolStripMenuItem.Enabled = m_FileType == FileType.Music && treeView1.SelectedNodes.Count > 0;
             if (tagsToolStripMenuItem.Enabled)
             {
@@ -503,8 +503,8 @@ namespace Ares.Editor
                 if (GetSelectedFiles().Count == 0)
                     tagsToolStripMenuItem.Enabled = false;
             }
-            id3TagsMenuItem.Visible = m_FileType == FileType.Music;
             id3TagsMenuItem.Enabled = tagsToolStripMenuItem.Enabled;
+            downloadTagsToolStripMenuItem.Enabled = tagsToolStripMenuItem.Enabled;
         }
 
         private void searchButton_Click(object sender, EventArgs e)
@@ -732,11 +732,20 @@ namespace Ares.Editor
             }
 
             m_TreeLocked = true;
-            Ares.ModelInfo.FileOperations.CopyOrMove(this, m_Project, uniqueElements, move, targetPath, () =>
+            Ares.Settings.Settings settings = Ares.Settings.Settings.Instance;
+            System.Threading.CancellationTokenSource tokenSource = new System.Threading.CancellationTokenSource();
+            Ares.CommonGUI.ProgressMonitorBase monitor = new TaskProgressMonitor(this, move ? StringResources.Moving : StringResources.Copying, tokenSource);
+            var task = Ares.TagsImport.FileOperations.CopyOrMove(monitor, m_Project, settings.MusicDirectory, settings.SoundDirectory, uniqueElements, move, targetPath, tokenSource);
+            task.ContinueWith( (task2) =>
+            {
+                monitor.Close();
+                if (task.Exception != null)
                 {
-                    m_TreeLocked = false;
-                    ReFillTree();
-                });
+                    HandleTaskException(task.Exception, StringResources.FileOpError);
+                }
+                m_TreeLocked = false;
+                ReFillTree();
+            }, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskContinuationOptions.None, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         private Dictionary<String, object> GetUniqueParents(List<String> files)
@@ -1023,13 +1032,35 @@ namespace Ares.Editor
                     }
                 }
 
-                Ares.ModelInfo.TagExtractor.ExtractTags(this, files, languageId, interpret, album, genre, mood, (success) =>
+                var tokenSource = new System.Threading.CancellationTokenSource();
+                Ares.CommonGUI.ProgressMonitorBase monitor = new TaskProgressMonitor(this, StringResources.ExtractingTags, tokenSource);
+
+                var task = Ares.TagsImport.TagExtractor.ExtractTags(monitor, files, Ares.Settings.Settings.Instance.MusicDirectory, languageId, interpret, album, genre, mood, tokenSource);
+                task.ContinueWith((task2) =>
                     {
-                        if (success)
+                        monitor.Close();
+                        if (task.Exception != null)
+                        {
+                            HandleTaskException(task.Exception, StringResources.TagExtractionError);
+                        }
+                        else
                         {
                             Ares.Editor.Actions.TagChanges.Instance.FireTagsDBChanged(this);
                         }
-                    });
+                    }, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskContinuationOptions.None, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
+            }
+        }
+
+        private void HandleTaskException(Exception ex, String text)
+        {
+            if (ex is AggregateException)
+            {
+                ex = (ex as AggregateException).Flatten().InnerException;
+            }
+            if (!(ex is System.Threading.Tasks.TaskCanceledException) && !(ex is OperationCanceledException))
+            {
+                System.Windows.Forms.MessageBox.Show(String.Format(text, ex.Message), StringResources.Ares,
+                    System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
             }
         }
 
@@ -1106,9 +1137,56 @@ namespace Ares.Editor
             }
         }
 
+        private void downloadTagsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            List<String> files = GetSelectedFiles();
+            if (files.Count == 0)
+                return;
+
+            System.Threading.CancellationTokenSource tokenSource = new System.Threading.CancellationTokenSource();
+            TaskProgressMonitor monitor = new TaskProgressMonitor(this, StringResources.ExtractingMusicIds, tokenSource);
+            monitor.IncreaseProgress(0.0, StringResources.ExtractingMusicIds);
+            var task = Ares.TagsImport.MusicIdentification.UpdateMusicIdentification(monitor, files, Ares.Settings.Settings.Instance.MusicDirectory, tokenSource);
+            task.ContinueWith((task2) =>
+            {
+                monitor.Close();
+            }, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskContinuationOptions.NotOnFaulted, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
+            task.ContinueWith((task2) =>
+            {
+                monitor.Close();
+                if (task2.Exception != null)
+                {
+                    HandleTaskException(task2.Exception, StringResources.MusicIdExtractionError);
+                }
+            }, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskContinuationOptions.OnlyOnFaulted, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
     }
 
+    public class TaskProgressMonitor : Ares.CommonGUI.ProgressMonitorBase
+    {
+        private System.Threading.CancellationTokenSource m_TokenSource;
 
+        public TaskProgressMonitor(System.Windows.Forms.Form parent, String text, System.Threading.CancellationTokenSource tokenSource)
+            : base(parent, text)
+        {
+            m_TokenSource = tokenSource;
+        }
+
+        protected override void DoCancel()
+        {
+            m_TokenSource.Cancel();
+        }
+
+        public override bool Canceled
+        {
+            get
+            {
+                return m_TokenSource.IsCancellationRequested;
+            }
+        }
+
+    }
     public enum DraggedItemType
     {
         Directory, File

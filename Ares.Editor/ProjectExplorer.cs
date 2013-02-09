@@ -1441,7 +1441,16 @@ namespace Ares.Editor
                     {
                         String tempFileName = System.IO.Path.GetTempFileName() + ".ares";
                         Data.DataModule.ProjectManager.ExportElements(exportItems, tempFileName);
-                        Ares.ModelInfo.Exporter.Export(this, exportItems, tempFileName, exportDialog.FileName);
+                        Ares.CommonGUI.ProgressMonitor monitor = new Ares.CommonGUI.ProgressMonitor(this, StringResources.Exporting);
+                        Ares.ModelInfo.Exporter.Export(monitor, exportItems, tempFileName, exportDialog.FileName, error =>
+                        {
+                            monitor.Close();
+                            if (error != null)
+                            {
+                                System.Windows.Forms.MessageBox.Show(String.Format(StringResources.ExportError, error.Message), StringResources.Ares,
+                                    System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                            }
+                        });
                     }
                     else
                     {
@@ -1790,7 +1799,20 @@ namespace Ares.Editor
                     if (fileName.EndsWith(".apkg", StringComparison.InvariantCultureIgnoreCase))
                     {
                         String tempFileName = System.IO.Path.GetTempFileName() + ".ares";
-                        Ares.ModelInfo.Importer.Import(this, fileName, tempFileName, () => DoImport(tempFileName));
+                        Ares.CommonGUI.ProgressMonitor monitor = new Ares.CommonGUI.ProgressMonitor(this, StringResources.Importing);
+                        Ares.ModelInfo.Importer.Import(monitor, fileName, tempFileName, (error, cancelled) =>
+                        {
+                            monitor.Close();
+                            if (error != null)
+                            {
+                                System.Windows.Forms.MessageBox.Show(String.Format(StringResources.ImportError, error.Message), StringResources.Ares,
+                                    System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                            }
+                            else if (!cancelled)
+                            {
+                                DoImport(tempFileName);
+                            }
+                        });
                     }
                     else
                     {
