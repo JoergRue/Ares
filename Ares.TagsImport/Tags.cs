@@ -199,12 +199,7 @@ namespace Ares.TagsImport
             List<IList<int>> newTags = new List<IList<int>>();
             for (int i = 0; i < info.Files.Count; ++i)
             {
-                HashSet<int> fileTags = new HashSet<int>();
-                var existingTags = dbRead.GetTagsForFile(info.Files[i]);
-                foreach (var existingTag in existingTags)
-                {
-                    fileTags.Add(existingTag.Id);
-                }
+                List<int> fileTags = new List<int>();
                 if (info.Interpret && !String.IsNullOrEmpty(interprets[i]))
                     fileTags.Add(interpretTags[interprets[i]]);
                 if (info.Album && !String.IsNullOrEmpty(albums[i]))
@@ -213,10 +208,10 @@ namespace Ares.TagsImport
                     fileTags.Add(genreTags[genres[i]]);
                 if (info.Mood && !String.IsNullOrEmpty(moods[i]))
                     fileTags.Add(moodTags[moods[i]]);
-                newTags.Add(new List<int>(fileTags));
+                newTags.Add(fileTags);
             }
             var dbWrite2 = Ares.Tags.TagsModule.GetTagsDB().WriteInterface;
-            dbWrite2.SetFileTags(info.Files, newTags);
+            dbWrite2.AddFileTags(info.Files, newTags);
         }
 
         private void AddTags(Dictionary<String, int> tags, int categoryId, int languageId, int currentCount, int totalCount, ref int lastPercent)

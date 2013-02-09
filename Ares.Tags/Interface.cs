@@ -210,11 +210,16 @@ namespace Ares.Tags
     public interface ITagsDBWrite
     {
         /// <summary>
-        /// Sets the tags for a list of files.
+        /// Adds tags for a list of files.
         /// For each file, the list of new tags is given.
-        /// Last parameter gives a function to report progress.
         /// </summary>
-        void SetFileTags(IList<String> relativePaths, IList<IList<int>> tagIds);
+        void AddFileTags(IList<String> relativePaths, IList<IList<int>> tagIds);
+
+        /// <summary>
+        /// Remove tags for a list of files.
+        /// For each file, the list of to-be-removed tags is given.
+        /// </summary>
+        void RemoveFileTags(IList<String> relativePaths, IList<IList<int>> tagIds);
 
         /// <summary>
         /// Removes tags for the given files from the database.

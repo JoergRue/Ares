@@ -57,45 +57,46 @@ namespace Ares.Editor.Actions
     public class ChangeFileTagsAction : Action
     {
         private List<String> m_Files;
-        private IList<IList<int>> m_OldTags;
-        private IList<IList<int>> m_NewTags;
+        private IList<IList<int>> m_AddedTags;
+        private IList<IList<int>> m_RemovedTags;
 
         public ChangeFileTagsAction(List<String> files, HashSet<int> addedTags, HashSet<int> removedTags, int languageId)
         {
             m_Files = new List<string>(files);
-            m_OldTags = new List<IList<int>>();
-            m_NewTags = new List<IList<int>>();
+            m_AddedTags = new List<IList<int>>();
+            m_RemovedTags = new List<IList<int>>();
 
-            ITagsDBReadByLanguage dbRead = Ares.Tags.TagsModule.GetTagsDB().GetReadInterfaceByLanguage(languageId);
             foreach (String file in m_Files)
             {
-                List<int> tags = new List<int>();
-                foreach (TagInfoForLanguage tagInfo in dbRead.GetTagsForFile(file))
-                {
-                    tags.Add(tagInfo.Id);
-                }
-                m_OldTags.Add(tags);
-                HashSet<int> newTags = new HashSet<int>(tags);
-                newTags.UnionWith(addedTags);
-                newTags.ExceptWith(removedTags);
-                m_NewTags.Add(new List<int>(newTags));
+                m_AddedTags.Add(new List<int>(addedTags));
+                m_RemovedTags.Add(new List<int>(removedTags));
             }
         }
 
         public override void Do(Ares.Data.IProject project)
         {
-            SetFileTags(m_NewTags);
+            AddFileTags(m_AddedTags);
+            RemoveFileTags(m_RemovedTags);
+            Ares.Editor.Actions.TagChanges.Instance.FireTagsDBChanged(this);
         }
 
         public override void Undo(Ares.Data.IProject project)
         {
-            SetFileTags(m_OldTags);
+            AddFileTags(m_RemovedTags);
+            RemoveFileTags(m_AddedTags);
+            Ares.Editor.Actions.TagChanges.Instance.FireTagsDBChanged(this);
         }
 
-        private void SetFileTags(IList<IList<int>> tags)
+        private void AddFileTags(IList<IList<int>> tags)
         {
             ITagsDBWrite dbWrite = Ares.Tags.TagsModule.GetTagsDB().WriteInterface;
-            dbWrite.SetFileTags(m_Files, tags);
+            dbWrite.AddFileTags(m_Files, tags);
+        }
+
+        private void RemoveFileTags(IList<IList<int>> tags)
+        {
+            ITagsDBWrite dbWrite = Ares.Tags.TagsModule.GetTagsDB().WriteInterface;
+            dbWrite.RemoveFileTags(m_Files, tags);
         }
     }
 

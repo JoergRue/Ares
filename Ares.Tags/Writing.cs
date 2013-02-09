@@ -40,7 +40,7 @@ namespace Ares.Tags
             m_Connection = connection;
         }
 
-        public void SetFileTags(IList<string> relativePaths, IList<IList<int>> tagIds)
+        public void AddFileTags(IList<string> relativePaths, IList<IList<int>> tagIds)
         {
             if (m_Connection == null)
             {
@@ -57,7 +57,40 @@ namespace Ares.Tags
                 {
                     for (int i = 0; i < relativePaths.Count; ++i)
                     {
-                        DoSetFileTags(transaction, relativePaths[i], tagIds[i]);
+                        DoAddFileTags(transaction, relativePaths[i], tagIds[i]);
+                    }
+
+                    transaction.Commit();
+                }
+            }
+            catch (System.Data.DataException ex)
+            {
+                throw new TagsDbException(ex.Message, ex);
+            }
+            catch (SQLiteException ex)
+            {
+                throw new TagsDbException(ex.Message, ex);
+            }
+        }
+
+        public void RemoveFileTags(IList<string> relativePaths, IList<IList<int>> tagIds)
+        {
+            if (m_Connection == null)
+            {
+                throw new TagsDbException("No Connection to DB file!");
+            }
+            try
+            {
+                if (relativePaths.Count == 0)
+                {
+                    return;
+                }
+
+                using (SQLiteTransaction transaction = m_Connection.BeginTransaction())
+                {
+                    for (int i = 0; i < relativePaths.Count; ++i)
+                    {
+                        DoRemoveFileTags(transaction, relativePaths[i], tagIds[i]);
                     }
 
                     transaction.Commit();
@@ -234,29 +267,132 @@ namespace Ares.Tags
             }
         }
 
-        private void DoSetFileTags(SQLiteTransaction transaction, String path, IList<int> tagIds)
+        private void DoAddFileTags(SQLiteTransaction transaction, String path, IList<int> tagIds)
         {
             if (tagIds.Count == 0)
             {
-                DoRemoveFile(transaction, path);
                 return;
             }
-            long fileId = InsertFileOrRemoveItsTags(transaction, path);
-            String insertTagString = String.Format("INSERT INTO {0} ({1}, {2}, {3}) VALUES (@Id, @File, @Tag)",
-                Schema.FILETAGS_TABLE, Schema.ID_COLUMN, Schema.FILE_COLUMN, Schema.TAG_COLUMN);
-            using (SQLiteCommand insertTagCommand = new SQLiteCommand(insertTagString, m_Connection, transaction))
+            long fileId = InsertOrFindFile(transaction, path);
+            String queryExistingString = String.Format("SELECT {0}, {1} FROM {2} WHERE {3}=@File AND {4}=@Tag",
+                Schema.ID_COLUMN, Schema.USER_COLUMN, Schema.FILETAGS_TABLE, Schema.FILE_COLUMN, Schema.TAG_COLUMN);
+            String removeRemovedString = String.Format("DELETE FROM {0} WHERE {1}=@File AND {2}=@Tag",
+                Schema.REMOVEDTAGS_TABLE, Schema.FILE_COLUMN, Schema.TAG_COLUMN);
+            String insertTagString = String.Format("INSERT INTO {0} ({1}, {2}, {3}, {4}) VALUES (@Id, @File, @Tag, @User)",
+                Schema.FILETAGS_TABLE, Schema.ID_COLUMN, Schema.FILE_COLUMN, Schema.TAG_COLUMN, Schema.USER_COLUMN);
+            String updateUserString = String.Format("UPDATE {0} SET {1}=@User WHERE {2}=@File AND {3}=@Tag",
+                Schema.FILETAGS_TABLE, Schema.USER_COLUMN, Schema.FILE_COLUMN, Schema.TAG_COLUMN);
+            using (SQLiteCommand queryExistingCommand = new SQLiteCommand(queryExistingString, m_Connection, transaction),
+                removeRemovedCommand = new SQLiteCommand(removeRemovedString, m_Connection, transaction),
+                insertTagCommand = new SQLiteCommand(insertTagString, m_Connection, transaction),
+                updateUserCommand = new SQLiteCommand(updateUserString, m_Connection, transaction))
             {
+                queryExistingCommand.Parameters.AddWithValue("@File", fileId);
+                SQLiteParameter queryParam = queryExistingCommand.Parameters.Add("@Tag", System.Data.DbType.Int64);
+                removeRemovedCommand.Parameters.AddWithValue("@File", fileId);
+                SQLiteParameter removeParam = removeRemovedCommand.Parameters.Add("@Tag", System.Data.DbType.Int64);
                 insertTagCommand.Parameters.AddWithValue("@Id", DBNull.Value);
                 insertTagCommand.Parameters.AddWithValue("@File", fileId);
-                SQLiteParameter tagParam = insertTagCommand.Parameters.Add("@Tag", System.Data.DbType.Int64);
+                insertTagCommand.Parameters.AddWithValue("@User", Schema.ARES_GUI_USER);
+                SQLiteParameter addParam = insertTagCommand.Parameters.Add("@Tag", System.Data.DbType.Int64);
+                updateUserCommand.Parameters.AddWithValue("@User", Schema.ARES_GUI_USER);
+                updateUserCommand.Parameters.AddWithValue("@File", fileId);
+                SQLiteParameter updateParam = updateUserCommand.Parameters.Add("@Tag", System.Data.DbType.Int64);
                 foreach (int tagId in tagIds)
                 {
-                    tagParam.Value = (Int64)tagId;
-                    int res = insertTagCommand.ExecuteNonQuery();
-                    if (res != 1)
+                    queryParam.Value = (Int64)tagId;
+                    using (SQLiteDataReader reader = queryExistingCommand.ExecuteReader())
                     {
-                        throw new TagsDbException("Insertion into FileTags table failed.");
+                        if (reader.Read())
+                        {
+                            // tag exists already
+                            // if the old user was the global db, tag is now 'confirmed' --> change the user
+                            if (reader.GetString(1) == Schema.GLOBAL_DB_USER)
+                            {
+                                updateParam.Value = (Int64)tagId;
+                                updateUserCommand.ExecuteNonQuery();
+                            }
+                            // else do nothing
+                        }
+                        else
+                        {
+                            // insert into table
+                            addParam.Value = (Int64)tagId;
+                            int res = insertTagCommand.ExecuteNonQuery();
+                            if (res != 1)
+                            {
+                                throw new TagsDbException("Insertion into FileTags table failed.");
+                            }
+                        }
                     }
+                    // also remove the tag from the 'removed tags' table
+                    removeParam.Value = (Int64)tagId;
+                    removeRemovedCommand.ExecuteNonQuery();
+                }
+            }
+        }
+
+        private void DoRemoveFileTags(SQLiteTransaction transaction, String path, IList<int> tagIds)
+        {
+            if (tagIds.Count == 0)
+            {
+                return;
+            }
+            long fileId = InsertOrFindFile(transaction, path);
+            String queryExistingString = String.Format("SELECT {0}, {1} FROM {2} WHERE {3}=@File AND {4}=@Tag",
+                Schema.ID_COLUMN, Schema.USER_COLUMN, Schema.REMOVEDTAGS_TABLE, Schema.FILE_COLUMN, Schema.TAG_COLUMN);
+            String removeAddedString = String.Format("DELETE FROM {0} WHERE {1}=@File AND {2}=@Tag",
+                Schema.FILETAGS_TABLE, Schema.FILE_COLUMN, Schema.TAG_COLUMN);
+            String removeTagString = String.Format("INSERT INTO {0} ({1}, {2}, {3}, {4}) VALUES (@Id, @File, @Tag, @User)",
+                Schema.REMOVEDTAGS_TABLE, Schema.ID_COLUMN, Schema.FILE_COLUMN, Schema.TAG_COLUMN, Schema.USER_COLUMN);
+            String updateUserString = String.Format("UPDATE {0} SET {1}=@User WHERE {2}=@File AND {3}=@Tag",
+                Schema.REMOVEDTAGS_TABLE, Schema.USER_COLUMN, Schema.FILE_COLUMN, Schema.TAG_COLUMN);
+            using (SQLiteCommand queryExistingCommand = new SQLiteCommand(queryExistingString, m_Connection, transaction),
+                removeAddedCommand = new SQLiteCommand(removeAddedString, m_Connection, transaction),
+                removeTagCommand = new SQLiteCommand(removeTagString, m_Connection, transaction),
+                updateUserCommand = new SQLiteCommand(updateUserString, m_Connection, transaction))
+            {
+                queryExistingCommand.Parameters.AddWithValue("@File", fileId);
+                SQLiteParameter queryParam = queryExistingCommand.Parameters.Add("@Tag", System.Data.DbType.Int64);
+                removeAddedCommand.Parameters.AddWithValue("@File", fileId);
+                SQLiteParameter removeParam = removeAddedCommand.Parameters.Add("@Tag", System.Data.DbType.Int64);
+                removeTagCommand.Parameters.AddWithValue("@Id", DBNull.Value);
+                removeTagCommand.Parameters.AddWithValue("@File", fileId);
+                removeTagCommand.Parameters.AddWithValue("@User", Schema.ARES_GUI_USER);
+                SQLiteParameter addParam = removeTagCommand.Parameters.Add("@Tag", System.Data.DbType.Int64);
+                updateUserCommand.Parameters.AddWithValue("@User", Schema.ARES_GUI_USER);
+                updateUserCommand.Parameters.AddWithValue("@File", fileId);
+                SQLiteParameter updateParam = updateUserCommand.Parameters.Add("@Tag", System.Data.DbType.Int64);
+                foreach (int tagId in tagIds)
+                {
+                    queryParam.Value = (Int64)tagId;
+                    using (SQLiteDataReader reader = queryExistingCommand.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            // tag was removed already
+                            // if the old user was the global db, tag is now 'confirmed' to be removed --> change the user
+                            if (reader.GetString(1) == Schema.GLOBAL_DB_USER)
+                            {
+                                updateParam.Value = (Int64)tagId;
+                                updateUserCommand.ExecuteNonQuery();
+                            }
+                            // else do nothing
+                        }
+                        else
+                        {
+                            // insert into table
+                            addParam.Value = (Int64)tagId;
+                            int res = removeTagCommand.ExecuteNonQuery();
+                            if (res != 1)
+                            {
+                                throw new TagsDbException("Insertion into RemovedTags table failed.");
+                            }
+                        }
+                    }
+                    // finally, remove the tag from the file tags table
+                    removeParam.Value = (Int64)tagId;
+                    removeAddedCommand.ExecuteNonQuery();
                 }
             }
         }
@@ -297,19 +433,32 @@ namespace Ares.Tags
                     {
                         tags.Add((int)reader.GetInt64(0));
                     }
-                    DoSetFileTags(transaction, newPath, tags);
+                    DoAddFileTags(transaction, newPath, tags);
+                }
+
+                queryString = String.Format("SELECT {0} FROM {1} WHERE {2}=@FileKey", Schema.TAG_COLUMN, Schema.REMOVEDTAGS_TABLE, Schema.FILE_COLUMN);
+                using (SQLiteCommand command = new SQLiteCommand(queryString, m_Connection, transaction))
+                {
+                    command.Parameters.AddWithValue("@FileKey", fileKey);
+                    SQLiteDataReader reader = command.ExecuteReader();
+                    if (!reader.HasRows)
+                        return;
+                    List<int> tags = new List<int>();
+                    while (reader.Read())
+                    {
+                        tags.Add((int)reader.GetInt64(0));
+                    }
+                    DoRemoveFileTags(transaction, newPath, tags);
                 }
             }
         }
 
-        private long InsertFileOrRemoveItsTags(SQLiteTransaction transaction, String path)
+        private long InsertOrFindFile(SQLiteTransaction transaction, String path)
         {
             // Search for the file
             Object fileKey = DoFindFile(transaction, path);
             if (fileKey != null)
             {
-                // File exists. Remove all its tags in preparation for setting new tags.
-                DoRemoveAllTagsForFile(transaction, fileKey);
                 return (long)fileKey;
             }
             else

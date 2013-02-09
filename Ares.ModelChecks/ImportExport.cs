@@ -127,7 +127,7 @@ namespace Ares.ModelInfo
                 m_Worker.DoWork += new System.ComponentModel.DoWorkEventHandler(m_Worker_DoWork);
                 m_Worker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(m_Worker_ProgressChanged);
                 m_Worker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(m_Worker_RunWorkerCompleted);
-                m_Monitor.IncreaseProgress(0.0);
+                m_Monitor.SetProgress(0, String.Empty);
                 m_Worker.RunWorkerAsync(data);
             }
             catch (Exception ex)
@@ -155,7 +155,7 @@ namespace Ares.ModelInfo
             }
             else
             {
-                m_Monitor.IncreaseProgress(e.ProgressPercentage, e.UserState.ToString());
+                m_Monitor.SetProgress(e.ProgressPercentage, e.UserState.ToString());
             }
         }
 
@@ -199,10 +199,9 @@ namespace Ares.ModelInfo
                                 int currentPercent = (int)(((double)currentSize / (double)data.OverallSize) * 100.0);
                                 if (currentPercent != lastPercent || e2.Name != lastFile)
                                 {
-                                    int inc = currentPercent - lastPercent;
                                     lastPercent = currentPercent;
                                     lastFile = e2.Name;
-                                    m_Worker.ReportProgress(inc, lastFile);
+                                    m_Worker.ReportProgress(currentPercent, lastFile);
                                     e2.ContinueRunning = !m_Worker.CancellationPending;
                                 }
                             }), TimeSpan.FromMilliseconds(50), entry, fileName, entry.Size);
@@ -307,7 +306,7 @@ namespace Ares.ModelInfo
             }
             else
             {
-                m_Monitor.IncreaseProgress(e.ProgressPercentage, e.UserState.ToString());
+                m_Monitor.SetProgress(e.ProgressPercentage, e.UserState.ToString());
             }
         }
 
@@ -335,7 +334,7 @@ namespace Ares.ModelInfo
             m_Worker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(m_Worker_ProgressChanged);
             m_Worker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(m_Worker_RunWorkerCompleted);
             m_Monitor = monitor;
-            m_Monitor.IncreaseProgress(0.0);
+            m_Monitor.SetProgress(0, String.Empty);
             m_Worker.RunWorkerAsync(exportData);
         }
 
@@ -443,10 +442,9 @@ namespace Ares.ModelInfo
                             int currentPercent = (int)(((double)currentSize / (double)overallSize) * 100.0);
                             if (currentPercent != lastPercent || e2.Name != lastFile)
                             {
-                                int inc = currentPercent - lastPercent;
                                 lastPercent = currentPercent;
                                 lastFile = e2.Name;
-                                m_Worker.ReportProgress(inc, lastFile);
+                                m_Worker.ReportProgress(currentPercent, lastFile);
                                 e2.ContinueRunning = !m_Worker.CancellationPending;
                             }
                         }), TimeSpan.FromMilliseconds(50), zipEntry.Key, zipEntry.Value, zipEntry.Key.Size);

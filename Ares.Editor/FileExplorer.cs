@@ -87,6 +87,7 @@ namespace Ares.Editor
                 RetrieveFilteredFiles();
                 ReFillTree();
             }
+            updateInformationPanel();
         }
 
         public void SetProject(Ares.Data.IProject project)
@@ -981,12 +982,14 @@ namespace Ares.Editor
                 {
                     m_Project.TagLanguageId = dialog.LanguageId;
                 }
+                /* // called through tags db changed
                 if (m_IsTagFilterActive)
                 {
                     RetrieveFilteredFiles();
                     ReFillTree();
                 }
                 updateInformationPanel();
+                 */
             }
         }
 

@@ -70,6 +70,7 @@ namespace Ares.Tags
         public static readonly String USER_COLUMN = "user";
 
         public static readonly String GLOBAL_DB_USER = "__global database rpgmusictags.de__";
+        public static readonly String ARES_GUI_USER = "Ares Editor";
     }
 
     partial class SQLiteTagsDB : ITagsDB, ITagsDBFiles
