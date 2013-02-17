@@ -72,6 +72,14 @@ namespace Ares.TagsImport
             m_TokenSource = tokenSource;
         }
 
+        private static String ObfuscateUser(String user)
+        {
+            var md5 = new System.Security.Cryptography.MD5CryptoServiceProvider();
+            md5.ComputeHash(System.Text.Encoding.UTF8.GetBytes(user));
+            byte[] hashBytes = md5.Hash;
+            return Convert.ToBase64String(hashBytes);
+        }
+
         private String DoUploadTags(IList<String> files, String user, bool includeLog)
         {
             m_Monitor.SetIndeterminate(StringResources.UploadingTags);
@@ -81,7 +89,7 @@ namespace Ares.TagsImport
             request.RequestFormat = RestSharp.DataFormat.Json;
             String serializedTagsData = ServiceStack.Text.TypeSerializer.SerializeToString<Ares.Tags.TagsExportedData>(exportedData);
             request.AddParameter("TagsData", serializedTagsData);
-            request.AddParameter("User", user);
+            request.AddParameter("User", ObfuscateUser(user));
             request.AddParameter("IncludeLog", includeLog);
             var client = new RestSharp.RestClient();
             client.BaseUrl = GlobalDb.BaseUrl;
@@ -95,7 +103,7 @@ namespace Ares.TagsImport
             }
             if (response.Data == null)
             {
-                throw new GlobalDbException("No data received");
+                throw new GlobalDbException(String.IsNullOrEmpty(response.ErrorMessage) ? "No data received" : response.ErrorMessage);
             }
             if (response.Data.Status != 0)
             {
@@ -150,7 +158,7 @@ namespace Ares.TagsImport
             }
             if (response.Data == null)
             {
-                throw new GlobalDbException("No data received");
+                throw new GlobalDbException(String.IsNullOrEmpty(response.ErrorMessage) ? "No data received" : response.ErrorMessage);
             }
             if (response.Data.Status != 0)
             {
