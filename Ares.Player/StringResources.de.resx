@@ -253,6 +253,9 @@ Sie sollten zuerst ein paar Einstellungen vornehmen.</value>
   <data name="StartEditor" xml:space="preserve">
     <value>Editor öffnen</value>
   </data>
+  <data name="Streaming" xml:space="preserve">
+    <value>Streaming</value>
+  </data>
   <data name="TagsDbError" xml:space="preserve">
     <value>Fehler beim Zugriff auf die Tags-Datenbasis:
 {0}</value>

@@ -19,7 +19,7 @@
  */
 namespace Ares.Player
 {
-    partial class StreamingDialog
+    partial class StreamingPage
     {
         /// <summary>
         /// Erforderliche Designervariable.
@@ -47,7 +47,7 @@ namespace Ares.Player
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StreamingDialog));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StreamingPage));
             this.streamingBox = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.serverAddressBox = new System.Windows.Forms.TextBox();
@@ -60,8 +60,6 @@ namespace Ares.Player
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label5 = new System.Windows.Forms.Label();
             this.urlLabel = new System.Windows.Forms.Label();
-            this.cancelButton = new System.Windows.Forms.Button();
-            this.okButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.serverPortUpDown)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -111,12 +109,12 @@ namespace Ares.Player
             // 
             // encodingBox
             // 
-            resources.ApplyResources(this.encodingBox, "encodingBox");
             this.encodingBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.encodingBox.FormattingEnabled = true;
             this.encodingBox.Items.AddRange(new object[] {
             resources.GetString("encodingBox.Items"),
             resources.GetString("encodingBox.Items1")});
+            resources.ApplyResources(this.encodingBox, "encodingBox");
             this.encodingBox.Name = "encodingBox";
             this.encodingBox.SelectedIndexChanged += new System.EventHandler(this.encodingBox_SelectedIndexChanged);
             // 
@@ -152,32 +150,12 @@ namespace Ares.Player
             resources.ApplyResources(this.urlLabel, "urlLabel");
             this.urlLabel.Name = "urlLabel";
             // 
-            // cancelButton
-            // 
-            resources.ApplyResources(this.cancelButton, "cancelButton");
-            this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Name = "cancelButton";
-            this.cancelButton.UseVisualStyleBackColor = true;
-            // 
-            // okButton
-            // 
-            resources.ApplyResources(this.okButton, "okButton");
-            this.okButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.okButton.Name = "okButton";
-            this.okButton.UseVisualStyleBackColor = true;
-            this.okButton.Click += new System.EventHandler(this.okButton_Click);
-            // 
-            // StreamingDialog
+            // StreamingPage
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.okButton);
-            this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.groupBox1);
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "StreamingDialog";
-            this.ShowInTaskbar = false;
+            this.Name = "StreamingPage";
             ((System.ComponentModel.ISupportInitialize)(this.serverPortUpDown)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -197,8 +175,6 @@ namespace Ares.Player
         private System.Windows.Forms.ComboBox encodingBox;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button cancelButton;
-        private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.Label urlLabel;
         private System.Windows.Forms.Label label5;
     }

@@ -34,13 +34,30 @@ namespace Ares.CommonGUI
 
         public void SetProgress(int percent, String text)
         {
+            if (progressBar.Style != ProgressBarStyle.Continuous)
+            {
+                progressBar.Style = ProgressBarStyle.Continuous;
+            }
             progressBar.Value = percent;
             descriptionLabel.Text = text;
         }
 
         public void SetProgress(int percent)
         {
+            if (progressBar.Style != ProgressBarStyle.Continuous)
+            {
+                progressBar.Style = ProgressBarStyle.Continuous;
+            }
             progressBar.Value = percent;
+        }
+
+        public void SetIndeterminate(String text)
+        {
+            if (progressBar.Style != ProgressBarStyle.Marquee)
+            {
+                progressBar.Style = ProgressBarStyle.Marquee;
+            }
+            descriptionLabel.Text = text;   
         }
     }
 }

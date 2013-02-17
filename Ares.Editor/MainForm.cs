@@ -28,7 +28,7 @@ using Ares.Settings;
 
 namespace Ares.Editor
 {
-    public partial class MainForm : Form, ErrorWindow.IErrorWindowClient, IFileExplorerParent
+    public partial class MainForm : Form, ErrorWindow.IErrorWindowClient, IFileExplorerParent, ElementEditors.IFileTagsEditorParent
     {
         private Ares.Ipc.ApplicationInstance m_Instance;
 
@@ -149,6 +149,14 @@ namespace Ares.Editor
                 m_TagsEditor.SetProject(m_CurrentProject);
                 return m_TagsEditor;
             }
+            else if (persistString == "FileTagsEditor")
+            {
+                m_FileTagsEditor = new ElementEditors.FileTagsEditor();
+                m_FileTagsEditor.SetParent(this);
+                m_FileTagsEditor.SetProject(m_CurrentProject);
+                m_FileTagsEditor.SetFiles(null);
+                return m_FileTagsEditor;
+            }
             else
             {
                 return null;
@@ -157,9 +165,12 @@ namespace Ares.Editor
 #endif
 
 
-        private void ShowSettingsDialog()
+        private void ShowSettingsDialog(int pageIndex)
         {
             CommonGUI.SettingsDialog dialog = new CommonGUI.SettingsDialog(Ares.Settings.Settings.Instance, m_BasicSettings);
+            dialog.AddPage(new Dialogs.ToolsPageHost());
+            dialog.AddPage(new Dialogs.OnlineDbPageHost());
+            dialog.SetVisiblePage(pageIndex);
             if (dialog.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
             {
                 SettingsChanged(true);
@@ -331,7 +342,7 @@ namespace Ares.Editor
             Ares.Settings.Settings settings = Ares.Settings.Settings.Instance;
             String oldSoundsDir = settings.SoundDirectory;
             String oldMusicDir = settings.MusicDirectory;
-            ShowSettingsDialog();
+            ShowSettingsDialog(-1);
         }
 
         private BasicSettings m_BasicSettings;
@@ -464,8 +475,11 @@ namespace Ares.Editor
             }
             if (m_TagsEditor != null)
             {
-                m_TagsEditor.Dispose();
-                m_TagsEditor = null;
+                m_TagsEditor.SetProject(m_CurrentProject);
+            }
+            if (m_FileTagsEditor != null)
+            {
+                m_FileTagsEditor.SetProject(m_CurrentProject);
             }
             for (int i = 0; i < m_FileExplorers.Length; ++i)
             {
@@ -518,7 +532,10 @@ namespace Ares.Editor
                 foreach (ElementEditors.EditorBase document in ElementEditors.EditorRegistry.Instance.GetAllEditors())
 #endif
                 {
-                    (document as Form).Close();
+                    if (!(document is ElementEditors.FileTagsEditor) && !(document is ElementEditors.TagsEditor))
+                    {
+                        (document as Form).Close();
+                    }
                 }
                 Ares.Data.DataModule.ProjectManager.UnloadProject(m_CurrentProject);
                 m_CurrentProject = null;
@@ -655,8 +672,11 @@ namespace Ares.Editor
             }
             if (m_TagsEditor != null)
             {
-                m_TagsEditor.Dispose();
-                m_TagsEditor = null;
+                m_TagsEditor.SetProject(m_CurrentProject);
+            }
+            if (m_FileTagsEditor != null)
+            {
+                m_FileTagsEditor.SetProject(m_CurrentProject);
             }
             for (int i = 0; i < m_FileExplorers.Length; ++i)
             {
@@ -865,7 +885,7 @@ namespace Ares.Editor
             if (!hasSettings)
             {
                 MessageBox.Show(this, StringResources.NoSettings, StringResources.Ares);
-                ShowSettingsDialog();
+                ShowSettingsDialog(0);
                 LoadTagsDB();
                 ShowVolumeWindow();
                 ShowProjectExplorer();
@@ -1152,20 +1172,47 @@ namespace Ares.Editor
             Ares.Editor.Actions.FilesWatcher.Instance.Enabled = true;
         }
 
-        private void toolsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ShowToolsDialog();
-        }
-
-        private void ShowToolsDialog()
-        {
-            Dialogs.ToolsDialog dialog = new Dialogs.ToolsDialog();
-            dialog.ShowDialog(this);
-        }
-
         public void SetEditor()
         {
-            ShowToolsDialog();
+            ShowSettingsDialog(1);
+        }
+
+        private ElementEditors.FileTagsEditor m_FileTagsEditor;
+
+        public void ShowFileTagsEditor(IList<String> selectedFiles)
+        {
+            if (m_FileTagsEditor == null)
+            {
+                m_FileTagsEditor = new ElementEditors.FileTagsEditor();
+                m_FileTagsEditor.SetParent(this);
+                m_FileTagsEditor.SetProject(m_CurrentProject);
+                m_FileTagsEditor.SetFiles(selectedFiles);
+#if !MONO
+                m_FileTagsEditor.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Document;
+                m_FileTagsEditor.Show(dockPanel);
+#else
+                m_FileTagsEditor.Dock = DockStyle.Document;
+                m_FileTagsEditor.MdiParent = this;
+                m_FileTagsEditor.Location = new Point(0, 0);
+                m_FileTagsEditor.Height = MdiClientControl.Height - 10;
+                m_FileTagsEditor.Show();
+#endif
+            }
+            else UpdateWindowState(m_FileTagsEditor);
+            ActivateWindow(m_FileTagsEditor);
+        }
+
+        public void SetSelectedFiles(IList<String> selectedFiles)
+        {
+            if (m_FileTagsEditor != null)
+            {
+                m_FileTagsEditor.SetFiles(selectedFiles);
+            }
+        }
+
+        public void SetOnlineUserId()
+        {
+            ShowSettingsDialog(2);
         }
 
         private void tagsMenuItem_Click(object sender, EventArgs e)

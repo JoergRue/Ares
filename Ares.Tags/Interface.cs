@@ -250,6 +250,11 @@ namespace Ares.Tags
         /// Sets the identification for the given files.
         /// </summary>
         void SetFileIdentifications(IList<String> files, IList<FileIdentification> identifications);
+
+        /// <summary>
+        /// Confirms the tags retrieved from the global DB for the given list of files.
+        /// </summary>
+        void ConfirmTags(IList<String> files);
     }
 
     /// <summary>
@@ -410,6 +415,22 @@ namespace Ares.Tags
     }
 
     /// <summary>
+    /// Interface used for the global database.
+    /// </summary>
+    public interface IGlobalTagsDB
+    {
+        /// <summary>
+        /// Exports data for the given files.
+        /// </summary>
+        TagsExportedData ExportDataForFiles(IList<FileIdentification> files);
+
+        /// <summary>
+        /// Import data from a client (upload).
+        /// </summary>
+        void ImportDataFromClient(TagsExportedData data, String userId, System.IO.TextWriter logStream);
+    }
+
+    /// <summary>
     /// Interface for the tags database.
     /// </summary>
     public interface ITagsDB
@@ -420,6 +441,7 @@ namespace Ares.Tags
         ITagsDBWriteByLanguage GetWriteInterfaceByLanguage(int languageId);
         ITagsDBTranslations TranslationsInterface { get; }
         ITagsDBFiles FilesInterface { get; }
+        IGlobalTagsDB GlobalDBInterface { get; }
     }
 
     /// <summary>

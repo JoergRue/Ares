@@ -176,6 +176,20 @@ namespace Ares.CommonGUI
             }
         }
 
+        public void SetIndeterminate(String text)
+        {
+            if (parent.InvokeRequired)
+            {
+                parent.Invoke(new Action(() => { SetIndeterminate(text); }));
+            }
+            else
+            {
+                if (m_Progress == 0.0)
+                    Start();
+                m_Progress = 0.1;
+                dialog.SetIndeterminate(text);
+            }
+        }
     }
 
     public class ProgressMonitor : ProgressMonitorBase

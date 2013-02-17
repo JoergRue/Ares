@@ -219,7 +219,7 @@
     <value>Strg+Z</value>
   </data>
   <data name="undoToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
+    <value>146, 22</value>
   </data>
   <data name="undoToolStripMenuItem.Text" xml:space="preserve">
     <value>Undo</value>
@@ -231,7 +231,7 @@
     <value>Strg+Y</value>
   </data>
   <data name="redoToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
+    <value>146, 22</value>
   </data>
   <data name="redoToolStripMenuItem.Text" xml:space="preserve">
     <value>Redo</value>
@@ -344,12 +344,6 @@
   <data name="settingsToolStripMenuItem.Text" xml:space="preserve">
     <value>Settings ...</value>
   </data>
-  <data name="toolsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
-  </data>
-  <data name="toolsToolStripMenuItem.Text" xml:space="preserve">
-    <value>Tools ...</value>
-  </data>
   <data name="extrasToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>49, 20</value>
   </data>
@@ -451,13 +445,13 @@
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGfSURBVDhPjZJNSwJRFIaHoJW0ahv0A1q1qE3UvnLTumX9
-        CSHoB+SmQiGtCDPQAiENQiMrKsgkJPxA0xLxC/PbNHVmnLc76lwNS71wOJc7933OPe8ZhmmvTGa1xnEr
-        fmgZwM2A45bD8biclb73zQ2/zMwqiBAq4IJkX2vfPCvPnw6E8H7ZCxUcEdE50xITSCEwB5PdA6PVBb3F
-        gWOLY6sHyCrJZRWJbVEkLkPrJRoSBukM2D+7xezSei8k7GM499W4gJ1W//gYBW5Irk0D0Yk2lNTQW2F7
-        9DQhOvOTkr6E5+VO2oJYkVSnnmCTAnZ1l02xFB1AeeGOCg4IIDTSMRF7FMDxDYgQCfTLCyEztdEIjqlh
-        IoDYJJBVkAloqVgQBFSqLFLZShMws7iGP6dzaLqnou5NneWRK1YRSRb7AzRGew+AbwgoVepIpMt4i+T6
-        A9Qnth5AtcYhnf9GOF6AO5juDxD7616icYWvGqKpEvzhLJze5PCAbuNC0TxeA594cMWGB3Qb533PwOFO
-        4Po5MhxAmvd/+d8xSjMWLwwK8T/4AQExNzelfihDAAAAAElFTkSuQmCC
+        CSHoB+SmQiGtCDPQAiENQiErKsgkpPxA0xLxC/PbNHVmnLc76lwNS71wOJc7933OPe8ZhmmvTGa1xnEr
+        fmgZwM2A45bD8biclb73zQ2/zMwqiBAq4IJkX2vfPCvPnw6E8H7ZMxUcEdE50xITSCEwB5PdA6PVBb3F
+        gWOLY6sHyCrJZRWJbVEkLkPrJRoSBukM2D+7wezSei8k7GO4V9u4gJ1W//gYBa5Jrk0D0Yk2lNTQW2F7
+        8DQhOvOjkr6E5+VO2oJYkVSnnmCTAnZ1l02xFB1AeeGWCg4IIDTSMRF7FMDxDYgQCfTLCyEztdEIjqlh
+        IoDYJJBVkAloqVgQBFSqLFLZShMws7iGP6dzaLqjou5NneWRK1YRSRb7AzRGew+AbwgoVepIpMt4i+T6
+        A9Qnth5AtcYhnf9GOF6AO5juDxD7616icYWvGqKpEvzhLJze5PCAbuNC0TxeAp+4d8WGB3Qb533PwOFO
+        4OopMhxAmvd/+d8xSjMWLwwK8T/4AfsdNzV/pSXsAAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="newButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
@@ -776,6 +770,12 @@
   <data name="&gt;&gt;projectErrorsToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;tagsMenuItem.Name" xml:space="preserve">
+    <value>tagsMenuItem</value>
+  </data>
+  <data name="&gt;&gt;tagsMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;toolStripSeparator9.Name" xml:space="preserve">
     <value>toolStripSeparator9</value>
   </data>
@@ -828,12 +828,6 @@
     <value>settingsToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;settingsToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;toolsToolStripMenuItem.Name" xml:space="preserve">
-    <value>toolsToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;toolsToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;hilfeToolStripMenuItem.Name" xml:space="preserve">
@@ -943,12 +937,6 @@
   </data>
   <data name="&gt;&gt;importFileDialog.Type" xml:space="preserve">
     <value>System.Windows.Forms.OpenFileDialog, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tagsMenuItem.Name" xml:space="preserve">
-    <value>tagsMenuItem</value>
-  </data>
-  <data name="&gt;&gt;tagsMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>MainForm</value>

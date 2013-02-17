@@ -73,7 +73,7 @@ namespace Ares.Tags
         public static readonly String ARES_GUI_USER = "Ares Editor";
     }
 
-    partial class SQLiteTagsDB : ITagsDB, ITagsDBFiles
+    partial class SQLiteTagsDB : ITagsDB, ITagsDBFiles, IGlobalTagsDB
     {
         private List<IConnectionClient> m_Clients = new List<IConnectionClient>();
 
@@ -156,6 +156,11 @@ namespace Ares.Tags
         }
 
         public ITagsDBFiles FilesInterface
+        {
+            get { return this; }
+        }
+
+        public IGlobalTagsDB GlobalDBInterface
         {
             get { return this; }
         }

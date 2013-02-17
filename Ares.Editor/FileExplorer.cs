@@ -269,10 +269,6 @@ namespace Ares.Editor
             playButton.Enabled = false;
         }
 
-        private void ShowUses()
-        {
-        }
-
         private bool PlayingPossible
         {
             get
@@ -303,6 +299,7 @@ namespace Ares.Editor
         {
             playButton.Enabled = PlayingPossible;
             updateInformationPanel();
+            m_Parent.SetSelectedFiles(GetSelectedFiles());
         }
 
         private void treeView1_DoubleClick(object sender, EventArgs e)
@@ -496,16 +493,14 @@ namespace Ares.Editor
             editToolStripMenuItem.Enabled = m_Parent != null && treeView1.SelectedNode != null && treeView1.SelectedNode.Tag != null &&
                 treeView1.SelectedNode.Tag is DraggedItem && ((DraggedItem)treeView1.SelectedNode.Tag).NodeType == DraggedItemType.File;
             pasteToolStripMenuItem.Enabled = Clipboard.ContainsFileDropList() || Clipboard.ContainsData(DataFormats.GetFormat("AresFilesList").Name);
-            tagsSubMenu.Visible = m_FileType == FileType.Music;
-            tagsToolStripMenuItem.Enabled = m_FileType == FileType.Music && treeView1.SelectedNodes.Count > 0;
-            if (tagsToolStripMenuItem.Enabled)
+            editTagsMenuItem.Visible = m_FileType == FileType.Music;
+            editTagsMenuItem.Enabled = m_FileType == FileType.Music && treeView1.SelectedNodes.Count > 0;
+            if (editTagsMenuItem.Enabled)
             {
                 // Disable if called only on empty directories
                 if (GetSelectedFiles().Count == 0)
-                    tagsToolStripMenuItem.Enabled = false;
+                    editTagsMenuItem.Enabled = false;
             }
-            id3TagsMenuItem.Enabled = tagsToolStripMenuItem.Enabled;
-            downloadTagsToolStripMenuItem.Enabled = tagsToolStripMenuItem.Enabled;
         }
 
         private void searchButton_Click(object sender, EventArgs e)
@@ -742,7 +737,7 @@ namespace Ares.Editor
                 monitor.Close();
                 if (task.Exception != null)
                 {
-                    HandleTaskException(task.Exception, StringResources.FileOpError);
+                    TaskHelpers.HandleTaskException(this, task.Exception, StringResources.FileOpError);
                 }
                 m_TreeLocked = false;
                 ReFillTree();
@@ -945,11 +940,6 @@ namespace Ares.Editor
             }
         }
 
-        private void showUsesMenuItem_Click(object sender, EventArgs e)
-        {
-            ShowUses();
-        }
-
         private void showInfoButton_Click(object sender, EventArgs e)
         {
             splitContainer1.Panel2Collapsed = !splitContainer1.Panel2Collapsed;
@@ -959,112 +949,7 @@ namespace Ares.Editor
         private void tagsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             List<String> files = GetSelectedFiles();
-            int languageId = m_Project != null ? m_Project.TagLanguageId : -1;
-            if (languageId == -1)
-            {
-                try
-                {
-                    languageId = Ares.Tags.TagsModule.GetTagsDB().TranslationsInterface.GetIdOfCurrentUILanguage();
-                }
-                catch (Ares.Tags.TagsDbException ex)
-                {
-                    MessageBox.Show(this, String.Format(StringResources.TagsDbError, ex.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-            }
-            Dialogs.FileTagsDialog dialog = new Dialogs.FileTagsDialog();
-            dialog.LanguageId = languageId;
-            dialog.SetFiles(files);
-            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                ChangeTagsForFiles(files, dialog.AddedTags, dialog.RemovedTags, languageId);
-                if (m_Project != null)
-                {
-                    m_Project.TagLanguageId = dialog.LanguageId;
-                }
-                /* // called through tags db changed
-                if (m_IsTagFilterActive)
-                {
-                    RetrieveFilteredFiles();
-                    ReFillTree();
-                }
-                updateInformationPanel();
-                 */
-            }
-        }
-
-        private void ChangeTagsForFiles(List<String> files, HashSet<int> addedTags, HashSet<int> removedTags, int languageId)
-        {
-            try
-            {
-                Actions.Actions.Instance.AddNew(new Actions.ChangeFileTagsAction(files, addedTags, removedTags, languageId), m_Project);
-            }
-            catch (Ares.Tags.TagsDbException ex)
-            {
-                MessageBox.Show(this, String.Format(StringResources.TagsDbError, ex.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void id3TagsMenuItem_Click(object sender, EventArgs e)
-        {
-            List<String> files = GetSelectedFiles();
-            if (files.Count == 0)
-                return;
-
-            Dialogs.AddID3TagsDialog dialog = new Dialogs.AddID3TagsDialog();
-            if (dialog.ShowDialog(this) == DialogResult.OK)
-            {
-                bool interpret = dialog.Interpret;
-                bool album = dialog.Album;
-                bool genre = dialog.Genre;
-                bool mood = dialog.Mood;
-                if (!interpret && !album && !genre && !mood)
-                    return;
-
-                int languageId = m_Project != null ? m_Project.TagLanguageId : -1;
-                if (languageId == -1)
-                {
-                    try
-                    {
-                        languageId = Ares.Tags.TagsModule.GetTagsDB().TranslationsInterface.GetIdOfCurrentUILanguage();
-                    }
-                    catch (Ares.Tags.TagsDbException ex)
-                    {
-                        MessageBox.Show(this, String.Format(StringResources.TagsDbError, ex.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-                }
-
-                var tokenSource = new System.Threading.CancellationTokenSource();
-                Ares.CommonGUI.ProgressMonitorBase monitor = new TaskProgressMonitor(this, StringResources.ExtractingTags, tokenSource);
-
-                var task = Ares.TagsImport.TagExtractor.ExtractTags(monitor, files, Ares.Settings.Settings.Instance.MusicDirectory, languageId, interpret, album, genre, mood, tokenSource);
-                task.ContinueWith((task2) =>
-                    {
-                        monitor.Close();
-                        if (task.Exception != null)
-                        {
-                            HandleTaskException(task.Exception, StringResources.TagExtractionError);
-                        }
-                        else
-                        {
-                            Ares.Editor.Actions.TagChanges.Instance.FireTagsDBChanged(this);
-                        }
-                    }, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskContinuationOptions.None, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
-            }
-        }
-
-        private void HandleTaskException(Exception ex, String text)
-        {
-            if (ex is AggregateException)
-            {
-                ex = (ex as AggregateException).Flatten().InnerException;
-            }
-            if (!(ex is System.Threading.Tasks.TaskCanceledException) && !(ex is OperationCanceledException))
-            {
-                System.Windows.Forms.MessageBox.Show(String.Format(text, ex.Message), StringResources.Ares,
-                    System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
-            }
+            m_Parent.ShowFileTagsEditor(files);
         }
 
         private bool m_IsTagFilterActive = false;
@@ -1140,56 +1025,8 @@ namespace Ares.Editor
             }
         }
 
-        private void downloadTagsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            List<String> files = GetSelectedFiles();
-            if (files.Count == 0)
-                return;
-
-            System.Threading.CancellationTokenSource tokenSource = new System.Threading.CancellationTokenSource();
-            TaskProgressMonitor monitor = new TaskProgressMonitor(this, StringResources.ExtractingMusicIds, tokenSource);
-            monitor.IncreaseProgress(0.0, StringResources.ExtractingMusicIds);
-            var task = Ares.TagsImport.MusicIdentification.UpdateMusicIdentification(monitor, files, Ares.Settings.Settings.Instance.MusicDirectory, tokenSource);
-            task.ContinueWith((task2) =>
-            {
-                monitor.Close();
-            }, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskContinuationOptions.NotOnFaulted, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
-            task.ContinueWith((task2) =>
-            {
-                monitor.Close();
-                if (task2.Exception != null)
-                {
-                    HandleTaskException(task2.Exception, StringResources.MusicIdExtractionError);
-                }
-            }, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskContinuationOptions.OnlyOnFaulted, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
-        }
-
     }
 
-    public class TaskProgressMonitor : Ares.CommonGUI.ProgressMonitorBase
-    {
-        private System.Threading.CancellationTokenSource m_TokenSource;
-
-        public TaskProgressMonitor(System.Windows.Forms.Form parent, String text, System.Threading.CancellationTokenSource tokenSource)
-            : base(parent, text)
-        {
-            m_TokenSource = tokenSource;
-        }
-
-        protected override void DoCancel()
-        {
-            m_TokenSource.Cancel();
-        }
-
-        public override bool Canceled
-        {
-            get
-            {
-                return m_TokenSource.IsCancellationRequested;
-            }
-        }
-
-    }
     public enum DraggedItemType
     {
         Directory, File
@@ -1247,5 +1084,7 @@ namespace Ares.Editor
     public interface IFileExplorerParent
     {
         void SetEditor();
+        void ShowFileTagsEditor(IList<String> selectedFiles);
+        void SetSelectedFiles(IList<String> selectedFiles);
     }
 }

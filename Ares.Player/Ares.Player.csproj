@@ -158,11 +158,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StreamingDialog.cs">
-      <SubType>Form</SubType>
+    <Compile Include="StreamingPage.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="StreamingDialog.Designer.cs">
-      <DependentUpon>StreamingDialog.cs</DependentUpon>
+    <Compile Include="StreamingPage.Designer.cs">
+      <DependentUpon>StreamingPage.cs</DependentUpon>
     </Compile>
     <Compile Include="StringResources.de.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -197,11 +197,11 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="StreamingDialog.de.resx">
-      <DependentUpon>StreamingDialog.cs</DependentUpon>
+    <EmbeddedResource Include="StreamingPage.de.resx">
+      <DependentUpon>StreamingPage.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="StreamingDialog.resx">
-      <DependentUpon>StreamingDialog.cs</DependentUpon>
+    <EmbeddedResource Include="StreamingPage.resx">
+      <DependentUpon>StreamingPage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="StringResources.de.resx">
       <Generator>ResXFileCodeGenerator</Generator>

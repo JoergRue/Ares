@@ -193,17 +193,29 @@
     <Compile Include="Dialogs\MacroCommandDialog.Designer.cs">
       <DependentUpon>MacroCommandDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\OnlineDbPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Dialogs\OnlineDbPage.Designer.cs">
+      <DependentUpon>OnlineDbPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\OnlineDbResultDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\OnlineDbResultDialog.Designer.cs">
+      <DependentUpon>OnlineDbResultDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\TagFilterDialog.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Dialogs\TagFilterDialog.Designer.cs">
       <DependentUpon>TagFilterDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\ToolsDialog.cs">
-      <SubType>Form</SubType>
+    <Compile Include="Dialogs\ToolsPage.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Dialogs\ToolsDialog.Designer.cs">
-      <DependentUpon>ToolsDialog.cs</DependentUpon>
+    <Compile Include="Dialogs\ToolsPage.Designer.cs">
+      <DependentUpon>ToolsPage.cs</DependentUpon>
     </Compile>
     <Compile Include="DragAndDrop.cs" />
     <Compile Include="ElementEditors\ChoiceContainerEditor.cs">
@@ -222,6 +234,12 @@
     </Compile>
     <Compile Include="ElementEditors\FileElementEditor.Designer.cs">
       <DependentUpon>FileElementEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ElementEditors\FileTagsEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ElementEditors\FileTagsEditor.Designer.cs">
+      <DependentUpon>FileTagsEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="ElementEditors\MacroEditor.cs">
       <SubType>Form</SubType>
@@ -306,6 +324,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>StringResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="TaskHelpers.cs" />
     <Compile Include="ToolWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -369,17 +388,29 @@
     <EmbeddedResource Include="Dialogs\MacroCommandDialog.resx">
       <DependentUpon>MacroCommandDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\OnlineDbPage.de.resx">
+      <DependentUpon>OnlineDbPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\OnlineDbPage.resx">
+      <DependentUpon>OnlineDbPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\OnlineDbResultDialog.de.resx">
+      <DependentUpon>OnlineDbResultDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\OnlineDbResultDialog.resx">
+      <DependentUpon>OnlineDbResultDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\TagFilterDialog.de.resx">
       <DependentUpon>TagFilterDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\TagFilterDialog.resx">
       <DependentUpon>TagFilterDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\ToolsDialog.de.resx">
-      <DependentUpon>ToolsDialog.cs</DependentUpon>
+    <EmbeddedResource Include="Dialogs\ToolsPage.de.resx">
+      <DependentUpon>ToolsPage.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\ToolsDialog.resx">
-      <DependentUpon>ToolsDialog.cs</DependentUpon>
+    <EmbeddedResource Include="Dialogs\ToolsPage.resx">
+      <DependentUpon>ToolsPage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ElementEditors\ChoiceContainerEditor.de.resx">
       <DependentUpon>ChoiceContainerEditor.cs</DependentUpon>
@@ -392,6 +423,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ElementEditors\FileElementEditor.resx">
       <DependentUpon>FileElementEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ElementEditors\FileTagsEditor.de.resx">
+      <DependentUpon>FileTagsEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ElementEditors\FileTagsEditor.resx">
+      <DependentUpon>FileTagsEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ElementEditors\MacroEditor.resx">
       <DependentUpon>MacroEditor.cs</DependentUpon>
@@ -683,6 +720,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\base_cog_32_ref.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Information.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

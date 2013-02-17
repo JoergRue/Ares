@@ -188,6 +188,8 @@ namespace Ares.Player
             StopAllPlaying();
             Ares.Settings.Settings settings = Ares.Settings.Settings.Instance;
             Ares.CommonGUI.SettingsDialog dialog = new Ares.CommonGUI.SettingsDialog(Ares.Settings.Settings.Instance, m_BasicSettings);
+            dialog.AddPage(new StreamingPageHost());
+            dialog.SetVisiblePage(-1);
             if (dialog.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
             {
                 m_PlayingControl.UpdateDirectories();
@@ -1446,16 +1448,6 @@ namespace Ares.Player
                     OpenProject(saveFileDialog.FileName, false);
                 }
             });
-        }
-
-        private void streamingToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            StopAllPlaying();
-            StreamingDialog dialog = new StreamingDialog();
-            if (dialog.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
-            {
-                Settings.Settings.Instance.Commit();
-            }
         }
 
         private void modesList_SelectedIndexChanged(object sender, EventArgs e)

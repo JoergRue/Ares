@@ -91,6 +91,7 @@ namespace Ares.Editor.ElementEditors
                 if (m_Project != null)
                 {
                     m_Project.TagLanguageId = m_LanguageId;
+                    Ares.Editor.Actions.TagChanges.Instance.FireTagsDBChanged(this);
                 }
                 UpdateAll();
             }

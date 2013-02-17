@@ -482,4 +482,25 @@ Soll es jetzt gespeichert werden?</value>
     <value>Einstellungen konnten nicht gespeichert werden. Grund:
 {0}</value>
   </data>
+  <data name="DownloadOperationSuccess" xml:space="preserve">
+    <value>Herunterladen von Tags von {0} war erfolgreich.</value>
+  </data>
+  <data name="OnlineDB" xml:space="preserve">
+    <value>Online Tags DB</value>
+  </data>
+  <data name="OnlineDbUserIdRequired" xml:space="preserve">
+    <value>Um Tags hochzuladen, wird ein Benutzername (z.B. eine E-Mail-Adresse) benötigt. Möchten Sie diesen jetzt festlegen?</value>
+  </data>
+  <data name="TagsForMultipleFiles" xml:space="preserve">
+    <value>Tags für {0} Dateien</value>
+  </data>
+  <data name="TagsForSingleFile" xml:space="preserve">
+    <value>Tags für {0}</value>
+  </data>
+  <data name="Tools" xml:space="preserve">
+    <value>Werkzeuge</value>
+  </data>
+  <data name="UploadOperationSuccess" xml:space="preserve">
+    <value>Hochladen von Tags nach {0} war erfolgreich.</value>
+  </data>
 </root>

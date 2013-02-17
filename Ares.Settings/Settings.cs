@@ -67,6 +67,10 @@ namespace Ares.Settings
         public bool GlobalKeyHook { get; set; }
 
         public bool NetworkEnabled { get; set; }
+
+        public String OnlineDBUserId { get; set; }
+        public bool ShowDialogAfterUpload { get; set; }
+        public bool ShowDialogAfterDownload { get; set; }
     }
 
     public class Settings
@@ -114,6 +118,10 @@ namespace Ares.Settings
         public bool GlobalKeyHook { get { return Data.GlobalKeyHook; } set { Data.GlobalKeyHook = value; } }
 
         public bool NetworkEnabled { get { return Data.NetworkEnabled; } set { Data.NetworkEnabled = value; } }
+
+        public String OnlineDBUserId { get { return Data.OnlineDBUserId; } set { Data.OnlineDBUserId = value; } }
+        public bool ShowDialogAfterUpload { get { return Data.ShowDialogAfterUpload; }  set { Data.ShowDialogAfterUpload = value; } }
+        public bool ShowDialogAfterDownload { get { return Data.ShowDialogAfterDownload; } set { Data.ShowDialogAfterDownload = value; } }
 
         public static Settings Instance
         {
@@ -302,6 +310,9 @@ namespace Ares.Settings
             ShowKeysInButtons = false;
             GlobalKeyHook = false;
             NetworkEnabled = true;
+            OnlineDBUserId = String.Empty;
+            ShowDialogAfterDownload = true;
+            ShowDialogAfterUpload = true;
         }
 
         private void WriteSettings(XmlWriter writer)
@@ -341,6 +352,11 @@ namespace Ares.Settings
             writer.WriteAttributeString("Port", StreamingServerPort.ToString(System.Globalization.CultureInfo.InvariantCulture));
             writer.WriteAttributeString("Password", StreamingPassword);
             writer.WriteAttributeString("Encoding", StreamingEncoder.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            writer.WriteEndElement();
+            writer.WriteStartElement("OnlineDB");
+            writer.WriteAttributeString("UserId", OnlineDBUserId);
+            writer.WriteAttributeString("DialogAfterDownload", ShowDialogAfterDownload ? "true" : "false");
+            writer.WriteAttributeString("DialogAfterUpload", ShowDialogAfterUpload ? "true" : "false");
             writer.WriteEndElement();
             writer.WriteEndElement();
         }
@@ -457,6 +473,20 @@ namespace Ares.Settings
                     StreamingServerPort = reader.GetIntegerAttribute("Port");
                     StreamingPassword = reader.GetAttribute("Password");
                     StreamingEncoder = reader.GetIntegerAttribute("Encoding");
+                    if (reader.IsEmptyElement)
+                        reader.Read();
+                    else
+                    {
+                        reader.Read();
+                        reader.ReadInnerXml();
+                        reader.ReadEndElement();
+                    }
+                }
+                else if (reader.IsStartElement("OnlineDB"))
+                {
+                    OnlineDBUserId = reader.GetAttribute("UserId");
+                    ShowDialogAfterUpload = reader.GetBooleanAttributeOrDefault("DialogAfterUpload", true);
+                    ShowDialogAfterDownload = reader.GetBooleanAttributeOrDefault("DialogAfterDownload", true);
                     if (reader.IsEmptyElement)
                         reader.Read();
                     else

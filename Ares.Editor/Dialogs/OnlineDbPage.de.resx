@@ -117,151 +117,44 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Ares" xml:space="preserve">
-    <value>Ares</value>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 79</value>
   </data>
-  <data name="AresPlayer" xml:space="preserve">
-    <value>Ares Player - {0}</value>
+  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>383, 29</value>
   </data>
-  <data name="BassDeviceAlready" xml:space="preserve">
-    <value>Device already initialized.</value>
+  <data name="label3.Text" xml:space="preserve">
+    <value>Sie müssen nicht einmal eine E-Mail-Adresse verwenden, aber sie ist eine einfache Art, einen eindeutigen Benutzernamen zu finden.</value>
   </data>
-  <data name="BassDeviceDriver" xml:space="preserve">
-    <value>No device driver available. Are soundcard and speakers installed properly? Is the device in use by another application?</value>
+  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 36</value>
   </data>
-  <data name="BassDeviceFormat" xml:space="preserve">
-    <value>Sound device doesn't support 44kHz sampling.</value>
+  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>381, 43</value>
   </data>
-  <data name="BassDeviceInfo" xml:space="preserve">
-    <value>Device: {0}, Driver: {1}, State: {2}</value>
+  <data name="label2.Text" xml:space="preserve">
+    <value>Die Adresse wird nur zum 'Voting' für Tags und für anonyme Statistiken verwendet. Sie wird nicht an die Online-DB übertragen. Es werden keine Mails versendet.</value>
   </data>
-  <data name="BassDeviceInvalid" xml:space="preserve">
-    <value>Invalid device. Are soundcard and speakers installed properly?</value>
+  <data name="label1.Text" xml:space="preserve">
+    <value>E-Mail Adresse:</value>
   </data>
-  <data name="BassFxLoadFail" xml:space="preserve">
-    <value>Could not load BASS Fx add-on library. Installation problem?</value>
+  <data name="groupBox1.Text" xml:space="preserve">
+    <value>Benutzername</value>
   </data>
-  <data name="BassInitFail" xml:space="preserve">
-    <value>Fatal: Couldn't initialize BASS engine!
-Error message: {0}
-{1}</value>
+  <data name="downloadDialogBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>258, 17</value>
   </data>
-  <data name="BassLoadFail" xml:space="preserve">
-    <value>Could not load BASS library. Installation problem?</value>
+  <data name="downloadDialogBox.Text" xml:space="preserve">
+    <value>Meldung nach Herunterladen von Tags anzeigen</value>
   </data>
-  <data name="BassNo3D" xml:space="preserve">
-    <value>The device has no 3D support.</value>
+  <data name="uploadDialogBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>243, 17</value>
   </data>
-  <data name="BassNoMem" xml:space="preserve">
-    <value>There is insufficient memory.</value>
+  <data name="uploadDialogBox.Text" xml:space="preserve">
+    <value>Meldung nach Hochladen von Tags anzeigen</value>
   </data>
-  <data name="BassUnknown" xml:space="preserve">
-    <value>Unknown error. Are soundcard and speakers installed properly?</value>
-  </data>
-  <data name="Connected" xml:space="preserve">
-    <value>Connected</value>
-  </data>
-  <data name="ConnectedWith" xml:space="preserve">
-    <value>Connected with </value>
-  </data>
-  <data name="DeviceDisabled" xml:space="preserve">
-    <value>disabled</value>
-  </data>
-  <data name="DeviceEnabled" xml:space="preserve">
-    <value>enabled</value>
-  </data>
-  <data name="Disable" xml:space="preserve">
-    <value>Disable</value>
-  </data>
-  <data name="Disabled" xml:space="preserve">
-    <value>Disabled</value>
-  </data>
-  <data name="Disconnect" xml:space="preserve">
-    <value>Disconnect</value>
-  </data>
-  <data name="EditorStartError" xml:space="preserve">
-    <value>Could not start editor. Reason:
-{0}</value>
-  </data>
-  <data name="Enable" xml:space="preserve">
-    <value>Enable</value>
-  </data>
-  <data name="GetLameYourself" xml:space="preserve">
-    <value>You have to obtain lame.exe yourself and copy it into the Ares Player installation directory.</value>
-  </data>
-  <data name="HelpPage" xml:space="preserve">
-    <value>http://aresrpg.sourceforge.net/en/hilfe/Player.html</value>
-  </data>
-  <data name="ImportError" xml:space="preserve">
-    <value>Error importing the project: {0}</value>
-  </data>
-  <data name="Importing" xml:space="preserve">
-    <value>Importing ...</value>
-  </data>
-  <data name="LoadError" xml:space="preserve">
-    <value>Error opening the project: {0}</value>
-  </data>
-  <data name="MusicList" xml:space="preserve">
-    <value>Music List</value>
-  </data>
-  <data name="MusicTags" xml:space="preserve">
-    <value>Music Tags</value>
-  </data>
-  <data name="NoDevice" xml:space="preserve">
-    <value>No sound device found.</value>
-  </data>
-  <data name="NoDeviceDriver" xml:space="preserve">
-    <value>No sound device driver found.</value>
-  </data>
-  <data name="NoElements" xml:space="preserve">
-    <value>There are no elements in this mode</value>
-  </data>
-  <data name="NoOpenedProject" xml:space="preserve">
-    <value>No Project Loaded</value>
-  </data>
-  <data name="NoSettings" xml:space="preserve">
-    <value>This seems to be the first start of the player.
-You should adapt some settings first.</value>
-  </data>
-  <data name="NoStatusInfoError" xml:space="preserve">
-    <value>Couldn't send status info. Check network connection.</value>
-  </data>
-  <data name="NoTags" xml:space="preserve">
-    <value>There are no tags in this category</value>
-  </data>
-  <data name="NotConnected" xml:space="preserve">
-    <value>Not connected</value>
-  </data>
-  <data name="OpenProject" xml:space="preserve">
-    <value>Open a project ...</value>
-  </data>
-  <data name="OpenProjectQuestion" xml:space="preserve">
-    <value>Open project {0}?</value>
-  </data>
-  <data name="ReloadProject" xml:space="preserve">
-    <value>Project file has changed. Stop playing and reload?</value>
-  </data>
-  <data name="ShowInfo" xml:space="preserve">
-    <value>About Ares ...</value>
-  </data>
-  <data name="ShowMessages" xml:space="preserve">
-    <value>Messages ...</value>
-  </data>
-  <data name="ShowSettings" xml:space="preserve">
-    <value>Settings ...</value>
-  </data>
-  <data name="StartEditor" xml:space="preserve">
-    <value>Open Editor</value>
-  </data>
-  <data name="Streaming" xml:space="preserve">
-    <value>Streaming</value>
-  </data>
-  <data name="TagsDbError" xml:space="preserve">
-    <value>Error accessing tags database:
-{0}</value>
-  </data>
-  <data name="WriteSettingsError" xml:space="preserve">
-    <value>Settings could not be saved. Reason:
-{0}</value>
+  <data name="groupBox2.Text" xml:space="preserve">
+    <value>Meldungen</value>
   </data>
 </root>

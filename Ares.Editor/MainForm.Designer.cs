@@ -90,6 +90,7 @@ namespace Ares.Editor
             this.soundFileExplorerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.volumesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.projectErrorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tagsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.usedKeysToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.usedFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -99,7 +100,6 @@ namespace Ares.Editor
             this.stopAllToolStipMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hilfeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpOnlineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkForUpdateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -120,7 +120,6 @@ namespace Ares.Editor
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
             this.exportFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.importFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.tagsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
@@ -292,6 +291,12 @@ namespace Ares.Editor
             resources.ApplyResources(this.projectErrorsToolStripMenuItem, "projectErrorsToolStripMenuItem");
             this.projectErrorsToolStripMenuItem.Click += new System.EventHandler(this.projectErrorsToolStripMenuItem_Click);
             // 
+            // tagsMenuItem
+            // 
+            this.tagsMenuItem.Name = "tagsMenuItem";
+            resources.ApplyResources(this.tagsMenuItem, "tagsMenuItem");
+            this.tagsMenuItem.Click += new System.EventHandler(this.tagsMenuItem_Click);
+            // 
             // toolStripSeparator9
             // 
             this.toolStripSeparator9.Name = "toolStripSeparator9";
@@ -316,8 +321,7 @@ namespace Ares.Editor
             this.toolStripSeparator3,
             this.stopAllToolStipMenuItem,
             this.toolStripSeparator4,
-            this.settingsToolStripMenuItem,
-            this.toolsToolStripMenuItem});
+            this.settingsToolStripMenuItem});
             this.extrasToolStripMenuItem.Name = "extrasToolStripMenuItem";
             resources.ApplyResources(this.extrasToolStripMenuItem, "extrasToolStripMenuItem");
             this.extrasToolStripMenuItem.DropDownOpening += new System.EventHandler(this.extrasToolStripMenuItem_DropDownOpening);
@@ -349,12 +353,6 @@ namespace Ares.Editor
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             resources.ApplyResources(this.settingsToolStripMenuItem, "settingsToolStripMenuItem");
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
-            // 
-            // toolsToolStripMenuItem
-            // 
-            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            resources.ApplyResources(this.toolsToolStripMenuItem, "toolsToolStripMenuItem");
-            this.toolsToolStripMenuItem.Click += new System.EventHandler(this.toolsToolStripMenuItem_Click);
             // 
             // hilfeToolStripMenuItem
             // 
@@ -536,12 +534,6 @@ namespace Ares.Editor
             this.importFileDialog.DefaultExt = "apkg";
             resources.ApplyResources(this.importFileDialog, "importFileDialog");
             // 
-            // tagsMenuItem
-            // 
-            this.tagsMenuItem.Name = "tagsMenuItem";
-            resources.ApplyResources(this.tagsMenuItem, "tagsMenuItem");
-            this.tagsMenuItem.Click += new System.EventHandler(this.tagsMenuItem_Click);
-            // 
             // MainForm
             // 
             resources.ApplyResources(this, "$this");
@@ -623,7 +615,6 @@ namespace Ares.Editor
         private System.Windows.Forms.SaveFileDialog exportFileDialog;
         private System.Windows.Forms.OpenFileDialog importFileDialog;
         private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tagsMenuItem;
     }
 }

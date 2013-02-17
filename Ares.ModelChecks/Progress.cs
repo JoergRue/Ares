@@ -30,5 +30,6 @@ namespace Ares.ModelInfo
         void IncreaseProgress(double percent);
         void IncreaseProgress(double percent, String text);
         void SetProgress(int percent, String text);
+        void SetIndeterminate(String text);
     }
 }

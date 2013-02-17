@@ -132,7 +132,13 @@
   <data name="Mood" xml:space="preserve">
     <value>Stimmung</value>
   </data>
+  <data name="QueryingGlobalDB" xml:space="preserve">
+    <value>Frage Online-Datenbank ab ...</value>
+  </data>
   <data name="SettingFileTags" xml:space="preserve">
     <value>Setze Datei-Tags</value>
+  </data>
+  <data name="UploadingTags" xml:space="preserve">
+    <value>Lade Tags zu Online-Datenbank hoch ...</value>
   </data>
 </root>

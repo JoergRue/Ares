@@ -30,6 +30,8 @@ namespace Ares.CommonGUI
 {
     public partial class SettingsDialog : Form
     {
+        private List<ISettingsDialogPage> m_Pages = new System.Collections.Generic.List<ISettingsDialogPage>();
+
         public SettingsDialog(Ares.Settings.Settings settings, BasicSettings basicSettings)
         {
             InitializeComponent();
@@ -56,8 +58,35 @@ namespace Ares.CommonGUI
             m_BasicSettings = basicSettings;
         }
 
+        public void AddPage(ISettingsDialogPage page)
+        {
+            TabPage tabPage = new TabPage(page.PageTitle);
+            tabPage.Controls.Add(page.Page);
+            page.Page.Dock = DockStyle.Fill;
+            tabControl.TabPages.Add(tabPage);
+            m_Pages.Add(page);
+        }
+
+        private static int s_lastPage = -1;
+
+        public void SetVisiblePage(int index)
+        {
+            if (index == -1)
+                index = s_lastPage;
+            if (index < 0 || index >= tabControl.TabPages.Count)
+                index = 0;
+            tabControl.SelectedIndex = index;
+        }
+
         private void okButton_Click(object sender, EventArgs e)
         {
+            s_lastPage = tabControl.SelectedIndex;
+
+            foreach (var page in m_Pages)
+            {
+                page.OnConfirm();
+            }
+
             if (otherDirButton.Checked)
             {
                 if (String.IsNullOrEmpty(otherDirLabel.Text))
@@ -109,5 +138,12 @@ namespace Ares.CommonGUI
         {
             SelectDirectory(otherDirLabel);
         }
+    }
+
+    public interface ISettingsDialogPage
+    {
+        Control Page { get; }
+        String PageTitle { get; }
+        void OnConfirm();
     }
 }

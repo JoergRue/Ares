@@ -79,6 +79,11 @@ namespace Ares.TagsImport
             throw new NotImplementedException();
         }
 
+        public void SetIndeterminate(String text)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool Canceled
         {
             get { return m_Parent.Canceled; }
@@ -140,6 +145,11 @@ namespace Ares.TagsImport
         }
 
         public void SetProgress(int percent, String text)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetIndeterminate(String text)
         {
             throw new NotImplementedException();
         }

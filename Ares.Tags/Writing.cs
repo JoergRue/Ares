@@ -267,6 +267,32 @@ namespace Ares.Tags
             }
         }
 
+        public void ConfirmTags(IList<String> files)
+        {
+            if (files == null)
+            {
+                throw new ArgumentNullException("files");
+            }
+            if (files.Count == 0)
+                return;
+            if (m_Connection == null)
+            {
+                throw new TagsDbException("No Connection to DB file!");
+            }
+            try
+            {
+                DoConfirmTags(files);
+            }
+            catch (System.Data.DataException ex)
+            {
+                throw new TagsDbException(ex.Message, ex);
+            }
+            catch (SQLiteException ex)
+            {
+                throw new TagsDbException(ex.Message, ex);
+            }
+        }
+
         private void DoAddFileTags(SQLiteTransaction transaction, String path, IList<int> tagIds)
         {
             if (tagIds.Count == 0)
@@ -612,6 +638,32 @@ namespace Ares.Tags
                             AssignStringOrNull(acoustIdParam2, file.AcoustId);
                             pathParam2.Value = files[i];
                             insertCommand.ExecuteNonQuery();
+                        }
+                    }
+                }
+                transaction.Commit();
+            }
+        }
+
+        private void DoConfirmTags(IList<String> files)
+        {
+            String cmdString = String.Format("UPDATE {0} SET {1}=@NewUser WHERE {1}=@OldUser AND {2}=@FileId",
+                Schema.FILETAGS_TABLE, Schema.USER_COLUMN, Schema.FILE_COLUMN);
+            // Note: do not confirm removed tags, because they are not shown anywhere to be confirmed
+            using (SQLiteTransaction transaction = m_Connection.BeginTransaction())
+            {
+                using (SQLiteCommand cmd = new SQLiteCommand(cmdString, m_Connection, transaction))
+                {
+                    cmd.Parameters.AddWithValue("@NewUser", Schema.ARES_GUI_USER);
+                    cmd.Parameters.AddWithValue("@OldUser", Schema.GLOBAL_DB_USER);
+                    SQLiteParameter fileIdParam = cmd.Parameters.Add("@FileId", System.Data.DbType.Int64);
+                    foreach (String file in files)
+                    {
+                        Object fileId = DoFindFile(transaction, file);
+                        if (fileId != null)
+                        {
+                            fileIdParam.Value = fileId;
+                            cmd.ExecuteNonQuery();
                         }
                     }
                 }

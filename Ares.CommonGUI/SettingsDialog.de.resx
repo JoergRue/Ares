@@ -117,27 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="cancelButton.Text" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="otherDirButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>129, 18</value>
+  <data name="updateCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>220, 18</value>
   </data>
-  <data name="otherDirButton.Text" xml:space="preserve">
-    <value>Anderes Verzeichnis:</value>
+  <data name="updateCheckBox.Text" xml:space="preserve">
+    <value>Prüfe beim Programmstart auf Updates</value>
   </data>
-  <data name="appDirButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>132, 18</value>
-  </data>
-  <data name="appDirButton.Text" xml:space="preserve">
-    <value>Programmverzeichnis</value>
-  </data>
-  <data name="userDirButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>130, 18</value>
-  </data>
-  <data name="userDirButton.Text" xml:space="preserve">
-    <value>Benutzer-Verzeichnis</value>
-  </data>
-  <data name="groupBox1.Text" xml:space="preserve">
-    <value>Speicherort für Einstellungen</value>
+  <data name="groupBox3.Text" xml:space="preserve">
+    <value>Optionen</value>
   </data>
   <data name="soundDirLabel.Location" type="System.Drawing.Point, System.Drawing">
     <value>106, 59</value>
@@ -166,17 +157,29 @@
   <data name="groupBox2.Text" xml:space="preserve">
     <value>Verzeichnisse</value>
   </data>
-  <data name="cancelButton.Text" xml:space="preserve">
-    <value>Abbrechen</value>
+  <data name="otherDirButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>129, 18</value>
   </data>
-  <data name="updateCheckBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>220, 18</value>
+  <data name="otherDirButton.Text" xml:space="preserve">
+    <value>Anderes Verzeichnis:</value>
   </data>
-  <data name="updateCheckBox.Text" xml:space="preserve">
-    <value>Prüfe beim Programmstart auf Updates</value>
+  <data name="appDirButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>132, 18</value>
   </data>
-  <data name="groupBox3.Text" xml:space="preserve">
-    <value>Optionen</value>
+  <data name="appDirButton.Text" xml:space="preserve">
+    <value>Programmverzeichnis</value>
+  </data>
+  <data name="userDirButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>130, 18</value>
+  </data>
+  <data name="userDirButton.Text" xml:space="preserve">
+    <value>Benutzer-Verzeichnis</value>
+  </data>
+  <data name="groupBox1.Text" xml:space="preserve">
+    <value>Speicherort für Einstellungen</value>
+  </data>
+  <data name="generalPage.Text" xml:space="preserve">
+    <value>Allgemein</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

@@ -481,4 +481,25 @@ You should adapt some settings first.</value>
     <value>Settings could not be saved. Reason:
 {0}</value>
   </data>
+  <data name="DownloadOperationSuccess" xml:space="preserve">
+    <value>Download of tags from {0} was successful.</value>
+  </data>
+  <data name="OnlineDB" xml:space="preserve">
+    <value>Online Tags DB</value>
+  </data>
+  <data name="OnlineDbUserIdRequired" xml:space="preserve">
+    <value>To upload tags, a user name (e.g. an e-mail address) is required. Would you like to set it now?</value>
+  </data>
+  <data name="TagsForMultipleFiles" xml:space="preserve">
+    <value>Tags for {0} files</value>
+  </data>
+  <data name="TagsForSingleFile" xml:space="preserve">
+    <value>Tags for {0}</value>
+  </data>
+  <data name="Tools" xml:space="preserve">
+    <value>Tools</value>
+  </data>
+  <data name="UploadOperationSuccess" xml:space="preserve">
+    <value>Upload of tags to {0} was successful.</value>
+  </data>
 </root>

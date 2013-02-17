@@ -28,9 +28,9 @@ using System.Windows.Forms;
 
 namespace Ares.Player
 {
-    public partial class StreamingDialog : Form
+    public partial class StreamingPage : UserControl
     {
-        public StreamingDialog()
+        public StreamingPage()
         {
             InitializeComponent();
             SetData();
@@ -82,7 +82,7 @@ namespace Ares.Player
             UpdateUrl();
         }
 
-        private void okButton_Click(object sender, EventArgs e)
+        public void OnConfirm()
         {
             SaveData();
         }
@@ -97,6 +97,26 @@ namespace Ares.Player
         {
             if (!listen) return;
             UpdateUrl();
+        }
+    }
+
+    class StreamingPageHost : Ares.CommonGUI.ISettingsDialogPage
+    {
+        private StreamingPage m_Page = new StreamingPage();
+
+        public Control Page
+        {
+            get { return m_Page; }
+        }
+
+        public string PageTitle
+        {
+            get { return StringResources.Streaming; }
+        }
+
+        public void OnConfirm()
+        {
+            m_Page.OnConfirm();
         }
     }
 }

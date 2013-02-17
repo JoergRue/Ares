@@ -80,10 +80,7 @@ namespace Ares.Editor
             this.playToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tagsSubMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.tagsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.downloadTagsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.id3TagsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editTagsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -209,7 +206,7 @@ namespace Ares.Editor
             this.playToolStripMenuItem,
             this.stopToolStripMenuItem,
             this.editToolStripMenuItem,
-            this.tagsSubMenu,
+            this.editTagsMenuItem,
             this.toolStripSeparator1,
             this.copyToolStripMenuItem,
             this.copyToolStripMenuItem1,
@@ -237,32 +234,11 @@ namespace Ares.Editor
             resources.ApplyResources(this.editToolStripMenuItem, "editToolStripMenuItem");
             this.editToolStripMenuItem.Click += new System.EventHandler(this.editToolStripMenuItem_Click);
             // 
-            // tagsSubMenu
+            // editTagsMenuItem
             // 
-            this.tagsSubMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tagsToolStripMenuItem,
-            this.downloadTagsToolStripMenuItem,
-            this.id3TagsMenuItem});
-            this.tagsSubMenu.Name = "tagsSubMenu";
-            resources.ApplyResources(this.tagsSubMenu, "tagsSubMenu");
-            // 
-            // tagsToolStripMenuItem
-            // 
-            this.tagsToolStripMenuItem.Name = "tagsToolStripMenuItem";
-            resources.ApplyResources(this.tagsToolStripMenuItem, "tagsToolStripMenuItem");
-            this.tagsToolStripMenuItem.Click += new System.EventHandler(this.tagsToolStripMenuItem_Click);
-            // 
-            // downloadTagsToolStripMenuItem
-            // 
-            this.downloadTagsToolStripMenuItem.Name = "downloadTagsToolStripMenuItem";
-            resources.ApplyResources(this.downloadTagsToolStripMenuItem, "downloadTagsToolStripMenuItem");
-            this.downloadTagsToolStripMenuItem.Click += new System.EventHandler(this.downloadTagsToolStripMenuItem_Click);
-            // 
-            // id3TagsMenuItem
-            // 
-            this.id3TagsMenuItem.Name = "id3TagsMenuItem";
-            resources.ApplyResources(this.id3TagsMenuItem, "id3TagsMenuItem");
-            this.id3TagsMenuItem.Click += new System.EventHandler(this.id3TagsMenuItem_Click);
+            this.editTagsMenuItem.Name = "editTagsMenuItem";
+            resources.ApplyResources(this.editTagsMenuItem, "editTagsMenuItem");
+            this.editTagsMenuItem.Click += new System.EventHandler(this.tagsToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
@@ -335,9 +311,6 @@ namespace Ares.Editor
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.ToolStripButton tagFilterButton;
-        private System.Windows.Forms.ToolStripMenuItem tagsSubMenu;
-        private System.Windows.Forms.ToolStripMenuItem tagsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem downloadTagsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem id3TagsMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editTagsMenuItem;
     }
 }
