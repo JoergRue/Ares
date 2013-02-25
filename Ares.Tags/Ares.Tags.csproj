@@ -51,6 +51,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Browsing.cs" />
     <Compile Include="ImportExport.cs" />
     <Compile Include="Interface.cs" />
     <Compile Include="LanguageReading.cs" />

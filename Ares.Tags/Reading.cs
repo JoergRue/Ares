@@ -120,6 +120,26 @@ namespace Ares.Tags
             }
         }
 
+        public IList<FileIdentification> GetFilesForTag(long tagId)
+        {
+            if (m_Connection == null)
+            {
+                throw new TagsDbException("No Connection to DB file!");
+            }
+            try
+            {
+                return DoGetFilesForTag(tagId);
+            }
+            catch (System.Data.DataException ex)
+            {
+                throw new TagsDbException(ex.Message, ex);
+            }
+            catch (SQLiteException ex)
+            {
+                throw new TagsDbException(ex.Message, ex);
+            }
+        }
+
         private HashSet<string> DoGetAllFilesWithAnyTag(HashSet<int> tagIds)
         {
             if (tagIds.Count == 0)
@@ -139,13 +159,15 @@ namespace Ares.Tags
             queryString += ")";
             using (SQLiteCommand command = new SQLiteCommand(queryString, m_Connection))
             {
-                SQLiteDataReader reader = command.ExecuteReader();
-                HashSet<String> result = new HashSet<string>();
-                while (reader.Read())
+                using (SQLiteDataReader reader = command.ExecuteReader())
                 {
-                    result.Add(reader.GetString(0));
+                    HashSet<String> result = new HashSet<string>();
+                    while (reader.Read())
+                    {
+                        result.Add(reader.GetString(0));
+                    }
+                    return result;
                 }
-                return result;
             }
         }
 
@@ -186,6 +208,46 @@ namespace Ares.Tags
                                 AcoustId = String.Empty
                             });
                         }
+                    }
+                }
+            }
+            return result;
+        }
+
+        private IList<FileIdentification> DoGetFilesForTag(long tagId)
+        {
+            List<FileIdentification> result = new List<FileIdentification>();
+            if (tagId == -1)
+                return result;
+
+            // first get the files which have the tag assigned
+            String findFilesQuery = String.Format("SELECT DISTINCT {1}.{0} AS FileId FROM {1},{2} WHERE {1}.{0}={2}.{3} AND {2}.{4}=@TagId",
+                Schema.ID_COLUMN, Schema.FILES_TABLE, Schema.FILETAGS_TABLE, Schema.FILE_COLUMN, Schema.TAG_COLUMN);
+            // then also check that the tag is assigned more often than it is removed (this query is for the global DB)
+            String countAddsQuery = String.Format("SELECT count(*) FROM {0} WHERE {0}.{1}=Inner.FileId AND {0}.{2}=@TagId2",
+                Schema.FILETAGS_TABLE, Schema.FILE_COLUMN, Schema.TAG_COLUMN);
+            String countRemovesQuery = String.Format("SELECT count(*) FROM {0} WHERE {0}.{1}=Inner.FileId AND {0}.{2}=@TagId3",
+                Schema.REMOVEDTAGS_TABLE, Schema.FILE_COLUMN, Schema.TAG_COLUMN);
+            // finally get information for the file
+            String getInfoQuery = String.Format("SELECT {5}.{0}, {5}.{1}, {5}.{2}, {5}.{3}, {5}.{4} FROM {5}, ({6}) AS Inner WHERE {5}.{0}=Inner.FileId AND ({7}) > ({8}) ORDER BY {5}.{1}, {5}.{2}, {5}.{3}",
+                Schema.ID_COLUMN, Schema.ARTIST_COLUMN, Schema.ALBUM_COLUMN, Schema.TITLE_COLUMN, Schema.ACOUST_ID_COLUMN, Schema.FILES_TABLE, findFilesQuery, countAddsQuery, countRemovesQuery);
+            using (SQLiteCommand getInfoCommand = new SQLiteCommand(getInfoQuery, m_Connection))
+            {
+                getInfoCommand.Parameters.AddWithValue("@TagId", tagId);
+                getInfoCommand.Parameters.AddWithValue("@TagId2", tagId);
+                getInfoCommand.Parameters.AddWithValue("@TagId3", tagId);
+                using (SQLiteDataReader reader = getInfoCommand.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        result.Add(new FileIdentification()
+                        {
+                            Id = (int)reader.GetInt64(0),
+                            Artist = reader.GetStringOrEmpty(1),
+                            Album = reader.GetStringOrEmpty(2),
+                            Title = reader.GetStringOrEmpty(3),
+                            AcoustId = reader.GetStringOrEmpty(4)
+                        });
                     }
                 }
             }

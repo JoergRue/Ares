@@ -451,13 +451,15 @@ namespace Ares.Tags
                 using (SQLiteCommand command = new SQLiteCommand(queryString, m_Connection, transaction))
                 {
                     command.Parameters.AddWithValue("@FileKey", fileKey);
-                    SQLiteDataReader reader = command.ExecuteReader();
-                    if (!reader.HasRows)
-                        return;
                     List<int> tags = new List<int>();
-                    while (reader.Read())
+                    using (SQLiteDataReader reader = command.ExecuteReader())
                     {
-                        tags.Add((int)reader.GetInt64(0));
+                        if (!reader.HasRows)
+                            return;
+                        while (reader.Read())
+                        {
+                            tags.Add((int)reader.GetInt64(0));
+                        }
                     }
                     DoAddFileTags(transaction, newPath, tags);
                 }
@@ -466,13 +468,15 @@ namespace Ares.Tags
                 using (SQLiteCommand command = new SQLiteCommand(queryString, m_Connection, transaction))
                 {
                     command.Parameters.AddWithValue("@FileKey", fileKey);
-                    SQLiteDataReader reader = command.ExecuteReader();
-                    if (!reader.HasRows)
-                        return;
                     List<int> tags = new List<int>();
-                    while (reader.Read())
+                    using (SQLiteDataReader reader = command.ExecuteReader())
                     {
-                        tags.Add((int)reader.GetInt64(0));
+                        if (!reader.HasRows)
+                            return;
+                        while (reader.Read())
+                        {
+                            tags.Add((int)reader.GetInt64(0));
+                        }
                     }
                     DoRemoveFileTags(transaction, newPath, tags);
                 }

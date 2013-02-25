@@ -82,6 +82,7 @@ namespace Ares.Tags
         private ITagsDBTranslations m_Translations = null;
         private ITagsDBRead m_Read = null;
         private Dictionary<int, ITagsDBReadByLanguage> m_ReadsByLanguage = new Dictionary<int, ITagsDBReadByLanguage>();
+        private ITagsDBBrowse m_Browser = null;
 
         public ITagsDBRead ReadInterface
         {
@@ -163,6 +164,20 @@ namespace Ares.Tags
         public IGlobalTagsDB GlobalDBInterface
         {
             get { return this; }
+        }
+
+        public ITagsDBBrowse BrowseInterface
+        {
+            get
+            {
+                if (m_Browser == null)
+                {
+                    TagsDBBrowsing browser = new TagsDBBrowsing(m_Connection);
+                    m_Clients.Add(browser);
+                    m_Browser = browser;
+                }
+                return m_Browser;
+            }
         }
 
     }

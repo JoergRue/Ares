@@ -56,6 +56,7 @@ namespace Ares.Tags
 
     public class LanguageForLanguage : ItemForLanguage
     {
+        public String Code { get; set; }
     }
 
     public class TagInfoForLanguage
@@ -152,6 +153,11 @@ namespace Ares.Tags
         /// Returns the stored identification for the given files.
         /// </summary>
         IList<FileIdentification> GetIdentificationForFiles(IList<String> filePaths);
+
+        /// <summary>
+        /// Returns the stored identification for all files which have the given tags.
+        /// </summary>
+        IList<FileIdentification> GetFilesForTag(long tagId);
     }
 
     /// <summary>
@@ -185,6 +191,14 @@ namespace Ares.Tags
         IList<TagInfoForLanguage> GetTagsForFile(String relativePath);
 
         /// <summary>
+        /// Gets all tags for a specific file identified by its id.
+        /// </summary>
+        /// <remarks>
+        /// If a tag doesn't have a name in the language, it is not returned.
+        /// </remarks>
+        IList<TagInfoForLanguage> GetTagsForFile(Int64 id);
+
+        /// <summary>
         /// Gets all defined tags for the given language.
         /// </summary>
         /// <remarks>
@@ -202,6 +216,11 @@ namespace Ares.Tags
         /// Gets information about the given tags.
         /// </summary>
         IList<TagInfoForLanguage> GetTagInfos(ICollection<int> tagIds);
+
+        /// <summary>
+        /// Finds the (first) tag with the given name in the given category.
+        /// </summary>
+        long FindTag(String category, String tagName);
     }
 
     /// <summary>
@@ -312,6 +331,11 @@ namespace Ares.Tags
         /// Returns the language which best fits the current UI language.
         /// </summary>
         int GetIdOfCurrentUILanguage();
+
+        /// <summary>
+        /// Returns the language which best fits the given language code.
+        /// </summary>
+        int GetIdOfLanguage(String languageCode);
 
         /// <summary>
         /// Adds a language.
@@ -430,6 +454,49 @@ namespace Ares.Tags
         void ImportDataFromClient(TagsExportedData data, String userId, System.IO.TextWriter logStream);
     }
 
+    public class Artist
+    {
+        public String Name { get; set; }
+    }
+
+    public class Album
+    {
+        public String Artist { get; set; }
+        public String Name { get; set; }
+    }
+
+    /// <summary>
+    /// Interface used for browsing the database
+    /// </summary>
+    public interface ITagsDBBrowse
+    {
+        /// <summary>
+        /// Retrieve all artists.
+        /// </summary>
+        IList<Artist> GetAllArtists();
+
+        /// <summary>
+        /// Retrieve all albums.
+        /// </summary>
+        IList<Album> GetAllAlbums();
+
+        /// <summary>
+        /// Retrieve the albums of an artist.
+        /// </summary>
+        /// <returns></returns>
+        IList<Album> GetAlbumsByArtist(String artist);
+
+        /// <summary>
+        /// Retrieve all files.
+        /// </summary>
+        IList<FileIdentification> GetAllFiles();
+
+        /// <summary>
+        /// Retrieve all files on an album.
+        /// </summary>
+        IList<FileIdentification> GetFilesByAlbum(String artist, String album);
+    }
+
     /// <summary>
     /// Interface for the tags database.
     /// </summary>
@@ -442,6 +509,7 @@ namespace Ares.Tags
         ITagsDBTranslations TranslationsInterface { get; }
         ITagsDBFiles FilesInterface { get; }
         IGlobalTagsDB GlobalDBInterface { get; }
+        ITagsDBBrowse BrowseInterface { get; }
     }
 
     /// <summary>
@@ -459,6 +527,11 @@ namespace Ares.Tags
                 s_TagsDB = new SQLiteTagsDB();
             }
             return s_TagsDB;
+        }
+
+        public static ITagsDB GetNewTagsDB()
+        {
+            return new SQLiteTagsDB();
         }
 
         private static ITagsDB s_TagsDB;

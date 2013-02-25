@@ -78,6 +78,7 @@ namespace Ares.Tags
             {
                 if (m_Connection != null)
                 {
+                    m_Connection.Close();
                     m_Connection.Dispose();
                     m_Connection = null;
                 }

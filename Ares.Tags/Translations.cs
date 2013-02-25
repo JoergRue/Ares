@@ -266,6 +266,26 @@ namespace Ares.Tags
             }
         }
 
+        public int GetIdOfLanguage(String languageCode)
+        {
+            if (m_Connection == null)
+            {
+                throw new TagsDbException("No Connection to DB file!");
+            }
+            try
+            {
+                return DoGetIdOfLanguage(languageCode);
+            }
+            catch (System.Data.DataException ex)
+            {
+                throw new TagsDbException(ex.Message, ex);
+            }
+            catch (SQLiteException ex)
+            {
+                throw new TagsDbException(ex.Message, ex);
+            }
+        }
+
         internal int DoAddLanguage(string code, string name)
         {
             using (SQLiteTransaction transaction = m_Connection.BeginTransaction())
@@ -354,13 +374,15 @@ namespace Ares.Tags
             using (SQLiteCommand queryCommand = new SQLiteCommand(getTranslationsCommand, connection, transaction))
             {
                 queryCommand.Parameters.AddWithValue("@RefId", refId);
-                SQLiteDataReader reader = queryCommand.ExecuteReader();
-                Dictionary<int, String> result = new Dictionary<int, string>();
-                while (reader.Read())
+                using (SQLiteDataReader reader = queryCommand.ExecuteReader())
                 {
-                    result[(int)reader.GetInt64(0)] = reader.GetString(1);
+                    Dictionary<int, String> result = new Dictionary<int, string>();
+                    while (reader.Read())
+                    {
+                        result[(int)reader.GetInt64(0)] = reader.GetString(1);
+                    }
+                    return result;
                 }
-                return result;
             }
         }
 

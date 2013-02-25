@@ -91,6 +91,7 @@ namespace Ares.Editor.ElementEditors
                     else
                     {
                         Ares.Editor.Actions.TagChanges.Instance.FireTagsDBChanged(this);
+                        UpdateAll();
                     }
                 }, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskContinuationOptions.None, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
             }
@@ -178,6 +179,8 @@ namespace Ares.Editor.ElementEditors
             task2.ContinueWith((t) =>
             {
                 monitor.Close();
+                Ares.Editor.Actions.TagChanges.Instance.FireTagsDBChanged(this);
+                UpdateAll();
                 if (includeLog)
                 {
                     String log = task2.Result;
@@ -226,7 +229,7 @@ namespace Ares.Editor.ElementEditors
         {
             if (sender != this)
             {
-                UpdateControls();
+                UpdateAll();
             }
         }
 
@@ -262,7 +265,11 @@ namespace Ares.Editor.ElementEditors
         public void SetFiles(IList<String> files)
         {
             m_Files = files != null ? new List<String>(files) : new List<String>();
+            UpdateAll();
+        }
 
+        private void UpdateAll()
+        {
             m_FileTags.Clear();
 
             try

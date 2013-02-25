@@ -170,17 +170,19 @@ namespace Ares.Tags
                 List<TagsForFileExchange> tagsForFileExchange = new List<TagsForFileExchange>();
                 using (SQLiteCommand fileTagsCommand = new SQLiteCommand(fileTagsInfo, m_Connection, transaction))
                 {
-                    SQLiteDataReader reader = fileTagsCommand.ExecuteReader();
-                    TagsForFileExchange tagsForFiles = null;
-                    while (reader.Read())
+                    using (SQLiteDataReader reader = fileTagsCommand.ExecuteReader())
                     {
-                        long fileId = reader.GetInt64(0);
-                        if (tagsForFiles == null || fileId != tagsForFiles.FileId)
+                        TagsForFileExchange tagsForFiles = null;
+                        while (reader.Read())
                         {
-                            tagsForFiles = new TagsForFileExchange() { FileId = fileId, TagIds = new List<long>() };
-                            tagsForFileExchange.Add(tagsForFiles);
+                            long fileId = reader.GetInt64(0);
+                            if (tagsForFiles == null || fileId != tagsForFiles.FileId)
+                            {
+                                tagsForFiles = new TagsForFileExchange() { FileId = fileId, TagIds = new List<long>() };
+                                tagsForFileExchange.Add(tagsForFiles);
+                            }
+                            tagsForFiles.TagIds.Add(reader.GetInt64(1));
                         }
-                        tagsForFiles.TagIds.Add(reader.GetInt64(1));
                     }
                 }
                 data.TagsForFiles = tagsForFileExchange;
@@ -196,17 +198,19 @@ namespace Ares.Tags
                 List<TagsForFileExchange> removedTags = new List<TagsForFileExchange>();
                 using (SQLiteCommand removedTagsCommand = new SQLiteCommand(removedTagsInfo, m_Connection, transaction))
                 {
-                    SQLiteDataReader reader = removedTagsCommand.ExecuteReader();
-                    TagsForFileExchange tagsForFiles = null;
-                    while (reader.Read())
+                    using (SQLiteDataReader reader = removedTagsCommand.ExecuteReader())
                     {
-                        long fileId = reader.GetInt64(0);
-                        if (tagsForFiles == null || fileId != tagsForFiles.FileId)
+                        TagsForFileExchange tagsForFiles = null;
+                        while (reader.Read())
                         {
-                            tagsForFiles = new TagsForFileExchange() { FileId = fileId, TagIds = new List<long>() };
-                            removedTags.Add(tagsForFiles);
+                            long fileId = reader.GetInt64(0);
+                            if (tagsForFiles == null || fileId != tagsForFiles.FileId)
+                            {
+                                tagsForFiles = new TagsForFileExchange() { FileId = fileId, TagIds = new List<long>() };
+                                removedTags.Add(tagsForFiles);
+                            }
+                            tagsForFiles.TagIds.Add(reader.GetInt64(1));
                         }
-                        tagsForFiles.TagIds.Add(reader.GetInt64(1));
                     }
                 }
                 data.RemovedTags = removedTags;
@@ -419,36 +423,38 @@ namespace Ares.Tags
             List<FileIdentification> fileExchange = new List<FileIdentification>();
             using (SQLiteCommand fileCommand = new SQLiteCommand(fileInfo, m_Connection, transaction))
             {
-                SQLiteDataReader reader = fileCommand.ExecuteReader();
-                while (reader.Read())
+                using (SQLiteDataReader reader = fileCommand.ExecuteReader())
                 {
-                    long id = reader.GetInt64(0);
-                    if (fileIdMap != null && fileIdMap.ContainsKey(id))
+                    while (reader.Read())
                     {
-                        id = fileIdMap[id];
-                    }
-                    if (includePath)
-                    {
-                        fileExchange.Add(new FileExchange()
+                        long id = reader.GetInt64(0);
+                        if (fileIdMap != null && fileIdMap.ContainsKey(id))
                         {
-                            Id = (int)id,
-                            RelativePath = reader.GetString(1),
-                            Artist = reader.GetStringOrEmpty(2),
-                            Album = reader.GetStringOrEmpty(3),
-                            Title = reader.GetStringOrEmpty(4),
-                            AcoustId = reader.GetStringOrEmpty(5)
-                        });
-                    }
-                    else
-                    {
-                        fileExchange.Add(new FileIdentification()
+                            id = fileIdMap[id];
+                        }
+                        if (includePath)
                         {
-                            Id = (int)id,
-                            Artist = reader.GetStringOrEmpty(2),
-                            Album = reader.GetStringOrEmpty(3),
-                            Title = reader.GetStringOrEmpty(4),
-                            AcoustId = reader.GetStringOrEmpty(5)
-                        });
+                            fileExchange.Add(new FileExchange()
+                            {
+                                Id = (int)id,
+                                RelativePath = reader.GetString(1),
+                                Artist = reader.GetStringOrEmpty(2),
+                                Album = reader.GetStringOrEmpty(3),
+                                Title = reader.GetStringOrEmpty(4),
+                                AcoustId = reader.GetStringOrEmpty(5)
+                            });
+                        }
+                        else
+                        {
+                            fileExchange.Add(new FileIdentification()
+                            {
+                                Id = (int)id,
+                                Artist = reader.GetStringOrEmpty(2),
+                                Album = reader.GetStringOrEmpty(3),
+                                Title = reader.GetStringOrEmpty(4),
+                                AcoustId = reader.GetStringOrEmpty(5)
+                            });
+                        }
                     }
                 }
             }
@@ -460,23 +466,25 @@ namespace Ares.Tags
             List<TagExchange> tags = new List<TagExchange>();
             using (SQLiteCommand tagsInfoCommand = new SQLiteCommand(tagsInfo, m_Connection, transaction))
             {
-                SQLiteDataReader reader = tagsInfoCommand.ExecuteReader();
-                using (SQLiteCommand translationInfoCommand = CreateTranslationInfosCommand(Schema.TAGNAMES_TABLE, Schema.TAG_COLUMN, Schema.LANGUAGE_COLUMN, "@TagId", m_Connection, transaction))
+                using (SQLiteDataReader reader = tagsInfoCommand.ExecuteReader())
                 {
-                    SQLiteParameter param = translationInfoCommand.Parameters.Add("@TagId", System.Data.DbType.Int64);
-                    while (reader.Read())
+                    using (SQLiteCommand translationInfoCommand = CreateTranslationInfosCommand(Schema.TAGNAMES_TABLE, Schema.TAG_COLUMN, Schema.LANGUAGE_COLUMN, "@TagId", m_Connection, transaction))
                     {
-                        long tagId = reader.GetInt64(0);
-                        param.Value = tagId;
-                        List<TranslationExchange> translations = new List<TranslationExchange>();
-                        using (SQLiteDataReader reader2 = translationInfoCommand.ExecuteReader())
+                        SQLiteParameter param = translationInfoCommand.Parameters.Add("@TagId", System.Data.DbType.Int64);
+                        while (reader.Read())
                         {
-                            while (reader2.Read())
+                            long tagId = reader.GetInt64(0);
+                            param.Value = tagId;
+                            List<TranslationExchange> translations = new List<TranslationExchange>();
+                            using (SQLiteDataReader reader2 = translationInfoCommand.ExecuteReader())
                             {
-                                translations.Add(new TranslationExchange() { LanguageId = reader2.GetInt64(0), Name = reader2.GetString(1) });
+                                while (reader2.Read())
+                                {
+                                    translations.Add(new TranslationExchange() { LanguageId = reader2.GetInt64(0), Name = reader2.GetString(1) });
+                                }
                             }
+                            tags.Add(new TagExchange() { Id = tagId, CategoryId = reader.GetInt64(1), Names = translations });
                         }
-                        tags.Add(new TagExchange() { Id = tagId, CategoryId = reader.GetInt64(1), Names = translations });
                     }
                 }
             }
@@ -488,23 +496,25 @@ namespace Ares.Tags
             List<CategoryExchange> categories = new List<CategoryExchange>();
             using (SQLiteCommand categoryInfoCommand = new SQLiteCommand(categoryInfo, m_Connection, transaction))
             {
-                SQLiteDataReader reader = categoryInfoCommand.ExecuteReader();
-                using (SQLiteCommand translationInfoCommand = CreateTranslationInfosCommand(Schema.CATEGORYNAMES_TABLE, Schema.CATEGORY_COLUMN, Schema.LANGUAGE_COLUMN, "@CategoryId", m_Connection, transaction))
+                using (SQLiteDataReader reader = categoryInfoCommand.ExecuteReader())
                 {
-                    SQLiteParameter param = translationInfoCommand.Parameters.Add("@CategoryId", System.Data.DbType.Int64);
-                    while (reader.Read())
+                    using (SQLiteCommand translationInfoCommand = CreateTranslationInfosCommand(Schema.CATEGORYNAMES_TABLE, Schema.CATEGORY_COLUMN, Schema.LANGUAGE_COLUMN, "@CategoryId", m_Connection, transaction))
                     {
-                        long categoryId = reader.GetInt64(0);
-                        param.Value = categoryId;
-                        List<TranslationExchange> translations = new List<TranslationExchange>();
-                        using (SQLiteDataReader reader2 = translationInfoCommand.ExecuteReader())
+                        SQLiteParameter param = translationInfoCommand.Parameters.Add("@CategoryId", System.Data.DbType.Int64);
+                        while (reader.Read())
                         {
-                            while (reader2.Read())
+                            long categoryId = reader.GetInt64(0);
+                            param.Value = categoryId;
+                            List<TranslationExchange> translations = new List<TranslationExchange>();
+                            using (SQLiteDataReader reader2 = translationInfoCommand.ExecuteReader())
                             {
-                                translations.Add(new TranslationExchange() { LanguageId = reader2.GetInt64(0), Name = reader2.GetString(1) });
+                                while (reader2.Read())
+                                {
+                                    translations.Add(new TranslationExchange() { LanguageId = reader2.GetInt64(0), Name = reader2.GetString(1) });
+                                }
                             }
+                            categories.Add(new CategoryExchange() { Id = categoryId, Names = translations });
                         }
-                        categories.Add(new CategoryExchange() { Id = categoryId, Names = translations });
                     }
                 }
             }
@@ -516,17 +526,19 @@ namespace Ares.Tags
             List<LanguageExchange> languages = new List<LanguageExchange>();
             using (SQLiteCommand languageInfoCommand = new SQLiteCommand(languageInfo, m_Connection, transaction))
             {
-                SQLiteDataReader reader = languageInfoCommand.ExecuteReader();
-                LanguageExchange language = null;
-                while (reader.Read())
+                using (SQLiteDataReader reader = languageInfoCommand.ExecuteReader())
                 {
-                    long langId = reader.GetInt64(0);
-                    if (language == null || language.Id != langId)
+                    LanguageExchange language = null;
+                    while (reader.Read())
                     {
-                        language = new LanguageExchange() { Id = langId, ISO6391Code = reader.GetString(1), Names = new List<TranslationExchange>() };
-                        languages.Add(language);
+                        long langId = reader.GetInt64(0);
+                        if (language == null || language.Id != langId)
+                        {
+                            language = new LanguageExchange() { Id = langId, ISO6391Code = reader.GetString(1), Names = new List<TranslationExchange>() };
+                            languages.Add(language);
+                        }
+                        language.Names.Add(new TranslationExchange() { LanguageId = reader.GetInt64(2), Name = reader.GetString(3) });
                     }
-                    language.Names.Add(new TranslationExchange() { LanguageId = reader.GetInt64(2), Name = reader.GetString(3) });
                 }
             }
             data.Languages = languages;
