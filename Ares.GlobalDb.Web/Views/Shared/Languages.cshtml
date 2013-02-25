@@ -1,0 +1,12 @@
+﻿@model LanguageResponse
+           
+@if (Model.GetDifferentLanguageUrls().Count > 0)
+{
+    <p>
+        Browse different database languages: 
+        @foreach (var language in Model.GetDifferentLanguageUrls())
+        {
+            <a href="@language.Url">@language.Name</a> 
+        }
+    </p>
+}

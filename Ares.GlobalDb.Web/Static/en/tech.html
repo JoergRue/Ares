@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>RPG Music Tags Database</title>
+    <link href="/Static/Browse.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+    <div id="site-top">
+        <h1>RPG Music Tags Database</h1>
+    </div>
+
+    <div id="page">
+
+        <div id="nav">
+            <ul>
+                <li><a href="/Static/en/index.html">About</a></li>
+                <li><a href="/Static/en/browse.html">Browse</a></li>
+                <li><a href="/Static/en/tech.html">Technology</a></li>
+                <li><a href="/stats.html">Statistics</a></li>
+                <li><a href="/Static/en/api.html">API</a></li>
+                <li></li>
+                <li><a href="/Static/de/index.html">German Version</a></li>
+            </ul>
+        </div>
+
+        <div id="content">
+            <h3>Technology</h3>
+            <p>
+                How is RPGMusicTags.de made? Here, I give a few insights in the technology.
+            </p> 
+            <h4>Database</h4>
+            <p>
+                The data is stored in an <a href="http://sqlite.org/">SQLite</a> database. The reason for SQLite is the
+                compatibility with <a href="http://aresrpg.sourceforge.net/">Ares</a>. Much code can be shared between
+                Ares and RPGMusicTags, since an upload into the database is only in a few details different from a 
+                download into the local database of Ares (and vice versa).<br />
+                <br />
+                The schema of the database is <a href="Tags_Schema.png">shown here</a>. For tags and categories, there
+                are potentially many translations into different languages. If someone adds a translation, the tag is
+                automatically assigned to all music titles in the new language, too.<br />
+                <br />
+                The assignments between tag and music title are stored per user, which is why users must give a name when
+                they upload data. If a user removes a tag, this is stored in the RemovedTags table. In this way, a simple
+                'voting' between the users regarding a tag is possible: when downloading tags, a tag is only returned for
+                a music title if more users have it assigned than removed.
+            </p>
+            <h4>Music Identification</h4>
+            <p>
+                To identify a music title, <a href="http://acoustid.org">AcoustId</a> is used. Through their
+                <a href="http://acoustid.org/chromaprint">Chromaprint</a> algorithm, a "fingerprint" of the music is
+                calculated, and through the web service at AcoustId, the Id is retrieved. When uploading, artist, album and
+                title are also stored to enable browsing. When downloading, the music can also be found with these attributes,
+                but that is not very reliable.
+            </p>
+            <h4>Web Service</h4>
+            <p>
+                The web service and all web pages here are served through <a href="http://www.servicestack.net/">ServiceStack.net</a>. 
+                This is a very simple way to create a web service with .NET. .NET must be used because the tags database shares much 
+                code with <a href="http://aresrpg.sourceforge.net/">Ares</a>. All code for the web service is open source and is 
+                contained in the sources of Ares.
+            </p>
+        </div>
+
+    </div>
+
+</body>
+</html>

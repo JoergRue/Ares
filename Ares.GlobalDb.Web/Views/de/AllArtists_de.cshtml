@@ -1,0 +1,25 @@
+﻿@inherits ViewPage<AllArtistsResponse>
+
+@{
+    Layout = "Browse_de";
+}
+
+<h3>Datenbasis bezüglich Künstlern durchsuchen</h3>
+
+<p>Derzeit sind @Model.Results.Count Künstler in der Datenbasis.</p>
+
+<table>
+    <thead><tr><th>Name</th></tr></thead>
+    <tbody>
+        @foreach (var artist in Model.Results)
+        {
+            <tr>
+                <td><a href="@artist.Url">@artist.Name</a></td>
+            </tr>
+        } 
+    </tbody>
+</table>
+
+@section Languages {
+    @Html.Partial("Languages_de", Model.LanguageResponse)
+}

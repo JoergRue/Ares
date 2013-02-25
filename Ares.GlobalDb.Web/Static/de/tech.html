@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>RPG Musik-Tags Datenbasis</title>
+    <link href="/Static/Browse.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+    <div id="site-top">
+        <h1>RPG Musik-Tags Datenbasis</h1>
+    </div>
+
+    <div id="page">
+
+        <div id="nav">
+            <ul>
+                <li><a href="index.html">Über</a></li>
+                <li><a href="browse.html">Stöbern</a></li>
+                <li><a href="tech.html">Technik</a></li>
+                <li><a href="stats.html">Statistik</a></li>
+                <li><a href="api.html">API</a></li>
+                <li></li>
+                <li><a href="/Static/en/index.html">English Version</a></li>
+            </ul>
+        </div>
+
+        <div id="content">
+            <h3>Technik</h3>
+            <p>
+                Wie wird RPGMusicTags.de gemacht? Hier gebe ich ein paar Einblicke in die Technik dahinter.
+            </p> 
+            <h4>Datenbasis</h4>
+            <p>
+                Die Daten sind in einer <a href="http://sqlite.org/">SQLite</a>-Datenbasis gespeichert. Der Grund für SQLite ist die Kompatibilität mit 
+                <a href="http://aresrpg.sourceforge.net/">Ares</a>. Viel Code kann gleich für Ares und RPGMusicTags 
+                verwendet werden, denn ein Upload in die Datenbasis unterscheidet sich nur in einigen Details von einem 
+                Download in die lokale Datenbasis von Ares (und umgekehrt).<br />
+                <br />
+                Das Datenbasis-Schema kann man <a href="Tags_Schema.png">hier sehen</a>. Für Tags und Kategorien gibt es
+                jeweils potentiell viele Übersetzungen in andere Sprachen. Wenn einer eine Übersetzung hinzufügt, ist der
+                Tag in der neuen Sprache auch automatisch allen Musikstücken zugeordnet, denen er bereits in der alten 
+                Sprache zugeordnet war.<br />
+                <br />
+                Die Zuordnungen zwischen Tag und Musikstück werden pro Benutzer gespeichert, 
+                weswegen man beim Upload auch einen Benutzernamen mitgeben muss. Wenn ein Benutzer einen Tag wieder entfernt, 
+                wird das in der RemovedTags-Tabelle gespeichert. So ist eine einfache "Abstimmung" zwischen den Benutzern 
+                über ein Tag möglich, denn beim Download wird ein Tag für ein Musikstück nur zurückgegeben, wenn mehr 
+                Benutzer es gesetzt als es entfernt haben.
+            </p>
+            <h4>Musik-Identifikation</h4>
+            <p>
+                Zur Identifikation eines Musikstückes wird <a href="http://acoustid.org">AcoustId</a> verwendet. Über den
+                dort bereitgestellten <a href="http://acoustid.org/chromaprint">Chromaprint</a>-Algorithmus wird ein 
+                "Fingerabdruck" des Musikstücks ermittelt, und über den Webservice bei AcoustId dann die Id geholt. Beim
+                Upload werden auch Künstler, Album und Titel mitgegeben, damit man Stöbern kann. Beim Download kann man 
+                das Musikstück auch über diese Attribute finden, aber das ist unzuverlässig.
+            </p>
+            <h4>Webservice</h4>
+            <p>
+                Der Webservice und alle Webseiten hier werden mittels <a href="http://www.servicestack.net/">ServiceStack.net</a>
+                betrieben. Dies ist eine sehr einfache Art, mit .NET einen Webservice zu erstellen. .NET wurde gebraucht, weil 
+                die Tag-Datenbasis sehr viel Code mit <a href="http://aresrpg.sourceforge.net/">Ares</a> gemeinsam hat. Der 
+                gesamte Code für den Webservice ist Open Source und in den Sourcen von Ares enthalten.
+            </p>
+        </div>
+
+    </div>
+
+</body>
+</html>

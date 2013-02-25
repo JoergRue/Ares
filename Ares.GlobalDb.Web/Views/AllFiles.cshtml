@@ -1,0 +1,27 @@
+﻿@inherits ViewPage<AllFilesResponse>
+
+@{
+    Layout = "Browse";
+}
+
+<h3>Browsing database by Title</h3>
+
+<p>There are currently @Model.Results.Count titles in the database.</p>
+
+<table>
+    <thead><tr><th>Name</th><th>Artist</th><th>Album</th></tr></thead>
+    <tbody>
+        @foreach (var file in Model.Results)
+        {
+            <tr>
+                <td><a href="@file.Url">@file.Name</a></td>
+                <td><a href="@file.ArtistUrl">@file.Artist</a></td>
+                <td><a href="@file.AlbumUrl">@file.Album</a></td>
+            </tr>
+        } 
+    </tbody>
+</table>
+
+@section Languages {
+    @Html.Partial("Languages", Model.LanguageResponse)
+}

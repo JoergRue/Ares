@@ -1,0 +1,26 @@
+﻿@inherits ViewPage<ArtistsResponse>
+
+@{
+    Layout = "Browse";
+}
+
+<h3>Browsing database by Artist</h3>
+
+<p>There are currently @Model.Results.Count albums by <a href="@Model.ArtistUrl">@Model.Artist</a> in the database.</p>
+
+<table>
+    <thead><tr><th>Name</th><th>Artist</th></tr></thead>
+    <tbody>
+        @foreach (var album in Model.Results)
+        {
+            <tr>
+                <td><a href="@album.Url">@album.Name</a></td>
+                <td><a href="@album.ArtistUrl">@album.Artist</a></td>
+            </tr>
+        } 
+    </tbody>
+</table>
+
+@section Languages {
+    @Html.Partial("Languages", Model.LanguageResponse)
+}

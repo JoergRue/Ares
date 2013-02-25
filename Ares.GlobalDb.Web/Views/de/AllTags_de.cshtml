@@ -1,0 +1,26 @@
+﻿@inherits ViewPage<AllTagsResponse>
+
+@{
+    Layout = "Browse_de";
+}
+
+<h3>Datenbasis bezüglich Tags durchsuchen</h3>
+
+<p>Derzeit sind @Model.Results.Count Tags in der Datenbasis.</p>
+
+<table>
+    <thead><tr><th>Name</th><th>Kategorie</th></tr></thead>
+    <tbody>
+        @foreach (var tag in Model.Results)
+        {
+            <tr>
+                <td><a href="@tag.Url">@tag.Name</a></td>
+                <td><a href="@tag.CategoryUrl">@tag.Category</a></td>
+            </tr>
+        } 
+    </tbody>
+</table>
+
+@section Languages {
+    @Html.Partial("Languages_de", Model.LanguageResponse)
+}

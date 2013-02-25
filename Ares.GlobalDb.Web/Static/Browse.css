@@ -1,0 +1,219 @@
+
+
+p,h4,td,ul,li,div,b,i,th {
+    font-family:sans-serif,Arial;
+  }
+
+
+h1,h2,h3 {
+    font-family:sans-serif,Arial;
+    margin-left:10pt;
+    color:#0000CC;
+  }
+
+
+h1 {
+    font-size:18pt;
+    font-weight:bold;
+  }
+
+
+h2 {
+    font-size:16pt;
+    font-weight:bold;
+    text-align:left;
+    text-decoration:underline;
+  }
+
+
+h3 {
+    font-size:14pt;
+    text-align:left;
+  }
+
+
+h3.abgesetzt {
+    margin-top:45pt;
+  }
+
+
+td.tabueber {
+    font-weight:bold;
+    font-size:14pt;
+    text-align:center;
+  }
+
+
+td.centered {
+    text-align:center;
+    vertical-align:middle;
+    font-size:14pt;
+  }
+
+
+td.centered2 {
+    text-align:center;
+    vertical-align:middle;
+    font-size:12pt;
+  }
+
+
+h4 {
+    font-size:12pt;
+    margin-left:10pt;
+  }
+
+
+p,ul,li,div,th,td {
+    font-size:10pt;
+  }
+
+
+p.left {
+    text-align:left;
+  }
+
+
+p.abgesetzt {
+    margin-top:30pt;
+  }
+
+
+p,table {
+    margin-left:10pt;
+    margin-right:10pt;
+  }
+
+
+ul.ohne {
+    list-style-type:none;
+  }
+
+
+li.big {
+    line-height:18pt;
+  }
+
+
+div {
+    margin-top:0px;
+  }
+
+
+div.site-links {
+    font-size:12pt;
+    text-align:center;
+  }
+  
+  
+#nav {
+  float: right;
+  margin:5pt;
+  border:dotted 1pt blue;
+  min-width:12em;
+}
+
+div#page {
+    margin: 0;
+    width: 760px;
+    padding: 0.5em;
+	text-align: left;
+}
+
+div#nav ul {
+	margin: 2pt; padding: 0;
+}
+div#nav li {
+  list-style: none;
+  margin: 0; padding: 0.2em;
+}
+div#nav a {
+  display: block;
+  padding: 0.2em;
+  font-weight: bold;
+}
+div#nav a:link {
+  color: #FFFFEC; background-color: #5c87b2;
+}
+div#nav a:visited {
+  color: #FFFFEC; background-color: #5c87b2;
+}
+div#nav a:hover {
+  color: white; background-color: #80C8C8;
+}
+div#nav a:active {
+  color: white; background-color: #80C8C8;
+}
+
+#site-top {
+    text-align:left;
+    margin:10pt;
+    color:#FFFFFF;
+	background-color:#5c87b2;
+	width: 760px;
+ }
+  
+ div#site-top h1
+  {
+    color:#FFFFFF;
+ }
+
+#content {
+}
+
+#languages {
+}
+
+p.page-foot {
+    font-size:7pt;
+  }
+
+
+td {
+    vertical-align:top;
+  }
+
+th {
+  text-align: left;
+  font-weight: bold;
+}
+
+body {
+    background-color:#FFFFEC;
+    margin:0px;
+    color:#000000;
+  }
+
+hr {
+    color:#A3551A;
+    background-color:#A3551A;
+    border:#A3551A;
+    height:1px;
+}
+
+hr.golden {
+    color:#C6CE29;
+  }
+
+
+a:link {
+    color:#0000FF;
+  }
+
+
+a:visited {
+    color:#00009E;
+  }
+
+
+a:active {
+    color:#00FFFF;
+  }
+
+a.sitelink {
+ margin-left:10pt;
+}
+
+img.right { float:right; width:auto; padding-left:5pt; margin-right:15pt; vertical-align:bottom; }
+
+div.ssthumb p { text-align:center }

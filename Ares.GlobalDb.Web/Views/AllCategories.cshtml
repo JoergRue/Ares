@@ -1,0 +1,25 @@
+﻿@inherits ViewPage<AllCategoriesResponse>
+
+@{
+    Layout = "Browse";
+}
+
+<h3>Browsing database by Category</h3>
+
+<p>There are currently @Model.Results.Count categories in the database.</p>
+
+<table>
+    <thead><tr><th>Name</th></tr></thead>
+    <tbody>
+        @foreach (var category in Model.Results)
+        {
+            <tr>
+                <td><a href="@category.Url">@category.Name</a></td>
+            </tr>
+        } 
+    </tbody>
+</table>
+
+@section Languages {
+    @Html.Partial("Languages", Model.LanguageResponse)
+}

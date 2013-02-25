@@ -1,0 +1,27 @@
+﻿@inherits ViewPage<AlbumsResponse>
+
+@{
+    Layout = "Browse_de";
+}
+
+<h3>Datenbasis bezüglich Alben durchsuchen</h3>
+
+<p>Derzeit sind @Model.Results.Count Musikstücke in der Datenbasis für das Album @Model.Album.</p>
+
+<table>
+    <thead><tr><th>Name</th><th>Künstler</th><th>Album</th></tr></thead>
+    <tbody>
+        @foreach (var file in Model.Results)
+        {
+            <tr>
+                <td><a href="@file.Url">@file.Name</a></td>
+                <td><a href="@file.ArtistUrl">@file.Artist</a></td>
+                <td><a href="@file.AlbumUrl">@file.Album</a></td>
+            </tr>
+        } 
+    </tbody>
+</table>
+
+@section Languages {
+    @Html.Partial("Languages_de", Model.LanguageResponse)
+}
