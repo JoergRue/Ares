@@ -19,7 +19,7 @@
  */
 using System;
 using System.Collections.Generic;
-using System.Data.SQLite;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 
@@ -27,14 +27,14 @@ namespace Ares.Tags
 {
     class TagsDBBrowsing: ITagsDBBrowse, IConnectionClient
     {
-        private SQLiteConnection m_Connection;
+        private DbConnection m_Connection;
 
-        internal TagsDBBrowsing(SQLiteConnection connection)
+        internal TagsDBBrowsing(DbConnection connection)
         {
             m_Connection = connection;
         }
 
-        public void ConnectionChanged(SQLiteConnection connection)
+        public void ConnectionChanged(DbConnection connection)
         {
             m_Connection = connection;
         }
@@ -53,7 +53,7 @@ namespace Ares.Tags
             {
                 throw new TagsDbException(ex.Message, ex);
             }
-            catch (SQLiteException ex)
+            catch (DbException ex)
             {
                 throw new TagsDbException(ex.Message, ex);
             }
@@ -73,7 +73,7 @@ namespace Ares.Tags
             {
                 throw new TagsDbException(ex.Message, ex);
             }
-            catch (SQLiteException ex)
+            catch (DbException ex)
             {
                 throw new TagsDbException(ex.Message, ex);
             }
@@ -93,7 +93,7 @@ namespace Ares.Tags
             {
                 throw new TagsDbException(ex.Message, ex);
             }
-            catch (SQLiteException ex)
+            catch (DbException ex)
             {
                 throw new TagsDbException(ex.Message, ex);
             }
@@ -113,7 +113,7 @@ namespace Ares.Tags
             {
                 throw new TagsDbException(ex.Message, ex);
             }
-            catch (SQLiteException ex)
+            catch (DbException ex)
             {
                 throw new TagsDbException(ex.Message, ex);
             }
@@ -133,7 +133,7 @@ namespace Ares.Tags
             {
                 throw new TagsDbException(ex.Message, ex);
             }
-            catch (SQLiteException ex)
+            catch (DbException ex)
             {
                 throw new TagsDbException(ex.Message, ex);
             }
@@ -142,9 +142,9 @@ namespace Ares.Tags
         private IList<Artist> DoGetAllArtists()
         {
             List<Artist> result = new List<Artist>();
-            using (SQLiteCommand command = new SQLiteCommand(String.Format("SELECT DISTINCT {0} FROM {1} ORDER BY {0}", Schema.ARTIST_COLUMN, Schema.FILES_TABLE), m_Connection))
+            using (DbCommand command = DbUtils.CreateDbCommand(String.Format("SELECT DISTINCT {0} FROM {1} ORDER BY {0}", Schema.ARTIST_COLUMN, Schema.FILES_TABLE), m_Connection))
             {
-                using (SQLiteDataReader reader = command.ExecuteReader())
+                using (DbDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
@@ -160,10 +160,10 @@ namespace Ares.Tags
             if (String.IsNullOrEmpty(artist))
                 return DoGetAllAlbums();
             List<Album> result = new List<Album>();
-            using (SQLiteCommand command = new SQLiteCommand(String.Format("SELECT DISTINCT {0}, {1} FROM {2} WHERE {0}=@Artist ORDER BY {1}", Schema.ARTIST_COLUMN, Schema.ALBUM_COLUMN, Schema.FILES_TABLE), m_Connection))
+            using (DbCommand command = DbUtils.CreateDbCommand(String.Format("SELECT DISTINCT {0}, {1} FROM {2} WHERE {0}=@Artist ORDER BY {1}", Schema.ARTIST_COLUMN, Schema.ALBUM_COLUMN, Schema.FILES_TABLE), m_Connection))
             {
-                command.Parameters.AddWithValue("@Artist", artist);
-                using (SQLiteDataReader reader = command.ExecuteReader())
+                command.AddParameterWithValue("@Artist", artist);
+                using (DbDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
@@ -177,9 +177,9 @@ namespace Ares.Tags
         private IList<Album> DoGetAllAlbums()
         {
             List<Album> result = new List<Album>();
-            using (SQLiteCommand command = new SQLiteCommand(String.Format("SELECT DISTINCT {0}, {1} FROM {2} ORDER BY {0}, {1}", Schema.ARTIST_COLUMN, Schema.ALBUM_COLUMN, Schema.FILES_TABLE), m_Connection))
+            using (DbCommand command = DbUtils.CreateDbCommand(String.Format("SELECT DISTINCT {0}, {1} FROM {2} ORDER BY {0}, {1}", Schema.ARTIST_COLUMN, Schema.ALBUM_COLUMN, Schema.FILES_TABLE), m_Connection))
             {
-                using (SQLiteDataReader reader = command.ExecuteReader())
+                using (DbDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
@@ -193,10 +193,10 @@ namespace Ares.Tags
         private IList<FileIdentification> DoGetAllFiles()
         {
             List<FileIdentification> result = new List<FileIdentification>();
-            using (SQLiteCommand command = new SQLiteCommand(String.Format("SELECT DISTINCT {0}, {1}, {2}, {3} FROM {4} ORDER BY {1}, {2}, {3}",
+            using (DbCommand command = DbUtils.CreateDbCommand(String.Format("SELECT DISTINCT {0}, {1}, {2}, {3} FROM {4} ORDER BY {1}, {2}, {3}",
                 Schema.ID_COLUMN, Schema.ARTIST_COLUMN, Schema.ALBUM_COLUMN, Schema.TITLE_COLUMN, Schema.FILES_TABLE), m_Connection))
             {
-                using (SQLiteDataReader reader = command.ExecuteReader())
+                using (DbDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
@@ -214,11 +214,11 @@ namespace Ares.Tags
             List<FileIdentification> result = new List<FileIdentification>();
             if (String.IsNullOrEmpty(album))
             {
-                using (SQLiteCommand command = new SQLiteCommand(String.Format("SELECT DISTINCT {0}, {1}, {2}, {3} FROM {4} WHERE {1}=@Artist ORDER BY {1}, {2}, {3}",
+                using (DbCommand command = DbUtils.CreateDbCommand(String.Format("SELECT DISTINCT {0}, {1}, {2}, {3} FROM {4} WHERE {1}=@Artist ORDER BY {1}, {2}, {3}",
                     Schema.ID_COLUMN, Schema.ARTIST_COLUMN, Schema.ALBUM_COLUMN, Schema.TITLE_COLUMN, Schema.FILES_TABLE), m_Connection))
                 {
-                    command.Parameters.AddWithValue("@Artist", artist);
-                    using (SQLiteDataReader reader = command.ExecuteReader())
+                    command.AddParameterWithValue("@Artist", artist);
+                    using (DbDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
                         {
@@ -229,11 +229,11 @@ namespace Ares.Tags
             }
             else if (String.IsNullOrEmpty(artist))
             {
-                using (SQLiteCommand command = new SQLiteCommand(String.Format("SELECT DISTINCT {0}, {1}, {2}, {3} WHERE {2}=@Album FROM {4} ORDER BY {1}, {2}, {3}",
+                using (DbCommand command = DbUtils.CreateDbCommand(String.Format("SELECT DISTINCT {0}, {1}, {2}, {3} WHERE {2}=@Album FROM {4} ORDER BY {1}, {2}, {3}",
                     Schema.ID_COLUMN, Schema.ARTIST_COLUMN, Schema.ALBUM_COLUMN, Schema.TITLE_COLUMN, Schema.FILES_TABLE), m_Connection))
                 {
-                    command.Parameters.AddWithValue("@Album", album);
-                    using (SQLiteDataReader reader = command.ExecuteReader())
+                    command.AddParameterWithValue("@Album", album);
+                    using (DbDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
                         {
@@ -244,12 +244,12 @@ namespace Ares.Tags
             }
             else
             {
-                using (SQLiteCommand command = new SQLiteCommand(String.Format("SELECT DISTINCT {0}, {1}, {2}, {3} FROM {4}  WHERE {1}=@Artist AND {2}=@Album ORDER BY {1}, {2}, {3}",
+                using (DbCommand command = DbUtils.CreateDbCommand(String.Format("SELECT DISTINCT {0}, {1}, {2}, {3} FROM {4}  WHERE {1}=@Artist AND {2}=@Album ORDER BY {1}, {2}, {3}",
                     Schema.ID_COLUMN, Schema.ARTIST_COLUMN, Schema.ALBUM_COLUMN, Schema.TITLE_COLUMN, Schema.FILES_TABLE), m_Connection))
                 {
-                    command.Parameters.AddWithValue("@Artist", artist);
-                    command.Parameters.AddWithValue("@Album", album);
-                    using (SQLiteDataReader reader = command.ExecuteReader())
+                    command.AddParameterWithValue("@Artist", artist);
+                    command.AddParameterWithValue("@Album", album);
+                    using (DbDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
                         {

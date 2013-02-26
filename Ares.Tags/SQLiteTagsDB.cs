@@ -26,7 +26,7 @@ namespace Ares.Tags
 {
     interface IConnectionClient
     {
-        void ConnectionChanged(System.Data.SQLite.SQLiteConnection connection);
+        void ConnectionChanged(System.Data.Common.DbConnection connection);
     }
 
     class Schema

@@ -22,7 +22,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using System.Data.SQLite;
+using System.Data.Common;
 
 namespace Ares.Tags
 {
@@ -30,15 +30,15 @@ namespace Ares.Tags
     class LanguageReading : ITagsDBReadByLanguage, IConnectionClient
     {
         private int m_LanguageId;
-        private SQLiteConnection m_Connection;
+        private DbConnection m_Connection;
 
-        internal LanguageReading(int languageId, SQLiteConnection connection)
+        internal LanguageReading(int languageId, DbConnection connection)
         {
             m_LanguageId = languageId;
             m_Connection = connection;
         }
 
-        public void ConnectionChanged(SQLiteConnection connection)
+        public void ConnectionChanged(DbConnection connection)
         {
             m_Connection = connection;
         }
@@ -57,7 +57,7 @@ namespace Ares.Tags
             {
                 throw new TagsDbException(ex.Message, ex);
             }
-            catch (SQLiteException ex)
+            catch (DbException ex)
             {
                 throw new TagsDbException(ex.Message, ex);
             }
@@ -77,7 +77,7 @@ namespace Ares.Tags
             {
                 throw new TagsDbException(ex.Message, ex);
             }
-            catch (SQLiteException ex)
+            catch (DbException ex)
             {
                 throw new TagsDbException(ex.Message, ex);
             }
@@ -97,7 +97,7 @@ namespace Ares.Tags
             {
                 throw new TagsDbException(ex.Message, ex);
             }
-            catch (SQLiteException ex)
+            catch (DbException ex)
             {
                 throw new TagsDbException(ex.Message, ex);
             }
@@ -117,7 +117,7 @@ namespace Ares.Tags
             {
                 throw new TagsDbException(ex.Message, ex);
             }
-            catch (SQLiteException ex)
+            catch (DbException ex)
             {
                 throw new TagsDbException(ex.Message, ex);
             }
@@ -137,7 +137,7 @@ namespace Ares.Tags
             {
                 throw new TagsDbException(ex.Message, ex);
             }
-            catch (SQLiteException ex)
+            catch (DbException ex)
             {
                 throw new TagsDbException(ex.Message, ex);
             }
@@ -157,7 +157,7 @@ namespace Ares.Tags
             {
                 throw new TagsDbException(ex.Message, ex);
             }
-            catch (SQLiteException ex)
+            catch (DbException ex)
             {
                 throw new TagsDbException(ex.Message, ex);
             }
@@ -177,7 +177,7 @@ namespace Ares.Tags
             {
                 throw new TagsDbException(ex.Message, ex);
             }
-            catch (SQLiteException ex)
+            catch (DbException ex)
             {
                 throw new TagsDbException(ex.Message, ex);
             }
@@ -197,7 +197,7 @@ namespace Ares.Tags
             {
                 throw new TagsDbException(ex.Message, ex);
             }
-            catch (SQLiteException ex)
+            catch (DbException ex)
             {
                 throw new TagsDbException(ex.Message, ex);
             }
@@ -207,11 +207,11 @@ namespace Ares.Tags
         {
             String query = String.Format("SELECT {0}.{1}, {2}.{3} FROM {0}, {2} WHERE {0}.{1}={2}.{4} AND {2}.{5}=@LangId ORDER BY {2}.{3}",
                 Schema.CATEGORIES_TABLE, Schema.ID_COLUMN, Schema.CATEGORYNAMES_TABLE, Schema.NAME_COLUMN, Schema.CATEGORY_COLUMN, Schema.LANGUAGE_COLUMN);
-            using (SQLiteCommand command = new SQLiteCommand(query, m_Connection))
+            using (DbCommand command = DbUtils.CreateDbCommand(query, m_Connection))
             {
-                command.Parameters.AddWithValue("@LangId", m_LanguageId);
+                command.AddParameterWithValue("@LangId", m_LanguageId);
                 List<CategoryForLanguage> result = new List<CategoryForLanguage>();
-                using (SQLiteDataReader reader = command.ExecuteReader())
+                using (DbDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
@@ -226,12 +226,12 @@ namespace Ares.Tags
         {
             String query = String.Format("SELECT {0}.{1}, {2}.{3} FROM {0}, {2} WHERE {0}.{1}={2}.{4} AND {2}.{5}=@LangId AND {0}.{6}=@CatId ORDER BY {2}.{3}",
                 Schema.TAGS_TABLE, Schema.ID_COLUMN, Schema.TAGNAMES_TABLE, Schema.NAME_COLUMN, Schema.TAG_COLUMN, Schema.LANGUAGE_COLUMN, Schema.CATEGORY_COLUMN);
-            using (SQLiteCommand command = new SQLiteCommand(query, m_Connection))
+            using (DbCommand command = DbUtils.CreateDbCommand(query, m_Connection))
             {
-                command.Parameters.AddWithValue("@LangId", m_LanguageId);
-                command.Parameters.AddWithValue("@CatId", categoryId);
+                command.AddParameterWithValue("@LangId", m_LanguageId);
+                command.AddParameterWithValue("@CatId", categoryId);
                 List<TagForLanguage> result = new List<TagForLanguage>();
-                using (SQLiteDataReader reader = command.ExecuteReader())
+                using (DbDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
@@ -265,13 +265,13 @@ namespace Ares.Tags
                 Schema.NAME_COLUMN, Schema.CATEGORY_COLUMN, Schema.CATEGORIES_TABLE, Schema.FILES_TABLE, Schema.FILETAGS_TABLE,
                 // 10 - 13
                 Schema.TAG_COLUMN, Schema.FILE_COLUMN, Schema.LANGUAGE_COLUMN, Schema.PATH_COLUMN);
-            using (SQLiteCommand command = new SQLiteCommand(query, m_Connection))
+            using (DbCommand command = DbUtils.CreateDbCommand(query, m_Connection))
             {
-                command.Parameters.AddWithValue("@LangId1", m_LanguageId);
-                command.Parameters.AddWithValue("@LangId2", m_LanguageId);
-                command.Parameters.AddWithValue("@Path", relativePath);
+                command.AddParameterWithValue("@LangId1", m_LanguageId);
+                command.AddParameterWithValue("@LangId2", m_LanguageId);
+                command.AddParameterWithValue("@Path", relativePath);
                 List<TagInfoForLanguage> result = new List<TagInfoForLanguage>();
-                using (SQLiteDataReader reader = command.ExecuteReader())
+                using (DbDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
@@ -320,13 +320,13 @@ namespace Ares.Tags
                 Schema.TAG_COLUMN, Schema.FILE_COLUMN, Schema.LANGUAGE_COLUMN, Schema.ID_COLUMN,
                 // 14 - 15
                 countAddsQuery, countRemovesQuery);
-            using (SQLiteCommand command = new SQLiteCommand(query, m_Connection))
+            using (DbCommand command = DbUtils.CreateDbCommand(query, m_Connection))
             {
-                command.Parameters.AddWithValue("@LangId1", m_LanguageId);
-                command.Parameters.AddWithValue("@LangId2", m_LanguageId);
-                command.Parameters.AddWithValue("@FileId", id);
+                command.AddParameterWithValue("@LangId1", m_LanguageId);
+                command.AddParameterWithValue("@LangId2", m_LanguageId);
+                command.AddParameterWithValue("@FileId", id);
                 List<TagInfoForLanguage> result = new List<TagInfoForLanguage>();
-                using (SQLiteDataReader reader = command.ExecuteReader())
+                using (DbDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
@@ -358,12 +358,12 @@ namespace Ares.Tags
                 Schema.TAGS_TABLE, Schema.ID_COLUMN, Schema.TAGNAMES_TABLE, Schema.NAME_COLUMN, Schema.CATEGORYNAMES_TABLE,
                 // 5 - 9
                 Schema.NAME_COLUMN, Schema.CATEGORY_COLUMN, Schema.CATEGORIES_TABLE, Schema.TAG_COLUMN, Schema.LANGUAGE_COLUMN);
-            using (SQLiteCommand command = new SQLiteCommand(query, m_Connection))
+            using (DbCommand command = DbUtils.CreateDbCommand(query, m_Connection))
             {
-                command.Parameters.AddWithValue("@LangId1", m_LanguageId);
-                command.Parameters.AddWithValue("@LangId2", m_LanguageId);
+                command.AddParameterWithValue("@LangId1", m_LanguageId);
+                command.AddParameterWithValue("@LangId2", m_LanguageId);
                 List<TagInfoForLanguage> result = new List<TagInfoForLanguage>();
-                using (SQLiteDataReader reader = command.ExecuteReader())
+                using (DbDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
@@ -384,11 +384,11 @@ namespace Ares.Tags
         {
             String query = String.Format("SELECT {0}.{1}, {2}.{3}, {0}.{6} FROM {0}, {2} WHERE {0}.{1}={2}.{4} AND {2}.{5}=@LangId ORDER BY {2}.{3}",
                 Schema.LANGUAGE_TABLE, Schema.ID_COLUMN, Schema.LANGUAGENAMES_TABLE, Schema.NAME_COLUMN, Schema.NAMED_LANGUAGE_COLUMN, Schema.LANGUAGE_OF_NAME_COLUMN, Schema.LC_COLUMN);
-            using (SQLiteCommand command = new SQLiteCommand(query, m_Connection))
+            using (DbCommand command = DbUtils.CreateDbCommand(query, m_Connection))
             {
-                command.Parameters.AddWithValue("@LangId", m_LanguageId);
+                command.AddParameterWithValue("@LangId", m_LanguageId);
                 List<LanguageForLanguage> result = new List<LanguageForLanguage>();
-                using (SQLiteDataReader reader = command.ExecuteReader())
+                using (DbDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
@@ -432,12 +432,12 @@ namespace Ares.Tags
             }
             query += String.Format(") ORDER BY {0}.{1}, {2}.{3}",
                 Schema.CATEGORYNAMES_TABLE, Schema.NAME_COLUMN, Schema.TAGNAMES_TABLE, Schema.NAME_COLUMN);
-            using (SQLiteCommand command = new SQLiteCommand(query, m_Connection))
+            using (DbCommand command = DbUtils.CreateDbCommand(query, m_Connection))
             {
-                command.Parameters.AddWithValue("@LangId1", m_LanguageId);
-                command.Parameters.AddWithValue("@LangId2", m_LanguageId);
+                command.AddParameterWithValue("@LangId1", m_LanguageId);
+                command.AddParameterWithValue("@LangId2", m_LanguageId);
                 List<TagInfoForLanguage> result = new List<TagInfoForLanguage>();
-                using (SQLiteDataReader reader = command.ExecuteReader())
+                using (DbDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
@@ -461,11 +461,11 @@ namespace Ares.Tags
             if (String.IsNullOrEmpty(category))
             {
                 String query = String.Format("SELECT {0} FROM {1} WHERE {2}=@TagName AND {3}=@LanguageId", Schema.TAG_COLUMN, Schema.TAGNAMES_TABLE, Schema.NAME_COLUMN, Schema.LANGUAGE_COLUMN);
-                using (SQLiteCommand command = new SQLiteCommand(query, m_Connection))
+                using (DbCommand command = DbUtils.CreateDbCommand(query, m_Connection))
                 {
-                    command.Parameters.AddWithValue("@TagName", tagName);
-                    command.Parameters.AddWithValue("@LanguageId", m_LanguageId);
-                    using (SQLiteDataReader reader = command.ExecuteReader())
+                    command.AddParameterWithValue("@TagName", tagName);
+                    command.AddParameterWithValue("@LanguageId", m_LanguageId);
+                    using (DbDataReader reader = command.ExecuteReader())
                     {
                         if (reader.Read())
                         {
@@ -483,13 +483,13 @@ namespace Ares.Tags
                 String query = String.Format("SELECT {0}.{1} FROM {0}, {2}, {3}, {4} WHERE {0}.{5}={2}.{1} AND {2}.{6}={3}.{7} AND {3}.{8}=@Category AND {0}.{1}={4}.{9} AND {4}.{10}=@TagName AND {3}.{11}=@LangId1 AND {4}.{11}=@LangId2",
                     Schema.TAGS_TABLE, Schema.ID_COLUMN, Schema.CATEGORIES_TABLE, Schema.CATEGORYNAMES_TABLE, Schema.TAGNAMES_TABLE,
                     Schema.CATEGORY_COLUMN, Schema.ID_COLUMN, Schema.CATEGORY_COLUMN, Schema.NAME_COLUMN, Schema.TAG_COLUMN, Schema.NAME_COLUMN, Schema.LANGUAGE_COLUMN);
-                using (SQLiteCommand command = new SQLiteCommand(query, m_Connection))
+                using (DbCommand command = DbUtils.CreateDbCommand(query, m_Connection))
                 {
-                    command.Parameters.AddWithValue("@TagName", tagName);
-                    command.Parameters.AddWithValue("@Category", category);
-                    command.Parameters.AddWithValue("@LangId1", m_LanguageId);
-                    command.Parameters.AddWithValue("@LangId2", m_LanguageId);
-                    using (SQLiteDataReader reader = command.ExecuteReader())
+                    command.AddParameterWithValue("@TagName", tagName);
+                    command.AddParameterWithValue("@Category", category);
+                    command.AddParameterWithValue("@LangId1", m_LanguageId);
+                    command.AddParameterWithValue("@LangId2", m_LanguageId);
+                    using (DbDataReader reader = command.ExecuteReader())
                     {
                         if (reader.Read())
                         {

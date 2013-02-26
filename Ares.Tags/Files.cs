@@ -22,7 +22,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using System.Data.SQLite;
+using System.Data.Common;
 
 namespace Ares.Tags
 {
@@ -46,7 +46,7 @@ namespace Ares.Tags
             {
                 throw new TagsDbException(ex.Message, ex);
             }
-            catch (SQLiteException ex)
+            catch (DbException ex)
             {
                 throw new TagsDbException(ex.Message, ex);
             }
@@ -92,7 +92,7 @@ namespace Ares.Tags
         private void CreateDatabase(String filePath)
         {
             DoOpenDatabase(filePath);
-            using (SQLiteTransaction transaction = m_Connection.BeginTransaction())
+            using (DbTransaction transaction = m_Connection.BeginTransaction())
             {
                 CreateSchema(transaction);
                 InsertDefaultValues(transaction);
@@ -108,7 +108,7 @@ namespace Ares.Tags
                 DoCloseDatabase();
             }
             
-            m_Connection = new SQLiteConnection(String.Format("Data Source={0};Version=3;foreign keys=true;", filePath));
+            m_Connection = new System.Data.SQLite.SQLiteConnection(String.Format("Data Source={0};Version=3;foreign keys=true;", filePath));
             
             m_Connection.Open();
         }
@@ -117,7 +117,7 @@ namespace Ares.Tags
 
         private void UpdateDatabase()
         {
-            using (SQLiteCommand command = new SQLiteCommand(String.Format("SELECT {0} FROM {1}", Schema.VERSION_COLUMN, Schema.DBINFO_TABLE), m_Connection))
+            using (DbCommand command = DbUtils.CreateDbCommand(String.Format("SELECT {0} FROM {1}", Schema.VERSION_COLUMN, Schema.DBINFO_TABLE), m_Connection))
             {
                 object version = command.ExecuteScalar();
                 int v = 0;
@@ -127,7 +127,7 @@ namespace Ares.Tags
                 }
                 if (v == 0)
                 {
-                    using (SQLiteTransaction transaction = m_Connection.BeginTransaction())
+                    using (DbTransaction transaction = m_Connection.BeginTransaction())
                     {
                         CreateSchema(transaction);
                         InsertDefaultValues(transaction);
@@ -136,7 +136,7 @@ namespace Ares.Tags
                 }
                 else if (v == 1)
                 {
-                    using (SQLiteTransaction transaction = m_Connection.BeginTransaction())
+                    using (DbTransaction transaction = m_Connection.BeginTransaction())
                     {
                         UpdateSchemaFromVersion1(transaction);
                         transaction.Commit();
@@ -145,7 +145,7 @@ namespace Ares.Tags
             }
         }
 
-        private void UpdateSchemaFromVersion1(SQLiteTransaction transaction)
+        private void UpdateSchemaFromVersion1(DbTransaction transaction)
         {
             String alterTableCommand = "ALTER TABLE {0} ADD COLUMN ";
             String createTableCommand = "CREATE TABLE IF NOT EXISTS {0} ( ";
@@ -153,28 +153,28 @@ namespace Ares.Tags
             String idRefColumnCommand = "{0} INTEGER NOT NULL REFERENCES {1} ({2}) ON DELETE CASCADE";
 
             // update files table
-            using (SQLiteCommand command = new SQLiteCommand(
+            using (DbCommand command = DbUtils.CreateDbCommand(
                 String.Format(alterTableCommand, Schema.FILES_TABLE) +
                 String.Format("{0} VARCHAR(500)", Schema.ARTIST_COLUMN), 
                 m_Connection, transaction))
             {
                 command.ExecuteNonQuery();
             }
-            using (SQLiteCommand command = new SQLiteCommand(
+            using (DbCommand command = DbUtils.CreateDbCommand(
                 String.Format(alterTableCommand, Schema.FILES_TABLE) +
                 String.Format("{0} VARCHAR(500)", Schema.ALBUM_COLUMN), 
                 m_Connection, transaction))
             {
                 command.ExecuteNonQuery();
             }
-            using (SQLiteCommand command = new SQLiteCommand(
+            using (DbCommand command = DbUtils.CreateDbCommand(
                 String.Format(alterTableCommand, Schema.FILES_TABLE) +
                 String.Format("{0} VARCHAR(500)", Schema.TITLE_COLUMN), 
                 m_Connection, transaction))
             {
                 command.ExecuteNonQuery();
             }
-            using (SQLiteCommand command = new SQLiteCommand(
+            using (DbCommand command = DbUtils.CreateDbCommand(
                 String.Format(alterTableCommand, Schema.FILES_TABLE) +
                 String.Format("{0} VARCHAR(500)", Schema.ACOUST_ID_COLUMN), 
                 m_Connection, transaction))
@@ -183,7 +183,7 @@ namespace Ares.Tags
             }
 
             // update filetags table
-            using (SQLiteCommand command = new SQLiteCommand(
+            using (DbCommand command = DbUtils.CreateDbCommand(
                 String.Format(alterTableCommand, Schema.FILETAGS_TABLE) +
                 String.Format("{0} VARCHAR(100)", Schema.USER_COLUMN),
                 m_Connection, transaction))
@@ -192,7 +192,7 @@ namespace Ares.Tags
             }
 
             // create removedtags table
-            using (SQLiteCommand command = new SQLiteCommand(
+            using (DbCommand command = DbUtils.CreateDbCommand(
                 String.Format(createTableCommand, Schema.REMOVEDTAGS_TABLE)
                 + String.Format(idColumnCommand, Schema.ID_COLUMN) + ", "
                 + String.Format(idRefColumnCommand, Schema.FILE_COLUMN, Schema.FILES_TABLE, Schema.ID_COLUMN) + ", "
@@ -204,7 +204,7 @@ namespace Ares.Tags
             }
 
             // create tagexport table
-            using (SQLiteCommand command = new SQLiteCommand(
+            using (DbCommand command = DbUtils.CreateDbCommand(
                 String.Format(createTableCommand, Schema.TAGEXPORT_TABLE)
                 + String.Format(idColumnCommand, Schema.ID_COLUMN) + ", "
                 + String.Format(idRefColumnCommand, Schema.TAG_COLUMN, Schema.TAGS_TABLE, Schema.ID_COLUMN)
@@ -215,10 +215,10 @@ namespace Ares.Tags
 
 
             // update version info
-            using (SQLiteCommand command = new SQLiteCommand(
+            using (DbCommand command = DbUtils.CreateDbCommand(
                 String.Format("UPDATE {0} SET {1}=@version", Schema.DBINFO_TABLE, Schema.VERSION_COLUMN), m_Connection, transaction))
             {
-                command.Parameters.AddWithValue("@version", Schema.DB_VERSION);
+                command.AddParameterWithValue("@version", Schema.DB_VERSION);
                 command.ExecuteNonQuery();
             }
         }
@@ -227,7 +227,7 @@ namespace Ares.Tags
 
         #region New DB Initialization
 
-        private void CreateSchema(SQLiteTransaction transaction)
+        private void CreateSchema(DbTransaction transaction)
         {
             String createTableCommand = "CREATE TABLE IF NOT EXISTS {0} ( ";
             String idColumnCommand = "{0} INTEGER NOT NULL PRIMARY KEY";
@@ -235,14 +235,14 @@ namespace Ares.Tags
             String nameColumnCommand = "{0} VARCHAR(100) NOT NULL";
 
             // DBInfo table
-            using (SQLiteCommand command = new SQLiteCommand(
+            using (DbCommand command = DbUtils.CreateDbCommand(
                 String.Format(createTableCommand, Schema.DBINFO_TABLE)
                 + String.Format("{0} INTEGER NOT NULL", Schema.VERSION_COLUMN)
                 + ");", m_Connection, transaction))
             {
                 command.ExecuteNonQuery();
             }
-            using (SQLiteCommand command = new SQLiteCommand(String.Format("INSERT INTO {0} ({1}) VALUES({2})",
+            using (DbCommand command = DbUtils.CreateDbCommand(String.Format("INSERT INTO {0} ({1}) VALUES({2})",
                 Schema.DBINFO_TABLE, Schema.VERSION_COLUMN, Schema.DB_VERSION),
                 m_Connection, transaction))
             {
@@ -250,7 +250,7 @@ namespace Ares.Tags
             }
 
             // Languages table
-            using (SQLiteCommand command = new SQLiteCommand(
+            using (DbCommand command = DbUtils.CreateDbCommand(
                 String.Format(createTableCommand, Schema.LANGUAGE_TABLE)
                 + String.Format(idColumnCommand, Schema.ID_COLUMN) + ", "
                 + String.Format("{0} VARCHAR(5) NOT NULL", Schema.LC_COLUMN)
@@ -260,7 +260,7 @@ namespace Ares.Tags
             }
 
             // LanguageNames table
-            using (SQLiteCommand command = new SQLiteCommand(
+            using (DbCommand command = DbUtils.CreateDbCommand(
                 String.Format(createTableCommand, Schema.LANGUAGENAMES_TABLE)
                 + String.Format(idColumnCommand, Schema.ID_COLUMN) + ", "
                 + String.Format(idRefColumnCommand, Schema.NAMED_LANGUAGE_COLUMN, Schema.LANGUAGE_TABLE, Schema.ID_COLUMN) + ", "
@@ -272,7 +272,7 @@ namespace Ares.Tags
             }
 
             // Categories table
-            using (SQLiteCommand command = new SQLiteCommand(
+            using (DbCommand command = DbUtils.CreateDbCommand(
                 String.Format(createTableCommand, Schema.CATEGORIES_TABLE)
                 + String.Format(idColumnCommand, Schema.ID_COLUMN)
                 + ");", m_Connection, transaction))
@@ -281,7 +281,7 @@ namespace Ares.Tags
             }
              
             // CategoryNames table
-            using (SQLiteCommand command = new SQLiteCommand(
+            using (DbCommand command = DbUtils.CreateDbCommand(
                 String.Format(createTableCommand, Schema.CATEGORYNAMES_TABLE)
                 + String.Format(idColumnCommand, Schema.ID_COLUMN) + ", "
                 + String.Format(idRefColumnCommand, Schema.LANGUAGE_COLUMN, Schema.LANGUAGE_TABLE, Schema.ID_COLUMN) + ", "
@@ -293,7 +293,7 @@ namespace Ares.Tags
             }
 
             // Tags table
-            using (SQLiteCommand command = new SQLiteCommand(
+            using (DbCommand command = DbUtils.CreateDbCommand(
                 String.Format(createTableCommand, Schema.TAGS_TABLE)
                 + String.Format(idColumnCommand, Schema.ID_COLUMN) + ", "
                 + String.Format(idRefColumnCommand, Schema.CATEGORY_COLUMN, Schema.CATEGORIES_TABLE, Schema.ID_COLUMN)
@@ -303,7 +303,7 @@ namespace Ares.Tags
             }
 
             // TagNames table
-            using (SQLiteCommand command = new SQLiteCommand(
+            using (DbCommand command = DbUtils.CreateDbCommand(
                 String.Format(createTableCommand, Schema.TAGNAMES_TABLE)
                 + String.Format(idColumnCommand, Schema.ID_COLUMN) + ", "
                 + String.Format(idRefColumnCommand, Schema.LANGUAGE_COLUMN, Schema.LANGUAGE_TABLE, Schema.ID_COLUMN) + ", "
@@ -315,7 +315,7 @@ namespace Ares.Tags
             }
 
             // Files table
-            using (SQLiteCommand command = new SQLiteCommand(
+            using (DbCommand command = DbUtils.CreateDbCommand(
                 String.Format(createTableCommand, Schema.FILES_TABLE)
                 + String.Format(idColumnCommand, Schema.ID_COLUMN) + ", "
                 + String.Format("{0} VARCHAR(500) NOT NULL", Schema.PATH_COLUMN) + ", "
@@ -329,7 +329,7 @@ namespace Ares.Tags
             }
 
             // FileTags table
-            using (SQLiteCommand command = new SQLiteCommand(
+            using (DbCommand command = DbUtils.CreateDbCommand(
                 String.Format(createTableCommand, Schema.FILETAGS_TABLE)
                 + String.Format(idColumnCommand, Schema.ID_COLUMN) + ", "
                 + String.Format(idRefColumnCommand, Schema.FILE_COLUMN, Schema.FILES_TABLE, Schema.ID_COLUMN) + ", "
@@ -341,7 +341,7 @@ namespace Ares.Tags
             }
 
             // RemovedTags table
-            using (SQLiteCommand command = new SQLiteCommand(
+            using (DbCommand command = DbUtils.CreateDbCommand(
                 String.Format(createTableCommand, Schema.REMOVEDTAGS_TABLE)
                 + String.Format(idColumnCommand, Schema.ID_COLUMN) + ", "
                 + String.Format(idRefColumnCommand, Schema.FILE_COLUMN, Schema.FILES_TABLE, Schema.ID_COLUMN) + ", "
@@ -353,7 +353,7 @@ namespace Ares.Tags
             }
 
             // FileExport table (see export for explanation)
-            using (SQLiteCommand command = new SQLiteCommand(
+            using (DbCommand command = DbUtils.CreateDbCommand(
                 String.Format(createTableCommand, Schema.FILEEXPORT_TABLE)
                 + String.Format(idColumnCommand, Schema.ID_COLUMN) + ", "
                 + String.Format(idRefColumnCommand, Schema.FILE_COLUMN, Schema.FILES_TABLE, Schema.ID_COLUMN) + ", "
@@ -364,7 +364,7 @@ namespace Ares.Tags
             }
 
             // TagExport table (see export for explanation)
-            using (SQLiteCommand command = new SQLiteCommand(
+            using (DbCommand command = DbUtils.CreateDbCommand(
                 String.Format(createTableCommand, Schema.TAGEXPORT_TABLE)
                 + String.Format(idColumnCommand, Schema.ID_COLUMN) + ", "
                 + String.Format(idRefColumnCommand, Schema.TAG_COLUMN, Schema.TAGS_TABLE, Schema.ID_COLUMN) 
@@ -374,7 +374,7 @@ namespace Ares.Tags
             }
         }
 
-        private void InsertDefaultValues(SQLiteTransaction transaction)
+        private void InsertDefaultValues(DbTransaction transaction)
         {
             // Languages
             TagsTranslations translations = new TagsTranslations(m_Connection);
@@ -446,7 +446,7 @@ namespace Ares.Tags
 
         private int AddDefaultCategory(String en, String de, String fr, String es, 
             LanguageWriting enWrite, LanguageWriting deWrite, LanguageWriting frWrite, LanguageWriting esWrite,
-            SQLiteTransaction transaction)
+            DbTransaction transaction)
         {
             int id = enWrite.DoAddCategory(en, transaction);
             deWrite.DoSetCategoryName(id, de, transaction);
@@ -457,7 +457,7 @@ namespace Ares.Tags
 
         private void AddDefaultTag(int category, String en, String de, String fr, String es,
             LanguageWriting enWrite, LanguageWriting deWrite, LanguageWriting frWrite, LanguageWriting esWrite,
-            SQLiteTransaction transaction)
+            DbTransaction transaction)
         {
             int id = enWrite.DoAddTag(category, en, transaction);
             deWrite.DoSetTagName(id, de, transaction);
@@ -467,6 +467,6 @@ namespace Ares.Tags
 
         #endregion
 
-        private SQLiteConnection m_Connection;
+        private DbConnection m_Connection;
     }
 }

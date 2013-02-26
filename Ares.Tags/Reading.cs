@@ -23,19 +23,20 @@ using System.Linq;
 using System.Text;
 
 using System.Data.SQLite;
+using System.Data.Common;
 
 namespace Ares.Tags
 {
     class TagsDBReading : ITagsDBRead, IConnectionClient
     {
-        private SQLiteConnection m_Connection;
+        private DbConnection m_Connection;
 
-        internal TagsDBReading(SQLiteConnection connection)
+        internal TagsDBReading(DbConnection connection)
         {
             m_Connection = connection;
         }
 
-        public void ConnectionChanged(SQLiteConnection connection)
+        public void ConnectionChanged(DbConnection connection)
         {
             m_Connection = connection;
         }
@@ -54,7 +55,7 @@ namespace Ares.Tags
             {
                 throw new TagsDbException(ex.Message, ex);
             }
-            catch (SQLiteException ex)
+            catch (DbException ex)
             {
                 throw new TagsDbException(ex.Message, ex);
             }
@@ -94,7 +95,7 @@ namespace Ares.Tags
             {
                 throw new TagsDbException(ex.Message, ex);
             }
-            catch (SQLiteException ex)
+            catch (DbException ex)
             {
                 throw new TagsDbException(ex.Message, ex);
             }
@@ -114,7 +115,7 @@ namespace Ares.Tags
             {
                 throw new TagsDbException(ex.Message, ex);
             }
-            catch (SQLiteException ex)
+            catch (DbException ex)
             {
                 throw new TagsDbException(ex.Message, ex);
             }
@@ -134,7 +135,7 @@ namespace Ares.Tags
             {
                 throw new TagsDbException(ex.Message, ex);
             }
-            catch (SQLiteException ex)
+            catch (DbException ex)
             {
                 throw new TagsDbException(ex.Message, ex);
             }
@@ -157,9 +158,9 @@ namespace Ares.Tags
                 ++i;
             }
             queryString += ")";
-            using (SQLiteCommand command = new SQLiteCommand(queryString, m_Connection))
+            using (DbCommand command = DbUtils.CreateDbCommand(queryString, m_Connection))
             {
-                using (SQLiteDataReader reader = command.ExecuteReader())
+                using (DbDataReader reader = command.ExecuteReader())
                 {
                     HashSet<String> result = new HashSet<string>();
                     while (reader.Read())
@@ -178,13 +179,13 @@ namespace Ares.Tags
                 return result;
             String queryString = String.Format("SELECT {0}, {1}, {2}, {3}, {4} FROM {5} WHERE {6}=@Path",
                 Schema.ID_COLUMN, Schema.ARTIST_COLUMN, Schema.ALBUM_COLUMN, Schema.TITLE_COLUMN, Schema.ACOUST_ID_COLUMN, Schema.FILES_TABLE, Schema.PATH_COLUMN);
-            using (SQLiteCommand queryCommand = new SQLiteCommand(queryString, m_Connection))
+            using (DbCommand queryCommand = DbUtils.CreateDbCommand(queryString, m_Connection))
             {
-                SQLiteParameter param = queryCommand.Parameters.Add("@Path", System.Data.DbType.String);
+                DbParameter param = queryCommand.AddParameter("@Path", System.Data.DbType.String);
                 foreach (String filePath in filePaths)
                 {
                     param.Value = filePath;
-                    using (SQLiteDataReader reader = queryCommand.ExecuteReader())
+                    using (DbDataReader reader = queryCommand.ExecuteReader())
                     {
                         if (reader.Read())
                         {
@@ -231,12 +232,12 @@ namespace Ares.Tags
             // finally get information for the file
             String getInfoQuery = String.Format("SELECT {5}.{0}, {5}.{1}, {5}.{2}, {5}.{3}, {5}.{4} FROM {5}, ({6}) AS Inner WHERE {5}.{0}=Inner.FileId AND ({7}) > ({8}) ORDER BY {5}.{1}, {5}.{2}, {5}.{3}",
                 Schema.ID_COLUMN, Schema.ARTIST_COLUMN, Schema.ALBUM_COLUMN, Schema.TITLE_COLUMN, Schema.ACOUST_ID_COLUMN, Schema.FILES_TABLE, findFilesQuery, countAddsQuery, countRemovesQuery);
-            using (SQLiteCommand getInfoCommand = new SQLiteCommand(getInfoQuery, m_Connection))
+            using (DbCommand getInfoCommand = DbUtils.CreateDbCommand(getInfoQuery, m_Connection))
             {
-                getInfoCommand.Parameters.AddWithValue("@TagId", tagId);
-                getInfoCommand.Parameters.AddWithValue("@TagId2", tagId);
-                getInfoCommand.Parameters.AddWithValue("@TagId3", tagId);
-                using (SQLiteDataReader reader = getInfoCommand.ExecuteReader())
+                getInfoCommand.AddParameterWithValue("@TagId", tagId);
+                getInfoCommand.AddParameterWithValue("@TagId2", tagId);
+                getInfoCommand.AddParameterWithValue("@TagId3", tagId);
+                using (DbDataReader reader = getInfoCommand.ExecuteReader())
                 {
                     while (reader.Read())
                     {

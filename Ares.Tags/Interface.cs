@@ -125,6 +125,31 @@ namespace Ares.Tags
         public List<TagsForFileExchange> RemovedTags { get; set; }
     }
 
+    public class TagsImportedFileData
+    {
+        public List<LanguageExchange> Languages { get; set; }
+        public List<CategoryExchange> Categories { get; set; }
+        public List<TagExchange> Tags { get; set; }
+        public List<FileExchange> Files { get; set; }
+        public List<TagsForFileExchange> TagsForFiles { get; set; }
+        public List<TagsForFileExchange> RemovedTags { get; set; }
+
+        public TagsExportedData MakeTagsExportedData()
+        {
+            var converted = new TagsExportedData { Languages = this.Languages, Categories = this.Categories, Tags = this.Tags, TagsForFiles = this.TagsForFiles, RemovedTags = this.RemovedTags };
+            if (Files != null)
+            {
+                var files = new List<FileIdentification>();
+                foreach (FileExchange file in Files)
+                {
+                    files.Add(file);
+                }
+                converted.Files = files;
+            }
+            return converted;
+        }
+    }
+
     #endregion
 
     /// <summary>

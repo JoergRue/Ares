@@ -23,7 +23,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 
-using System.Data.SQLite;
+using System.Data.Common;
 
 namespace Ares.Tags
 {
@@ -55,7 +55,7 @@ namespace Ares.Tags
             {
                 throw new TagsDbException(ex.Message, ex);
             }
-            catch (SQLiteException ex)
+            catch (DbException ex)
             {
                 throw new TagsDbException(ex.Message, ex);
             }
@@ -79,7 +79,7 @@ namespace Ares.Tags
             {
                 throw new TagsDbException(ex.Message, ex);
             }
-            catch (SQLiteException ex)
+            catch (DbException ex)
             {
                 throw new TagsDbException(ex.Message, ex);
             }
@@ -102,7 +102,7 @@ namespace Ares.Tags
             {
                 throw new TagsDbException(ex.Message, ex);
             }
-            catch (SQLiteException ex)
+            catch (DbException ex)
             {
                 throw new TagsDbException(ex.Message, ex);
             }
@@ -125,10 +125,10 @@ namespace Ares.Tags
 
         private static readonly String GET_TRANSLATION_INFO = "SELECT {1}, {2} FROM {0} WHERE {0}.{3} = {4}";
 
-        private static SQLiteCommand CreateTranslationInfosCommand(String translationTable, String mainIdColumn, String languageIdColumn, String mainIdParam, 
-            SQLiteConnection connection, SQLiteTransaction transaction)
+        private static DbCommand CreateTranslationInfosCommand(String translationTable, String mainIdColumn, String languageIdColumn, String mainIdParam, 
+            DbConnection connection, DbTransaction transaction)
         {
-            return new SQLiteCommand(String.Format(GET_TRANSLATION_INFO, translationTable, languageIdColumn, Schema.NAME_COLUMN, mainIdColumn, mainIdParam),
+            return DbUtils.CreateDbCommand(String.Format(GET_TRANSLATION_INFO, translationTable, languageIdColumn, Schema.NAME_COLUMN, mainIdColumn, mainIdParam),
                 connection, transaction);
         }
 
@@ -142,14 +142,14 @@ namespace Ares.Tags
             // iterate over each file.
             // Use another temporary table which holds all tags which are either assigned
             // or removed from any of the files.
-            using (SQLiteTransaction transaction = m_Connection.BeginTransaction())
+            using (DbTransaction transaction = m_Connection.BeginTransaction())
             {
                 // no need to clear export tables: transaction will always be rolled back
                 String moveCommand = String.Format("INSERT INTO {0} ({1}, {2}) SELECT {3}, {4} FROM {5} WHERE {4} = @FilePath",
                     Schema.FILEEXPORT_TABLE, Schema.FILE_COLUMN, Schema.PATH_COLUMN, Schema.ID_COLUMN, Schema.PATH_COLUMN, Schema.FILES_TABLE, Schema.PATH_COLUMN);
-                using (SQLiteCommand command = new SQLiteCommand(moveCommand, m_Connection, transaction))
+                using (DbCommand command = DbUtils.CreateDbCommand(moveCommand, m_Connection, transaction))
                 {
-                    SQLiteParameter param = command.Parameters.Add("@FilePath", System.Data.DbType.String);
+                    DbParameter param = command.AddParameter("@FilePath", System.Data.DbType.String);
                     foreach (String file in filePaths)
                     {
                         param.Value = file;
@@ -168,9 +168,9 @@ namespace Ares.Tags
                 }
                 fileTagsInfo += String.Format(" ORDER BY {0}.{1}", Schema.FILETAGS_TABLE, Schema.FILE_COLUMN);
                 List<TagsForFileExchange> tagsForFileExchange = new List<TagsForFileExchange>();
-                using (SQLiteCommand fileTagsCommand = new SQLiteCommand(fileTagsInfo, m_Connection, transaction))
+                using (DbCommand fileTagsCommand = DbUtils.CreateDbCommand(fileTagsInfo, m_Connection, transaction))
                 {
-                    using (SQLiteDataReader reader = fileTagsCommand.ExecuteReader())
+                    using (DbDataReader reader = fileTagsCommand.ExecuteReader())
                     {
                         TagsForFileExchange tagsForFiles = null;
                         while (reader.Read())
@@ -196,9 +196,9 @@ namespace Ares.Tags
                 }
                 removedTagsInfo += String.Format(" ORDER BY {0}.{1}", Schema.REMOVEDTAGS_TABLE, Schema.FILE_COLUMN);
                 List<TagsForFileExchange> removedTags = new List<TagsForFileExchange>();
-                using (SQLiteCommand removedTagsCommand = new SQLiteCommand(removedTagsInfo, m_Connection, transaction))
+                using (DbCommand removedTagsCommand = DbUtils.CreateDbCommand(removedTagsInfo, m_Connection, transaction))
                 {
-                    using (SQLiteDataReader reader = removedTagsCommand.ExecuteReader())
+                    using (DbDataReader reader = removedTagsCommand.ExecuteReader())
                     {
                         TagsForFileExchange tagsForFiles = null;
                         while (reader.Read())
@@ -223,7 +223,7 @@ namespace Ares.Tags
             return data;
         }
 
-        private void FindTagsForExport(SQLiteTransaction transaction, bool excludeGlobalDBData)
+        private void FindTagsForExport(DbTransaction transaction, bool excludeGlobalDBData)
         {
             String moveCommand2 = String.Format("INSERT INTO {0} ({2}) SELECT DISTINCT {3}.{4} FROM {3},{5},{6} WHERE {3}.{4}={5}.{7} AND {5}.{8}={6}.{9}",
                 Schema.TAGEXPORT_TABLE, Schema.ID_COLUMN, Schema.TAG_COLUMN, Schema.TAGS_TABLE, Schema.ID_COLUMN,
@@ -232,7 +232,7 @@ namespace Ares.Tags
             {
                 moveCommand2 += String.Format(" AND {0}.{1}!='{2}'", Schema.FILETAGS_TABLE, Schema.USER_COLUMN, Schema.GLOBAL_DB_USER);
             }
-            using (SQLiteCommand command = new SQLiteCommand(moveCommand2, m_Connection, transaction))
+            using (DbCommand command = DbUtils.CreateDbCommand(moveCommand2, m_Connection, transaction))
             {
                 command.ExecuteNonQuery();
             }
@@ -244,7 +244,7 @@ namespace Ares.Tags
             {
                 moveCommand3 += String.Format(" AND {0}.{1}!='{2}'", Schema.REMOVEDTAGS_TABLE, Schema.USER_COLUMN, Schema.GLOBAL_DB_USER);
             }
-            using (SQLiteCommand command = new SQLiteCommand(moveCommand3, m_Connection, transaction))
+            using (DbCommand command = DbUtils.CreateDbCommand(moveCommand3, m_Connection, transaction))
             {
                 command.ExecuteNonQuery();
             }
@@ -254,7 +254,7 @@ namespace Ares.Tags
         {
             TagsExportedData data = new TagsExportedData();
 
-            using (SQLiteTransaction transaction = m_Connection.BeginTransaction())
+            using (DbTransaction transaction = m_Connection.BeginTransaction())
             {
                 Dictionary<long, long> fileIdMap = new Dictionary<long, long>();
 
@@ -264,9 +264,9 @@ namespace Ares.Tags
 
                 using (FileFinder finder = new FileFinder(m_Connection, transaction))
                 {
-                    using (SQLiteCommand moveCmd = new SQLiteCommand(moveCommand, m_Connection, transaction))
+                    using (DbCommand moveCmd = DbUtils.CreateDbCommand(moveCommand, m_Connection, transaction))
                     {
-                        SQLiteParameter moveParam = moveCmd.Parameters.Add("@FileId", System.Data.DbType.Int64);
+                        DbParameter moveParam = moveCmd.AddParameter("@FileId", System.Data.DbType.Int64);
 
                         foreach (FileIdentification file in files)
                         {
@@ -295,18 +295,18 @@ namespace Ares.Tags
                     + countAddsQuery + ") > (" + countRemovesQuery + ")", 
                     Schema.TAGEXPORT_TABLE, Schema.TAG_COLUMN, Schema.FILETAGS_TABLE, Schema.FILE_COLUMN, Schema.TAG_COLUMN);
                 List<TagsForFileExchange> tagsForFileExchange = new List<TagsForFileExchange>();
-                using (SQLiteCommand fileTagsCommand = new SQLiteCommand(fileTagsInfo, m_Connection, transaction))
+                using (DbCommand fileTagsCommand = DbUtils.CreateDbCommand(fileTagsInfo, m_Connection, transaction))
                 {
-                    SQLiteParameter fileParam1 = fileTagsCommand.Parameters.Add("@FileId1", System.Data.DbType.Int64);
-                    SQLiteParameter fileParam2 = fileTagsCommand.Parameters.Add("@FileId2", System.Data.DbType.Int64);
-                    SQLiteParameter fileParam3 = fileTagsCommand.Parameters.Add("@FileId3", System.Data.DbType.Int64);
+                    DbParameter fileParam1 = fileTagsCommand.AddParameter("@FileId1", System.Data.DbType.Int64);
+                    DbParameter fileParam2 = fileTagsCommand.AddParameter("@FileId2", System.Data.DbType.Int64);
+                    DbParameter fileParam3 = fileTagsCommand.AddParameter("@FileId3", System.Data.DbType.Int64);
                     foreach (var entry in fileIdMap)
                     {
                         fileParam1.Value = entry.Key;
                         fileParam2.Value = entry.Key;
                         fileParam3.Value = entry.Key;
                         TagsForFileExchange tagsForFile = new TagsForFileExchange() { FileId = entry.Value, TagIds = new List<long>() };
-                        using (SQLiteDataReader reader = fileTagsCommand.ExecuteReader())
+                        using (DbDataReader reader = fileTagsCommand.ExecuteReader())
                         {
                             while (reader.Read())
                             {
@@ -324,18 +324,18 @@ namespace Ares.Tags
                     + countAddsQuery + ") < (" + countRemovesQuery + ")",
                     Schema.TAGEXPORT_TABLE, Schema.TAG_COLUMN, Schema.REMOVEDTAGS_TABLE, Schema.FILE_COLUMN, Schema.TAG_COLUMN);
                 List<TagsForFileExchange> removedTags = new List<TagsForFileExchange>();
-                using (SQLiteCommand fileTagsCommand = new SQLiteCommand(removedTagsInfo, m_Connection, transaction))
+                using (DbCommand fileTagsCommand = DbUtils.CreateDbCommand(removedTagsInfo, m_Connection, transaction))
                 {
-                    SQLiteParameter fileParam1 = fileTagsCommand.Parameters.Add("@FileId1", System.Data.DbType.Int64);
-                    SQLiteParameter fileParam2 = fileTagsCommand.Parameters.Add("@FileId2", System.Data.DbType.Int64);
-                    SQLiteParameter fileParam3 = fileTagsCommand.Parameters.Add("@FileId3", System.Data.DbType.Int64);
+                    DbParameter fileParam1 = fileTagsCommand.AddParameter("@FileId1", System.Data.DbType.Int64);
+                    DbParameter fileParam2 = fileTagsCommand.AddParameter("@FileId2", System.Data.DbType.Int64);
+                    DbParameter fileParam3 = fileTagsCommand.AddParameter("@FileId3", System.Data.DbType.Int64);
                     foreach (var entry in fileIdMap)
                     {
                         fileParam1.Value = entry.Key;
                         fileParam2.Value = entry.Key;
                         fileParam3.Value = entry.Key;
                         TagsForFileExchange tagsForFile = new TagsForFileExchange() { FileId = entry.Value, TagIds = new List<long>() };
-                        using (SQLiteDataReader reader = fileTagsCommand.ExecuteReader())
+                        using (DbDataReader reader = fileTagsCommand.ExecuteReader())
                         {
                             while (reader.Read())
                             {
@@ -357,24 +357,24 @@ namespace Ares.Tags
 
         private class FileFinder : IDisposable
         {
-            private SQLiteCommand queryByAcoustIdCmd;
-            private SQLiteCommand queryByArtistAndTitleCmd;
-            private SQLiteParameter acoustIdParam;
-            private SQLiteParameter artistParam;
-            private SQLiteParameter titleParam;
+            private DbCommand queryByAcoustIdCmd;
+            private DbCommand queryByArtistAndTitleCmd;
+            private DbParameter acoustIdParam;
+            private DbParameter artistParam;
+            private DbParameter titleParam;
 
             private bool m_Disposed = false;
 
-            public FileFinder(SQLiteConnection connection, SQLiteTransaction transaction)
+            public FileFinder(DbConnection connection, DbTransaction transaction)
             {
                 String queryByAcoustId = String.Format("SELECT {0} FROM {1} WHERE {2}=@AcoustId", Schema.ID_COLUMN, Schema.FILES_TABLE, Schema.ACOUST_ID_COLUMN);
                 String queryByArtistAndTitle = String.Format("SELECT {0} FROM {1} WHERE {2}=@Artist AND {3}=@Title",
                     Schema.ID_COLUMN, Schema.FILES_TABLE, Schema.ARTIST_COLUMN, Schema.TITLE_COLUMN);
-                queryByAcoustIdCmd = new SQLiteCommand(queryByAcoustId, connection, transaction);
-                queryByArtistAndTitleCmd = new SQLiteCommand(queryByArtistAndTitle, connection, transaction);
-                acoustIdParam = queryByAcoustIdCmd.Parameters.Add("@AcoustId", System.Data.DbType.String);
-                artistParam = queryByArtistAndTitleCmd.Parameters.Add("@Artist", System.Data.DbType.String);
-                titleParam = queryByArtistAndTitleCmd.Parameters.Add("@Title", System.Data.DbType.String);
+                queryByAcoustIdCmd = DbUtils.CreateDbCommand(queryByAcoustId, connection, transaction);
+                queryByArtistAndTitleCmd = DbUtils.CreateDbCommand(queryByArtistAndTitle, connection, transaction);
+                acoustIdParam = queryByAcoustIdCmd.AddParameter("@AcoustId", System.Data.DbType.String);
+                artistParam = queryByArtistAndTitleCmd.AddParameter("@Artist", System.Data.DbType.String);
+                titleParam = queryByArtistAndTitleCmd.AddParameter("@Title", System.Data.DbType.String);
             }
 
             public void Dispose()
@@ -414,16 +414,16 @@ namespace Ares.Tags
             }
         }
 
-        private void FillExportedData(TagsExportedData data, SQLiteTransaction transaction, Dictionary<long, long> fileIdMap, bool includePath)
+        private void FillExportedData(TagsExportedData data, DbTransaction transaction, Dictionary<long, long> fileIdMap, bool includePath)
         {
             // file information
             String fileInfo = String.Format("SELECT {6}.{0}, {6}.{1}, {6}.{2}, {6}.{3}, {6}.{4}, {6}.{5} FROM {6},{7} WHERE {6}.{0}={7}.{8}",
                 Schema.ID_COLUMN, Schema.PATH_COLUMN, Schema.ARTIST_COLUMN, Schema.ALBUM_COLUMN, Schema.TITLE_COLUMN, Schema.ACOUST_ID_COLUMN,
                 Schema.FILES_TABLE, Schema.FILEEXPORT_TABLE, Schema.FILE_COLUMN);
             List<FileIdentification> fileExchange = new List<FileIdentification>();
-            using (SQLiteCommand fileCommand = new SQLiteCommand(fileInfo, m_Connection, transaction))
+            using (DbCommand fileCommand = DbUtils.CreateDbCommand(fileInfo, m_Connection, transaction))
             {
-                using (SQLiteDataReader reader = fileCommand.ExecuteReader())
+                using (DbDataReader reader = fileCommand.ExecuteReader())
                 {
                     while (reader.Read())
                     {
@@ -464,19 +464,19 @@ namespace Ares.Tags
             String tagsInfo = String.Format("SELECT DISTINCT {0}.{1}, {0}.{2} FROM {0}, {3} WHERE {0}.{1} = {3}.{4}",
                 Schema.TAGS_TABLE, Schema.ID_COLUMN, Schema.CATEGORY_COLUMN, Schema.TAGEXPORT_TABLE, Schema.TAG_COLUMN);
             List<TagExchange> tags = new List<TagExchange>();
-            using (SQLiteCommand tagsInfoCommand = new SQLiteCommand(tagsInfo, m_Connection, transaction))
+            using (DbCommand tagsInfoCommand = DbUtils.CreateDbCommand(tagsInfo, m_Connection, transaction))
             {
-                using (SQLiteDataReader reader = tagsInfoCommand.ExecuteReader())
+                using (DbDataReader reader = tagsInfoCommand.ExecuteReader())
                 {
-                    using (SQLiteCommand translationInfoCommand = CreateTranslationInfosCommand(Schema.TAGNAMES_TABLE, Schema.TAG_COLUMN, Schema.LANGUAGE_COLUMN, "@TagId", m_Connection, transaction))
+                    using (DbCommand translationInfoCommand = CreateTranslationInfosCommand(Schema.TAGNAMES_TABLE, Schema.TAG_COLUMN, Schema.LANGUAGE_COLUMN, "@TagId", m_Connection, transaction))
                     {
-                        SQLiteParameter param = translationInfoCommand.Parameters.Add("@TagId", System.Data.DbType.Int64);
+                        DbParameter param = translationInfoCommand.AddParameter("@TagId", System.Data.DbType.Int64);
                         while (reader.Read())
                         {
                             long tagId = reader.GetInt64(0);
                             param.Value = tagId;
                             List<TranslationExchange> translations = new List<TranslationExchange>();
-                            using (SQLiteDataReader reader2 = translationInfoCommand.ExecuteReader())
+                            using (DbDataReader reader2 = translationInfoCommand.ExecuteReader())
                             {
                                 while (reader2.Read())
                                 {
@@ -494,19 +494,19 @@ namespace Ares.Tags
             String categoryInfo = String.Format("SELECT DISTINCT {0}.{2} FROM {0}, {3} WHERE {0}.{1} = {3}.{4}",
                 Schema.TAGS_TABLE, Schema.ID_COLUMN, Schema.CATEGORY_COLUMN, Schema.TAGEXPORT_TABLE, Schema.TAG_COLUMN);
             List<CategoryExchange> categories = new List<CategoryExchange>();
-            using (SQLiteCommand categoryInfoCommand = new SQLiteCommand(categoryInfo, m_Connection, transaction))
+            using (DbCommand categoryInfoCommand = DbUtils.CreateDbCommand(categoryInfo, m_Connection, transaction))
             {
-                using (SQLiteDataReader reader = categoryInfoCommand.ExecuteReader())
+                using (DbDataReader reader = categoryInfoCommand.ExecuteReader())
                 {
-                    using (SQLiteCommand translationInfoCommand = CreateTranslationInfosCommand(Schema.CATEGORYNAMES_TABLE, Schema.CATEGORY_COLUMN, Schema.LANGUAGE_COLUMN, "@CategoryId", m_Connection, transaction))
+                    using (DbCommand translationInfoCommand = CreateTranslationInfosCommand(Schema.CATEGORYNAMES_TABLE, Schema.CATEGORY_COLUMN, Schema.LANGUAGE_COLUMN, "@CategoryId", m_Connection, transaction))
                     {
-                        SQLiteParameter param = translationInfoCommand.Parameters.Add("@CategoryId", System.Data.DbType.Int64);
+                        DbParameter param = translationInfoCommand.AddParameter("@CategoryId", System.Data.DbType.Int64);
                         while (reader.Read())
                         {
                             long categoryId = reader.GetInt64(0);
                             param.Value = categoryId;
                             List<TranslationExchange> translations = new List<TranslationExchange>();
-                            using (SQLiteDataReader reader2 = translationInfoCommand.ExecuteReader())
+                            using (DbDataReader reader2 = translationInfoCommand.ExecuteReader())
                             {
                                 while (reader2.Read())
                                 {
@@ -524,9 +524,9 @@ namespace Ares.Tags
             String languageInfo = String.Format("SELECT {0}.{1}, {0}.{2}, {3}.{4}, {3}.{5} FROM {0}, {3} WHERE {0}.{1} = {3}.{6} ORDER BY {0}.{1}",
                 Schema.LANGUAGE_TABLE, Schema.ID_COLUMN, Schema.LC_COLUMN, Schema.LANGUAGENAMES_TABLE, Schema.LANGUAGE_OF_NAME_COLUMN, Schema.NAME_COLUMN, Schema.NAMED_LANGUAGE_COLUMN);
             List<LanguageExchange> languages = new List<LanguageExchange>();
-            using (SQLiteCommand languageInfoCommand = new SQLiteCommand(languageInfo, m_Connection, transaction))
+            using (DbCommand languageInfoCommand = DbUtils.CreateDbCommand(languageInfo, m_Connection, transaction))
             {
-                using (SQLiteDataReader reader = languageInfoCommand.ExecuteReader())
+                using (DbDataReader reader = languageInfoCommand.ExecuteReader())
                 {
                     LanguageExchange language = null;
                     while (reader.Read())
@@ -575,7 +575,7 @@ namespace Ares.Tags
             {
                 throw new TagsDbException(ex.Message, ex);
             }
-            catch (SQLiteException ex)
+            catch (DbException ex)
             {
                 throw new TagsDbException(ex.Message, ex);
             }
@@ -602,7 +602,7 @@ namespace Ares.Tags
             {
                 throw new TagsDbException(ex.Message, ex);
             }
-            catch (SQLiteException ex)
+            catch (DbException ex)
             {
                 throw new TagsDbException(ex.Message, ex);
             }
@@ -630,7 +630,7 @@ namespace Ares.Tags
             {
                 throw new TagsDbException(ex.Message, ex);
             }
-            catch (SQLiteException ex)
+            catch (DbException ex)
             {
                 throw new TagsDbException(ex.Message, ex);
             }
@@ -646,7 +646,8 @@ namespace Ares.Tags
         {
             using (FileStream stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
-                return ServiceStack.Text.TypeSerializer.DeserializeFromStream<TagsExportedData>(stream);
+                var importedData = ServiceStack.Text.TypeSerializer.DeserializeFromStream<TagsImportedFileData>(stream);
+                return importedData != null ? importedData.MakeTagsExportedData() : null;
             }
         }
 
@@ -654,7 +655,7 @@ namespace Ares.Tags
         {
             if (data == null)
                 return;
-            using (SQLiteTransaction transaction = m_Connection.BeginTransaction())
+            using (DbTransaction transaction = m_Connection.BeginTransaction())
             {
                 if (data.Languages == null)
                     return;
@@ -672,7 +673,7 @@ namespace Ares.Tags
         {
             if (data == null)
                 return;
-            using (SQLiteTransaction transaction = m_Connection.BeginTransaction())
+            using (DbTransaction transaction = m_Connection.BeginTransaction())
             {
                 if (data.Languages == null)
                     return;
@@ -690,15 +691,15 @@ namespace Ares.Tags
         private abstract class ImportHelperBase
         {
             protected SQLiteTagsDB m_TagsDb;
-            protected SQLiteConnection m_Connection;
+            protected DbConnection m_Connection;
             protected TextWriter m_LogStream;
-            protected SQLiteTransaction m_Transaction;
+            protected DbTransaction m_Transaction;
             protected Dictionary<long, long> m_LanguageMap = new Dictionary<long, long>();
             protected Dictionary<long, long> m_CategoriesMap = new Dictionary<long, long>();
             protected Dictionary<long, long> m_TagsMap = new Dictionary<long, long>();
             protected Dictionary<long, long> m_FilesMap = new Dictionary<long, long>();
 
-            protected ImportHelperBase(SQLiteTagsDB tagsDB, SQLiteConnection connection, SQLiteTransaction transaction, TextWriter logStream)
+            protected ImportHelperBase(SQLiteTagsDB tagsDB, DbConnection connection, DbTransaction transaction, TextWriter logStream)
             {
                 m_TagsDb = tagsDB;
                 m_LogStream = logStream;
@@ -799,10 +800,10 @@ namespace Ares.Tags
                 HashSet<long> existingIds = new HashSet<long>();
                 String nameQueryString = String.Format("SELECT {0} FROM {1} WHERE {2}=@LangId AND {3}=@Name",
                     Schema.CATEGORY_COLUMN, Schema.CATEGORYNAMES_TABLE, Schema.LANGUAGE_COLUMN, Schema.NAME_COLUMN);
-                using (SQLiteCommand command = new SQLiteCommand(nameQueryString, m_Connection, m_Transaction))
+                using (DbCommand command = DbUtils.CreateDbCommand(nameQueryString, m_Connection, m_Transaction))
                 {
-                    SQLiteParameter langParam = command.Parameters.Add("@LangId", System.Data.DbType.Int64);
-                    SQLiteParameter nameParam = command.Parameters.Add("@Name", System.Data.DbType.String);
+                    DbParameter langParam = command.AddParameter("@LangId", System.Data.DbType.Int64);
+                    DbParameter nameParam = command.AddParameter("@Name", System.Data.DbType.String);
                     if (category.Names != null)
                     {
                         foreach (TranslationExchange translation in category.Names)
@@ -906,10 +907,10 @@ namespace Ares.Tags
                 Dictionary<long, long> existingIds = new Dictionary<long, long>();
                 String nameQueryString = String.Format("SELECT {0}.{1}, {0}.{2} FROM {0}, {3} WHERE {0}.{1}={3}.{4} AND {3}.{5}=@LangId AND {3}.{6}=@Name",
                     Schema.TAGS_TABLE, Schema.ID_COLUMN, Schema.CATEGORY_COLUMN, Schema.TAGNAMES_TABLE, Schema.TAG_COLUMN, Schema.LANGUAGE_COLUMN, Schema.NAME_COLUMN);
-                using (SQLiteCommand command = new SQLiteCommand(nameQueryString, m_Connection, m_Transaction))
+                using (DbCommand command = DbUtils.CreateDbCommand(nameQueryString, m_Connection, m_Transaction))
                 {
-                    SQLiteParameter langParam = command.Parameters.Add("@LangId", System.Data.DbType.Int64);
-                    SQLiteParameter nameParam = command.Parameters.Add("@Name", System.Data.DbType.String);
+                    DbParameter langParam = command.AddParameter("@LangId", System.Data.DbType.Int64);
+                    DbParameter nameParam = command.AddParameter("@Name", System.Data.DbType.String);
                     if (tag.Names != null)
                     {
                         foreach (TranslationExchange translation in tag.Names)
@@ -923,7 +924,7 @@ namespace Ares.Tags
                             {
                                 langParam.Value = m_LanguageMap[translation.LanguageId];
                                 nameParam.Value = translation.Name;
-                                using (SQLiteDataReader reader = command.ExecuteReader())
+                                using (DbDataReader reader = command.ExecuteReader())
                                 {
                                     if (reader.Read())
                                     {
@@ -1045,19 +1046,19 @@ namespace Ares.Tags
 
                 using (FileFinder finder = new FileFinder(m_Connection, m_Transaction))
                 {
-                    using (SQLiteCommand command = new SQLiteCommand(fileQuery, m_Connection, m_Transaction),
-                           command3 = new SQLiteCommand(fileQueryById, m_Connection, m_Transaction),
-                           insertCommand = new SQLiteCommand(insertString, m_Connection, m_Transaction))
+                    using (DbCommand command = DbUtils.CreateDbCommand(fileQuery, m_Connection, m_Transaction),
+                           command3 = DbUtils.CreateDbCommand(fileQueryById, m_Connection, m_Transaction),
+                           insertCommand = DbUtils.CreateDbCommand(insertString, m_Connection, m_Transaction))
                     {
-                        SQLiteParameter param = command.Parameters.Add("@FilePath", System.Data.DbType.String);
-                        SQLiteParameter param2 = command.Parameters.Add("@AcoustId", System.Data.DbType.String);
-                        SQLiteParameter param3 = command.Parameters.Add("@Id", System.Data.DbType.Int64);
-                        insertCommand.Parameters.AddWithValue("@Id", DBNull.Value);
-                        SQLiteParameter pathInsertParam = insertCommand.Parameters.Add("@Path", System.Data.DbType.String);
-                        SQLiteParameter artistInsertParam = insertCommand.Parameters.Add("@Artist", System.Data.DbType.String);
-                        SQLiteParameter albumInsertParam = insertCommand.Parameters.Add("@Album", System.Data.DbType.String);
-                        SQLiteParameter titleInsertParam = insertCommand.Parameters.Add("@Title", System.Data.DbType.String);
-                        SQLiteParameter acoustIdInsertParam = insertCommand.Parameters.Add("@AcoustId", System.Data.DbType.String);
+                        DbParameter param = command.AddParameter("@FilePath", System.Data.DbType.String);
+                        DbParameter param2 = command.AddParameter("@AcoustId", System.Data.DbType.String);
+                        DbParameter param3 = command.AddParameter("@Id", System.Data.DbType.Int64);
+                        insertCommand.AddParameterWithValue("@Id", DBNull.Value);
+                        DbParameter pathInsertParam = insertCommand.AddParameter("@Path", System.Data.DbType.String);
+                        DbParameter artistInsertParam = insertCommand.AddParameter("@Artist", System.Data.DbType.String);
+                        DbParameter albumInsertParam = insertCommand.AddParameter("@Album", System.Data.DbType.String);
+                        DbParameter titleInsertParam = insertCommand.AddParameter("@Title", System.Data.DbType.String);
+                        DbParameter acoustIdInsertParam = insertCommand.AddParameter("@AcoustId", System.Data.DbType.String);
                         foreach (FileIdentification file in files)
                         {
                             FileExchange fileExchange = file as FileExchange;
@@ -1111,13 +1112,20 @@ namespace Ares.Tags
                                 titleInsertParam.Value = String.IsNullOrEmpty(file.Title) ? String.Empty : file.Title;
                                 acoustIdInsertParam.Value = String.IsNullOrEmpty(file.AcoustId) ? String.Empty : file.AcoustId;
                                 insertCommand.ExecuteNonQuery();
-                                long id = m_Connection.LastInsertRowId;
+                                long id = m_Connection.LastInsertRowId();
                                 m_FilesMap[file.Id] = id;
                                 m_LogStream.WriteLine(String.Format("Insert new file {0} with id {1} (imported id {2})", filePath, id, file.Id));
                             }
                             else
                             {
-                                m_LogStream.Write("WARNING: ignoring imported file {0}, acoust Id or artist / title not found in database", file.Id);
+                                if (AllowEmptyPathInserts)
+                                {
+                                    m_LogStream.WriteLine("WARNING: Ignoring imported file {0}, acoust Id or artist / title not found in database", file.Id);
+                                }
+                                else
+                                {
+                                    m_LogStream.WriteLine("WARNING: Ignoring file {0} with missing path", file.Id);
+                                }
                             }
                         }
                     }
@@ -1131,10 +1139,10 @@ namespace Ares.Tags
 
                 String query = String.Format("SELECT {0}, {1}, {2}, {3} FROM {4} WHERE {5}=@Id",
                     Schema.ARTIST_COLUMN, Schema.ALBUM_COLUMN, Schema.TITLE_COLUMN, Schema.ACOUST_ID_COLUMN, Schema.FILES_TABLE, Schema.ID_COLUMN);
-                using (SQLiteCommand queryCommand = new SQLiteCommand(query, m_Connection, m_Transaction))
+                using (DbCommand queryCommand = DbUtils.CreateDbCommand(query, m_Connection, m_Transaction))
                 {
-                    queryCommand.Parameters.AddWithValue("@Id", existingId);
-                    using (SQLiteDataReader reader = queryCommand.ExecuteReader())
+                    queryCommand.AddParameterWithValue("@Id", existingId);
+                    using (DbDataReader reader = queryCommand.ExecuteReader())
                     {
                         if (!reader.Read())
                         {
@@ -1181,13 +1189,13 @@ namespace Ares.Tags
 
                 String updateString = String.Format("UPDATE {0} SET {1}=@Artist, {2}=@Album, {3}=@Title, {4}=@AcoustId WHERE {5}=@Id",
                     Schema.FILES_TABLE, Schema.ARTIST_COLUMN, Schema.ALBUM_COLUMN, Schema.TITLE_COLUMN, Schema.ACOUST_ID_COLUMN);
-                using (SQLiteCommand command = new SQLiteCommand(updateString, m_Connection, m_Transaction))
+                using (DbCommand command = DbUtils.CreateDbCommand(updateString, m_Connection, m_Transaction))
                 {
-                    command.Parameters.AddWithValue("@Artist", newArtist);
-                    command.Parameters.AddWithValue("@Album", newAlbum);
-                    command.Parameters.AddWithValue("@Title", newTitle);
-                    command.Parameters.AddWithValue("@AcoustId", newAcoustId);
-                    command.Parameters.AddWithValue("@Id", existingId);
+                    command.AddParameterWithValue("@Artist", newArtist);
+                    command.AddParameterWithValue("@Album", newAlbum);
+                    command.AddParameterWithValue("@Title", newTitle);
+                    command.AddParameterWithValue("@AcoustId", newAcoustId);
+                    command.AddParameterWithValue("@Id", existingId);
                     command.ExecuteNonQuery();
                 }
             }
@@ -1240,7 +1248,7 @@ namespace Ares.Tags
 
         private class LocalDBImporter : ImportHelperBase
         {
-            public LocalDBImporter(SQLiteTagsDB tagsDB, SQLiteConnection connection, SQLiteTransaction transaction, TextWriter logStream)
+            public LocalDBImporter(SQLiteTagsDB tagsDB, DbConnection connection, DbTransaction transaction, TextWriter logStream)
                 : base(tagsDB, connection, transaction, logStream)
             {
             }
@@ -1263,31 +1271,31 @@ namespace Ares.Tags
                 String removeRemovedString = String.Format("DELETE FROM {0} WHERE {1}=@FileId AND {2}=@TagId", Schema.REMOVEDTAGS_TABLE, Schema.FILE_COLUMN, Schema.TAG_COLUMN);
                 String updateString = String.Format("UPDATE {0} SET {1}=@User WHERE {2}=@TagId AND {3}=@FileId", Schema.FILETAGS_TABLE, Schema.USER_COLUMN, Schema.TAG_COLUMN, Schema.FILE_COLUMN);
 
-                using (SQLiteCommand tagsQueryCommand = new SQLiteCommand(tagsQuery, m_Connection, m_Transaction),
-                       userQueryCommand = new SQLiteCommand(userQuery, m_Connection, m_Transaction),
-                       removedQueryCommand = new SQLiteCommand(removedQuery, m_Connection, m_Transaction),
-                       removeRemovedCommand = new SQLiteCommand(removeRemovedString, m_Connection, m_Transaction),
-                       updateCommand = new SQLiteCommand(updateString, m_Connection, m_Transaction),
-                       insertCommand = new SQLiteCommand(insertString, m_Connection, m_Transaction))
+                using (DbCommand tagsQueryCommand = DbUtils.CreateDbCommand(tagsQuery, m_Connection, m_Transaction),
+                       userQueryCommand = DbUtils.CreateDbCommand(userQuery, m_Connection, m_Transaction),
+                       removedQueryCommand = DbUtils.CreateDbCommand(removedQuery, m_Connection, m_Transaction),
+                       removeRemovedCommand = DbUtils.CreateDbCommand(removeRemovedString, m_Connection, m_Transaction),
+                       updateCommand = DbUtils.CreateDbCommand(updateString, m_Connection, m_Transaction),
+                       insertCommand = DbUtils.CreateDbCommand(insertString, m_Connection, m_Transaction))
                 {
-                    SQLiteParameter queryTagsFileParam = tagsQueryCommand.Parameters.Add("@FileId", System.Data.DbType.Int64);
+                    DbParameter queryTagsFileParam = tagsQueryCommand.AddParameter("@FileId", System.Data.DbType.Int64);
 
-                    SQLiteParameter queryUserFileParam = userQueryCommand.Parameters.Add("@FileId", System.Data.DbType.Int64);
-                    SQLiteParameter queryUserTagParam = userQueryCommand.Parameters.Add("@TagId", System.Data.DbType.Int64);
+                    DbParameter queryUserFileParam = userQueryCommand.AddParameter("@FileId", System.Data.DbType.Int64);
+                    DbParameter queryUserTagParam = userQueryCommand.AddParameter("@TagId", System.Data.DbType.Int64);
 
-                    SQLiteParameter queryRemovedFileParam = removedQueryCommand.Parameters.Add("@FileId", System.Data.DbType.Int64);
+                    DbParameter queryRemovedFileParam = removedQueryCommand.AddParameter("@FileId", System.Data.DbType.Int64);
 
-                    insertCommand.Parameters.AddWithValue("@NewId", DBNull.Value);
-                    SQLiteParameter fileInsertParam = insertCommand.Parameters.Add("@FileId", System.Data.DbType.Int64);
-                    SQLiteParameter tagInsertParam = insertCommand.Parameters.Add("@TagId", System.Data.DbType.Int64);
-                    insertCommand.Parameters.AddWithValue("@User", user);
+                    insertCommand.AddParameterWithValue("@NewId", DBNull.Value);
+                    DbParameter fileInsertParam = insertCommand.AddParameter("@FileId", System.Data.DbType.Int64);
+                    DbParameter tagInsertParam = insertCommand.AddParameter("@TagId", System.Data.DbType.Int64);
+                    insertCommand.AddParameterWithValue("@User", user);
 
-                    SQLiteParameter removeRemovedFileParam = removeRemovedCommand.Parameters.Add("@FileId", System.Data.DbType.Int64);
-                    SQLiteParameter tagidParam3 = removeRemovedCommand.Parameters.Add("@TagId", System.Data.DbType.Int64);
+                    DbParameter removeRemovedFileParam = removeRemovedCommand.AddParameter("@FileId", System.Data.DbType.Int64);
+                    DbParameter tagidParam3 = removeRemovedCommand.AddParameter("@TagId", System.Data.DbType.Int64);
 
-                    updateCommand.Parameters.AddWithValue("@User", user);
-                    SQLiteParameter updateFileParam = updateCommand.Parameters.Add("@FileId", System.Data.DbType.Int64);
-                    SQLiteParameter updateTagParam = updateCommand.Parameters.Add("@TagId", System.Data.DbType.Int64);
+                    updateCommand.AddParameterWithValue("@User", user);
+                    DbParameter updateFileParam = updateCommand.AddParameter("@FileId", System.Data.DbType.Int64);
+                    DbParameter updateTagParam = updateCommand.AddParameter("@TagId", System.Data.DbType.Int64);
 
                     foreach (TagsForFileExchange fileTags in tags)
                     {
@@ -1309,7 +1317,7 @@ namespace Ares.Tags
                             }
                             // find existing tags --> those don't need to be added
                             queryTagsFileParam.Value = fileId;
-                            using (SQLiteDataReader reader = tagsQueryCommand.ExecuteReader())
+                            using (DbDataReader reader = tagsQueryCommand.ExecuteReader())
                             {
                                 while (reader.Read())
                                 {
@@ -1339,7 +1347,7 @@ namespace Ares.Tags
                             }
                             // find tags removed by user himself --> those must not be added
                             queryRemovedFileParam.Value = fileId;
-                            using (SQLiteDataReader reader = removedQueryCommand.ExecuteReader())
+                            using (DbDataReader reader = removedQueryCommand.ExecuteReader())
                             {
                                 while (reader.Read())
                                 {
@@ -1393,31 +1401,31 @@ namespace Ares.Tags
                 String removeAssignedString = String.Format("DELETE FROM {0} WHERE {1}=@FileId AND {2}=@TagId", Schema.FILETAGS_TABLE, Schema.FILE_COLUMN, Schema.TAG_COLUMN);
                 String updateString = String.Format("UPDATE {0} SET {1}=@User WHERE {2}=@TagId AND {3}=@FileId", Schema.REMOVEDTAGS_TABLE, Schema.USER_COLUMN, Schema.TAG_COLUMN, Schema.FILE_COLUMN);
 
-                using (SQLiteCommand tagsQueryCommand = new SQLiteCommand(tagsQuery, m_Connection, m_Transaction),
-                       userQueryCommand = new SQLiteCommand(userQuery, m_Connection, m_Transaction),
-                       assignedQueryCommand = new SQLiteCommand(assignedQuery, m_Connection, m_Transaction),
-                       removeAssignedCommand = new SQLiteCommand(removeAssignedString, m_Connection, m_Transaction),
-                       updateCommand = new SQLiteCommand(updateString, m_Connection, m_Transaction),
-                       insertCommand = new SQLiteCommand(insertString, m_Connection, m_Transaction))
+                using (DbCommand tagsQueryCommand = DbUtils.CreateDbCommand(tagsQuery, m_Connection, m_Transaction),
+                       userQueryCommand = DbUtils.CreateDbCommand(userQuery, m_Connection, m_Transaction),
+                       assignedQueryCommand = DbUtils.CreateDbCommand(assignedQuery, m_Connection, m_Transaction),
+                       removeAssignedCommand = DbUtils.CreateDbCommand(removeAssignedString, m_Connection, m_Transaction),
+                       updateCommand = DbUtils.CreateDbCommand(updateString, m_Connection, m_Transaction),
+                       insertCommand = DbUtils.CreateDbCommand(insertString, m_Connection, m_Transaction))
                 {
-                    SQLiteParameter queryTagsFileParam = tagsQueryCommand.Parameters.Add("@FileId", System.Data.DbType.Int64);
+                    DbParameter queryTagsFileParam = tagsQueryCommand.AddParameter("@FileId", System.Data.DbType.Int64);
 
-                    SQLiteParameter queryUserFileParam = userQueryCommand.Parameters.Add("@FileId", System.Data.DbType.Int64);
-                    SQLiteParameter queryUserTagParam = userQueryCommand.Parameters.Add("@TagId", System.Data.DbType.Int64);
+                    DbParameter queryUserFileParam = userQueryCommand.AddParameter("@FileId", System.Data.DbType.Int64);
+                    DbParameter queryUserTagParam = userQueryCommand.AddParameter("@TagId", System.Data.DbType.Int64);
 
-                    SQLiteParameter queryAssignedFileParam = assignedQueryCommand.Parameters.Add("@FileId", System.Data.DbType.Int64);
+                    DbParameter queryAssignedFileParam = assignedQueryCommand.AddParameter("@FileId", System.Data.DbType.Int64);
 
-                    insertCommand.Parameters.AddWithValue("@NewId", DBNull.Value);
-                    SQLiteParameter fileInsertParam = insertCommand.Parameters.Add("@FileId", System.Data.DbType.Int64);
-                    SQLiteParameter tagInsertParam = insertCommand.Parameters.Add("@TagId", System.Data.DbType.Int64);
-                    insertCommand.Parameters.AddWithValue("@User", user);
+                    insertCommand.AddParameterWithValue("@NewId", DBNull.Value);
+                    DbParameter fileInsertParam = insertCommand.AddParameter("@FileId", System.Data.DbType.Int64);
+                    DbParameter tagInsertParam = insertCommand.AddParameter("@TagId", System.Data.DbType.Int64);
+                    insertCommand.AddParameterWithValue("@User", user);
 
-                    SQLiteParameter removeAssignedFileParam = removeAssignedCommand.Parameters.Add("@FileId", System.Data.DbType.Int64);
-                    SQLiteParameter removeAssignedTagParam = removeAssignedCommand.Parameters.Add("@TagId", System.Data.DbType.Int64);
+                    DbParameter removeAssignedFileParam = removeAssignedCommand.AddParameter("@FileId", System.Data.DbType.Int64);
+                    DbParameter removeAssignedTagParam = removeAssignedCommand.AddParameter("@TagId", System.Data.DbType.Int64);
 
-                    updateCommand.Parameters.AddWithValue("@User", user);
-                    SQLiteParameter updateFileParam = updateCommand.Parameters.Add("@FileId", System.Data.DbType.Int64);
-                    SQLiteParameter updateTagParam = updateCommand.Parameters.Add("@TagId", System.Data.DbType.Int64);
+                    updateCommand.AddParameterWithValue("@User", user);
+                    DbParameter updateFileParam = updateCommand.AddParameter("@FileId", System.Data.DbType.Int64);
+                    DbParameter updateTagParam = updateCommand.AddParameter("@TagId", System.Data.DbType.Int64);
 
                     foreach (TagsForFileExchange fileTags in tags)
                     {
@@ -1439,7 +1447,7 @@ namespace Ares.Tags
                             }
                             // find existing tags --> those don't need to be added to the removed-table
                             queryTagsFileParam.Value = fileId;
-                            using (SQLiteDataReader reader = tagsQueryCommand.ExecuteReader())
+                            using (DbDataReader reader = tagsQueryCommand.ExecuteReader())
                             {
                                 while (reader.Read())
                                 {
@@ -1469,7 +1477,7 @@ namespace Ares.Tags
                             }
                             // find tags assigned by user himself --> those must not be removed
                             queryAssignedFileParam.Value = fileId;
-                            using (SQLiteDataReader reader = assignedQueryCommand.ExecuteReader())
+                            using (DbDataReader reader = assignedQueryCommand.ExecuteReader())
                             {
                                 while (reader.Read())
                                 {
@@ -1513,7 +1521,7 @@ namespace Ares.Tags
 
         class GlobalDBImporter : ImportHelperBase
         {
-            public GlobalDBImporter(SQLiteTagsDB tagsDB, SQLiteConnection connection, SQLiteTransaction transaction, TextWriter logStream)
+            public GlobalDBImporter(SQLiteTagsDB tagsDB, DbConnection connection, DbTransaction transaction, TextWriter logStream)
                 : base(tagsDB, connection, transaction, logStream)
             {
             }
@@ -1534,22 +1542,22 @@ namespace Ares.Tags
                     Schema.REMOVEDTAGS_TABLE, Schema.FILE_COLUMN, Schema.TAG_COLUMN, Schema.USER_COLUMN);
                 String insertNew = String.Format("INSERT INTO {0} ({1}, {2}, {3}, {4}) VALUES (@Id, @FileId, @TagId, @User)",
                     Schema.FILETAGS_TABLE, Schema.ID_COLUMN, Schema.FILE_COLUMN, Schema.TAG_COLUMN, Schema.USER_COLUMN);
-                using (SQLiteCommand queryExistingCmd = new SQLiteCommand(queryExisting, m_Connection, m_Transaction),
-                       removeRemovedCmd = new SQLiteCommand(removeRemoved, m_Connection, m_Transaction),
-                       insertNewCmd = new SQLiteCommand(insertNew, m_Connection, m_Transaction))
+                using (DbCommand queryExistingCmd = DbUtils.CreateDbCommand(queryExisting, m_Connection, m_Transaction),
+                       removeRemovedCmd = DbUtils.CreateDbCommand(removeRemoved, m_Connection, m_Transaction),
+                       insertNewCmd = DbUtils.CreateDbCommand(insertNew, m_Connection, m_Transaction))
                 {
-                    SQLiteParameter queryFileParam = queryExistingCmd.Parameters.Add("@FileId", System.Data.DbType.Int64);
-                    SQLiteParameter queryTagParam = queryExistingCmd.Parameters.Add("@TagId", System.Data.DbType.Int64);
-                    queryExistingCmd.Parameters.AddWithValue("@User", user);
+                    DbParameter queryFileParam = queryExistingCmd.AddParameter("@FileId", System.Data.DbType.Int64);
+                    DbParameter queryTagParam = queryExistingCmd.AddParameter("@TagId", System.Data.DbType.Int64);
+                    queryExistingCmd.AddParameterWithValue("@User", user);
 
-                    SQLiteParameter removeFileParam = removeRemovedCmd.Parameters.Add("@FileId", System.Data.DbType.Int64);
-                    SQLiteParameter removeTagParam = removeRemovedCmd.Parameters.Add("@TagId", System.Data.DbType.Int64);
-                    removeRemovedCmd.Parameters.AddWithValue("@User", user);
+                    DbParameter removeFileParam = removeRemovedCmd.AddParameter("@FileId", System.Data.DbType.Int64);
+                    DbParameter removeTagParam = removeRemovedCmd.AddParameter("@TagId", System.Data.DbType.Int64);
+                    removeRemovedCmd.AddParameterWithValue("@User", user);
 
-                    insertNewCmd.Parameters.AddWithValue("@Id", System.DBNull.Value);
-                    SQLiteParameter insertFileParam = insertNewCmd.Parameters.Add("@FileId", System.Data.DbType.Int64);
-                    SQLiteParameter insertTagParam = insertNewCmd.Parameters.Add("@TagId", System.Data.DbType.Int64);
-                    insertNewCmd.Parameters.AddWithValue("@User", user);
+                    insertNewCmd.AddParameterWithValue("@Id", System.DBNull.Value);
+                    DbParameter insertFileParam = insertNewCmd.AddParameter("@FileId", System.Data.DbType.Int64);
+                    DbParameter insertTagParam = insertNewCmd.AddParameter("@TagId", System.Data.DbType.Int64);
+                    insertNewCmd.AddParameterWithValue("@User", user);
 
                     foreach (TagsForFileExchange tagsForFile in tags)
                     {
@@ -1615,22 +1623,22 @@ namespace Ares.Tags
                     Schema.FILETAGS_TABLE, Schema.FILE_COLUMN, Schema.TAG_COLUMN, Schema.USER_COLUMN);
                 String insertNew = String.Format("INSERT INTO {0} ({1}, {2}, {3}, {4}) VALUES (@Id, @FileId, @TagId, @User)",
                     Schema.REMOVEDTAGS_TABLE, Schema.ID_COLUMN, Schema.FILE_COLUMN, Schema.TAG_COLUMN, Schema.USER_COLUMN);
-                using (SQLiteCommand queryExistingCmd = new SQLiteCommand(queryExisting, m_Connection, m_Transaction),
-                       removeAssignedCmd = new SQLiteCommand(removeAssigned, m_Connection, m_Transaction),
-                       insertNewCmd = new SQLiteCommand(insertNew, m_Connection, m_Transaction))
+                using (DbCommand queryExistingCmd = DbUtils.CreateDbCommand(queryExisting, m_Connection, m_Transaction),
+                       removeAssignedCmd = DbUtils.CreateDbCommand(removeAssigned, m_Connection, m_Transaction),
+                       insertNewCmd = DbUtils.CreateDbCommand(insertNew, m_Connection, m_Transaction))
                 {
-                    SQLiteParameter queryFileParam = queryExistingCmd.Parameters.Add("@FileId", System.Data.DbType.Int64);
-                    SQLiteParameter queryTagParam = queryExistingCmd.Parameters.Add("@TagId", System.Data.DbType.Int64);
-                    queryExistingCmd.Parameters.AddWithValue("@User", user);
+                    DbParameter queryFileParam = queryExistingCmd.AddParameter("@FileId", System.Data.DbType.Int64);
+                    DbParameter queryTagParam = queryExistingCmd.AddParameter("@TagId", System.Data.DbType.Int64);
+                    queryExistingCmd.AddParameterWithValue("@User", user);
 
-                    SQLiteParameter removeFileParam = removeAssignedCmd.Parameters.Add("@FileId", System.Data.DbType.Int64);
-                    SQLiteParameter removeTagParam = removeAssignedCmd.Parameters.Add("@TagId", System.Data.DbType.Int64);
-                    removeAssignedCmd.Parameters.AddWithValue("@User", user);
+                    DbParameter removeFileParam = removeAssignedCmd.AddParameter("@FileId", System.Data.DbType.Int64);
+                    DbParameter removeTagParam = removeAssignedCmd.AddParameter("@TagId", System.Data.DbType.Int64);
+                    removeAssignedCmd.AddParameterWithValue("@User", user);
 
-                    insertNewCmd.Parameters.AddWithValue("@Id", System.DBNull.Value);
-                    SQLiteParameter insertFileParam = insertNewCmd.Parameters.Add("@FileId", System.Data.DbType.Int64);
-                    SQLiteParameter insertTagParam = insertNewCmd.Parameters.Add("@TagId", System.Data.DbType.Int64);
-                    insertNewCmd.Parameters.AddWithValue("@User", user);
+                    insertNewCmd.AddParameterWithValue("@Id", System.DBNull.Value);
+                    DbParameter insertFileParam = insertNewCmd.AddParameter("@FileId", System.Data.DbType.Int64);
+                    DbParameter insertTagParam = insertNewCmd.AddParameter("@TagId", System.Data.DbType.Int64);
+                    insertNewCmd.AddParameterWithValue("@User", user);
 
                     foreach (TagsForFileExchange tagsForFile in tags)
                     {
@@ -1690,11 +1698,4 @@ namespace Ares.Tags
 
     }
 
-    public static class DBReaderExtension
-    {
-        public static String GetStringOrEmpty(this SQLiteDataReader reader, int columnIndex)
-        {
-            return reader.IsDBNull(columnIndex) ? String.Empty : reader.GetString(columnIndex);
-        }
-    }
 }

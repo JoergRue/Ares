@@ -7,12 +7,12 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{F0544C2F-497A-43F6-BA8C-EF180FC5F4C9}</ProjectGuid>
+    <ProjectGuid>{A8911951-5B43-485D-85B6-A17A5703D7C2}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Ares.GlobalDb.Web</RootNamespace>
-    <AssemblyName>Ares.GlobalDb.Web</AssemblyName>
+    <RootNamespace>Ares.GlobalDB.Web</RootNamespace>
+    <AssemblyName>Ares.GlobalDB.Web</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
@@ -25,7 +25,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\bin\Debug\</OutputPath>
+    <OutputPath>bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -33,35 +33,39 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\bin\Release_Web\</OutputPath>
+    <OutputPath>bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="ServiceStack, Version=3.9.37.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Ares.GlobalDB.StandaloneHost\packages\ServiceStack.3.9.37\lib\net35\ServiceStack.dll</HintPath>
+    <Reference Include="ServiceStack">
+      <HintPath>..\packages\ServiceStack.3.9.37\lib\net35\ServiceStack.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack.Common, Version=3.9.37.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Ares.GlobalDB.StandaloneHost\packages\ServiceStack.Common.3.9.37\lib\net35\ServiceStack.Common.dll</HintPath>
+    <Reference Include="ServiceStack.Common">
+      <HintPath>..\packages\ServiceStack.Common.3.9.37\lib\net35\ServiceStack.Common.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack.Interfaces, Version=3.9.37.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Ares.GlobalDB.StandaloneHost\packages\ServiceStack.Common.3.9.37\lib\net35\ServiceStack.Interfaces.dll</HintPath>
+    <Reference Include="ServiceStack.Interfaces">
+      <HintPath>..\packages\ServiceStack.Common.3.9.37\lib\net35\ServiceStack.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.OrmLite">
+      <HintPath>..\packages\ServiceStack.OrmLite.SqlServer.3.9.37\lib\ServiceStack.OrmLite.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.OrmLite.SqlServer">
+      <HintPath>..\packages\ServiceStack.OrmLite.SqlServer.3.9.37\lib\ServiceStack.OrmLite.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.Razor">
-      <HintPath>..\Ares.GlobalDB.StandaloneHost\packages\ServiceStack.Razor.3.9.37\lib\net40\ServiceStack.Razor.dll</HintPath>
+      <HintPath>..\packages\ServiceStack.Razor.3.9.37\lib\net40\ServiceStack.Razor.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack.ServiceInterface, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Ares.GlobalDB.StandaloneHost\packages\ServiceStack.3.9.37\lib\net35\ServiceStack.ServiceInterface.dll</HintPath>
+    <Reference Include="ServiceStack.Redis">
+      <HintPath>..\packages\ServiceStack.Redis.3.9.37\lib\net35\ServiceStack.Redis.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack.Text, Version=3.9.37.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Ares.GlobalDB.StandaloneHost\packages\ServiceStack.Text.3.9.37\lib\net35\ServiceStack.Text.dll</HintPath>
+    <Reference Include="ServiceStack.ServiceInterface">
+      <HintPath>..\packages\ServiceStack.3.9.37\lib\net35\ServiceStack.ServiceInterface.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Text">
+      <HintPath>..\packages\ServiceStack.Text.3.9.37\lib\net35\ServiceStack.Text.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.DynamicData" />
@@ -73,19 +77,19 @@
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\Ares.GlobalDB.StandaloneHost\packages\ServiceStack.Razor.3.9.37\lib\net40\System.Web.Razor.dll</HintPath>
+      <HintPath>..\packages\ServiceStack.Razor.3.9.37\lib\net40\System.Web.Razor.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\Ares.GlobalDB.StandaloneHost\packages\ServiceStack.Razor.3.9.37\lib\net40\System.Web.WebPages.dll</HintPath>
+      <HintPath>..\packages\ServiceStack.Razor.3.9.37\lib\net40\System.Web.WebPages.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.WebPages.Deployment, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\Ares.GlobalDB.StandaloneHost\packages\ServiceStack.Razor.3.9.37\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+      <HintPath>..\packages\ServiceStack.Razor.3.9.37\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.WebPages.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\Ares.GlobalDB.StandaloneHost\packages\ServiceStack.Razor.3.9.37\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+      <HintPath>..\packages\ServiceStack.Razor.3.9.37\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
@@ -100,13 +104,13 @@
     <Content Include="Static\Browse.css" />
     <Content Include="Static\de\browse.html" />
     <Content Include="Static\de\index.html" />
+    <Content Include="Static\de\Tags_Schema.png" />
     <Content Include="Static\de\tech.html" />
     <Content Include="Static\en\browse.html" />
     <Content Include="Static\en\index.html" />
+    <Content Include="Static\en\Tags_Schema.png" />
     <Content Include="Static\en\tech.html" />
-    <Content Include="Web.config">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">
@@ -116,33 +120,33 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <Content Include="Views\AllArtists.cshtml" />
-    <Content Include="Views\Shared\Browse.cshtml" />
-    <Content Include="Views\AllAlbums.cshtml" />
-    <Content Include="Views\Artists.cshtml" />
-    <Content Include="Views\AllFiles.cshtml" />
+    <Content Include="default.cshtml" />
     <Content Include="Views\Albums.cshtml" />
+    <Content Include="Views\AllAlbums.cshtml" />
+    <Content Include="Views\AllArtists.cshtml" />
     <Content Include="Views\AllCategories.cshtml" />
+    <Content Include="Views\AllFiles.cshtml" />
     <Content Include="Views\AllTags.cshtml" />
+    <Content Include="Views\Artists.cshtml" />
+    <Content Include="Views\de\Albums_de.cshtml" />
+    <Content Include="Views\de\AllAlbums_de.cshtml" />
+    <Content Include="Views\de\AllArtists_de.cshtml" />
+    <Content Include="Views\de\AllCategories_de.cshtml" />
+    <Content Include="Views\de\AllFiles_de.cshtml" />
+    <Content Include="Views\de\AllTags_de.cshtml" />
+    <Content Include="Views\de\Artists_de.cshtml" />
+    <Content Include="Views\de\FilesByTag_de.cshtml" />
+    <Content Include="Views\de\Shared\Browse_de.cshtml" />
+    <Content Include="Views\de\Shared\Languages_de.cshtml" />
+    <Content Include="Views\de\Start_de.cshtml" />
+    <Content Include="Views\de\TagsByCategory_de.cshtml" />
+    <Content Include="Views\de\TagsByFile_de.cshtml" />
+    <Content Include="Views\FilesByTag.cshtml" />
+    <Content Include="Views\Shared\Browse.cshtml" />
+    <Content Include="Views\Shared\Languages.cshtml" />
+    <Content Include="Views\Start.cshtml" />
     <Content Include="Views\TagsByCategory.cshtml" />
     <Content Include="Views\TagsByFile.cshtml" />
-    <Content Include="Views\FilesByTag.cshtml" />
-    <Content Include="Views\Shared\Languages.cshtml" />
-    <Content Include="Views\de\Shared\Browse_de.cshtml" />
-    <Content Include="Views\de\AllAlbums_de.cshtml" />
-    <Content Include="Views\de\Shared\Languages_de.cshtml" />
-    <Content Include="Views\de\TagsByFile_de.cshtml" />
-    <Content Include="Views\de\TagsByCategory_de.cshtml" />
-    <Content Include="Views\de\FilesByTag_de.cshtml" />
-    <Content Include="Views\de\Artists_de.cshtml" />
-    <Content Include="Views\de\AllTags_de.cshtml" />
-    <Content Include="Views\de\AllFiles_de.cshtml" />
-    <Content Include="Views\de\AllCategories_de.cshtml" />
-    <Content Include="Views\de\AllArtists_de.cshtml" />
-    <Content Include="Views\de\Albums_de.cshtml" />
-    <Content Include="Views\Start.cshtml" />
-    <Content Include="Views\de\Start_de.cshtml" />
-    <Content Include="default.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -155,8 +159,11 @@
       <Project>{8258afee-710c-44be-9b25-d81f89ac01aa}</Project>
       <Name>Ares.GlobalDB.Service</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Ares.Tags\Ares.Tags_Web.csproj">
+      <Project>{ed78886a-8674-499f-b0f9-98eb25322ebb}</Project>
+      <Name>Ares.Tags_Web</Name>
+    </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

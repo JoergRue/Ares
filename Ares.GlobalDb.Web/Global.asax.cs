@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Security;
 using System.Web.SessionState;
 
-namespace Ares.GlobalDb.Web
+namespace Ares.GlobalDB.Web
 {
     public class Global : System.Web.HttpApplication
     {

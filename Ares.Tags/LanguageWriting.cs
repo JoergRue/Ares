@@ -22,7 +22,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using System.Data.SQLite;
+using System.Data.Common;
 
 namespace Ares.Tags
 {
@@ -30,15 +30,15 @@ namespace Ares.Tags
     class LanguageWriting : ITagsDBWriteByLanguage, IConnectionClient
     {
         private int m_LanguageId;
-        private SQLiteConnection m_Connection;
+        private DbConnection m_Connection;
 
-        internal LanguageWriting(int languageId, SQLiteConnection connection)
+        internal LanguageWriting(int languageId, DbConnection connection)
         {
             m_LanguageId = languageId;
             m_Connection = connection;
         }
 
-        public void ConnectionChanged(SQLiteConnection connection)
+        public void ConnectionChanged(DbConnection connection)
         {
             m_Connection = connection;
         }
@@ -61,7 +61,7 @@ namespace Ares.Tags
             {
                 throw new TagsDbException(ex.Message, ex);
             }
-            catch (SQLiteException ex)
+            catch (DbException ex)
             {
                 throw new TagsDbException(ex.Message, ex);
             }
@@ -85,7 +85,7 @@ namespace Ares.Tags
             {
                 throw new TagsDbException(ex.Message, ex);
             }
-            catch (SQLiteException ex)
+            catch (DbException ex)
             {
                 throw new TagsDbException(ex.Message, ex);
             }
@@ -105,7 +105,7 @@ namespace Ares.Tags
             {
                 throw new TagsDbException(ex.Message, ex);
             }
-            catch (SQLiteException ex)
+            catch (DbException ex)
             {
                 throw new TagsDbException(ex.Message, ex);
             }
@@ -125,7 +125,7 @@ namespace Ares.Tags
             {
                 throw new TagsDbException(ex.Message, ex);
             }
-            catch (SQLiteException ex)
+            catch (DbException ex)
             {
                 throw new TagsDbException(ex.Message, ex);
             }
@@ -149,7 +149,7 @@ namespace Ares.Tags
             {
                 throw new TagsDbException(ex.Message, ex);
             }
-            catch (SQLiteException ex)
+            catch (DbException ex)
             {
                 throw new TagsDbException(ex.Message, ex);
             }
@@ -173,7 +173,7 @@ namespace Ares.Tags
             {
                 throw new TagsDbException(ex.Message, ex);
             }
-            catch (SQLiteException ex)
+            catch (DbException ex)
             {
                 throw new TagsDbException(ex.Message, ex);
             }
@@ -181,7 +181,7 @@ namespace Ares.Tags
 
         internal int DoAddCategory(String name)
         {
-            using (SQLiteTransaction transaction = m_Connection.BeginTransaction())
+            using (DbTransaction transaction = m_Connection.BeginTransaction())
             {
                 int newId = DoAddCategory(name, transaction);
 
@@ -191,20 +191,20 @@ namespace Ares.Tags
             }
         }
 
-        internal int DoAddCategory(String name, SQLiteTransaction transaction)
+        internal int DoAddCategory(String name, DbTransaction transaction)
         {
             // Insert into categories table
             String insertCommand = String.Format("INSERT INTO {0} ({1}) VALUES (@Id)", Schema.CATEGORIES_TABLE, Schema.ID_COLUMN);
-            using (SQLiteCommand command = new SQLiteCommand(insertCommand, m_Connection, transaction))
+            using (DbCommand command = DbUtils.CreateDbCommand(insertCommand, m_Connection, transaction))
             {
-                command.Parameters.AddWithValue("@Id", DBNull.Value);
+                command.AddParameterWithValue("@Id", DBNull.Value);
                 int res = command.ExecuteNonQuery();
                 if (res != 1)
                 {
                     throw new TagsDbException("Insertion into Category table failed.");
                 }
             }
-            long newId = m_Connection.LastInsertRowId;
+            long newId = m_Connection.LastInsertRowId();
 
             // Insert name into translation table
             TagsTranslations.DoAddTranslation(m_Connection, transaction, Schema.CATEGORYNAMES_TABLE, Schema.CATEGORY_COLUMN, Schema.LANGUAGE_COLUMN, newId, m_LanguageId, name);
@@ -217,7 +217,7 @@ namespace Ares.Tags
             TagsTranslations.DoSetTranslation(m_Connection, Schema.CATEGORYNAMES_TABLE, Schema.CATEGORY_COLUMN, Schema.LANGUAGE_COLUMN, categoryId, m_LanguageId, name);
         }
 
-        internal void DoSetCategoryName(int categoryId, String name, SQLiteTransaction transaction)
+        internal void DoSetCategoryName(int categoryId, String name, DbTransaction transaction)
         {
             TagsTranslations.DoSetTranslation(m_Connection, Schema.CATEGORYNAMES_TABLE, Schema.CATEGORY_COLUMN, Schema.LANGUAGE_COLUMN, 
                 categoryId, m_LanguageId, name, transaction);
@@ -225,7 +225,7 @@ namespace Ares.Tags
 
         private int DoAddTag(int categoryId, string name)
         {
-            using (SQLiteTransaction transaction = m_Connection.BeginTransaction())
+            using (DbTransaction transaction = m_Connection.BeginTransaction())
             {
                 int newId = DoAddTag(categoryId, name, transaction);
 
@@ -235,21 +235,21 @@ namespace Ares.Tags
             }
         }
 
-        internal int DoAddTag(int categoryId, string name, SQLiteTransaction transaction)
+        internal int DoAddTag(int categoryId, string name, DbTransaction transaction)
         {
             // Insert into names table
             String insertCommand = String.Format("INSERT INTO {0} ({1}, {2}) VALUES (@Id, @Category)", Schema.TAGS_TABLE, Schema.ID_COLUMN, Schema.CATEGORY_COLUMN);
-            using (SQLiteCommand command = new SQLiteCommand(insertCommand, m_Connection, transaction))
+            using (DbCommand command = DbUtils.CreateDbCommand(insertCommand, m_Connection, transaction))
             {
-                command.Parameters.AddWithValue("@Id", DBNull.Value);
-                command.Parameters.AddWithValue("@Category", categoryId);
+                command.AddParameterWithValue("@Id", DBNull.Value);
+                command.AddParameterWithValue("@Category", categoryId);
                 int res = command.ExecuteNonQuery();
                 if (res != 1)
                 {
                     throw new TagsDbException("Insertion into Tags table failed.");
                 }
             }
-            long newId = m_Connection.LastInsertRowId;
+            long newId = m_Connection.LastInsertRowId();
 
             // Insert name into translation table
             TagsTranslations.DoAddTranslation(m_Connection, transaction, Schema.TAGNAMES_TABLE, Schema.TAG_COLUMN, Schema.LANGUAGE_COLUMN, newId, m_LanguageId, name);
@@ -263,7 +263,7 @@ namespace Ares.Tags
             TagsTranslations.DoSetTranslation(m_Connection, Schema.TAGNAMES_TABLE, Schema.TAG_COLUMN, Schema.LANGUAGE_COLUMN, tagId, m_LanguageId, name);
         }
 
-        internal void DoSetTagName(int tagId, String name, SQLiteTransaction transaction)
+        internal void DoSetTagName(int tagId, String name, DbTransaction transaction)
         {
             TagsTranslations.DoSetTranslation(m_Connection, Schema.TAGNAMES_TABLE, Schema.TAG_COLUMN, Schema.LANGUAGE_COLUMN, tagId, m_LanguageId, name, transaction);
         }

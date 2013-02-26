@@ -22,20 +22,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using System.Data.SQLite;
+using System.Data.Common;
 
 namespace Ares.Tags
 {
     class TagsTranslations : ITagsDBTranslations, IConnectionClient
     {
-        private SQLiteConnection m_Connection;
+        private DbConnection m_Connection;
 
-        internal TagsTranslations(SQLiteConnection connection)
+        internal TagsTranslations(DbConnection connection)
         {
             m_Connection = connection;
         }
 
-        public void ConnectionChanged(SQLiteConnection connection)
+        public void ConnectionChanged(DbConnection connection)
         {
             m_Connection = connection;
         }
@@ -62,7 +62,7 @@ namespace Ares.Tags
             {
                 throw new TagsDbException(ex.Message, ex);
             }
-            catch (SQLiteException ex)
+            catch (DbException ex)
             {
                 throw new TagsDbException(ex.Message, ex);
             }
@@ -90,7 +90,7 @@ namespace Ares.Tags
             {
                 throw new TagsDbException(ex.Message, ex);
             }
-            catch (SQLiteException ex)
+            catch (DbException ex)
             {
                 throw new TagsDbException(ex.Message, ex);
             }
@@ -114,7 +114,7 @@ namespace Ares.Tags
             {
                 throw new TagsDbException(ex.Message, ex);
             }
-            catch (SQLiteException ex)
+            catch (DbException ex)
             {
                 throw new TagsDbException(ex.Message, ex);
             }
@@ -135,7 +135,7 @@ namespace Ares.Tags
             {
                 throw new TagsDbException(ex.Message, ex);
             }
-            catch (SQLiteException ex)
+            catch (DbException ex)
             {
                 throw new TagsDbException(ex.Message, ex);
             }
@@ -155,7 +155,7 @@ namespace Ares.Tags
             {
                 throw new TagsDbException(ex.Message, ex);
             }
-            catch (SQLiteException ex)
+            catch (DbException ex)
             {
                 throw new TagsDbException(ex.Message, ex);
             }
@@ -180,7 +180,7 @@ namespace Ares.Tags
             {
                 throw new TagsDbException(ex.Message, ex);
             }
-            catch (SQLiteException ex)
+            catch (DbException ex)
             {
                 throw new TagsDbException(ex.Message, ex);
             }
@@ -200,7 +200,7 @@ namespace Ares.Tags
             {
                 throw new TagsDbException(ex.Message, ex);
             }
-            catch (SQLiteException ex)
+            catch (DbException ex)
             {
                 throw new TagsDbException(ex.Message, ex);
             }
@@ -220,7 +220,7 @@ namespace Ares.Tags
             {
                 throw new TagsDbException(ex.Message, ex);
             }
-            catch (SQLiteException ex)
+            catch (DbException ex)
             {
                 throw new TagsDbException(ex.Message, ex);
             }
@@ -240,7 +240,7 @@ namespace Ares.Tags
             {
                 throw new TagsDbException(ex.Message, ex);
             }
-            catch (SQLiteException ex)
+            catch (DbException ex)
             {
                 throw new TagsDbException(ex.Message, ex);
             }
@@ -260,7 +260,7 @@ namespace Ares.Tags
             {
                 throw new TagsDbException(ex.Message, ex);
             }
-            catch (SQLiteException ex)
+            catch (DbException ex)
             {
                 throw new TagsDbException(ex.Message, ex);
             }
@@ -280,7 +280,7 @@ namespace Ares.Tags
             {
                 throw new TagsDbException(ex.Message, ex);
             }
-            catch (SQLiteException ex)
+            catch (DbException ex)
             {
                 throw new TagsDbException(ex.Message, ex);
             }
@@ -288,7 +288,7 @@ namespace Ares.Tags
 
         internal int DoAddLanguage(string code, string name)
         {
-            using (SQLiteTransaction transaction = m_Connection.BeginTransaction())
+            using (DbTransaction transaction = m_Connection.BeginTransaction())
             {
                 int newId = DoAddLanguage(code, name, transaction);
 
@@ -298,7 +298,7 @@ namespace Ares.Tags
             }
         }
 
-        internal int DoAddLanguage(string code, string name, SQLiteTransaction transaction)
+        internal int DoAddLanguage(string code, string name, DbTransaction transaction)
         {
             // insert into language table
             long newId = DoInsertLanguage(transaction, code);
@@ -311,7 +311,7 @@ namespace Ares.Tags
 
         internal int DoAddLanguage(string code, string name, int languageId)
         {
-            using (SQLiteTransaction transaction = m_Connection.BeginTransaction())
+            using (DbTransaction transaction = m_Connection.BeginTransaction())
             {
                 int newId = DoAddLanguage(code, name, languageId, transaction);
 
@@ -321,7 +321,7 @@ namespace Ares.Tags
             }
         }
 
-        internal int DoAddLanguage(string code, string name, int languageId, SQLiteTransaction transaction)
+        internal int DoAddLanguage(string code, string name, int languageId, DbTransaction transaction)
         {
             // insert into language table
             long newId = DoInsertLanguage(transaction, code);
@@ -332,14 +332,14 @@ namespace Ares.Tags
             return (int)newId;
         }
 
-        private long DoInsertLanguage(SQLiteTransaction transaction, string code)
+        private long DoInsertLanguage(DbTransaction transaction, string code)
         {
             String addLanguageCommand = String.Format("INSERT INTO {0} ({1}, {2}) VALUES (@Id, @Code)", Schema.LANGUAGE_TABLE, Schema.ID_COLUMN, Schema.LC_COLUMN);
 
-            using (SQLiteCommand command = new SQLiteCommand(addLanguageCommand, m_Connection, transaction))
+            using (DbCommand command = DbUtils.CreateDbCommand(addLanguageCommand, m_Connection, transaction))
             {
-                command.Parameters.AddWithValue("@Id", DBNull.Value);
-                command.Parameters.AddWithValue("@Code", code);
+                command.AddParameterWithValue("@Id", DBNull.Value);
+                command.AddParameterWithValue("@Code", code);
                 int res = command.ExecuteNonQuery();
                 if (res != 1)
                 {
@@ -347,7 +347,7 @@ namespace Ares.Tags
                 }
             }
 
-            return m_Connection.LastInsertRowId;
+            return m_Connection.LastInsertRowId();
         }
 
         internal void DoSetLanguageName(int languageIdOfName, int languageIdOfLanguage, string name)
@@ -355,7 +355,7 @@ namespace Ares.Tags
             DoSetTranslation(m_Connection, Schema.LANGUAGENAMES_TABLE, Schema.NAMED_LANGUAGE_COLUMN, Schema.LANGUAGE_OF_NAME_COLUMN, languageIdOfLanguage, languageIdOfName, name);
         }
 
-        internal void DoSetLanguageName(int languageIdOfName, int languageIdOfLanguage, string name, SQLiteTransaction transaction)
+        internal void DoSetLanguageName(int languageIdOfName, int languageIdOfLanguage, string name, DbTransaction transaction)
         {
             DoSetTranslation(m_Connection, Schema.LANGUAGENAMES_TABLE, Schema.NAMED_LANGUAGE_COLUMN, Schema.LANGUAGE_OF_NAME_COLUMN, 
                 languageIdOfLanguage, languageIdOfName, name, transaction);
@@ -368,13 +368,13 @@ namespace Ares.Tags
             return DoGetTranslations(tableName, refColName, langColName, refId, m_Connection, null);
         }
 
-        internal static IDictionary<int, String> DoGetTranslations(String tableName, String refColName, String langColName, long refId, SQLiteConnection connection, SQLiteTransaction transaction)
+        internal static IDictionary<int, String> DoGetTranslations(String tableName, String refColName, String langColName, long refId, DbConnection connection, DbTransaction transaction)
         {
             String getTranslationsCommand = String.Format(GET_TRANSLATIONS_COMMAND, langColName, Schema.NAME_COLUMN, tableName, refColName);
-            using (SQLiteCommand queryCommand = new SQLiteCommand(getTranslationsCommand, connection, transaction))
+            using (DbCommand queryCommand = DbUtils.CreateDbCommand(getTranslationsCommand, connection, transaction))
             {
-                queryCommand.Parameters.AddWithValue("@RefId", refId);
-                using (SQLiteDataReader reader = queryCommand.ExecuteReader())
+                queryCommand.AddParameterWithValue("@RefId", refId);
+                using (DbDataReader reader = queryCommand.ExecuteReader())
                 {
                     Dictionary<int, String> result = new Dictionary<int, string>();
                     while (reader.Read())
@@ -415,12 +415,12 @@ namespace Ares.Tags
             return res;
         }
 
-        internal static bool DoGetIdOfLanguage(String languageCode, out long id, SQLiteConnection connection, SQLiteTransaction transaction)
+        internal static bool DoGetIdOfLanguage(String languageCode, out long id, DbConnection connection, DbTransaction transaction)
         {
             String findLanguageCommand = String.Format(FIND_LANGUAGE_COMMAND, Schema.ID_COLUMN, Schema.LANGUAGE_TABLE, Schema.LC_COLUMN);
-            using (SQLiteCommand command = new SQLiteCommand(findLanguageCommand, connection))
+            using (DbCommand command = DbUtils.CreateDbCommand(findLanguageCommand, connection))
             {
-                command.Parameters.AddWithValue("@Code", languageCode);
+                command.AddParameterWithValue("@Code", languageCode);
                 Object res = command.ExecuteScalar();
                 if (res != null)
                 {
@@ -440,7 +440,7 @@ namespace Ares.Tags
         private bool DoGetIdOfFirstLanguage(out int id)
         {
             String findAnyLanguageCommand = String.Format(FIND_ANY_LANGUAGE_COMMAND, Schema.ID_COLUMN, Schema.LANGUAGE_TABLE);
-            using (SQLiteCommand command = new SQLiteCommand(findAnyLanguageCommand, m_Connection))
+            using (DbCommand command = DbUtils.CreateDbCommand(findAnyLanguageCommand, m_Connection))
             {
                 Object res = command.ExecuteScalar();
                 if (res != null)
@@ -462,9 +462,9 @@ namespace Ares.Tags
         {
             // translations are removed automatically through ON DELETE CASCADE
             String removeLanguageCommand = String.Format(REMOVE_LANGUAGE_COMMAND, Schema.LANGUAGE_TABLE, Schema.ID_COLUMN);
-            using (SQLiteCommand command = new SQLiteCommand(removeLanguageCommand, m_Connection))
+            using (DbCommand command = DbUtils.CreateDbCommand(removeLanguageCommand, m_Connection))
             {
-                command.Parameters.AddWithValue("@LangId", languageId);
+                command.AddParameterWithValue("@LangId", languageId);
                 command.ExecuteNonQuery();
             }
         }
@@ -472,29 +472,29 @@ namespace Ares.Tags
         private static String FIND_TRANSLATION_COMMAND = "SELECT {3} FROM {0} WHERE {1}=@RefId AND {2}=@LangId";
         private static String SET_TRANSLATION_COMMAND = "UPDATE {0} SET {1}=@Name WHERE {2}=@Id";
 
-        internal static void DoSetTranslation(SQLiteConnection connection, String table, String refColName, String langColName, long refId, long langId, String name)
+        internal static void DoSetTranslation(DbConnection connection, String table, String refColName, String langColName, long refId, long langId, String name)
         {
             DoSetTranslation(connection, table, refColName, langColName, refId, langId, name, null);
         }
 
-        internal static void DoSetTranslation(SQLiteConnection connection, String table, String refColName, String langColName, 
-            long refId, long langId, String name, SQLiteTransaction transaction)
+        internal static void DoSetTranslation(DbConnection connection, String table, String refColName, String langColName, 
+            long refId, long langId, String name, DbTransaction transaction)
         {
             // First find an existing entry (if any)
             String queryLanguageCommand = String.Format(FIND_TRANSLATION_COMMAND, table, refColName, langColName, Schema.ID_COLUMN);
-            using (SQLiteCommand queryCommand = new SQLiteCommand(queryLanguageCommand, connection, transaction))
+            using (DbCommand queryCommand = DbUtils.CreateDbCommand(queryLanguageCommand, connection, transaction))
             {
-                queryCommand.Parameters.AddWithValue("@RefId", refId);
-                queryCommand.Parameters.AddWithValue("@LangId", langId);
+                queryCommand.AddParameterWithValue("@RefId", refId);
+                queryCommand.AddParameterWithValue("@LangId", langId);
                 Object res = queryCommand.ExecuteScalar();
                 if (res != null)
                 {
                     // entry exists, just change its name
                     String updateLanguageCommand = String.Format(SET_TRANSLATION_COMMAND, table, Schema.NAME_COLUMN, Schema.ID_COLUMN);
-                    using (SQLiteCommand updateCommand = new SQLiteCommand(updateLanguageCommand, connection, transaction))
+                    using (DbCommand updateCommand = DbUtils.CreateDbCommand(updateLanguageCommand, connection, transaction))
                     {
-                        updateCommand.Parameters.AddWithValue("@Name", name);
-                        updateCommand.Parameters.AddWithValue("@Id", res);
+                        updateCommand.AddParameterWithValue("@Name", name);
+                        updateCommand.AddParameterWithValue("@Id", (long)res);
                         updateCommand.ExecuteNonQuery();
                     }
                 }
@@ -508,30 +508,30 @@ namespace Ares.Tags
 
         private static String ADD_TRANSLATION_COMMAND = "INSERT INTO {0} ({1}, {2}, {3}, {4}) VALUES (@Id, @RefId, @LangId, @Name)";
 
-        internal static void DoAddTranslation(SQLiteConnection connection, SQLiteTransaction transaction, 
+        internal static void DoAddTranslation(DbConnection connection, DbTransaction transaction, 
             String table, String refColName, String langColName, long refId, long langId, String name)
         {
             String addTranslationCommand = String.Format(ADD_TRANSLATION_COMMAND, table, Schema.ID_COLUMN, refColName, langColName, Schema.NAME_COLUMN);
-            using (SQLiteCommand command = new SQLiteCommand(addTranslationCommand, connection, transaction))
+            using (DbCommand command = DbUtils.CreateDbCommand(addTranslationCommand, connection, transaction))
             {
-                command.Parameters.AddWithValue("@Id", DBNull.Value);
-                command.Parameters.AddWithValue("@RefId", refId);
-                command.Parameters.AddWithValue("@LangId", langId);
-                command.Parameters.AddWithValue("@Name", name);
+                command.AddParameterWithValue("@Id", DBNull.Value);
+                command.AddParameterWithValue("@RefId", refId);
+                command.AddParameterWithValue("@LangId", langId);
+                command.AddParameterWithValue("@Name", name);
                 command.ExecuteNonQuery();
             }
         }
 
         private static String REMOVE_TRANSLATION_COMMAND = "DELETE FROM {0} WHERE {1}=@RefId AND {2}=@LangId";
 
-        internal static void DoRemoveTranslation(SQLiteConnection connection, SQLiteTransaction transaction,
+        internal static void DoRemoveTranslation(DbConnection connection, DbTransaction transaction,
             String table, String refColName, String langColName, long refId, long langId)
         {
             String removeTranslationCommand = String.Format(REMOVE_TRANSLATION_COMMAND, table, refColName, langColName);
-            using (SQLiteCommand command = new SQLiteCommand(removeTranslationCommand, connection, transaction))
+            using (DbCommand command = DbUtils.CreateDbCommand(removeTranslationCommand, connection, transaction))
             {
-                command.Parameters.AddWithValue("@RefId", refId);
-                command.Parameters.AddWithValue("@LangId", langId);
+                command.AddParameterWithValue("@RefId", refId);
+                command.AddParameterWithValue("@LangId", langId);
                 command.ExecuteNonQuery();
             }
         }
