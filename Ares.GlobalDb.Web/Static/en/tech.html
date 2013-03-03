@@ -18,7 +18,7 @@
                 <li><a href="/Static/en/index.html">About</a></li>
                 <li><a href="/Static/en/browse.html">Browse</a></li>
                 <li><a href="/Static/en/tech.html">Technology</a></li>
-                <li><a href="/stats.html">Statistics</a></li>
+                <li><a href="/Statistics">Statistics</a></li>
                 <li><a href="/Static/en/api.html">API</a></li>
                 <li></li>
                 <li><a href="/Static/de/index.html">German Version</a></li>
@@ -32,10 +32,8 @@
             </p> 
             <h4>Database</h4>
             <p>
-                The data is stored in an <a href="http://sqlite.org/">SQLite</a> database. The reason for SQLite is the
-                compatibility with <a href="http://aresrpg.sourceforge.net/">Ares</a>. Much code can be shared between
-                Ares and RPGMusicTags, since an upload into the database is only in a few details different from a 
-                download into the local database of Ares (and vice versa).<br />
+                The data is stored in an <a href="http://sqlite.org/">SQLite</a> database. SQLite is used because it
+                is an easy and free DBMS which is absolutely sufficient for a small database like this one.<br />
                 <br />
                 The schema of the database is <a href="Tags_Schema.png">shown here</a>. For tags and categories, there
                 are potentially many translations into different languages. If someone adds a translation, the tag is
@@ -58,8 +56,11 @@
             <p>
                 The web service and all web pages here are served through <a href="http://www.servicestack.net/">ServiceStack.net</a>. 
                 This is a very simple way to create a web service with .NET. .NET must be used because the tags database shares much 
-                code with <a href="http://aresrpg.sourceforge.net/">Ares</a>. All code for the web service is open source and is 
-                contained in the sources of Ares.
+                code with <a href="http://aresrpg.sourceforge.net/">Ares</a>. Much code can be shared between
+                Ares and RPGMusicTags, since an upload into the database is only in a few details different from a 
+                download into the local database of Ares (and vice versa).<br />
+                All code for the web service is open source and is contained in the sources of Ares.<br />
+                The website is hosted by <a href="http://www.smarterasp.net/"">SmarterASP.NET</a>.
             </p>
         </div>
 

@@ -34,6 +34,7 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.removeDialogBox = new System.Windows.Forms.CheckBox();
             this.okButton = new System.Windows.Forms.Button();
+            this.secondLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -70,12 +71,18 @@
             this.okButton.UseVisualStyleBackColor = true;
             this.okButton.Click += new System.EventHandler(this.okButton_Click);
             // 
+            // secondLabel
+            // 
+            resources.ApplyResources(this.secondLabel, "secondLabel");
+            this.secondLabel.Name = "secondLabel";
+            // 
             // OnlineDbResultDialog
             // 
             this.AcceptButton = this.okButton;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.okButton;
+            this.Controls.Add(this.secondLabel);
             this.Controls.Add(this.okButton);
             this.Controls.Add(this.removeDialogBox);
             this.Controls.Add(this.pictureBox1);
@@ -100,5 +107,6 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.CheckBox removeDialogBox;
         private System.Windows.Forms.Button okButton;
+        private System.Windows.Forms.Label secondLabel;
     }
 }

@@ -503,4 +503,7 @@ Soll es jetzt gespeichert werden?</value>
   <data name="UploadOperationSuccess" xml:space="preserve">
     <value>Hochladen von Tags nach {0} war erfolgreich.</value>
   </data>
+  <data name="TagsDownloadStats" xml:space="preserve">
+    <value>Tags wurden für {0} der {1} Dateien gefunden.</value>
+  </data>
 </root>

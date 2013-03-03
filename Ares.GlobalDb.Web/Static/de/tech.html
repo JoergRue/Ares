@@ -15,11 +15,11 @@
 
         <div id="nav">
             <ul>
-                <li><a href="index.html">Über</a></li>
-                <li><a href="browse.html">Stöbern</a></li>
-                <li><a href="tech.html">Technik</a></li>
-                <li><a href="stats.html">Statistik</a></li>
-                <li><a href="api.html">API</a></li>
+                <li><a href="/Static/de/index.html">Über</a></li>
+                <li><a href="/Static/de/browse.html">Stöbern</a></li>
+                <li><a href="/Static/de/tech.html">Technik</a></li>
+                <li><a href="/Statistics?WebLanguage=de">Statistik</a></li>
+                <li><a href="/Static/de/api.html">API</a></li>
                 <li></li>
                 <li><a href="/Static/en/index.html">English Version</a></li>
             </ul>
@@ -32,10 +32,8 @@
             </p> 
             <h4>Datenbasis</h4>
             <p>
-                Die Daten sind in einer <a href="http://sqlite.org/">SQLite</a>-Datenbasis gespeichert. Der Grund für SQLite ist die Kompatibilität mit 
-                <a href="http://aresrpg.sourceforge.net/">Ares</a>. Viel Code kann gleich für Ares und RPGMusicTags 
-                verwendet werden, denn ein Upload in die Datenbasis unterscheidet sich nur in einigen Details von einem 
-                Download in die lokale Datenbasis von Ares (und umgekehrt).<br />
+                Die Daten sind in einer <a href="http://sqlite.org/">SQLite</a>-Datenbasis gespeichert. SQLite wird verwendet, 
+                weil es ein einfaches und kostenloses DBMS ist, das für eine eher kleine Datenbasis wie diese völlig ausreicht.<br />
                 <br />
                 Das Datenbasis-Schema kann man <a href="Tags_Schema.png">hier sehen</a>. Für Tags und Kategorien gibt es
                 jeweils potentiell viele Übersetzungen in andere Sprachen. Wenn einer eine Übersetzung hinzufügt, ist der
@@ -60,8 +58,11 @@
             <p>
                 Der Webservice und alle Webseiten hier werden mittels <a href="http://www.servicestack.net/">ServiceStack.net</a>
                 betrieben. Dies ist eine sehr einfache Art, mit .NET einen Webservice zu erstellen. .NET wurde gebraucht, weil 
-                die Tag-Datenbasis sehr viel Code mit <a href="http://aresrpg.sourceforge.net/">Ares</a> gemeinsam hat. Der 
-                gesamte Code für den Webservice ist Open Source und in den Sourcen von Ares enthalten.
+                die Tag-Datenbasis sehr viel Code mit <a href="http://aresrpg.sourceforge.net/">Ares</a> gemeinsam hat.  
+                Viel Code kann gleich für Ares und RPGMusicTags verwendet werden, denn ein Upload in die Datenbasis unterscheidet 
+                sich nur in einigen Details von einem Download in die lokale Datenbasis von Ares (und umgekehrt).<br />
+                Der gesamte Code für den Webservice ist Open Source und in den Sourcen von Ares enthalten.<br />
+                Die Webseite wird von <a href="http://www.smarterasp.net/">SmarterASP.NET</a> gehostet.
             </p>
         </div>
 

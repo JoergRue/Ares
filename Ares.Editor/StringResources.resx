@@ -502,4 +502,7 @@ You should adapt some settings first.</value>
   <data name="UploadOperationSuccess" xml:space="preserve">
     <value>Upload of tags to {0} was successful.</value>
   </data>
+  <data name="TagsDownloadStats" xml:space="preserve">
+    <value>Tags were found for {0} of {1} files.</value>
+  </data>
 </root>

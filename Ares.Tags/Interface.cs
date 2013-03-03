@@ -69,60 +69,154 @@ namespace Ares.Tags
 
     #region Data Types for Import / Export
 
+    /// <summary>
+    /// Identifies a file / title in the database.
+    /// </summary>
     public class FileIdentification
     {
+        /// <summary>
+        /// Id of the file. Used for cross-referal in TagsExported data.
+        /// </summary>
         public int Id { get; set; }
+        /// <summary>
+        /// Artist of the title. Only used for identification if no
+        /// Acoust Id is given.
+        /// </summary>
         public String Artist { get; set; }
+        /// <summary>
+        /// Album of the title. Only used for identification if no
+        /// Acoust Id is given.
+        /// </summary>
         public String Album { get; set; }
+        /// <summary>
+        /// Title name. Only used for identification if no 
+        /// Acoust Id is given.
+        /// </summary>
         public String Title { get; set; }
+        /// <summary>
+        /// Identifies the music title globally. See 
+        /// <a href="http://acoustid.org/">AcoustId</a> for more information.
+        /// </summary>
         public String AcoustId { get; set; }
     }
 
+    /// <summary>
+    /// A translation of an item into a language.
+    /// </summary>
     public class TranslationExchange
     {
+        /// <summary>
+        /// Id of the language.
+        /// </summary>
         public long LanguageId { get; set; }
+        /// <summary>
+        /// Name of the item in that language.
+        /// </summary>
         public String Name { get; set; }
     }
 
+    /// <summary>
+    /// Information about a language.
+    /// </summary>
     public class LanguageExchange
     {
+        /// <summary>
+        /// Two-letter ISO-6391 code which identifies the languages.
+        /// </summary>
         public String ISO6391Code { get; set; }
+        /// <summary>
+        /// Id of the language for referencing it e.g. in an TranslationExchange.
+        /// </summary>
         public long Id { get; set; }
+        /// <summary>
+        /// Names of the language (in possibly several languages).
+        /// </summary>
         public List<TranslationExchange> Names { get; set; }
     }
 
+    /// <summary>
+    /// Information about a category.
+    /// </summary>
     public class CategoryExchange
     {
+        /// <summary>
+        /// Id of the category for referencing it e.g. in a TagExchange.
+        /// </summary>
         public long Id { get; set; }
+        /// <summary>
+        /// Names of the category (in possibly several languages).
+        /// </summary>
         public List<TranslationExchange> Names { get; set; }
     }
 
+    /// <summary>
+    /// Information about a tag.
+    /// </summary>
     public class TagExchange
     {
+        /// <summary>
+        /// Id of the tag for referencing it e.g. in a TagsForFileExchange.
+        /// </summary>
         public long Id { get; set; }
+        /// <summary>
+        /// Category of the tag.
+        /// </summary>
         public long CategoryId { get; set; }
+        /// <summary>
+        /// Names of the tag (in possibly several languages).
+        /// </summary>
         public List<TranslationExchange> Names { get; set; }
     }
 
+    /// <summary>
+    /// Information about an assignment of tags to a file.
+    /// </summary>
     public class TagsForFileExchange
     {
+        /// <summary>
+        /// Id of the file.
+        /// </summary>
         public long FileId { get; set; }
+        /// <summary>
+        /// Ids of the assigned tags.
+        /// </summary>
         public List<long> TagIds { get; set; }
+    }
+
+    /// <summary>
+    /// Wrapper around exchanged data.
+    /// </summary>
+    public class TagsExportedData
+    {
+        /// <summary>
+        /// Languages in the data.
+        /// </summary>
+        public List<LanguageExchange> Languages { get; set; }
+        /// <summary>
+        /// Categories in the data.
+        /// </summary>
+        public List<CategoryExchange> Categories { get; set; }
+        /// <summary>
+        /// Tags in the data.
+        /// </summary>
+        public List<TagExchange> Tags { get; set; }
+        /// <summary>
+        /// Files (music titles) in the data.
+        /// </summary>
+        public List<FileIdentification> Files { get; set; }
+        /// <summary>
+        /// Tags which are assigned to the files.
+        /// </summary>
+        public List<TagsForFileExchange> TagsForFiles { get; set; }
+        /// <summary>
+        /// Tags which have been removed from the files ("downvoting").
+        /// </summary>
+        public List<TagsForFileExchange> RemovedTags { get; set; }
     }
 
     public class FileExchange : FileIdentification
     {
         public String RelativePath { get; set; }
-    }
-
-    public class TagsExportedData
-    {
-        public List<LanguageExchange> Languages { get; set; }
-        public List<CategoryExchange> Categories { get; set; }
-        public List<TagExchange> Tags { get; set; }
-        public List<FileIdentification> Files { get; set; }
-        public List<TagsForFileExchange> TagsForFiles { get; set; }
-        public List<TagsForFileExchange> RemovedTags { get; set; }
     }
 
     public class TagsImportedFileData
@@ -471,12 +565,12 @@ namespace Ares.Tags
         /// <summary>
         /// Exports data for the given files.
         /// </summary>
-        TagsExportedData ExportDataForFiles(IList<FileIdentification> files);
+        TagsExportedData ExportDataForFiles(IList<FileIdentification> files, out int nrOfFoundFiles);
 
         /// <summary>
         /// Import data from a client (upload).
         /// </summary>
-        void ImportDataFromClient(TagsExportedData data, String userId, System.IO.TextWriter logStream);
+        void ImportDataFromClient(TagsExportedData data, String userId, System.IO.TextWriter logStream, out int nrOfNewFiles, out int nrOfNewTags);
     }
 
     public class Artist
@@ -488,6 +582,17 @@ namespace Ares.Tags
     {
         public String Artist { get; set; }
         public String Name { get; set; }
+    }
+
+    public class Statistics
+    {
+        public int TagsCount { get; set; }
+        public int FilesCount { get; set; }
+        public int UsersCount { get; set; }
+        public int CategoriesCount { get; set; }
+        public int AlbumsCount { get; set; }
+        public int ArtistsCount { get; set; }
+        public double AvgTagsPerFile { get; set; }
     }
 
     /// <summary>
@@ -520,6 +625,11 @@ namespace Ares.Tags
         /// Retrieve all files on an album.
         /// </summary>
         IList<FileIdentification> GetFilesByAlbum(String artist, String album);
+
+        /// <summary>
+        /// Retrieve statistics.
+        /// </summary>
+        Statistics GetStatistics();
     }
 
     /// <summary>

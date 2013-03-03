@@ -217,3 +217,62 @@ a.sitelink {
 img.right { float:right; width:auto; padding-left:5pt; margin-right:15pt; vertical-align:bottom; }
 
 div.ssthumb p { text-align:center }
+
+span.statistics {
+    font-weight: bold;
+}
+
+li.statistics {
+    padding-top: 5pt;
+}
+
+table.statistics {
+    border-spacing: 0pt;
+}
+
+th.statistics, td.statistics {
+    border-left: none;
+    border-right: 1pt solid;
+    margin: 0pt;
+    padding: 2pt;
+}
+
+th.statisticsLast, td.statisticsLast {
+    border-left: none;
+    border-right: none;
+    margin: 0pt;
+    padding: 2pt;
+}
+
+th.statisticsFirst, td.statisticsFirst {
+    border-left: none;
+    border-right: 1pt solid;
+    margin: 0pt;
+    padding: 2pt;
+}
+
+th.statistics, th.statisticsLast, th.statisticsFirst {
+    border-bottom: 1pt solid;
+    margin: 0pt;
+    padding: 2pt;
+}
+
+td.statistics, td.statisticsLast {
+    text-align: right;
+    margin: 0pt;
+    padding: 2pt;
+}
+
+table.Parameters {
+    margin-left: 30pt;
+    border-spacing: 0pt;
+}
+
+th.Parameters, td.Parameters {
+    margin: 0pt;
+    padding: 2pt;
+    border: 1pt solid;
+}
+
+th.Parameters {
+}

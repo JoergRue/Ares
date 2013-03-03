@@ -81,6 +81,7 @@
     <Compile Include="Tags.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="ares.snk" />
     <None Include="Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

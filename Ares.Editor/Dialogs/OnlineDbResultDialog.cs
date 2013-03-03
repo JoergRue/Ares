@@ -20,20 +20,18 @@ namespace Ares.Editor.Dialogs
 
         private static readonly String sMusicDb = "rpgmusictags.de";
 
-        public bool IsDownload
+        public void SetIsDownload(int nrOfFiles, int nrOfFoundFiles)
         {
-            set
-            {
-                m_IsDownload = value;
-                if (value)
-                {
-                    resultLabel.Text = String.Format(StringResources.DownloadOperationSuccess, sMusicDb);
-                }
-                else
-                {
-                    resultLabel.Text = String.Format(StringResources.UploadOperationSuccess, sMusicDb);
-                }
-            }
+            m_IsDownload = true;
+            resultLabel.Text = String.Format(StringResources.DownloadOperationSuccess, sMusicDb);
+            secondLabel.Text = String.Format(StringResources.TagsDownloadStats, nrOfFoundFiles, nrOfFiles);
+        }
+
+        public void SetIsUpload()
+        {
+            m_IsDownload = false;
+            resultLabel.Text = String.Format(StringResources.UploadOperationSuccess, sMusicDb);
+            secondLabel.Text = String.Empty;
         }
 
         public String Log { get; set; }

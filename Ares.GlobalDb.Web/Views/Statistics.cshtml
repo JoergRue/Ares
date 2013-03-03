@@ -1,0 +1,42 @@
+﻿@inherits ViewPage<StatisticsResponse>
+
+@{
+    Layout = "Browse";
+}
+
+<h3>Statistics</h3>
+
+<h4>Current tags database numbers</h4>
+
+<p>The database currently contains:</p>
+
+<ul>
+    <li class="statistics"><span class="statistics">@Model.FilesCount</span> <a href="@Model.FilesUrl">titles</a> of <span class="statistics">@Model.ArtistsCount</span> <a href="@Model.ArtistsUrl">artists</a> in <span class="statistics">@Model.AlbumsCount</span> <a href="@Model.AlbumsUrl">albums</a></li>
+    <li class="statistics"><span class="statistics">@Model.TagsCount</span> <a href="@Model.TagsUrl">tags</a> in <span class="statistics">@Model.CategoriesCount</span> <a href="@Model.CategoriesUrl">categories</a></li>
+    <li class="statistics">An average of <span class="statistics">@String.Format("{0:0.0}", Model.AvgTagsPerFile)</span> tags for each title</li>
+    <li class="statistics">Contributions by <span class="statistics">@Model.UsersCount</span> users</li>
+</ul>
+
+<h4>Download Statistics</h4>
+
+<table class="statistics">
+    <thead><tr><th class="statisticsFirst">Timespan</th><th class="statistics"># Requests</th><th class="statistics"># Searched Files</th><th class="statistics"># Found Files</th><th class="statisticsLast">% Found Files</th></tr></thead>
+    <tbody>
+        <tr><td class="statisticsFirst">Today</td><td class="statistics">@Model.DownloadStats.Today.NrOfDownloads</td><td class="statistics">@Model.DownloadStats.Today.NrOfRequestedFiles</td><td class="statistics">@Model.DownloadStats.Today.NrOfFoundFiles</td><td class="statisticsLast">@String.Format("{0:0.0}", Model.DownloadStats.Today.PercentFoundFiles)</td></tr>
+        <tr><td class="statisticsFirst">Last Week</td><td class="statistics">@Model.DownloadStats.LastWeek.NrOfDownloads</td><td class="statistics">@Model.DownloadStats.LastWeek.NrOfRequestedFiles</td><td class="statistics">@Model.DownloadStats.LastWeek.NrOfFoundFiles</td><td class="statisticsLast">@String.Format("{0:0.0}", Model.DownloadStats.LastWeek.PercentFoundFiles)</td></tr>
+        <tr><td class="statisticsFirst">Month to Date</td><td class="statistics">@Model.DownloadStats.LastMonth.NrOfDownloads</td><td class="statistics">@Model.DownloadStats.LastMonth.NrOfRequestedFiles</td><td class="statistics">@Model.DownloadStats.LastMonth.NrOfFoundFiles</td><td class="statisticsLast">@String.Format("{0:0.0}", Model.DownloadStats.LastMonth.PercentFoundFiles)</td></tr>
+        <tr><td class="statisticsFirst">Year to Date</td><td class="statistics">@Model.DownloadStats.LastYear.NrOfDownloads</td><td class="statistics">@Model.DownloadStats.LastYear.NrOfRequestedFiles</td><td class="statistics">@Model.DownloadStats.LastYear.NrOfFoundFiles</td><td class="statisticsLast">@String.Format("{0:0.0}", Model.DownloadStats.LastYear.PercentFoundFiles)</td></tr>
+    </tbody>
+</table>
+
+<h4>Upload Statistics</h4>
+
+<table class="statistics">
+    <thead><tr><th class="statisticsFirst">Timespan</th><th class="statistics"># Requests</th><th class="statistics"># Titles Added</th><th class="statisticsLast"># Tags Added</th></tr></thead>
+    <tbody>
+        <tr><td class="statisticsFirst">Today</td><td class="statistics">@Model.UploadStats.Today.NrOfUploads</td><td class="statistics">@Model.UploadStats.Today.NrOfNewFiles</td><td class="statisticsLast">@Model.UploadStats.Today.NrOfNewTags</td></tr>
+        <tr><td class="statisticsFirst">Last Week</td><td class="statistics">@Model.UploadStats.LastWeek.NrOfUploads</td><td class="statistics">@Model.UploadStats.LastWeek.NrOfNewFiles</td><td class="statisticsLast">@Model.UploadStats.LastWeek.NrOfNewTags</td></tr>
+        <tr><td class="statisticsFirst">Month to Date</td><td class="statistics">@Model.UploadStats.LastMonth.NrOfUploads</td><td class="statistics">@Model.UploadStats.LastMonth.NrOfNewFiles</td><td class="statisticsLast">@Model.UploadStats.LastMonth.NrOfNewTags</td></tr>
+        <tr><td class="statisticsFirst">Year to Date</td><td class="statistics">@Model.UploadStats.LastYear.NrOfUploads</td><td class="statistics">@Model.UploadStats.LastYear.NrOfNewFiles</td><td class="statisticsLast">@Model.UploadStats.LastYear.NrOfNewTags</td></tr>
+    </tbody>
+</table>

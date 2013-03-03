@@ -1,0 +1,321 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>RPG Musik-Tags Datenbasis</title>
+    <link href="/Static/Browse.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+    <div id="site-top">
+        <h1>RPG Musik-Tags Datenbasis</h1>
+    </div>
+
+    <div id="page">
+
+        <div id="nav">
+            <ul>
+                <li><a href="/Static/de/index.html">Über</a></li>
+                <li><a href="/Static/de/browse.html">Stöbern</a></li>
+                <li><a href="/Static/de/tech.html">Technik</a></li>
+                <li><a href="/Statistics?WebLanguage=de">Statistik</a></li>
+                <li><a href="/Static/de/api.html">API</a></li>
+                <li></li>
+                <li><a href="/Static/en/index.html">English Version</a></li>
+            </ul>
+        </div>
+
+        <div id="content">
+            <h3>API</h3>
+            <p>
+                This page describes the API of the web service for developers. The main services are for up- and download
+                of data. Further services are to browse the database.<br />
+                <br />
+                All services are also described technically in the <a href="/Metadata">metadata</a> page.<br />
+                <br />
+                This page is only available in English.
+            </p> 
+            <h4>General Notes</h4>
+            <p>
+                The services are implemented with <a href="http://www.servicestack.net/">ServiceStack.net</a>. If you have 
+                problems accessing them, the documentation and help of ServiceStack should be the first place to look for 
+                solutions. See also the <a href="https://github.com/ServiceStack/ServiceStack/wiki/Clients-overview">ServiceStack
+                clients documentation page</a>.<br />
+                <br />
+                Parameters for the services can be given and returned in several formats, most importantly JSON, XML and JSV. 
+                <strong>Important:</strong> parameters of complex datatypes must be serialized in the <a href="http://www.servicestack.net/mythz_blog/?p=176">
+                JSV format</a> for upload, and will be serialized in the JSV format for download.
+            </p>
+            <h4>Download</h4>
+            <p>
+                With this service, you can retrieve tags for files.
+            </p>
+            <ul>
+                <li><strong>Request type:</strong> must be POST</li>
+                <li><strong>Path:</strong> /Download</li>
+                <li><strong>Parameters:</strong></li>
+            </ul>
+            <table class="Parameters">
+                <thead><tr>
+                    <th class="Parameters">Name</th>
+                    <th class="Parameters">Type</th>
+                    <th class="Parameters">Required</th>
+                    <th class="Parameters">Description</th></tr></thead>
+                <tbody>
+                    <tr><td class="Parameters">FileIdentification</td>  <td class="Parameters">List&lt;FileIdentification&gt;</td><td class="Parameters">Yes</td><td class="Parameters">Identifies the files. <a href="#DataTypes">Custom data type</a> serialized with JSV.</td></tr>
+                    <tr><td class="Parameters">Test</td>                <td class="Parameters">boolean</td>                       <td class="Parameters">No</td> <td class="Parameters">Set to true to access a test database instead of the normal database</td></tr>
+                </tbody>
+            </table>
+            <ul>
+                <li><strong>Response:</strong></li>
+            </ul>
+            <table class="Parameters">
+                <thead><tr>
+                    <th class="Parameters">Name</th>
+                    <th class="Parameters">Type</th>
+                    <th class="Parameters">Description</th></tr></thead>
+                <tbody>
+                    <tr><td class="Parameters">Status</td>        <td class="Parameters">int</td>             <td class="Parameters">Error code: 0 on success, 1 on failure</td></tr>
+                    <tr><td class="Parameters">ErrorMessage</td>  <td class="Parameters">String</td>          <td class="Parameters">Describes the error on failure</td></tr>
+                    <tr><td class="Parameters">TagsData</td>      <td class="Parameters">TagsExportedData</td><td class="Parameters">Retrieved tags. <a href="#DataTypes">Custom data type</a> serialized with JSV.</td></tr>
+                    <tr><td class="Parameters">NrOfFoundFiles</td><td class="Parameters">int</td>             <td class="Parameters">The number of files in the request which were found in the database.</td></tr>
+                </tbody>
+            </table>
+            <h4>Upload</h4>
+            <p>
+                With this service, you can add tags for files to the database. It is <strong>strongly</strong> recommended that you test your client well with the test database (setting the
+                parameter Test to true on each request) before using the normal database.
+            </p>
+            <ul>
+                <li><strong>Request type:</strong> must be POST</li>
+                <li><strong>Path:</strong> /Upload</li>
+                <li><strong>Parameters:</strong></li>
+            </ul>
+            <table class="Parameters">
+                <thead><tr>
+                    <th class="Parameters">Name</th>
+                    <th class="Parameters">Type</th>
+                    <th class="Parameters">Required</th>
+                    <th class="Parameters">Description</th></tr></thead>
+                <tbody>
+                    <tr><td class="Parameters">TagsData</td>  <td class="Parameters">TagsExportedData</td><td class="Parameters">Yes</td><td class="Parameters">Data to put into the database. <a href="#DataTypes">Custom data type</a> serialized with JSV.</td></tr>
+                    <tr><td class="Parameters">User</td>      <td class="Parameters">String</td>          <td class="Parameters">Yes</td><td class="Parameters">User Id. Ares uses a hash over a mail address, but it can be any string.</td></tr>
+                    <tr><td class="Parameters">IncludeLog</td><td class="Parameters">boolean</td>         <td class="Parameters">No</td> <td class="Parameters">If set to true, the response will include a log about the import operation.</td></tr>
+                    <tr><td class="Parameters">Test</td>      <td class="Parameters">boolean</td>         <td class="Parameters">No</td> <td class="Parameters">Set to true to access a test database instead of the normal database</td></tr>
+                </tbody>
+            </table>
+            <ul>
+                <li><strong>Response:</strong></li>
+            </ul>
+            <table class="Parameters">
+                <thead><tr>
+                    <th class="Parameters">Name</th>
+                    <th class="Parameters">Type</th>
+                    <th class="Parameters">Description</th></tr></thead>
+                <tbody>
+                    <tr><td class="Parameters">Status</td>        <td class="Parameters">int</td>   <td class="Parameters">Error code: 0 on success, 1 on failure</td></tr>
+                    <tr><td class="Parameters">ErrorMessage</td>  <td class="Parameters">String</td><td class="Parameters">Describes the error on failure</td></tr>
+                    <tr><td class="Parameters">Log</td>           <td class="Parameters">String</td><td class="Parameters">Log about the import operation, if it was requested</td></tr>
+                </tbody>
+            </table>
+            <h4>Browse</h4>
+            <p>
+                There are multiple services which are used to browse the database. They can all be accessed with any request type (though GET should be used normally), and they share some
+                common parameters:
+            </p>
+            <table class="Parameters">
+                <thead><tr>
+                    <th class="Parameters">Name</th>
+                    <th class="Parameters">Type</th>
+                    <th class="Parameters">Required</th>
+                    <th class="Parameters">Description</th></tr></thead>
+                <tbody>
+                    <tr><td class="Parameters">LanguageCode</td><td class="Parameters">String</td><td class="Parameters">No</td> <td class="Parameters">A two-letter ISO 639-1 language code (e.g. "de"). The database is browsed regarding tags and categories in that language.</td></tr>
+                    <tr><td class="Parameters">WebLanguage</td> <td class="Parameters">String</td><td class="Parameters">No</td> <td class="Parameters">Either "de" or "en": determines whether web pages shown as response are in German or in English.</td></tr>
+                    <tr><td class="Parameters">Test</td>      <td class="Parameters">boolean</td> <td class="Parameters">No</td> <td class="Parameters">Set to true to access a test database instead of the normal database</td></tr>
+                </tbody>
+            </table>
+            <p>These three parameters are also always included in the response for a browse request; the first two wrapped inside a LanguageResponse.<br />
+                <br />
+               In particular, the following browsing services are available:
+            </p>
+            <table class="Parameters">
+                <thead><tr>
+                    <th class="Parameters">Path</th>
+                    <th class="Parameters">Description</th></tr></thead>
+                <tbody>
+                    <tr><td class="Parameters">/Artists</td><td class="Parameters">Returns all artists</td></tr>
+                    <tr><td class="Parameters">/Artists/{Name}</td><td class="Parameters">Returns all albums by an artist</td></tr>
+                    <tr><td class="Parameters">/Albums</td><td class="Parameters">Returns all albums</td></tr>
+                    <tr><td class="Parameters">/Albums/{Name}</td><td class="Parameters">Returns all titles in an album</td></tr>
+                    <tr><td class="Parameters">/Artists/{Artist}/{Album}</td><td class="Parameters">Returns all titles in an album</td></tr>
+                    <tr><td class="Parameters">/Files</td><td class="Parameters">Returns all titles</td></tr>
+                    <tr><td class="Parameters">/Categories</td><td class="Parameters">Returns all categories</td></tr>
+                    <tr><td class="Parameters">/Categories/{Name}</td><td class="Parameters">Returns all tags in a category</td></tr>
+                    <tr><td class="Parameters">/Tags/{Name}</td><td class="Parameters">Returns all titles with a tag</td></tr>
+                    <tr><td class="Parameters">/Tags/{Category}/{Name}</td><td class="Parameters">Returns all titles with a tag</td></tr>
+                    <tr><td class="Parameters">/Files/{Id}</td><td class="Parameters">Returns all tags of a title</td></tr>
+                    <tr><td class="Parameters">/Statistics</td><td class="Parameters">Returns statistics about the database</td></tr>
+                </tbody>
+            </table>
+            <p>The parameters of the responses should be pretty self-explanatory. Services which return several items always return them in a list parameter called Results.</p>
+            <h4><a name="DataTypes">Custom Data Types</a></h4>
+            <p>
+                For the Upload and Download services, custom data types are used to identify the files and to wrap the actual data. The data types are given as their C# class
+                definitions with their descriptive comments here:
+            </p>
+            <pre>
+            <code>
+    /// &lt;summary&gt;
+    /// Identifies a file / title in the database.
+    /// &lt;/summary&gt;
+    public class FileIdentification
+    {
+        /// &lt;summary&gt;
+        /// Id of the file. Used for cross-referal in TagsExported data.
+        /// &lt;/summary&gt;
+        public int Id { get; set; }
+        /// &lt;summary&gt;
+        /// Artist of the title. Only used for identification if no
+        /// Acoust Id is given.
+        /// &lt;/summary&gt;
+        public String Artist { get; set; }
+        /// &lt;summary&gt;
+        /// Album of the title. Only used for identification if no
+        /// Acoust Id is given.
+        /// &lt;/summary&gt;
+        public String Album { get; set; }
+        /// &lt;summary&gt;
+        /// Title name. Only used for identification if no 
+        /// Acoust Id is given.
+        /// &lt;/summary&gt;
+        public String Title { get; set; }
+        /// &lt;summary&gt;
+        /// Identifies the music title globally. See 
+        /// &lt;a href="http://acoustid.org/"&gt;AcoustId&lt;/a&gt; for more information.
+        /// &lt;/summary&gt;
+        public String AcoustId { get; set; }
+    }
+
+    /// &lt;summary&gt;
+    /// A translation of an item into a language.
+    /// &lt;/summary&gt;
+    public class TranslationExchange
+    {
+        /// &lt;summary&gt;
+        /// Id of the language.
+        /// &lt;/summary&gt;
+        public long LanguageId { get; set; }
+        /// &lt;summary&gt;
+        /// Name of the item in that language.
+        /// &lt;/summary&gt;
+        public String Name { get; set; }
+    }
+
+    /// &lt;summary&gt;
+    /// Information about a language.
+    /// &lt;/summary&gt;
+    public class LanguageExchange
+    {
+        /// &lt;summary&gt;
+        /// Two-letter ISO-6391 code which identifies the languages.
+        /// &lt;/summary&gt;
+        public String ISO6391Code { get; set; }
+        /// &lt;summary&gt;
+        /// Id of the language for referencing it e.g. in an TranslationExchange.
+        /// &lt;/summary&gt;
+        public long Id { get; set; }
+        /// &lt;summary&gt;
+        /// Names of the language (in possibly several languages).
+        /// &lt;/summary&gt;
+        public List&lt;TranslationExchange&gt; Names { get; set; }
+    }
+
+    /// &lt;summary&gt;
+    /// Information about a category.
+    /// &lt;/summary&gt;
+    public class CategoryExchange
+    {
+        /// &lt;summary&gt;
+        /// Id of the category for referencing it e.g. in a TagExchange.
+        /// &lt;/summary&gt;
+        public long Id { get; set; }
+        /// &lt;summary&gt;
+        /// Names of the category (in possibly several languages).
+        /// &lt;/summary&gt;
+        public List&lt;TranslationExchange&gt; Names { get; set; }
+    }
+
+    /// &lt;summary&gt;
+    /// Information about a tag.
+    /// &lt;/summary&gt;
+    public class TagExchange
+    {
+        /// &lt;summary&gt;
+        /// Id of the tag for referencing it e.g. in a TagsForFileExchange.
+        /// &lt;/summary&gt;
+        public long Id { get; set; }
+        /// &lt;summary&gt;
+        /// Category of the tag.
+        /// &lt;/summary&gt;
+        public long CategoryId { get; set; }
+        /// &lt;summary&gt;
+        /// Names of the tag (in possibly several languages).
+        /// &lt;/summary&gt;
+        public List&lt;TranslationExchange&gt; Names { get; set; }
+    }
+
+    /// &lt;summary&gt;
+    /// Information about an assignment of tags to a file.
+    /// &lt;/summary&gt;
+    public class TagsForFileExchange
+    {
+        /// &lt;summary&gt;
+        /// Id of the file.
+        /// &lt;/summary&gt;
+        public long FileId { get; set; }
+        /// &lt;summary&gt;
+        /// Ids of the assigned tags.
+        /// &lt;/summary&gt;
+        public List&lt;long&gt; TagIds { get; set; }
+    }
+
+    /// &lt;summary&gt;
+    /// Wrapper around exchanged data.
+    /// &lt;/summary&gt;
+    public class TagsExportedData
+    {
+        /// &lt;summary&gt;
+        /// Languages in the data.
+        /// &lt;/summary&gt;
+        public List&lt;LanguageExchange&gt; Languages { get; set; }
+        /// &lt;summary&gt;
+        /// Categories in the data.
+        /// &lt;/summary&gt;
+        public List&lt;CategoryExchange&gt; Categories { get; set; }
+        /// &lt;summary&gt;
+        /// Tags in the data.
+        /// &lt;/summary&gt;
+        public List&lt;TagExchange&gt; Tags { get; set; }
+        /// &lt;summary&gt;
+        /// Files (music titles) in the data.
+        /// &lt;/summary&gt;
+        public List&lt;FileIdentification&gt; Files { get; set; }
+        /// &lt;summary&gt;
+        /// Tags which are assigned to the files.
+        /// &lt;/summary&gt;
+        public List&lt;TagsForFileExchange&gt; TagsForFiles { get; set; }
+        /// &lt;summary&gt;
+        /// Tags which have been removed from the files ("downvoting").
+        /// &lt;/summary&gt;
+        public List&lt;TagsForFileExchange&gt; RemovedTags { get; set; }
+    }
+            </code>
+            </pre>
+        </div>
+
+    </div>
+
+
+</body>
+</html>

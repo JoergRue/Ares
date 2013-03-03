@@ -1,4 +1,23 @@
-﻿using ServiceStack.ServiceHost;
+﻿/*
+ Copyright (c) 2013 [Joerg Ruedenauer]
+ 
+ This file is part of Ares.
+
+ Ares is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+ Ares is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Ares; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
+using ServiceStack.ServiceHost;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -71,12 +90,29 @@ namespace Ares.GlobalDB.Services
                 UploadResponse response = new UploadResponse();
                 try
                 {
-                    using (TagsDBUser user = new TagsDBUser(request.Test))
+                    // try several times to prevent possible problems with concurrent modifications
+                    int retryCount = 0;
+                    const int MAX_RETRIES = 5;
+                    while (true)
                     {
-                        user.TagsDB.GlobalDBInterface.ImportDataFromClient(request.TagsData, request.User, writer);
+                        try
+                        {
+                            int nrOfNewFiles, nrOfNewTags;
+                            using (TagsDBUser user = new TagsDBUser(request.Test))
+                            {
+                                user.TagsDB.GlobalDBInterface.ImportDataFromClient(request.TagsData, request.User, writer, out nrOfNewFiles, out nrOfNewTags);
+                            }
+                            StatisticsDB.GetStatisticsDB(request.Test).InsertUpload(nrOfNewFiles, nrOfNewTags);
+                            response.Status = 0;
+                            response.ErrorMessage = String.Empty;
+                            break;
+                        }
+                        catch (Exception)
+                        {
+                            if (++retryCount >= MAX_RETRIES)
+                                throw;
+                        }
                     }
-                    response.Status = 0;
-                    response.ErrorMessage = String.Empty;
                 }
                 catch (Exception ex)
                 {
@@ -104,6 +140,7 @@ namespace Ares.GlobalDB.Services
         public int Status { get; set; }
         public String ErrorMessage { get; set; }
         public Ares.Tags.TagsExportedData TagsData { get; set; }
+        public int NrOfFoundFiles { get; set; }
     }
 
     public class DownloadService : ServiceStack.ServiceInterface.Service
@@ -113,12 +150,31 @@ namespace Ares.GlobalDB.Services
             DownloadResponse response = new DownloadResponse();
             try
             {
-                using (TagsDBUser user = new TagsDBUser(request.Test))
+                // try several times to prevent possible problems with concurrent modifications
+                int retryCount = 0;
+                const int MAX_RETRIES = 5;
+                while (true)
                 {
-                    response.TagsData = user.TagsDB.GlobalDBInterface.ExportDataForFiles(request.FileIdentification);
+                    try
+                    {
+                        int nrOfFoundFiles;
+                        using (TagsDBUser user = new TagsDBUser(request.Test))
+                        {
+                            response.TagsData = user.TagsDB.GlobalDBInterface.ExportDataForFiles(request.FileIdentification, out nrOfFoundFiles);
+                            response.NrOfFoundFiles = nrOfFoundFiles;
+                        }
+                        int nrOfRequestedFiles = request.FileIdentification != null ? request.FileIdentification.Count : 0;
+                        StatisticsDB.GetStatisticsDB(request.Test).InsertDownload(nrOfRequestedFiles, nrOfFoundFiles);
+                        response.Status = 0;
+                        response.ErrorMessage = String.Empty;
+                        break;
+                    }
+                    catch (Exception)
+                    {
+                        if (++retryCount >= MAX_RETRIES)
+                            throw;
+                    }
                 }
-                response.Status = 0;
-                response.ErrorMessage = String.Empty;
             }
             catch (Exception ex)
             {
@@ -195,6 +251,11 @@ namespace Ares.GlobalDB.Services
     {
         public String Id { get; set; }
         public String Name { get; set; }
+    }
+
+    [Route("Statistics")]
+    public class Statistics : BrowseRequest
+    {
     }
 
     public class Language
@@ -433,6 +494,44 @@ namespace Ares.GlobalDB.Services
         public String Tag { get; set; }
     }
 
+    public class StatisticsResponse : ItemResponse<Ares.Tags.Statistics>
+    {
+        public int FilesCount { get { return Inner.FilesCount; } }
+
+        public int AlbumsCount { get { return Inner.AlbumsCount; } }
+
+        public int ArtistsCount { get { return Inner.ArtistsCount; } }
+
+        public int TagsCount { get { return Inner.TagsCount; } }
+
+        public int CategoriesCount { get { return Inner.CategoriesCount; } }
+
+        public int UsersCount { get { return Inner.UsersCount; } }
+
+        public double AvgTagsPerFile { get { return Inner.AvgTagsPerFile; } }
+
+        public String AlbumsUrl { get { return MakeBrowseUrl("/Albums"); } }
+
+        public String ArtistsUrl { get { return MakeBrowseUrl("/Artists"); } }
+
+        public String FilesUrl { get { return MakeBrowseUrl("/Files"); } }
+
+        public String TagsUrl { get { return MakeBrowseUrl("/Tags"); } }
+
+        public String CategoriesUrl { get { return MakeBrowseUrl("/Categories"); } }
+
+        private Ares.Tags.Statistics Inner { get; set; }
+        
+        public override void SetData(Ares.Tags.Statistics data)
+        {
+ 	        Inner = data;
+        }
+
+        public UploadStatistics UploadStats { get; set; }
+
+        public DownloadStatistics DownloadStats { get; set; }
+    }
+
     public class BrowsingService : ServiceStack.ServiceInterface.Service
     {
         private void SetResponseOptions(BrowseRequest request, BrowseResponse response, TagsDBUser dbUser)
@@ -618,6 +717,21 @@ namespace Ares.GlobalDB.Services
                 }
                 var response = CreateItemResponse<FilesByTagResponse, List<File>>(request, result, user);
                 response.Tag = request.Tag;
+                return CreateHttpResponse(request, response);
+            }
+        }
+
+        public object Get(Statistics request)
+        {
+            Ares.Tags.Statistics result = new Ares.Tags.Statistics();
+            using (TagsDBUser user = new TagsDBUser(request.Test))
+            {
+                result = user.TagsDB.BrowseInterface.GetStatistics();
+                var response = CreateItemResponse<StatisticsResponse, Ares.Tags.Statistics>(request, result, user);
+                UploadStatistics uploadStats; DownloadStatistics downloadStats;
+                StatisticsDB.GetStatisticsDB(request.Test).GetStatistics(out uploadStats, out downloadStats);
+                response.UploadStats = uploadStats;
+                response.DownloadStats = downloadStats;
                 return CreateHttpResponse(request, response);
             }
         }

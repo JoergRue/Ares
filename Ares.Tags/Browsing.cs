@@ -139,6 +139,26 @@ namespace Ares.Tags
             }
         }
 
+        public Statistics GetStatistics()
+        {
+            if (m_Connection == null)
+            {
+                throw new TagsDbException("No Connection to DB file!");
+            }
+            try
+            {
+                return DoGetStatistics();
+            }
+            catch (System.Data.DataException ex)
+            {
+                throw new TagsDbException(ex.Message, ex);
+            }
+            catch (DbException ex)
+            {
+                throw new TagsDbException(ex.Message, ex);
+            }
+        }
+
         private IList<Artist> DoGetAllArtists()
         {
             List<Artist> result = new List<Artist>();
@@ -257,6 +277,42 @@ namespace Ares.Tags
                         }
                     }
                 }
+            }
+            return result;
+        }
+
+        public Statistics DoGetStatistics()
+        {
+            Statistics result = new Statistics();
+            using (DbCommand command = DbUtils.CreateDbCommand(String.Format("SELECT COUNT(*) FROM {0}", Schema.FILES_TABLE), m_Connection))
+            {
+                Object res = command.ExecuteScalar();
+                result.FilesCount = (Int32)(Int64)res;
+            }
+            using (DbCommand command = DbUtils.CreateDbCommand(String.Format("SELECT COUNT(*) FROM {0}", Schema.CATEGORIES_TABLE), m_Connection))
+            {
+                result.CategoriesCount = (Int32)(Int64)command.ExecuteScalar();
+            }
+            using (DbCommand command = DbUtils.CreateDbCommand(String.Format("SELECT COUNT(*) FROM {0}", Schema.TAGS_TABLE), m_Connection))
+            {
+                result.TagsCount = (Int32)(Int64)command.ExecuteScalar();
+            }
+            using (DbCommand command = DbUtils.CreateDbCommand(String.Format("SELECT COUNT(*) FROM (SELECT DISTINCT {0} FROM {1})", Schema.USER_COLUMN, Schema.FILETAGS_TABLE), m_Connection))
+            {
+                result.UsersCount = (Int32)(Int64)command.ExecuteScalar();
+            }
+            using (DbCommand command = DbUtils.CreateDbCommand(String.Format("SELECT COUNT(*) FROM (SELECT DISTINCT {0}, {1} FROM {2})", Schema.FILE_COLUMN, Schema.TAG_COLUMN, Schema.FILETAGS_TABLE), m_Connection))
+            {
+                int count = (Int32)(Int64)command.ExecuteScalar();
+                result.AvgTagsPerFile = result.TagsCount > 0 ? (double)count / (double)result.TagsCount : 0.0;
+            }
+            using (DbCommand command = DbUtils.CreateDbCommand(String.Format("SELECT COUNT(*) FROM (SELECT DISTINCT {0}, {1} FROM {2})", Schema.ARTIST_COLUMN, Schema.ALBUM_COLUMN, Schema.FILES_TABLE), m_Connection))
+            {
+                result.AlbumsCount = (Int32)(Int64)command.ExecuteScalar();
+            }
+            using (DbCommand command = DbUtils.CreateDbCommand(String.Format("SELECT COUNT(*) FROM (SELECT DISTINCT {0} FROM {1})", Schema.ARTIST_COLUMN, Schema.FILES_TABLE), m_Connection))
+            {
+                result.ArtistsCount = (Int32)(Int64)command.ExecuteScalar();
             }
             return result;
         }

@@ -86,17 +86,20 @@ namespace Ares.Tags
         }
 
         // method from global database
-        public TagsExportedData ExportDataForFiles(IList<FileIdentification> files)
+        public TagsExportedData ExportDataForFiles(IList<FileIdentification> files, out int foundFiles)
         {
             if (files == null || files.Count == 0)
+            {
+                foundFiles = 0;
                 return new TagsExportedData();
+            }
             if (m_Connection == null)
             {
                 throw new TagsDbException("No connection to DB file!");
             }
             try
             {
-                return CreateExportedData(files);
+                return CreateExportedData(files, out foundFiles);
             }
             catch (System.Data.DataException ex)
             {
@@ -250,9 +253,10 @@ namespace Ares.Tags
             }
         }
 
-        TagsExportedData CreateExportedData(IList<FileIdentification> files)
+        TagsExportedData CreateExportedData(IList<FileIdentification> files, out int foundFiles)
         {
             TagsExportedData data = new TagsExportedData();
+            foundFiles = 0;
 
             using (DbTransaction transaction = m_Connection.BeginTransaction())
             {
@@ -277,6 +281,7 @@ namespace Ares.Tags
                                 fileIdMap[id] = file.Id;
                                 moveParam.Value = id;
                                 moveCmd.ExecuteNonQuery();
+                                ++foundFiles;
                             }
                         }
                     }
@@ -609,8 +614,10 @@ namespace Ares.Tags
         }
 
         // method for global DB
-        public void ImportDataFromClient(TagsExportedData data, String userId, System.IO.TextWriter logStream)
+        public void ImportDataFromClient(TagsExportedData data, String userId, System.IO.TextWriter logStream, out int nrOfNewFiles, out int nrOfNewTags)
         {
+            nrOfNewFiles = 0;
+            nrOfNewTags = 0;
             if (data == null)
                 return;
             if (logStream == null)
@@ -624,7 +631,7 @@ namespace Ares.Tags
             }
             try
             {
-                ImportDataIntoGlobalDB(data, logStream, userId);
+                ImportDataIntoGlobalDB(data, logStream, userId, out nrOfNewFiles, out nrOfNewTags);
             }
             catch (System.Data.DataException ex)
             {
@@ -669,8 +676,10 @@ namespace Ares.Tags
             }            
         }
 
-        private void ImportDataIntoGlobalDB(TagsExportedData data, TextWriter logStream, String user)
+        private void ImportDataIntoGlobalDB(TagsExportedData data, TextWriter logStream, String user, out int nrOfNewFiles, out int nrOfNewTags)
         {
+            nrOfNewFiles = 0;
+            nrOfNewTags = 0;
             if (data == null)
                 return;
             using (DbTransaction transaction = m_Connection.BeginTransaction())
@@ -681,7 +690,7 @@ namespace Ares.Tags
                     return;
 
                 GlobalDBImporter helper = new GlobalDBImporter(this, m_Connection, transaction, logStream);
-                helper.ImportExportedData(data, user);
+                helper.ImportExportedData(data, user, out nrOfNewFiles, out nrOfNewTags);
 
                 transaction.Commit();
             }
@@ -709,10 +718,16 @@ namespace Ares.Tags
 
             public void ImportExportedData(TagsExportedData data, String user)
             {
+                int newFiles, newTags;
+                ImportExportedData(data, user, out newFiles, out newTags);
+            }
+
+            public void ImportExportedData(TagsExportedData data, String user, out int nrOfNewFiles, out int nrOfNewTags)
+            {
                 ImportLanguages(data.Languages);
                 ImportCategories(data.Categories);
-                ImportTags(data.Tags);
-                ImportFiles(data.Files, user);
+                ImportTags(data.Tags, out nrOfNewTags);
+                ImportFiles(data.Files, user, out nrOfNewFiles);
                 ImportFileTags(data.TagsForFiles, user);
                 ImportRemovedTags(data.RemovedTags, user);
             }
@@ -884,14 +899,15 @@ namespace Ares.Tags
                 ImportTranslations(ce.Names, categoryId, Schema.CATEGORYNAMES_TABLE, Schema.CATEGORY_COLUMN, Schema.LANGUAGE_COLUMN, "category");
             }
 
-            private void ImportTags(List<TagExchange> tags)
+            private void ImportTags(List<TagExchange> tags, out int nrOfNewTags)
             {
+                nrOfNewTags = 0;
                 if (tags == null)
                     return;
                 foreach (TagExchange tag in tags)
                 {
                     long tagId;
-                    if (FindOrAddTag(tag, out tagId))
+                    if (FindOrAddTag(tag, out tagId, ref nrOfNewTags))
                     {
                         m_TagsMap[tag.Id] = tagId;
                         ImportTagTranslations(tag);
@@ -899,7 +915,7 @@ namespace Ares.Tags
                 }
             }
 
-            private bool FindOrAddTag(TagExchange tag, out long tagId)
+            private bool FindOrAddTag(TagExchange tag, out long tagId, ref int nrOfNewTags)
             {
                 // first try to find an existing tag
 
@@ -1019,6 +1035,7 @@ namespace Ares.Tags
                     LanguageWriting writing = (LanguageWriting)m_TagsDb.GetWriteInterfaceByLanguage((int)langId);
                     tagId = writing.DoAddTag((int)m_CategoriesMap[tag.CategoryId], name, m_Transaction);
                     m_LogStream.WriteLine(String.Format("Added tag {0} (language {1}, new Id {2}) for Id {3}", name, langId, tagId, tag.Id));
+                    ++nrOfNewTags;
                     return true;
                 }
                 else
@@ -1035,8 +1052,9 @@ namespace Ares.Tags
                 ImportTranslations(te.Names, tagId, Schema.TAGNAMES_TABLE, Schema.TAG_COLUMN, Schema.LANGUAGE_COLUMN, "tag");
             }
 
-            private void ImportFiles(List<FileIdentification> files, String user)
+            private void ImportFiles(List<FileIdentification> files, String user, out int nrOfNewFiles)
             {
+                nrOfNewFiles = 0;
                 if (files == null)
                     return;
                 String fileQuery = String.Format("SELECT {0} FROM {1} WHERE {2}=@FilePath", Schema.ID_COLUMN, Schema.FILES_TABLE, Schema.PATH_COLUMN);
@@ -1115,6 +1133,7 @@ namespace Ares.Tags
                                 long id = m_Connection.LastInsertRowId();
                                 m_FilesMap[file.Id] = id;
                                 m_LogStream.WriteLine(String.Format("Insert new file {0} with id {1} (imported id {2})", filePath, id, file.Id));
+                                ++nrOfNewFiles;
                             }
                             else
                             {

@@ -27,6 +27,7 @@ using System.Xml;
 using System.Threading;
 using System.Threading.Tasks;
 
+
 namespace Ares.TagsImport
 {
     [Serializable]
@@ -91,6 +92,10 @@ namespace Ares.TagsImport
             request.AddParameter("TagsData", serializedTagsData);
             request.AddParameter("User", ObfuscateUser(user));
             request.AddParameter("IncludeLog", includeLog);
+            if (Settings.Default.UseTestDB)
+            {
+                request.AddParameter("Test", true);
+            }
             var client = new RestSharp.RestClient();
             client.BaseUrl = GlobalDb.BaseUrl;
             client.Timeout = 10 * 1000;
@@ -119,10 +124,10 @@ namespace Ares.TagsImport
         private Ares.ModelInfo.IProgressMonitor m_Monitor;
         private CancellationTokenSource m_TokenSource;
 
-        public static String DownloadTags(Ares.ModelInfo.IProgressMonitor monitor, IList<String> files, bool includeLog, CancellationTokenSource cancellationTokenSource)
+        public static String DownloadTags(Ares.ModelInfo.IProgressMonitor monitor, IList<String> files, out int nrOfFoundFiles, bool includeLog, CancellationTokenSource cancellationTokenSource)
         {
             GlobalDbDownload instance = new GlobalDbDownload(monitor, cancellationTokenSource);
-            return instance.DoDownloadTags(files, includeLog);
+            return instance.DoDownloadTags(files, out nrOfFoundFiles, includeLog);
         }
 
         private GlobalDbDownload(Ares.ModelInfo.IProgressMonitor monitor, CancellationTokenSource tokenSource)
@@ -131,8 +136,9 @@ namespace Ares.TagsImport
             m_TokenSource = tokenSource;
         }
 
-        private String DoDownloadTags(IList<String> files, bool includeLog)
+        private String DoDownloadTags(IList<String> files, out int nrOfFoundFiles, bool includeLog)
         {
+            nrOfFoundFiles = 0;
             m_Monitor.SetIndeterminate(StringResources.QueryingGlobalDB);
             IList<Ares.Tags.FileIdentification> ids = Ares.Tags.TagsModule.GetTagsDB().ReadInterface.GetIdentificationForFiles(files);
             List<Ares.Tags.FileIdentification> usableIds = new List<Tags.FileIdentification>();
@@ -147,6 +153,10 @@ namespace Ares.TagsImport
             request.RequestFormat = RestSharp.DataFormat.Json;
             String serializedFileIds = ServiceStack.Text.TypeSerializer.SerializeToString<List<Ares.Tags.FileIdentification>>(usableIds);
             request.AddParameter("FileIdentification", serializedFileIds);
+            if (Settings.Default.UseTestDB)
+            {
+                request.AddParameter("Test", true);
+            }
             var client = new RestSharp.RestClient();
             client.BaseUrl = GlobalDb.BaseUrl;
             client.Timeout = 10 * 1000;
@@ -169,6 +179,7 @@ namespace Ares.TagsImport
                 throw new GlobalDbException("No data received");
             }
 
+            nrOfFoundFiles = response.Data.NrOfFoundFiles;
             m_Monitor.SetIndeterminate(StringResources.AddingTags);
             using (System.IO.StringWriter writer = new System.IO.StringWriter())
             {
@@ -190,6 +201,7 @@ namespace Ares.TagsImport
         public int Status { get; set; }
         public String ErrorMessage { get; set; }
         public Ares.Tags.TagsExportedData TagsData { get; set; }
+        public int NrOfFoundFiles { get; set; }
     }
 
 
