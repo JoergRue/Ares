@@ -58,8 +58,14 @@ namespace Ares.Player
             this.encodingBox = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.streamNameBox = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.bitrateBox = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.urlLabel = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.userNameBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.serverPortUpDown)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -126,6 +132,12 @@ namespace Ares.Player
             // groupBox1
             // 
             resources.ApplyResources(this.groupBox1, "groupBox1");
+            this.groupBox1.Controls.Add(this.userNameBox);
+            this.groupBox1.Controls.Add(this.label8);
+            this.groupBox1.Controls.Add(this.streamNameBox);
+            this.groupBox1.Controls.Add(this.label7);
+            this.groupBox1.Controls.Add(this.bitrateBox);
+            this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.urlLabel);
             this.groupBox1.Controls.Add(this.streamingBox);
@@ -140,6 +152,37 @@ namespace Ares.Player
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
             // 
+            // streamNameBox
+            // 
+            resources.ApplyResources(this.streamNameBox, "streamNameBox");
+            this.streamNameBox.Name = "streamNameBox";
+            this.streamNameBox.TextChanged += new System.EventHandler(this.streamNameBox_TextChanged);
+            // 
+            // label7
+            // 
+            resources.ApplyResources(this.label7, "label7");
+            this.label7.Name = "label7";
+            // 
+            // bitrateBox
+            // 
+            this.bitrateBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.bitrateBox.FormattingEnabled = true;
+            this.bitrateBox.Items.AddRange(new object[] {
+            resources.GetString("bitrateBox.Items"),
+            resources.GetString("bitrateBox.Items1"),
+            resources.GetString("bitrateBox.Items2"),
+            resources.GetString("bitrateBox.Items3"),
+            resources.GetString("bitrateBox.Items4"),
+            resources.GetString("bitrateBox.Items5"),
+            resources.GetString("bitrateBox.Items6")});
+            resources.ApplyResources(this.bitrateBox, "bitrateBox");
+            this.bitrateBox.Name = "bitrateBox";
+            // 
+            // label6
+            // 
+            resources.ApplyResources(this.label6, "label6");
+            this.label6.Name = "label6";
+            // 
             // label5
             // 
             resources.ApplyResources(this.label5, "label5");
@@ -149,6 +192,16 @@ namespace Ares.Player
             // 
             resources.ApplyResources(this.urlLabel, "urlLabel");
             this.urlLabel.Name = "urlLabel";
+            // 
+            // label8
+            // 
+            resources.ApplyResources(this.label8, "label8");
+            this.label8.Name = "label8";
+            // 
+            // userNameBox
+            // 
+            resources.ApplyResources(this.userNameBox, "userNameBox");
+            this.userNameBox.Name = "userNameBox";
             // 
             // StreamingPage
             // 
@@ -177,5 +230,11 @@ namespace Ares.Player
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label urlLabel;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ComboBox bitrateBox;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox streamNameBox;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox userNameBox;
+        private System.Windows.Forms.Label label8;
     }
 }

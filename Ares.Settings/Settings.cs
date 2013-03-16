@@ -63,6 +63,12 @@ namespace Ares.Settings
 
         public int StreamingEncoder { get; set; }
 
+        public String StreamingStreamName { get; set; }
+
+        public int StreamingBitrate { get; set; }
+
+        public String StreamingUserName { get; set; }
+
         public bool ShowKeysInButtons { get; set; }
         public bool GlobalKeyHook { get; set; }
 
@@ -112,6 +118,12 @@ namespace Ares.Settings
         public String StreamingPassword { get { return Data.StreamingPassword; } set { Data.StreamingPassword = value; } }
 
         public int StreamingEncoder { get { return Data.StreamingEncoder; } set { Data.StreamingEncoder = value; } }
+
+        public String StreamingStreamName { get { return Data.StreamingStreamName; } set { Data.StreamingStreamName = value; } }
+
+        public int StreamingBitrate { get { return Data.StreamingBitrate; } set { Data.StreamingBitrate = value; } }
+
+        public String StreamingUserName { get { return Data.StreamingUserName; } set { Data.StreamingUserName = value; } }
 
         public bool ShowKeysInButtons { get { return Data.ShowKeysInButtons; } set { Data.ShowKeysInButtons = value; } }
 
@@ -307,6 +319,9 @@ namespace Ares.Settings
             StreamingServerPort = 8000;
             StreamingPassword = "hackme";
             StreamingEncoder = 1;
+            StreamingStreamName = "Ares";
+            StreamingBitrate = 128;
+            StreamingUserName = String.Empty;
             ShowKeysInButtons = false;
             GlobalKeyHook = false;
             NetworkEnabled = true;
@@ -352,6 +367,9 @@ namespace Ares.Settings
             writer.WriteAttributeString("Port", StreamingServerPort.ToString(System.Globalization.CultureInfo.InvariantCulture));
             writer.WriteAttributeString("Password", StreamingPassword);
             writer.WriteAttributeString("Encoding", StreamingEncoder.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            writer.WriteAttributeString("StreamName", StreamingStreamName);
+            writer.WriteAttributeString("Bitrate", StreamingBitrate.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            writer.WriteAttributeString("UserName", StreamingUserName);
             writer.WriteEndElement();
             writer.WriteStartElement("OnlineDB");
             writer.WriteAttributeString("UserId", OnlineDBUserId);
@@ -473,6 +491,13 @@ namespace Ares.Settings
                     StreamingServerPort = reader.GetIntegerAttribute("Port");
                     StreamingPassword = reader.GetAttribute("Password");
                     StreamingEncoder = reader.GetIntegerAttribute("Encoding");
+                    StreamingStreamName = reader.GetAttribute("StreamName");
+                    if (String.IsNullOrEmpty(StreamingStreamName))
+                        StreamingStreamName = "Ares";
+                    StreamingBitrate = reader.GetIntegerAttributeOrDefault("Bitrate", 128);
+                    StreamingUserName = reader.GetAttribute("UserName");
+                    if (StreamingUserName == null)
+                        StreamingUserName = String.Empty;
                     if (reader.IsEmptyElement)
                         reader.Read();
                     else

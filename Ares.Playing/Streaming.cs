@@ -35,6 +35,17 @@ namespace Ares.Playing
         Icecast
     }
 
+    public enum StreamingBitrate
+    {
+            kbps_32 = 32,
+            kbps_48 = 48,
+            kbps_64 = 64,
+            kbps_96 = 96,
+            kbps_128 = 128,
+            kbps_144 = 144,
+            kbps_192 = 192
+    }
+
     public class StreamingParameters
     {
         public StreamEncoding Encoding { get; set; }
@@ -44,6 +55,7 @@ namespace Ares.Playing
         public String ServerAddress { get; set; }
         public int ServerPort { get; set; }
         public String StreamName { get; set; }
+        public StreamingBitrate Bitrate { get; set; }
     }
 
     public interface IStreamer

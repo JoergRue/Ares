@@ -42,19 +42,19 @@ namespace Ares.Playing
                     break;
                 case StreamEncoding.Wma:
                     Un4seen.Bass.Misc.EncoderWMA wmaEnc = new Un4seen.Bass.Misc.EncoderWMA(m_MixerChannel);
-                    wmaEnc.WMA_Bitrate = (int)Un4seen.Bass.Misc.EncoderWMA.BITRATE.kbps_128;
+                    wmaEnc.WMA_Bitrate = (int)parameters.Bitrate;
                     encoder = wmaEnc;
                     break;
                 case StreamEncoding.Ogg:
                     Un4seen.Bass.Misc.EncoderOGG oggEnc = new Un4seen.Bass.Misc.EncoderOGG(m_MixerChannel);
-                    oggEnc.OGG_Bitrate = (int)Un4seen.Bass.Misc.EncoderOGG.BITRATE.kbps_128;
+                    oggEnc.OGG_Bitrate = (int)parameters.Bitrate;
                     oggEnc.OGG_TargetSampleRate = (int)Un4seen.Bass.Misc.EncoderOGG.SAMPLERATE.Hz_44100;
-                    oggEnc.OGG_UseQualityMode = true;
+                    oggEnc.OGG_UseQualityMode = oggEnc.OGG_Bitrate == 128;
                     encoder = oggEnc;
                     break;
                 case StreamEncoding.Lame:
                     Un4seen.Bass.Misc.EncoderLAME lameEnc = new Un4seen.Bass.Misc.EncoderLAME(m_MixerChannel);
-                    lameEnc.LAME_Bitrate = (int)Un4seen.Bass.Misc.EncoderLAME.BITRATE.kbps_128;
+                    lameEnc.LAME_Bitrate = (int)parameters.Bitrate;
                     lameEnc.LAME_Mode = Un4seen.Bass.Misc.EncoderLAME.LAMEMode.Stereo;
                     lameEnc.LAME_TargetSampleRate = (int)Un4seen.Bass.Misc.EncoderLAME.SAMPLERATE.Hz_44100;
                     lameEnc.LAME_Quality = Un4seen.Bass.Misc.EncoderLAME.LAMEQuality.Quality;
@@ -79,7 +79,7 @@ namespace Ares.Playing
                         iceCast.ServerPort = parameters.ServerPort;
                         iceCast.StreamName = parameters.StreamName;
                         iceCast.PublicFlag = false;
-                        iceCast.MountPoint = parameters.Encoding == StreamEncoding.Ogg ? "/Ares.ogg" : "/Ares";
+                        iceCast.MountPoint = parameters.Encoding == StreamEncoding.Ogg ? "/" + parameters.StreamName + ".ogg" : "/" + parameters.StreamName;
                         server = iceCast;
                         break;
                     }
@@ -118,15 +118,18 @@ namespace Ares.Playing
 
         void m_BroadCast_Notification(object sender, Un4seen.Bass.Misc.BroadCastEventArgs e)
         {
-            if (m_BroadCast == null)
-                return;
-            if (m_BroadCast.IsConnected)
+            lock (m_SyncObject)
             {
-                // ErrorHandling.ErrorOccurred(0, "Connected to Icecast");
-            }
-            else
-            {
-                // ErrorHandling.ErrorOccurred(0, "Disconnected from Icecast");
+                if (m_BroadCast == null)
+                    return;
+                if (m_BroadCast.IsConnected)
+                {
+                    // ErrorHandling.ErrorOccurred(0, "Connected to Icecast");
+                }
+                else
+                {
+                    // ErrorHandling.ErrorOccurred(0, "Disconnected from Icecast");
+                }
             }
         }
 
@@ -134,9 +137,12 @@ namespace Ares.Playing
         {
             if (!IsStreaming)
                 return;
-            if (m_BroadCast != null)
-                m_BroadCast.Disconnect();
-            m_BroadCast = null;
+            lock (m_SyncObject)
+            {
+                if (m_BroadCast != null)
+                    m_BroadCast.Disconnect();
+                m_BroadCast = null;
+            }
             if (m_MixerChannel != 0)
                 Un4seen.Bass.Bass.BASS_StreamFree(m_MixerChannel);
             m_MixerChannel = 0;
@@ -154,6 +160,8 @@ namespace Ares.Playing
                 HandleBassError();
             return result;
         }
+
+        private Object m_SyncObject = new object();
 
         public void RemoveChannel(int channel)
         {

@@ -186,8 +186,9 @@ namespace Ares.Players
             result.ServerAddress = settings.StreamingServerAddress;
             result.ServerPort = settings.StreamingServerPort;
             result.Streamer = StreamerType.Icecast;
-            result.StreamName = "Ares";
-            result.Username = "";
+            result.StreamName = settings.StreamingStreamName;
+            result.Bitrate = (StreamingBitrate)settings.StreamingBitrate;
+            result.Username = settings.StreamingUserName;
             return result;
         }
 

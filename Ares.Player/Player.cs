@@ -186,6 +186,7 @@ namespace Ares.Player
         private void ShowSettingsDialog()
         {
             StopAllPlaying();
+            m_KeyboardHookManager.Enabled = false; 
             Ares.Settings.Settings settings = Ares.Settings.Settings.Instance;
             Ares.CommonGUI.SettingsDialog dialog = new Ares.CommonGUI.SettingsDialog(Ares.Settings.Settings.Instance, m_BasicSettings);
             dialog.AddPage(new StreamingPageHost());
@@ -195,6 +196,7 @@ namespace Ares.Player
                 m_PlayingControl.UpdateDirectories();
                 LoadTagsDB();
             }
+            m_KeyboardHookManager.Enabled = true;
         }
 
         private void openButton_Click(object sender, EventArgs e)

@@ -47,13 +47,42 @@ namespace Ares.Player
             serverPortUpDown.Value = settings.StreamingServerPort;
             passwordBox.Text = settings.StreamingPassword;
             encodingBox.SelectedIndex = (settings.StreamingEncoder == (int)Playing.StreamEncoding.Ogg) ? 0 : 1;
+            switch (settings.StreamingBitrate)
+            {
+                case 32:
+                    bitrateBox.SelectedIndex = 0;
+                    break;
+                case 48:
+                    bitrateBox.SelectedIndex = 1;
+                    break;
+                case 64:
+                    bitrateBox.SelectedIndex = 2;
+                    break;
+                case 96:
+                    bitrateBox.SelectedIndex = 3;
+                    break;
+                case 128:
+                    bitrateBox.SelectedIndex = 4;
+                    break;
+                case 144:
+                    bitrateBox.SelectedIndex = 5;
+                    break;
+                case 192:
+                    bitrateBox.SelectedIndex = 6;
+                    break;
+                default:
+                    bitrateBox.SelectedIndex = 4;
+                    break;
+            }
+            streamNameBox.Text = settings.StreamingStreamName;
+            userNameBox.Text = settings.StreamingUserName;
             UpdateUrl();
             listen = true;
         }
 
         private void UpdateUrl()
         {
-            String urlText = "Client URL: http://" + serverAddressBox.Text + ":" + serverPortUpDown.Value + "/Ares";
+            String urlText = "Client URL: http://" + serverAddressBox.Text + ":" + serverPortUpDown.Value + "/" + streamNameBox.Text;
             if (encodingBox.SelectedIndex == 0)
                 urlText += ".ogg";
             urlLabel.Text = urlText;
@@ -70,6 +99,35 @@ namespace Ares.Player
                 settings.StreamingEncoder = (int)Playing.StreamEncoding.Lame;
             else
                 settings.StreamingEncoder = (int)Playing.StreamEncoding.Ogg;
+            switch (bitrateBox.SelectedIndex)
+            {
+                case 0:
+                    settings.StreamingBitrate = 32;
+                    break;
+                case 1:
+                    settings.StreamingBitrate = 48;
+                    break;
+                case 2:
+                    settings.StreamingBitrate = 64;
+                    break;
+                case 3:
+                    settings.StreamingBitrate = 96;
+                    break;
+                case 4:
+                    settings.StreamingBitrate = 128;
+                    break;
+                case 5:
+                    settings.StreamingBitrate = 144;
+                    break;
+                case 6:
+                    settings.StreamingBitrate = 192;
+                    break;
+                default:
+                    settings.StreamingBitrate = 128;
+                    break;
+            }
+            settings.StreamingStreamName = String.IsNullOrEmpty(streamNameBox.Text) ? "Ares" : streamNameBox.Text;
+            settings.StreamingUserName = userNameBox.Text;
         }
 
         private void encodingBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -94,6 +152,12 @@ namespace Ares.Player
         }
 
         private void serverPortUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            if (!listen) return;
+            UpdateUrl();
+        }
+
+        private void streamNameBox_TextChanged(object sender, EventArgs e)
         {
             if (!listen) return;
             UpdateUrl();
