@@ -1207,7 +1207,7 @@ namespace Ares.Tags
                     return;
 
                 String updateString = String.Format("UPDATE {0} SET {1}=@Artist, {2}=@Album, {3}=@Title, {4}=@AcoustId WHERE {5}=@Id",
-                    Schema.FILES_TABLE, Schema.ARTIST_COLUMN, Schema.ALBUM_COLUMN, Schema.TITLE_COLUMN, Schema.ACOUST_ID_COLUMN);
+                    Schema.FILES_TABLE, Schema.ARTIST_COLUMN, Schema.ALBUM_COLUMN, Schema.TITLE_COLUMN, Schema.ACOUST_ID_COLUMN, Schema.ID_COLUMN);
                 using (DbCommand command = DbUtils.CreateDbCommand(updateString, m_Connection, m_Transaction))
                 {
                     command.AddParameterWithValue("@Artist", newArtist);

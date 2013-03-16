@@ -36,7 +36,7 @@ namespace Ares.TagsImport
         private Ares.ModelInfo.IProgressMonitor m_Monitor;
         private CancellationTokenSource m_TokenSource;
 
-        public static Task UpdateMusicIdentification(Ares.ModelInfo.IProgressMonitor monitor, IList<String> files, String musicDirectory,
+        public static Task<int> UpdateMusicIdentification(Ares.ModelInfo.IProgressMonitor monitor, IList<String> files, String musicDirectory,
             CancellationTokenSource cancellationTokenSource)
         {
             MusicIdentification identification = new MusicIdentification(monitor, cancellationTokenSource);
@@ -59,9 +59,32 @@ namespace Ares.TagsImport
             return false;
         }
 
-        private Task DoUpdate(IList<String> files, String musicDirectory)
+        private List<Task> CreateTaskPackage(List<String> filesNeedRetrieval, String basePath, 
+            MusicIdentificationRetriever retriever, 
+            List<Ares.Tags.FileIdentification> retrievedInfo,
+            Ares.ModelInfo.IProgressMonitor progressMon,
+            int packageIndex, int packageSize)
+        {
+            List<Task> subTasks = new List<Task>();
+            for (int i = 0; i < packageSize; ++i)
+            {
+                int fileIndex = packageIndex * packageSize + i;
+                if (fileIndex >= filesNeedRetrieval.Count)
+                    break;
+                String path = System.IO.Path.Combine(basePath, filesNeedRetrieval[fileIndex]);
+                var task2 = Task.Factory.StartNew(() =>
+                {
+                    retriever.RetrieveFileInfo(path, retrievedInfo[fileIndex], progressMon);
+                }, m_TokenSource.Token);
+                subTasks.Add(task2);
+            }
+            return subTasks;
+        }
+
+        private Task<int> DoUpdate(IList<String> files, String musicDirectory)
         {
             m_Monitor.IncreaseProgress(0.0);
+            int countWithId = 0;
             IList<Ares.Tags.FileIdentification> identification = Ares.Tags.TagsModule.GetTagsDB().ReadInterface.GetIdentificationForFiles(files);
 
             List<Ares.Tags.FileIdentification> retrievedInfo = new List<Tags.FileIdentification>();
@@ -69,15 +92,23 @@ namespace Ares.TagsImport
             List<String> filesNeedRetrieval = new List<string>();
             for (int i = 0; i < files.Count; ++i)
             {
+                if (files[i].EndsWith(".m3u", StringComparison.OrdinalIgnoreCase))
+                    continue;
+                if (files[i].EndsWith(".m3u8", StringComparison.OrdinalIgnoreCase))
+                    continue;
                 if (NeedsRetrieval(identification[i]))
                 {
                     retrievedInfo.Add(identification[i]);
                     filesNeedRetrieval.Add(files[i]);
                 }
+                else
+                {
+                    ++countWithId;
+                }
             }
             int nrOfRetrievals = filesNeedRetrieval.Count;
             if (nrOfRetrievals == 0)
-                return Task.Factory.StartNew(() => { });
+                return Task.Factory.StartNew(() => { return countWithId;  });
 
             String basePath = musicDirectory;
             MusicIdentificationRetriever retriever = new MusicIdentificationRetriever(m_TokenSource);
@@ -86,24 +117,41 @@ namespace Ares.TagsImport
             m_Monitor.IncreaseProgress(5);
             SequentialProgressMonitor seqMon = new SequentialProgressMonitor(m_Monitor, 5.0, 95.0);
             ParallelProgressMonitor parallelMon = new ParallelProgressMonitor(seqMon, 100.0, filesNeedRetrieval.Count);
-            for (int i = 0; i < filesNeedRetrieval.Count; ++i)
-            {
-                String path = System.IO.Path.Combine(basePath, filesNeedRetrieval[i]);
-                int j = i;
-                var task = Task.Factory.StartNew(() =>
-                    {
-                        retriever.RetrieveFileInfo(path, retrievedInfo[j], parallelMon);
-                    }, m_TokenSource.Token);
-                tasks.Add(task);
-            }
+            // use packages of 30 files to reduce system load
+            const int PACKAGE_SIZE = 30;
+            int subTaskCount = (filesNeedRetrieval.Count + PACKAGE_SIZE - 1) / PACKAGE_SIZE;
 
-            var lastTask = Task.Factory.ContinueWhenAll(tasks.ToArray(), (task2) =>
+            var task = Task.Factory.StartNew(() =>
                 {
+                    for (int t = 0; t < subTaskCount; ++t)
+                    {
+                        List<Task> subTasks = CreateTaskPackage(filesNeedRetrieval, basePath, retriever, retrievedInfo, parallelMon, t, PACKAGE_SIZE);
+                        Task.WaitAll(subTasks.ToArray());
+                        List<String> retrievedFiles = new List<String>();
+                        List<Ares.Tags.FileIdentification> retrievedInfo2 = new List<Tags.FileIdentification>();
+                        for (int i = 0; i < PACKAGE_SIZE; ++i)
+                        {
+                            int fileIndex = t * PACKAGE_SIZE + i;
+                            if (fileIndex >= filesNeedRetrieval.Count)
+                                break;
+                            retrievedFiles.Add(filesNeedRetrieval[fileIndex]);
+                            retrievedInfo2.Add(retrievedInfo[fileIndex]);
+                            if (!String.IsNullOrEmpty(retrievedInfo[fileIndex].AcoustId))
+                            {
+                                ++countWithId;
+                            }
+                        }
+                        Ares.Tags.TagsModule.GetTagsDB().WriteInterface.SetFileIdentifications(retrievedFiles, retrievedInfo2);
+                        subTasks = null;
+                        retrievedFiles = null;
+                        retrievedInfo2 = null;
+                        System.GC.Collect();
+                    }
                     retriever.Dispose();
-                    Ares.Tags.TagsModule.GetTagsDB().WriteInterface.SetFileIdentifications(filesNeedRetrieval, retrievedInfo);
+                    return countWithId;
                 }, m_TokenSource.Token);
 
-            return lastTask;
+            return task;
         }
 
     }
@@ -344,7 +392,7 @@ namespace Ares.TagsImport
             if (handle == 0)
             {
                 BASSError error = Bass.BASS_ErrorGetCode();
-                System.Console.WriteLine("ERROR: " + error);
+                // System.Console.WriteLine("ERROR: " + error);
                 return null;
             }
             long length = Bass.BASS_ChannelGetLength(handle);
@@ -353,13 +401,13 @@ namespace Ares.TagsImport
             if (mixHandle == 0)
             {
                 BASSError error = Bass.BASS_ErrorGetCode();
-                System.Console.WriteLine("ERROR: " + error);
+                // System.Console.WriteLine("ERROR: " + error);
                 return null;
             }
             if (!Un4seen.Bass.AddOn.Mix.BassMix.BASS_Mixer_StreamAddChannel(mixHandle, handle, BASSFlag.BASS_DEFAULT))
             {
                 BASSError error = Bass.BASS_ErrorGetCode();
-                System.Console.WriteLine("ERROR: " + error);
+                // System.Console.WriteLine("ERROR: " + error);
                 return null;
             }
             List<System.Int16> data = new List<System.Int16>();
@@ -371,7 +419,7 @@ namespace Ares.TagsImport
                 {
                     BASSError error = Bass.BASS_ErrorGetCode();
                     Bass.BASS_StreamFree(handle);
-                    System.Console.WriteLine("ERROR: " + error);
+                    // System.Console.WriteLine("ERROR: " + error);
                     return null;
                 }
                 for (int i = 0; i < num / 2; ++i)
@@ -385,7 +433,15 @@ namespace Ares.TagsImport
                     break;
             }
             Bass.BASS_StreamFree(handle);
-            return data.ToArray();
+            try
+            {
+                return data.ToArray();
+            }
+            catch (System.OutOfMemoryException ex)
+            {
+                System.GC.Collect();
+                return null;
+            }
         }
     }
 

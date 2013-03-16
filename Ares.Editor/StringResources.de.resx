@@ -506,4 +506,19 @@ Soll es jetzt gespeichert werden?</value>
   <data name="TagsDownloadStats" xml:space="preserve">
     <value>Tags wurden für {0} der {1} Dateien gefunden.</value>
   </data>
+  <data name="DownloadError" xml:space="preserve">
+    <value>Fehler beim Herunterladen der Tags: {0}</value>
+  </data>
+  <data name="DownloadingTags" xml:space="preserve">
+    <value>Lade Tags herunter ...</value>
+  </data>
+  <data name="SharingTags" xml:space="preserve">
+    <value>Lade Tags hoch ...</value>
+  </data>
+  <data name="UploadError" xml:space="preserve">
+    <value>Fehler beim Hochladen der Tags: {0}</value>
+  </data>
+  <data name="MusicIdStats" xml:space="preserve">
+    <value>Ids wurden für {0} der {1} Dateien gefunden.</value>
+  </data>
 </root>

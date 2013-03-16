@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AddingTags" xml:space="preserve">
-    <value>Adding tags</value>
+    <value>Adding tags ...</value>
   </data>
   <data name="Album" xml:space="preserve">
     <value>Album</value>
@@ -136,7 +136,7 @@
     <value>Querying online database ...</value>
   </data>
   <data name="SettingFileTags" xml:space="preserve">
-    <value>Setting file tags</value>
+    <value>Setting file tags ...</value>
   </data>
   <data name="UploadingTags" xml:space="preserve">
     <value>Uploading tags to online database ...</value>

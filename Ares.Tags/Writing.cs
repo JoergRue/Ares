@@ -293,6 +293,32 @@ namespace Ares.Tags
             }
         }
 
+        public bool CanConfirmTags(IList<String> files)
+        {
+            if (files == null)
+            {
+                throw new ArgumentNullException("files");
+            }
+            if (files.Count == 0)
+                return false;
+            if (m_Connection == null)
+            {
+                throw new TagsDbException("No Connection to DB file!");
+            }
+            try
+            {
+                return DoCanConfirmTags(files);
+            }
+            catch (System.Data.DataException ex)
+            {
+                throw new TagsDbException(ex.Message, ex);
+            }
+            catch (DbException ex)
+            {
+                throw new TagsDbException(ex.Message, ex);
+            }
+        }
+
         private void DoAddFileTags(DbTransaction transaction, String path, IList<int> tagIds)
         {
             if (tagIds.Count == 0)
@@ -673,6 +699,29 @@ namespace Ares.Tags
                 }
                 transaction.Commit();
             }
+        }
+
+        private bool DoCanConfirmTags(IList<String> files)
+        {
+            String query = String.Format("SELECT COUNT(*) FROM {0} WHERE {1}=@User AND {2}=@FileId",
+                Schema.FILETAGS_TABLE, Schema.USER_COLUMN, Schema.FILE_COLUMN);
+            using (DbCommand cmd = DbUtils.CreateDbCommand(query, m_Connection))
+            {
+                cmd.AddParameterWithValue("@User", Schema.GLOBAL_DB_USER);
+                DbParameter fileIdParam = cmd.AddParameter("@FileId", System.Data.DbType.Int64);
+                foreach (String file in files)
+                {
+                    Object fileId = DoFindFile(null, file);
+                    if (fileId != null)
+                    {
+                        fileIdParam.Value = fileId;
+                        Object res = cmd.ExecuteScalar();
+                        if (res != null && (long)res > 0)
+                            return true;
+                    }
+                }
+            }
+            return false;
         }
 
         private static void AssignStringOrNull(DbParameter param, String value)

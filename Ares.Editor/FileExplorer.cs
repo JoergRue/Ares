@@ -138,6 +138,10 @@ namespace Ares.Editor
             m_Root.Expand();
             treeView1.SelectedNode = m_Root;
             treeView1.EndUpdate();
+            if (m_FileType == FileType.Music)
+            {
+                m_Parent.SetSelectedFiles(GetSelectedFiles());
+            }
         }
 
         private void GetTreeStates(TreeNode rootNode, Dictionary<String, bool> states)
@@ -299,7 +303,10 @@ namespace Ares.Editor
         {
             playButton.Enabled = PlayingPossible;
             updateInformationPanel();
-            m_Parent.SetSelectedFiles(GetSelectedFiles());
+            if (m_FileType == FileType.Music)
+            {
+                m_Parent.SetSelectedFiles(GetSelectedFiles());
+            }
         }
 
         private void treeView1_DoubleClick(object sender, EventArgs e)

@@ -100,6 +100,7 @@ namespace Ares.Editor.ElementEditors
         private void confirmButton_Click(object sender, EventArgs e)
         {
             Ares.Tags.TagsModule.GetTagsDB().WriteInterface.ConfirmTags(m_Files);
+            confirmButton.Enabled = Ares.Tags.TagsModule.GetTagsDB().WriteInterface.CanConfirmTags(m_Files);
         }
 
         private void shareButton_Click(object sender, EventArgs e)
@@ -123,8 +124,8 @@ namespace Ares.Editor.ElementEditors
             bool includeLog = Settings.Settings.Instance.ShowDialogAfterUpload;
 
             System.Threading.CancellationTokenSource tokenSource = new System.Threading.CancellationTokenSource();
-            TaskProgressMonitor monitor = new TaskProgressMonitor(this, StringResources.ExtractingMusicIds, tokenSource);
-            monitor.IncreaseProgress(0.0, StringResources.ExtractingMusicIds);
+            TaskProgressMonitor monitor = new TaskProgressMonitor(this, StringResources.SharingTags, tokenSource);
+            monitor.IncreaseProgress(0.1, StringResources.ExtractingMusicIds);
             List<String> usedFiles = new List<String>();
             var readIf = Ares.Tags.TagsModule.GetTagsDB().GetReadInterfaceByLanguage(m_LanguageId);
             foreach (String file in m_Files)
@@ -148,7 +149,7 @@ namespace Ares.Editor.ElementEditors
                     String log = task2.Result;
                     var dialog = new Dialogs.OnlineDbResultDialog();
                     dialog.Log = log;
-                    dialog.SetIsUpload();
+                    dialog.SetIsUpload(usedFiles.Count, task.Result);
                     dialog.ShowDialog(this);
                 }
             }, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskContinuationOptions.NotOnFaulted, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
@@ -158,7 +159,7 @@ namespace Ares.Editor.ElementEditors
                 monitor.Close();
                 if (t.Exception != null)
                 {
-                    TaskHelpers.HandleTaskException(this, t.Exception, StringResources.MusicIdExtractionError);
+                    TaskHelpers.HandleTaskException(this, t.Exception, StringResources.UploadError);
                 }
             }, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskContinuationOptions.OnlyOnFaulted, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
 
@@ -177,8 +178,8 @@ namespace Ares.Editor.ElementEditors
             bool includeLog = Settings.Settings.Instance.ShowDialogAfterDownload;
 
             System.Threading.CancellationTokenSource tokenSource = new System.Threading.CancellationTokenSource();
-            TaskProgressMonitor monitor = new TaskProgressMonitor(this, StringResources.ExtractingMusicIds, tokenSource);
-            monitor.IncreaseProgress(0.0, StringResources.ExtractingMusicIds);
+            TaskProgressMonitor monitor = new TaskProgressMonitor(this, StringResources.DownloadingTags, tokenSource);
+            monitor.IncreaseProgress(0.1, StringResources.ExtractingMusicIds);
             var task = Ares.TagsImport.MusicIdentification.UpdateMusicIdentification(monitor, m_Files, Ares.Settings.Settings.Instance.MusicDirectory, tokenSource);
             int nrOfFoundFiles = 0;
             var task2 = task.ContinueWith((t) =>
@@ -196,7 +197,7 @@ namespace Ares.Editor.ElementEditors
                     String log = task2.Result;
                     var dialog = new Dialogs.OnlineDbResultDialog();
                     dialog.Log = log;
-                    dialog.SetIsDownload(m_Files.Count, nrOfFoundFiles);
+                    dialog.SetIsDownload(m_Files.Count, nrOfFoundFiles, task.Result);
                     dialog.ShowDialog(this);
                 }
             }, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskContinuationOptions.NotOnFaulted, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
@@ -205,7 +206,7 @@ namespace Ares.Editor.ElementEditors
                 monitor.Close();
                 if (t.Exception != null)
                 {
-                    TaskHelpers.HandleTaskException(this, t.Exception, StringResources.MusicIdExtractionError);
+                    TaskHelpers.HandleTaskException(this, t.Exception, StringResources.DownloadError);
                 }
             }, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskContinuationOptions.OnlyOnFaulted, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
             task.ContinueWith((t) =>
@@ -245,7 +246,6 @@ namespace Ares.Editor.ElementEditors
 
         private Ares.Data.IProject m_Project;
         private List<String> m_Files;
-        private Dictionary<int, int> m_FileTags = new Dictionary<int, int>();
         private IFileTagsEditorParent m_Parent;
 
         public void SetParent(IFileTagsEditorParent parent)
@@ -280,42 +280,16 @@ namespace Ares.Editor.ElementEditors
 
         private void UpdateAll()
         {
-            m_FileTags.Clear();
-
-            try
+            if (m_Files.Count == 1)
             {
-                ITagsDBReadByLanguage dbRead = TagsModule.GetTagsDB().GetReadInterfaceByLanguage(m_LanguageId);
-                foreach (String file in m_Files)
-                {
-                    IList<TagInfoForLanguage> tagsForFile = dbRead.GetTagsForFile(file);
-                    foreach (TagInfoForLanguage tagInfo in tagsForFile)
-                    {
-                        if (m_FileTags.ContainsKey(tagInfo.Id))
-                        {
-                            m_FileTags[tagInfo.Id]++;
-                        }
-                        else
-                        {
-                            m_FileTags[tagInfo.Id] = 1;
-                        }
-                    }
-                }
-
-                if (m_Files.Count == 1)
-                {
-                    titleLabel.Text = String.Format(StringResources.TagsForSingleFile, m_Files[0]);
-                }
-                else
-                {
-                    titleLabel.Text = String.Format(StringResources.TagsForMultipleFiles, m_Files.Count);
-                }
-
-                UpdateControls();
+                titleLabel.Text = String.Format(StringResources.TagsForSingleFile, m_Files[0]);
             }
-            catch (Ares.Tags.TagsDbException ex)
+            else
             {
-                MessageBox.Show(this, String.Format(StringResources.TagsDbError, ex.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                titleLabel.Text = String.Format(StringResources.TagsForMultipleFiles, m_Files.Count);
             }
+
+            UpdateControls();
         }
 
         private int m_LanguageId;
@@ -388,6 +362,11 @@ namespace Ares.Editor.ElementEditors
                     languageBox.SelectedIndex = selIndex;
                 }
                 languageBox.EndUpdate();
+
+                if (confirmButton.Enabled)
+                {
+                    confirmButton.Enabled = Ares.Tags.TagsModule.GetTagsDB().WriteInterface.CanConfirmTags(m_Files);
+                }
             }
             catch (Ares.Tags.TagsDbException ex)
             {
@@ -455,13 +434,44 @@ namespace Ares.Editor.ElementEditors
                     m_Tags.Add(new TagForLanguage() { Name = tagInfo.Name, Id = tagInfo.Id });
                 }
             }
-            foreach (TagForLanguage tag in m_Tags)
+            try
             {
-                tagsBox.Items.Add(tag.Name);
-                if (m_FileTags.ContainsKey(tag.Id))
+                var readIf = Ares.Tags.TagsModule.GetTagsDB().ReadInterface;
+                foreach (TagForLanguage tag in m_Tags)
                 {
-                    tagsBox.SetItemCheckState(tagsBox.Items.Count - 1, m_FileTags[tag.Id] == m_Files.Count ? CheckState.Checked : CheckState.Indeterminate);
+                    tagsBox.Items.Add(tag.Name);
+                    if (m_Files != null && m_Files.Count > 0)
+                    {
+                        HashSet<int> tagsSet = new HashSet<int>();
+                        tagsSet.Add(tag.Id);
+                        var files = readIf.GetAllFilesWithAnyTag(tagsSet);
+                        bool allFilesHaveTag = true;
+                        bool anyFileHasTag = false;
+                        foreach (String file in m_Files)
+                        {
+                            if (files.Contains(file, StringComparer.InvariantCultureIgnoreCase))
+                            {
+                                anyFileHasTag = true;
+                                if (!allFilesHaveTag)
+                                    break;
+                            }
+                            else
+                            {
+                                allFilesHaveTag = false;
+                                if (anyFileHasTag)
+                                    break;
+                            }
+                        }
+                        if (anyFileHasTag)
+                        {
+                            tagsBox.SetItemCheckState(tagsBox.Items.Count - 1, allFilesHaveTag ? CheckState.Checked : CheckState.Indeterminate);
+                        }
+                    }
                 }
+            }
+            catch (Ares.Tags.TagsDbException ex)
+            {
+                MessageBox.Show(this, String.Format(StringResources.TagsDbError, ex.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             tagsBox.EndUpdate();
         }
@@ -522,7 +532,6 @@ namespace Ares.Editor.ElementEditors
 
         private void AddTagToFiles(int tagId)
         {
-            m_FileTags[tagId] = m_Files.Count;
             List<IList<int>> newTags = new List<IList<int>>();
             for (int i = 0; i < m_Files.Count; ++i)
             {
@@ -534,7 +543,6 @@ namespace Ares.Editor.ElementEditors
 
         private void RemoveTagFromFiles(int tagId)
         {
-            m_FileTags.Remove(tagId);
             List<IList<int>> removedTags = new List<IList<int>>();
             for (int i = 0; i < m_Files.Count; ++i)
             {

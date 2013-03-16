@@ -154,7 +154,7 @@ namespace Ares.Editor
                 m_FileTagsEditor = new ElementEditors.FileTagsEditor();
                 m_FileTagsEditor.SetParent(this);
                 m_FileTagsEditor.SetProject(m_CurrentProject);
-                m_FileTagsEditor.SetFiles(null);
+                m_FileTagsEditor.SetFiles(m_SelectedFiles);
                 return m_FileTagsEditor;
             }
             else
@@ -1204,11 +1204,14 @@ namespace Ares.Editor
 
         public void SetSelectedFiles(IList<String> selectedFiles)
         {
+            m_SelectedFiles = selectedFiles;
             if (m_FileTagsEditor != null)
             {
                 m_FileTagsEditor.SetFiles(selectedFiles);
             }
         }
+
+        private IList<String> m_SelectedFiles;
 
         public void SetOnlineUserId()
         {

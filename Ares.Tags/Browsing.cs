@@ -304,7 +304,7 @@ namespace Ares.Tags
             using (DbCommand command = DbUtils.CreateDbCommand(String.Format("SELECT COUNT(*) FROM (SELECT DISTINCT {0}, {1} FROM {2})", Schema.FILE_COLUMN, Schema.TAG_COLUMN, Schema.FILETAGS_TABLE), m_Connection))
             {
                 int count = (Int32)(Int64)command.ExecuteScalar();
-                result.AvgTagsPerFile = result.TagsCount > 0 ? (double)count / (double)result.TagsCount : 0.0;
+                result.AvgTagsPerFile = result.TagsCount > 0 ? (double)count / (double)result.FilesCount : 0.0;
             }
             using (DbCommand command = DbUtils.CreateDbCommand(String.Format("SELECT COUNT(*) FROM (SELECT DISTINCT {0}, {1} FROM {2})", Schema.ARTIST_COLUMN, Schema.ALBUM_COLUMN, Schema.FILES_TABLE), m_Connection))
             {

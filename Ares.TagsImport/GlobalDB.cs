@@ -84,38 +84,59 @@ namespace Ares.TagsImport
         private String DoUploadTags(IList<String> files, String user, bool includeLog)
         {
             m_Monitor.SetIndeterminate(StringResources.UploadingTags);
-            var exportedData = Ares.Tags.TagsModule.GetTagsDB().FilesInterface.ExportDatabaseForGlobalDB(files);
 
-            var request = new RestSharp.RestRequest(GlobalDb.UploadPath, RestSharp.Method.POST);
-            request.RequestFormat = RestSharp.DataFormat.Json;
-            String serializedTagsData = ServiceStack.Text.TypeSerializer.SerializeToString<Ares.Tags.TagsExportedData>(exportedData);
-            request.AddParameter("TagsData", serializedTagsData);
-            request.AddParameter("User", ObfuscateUser(user));
-            request.AddParameter("IncludeLog", includeLog);
-            if (Settings.Default.UseTestDB)
-            {
-                request.AddParameter("Test", true);
-            }
-            var client = new RestSharp.RestClient();
-            client.BaseUrl = GlobalDb.BaseUrl;
-            client.Timeout = 10 * 1000;
-            var response = client.Execute<UploadResponse>(request);
+            var proxy = System.Net.WebRequest.GetSystemWebProxy();
 
-            m_TokenSource.Token.ThrowIfCancellationRequested();
-            if (response.ErrorException != null)
+            // upload in chunks; otherwise request size gets too large
+            const int MAX_FILES_PER_REQUEST = 50;
+            int nrOfRequests = (files.Count + MAX_FILES_PER_REQUEST - 1) / MAX_FILES_PER_REQUEST;
+            StringBuilder logBuilder = new StringBuilder();
+            for (int i = 0; i < nrOfRequests; ++i)
             {
-                throw new GlobalDbException(response.ErrorException);
-            }
-            if (response.Data == null)
-            {
-                throw new GlobalDbException(String.IsNullOrEmpty(response.ErrorMessage) ? "No data received" : response.ErrorMessage);
-            }
-            if (response.Data.Status != 0)
-            {
-                throw new GlobalDbException(response.Data.ErrorMessage);
-            }
+                List<String> filesInRequest = new List<string>();
+                for (int j = i * MAX_FILES_PER_REQUEST; j < (i+1)*MAX_FILES_PER_REQUEST; ++j)
+                {
+                    if (j >= files.Count)
+                        break;
+                    filesInRequest.Add(files[j]);
+                }
+                var exportedData = Ares.Tags.TagsModule.GetTagsDB().FilesInterface.ExportDatabaseForGlobalDB(filesInRequest);
 
-            return response.Data.Log;
+                var request = new RestSharp.RestRequest(GlobalDb.UploadPath, RestSharp.Method.POST);
+                request.RequestFormat = RestSharp.DataFormat.Json;
+                String serializedTagsData = ServiceStack.Text.TypeSerializer.SerializeToString<Ares.Tags.TagsExportedData>(exportedData);
+                request.AddParameter("TagsData", serializedTagsData);
+                request.AddParameter("User", ObfuscateUser(user));
+                request.AddParameter("IncludeLog", includeLog);
+                if (Settings.Default.UseTestDB)
+                {
+                    request.AddParameter("Test", true);
+                }
+                var client = new RestSharp.RestClient();
+                client.BaseUrl = GlobalDb.BaseUrl;
+                client.Timeout = 20 * 1000;
+                var response = client.Execute<UploadResponse>(request);
+
+                m_TokenSource.Token.ThrowIfCancellationRequested();
+                if (response.ErrorException != null)
+                {
+                    throw new GlobalDbException(response.ErrorException);
+                }
+                if (response.Data == null)
+                {
+                    throw new GlobalDbException(String.IsNullOrEmpty(response.ErrorMessage) ? "No data received" : response.ErrorMessage);
+                }
+                if (response.Data.Status != 0)
+                {
+                    throw new GlobalDbException(response.Data.ErrorMessage);
+                }
+                if (i > 0)
+                {
+                    logBuilder.AppendLine("---------------------------------------------------------");
+                }
+                logBuilder.Append(response.Data.Log);
+            }
+            return logBuilder.ToString();
         }
     }
 
@@ -138,6 +159,8 @@ namespace Ares.TagsImport
 
         private String DoDownloadTags(IList<String> files, out int nrOfFoundFiles, bool includeLog)
         {
+            var proxy = System.Net.WebRequest.GetSystemWebProxy();
+
             nrOfFoundFiles = 0;
             m_Monitor.SetIndeterminate(StringResources.QueryingGlobalDB);
             IList<Ares.Tags.FileIdentification> ids = Ares.Tags.TagsModule.GetTagsDB().ReadInterface.GetIdentificationForFiles(files);
@@ -149,43 +172,66 @@ namespace Ares.TagsImport
                 else if (!String.IsNullOrEmpty(id.Artist) && !String.IsNullOrEmpty(id.Title))
                     usableIds.Add(id);
             }
-            var request = new RestSharp.RestRequest(GlobalDb.DownloadPath, RestSharp.Method.POST);
-            request.RequestFormat = RestSharp.DataFormat.Json;
-            String serializedFileIds = ServiceStack.Text.TypeSerializer.SerializeToString<List<Ares.Tags.FileIdentification>>(usableIds);
-            request.AddParameter("FileIdentification", serializedFileIds);
-            if (Settings.Default.UseTestDB)
+            // download in chunks; otherwise request size gets too large
+            const int MAX_FILES_PER_REQUEST = 50;
+            int nrOfRequests = (usableIds.Count + MAX_FILES_PER_REQUEST - 1) / MAX_FILES_PER_REQUEST;
+            StringBuilder logBuilder = new StringBuilder();
+            for (int i = 0; i < nrOfRequests; ++i)
             {
-                request.AddParameter("Test", true);
-            }
-            var client = new RestSharp.RestClient();
-            client.BaseUrl = GlobalDb.BaseUrl;
-            client.Timeout = 10 * 1000;
-            var response = client.Execute<DownloadResponse>(request);
-            m_TokenSource.Token.ThrowIfCancellationRequested();
-            if (response.ErrorException != null)
-            {
-                throw new GlobalDbException(response.ErrorException);
-            }
-            if (response.Data == null)
-            {
-                throw new GlobalDbException(String.IsNullOrEmpty(response.ErrorMessage) ? "No data received" : response.ErrorMessage);
-            }
-            if (response.Data.Status != 0)
-            {
-                throw new GlobalDbException(response.Data.ErrorMessage);
-            }
-            if (response.Data.TagsData == null)
-            {
-                throw new GlobalDbException("No data received");
-            }
+                m_Monitor.SetIndeterminate(StringResources.QueryingGlobalDB);
+                List<Ares.Tags.FileIdentification> idsInRequest = new List<Tags.FileIdentification>();
+                for (int j =  i * MAX_FILES_PER_REQUEST; j < (i+1)* MAX_FILES_PER_REQUEST; ++j)
+                {
+                    if (j >= usableIds.Count)
+                        break;
+                    idsInRequest.Add(usableIds[j]);
+                }
+                var request = new RestSharp.RestRequest(GlobalDb.DownloadPath, RestSharp.Method.POST);
+                request.RequestFormat = RestSharp.DataFormat.Json;
+                String serializedFileIds = ServiceStack.Text.TypeSerializer.SerializeToString<List<Ares.Tags.FileIdentification>>(idsInRequest);
+                request.AddParameter("FileIdentification", serializedFileIds);
+                if (Settings.Default.UseTestDB)
+                {
+                    request.AddParameter("Test", true);
+                }
+                var client = new RestSharp.RestClient();
+                client.BaseUrl = GlobalDb.BaseUrl;
+                client.Timeout = 20 * 1000;
+                var response = client.Execute<DownloadResponse>(request);
+                m_TokenSource.Token.ThrowIfCancellationRequested();
+                if (response.ErrorException != null)
+                {
+                    throw new GlobalDbException(response.ErrorException);
+                }
+                if (response.Data == null)
+                {   
+                    throw new GlobalDbException(String.IsNullOrEmpty(response.ErrorMessage) ? "No data received" : response.ErrorMessage);
+                }
+                if (response.Data.Status != 0)
+                {
+                    throw new GlobalDbException(response.Data.ErrorMessage);
+                }
+                if (response.Data.TagsData == null)
+                {
+                    throw new GlobalDbException("No data received");
+                }
 
-            nrOfFoundFiles = response.Data.NrOfFoundFiles;
-            m_Monitor.SetIndeterminate(StringResources.AddingTags);
-            using (System.IO.StringWriter writer = new System.IO.StringWriter())
-            {
-                Ares.Tags.TagsModule.GetTagsDB().FilesInterface.ImportDataFromGlobalDB(response.Data.TagsData, writer);
-                return includeLog ? writer.ToString() : String.Empty;
+                nrOfFoundFiles += response.Data.NrOfFoundFiles;
+                m_Monitor.SetIndeterminate(StringResources.AddingTags);
+                using (System.IO.StringWriter writer = new System.IO.StringWriter())
+                {
+                    Ares.Tags.TagsModule.GetTagsDB().FilesInterface.ImportDataFromGlobalDB(response.Data.TagsData, writer);
+                    if (includeLog)
+                    {
+                        if (i > 0)
+                        {
+                            logBuilder.AppendLine("-------------------------------------------------------");
+                        }
+                        logBuilder.Append(writer.ToString());
+                    }
+                }
             }
+            return logBuilder.ToString();
         }
     }
 

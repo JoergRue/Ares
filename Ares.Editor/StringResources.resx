@@ -505,4 +505,19 @@ You should adapt some settings first.</value>
   <data name="TagsDownloadStats" xml:space="preserve">
     <value>Tags were found for {0} of {1} files.</value>
   </data>
+  <data name="DownloadError" xml:space="preserve">
+    <value>Error downloading tags: {0}</value>
+  </data>
+  <data name="DownloadingTags" xml:space="preserve">
+    <value>Downloading tags ...</value>
+  </data>
+  <data name="SharingTags" xml:space="preserve">
+    <value>Sharing tags ...</value>
+  </data>
+  <data name="UploadError" xml:space="preserve">
+    <value>Error sharing tags: {0}</value>
+  </data>
+  <data name="MusicIdStats" xml:space="preserve">
+    <value>Ids were found for {0} of {1} files.</value>
+  </data>
 </root>

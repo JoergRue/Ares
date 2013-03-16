@@ -393,6 +393,12 @@ namespace Ares.Tags
         /// Confirms the tags retrieved from the global DB for the given list of files.
         /// </summary>
         void ConfirmTags(IList<String> files);
+
+        /// <summary>
+        /// Returns whether there are tags retrieved from the global DB for the given list of files
+        /// which can be confirmed.
+        /// </summary>
+        bool CanConfirmTags(IList<String> files);
     }
 
     /// <summary>

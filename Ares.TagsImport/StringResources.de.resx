@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AddingTags" xml:space="preserve">
-    <value>Füge Tags hinzu</value>
+    <value>Füge Tags hinzu ...</value>
   </data>
   <data name="Album" xml:space="preserve">
     <value>Album</value>
@@ -136,7 +136,7 @@
     <value>Frage Online-Datenbank ab ...</value>
   </data>
   <data name="SettingFileTags" xml:space="preserve">
-    <value>Setze Datei-Tags</value>
+    <value>Setze Datei-Tags ...</value>
   </data>
   <data name="UploadingTags" xml:space="preserve">
     <value>Lade Tags zu Online-Datenbank hoch ...</value>

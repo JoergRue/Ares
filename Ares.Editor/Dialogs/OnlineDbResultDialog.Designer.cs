@@ -35,6 +35,7 @@
             this.removeDialogBox = new System.Windows.Forms.CheckBox();
             this.okButton = new System.Windows.Forms.Button();
             this.secondLabel = new System.Windows.Forms.Label();
+            this.musicIdsLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -76,12 +77,18 @@
             resources.ApplyResources(this.secondLabel, "secondLabel");
             this.secondLabel.Name = "secondLabel";
             // 
+            // musicIdsLabel
+            // 
+            resources.ApplyResources(this.musicIdsLabel, "musicIdsLabel");
+            this.musicIdsLabel.Name = "musicIdsLabel";
+            // 
             // OnlineDbResultDialog
             // 
             this.AcceptButton = this.okButton;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.okButton;
+            this.Controls.Add(this.musicIdsLabel);
             this.Controls.Add(this.secondLabel);
             this.Controls.Add(this.okButton);
             this.Controls.Add(this.removeDialogBox);
@@ -108,5 +115,6 @@
         private System.Windows.Forms.CheckBox removeDialogBox;
         private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.Label secondLabel;
+        private System.Windows.Forms.Label musicIdsLabel;
     }
 }

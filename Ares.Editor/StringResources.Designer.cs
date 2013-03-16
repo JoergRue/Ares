@@ -270,6 +270,24 @@ namespace Ares.Editor {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Error downloading tags: {0} ähnelt.
+        /// </summary>
+        internal static string DownloadError {
+            get {
+                return ResourceManager.GetString("DownloadError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Downloading tags ... ähnelt.
+        /// </summary>
+        internal static string DownloadingTags {
+            get {
+                return ResourceManager.GetString("DownloadingTags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Download of tags from {0} was successful. ähnelt.
         /// </summary>
         internal static string DownloadOperationSuccess {
@@ -546,6 +564,15 @@ namespace Ares.Editor {
         internal static string MusicIdExtractionError {
             get {
                 return ResourceManager.GetString("MusicIdExtractionError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Ids were found for {0} of {1} files. ähnelt.
+        /// </summary>
+        internal static string MusicIdStats {
+            get {
+                return ResourceManager.GetString("MusicIdStats", resourceCulture);
             }
         }
         
@@ -985,6 +1012,15 @@ namespace Ares.Editor {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Sharing tags ... ähnelt.
+        /// </summary>
+        internal static string SharingTags {
+            get {
+                return ResourceManager.GetString("SharingTags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Couldn&apos;&apos;t start editor. Error message: {0} ähnelt.
         /// </summary>
         internal static string SoundFileEditorStartFail {
@@ -1144,6 +1180,15 @@ namespace Ares.Editor {
         internal static string Unknown {
             get {
                 return ResourceManager.GetString("Unknown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Error sharing tags: {0} ähnelt.
+        /// </summary>
+        internal static string UploadError {
+            get {
+                return ResourceManager.GetString("UploadError", resourceCulture);
             }
         }
         

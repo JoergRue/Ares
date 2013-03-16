@@ -132,7 +132,7 @@
     <value>1</value>
   </data>
   <data name="resultLabel.Text" xml:space="preserve">
-    <value>Download of tags from rpgmusictags.de was successful.</value>
+    <value>Download of tags from rpgmusictags.org was successful.</value>
   </data>
   <data name="&gt;&gt;resultLabel.Name" xml:space="preserve">
     <value>resultLabel</value>
@@ -144,10 +144,10 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;resultLabel.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="showLogButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>49, 44</value>
+    <value>49, 65</value>
   </data>
   <data name="showLogButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>121, 23</value>
@@ -168,7 +168,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;showLogButton.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="pictureBox1.Location" type="System.Drawing.Point, System.Drawing">
     <value>2, 9</value>
@@ -193,13 +193,13 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;pictureBox1.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="removeDialogBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="removeDialogBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>52, 73</value>
+    <value>52, 94</value>
   </data>
   <data name="removeDialogBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>158, 17</value>
@@ -220,13 +220,13 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;removeDialogBox.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="okButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
   </data>
   <data name="okButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>286, 92</value>
+    <value>286, 115</value>
   </data>
   <data name="okButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
@@ -247,13 +247,13 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;okButton.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="secondLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="secondLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>49, 28</value>
+    <value>49, 49</value>
   </data>
   <data name="secondLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>35, 13</value>
@@ -274,6 +274,33 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;secondLabel.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="musicIdsLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="musicIdsLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>49, 30</value>
+  </data>
+  <data name="musicIdsLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>74, 13</value>
+  </data>
+  <data name="musicIdsLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="musicIdsLabel.Text" xml:space="preserve">
+    <value>musicIdsLabel</value>
+  </data>
+  <data name="&gt;&gt;musicIdsLabel.Name" xml:space="preserve">
+    <value>musicIdsLabel</value>
+  </data>
+  <data name="&gt;&gt;musicIdsLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;musicIdsLabel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;musicIdsLabel.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
@@ -283,7 +310,7 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>373, 127</value>
+    <value>373, 150</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterParent</value>
