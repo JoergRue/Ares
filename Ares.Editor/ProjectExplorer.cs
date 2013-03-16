@@ -843,6 +843,8 @@ namespace Ares.Editor
             DialogResult result = Dialogs.KeyDialog.Show(this, out keyCode);
             if (result != DialogResult.Cancel)
             {
+                if ((System.Windows.Forms.Keys)keyCode == System.Windows.Forms.Keys.Delete)
+                    keyCode = 0;
                 Actions.Actions.Instance.AddNew(new Actions.SetModeKeyAction(SelectedNode, keyCode), m_Project);
             }
         }
@@ -854,20 +856,29 @@ namespace Ares.Editor
             if (result != DialogResult.Cancel)
             {
                 IModeElement modeElement = SelectedNode.Tag as IModeElement;
-                IKeyTrigger keyTrigger = Data.DataModule.ElementFactory.CreateKeyTrigger();
-                keyTrigger.TargetElementId = modeElement.Id;
-                keyTrigger.KeyCode = keyCode;
-                if (modeElement.Trigger != null && modeElement.Trigger.TriggerType == TriggerType.Key)
+                ITrigger trigger = null;
+                if ((System.Windows.Forms.Keys)keyCode == System.Windows.Forms.Keys.Delete)
                 {
-                    IKeyTrigger oldTrigger = modeElement.Trigger as IKeyTrigger;
-                    keyTrigger.StopSounds = oldTrigger.StopSounds;
-                    keyTrigger.StopMusic = oldTrigger.StopMusic;
+                    trigger = Data.DataModule.ElementFactory.CreateNoTrigger();
                 }
                 else
                 {
-                    keyTrigger.StopMusic = keyTrigger.StopSounds = false;
+                    IKeyTrigger keyTrigger = Data.DataModule.ElementFactory.CreateKeyTrigger();
+                    keyTrigger.TargetElementId = modeElement.Id;
+                    keyTrigger.KeyCode = keyCode;
+                    trigger = keyTrigger;
                 }
-                Actions.Actions.Instance.AddNew(new Actions.SetModeElementTriggerAction(modeElement, keyTrigger), m_Project);
+                if (modeElement.Trigger != null && modeElement.Trigger.TriggerType == TriggerType.Key)
+                {
+                    IKeyTrigger oldTrigger = modeElement.Trigger as IKeyTrigger;
+                    trigger.StopSounds = oldTrigger.StopSounds;
+                    trigger.StopMusic = oldTrigger.StopMusic;
+                }
+                else
+                {
+                    trigger.StopMusic = trigger.StopSounds = false;
+                }
+                Actions.Actions.Instance.AddNew(new Actions.SetModeElementTriggerAction(modeElement, trigger), m_Project);
             }
         }
 

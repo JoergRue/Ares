@@ -220,7 +220,14 @@ namespace Ares.Editor.ElementEditors
             {
                 KeysConverter converter = new KeysConverter();
                 Keys key = (Keys)keyCode;
-                selectKeyButton.Text = converter.ConvertToString(key);
+                if (key == Keys.Delete)
+                {
+                    selectKeyButton.Text = StringResources.NoKey;
+                }
+                else
+                {
+                    selectKeyButton.Text = converter.ConvertToString(key);
+                }
                 UpdateErrorProvider();
                 Commit();
             }
