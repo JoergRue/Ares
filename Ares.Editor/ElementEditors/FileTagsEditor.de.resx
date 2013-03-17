@@ -121,38 +121,20 @@
   <data name="languageBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>254, 6</value>
   </data>
-  <data name="languageBox.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
     <value>236, 13</value>
   </data>
   <data name="label1.Text" xml:space="preserve">
     <value>Sprache, die im Projekt für Tags verwendet wird:</value>
   </data>
-  <data name="label1.ToolTip" xml:space="preserve">
-    <value />
+  <data name="groupBox2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>220, 239</value>
   </data>
   <data name="tagsBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>214, 220</value>
   </data>
-  <data name="tagsBox.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="groupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>220, 239</value>
-  </data>
-  <data name="groupBox2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="categoriesBox.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="groupBox1.Text" xml:space="preserve">
     <value>Kategorien</value>
-  </data>
-  <data name="groupBox1.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="addTagButton.Location" type="System.Drawing.Point, System.Drawing">
     <value>443, 71</value>
@@ -162,9 +144,6 @@
   </data>
   <data name="addTagButton.Text" xml:space="preserve">
     <value>Tag hinzufügen ...</value>
-  </data>
-  <data name="addTagButton.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="downloadButton.Location" type="System.Drawing.Point, System.Drawing">
     <value>443, 120</value>
@@ -214,13 +193,16 @@
   <data name="id3Button.ToolTip" xml:space="preserve">
     <value>Tags aus ID3-Informationen holen</value>
   </data>
-  <data name="titleLabel.ToolTip" xml:space="preserve">
-    <value />
+  <data name="musicBrainzButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>443, 251</value>
+  </data>
+  <data name="musicBrainzButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>110, 23</value>
+  </data>
+  <data name="musicBrainzButton.ToolTip" xml:space="preserve">
+    <value>Tags von MusicBrainz holen</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Tags für Dateien</value>
-  </data>
-  <data name="$this.ToolTip" xml:space="preserve">
-    <value />
   </data>
 </root>

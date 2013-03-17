@@ -308,6 +308,7 @@ namespace Ares.Editor.ElementEditors
             shareButton.Enabled = hasFiles;
             downloadButton.Enabled = hasFiles;
             id3Button.Enabled = hasFiles;
+            musicBrainzButton.Enabled = hasFiles;
             addTagButton.Enabled = hasFiles;
             confirmButton.Enabled = hasFiles;
 
@@ -550,6 +551,46 @@ namespace Ares.Editor.ElementEditors
             }
             Ares.Tags.TagsModule.GetTagsDB().WriteInterface.RemoveFileTags(m_Files, removedTags);
             Ares.Editor.Actions.TagChanges.Instance.FireTagsDBChanged(this);
+        }
+
+        private void musicBrainzButton_Click(object sender, EventArgs e)
+        {
+            System.Threading.CancellationTokenSource tokenSource = new System.Threading.CancellationTokenSource();
+            TaskProgressMonitor monitor = new TaskProgressMonitor(this, StringResources.DownloadingTags, tokenSource);
+            monitor.IncreaseProgress(0.1, StringResources.ExtractingMusicIds);
+            Ares.TagsImport.SequentialProgressMonitor musicIdMonitor = new TagsImport.SequentialProgressMonitor(monitor, 0.1, 89.9);
+            var task = Ares.TagsImport.MusicIdentification.UpdateMusicIdentification(musicIdMonitor, m_Files, Ares.Settings.Settings.Instance.MusicDirectory, tokenSource);
+            var task2 = task.ContinueWith((t) =>
+            {
+                var dbRead = Ares.Tags.TagsModule.GetTagsDB().ReadInterface;
+                var fileIds = dbRead.GetIdentificationForFiles(m_Files);
+                return Ares.TagsImport.TagsFromIds.SetTagsFromIds(monitor, fileIds, m_LanguageId, true, true, tokenSource);
+            }, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskContinuationOptions.NotOnFaulted, System.Threading.Tasks.TaskScheduler.Default);
+
+            task2.ContinueWith((t) =>
+            {
+                monitor.Close();
+                Ares.Editor.Actions.TagChanges.Instance.FireTagsDBChanged(this);
+                UpdateAll();
+                MessageBox.Show(this, String.Format(StringResources.TagsDownloadStats, task2.Result, m_Files.Count), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskContinuationOptions.NotOnFaulted, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
+            task2.ContinueWith((t) =>
+            {
+                monitor.Close();
+                if (t.Exception != null)
+                {
+                    TaskHelpers.HandleTaskException(this, t.Exception, StringResources.TagsDbError);
+                }
+            }, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskContinuationOptions.OnlyOnFaulted, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
+            task.ContinueWith((t) =>
+            {
+                monitor.Close();
+                if (t.Exception != null)
+                {
+                    TaskHelpers.HandleTaskException(this, t.Exception, StringResources.MusicIdExtractionError);
+                }
+            }, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskContinuationOptions.OnlyOnFaulted, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
+
         }
     }
 

@@ -73,6 +73,39 @@ namespace Ares.Tags
             }
         }
 
+        public void AddFileTags(IList<int> fileIds, IList<IList<int>> tagIds)
+        {
+            if (m_Connection == null)
+            {
+                throw new TagsDbException("No Connection to DB file!");
+            }
+            try
+            {
+                if (fileIds.Count == 0)
+                {
+                    return;
+                }
+
+                using (DbTransaction transaction = m_Connection.BeginTransaction())
+                {
+                    for (int i = 0; i < fileIds.Count; ++i)
+                    {
+                        DoAddFileTags(transaction, fileIds[i], tagIds[i]);
+                    }
+
+                    transaction.Commit();
+                }
+            }
+            catch (System.Data.DataException ex)
+            {
+                throw new TagsDbException(ex.Message, ex);
+            }
+            catch (DbException ex)
+            {
+                throw new TagsDbException(ex.Message, ex);
+            }
+        }
+
         public void RemoveFileTags(IList<string> relativePaths, IList<IList<int>> tagIds)
         {
             if (m_Connection == null)
@@ -326,6 +359,11 @@ namespace Ares.Tags
                 return;
             }
             long fileId = InsertOrFindFile(transaction, path);
+            DoAddFileTags(transaction, fileId, tagIds);
+        }
+
+        private void DoAddFileTags(DbTransaction transaction, long fileId, IList<int> tagIds)
+        {
             String queryExistingString = String.Format("SELECT {0}, {1} FROM {2} WHERE {3}=@File AND {4}=@Tag",
                 Schema.ID_COLUMN, Schema.USER_COLUMN, Schema.FILETAGS_TABLE, Schema.FILE_COLUMN, Schema.TAG_COLUMN);
             String removeRemovedString = String.Format("DELETE FROM {0} WHERE {1}=@File AND {2}=@Tag",

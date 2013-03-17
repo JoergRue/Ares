@@ -79,6 +79,7 @@
       <DependentUpon>StringResources.resx</DependentUpon>
     </Compile>
     <Compile Include="Tags.cs" />
+    <Compile Include="TagsFromIds.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

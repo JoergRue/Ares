@@ -354,6 +354,12 @@ namespace Ares.Tags
         void AddFileTags(IList<String> relativePaths, IList<IList<int>> tagIds);
 
         /// <summary>
+        /// Adds tags for a list of files.
+        /// For each file, the list of new tags is given.
+        /// </summary>
+        void AddFileTags(IList<int> fileIds, IList<IList<int>> tagIds);
+
+        /// <summary>
         /// Remove tags for a list of files.
         /// For each file, the list of to-be-removed tags is given.
         /// </summary>

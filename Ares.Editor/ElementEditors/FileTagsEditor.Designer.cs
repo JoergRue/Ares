@@ -63,6 +63,7 @@ namespace Ares.Editor.ElementEditors
             this.id3Button = new System.Windows.Forms.Button();
             this.titleLabel = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.musicBrainzButton = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -161,10 +162,19 @@ namespace Ares.Editor.ElementEditors
             this.titleLabel.Name = "titleLabel";
             this.toolTip1.SetToolTip(this.titleLabel, resources.GetString("titleLabel.ToolTip"));
             // 
+            // musicBrainzButton
+            // 
+            resources.ApplyResources(this.musicBrainzButton, "musicBrainzButton");
+            this.musicBrainzButton.Name = "musicBrainzButton";
+            this.toolTip1.SetToolTip(this.musicBrainzButton, resources.GetString("musicBrainzButton.ToolTip"));
+            this.musicBrainzButton.UseVisualStyleBackColor = true;
+            this.musicBrainzButton.Click += new System.EventHandler(this.musicBrainzButton_Click);
+            // 
             // FileTagsEditor
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.musicBrainzButton);
             this.Controls.Add(this.titleLabel);
             this.Controls.Add(this.id3Button);
             this.Controls.Add(this.confirmButton);
@@ -199,5 +209,6 @@ namespace Ares.Editor.ElementEditors
         private System.Windows.Forms.Button id3Button;
         private System.Windows.Forms.Label titleLabel;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.Button musicBrainzButton;
     }
 }

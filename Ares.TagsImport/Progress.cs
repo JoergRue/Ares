@@ -22,7 +22,7 @@ using Ares.ModelInfo;
 
 namespace Ares.TagsImport
 {
-    class SequentialProgressMonitor : IProgressMonitor
+    public class SequentialProgressMonitor : IProgressMonitor
     {
         private IProgressMonitor m_Parent;
         private double m_Offset;
