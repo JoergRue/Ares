@@ -220,7 +220,13 @@ namespace Ares.Tags
                 {
                     while (reader.Read())
                     {
-                        result.Add(new FileIdentification() { Id = (int)reader.GetInt64(0), Artist = reader.GetString(1), Album = reader.GetString(2), Title = reader.GetString(3) });
+                        result.Add(new FileIdentification() 
+                         { 
+                             Id = (int)reader.GetInt64(0), 
+                             Artist = reader.GetStringOrEmpty(1), 
+                             Album = reader.GetStringOrEmpty(2), 
+                             Title = reader.GetStringOrEmpty(3) 
+                         });
                     }
                 }
             }

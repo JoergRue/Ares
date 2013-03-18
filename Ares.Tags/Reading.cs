@@ -121,6 +121,26 @@ namespace Ares.Tags
             }
         }
 
+        public IList<FileIdentification> GetIdentificationForFiles(IList<int> fileIds)
+        {
+            if (m_Connection == null)
+            {
+                throw new TagsDbException("No Connection to DB file!");
+            }
+            try
+            {
+                return DoGetIdentificationForFiles(fileIds);
+            }
+            catch (System.Data.DataException ex)
+            {
+                throw new TagsDbException(ex.Message, ex);
+            }
+            catch (DbException ex)
+            {
+                throw new TagsDbException(ex.Message, ex);
+            }
+        }
+
         public IList<FileIdentification> GetFilesForTag(long tagId)
         {
             if (m_Connection == null)
@@ -185,6 +205,49 @@ namespace Ares.Tags
                 foreach (String filePath in filePaths)
                 {
                     param.Value = filePath;
+                    using (DbDataReader reader = queryCommand.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            result.Add(new FileIdentification()
+                            {
+                                Id = (int)reader.GetInt64(0),
+                                Artist = reader.GetStringOrEmpty(1),
+                                Album = reader.GetStringOrEmpty(2),
+                                Title = reader.GetStringOrEmpty(3),
+                                AcoustId = reader.GetStringOrEmpty(4)
+                            });
+                        }
+                        else
+                        {
+                            result.Add(new FileIdentification()
+                            {
+                                Id = -1,
+                                Artist = String.Empty,
+                                Album = String.Empty,
+                                Title = String.Empty,
+                                AcoustId = String.Empty
+                            });
+                        }
+                    }
+                }
+            }
+            return result;
+        }
+
+        private IList<FileIdentification> DoGetIdentificationForFiles(IList<int> fileIds)
+        {
+            List<FileIdentification> result = new List<FileIdentification>();
+            if (fileIds == null || fileIds.Count == 0)
+                return result;
+            String queryString = String.Format("SELECT {0}, {1}, {2}, {3}, {4} FROM {5} WHERE {6}=@FileId",
+                Schema.ID_COLUMN, Schema.ARTIST_COLUMN, Schema.ALBUM_COLUMN, Schema.TITLE_COLUMN, Schema.ACOUST_ID_COLUMN, Schema.FILES_TABLE, Schema.ID_COLUMN);
+            using (DbCommand queryCommand = DbUtils.CreateDbCommand(queryString, m_Connection))
+            {
+                DbParameter param = queryCommand.AddParameter("@Fileid", System.Data.DbType.Int64);
+                foreach (int fileId in fileIds)
+                {
+                    param.Value = fileId;
                     using (DbDataReader reader = queryCommand.ExecuteReader())
                     {
                         if (reader.Read())

@@ -94,6 +94,7 @@ namespace Ares.TagsImportTest
                         }
                         catch (System.IO.IOException)
                         {
+                            System.Console.WriteLine("WARNING: Could not delete temp DB, Resource leak?");
                         }
                     }
                 }

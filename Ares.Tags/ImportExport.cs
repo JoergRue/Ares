@@ -1501,7 +1501,7 @@ namespace Ares.Tags
                                 while (reader.Read())
                                 {
                                     long tagId = reader.GetInt64(0);
-                                    String currentUser = reader.GetString(1);
+                                    String currentUser = reader.GetStringOrEmpty(1);
                                     if (importedTags.Contains(tagId) && currentUser != Schema.GLOBAL_DB_USER)
                                     {
                                         m_LogStream.WriteLine(String.Format("Tag {0} was assigned to file {1} and will not be removed from it", tagId, fileId));

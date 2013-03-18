@@ -274,6 +274,11 @@ namespace Ares.Tags
         IList<FileIdentification> GetIdentificationForFiles(IList<String> filePaths);
 
         /// <summary>
+        /// Returns the stored identification for the given files.
+        /// </summary>
+        IList<FileIdentification> GetIdentificationForFiles(IList<int> fileIds);
+
+        /// <summary>
         /// Returns the stored identification for all files which have the given tags.
         /// </summary>
         IList<FileIdentification> GetFilesForTag(long tagId);
