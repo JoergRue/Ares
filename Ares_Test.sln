@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ares.Tags", "Ares.Tags\Ares
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ares.GlobalDbImportTest", "Ares.GlobalDbImportTest\Ares.GlobalDbImportTest.csproj", "{5F2F8F62-BC5A-41DC-A12E-F87056B569CD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ares.GlobalDbUploadTest", "Ares.GlobalDbUploadTest\Ares.GlobalDbUploadTest.csproj", "{21494B5B-E73B-4F18-8895-F7D874CDA9BD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,16 @@ Global
 		{5F2F8F62-BC5A-41DC-A12E-F87056B569CD}.Release|Mixed Platforms.Build.0 = Release|x86
 		{5F2F8F62-BC5A-41DC-A12E-F87056B569CD}.Release|x86.ActiveCfg = Release|x86
 		{5F2F8F62-BC5A-41DC-A12E-F87056B569CD}.Release|x86.Build.0 = Release|x86
+		{21494B5B-E73B-4F18-8895-F7D874CDA9BD}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{21494B5B-E73B-4F18-8895-F7D874CDA9BD}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{21494B5B-E73B-4F18-8895-F7D874CDA9BD}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{21494B5B-E73B-4F18-8895-F7D874CDA9BD}.Debug|x86.ActiveCfg = Debug|x86
+		{21494B5B-E73B-4F18-8895-F7D874CDA9BD}.Debug|x86.Build.0 = Debug|x86
+		{21494B5B-E73B-4F18-8895-F7D874CDA9BD}.Release|Any CPU.ActiveCfg = Release|x86
+		{21494B5B-E73B-4F18-8895-F7D874CDA9BD}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{21494B5B-E73B-4F18-8895-F7D874CDA9BD}.Release|Mixed Platforms.Build.0 = Release|x86
+		{21494B5B-E73B-4F18-8895-F7D874CDA9BD}.Release|x86.ActiveCfg = Release|x86
+		{21494B5B-E73B-4F18-8895-F7D874CDA9BD}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Ares.GlobalDbImportTest
+namespace Ares.GlobalDbUploadTest
 {
     class Program
     {
@@ -24,6 +24,8 @@ namespace Ares.GlobalDbImportTest
         private static String TEMP_DB = "Temp.sqlite";
         private static String REFERENCE = "Reference.txt";
         private static String RESULTS = "Results.txt";
+
+        private static String USER_ID = "UploadTester";
 
         private static int Process(String dir, ref int errors)
         {
@@ -55,11 +57,11 @@ namespace Ares.GlobalDbImportTest
                 try
                 {
                     ++count;
-                    System.IO.File.Copy(localDbName, tempName, true);
+                    System.IO.File.Copy(globalDbName, tempName, true);
                     try
                     {
                         var fileInterface = Ares.Tags.TagsModule.GetTagsDB().FilesInterface;
-                        fileInterface.OpenOrCreateDatabase(tempName);
+                        fileInterface.OpenOrCreateDatabase(localDbName);
                         System.Console.WriteLine("Start test " + dir);
                         try
                         {
@@ -71,20 +73,20 @@ namespace Ares.GlobalDbImportTest
                             {
                                 fileIds.Add(file.Id);
                             }
-                            var files2 = readInterface.GetIdentificationForFiles(fileIds);
 
                             var globalDb = Ares.Tags.TagsModule.GetNewTagsDB();
-                            globalDb.FilesInterface.OpenOrCreateDatabase(globalDbName);
-                            int nrOfFoundFiles = 0;
+                            globalDb.FilesInterface.OpenOrCreateDatabase(tempName);
                             try
                             {
-                                var exportedData = globalDb.GlobalDBInterface.ExportDataForFiles(files2, out nrOfFoundFiles);
+                                var exportedData = fileInterface.ExportDatabaseForGlobalDB(fileIds);
+
+                                int newFiles = 0; int newTags = 0;
+                                globalDb.GlobalDBInterface.ImportDataFromClient(exportedData, USER_ID, writer, out newFiles, out newTags);
                                 globalDb.FilesInterface.CloseDatabase();
-                                writer.WriteLine("Tags found for " + nrOfFoundFiles + " files.");
-                                fileInterface.ImportDataFromGlobalDB(exportedData, writer);
+                                writer.WriteLine("New files: " + newFiles + "; new tags: " + newTags);
                                 writer.Flush();
                                 writer.Close();
-                                System.Console.WriteLine("Import from global DB finished.");
+                                System.Console.WriteLine("Upload to global DB finished.");
                                 if (referenceExists)
                                 {
                                     if (!CompareFiles(logName, referenceName))

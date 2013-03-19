@@ -85,6 +85,30 @@ namespace Ares.Tags
             }
         }
 
+        public TagsExportedData ExportDatabaseForGlobalDB(IList<int> fileIds)
+        {
+            if (fileIds == null)
+            {
+                throw new ArgumentException("File ids must be given", "filePaths");
+            }
+            if (m_Connection == null)
+            {
+                throw new TagsDbException("No Connection to DB file!");
+            }
+            try
+            {
+                return CreateExportedData(fileIds, true);
+            }
+            catch (System.Data.DataException ex)
+            {
+                throw new TagsDbException(ex.Message, ex);
+            }
+            catch (DbException ex)
+            {
+                throw new TagsDbException(ex.Message, ex);
+            }
+        }
+
         // method from global database
         public TagsExportedData ExportDataForFiles(IList<FileIdentification> files, out int foundFiles)
         {
@@ -160,70 +184,105 @@ namespace Ares.Tags
                     }
                 }
 
-                FindTagsForExport(transaction, excludeGlobalDBData);
-
-                // file tags information
-                String fileTagsInfo = String.Format("SELECT {0}.{1}, {0}.{2} FROM {0}, {3} WHERE {0}.{1} = {3}.{4}",
-                    Schema.FILETAGS_TABLE, Schema.FILE_COLUMN, Schema.TAG_COLUMN, Schema.FILEEXPORT_TABLE, Schema.FILE_COLUMN);
-                if (excludeGlobalDBData)
-                {
-                    fileTagsInfo += String.Format(" AND {0}.{1}!='{2}'", Schema.FILETAGS_TABLE, Schema.USER_COLUMN, Schema.GLOBAL_DB_USER);
-                }
-                fileTagsInfo += String.Format(" ORDER BY {0}.{1}", Schema.FILETAGS_TABLE, Schema.FILE_COLUMN);
-                List<TagsForFileExchange> tagsForFileExchange = new List<TagsForFileExchange>();
-                using (DbCommand fileTagsCommand = DbUtils.CreateDbCommand(fileTagsInfo, m_Connection, transaction))
-                {
-                    using (DbDataReader reader = fileTagsCommand.ExecuteReader())
-                    {
-                        TagsForFileExchange tagsForFiles = null;
-                        while (reader.Read())
-                        {
-                            long fileId = reader.GetInt64(0);
-                            if (tagsForFiles == null || fileId != tagsForFiles.FileId)
-                            {
-                                tagsForFiles = new TagsForFileExchange() { FileId = fileId, TagIds = new List<long>() };
-                                tagsForFileExchange.Add(tagsForFiles);
-                            }
-                            tagsForFiles.TagIds.Add(reader.GetInt64(1));
-                        }
-                    }
-                }
-                data.TagsForFiles = tagsForFileExchange;
-
-                // removed tags information
-                String removedTagsInfo = String.Format("SELECT {0}.{1}, {0}.{2} FROM {0}, {3} WHERE {0}.{1} = {3}.{4}",
-                    Schema.REMOVEDTAGS_TABLE, Schema.FILE_COLUMN, Schema.TAG_COLUMN, Schema.FILEEXPORT_TABLE, Schema.FILE_COLUMN);
-                if (excludeGlobalDBData)
-                {
-                    removedTagsInfo += String.Format(" AND {0}.{1}!='{2}'", Schema.REMOVEDTAGS_TABLE, Schema.USER_COLUMN, Schema.GLOBAL_DB_USER);
-                }
-                removedTagsInfo += String.Format(" ORDER BY {0}.{1}", Schema.REMOVEDTAGS_TABLE, Schema.FILE_COLUMN);
-                List<TagsForFileExchange> removedTags = new List<TagsForFileExchange>();
-                using (DbCommand removedTagsCommand = DbUtils.CreateDbCommand(removedTagsInfo, m_Connection, transaction))
-                {
-                    using (DbDataReader reader = removedTagsCommand.ExecuteReader())
-                    {
-                        TagsForFileExchange tagsForFiles = null;
-                        while (reader.Read())
-                        {
-                            long fileId = reader.GetInt64(0);
-                            if (tagsForFiles == null || fileId != tagsForFiles.FileId)
-                            {
-                                tagsForFiles = new TagsForFileExchange() { FileId = fileId, TagIds = new List<long>() };
-                                removedTags.Add(tagsForFiles);
-                            }
-                            tagsForFiles.TagIds.Add(reader.GetInt64(1));
-                        }
-                    }
-                }
-                data.RemovedTags = removedTags;
-
-                FillExportedData(data, transaction, null, !excludeGlobalDBData);
-
+                DoCreateExportedData(data, transaction, excludeGlobalDBData);
                 transaction.Rollback();
             }
 
             return data;
+        }
+
+        private TagsExportedData CreateExportedData(IList<int> fileIds, bool excludeGlobalDBData)
+        {
+            TagsExportedData data = new TagsExportedData();
+
+            // Use temporary table with all file IDs. This is so we don't have to
+            // use a "where File.Path in (........)" in each query or even manually
+            // iterate over each file.
+            // Use another temporary table which holds all tags which are either assigned
+            // or removed from any of the files.
+            using (DbTransaction transaction = m_Connection.BeginTransaction())
+            {
+                // no need to clear export tables: transaction will always be rolled back
+                String moveCommand = String.Format("INSERT INTO {0} ({1}, {2}) SELECT {3}, {4} FROM {5} WHERE {3} = @FileId",
+                    Schema.FILEEXPORT_TABLE, Schema.FILE_COLUMN, Schema.PATH_COLUMN, Schema.ID_COLUMN, Schema.PATH_COLUMN, Schema.FILES_TABLE, Schema.ID_COLUMN);
+                using (DbCommand command = DbUtils.CreateDbCommand(moveCommand, m_Connection, transaction))
+                {
+                    DbParameter param = command.AddParameter("@FileId", System.Data.DbType.Int64);
+                    foreach (int fileId in fileIds)
+                    {
+                        param.Value = fileId;
+                        command.ExecuteNonQuery();
+                    }
+                }
+
+                DoCreateExportedData(data, transaction, excludeGlobalDBData);
+                transaction.Rollback();
+            }
+
+            return data;
+        }
+
+        private void DoCreateExportedData(TagsExportedData data, DbTransaction transaction, bool excludeGlobalDBData)
+        {
+            FindTagsForExport(transaction, excludeGlobalDBData);
+
+            // file tags information
+            String fileTagsInfo = String.Format("SELECT {0}.{1}, {0}.{2} FROM {0}, {3} WHERE {0}.{1} = {3}.{4}",
+                Schema.FILETAGS_TABLE, Schema.FILE_COLUMN, Schema.TAG_COLUMN, Schema.FILEEXPORT_TABLE, Schema.FILE_COLUMN);
+            if (excludeGlobalDBData)
+            {
+                fileTagsInfo += String.Format(" AND {0}.{1}!='{2}'", Schema.FILETAGS_TABLE, Schema.USER_COLUMN, Schema.GLOBAL_DB_USER);
+            }
+            fileTagsInfo += String.Format(" ORDER BY {0}.{1}", Schema.FILETAGS_TABLE, Schema.FILE_COLUMN);
+            List<TagsForFileExchange> tagsForFileExchange = new List<TagsForFileExchange>();
+            using (DbCommand fileTagsCommand = DbUtils.CreateDbCommand(fileTagsInfo, m_Connection, transaction))
+            {
+                using (DbDataReader reader = fileTagsCommand.ExecuteReader())
+                {
+                    TagsForFileExchange tagsForFiles = null;
+                    while (reader.Read())
+                    {
+                        long fileId = reader.GetInt64(0);
+                        if (tagsForFiles == null || fileId != tagsForFiles.FileId)
+                        {
+                            tagsForFiles = new TagsForFileExchange() { FileId = fileId, TagIds = new List<long>() };
+                            tagsForFileExchange.Add(tagsForFiles);
+                        }
+                        tagsForFiles.TagIds.Add(reader.GetInt64(1));
+                    }
+                }
+            }
+            data.TagsForFiles = tagsForFileExchange;
+
+            // removed tags information
+            String removedTagsInfo = String.Format("SELECT {0}.{1}, {0}.{2} FROM {0}, {3} WHERE {0}.{1} = {3}.{4}",
+                Schema.REMOVEDTAGS_TABLE, Schema.FILE_COLUMN, Schema.TAG_COLUMN, Schema.FILEEXPORT_TABLE, Schema.FILE_COLUMN);
+            if (excludeGlobalDBData)
+            {
+                removedTagsInfo += String.Format(" AND {0}.{1}!='{2}'", Schema.REMOVEDTAGS_TABLE, Schema.USER_COLUMN, Schema.GLOBAL_DB_USER);
+            }
+            removedTagsInfo += String.Format(" ORDER BY {0}.{1}", Schema.REMOVEDTAGS_TABLE, Schema.FILE_COLUMN);
+            List<TagsForFileExchange> removedTags = new List<TagsForFileExchange>();
+            using (DbCommand removedTagsCommand = DbUtils.CreateDbCommand(removedTagsInfo, m_Connection, transaction))
+            {
+                using (DbDataReader reader = removedTagsCommand.ExecuteReader())
+                {
+                    TagsForFileExchange tagsForFiles = null;
+                    while (reader.Read())
+                    {
+                        long fileId = reader.GetInt64(0);
+                        if (tagsForFiles == null || fileId != tagsForFiles.FileId)
+                        {
+                            tagsForFiles = new TagsForFileExchange() { FileId = fileId, TagIds = new List<long>() };
+                            removedTags.Add(tagsForFiles);
+                        }
+                        tagsForFiles.TagIds.Add(reader.GetInt64(1));
+                    }
+                }
+            }
+            data.RemovedTags = removedTags;
+
+            FillExportedData(data, transaction, null, !excludeGlobalDBData);
         }
 
         private void FindTagsForExport(DbTransaction transaction, bool excludeGlobalDBData)

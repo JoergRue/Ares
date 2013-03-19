@@ -569,6 +569,12 @@ namespace Ares.Tags
         TagsExportedData ExportDatabaseForGlobalDB(IList<String> filePaths);
 
         /// <summary>
+        /// Exports the part of the database relevant to the given files. 
+        /// Does not export parts which come from the global database.
+        /// </summary>
+        TagsExportedData ExportDatabaseForGlobalDB(IList<int> fileIds);
+
+        /// <summary>
         /// The default file name for the tags database.
         /// </summary>
         String DefaultFileName { get; }

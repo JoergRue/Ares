@@ -1,0 +1,46 @@
+Found language en (imported id 1) with id 1
+Found language de (imported id 2) with id 2
+Found language fr (imported id 3) with id 3
+Found language es (imported id 4) with id 4
+Translation 'English' for language 1 already exists
+Translation 'Englisch' for language 1 already exists
+Translation 'Anglais' for language 1 already exists
+Translation 'Inglés' for language 1 already exists
+Translation 'German' for language 2 already exists
+Translation 'Deutsch' for language 2 already exists
+Translation 'Allemand' for language 2 already exists
+Translation 'Aléman' for language 2 already exists
+Translation 'French' for language 3 already exists
+Translation 'Französisch' for language 3 already exists
+Translation 'Français' for language 3 already exists
+Translation 'Francés' for language 3 already exists
+Translation 'Spanish' for language 4 already exists
+Translation 'Spanisch' for language 4 already exists
+Translation 'Espagnol' for language 4 already exists
+Translation 'Castellano' for language 4 already exists
+Added category Interpret (language 2, new Id 1) for Id 4
+Translation 'Interpret' for category 1 already exists
+Added category Mood (language 1, new Id 2) for Id 1
+Translation 'Mood' for category 2 already exists
+Adding category translation 'Stimmung' for language 2 into language 2
+Adding category translation 'Ambiance' for language 2 into language 3
+Adding category translation 'Ambiente' for language 2 into language 4
+Added category Situation (language 1, new Id 3) for Id 2
+Translation 'Situation' for category 3 already exists
+Adding category translation 'Situation' for language 3 into language 2
+Adding category translation 'Situation' for language 3 into language 3
+Adding category translation 'Situación' for language 3 into language 4
+Added tag Erdenstern (language 2, new Id 1) for Id 10
+Translation 'Erdenstern' for tag 1 already exists
+Added tag Suspense (language 1, new Id 2) for Id 1
+Translation 'Suspense' for tag 2 already exists
+Adding tag translation 'Spannung' for language 2 into language 2
+Adding tag translation 'Suspense' for language 2 into language 3
+Adding tag translation 'Suspense' for language 2 into language 4
+Added tag Dungeon (language 2, new Id 3) for Id 13
+Translation 'Dungeon' for tag 3 already exists
+Insert new file  with id 1 (imported id 36)
+Tag 10 assigned to file 36 for user UploadTester
+Tag 1 assigned to file 36 for user UploadTester
+Tag 13 assigned to file 36 for user UploadTester
+New files: 1; new tags: 3

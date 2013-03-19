@@ -1,0 +1,46 @@
+Insert new language en (imported id 1) with id 5
+Found language de (imported id 2) with id 2
+Found language fr (imported id 3) with id 3
+Found language es (imported id 4) with id 4
+Translation 'English' for language 5 already exists
+Adding language translation 'Englisch' for language 5 into language 2
+Adding language translation 'Anglais' for language 5 into language 3
+Adding language translation 'Inglés' for language 5 into language 4
+Adding language translation 'German' for language 2 into language 5
+Translation 'Deutsch' for language 2 already exists
+Translation 'Allemand' for language 2 already exists
+Translation 'Aléman' for language 2 already exists
+Adding language translation 'French' for language 3 into language 5
+Translation 'Französisch' for language 3 already exists
+Translation 'Français' for language 3 already exists
+Translation 'Francés' for language 3 already exists
+Adding language translation 'Spanish' for language 4 into language 5
+Translation 'Spanisch' for language 4 already exists
+Translation 'Espagnol' for language 4 already exists
+Translation 'Castellano' for language 4 already exists
+Found existing category 4 for imported category 4
+Translation 'Interpret' for category 4 already exists
+Found existing category 1 for imported category 1
+Adding category translation 'Mood' for language 1 into language 5
+Translation 'Stimmung' for category 1 already exists
+Translation 'Ambiance' for category 1 already exists
+Translation 'Ambiente' for category 1 already exists
+Found existing category 2 for imported category 2
+Adding category translation 'Situation' for language 2 into language 5
+Translation 'Situation' for category 2 already exists
+Translation 'Situation' for category 2 already exists
+Translation 'Situación' for category 2 already exists
+Found existing tag 10 for imported tag 10
+Translation 'Erdenstern' for tag 10 already exists
+Found existing tag 1 for imported tag 1
+Adding tag translation 'Suspense' for language 1 into language 5
+Translation 'Spannung' for tag 1 already exists
+Translation 'Suspense' for tag 1 already exists
+Translation 'Suspense' for tag 1 already exists
+Found existing tag 13 for imported tag 13
+Translation 'Dungeon' for tag 13 already exists
+Found existing file 36 for acoust Id 0c753c88-308c-436f-b7f2-921e1ce6730c
+Tag 10 already assigned to file 36 by user UploadTester; ignoring assignment
+Tag 1 already assigned to file 36 by user UploadTester; ignoring assignment
+Tag 13 already assigned to file 36 by user UploadTester; ignoring assignment
+New files: 0; new tags: 0
