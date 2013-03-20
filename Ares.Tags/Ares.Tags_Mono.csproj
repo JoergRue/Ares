@@ -54,5 +54,7 @@
     <Compile Include="SQLiteTagsDB.cs" />
     <Compile Include="Translations.cs" />
     <Compile Include="Writing.cs" />
+    <Compile Include="DbUtils.cs" />
+    <Compile Include="Browsing.cs" />
   </ItemGroup>
 </Project>

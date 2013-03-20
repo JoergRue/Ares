@@ -52,13 +52,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>StringResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="PathLabel.cs" />
-    <Compile Include="ProgressDialog.cs" />
-    <Compile Include="ProgressDialog.Designer.cs" />
     <Compile Include="KeyChecks.cs" />
     <Compile Include="FileSearch.cs" />
     <Compile Include="Playlists.cs" />
     <Compile Include="ReferenceChecks.cs" />
+    <Compile Include="Progress.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ares.snk" />
@@ -70,7 +68,6 @@
       <LastGenOutput>StringResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="..\Ares.png" />
-    <EmbeddedResource Include="ProgressDialog.resx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

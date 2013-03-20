@@ -1,3 +1,15 @@
+Version 2.1.0
+----------------------------------------------------------------------------------
+- Editor: Dialog für Dateitags durch Editor-Fenster ersetzt
+- Editor: Tags können zu rpgmusictags.org hoch- und von dort heruntergeladen werden
+- Editor: Interpret- und Album-Tags können von musicbrainz.org geholt werden
+- Editor: Einstellungsdialog mit mehreren Tabs statt mehrerer Dialoge
+- Editor: Trigger-Tasten können von Modi / Elementen entfernt werden
+- Editor: F1 öffnet die Hilfe-Webseite
+- Player: Beim Streaming über Icecast können Benutzername, Stream-Name und Bitrate
+  gesetzt werden
+- Player: Einstellungsdialog mit mehreren Tabs statt mehrerer Dialoge
+
 Version 2.0.0
 ----------------------------------------------------------------------------------
 - Allgemein: Unterstützung von Musik-Tags

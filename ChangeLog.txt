@@ -1,3 +1,15 @@
+Version 2.1.0
+----------------------------------------------------------------------------------
+- Editor: Replaced dialog for file tags with editor window
+- Editor: Can upload tags to and download tags from rpgmusictags.org
+- Editor: Interpret and Album tags can be retrieved from musicbrainz.org
+- Editor: Settings dialog with several tabs instead of separate dialogs
+- Editor: Trigger keys can be removed from modes / elements
+- Editor: F1 opens help web page
+- Player: When streaming through Icecast, user name, stream name and bit rate can
+  be set
+- Player: Settings dialog with several tabs instead of separate dialogs
+
 Version 2.0.0
 ----------------------------------------------------------------------------------
 - General: Support for music tags

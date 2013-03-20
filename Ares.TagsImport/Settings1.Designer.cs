@@ -25,7 +25,7 @@ namespace Ares.TagsImport {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://joergrue-001-site1.smarterasp.net")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://www.rpgmusictags.org")]
         public string GlobalDbUrl {
             get {
                 return ((string)(this["GlobalDbUrl"]));

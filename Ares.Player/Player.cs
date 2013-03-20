@@ -186,17 +186,23 @@ namespace Ares.Player
         private void ShowSettingsDialog()
         {
             StopAllPlaying();
+#if !MONO
             m_KeyboardHookManager.Enabled = false; 
+#endif
             Ares.Settings.Settings settings = Ares.Settings.Settings.Instance;
             Ares.CommonGUI.SettingsDialog dialog = new Ares.CommonGUI.SettingsDialog(Ares.Settings.Settings.Instance, m_BasicSettings);
+#if !MONO
             dialog.AddPage(new StreamingPageHost());
+#endif
             dialog.SetVisiblePage(-1);
             if (dialog.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
             {
                 m_PlayingControl.UpdateDirectories();
                 LoadTagsDB();
             }
+#if !MONO
             m_KeyboardHookManager.Enabled = true;
+#endif
         }
 
         private void openButton_Click(object sender, EventArgs e)
@@ -1330,7 +1336,6 @@ namespace Ares.Player
 #if MONO
 			editorButton.Enabled = false;
 			startEditorToolStripMenuItem.Enabled = false;
-			streamingToolStripMenuItem.Enabled = false;
 #endif
             listenForPorts = true;
             m_Network = new Network(this);

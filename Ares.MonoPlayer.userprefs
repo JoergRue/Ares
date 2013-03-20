@@ -1,27 +1,22 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Mono_Release" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Ares.Playing\MusicPlayer.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Ares.Player\Player.cs">
     <Files>
       <File FileName="Ares.Settings\Settings.cs" Line="308" Column="44" />
-      <File FileName="Ares.Player\Player.cs" Line="1157" Column="14" />
-      <File FileName="Ares.Settings\SettingsDialog.cs" Line="42" Column="121" />
+      <File FileName="Ares.Player\Player.cs" Line="196" Column="7" />
       <File FileName="Ares.Settings\BasicSettings.cs" Line="104" Column="53" />
       <File FileName="Ares.Online\OnlineOperations.cs" Line="55" Column="1" />
       <File FileName="Ares.Playing\Player.cs" Line="579" Column="53" />
       <File FileName="Ares.Data\Containers.cs" Line="178" Column="10" />
-      <File FileName="Ares.Tags\Files.cs" Line="25" Column="19" />
-      <File FileName="Ares.ModelChecks\ImportExport.cs" Line="224" Column="14" />
+      <File FileName="Ares.Tags\Files.cs" Line="120" Column="40" />
+      <File FileName="Ares.ModelChecks\ImportExport.cs" Line="34" Column="17" />
       <File FileName="Ares.Playing\MusicPlayer.cs" Line="611" Column="17" />
+      <File FileName="Ares.Tags\SQLiteTagsDB.cs" Line="175" Column="21" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
-          <Node name="Ares.Online_Mono" expanded="True" />
-          <Node name="Ares.Player_Mono" expanded="True" />
-          <Node name="Ares.Playing_Mono" expanded="True" selected="True" />
-          <Node name="Ares.Tags_Mono" expanded="True">
-            <Node name="References" expanded="True" />
-          </Node>
+          <Node name="Ares.Online_Mono" selected="True" />
         </State>
       </Pad>
       <Pad Id="ClassPad">

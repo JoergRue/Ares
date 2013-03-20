@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="GlobalDbUrl" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">http://joergrue-001-site1.smarterasp.net</Value>
+      <Value Profile="(Default)">http://www.rpgmusictags.org</Value>
     </Setting>
     <Setting Name="UploadPath" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Upload</Value>

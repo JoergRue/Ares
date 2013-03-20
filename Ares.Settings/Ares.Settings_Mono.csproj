@@ -49,11 +49,6 @@
       <DependentUpon>StringResources.resx</DependentUpon>
     </Compile>
     <Compile Include="XmlHelpers.cs" />
-    <Compile Include="AboutDialog.cs" />
-    <Compile Include="AboutDialog.Designer.cs" />
-    <Compile Include="PathLabel.cs" />
-    <Compile Include="SettingsDialog.cs" />
-    <Compile Include="SettingsDialog.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="StringResources.de.resx" />
@@ -61,10 +56,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>StringResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="AboutDialog.de.resx" />
-    <EmbeddedResource Include="AboutDialog.resx" />
-    <EmbeddedResource Include="SettingsDialog.de.resx" />
-    <EmbeddedResource Include="SettingsDialog.resx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ares.snk" />
