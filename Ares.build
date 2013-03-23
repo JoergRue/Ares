@@ -116,6 +116,7 @@
 	    <copy todir="${output.dir}">
 		    <fileset basedir="${libraries.dir}">
 			  <include name="*.dll" />
+			  <include name="*.exe" />
 			</fileset>
 	    </copy>		
 	    <copy todir="${build.dir}/Ares">

@@ -14,5 +14,3 @@ call %ant% -DProductVersion=%1 prepareSetup
 cd ..\..\..
 
 %nant% clean prepareSetup
-
-copy Libraries\oggenc2.exe build\Ares\Player_Editor

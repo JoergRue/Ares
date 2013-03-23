@@ -12,7 +12,7 @@
       <Value Profile="(Default)">Download</Value>
     </Setting>
     <Setting Name="UseTestDB" Type="System.Boolean" Scope="Application">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
 </SettingsFile>

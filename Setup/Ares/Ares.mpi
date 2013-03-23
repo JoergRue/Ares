@@ -291,6 +291,14 @@ File ::145BB7FF-C5FA-49D4-8D30-C9CF49DB63F0 -name avutil-52.dll -active 0 -paren
 File ::12A937F4-65B8-4932-A810-AFF215298E6A -name chromaprint.dll -active 0 -parent 85519505-B2E6-4155-96D6-3C0D6C533801
 File ::BF2385E4-9529-4100-BCB8-21FE709E712D -name RestSharp.dll -active 0 -parent 85519505-B2E6-4155-96D6-3C0D6C533801
 File ::84FC2755-FB6D-4C8B-AB42-6A4DAAC06862 -name System.Threading.dll -active 0 -parent 85519505-B2E6-4155-96D6-3C0D6C533801
+File ::7FAD6FC4-E484-4295-80EE-B078B1557BB8 -name ChromaprintLicence.txt -active 0 -parent 85519505-B2E6-4155-96D6-3C0D6C533801
+File ::D8BD36C7-B282-4A83-9628-7A8F9566754A -name FfmpegLicence.txt -active 0 -parent 85519505-B2E6-4155-96D6-3C0D6C533801
+File ::5AB3EBB3-B9CF-4B14-8427-12D27CB791E0 -name HtmlRendererLicence.txt -parent 85519505-B2E6-4155-96D6-3C0D6C533801
+File ::04676C3A-103A-4524-9898-26D6F78898BD -name MouseKeyboardHooksLicence.txt -parent 85519505-B2E6-4155-96D6-3C0D6C533801
+File ::1DB14E5B-5166-460F-842A-36A35672A350 -name msvcp100.dll -active 0 -parent 85519505-B2E6-4155-96D6-3C0D6C533801
+File ::67A73DDD-7F0A-481E-B930-DC49A8B23267 -name msvcr100.dll -active 0 -parent 85519505-B2E6-4155-96D6-3C0D6C533801
+File ::35ADFB73-0A5E-4253-91DB-2527769ABEC3 -name RestSharpLicence.txt -parent 85519505-B2E6-4155-96D6-3C0D6C533801
+File ::98D189EA-BBEE-4FE2-B99D-4C60EFE7C832 -name ServiceStackLicence.txt -parent 85519505-B2E6-4155-96D6-3C0D6C533801
 File ::95542296-8E72-4D8D-8ACE-B7B6AB1080E3 -name D:/Projekte/Ares/trunk/build/Ares/ServiceStackLicence.txt -parent 36904AC1-ABF2-4646-9ECF-2C0CBC0BB8C5
 File ::CCC6C317-4CCE-44B9-9FE1-9C12E10D1373 -name D:/Projekte/Ares/trunk/build/Ares/HtmlRendererLicence.txt -parent 36904AC1-ABF2-4646-9ECF-2C0CBC0BB8C5
 FileGroup ::68676E85-DEAC-451E-9016-59D1A2300E9B -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows TarArchive ZipArchive} -name Player -parent FileGroups
@@ -321,6 +329,8 @@ File ::F7F91345-BE21-4489-8178-1DE19492567E -directory <%InstallDir%>/Player_Edi
 File ::25794162-23F9-4567-ACF8-2E2851301614 -name D:/Projekte/Ares/trunk/build/Ares/ChromaprintLicence.txt -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
 File ::204121E1-4E0F-4ED6-AFDA-3CDEF83D3C68 -name D:/Projekte/Ares/trunk/build/Ares/FfmpegLicence.txt -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
 File ::1BFEDD8B-74E8-4496-9D22-98F331D13A9C -name D:/Projekte/Ares/trunk/build/Ares/RestSharpLicence.txt -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
+File ::737D2D8F-8B11-42B1-8F8F-757F05A9E160 -name D:/Projekte/Ares/trunk/build/Ares/Player_Editor/msvcp100.dll -location <%BaseDir%>/Ares/Player_Editor -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
+File ::7F6E31D7-656B-4691-8C1B-3368F0AD2344 -name D:/Projekte/Ares/trunk/build/Ares/Player_Editor/msvcr100.dll -location <%BaseDir%>/Ares/Player_Editor -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
 FileGroup ::953890EA-7233-446E-AF22-E9084BF13BF4 -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows TarArchive ZipArchive} -name {Controller Common} -parent FileGroups
 File ::91F171A1-E4C0-4BED-ACD5-C4ADACD8CC2C -type dir -name D:/Projekte/Ares/trunk/build/Ares/Controller -location <%BaseDir%>/Ares/Controller -parent 953890EA-7233-446E-AF22-E9084BF13BF4
 File ::EAC8BD0A-D043-4FCE-9AB0-851CD5961292 -name Ares.Controller.exe -active 0 -parent 91F171A1-E4C0-4BED-ACD5-C4ADACD8CC2C

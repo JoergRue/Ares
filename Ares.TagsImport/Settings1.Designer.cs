@@ -52,7 +52,7 @@ namespace Ares.TagsImport {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool UseTestDB {
             get {
                 return ((bool)(this["UseTestDB"]));
