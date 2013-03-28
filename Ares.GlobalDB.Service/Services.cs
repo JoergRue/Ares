@@ -186,6 +186,20 @@ namespace Ares.GlobalDB.Services
         }
     }
 
+    class DataEncoding
+    {
+        public static String EscapeDataString(String data)
+        {
+            data = data.Replace("/", "%2F");
+            return Uri.EscapeDataString(data);
+        }
+
+        public static String UnescapeDataString(String data)
+        {
+            return data.Replace("%2F", "/");
+        }
+    }
+
     public class BrowseRequest
     {
         public String LanguageCode { get; set; }
@@ -375,7 +389,7 @@ namespace Ares.GlobalDB.Services
  	        Inner = data;
         }
         public String Name { get { return Inner.Name; } }
-        public String Url { get { return MakeBrowseUrl(String.Format("/Artists/{0}", Name)); } }
+        public String Url { get { return MakeBrowseUrl(String.Format("/Artists/{0}", DataEncoding.EscapeDataString(Name))); } }
     }
 
     public class Album : ItemResponse<Ares.Tags.Album>
@@ -387,8 +401,8 @@ namespace Ares.GlobalDB.Services
         }
         public String Artist { get { return Inner.Artist; } }
         public String Name { get { return Inner.Name; } }
-        public String Url { get { return MakeBrowseUrl(String.Format("/Artists/{0}/{1}", Artist, Name)); } }
-        public String ArtistUrl { get { return MakeBrowseUrl(String.Format("/Artists/{0}", Artist)); } }
+        public String Url { get { return MakeBrowseUrl(String.Format("/Artists/{0}/{1}", DataEncoding.EscapeDataString(Artist), DataEncoding.EscapeDataString(Name))); } }
+        public String ArtistUrl { get { return MakeBrowseUrl(String.Format("/Artists/{0}", DataEncoding.EscapeDataString(Artist))); } }
     }
 
     public class File : ItemResponse<Ares.Tags.FileIdentification>
@@ -408,15 +422,15 @@ namespace Ares.GlobalDB.Services
         { 
             get 
             {
-                String originalUrl = MakeBrowseUrl(String.Format("/Files/{0}", Inner.Id, Name));
+                String originalUrl = MakeBrowseUrl(String.Format("/Files/{0}", Inner.Id, DataEncoding.EscapeDataString(Name)));
                 if (originalUrl.LastIndexOf('?') != -1)
-                    return originalUrl + String.Format("&Name={0}", Name);
+                    return originalUrl + String.Format("&Name={0}", DataEncoding.EscapeDataString(Name));
                 else
-                    return originalUrl + String.Format("?Name={0}", Name);
+                    return originalUrl + String.Format("?Name={0}", DataEncoding.EscapeDataString(Name));
             } 
         }
-        public String ArtistUrl { get { return MakeBrowseUrl(String.Format("/Artists/{0}", Artist)); } }
-        public String AlbumUrl { get { return MakeBrowseUrl(String.Format("/Artists/{0}/{1}", Artist, Album)); } }
+        public String ArtistUrl { get { return MakeBrowseUrl(String.Format("/Artists/{0}", DataEncoding.EscapeDataString(Artist))); } }
+        public String AlbumUrl { get { return MakeBrowseUrl(String.Format("/Artists/{0}/{1}", DataEncoding.EscapeDataString(Artist), DataEncoding.EscapeDataString(Album))); } }
     }
 
     public class Category : ItemResponse<String>
@@ -426,7 +440,7 @@ namespace Ares.GlobalDB.Services
         {
  	        Name = data;
         }
-        public String Url { get { return MakeBrowseUrl(String.Format("/Categories/{0}", Name)); } }
+        public String Url { get { return MakeBrowseUrl(String.Format("/Categories/{0}", DataEncoding.EscapeDataString(Name))); } }
     }
 
     public class Tag : BrowseResponse
@@ -434,8 +448,8 @@ namespace Ares.GlobalDB.Services
         public String Name { get; set; }
         public String Category { get; set; }
 
-        public String Url { get { return MakeBrowseUrl(String.Format("/Tags/{0}/{1}", Category, Name)); } }
-        public String CategoryUrl { get { return MakeBrowseUrl(String.Format("/Categories/{0}", Category)); } }
+        public String Url { get { return MakeBrowseUrl(String.Format("/Tags/{0}/{1}", DataEncoding.EscapeDataString(Category), DataEncoding.EscapeDataString(Name))); } }
+        public String CategoryUrl { get { return MakeBrowseUrl(String.Format("/Categories/{0}", DataEncoding.EscapeDataString(Category))); } }
     }
 
     public class ListResponse<T> : ItemResponse<List<T>>
@@ -458,7 +472,7 @@ namespace Ares.GlobalDB.Services
     public class ArtistsResponse : ListResponse<Album>
     {
         public String Artist { get; set; }
-        public String ArtistUrl { get { return MakeBrowseUrl(String.Format("/Artists/{0}", Artist)); } }
+        public String ArtistUrl { get { return MakeBrowseUrl(String.Format("/Artists/{0}", DataEncoding.EscapeDataString(Artist))); } }
     }
 
     public class AlbumsResponse : ListResponse<File>
@@ -592,12 +606,12 @@ namespace Ares.GlobalDB.Services
             List<Album> result = new List<Album>();
             using (TagsDBUser user = new TagsDBUser(request.Test))
             {
-                foreach (Ares.Tags.Album album in user.TagsDB.BrowseInterface.GetAlbumsByArtist(request.Name))
+                foreach (Ares.Tags.Album album in user.TagsDB.BrowseInterface.GetAlbumsByArtist(DataEncoding.UnescapeDataString(request.Name)))
                 {
                     result.Add(CreateItemResponse<Album, Ares.Tags.Album>(request, album, user));
                 }
                 var response = CreateItemResponse<ArtistsResponse, List<Album>>(request, result, user);
-                response.Artist = request.Name;
+                response.Artist = DataEncoding.UnescapeDataString(request.Name);
                 return CreateHttpResponse(request, response);
             }
         }
@@ -607,13 +621,13 @@ namespace Ares.GlobalDB.Services
             List<File> result = new List<File>();
             using (TagsDBUser user = new TagsDBUser(request.Test))
             {
-                foreach (Ares.Tags.FileIdentification file in user.TagsDB.BrowseInterface.GetFilesByAlbum(request.Artist, request.Name))
+                foreach (Ares.Tags.FileIdentification file in user.TagsDB.BrowseInterface.GetFilesByAlbum(DataEncoding.UnescapeDataString(request.Artist), DataEncoding.UnescapeDataString(request.Name)))
                 {
                     result.Add(CreateItemResponse<File, Ares.Tags.FileIdentification>(request, file, user));
                 }
                 var response = CreateItemResponse<AlbumsResponse, List<File>>(request, result, user);
-                response.Album = request.Name;
-                response.Artist = request.Artist;
+                response.Album = DataEncoding.UnescapeDataString(request.Name);
+                response.Artist = DataEncoding.UnescapeDataString(request.Artist);
                 return CreateHttpResponse(request, response);
             }
         }
@@ -669,7 +683,8 @@ namespace Ares.GlobalDB.Services
                 var readIf = GetReadInterface(user, request);
                 foreach (var categoryForLanguage in readIf.GetAllCategories())
                 {
-                    if (categoryForLanguage.Name.Equals(request.Category, StringComparison.Ordinal))
+                    String category = DataEncoding.UnescapeDataString(request.Category);
+                    if (categoryForLanguage.Name.Equals(category, StringComparison.Ordinal))
                     {
                         foreach (var tagForLanguage in readIf.GetAllTags(categoryForLanguage.Id))
                         {
@@ -681,7 +696,7 @@ namespace Ares.GlobalDB.Services
                     }
                 }
                 var response = CreateItemResponse<TagsByCategoryResponse, List<Tag>>(request, result, user);
-                response.Category = request.Category;
+                response.Category = DataEncoding.UnescapeDataString(request.Category);
                 return CreateHttpResponse(request, response);
             }
         }
@@ -700,7 +715,7 @@ namespace Ares.GlobalDB.Services
                     result.Add(tag);
                 }
                 var response = CreateItemResponse<TagsByFileResponse, List<Tag>>(request, result, user);
-                response.File = request.Name;
+                response.File = DataEncoding.UnescapeDataString(request.Name);
                 return CreateHttpResponse(request, response);
             }
         }
@@ -710,13 +725,13 @@ namespace Ares.GlobalDB.Services
             List<File> result = new List<File>();
             using (TagsDBUser user = new TagsDBUser(request.Test))
             {
-                long tagId = GetReadInterface(user, request).FindTag(request.Category, request.Tag);
+                long tagId = GetReadInterface(user, request).FindTag(DataEncoding.UnescapeDataString(request.Category), DataEncoding.UnescapeDataString(request.Tag));
                 foreach (var file in user.TagsDB.ReadInterface.GetFilesForTag(tagId))
                 {
                     result.Add(CreateItemResponse<File, Ares.Tags.FileIdentification>(request, file, user));
                 }
                 var response = CreateItemResponse<FilesByTagResponse, List<File>>(request, result, user);
-                response.Tag = request.Tag;
+                response.Tag = DataEncoding.UnescapeDataString(request.Tag);
                 return CreateHttpResponse(request, response);
             }
         }

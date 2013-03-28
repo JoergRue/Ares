@@ -169,7 +169,7 @@ m1=1..n</panel_attributes>
 -artist: String
 -album: String
 -title: String
--echoNestId: String</panel_attributes>
+-acoustId: String</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
