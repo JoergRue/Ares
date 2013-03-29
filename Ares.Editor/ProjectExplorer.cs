@@ -372,7 +372,7 @@ namespace Ares.Editor
             {
                 IElement referencedElement = Data.DataModule.ElementRepository.GetElement((element as IReferenceElement).ReferencedId);
                 if (referencedElement != null)
-                    return GetNodeImageIndex(referencedElement) + 11;
+                    return GetNodeImageIndex(referencedElement) + 12;
                 else
                     return 10;
             }
