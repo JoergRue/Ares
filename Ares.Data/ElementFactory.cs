@@ -92,16 +92,10 @@ namespace Ares.Data
         /// </summary>
         IReferenceElement CreateReferenceElement(int referencedId);
 
-        /*
         /// <summary>
-        /// Creates a reference to a container.
+        /// Creates a music by tags element
         /// </summary>
-        /// <typeparam name="T">Type of the container.</typeparam>
-        /// <typeparam name="T">Type of the container elements.</typeparam>
-        /// <param name="container">The container.</param>
-        /// <returns>New reference to the container.</returns>
-        IContainerReference<T, U> CreateContainerReference<T, U>(T container) where T : IElementContainer<U> where U : IContainerElement;
-         */
+        IMusicByTags CreateMusicByTags(String title);
     }
 
     class ElementFactory : IElementFactory
@@ -177,15 +171,10 @@ namespace Ares.Data
             return new ReferenceElement(referencedId);
         }
 
-        /*
-        public IContainerReference<T, U> CreateContainerReference<T, U>(T container) where T : IElementContainer<U> where U : IContainerElement
+        public IMusicByTags CreateMusicByTags(String title)
         {
-            IContainerReference<T, U> result = new ContainerReference<T, U>(GetNextID(), container);
-            container.AddReference(result);
-            return result;
+            return new MusicByTags(GetNextID(), title);
         }
-         */
-
 
         internal ElementFactory()
         {
@@ -253,6 +242,15 @@ namespace Ares.Data
             return new ReferenceElement(reader);
         }
 
+        internal IMusicByTags CreateMusicByTags(System.Xml.XmlReader reader)
+        {
+            if (!reader.IsStartElement("MusicByTags"))
+            {
+                XmlHelpers.ThrowException(String.Format(StringResources.ExpectedElement, "MusicByTags"), reader);
+            }
+            return new MusicByTags(reader);
+        }
+
         internal IElement CreateElement(System.Xml.XmlReader reader)
         {
             if (reader.IsStartElement("SequentialMusicList"))
@@ -313,6 +311,10 @@ namespace Ares.Data
             else if (reader.IsStartElement("ReferenceElement"))
             {
                 return new ReferenceElement(reader);
+            }
+            else if (reader.IsStartElement("MusicByTags"))
+            {
+                return new MusicByTags(reader);
             }
             else
             {
@@ -412,24 +414,5 @@ namespace Ares.Data
         }
 
         public abstract void WriteToXml(System.Xml.XmlWriter writer);
-
-        /*
-        private List<IElementReference> m_References;
-
-        public IList<IElementReference> References
-        {
-            get
-            {
-                return m_References;
-            }
-        }
-
-        public void AddReference(IElementReference reference)
-        {
-            if (m_References == null)
-                m_References = new List<IElementReference>();
-            m_References.Add(reference);
-        }
-         */
     }
 }

@@ -122,9 +122,10 @@ namespace Ares.Playing
                 action();
         }
 
-        public override void StopMusic(int crossFadeMusicTime)
+        public override bool StopMusic(int crossFadeMusicTime)
         {
             Stop(crossFadeMusicTime);
+            return true;
         }
 
         public override void StopSounds()
@@ -469,6 +470,10 @@ namespace Ares.Playing
         private int m_CurrentFileId;
         private IRandomBackgroundMusicList m_MusicList;
         private IModeElement m_ModeElement;
+        private bool m_MusicByTagsElementPlayed;
+
+        private int m_FadeTime = 0;
+        private bool m_FadeOnlyOnChange = false;
 
         public bool AddTag(int categoryId, int tag, out bool hadFiles)
         {
@@ -556,6 +561,23 @@ namespace Ares.Playing
             ProjectCallbacks.Instance.RemoveCallbacks(this);
         }
 
+        public void SetMusicByTagsElementPlayed(Ares.Data.IMusicByTags musicByTags)
+        {
+            m_TagsSet.Clear();
+            m_TagsSet.UnionWith(musicByTags.GetAllTags());
+            m_TagsSetByCategory.Clear();
+            IDictionary<int, HashSet<int>> tagsByCategories = musicByTags.GetTags();
+            foreach (int category in tagsByCategories.Keys)
+            {
+                HashSet<int> tags = new HashSet<int>();
+                tags.UnionWith(tagsByCategories[category]);
+                m_TagsSetByCategory[category] = tags;
+            }
+            m_CategoriesOperatorIsAnd = musicByTags.IsOperatorAnd;
+            m_FadeTime = musicByTags.FadeTime;
+            m_MusicByTagsElementPlayed = true;
+        }
+
         private bool RetrieveCurrentChoices()
         {
             IList<String> choices = null;
@@ -592,9 +614,14 @@ namespace Ares.Playing
                 {
                     mustChange = true;
                 }
-                // or no title is playing but there are some in the current choice list
-                else if (String.IsNullOrEmpty(m_CurrentFile) && m_CurrentChoices.Count > 0)
+                // or no title is playing --> then always change, even if the new list has no titles
+                else if (String.IsNullOrEmpty(m_CurrentFile))
                 {
+                    mustChange = true;
+                }
+                if (m_MusicByTagsElementPlayed)
+                {
+                    m_MusicByTagsElementPlayed = false;
                     mustChange = true;
                 }
             }
@@ -602,16 +629,34 @@ namespace Ares.Playing
             return mustChange;
         }
 
-        private void UpdateMusicList()
+        public static IRandomBackgroundMusicList CreateTagsMusicList(String title, IList<String> choices, int fadeTime)
         {
-            var newMusicList = Ares.Data.DataModule.ElementFactory.CreateRandomBackgroundMusicList(m_Title);
-            foreach (String file in m_CurrentChoices)
+            var newMusicList = Ares.Data.DataModule.ElementFactory.CreateRandomBackgroundMusicList(title);
+            foreach (String file in choices)
             {
                 IFileElement fileElement = Ares.Data.DataModule.ElementFactory.CreateFileElement(file, Data.SoundFileType.Music);
+                if (fadeTime > 0)
+                {
+                    fileElement.Effects.FadeInTime = fadeTime / 2;
+                    fileElement.Effects.FadeOutTime = fadeTime / 2;
+                }
                 newMusicList.AddElement(fileElement);
             }
-            var newModeElement = Ares.Data.DataModule.ElementFactory.CreateModeElement(m_Title, newMusicList);
+            return newMusicList;
+        }
 
+        private void UpdateMusicList()
+        {
+            var newMusicList = CreateTagsMusicList(m_Title, m_CurrentChoices, m_FadeOnlyOnChange ? 0 : m_FadeTime);
+            var newModeElement = Ares.Data.DataModule.ElementFactory.CreateModeElement(m_Title, newMusicList);
+            newModeElement.Trigger = Ares.Data.DataModule.ElementFactory.CreateNoTrigger();
+            newModeElement.Trigger.StopMusic = true;
+            newModeElement.Trigger.CrossFadeMusic = false;
+            if (m_FadeTime > 0)
+            {
+                newModeElement.Trigger.FadeMusic = true;
+                newModeElement.Trigger.FadeMusicTime = m_FadeTime;
+            }
             IRandomBackgroundMusicList oldMusicList;
             lock (m_SyncObject)
             {
@@ -706,6 +751,10 @@ namespace Ares.Playing
         }
 
         public void MusicTagCategoriesOperatorChanged(bool isAndOperator)
+        {
+        }
+
+        public void MusicTagsChanged(ICollection<int> newTags, bool isAndOperator, int fadeTime)
         {
         }
     }

@@ -110,5 +110,10 @@ namespace Ares.ModelInfo
         {
             // don't need to follow the link: will be checked through its normal 'element path'
         }
+
+        public void VisitMusicByTags(IMusicByTags musicByTags)
+        {
+            // don't need to check, files are determined dynamically
+        }
     }
 }

@@ -63,6 +63,10 @@ namespace Ares.Data
         /// Visits a reference to an element.
         /// </summary>
         void VisitReference(IReferenceElement reference);
+        /// <summary>
+        /// Visits a music by tags element.
+        /// </summary>
+        void VisitMusicByTags(IMusicByTags musicByTags);
     }
 
     /// <summary>
@@ -104,32 +108,7 @@ namespace Ares.Data
         /// Visitor pattern.
         /// </summary>
         void Visit(IElementVisitor visitor);
-
-        /*
-        /// <summary>
-        /// Returns the references to this element. The list may be null or empty.
-        /// </summary>
-        IList<IElementReference> References { get; }
-
-        /// <summary>
-        /// Adds a reference to the element.
-        /// </summary>
-        void AddReference(IElementReference reference);
-         */
     }
-
-    /*
-    /// <summary>
-    /// Contains a reference to another element.
-    /// </summary>
-    public interface IElementReference
-    {
-        /// <summary>
-        /// The referenced element
-        /// </summary>
-        IElement ReferencedElement { get; }
-    }
-     */
 
     /// <summary>
     /// Interface for a music list.
@@ -513,20 +492,6 @@ namespace Ares.Data
     public interface ISequentialContainer : IReorderableContainer<ISequentialElement>
     {
     }
-
-    /*
-    /// <summary>
-    /// Special element reference to a container.
-    /// </summary>
-    /// <typeparam name="T">Type of the container</typeparam>
-    public interface IContainerReference<T, U> : IElementReference, IElementContainer<U> where T : IElementContainer<U> where U : IContainerElement
-    {
-        /// <summary>
-        /// The referenced container.
-        /// </summary>
-        T ReferencedContainer { get; }
-    }
-     */
 
     /// <summary>
     /// Type of triggers which can start the playback of an element.

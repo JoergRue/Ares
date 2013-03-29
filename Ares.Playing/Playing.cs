@@ -268,6 +268,19 @@ namespace Ares.Playing
                 callback.MusicTagCategoriesOperatorChanged(isAndOperator);
             }
         }
+
+        public void MusicTagsChanged(ICollection<int> newTags, bool isAndOperator, int fadeTime)
+        {
+            List<IProjectPlayingCallbacks> copy = null;
+            lock (syncObject)
+            {
+                copy = new List<IProjectPlayingCallbacks>(m_Clients);
+            }
+            foreach (IProjectPlayingCallbacks callback in copy)
+            {
+                callback.MusicTagsChanged(newTags, isAndOperator, fadeTime);
+            }
+        }
     }
 
     public static class PlayingModule

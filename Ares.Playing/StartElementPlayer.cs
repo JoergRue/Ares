@@ -76,11 +76,15 @@ namespace Ares.Playing
                 players.AddRange(m_SubPlayers.Keys);
                 m_MusicStopped = true;
             }
+            bool mustStop = false;
             foreach (ElementPlayerBase player in players)
             {
-                player.StopMusic(crossFadeMusicTime);
+                if (player.StopMusic(crossFadeMusicTime))
+                {
+                    mustStop = true;
+                }
             }
-            return m_StoppedEvent;
+            return mustStop ? m_StoppedEvent : null;
         }
 
         public void StopSounds()

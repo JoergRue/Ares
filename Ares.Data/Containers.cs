@@ -212,6 +212,12 @@ namespace Ares.Data
                 mCheckedReferences.Remove(reference);
             }
         }
+
+        public void VisitMusicByTags(IMusicByTags musicByTags)
+        {
+            // needs not be considered here, because the File Element Searcher is only used
+            // by the background sounds element, which can't contain a MusicByTags element
+        }
     }
 
     [Serializable]

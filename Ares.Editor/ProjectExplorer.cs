@@ -57,6 +57,7 @@ namespace Ares.Editor
             sImageList.Images.Add(ImageResources.vierge);
             sImageList.Images.Add(ImageResources.base_cog_32);
             sImageList.Images.Add(ImageResources.SeriousWarning);
+            sImageList.Images.Add(ImageResources.musicbytags);
 
             sImageList.Images.Add(ImageResources.random_music_list_ref);
             sImageList.Images.Add(ImageResources.sequential_music_list_ref);
@@ -69,6 +70,7 @@ namespace Ares.Editor
             sImageList.Images.Add(ImageResources.vierge);
             sImageList.Images.Add(ImageResources.base_cog_32_ref);
             sImageList.Images.Add(ImageResources.SeriousWarning_ref);
+            sImageList.Images.Add(ImageResources.musicbytags_ref);
         }
 
         public ProjectExplorer()
@@ -317,6 +319,10 @@ namespace Ares.Editor
             {
                 return elementContextMenu;
             }
+            else if (element is IMusicByTags)
+            {
+                return elementContextMenu;
+            }
             else
                 return null;
         }
@@ -357,6 +363,10 @@ namespace Ares.Editor
                 {
                     return 7;
                 }
+            }
+            else if (element is IMusicByTags)
+            {
+                return 11;
             }
             else if (element is IReferenceElement)
             {
@@ -536,6 +546,26 @@ namespace Ares.Editor
                 SelectedNode.Text = (SelectedNode.Tag as IMode).Title;
                 SelectedNode.BeginEdit();
             }
+        }
+
+        private void AddMusicByTags()
+        {
+            String name = StringResources.NewPlaylist;
+            IMusicByTags element = DataModule.ElementFactory.CreateMusicByTags(name);
+            if (SelectedNode.Tag is IMode)
+            {
+                AddModeElement(element, name);
+            }
+            else
+            {
+                AddContainerElement(element);
+            }
+            m_AfterEditAction = () =>
+            {
+                m_AfterEditAction = null;
+                EditElement(GetElement(SelectedNode));
+            };
+            RenameElement();            
         }
 
         private void AddRandomPlaylist()
@@ -2183,6 +2213,16 @@ namespace Ares.Editor
         private void tagsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SelectTagsForElement();
+        }
+
+        private void addMusicByTagsToolStripItem_Click(object sender, EventArgs e)
+        {
+            AddMusicByTags();
+        }
+
+        private void addMusicByTagsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AddMusicByTags();
         }
 
     }

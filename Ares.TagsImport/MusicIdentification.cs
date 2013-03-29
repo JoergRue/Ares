@@ -437,7 +437,7 @@ namespace Ares.TagsImport
             {
                 return data.ToArray();
             }
-            catch (System.OutOfMemoryException ex)
+            catch (System.OutOfMemoryException)
             {
                 System.GC.Collect();
                 return null;

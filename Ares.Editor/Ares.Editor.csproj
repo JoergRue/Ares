@@ -247,6 +247,12 @@
     <Compile Include="ElementEditors\MacroEditor.Designer.cs">
       <DependentUpon>MacroEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="ElementEditors\MusicByTagsEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ElementEditors\MusicByTagsEditor.Designer.cs">
+      <DependentUpon>MusicByTagsEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="ElementEditors\ParallelContainerEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -433,6 +439,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ElementEditors\MacroEditor.resx">
       <DependentUpon>MacroEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ElementEditors\MusicByTagsEditor.de.resx">
+      <DependentUpon>MusicByTagsEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ElementEditors\MusicByTagsEditor.resx">
+      <DependentUpon>MusicByTagsEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ElementEditors\ParallelContainerEditor.de.resx">
       <DependentUpon>ParallelContainerEditor.cs</DependentUpon>
@@ -724,6 +736,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Information.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\musicbytags.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\musicbytags_ref.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

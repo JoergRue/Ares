@@ -81,6 +81,7 @@
     <Compile Include="FilesWatcher.cs" />
     <Compile Include="MacroActions.cs" />
     <Compile Include="ModeActions.cs" />
+    <Compile Include="MusicByTagsActions.cs" />
     <Compile Include="Playing.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringResources.Designer.cs">

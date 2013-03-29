@@ -207,6 +207,10 @@ namespace Ares.Playing
         public void MusicTagCategoriesOperatorChanged(bool isAndOperator)
         {
         }
+
+        public void MusicTagsChanged(System.Collections.Generic.ICollection<int> newTags, bool isAndOperator, int fadeTime)
+        {
+        }
     }
 
     class MacroPlayer : ElementPlayerBase, IMacroCommandVisitor
@@ -353,8 +357,9 @@ namespace Ares.Playing
         {
         }
 
-        public override void StopMusic(int crossFadeMusicTime)
+        public override bool StopMusic(int crossFadeMusicTime)
         {
+            return false;
         }
 
         public override void StopSounds()

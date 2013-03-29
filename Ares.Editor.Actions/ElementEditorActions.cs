@@ -748,7 +748,11 @@ namespace Ares.Editor.Actions
                 {
                     foreach (IModeElement modeElement in mode.GetElements())
                     {
-                        if (modeElement.Trigger != null && (modeElement.Trigger.StopMusic || modeElement.AlwaysStartsMusic()))
+                        if (modeElement.Trigger == null)
+                        {
+                            modeElement.Trigger = Ares.Data.DataModule.ElementFactory.CreateNoTrigger();
+                        }
+                        if ((modeElement.Trigger.StopMusic || modeElement.AlwaysStartsMusic()))
                         {
                             m_Triggers.Add(modeElement.Trigger);
                             m_TriggeredElementIds.Add(modeElement.Id);
@@ -757,6 +761,7 @@ namespace Ares.Editor.Actions
                             m_OldFadeTimes.Add(modeElement.Trigger.FadeMusicTime);
                             m_OldStopsMusic.Add(modeElement.Trigger.StopMusic);
                         }
+
                     }
                 }
             }

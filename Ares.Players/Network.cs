@@ -1364,6 +1364,20 @@ namespace Ares.Players
             }
         }
 
+        public void MusicTagsChanged(ICollection<int> newTags, bool operatorIsAnd, int fadeTime)
+        {
+            try
+            {
+                InformActiveTags(new List<int>(newTags));
+                InformCategoryOperatorChanged(operatorIsAnd);
+            }
+            catch (System.IO.IOException e)
+            {
+                Messages.AddMessage(MessageType.Warning, e.Message);
+                DoDisconnect(true);
+            }
+        }
+
         public void MusicTagCategoriesOperatorChanged(bool isAndOperator)
         {
             try

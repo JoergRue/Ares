@@ -119,6 +119,7 @@
     <Compile Include="ElementRepository.cs" />
     <Compile Include="Macros.cs" />
     <Compile Include="Modes.cs" />
+    <Compile Include="MusicByTags.cs" />
     <Compile Include="ProjectInterfaces.cs" />
     <Compile Include="ProjectManager.cs" />
     <Compile Include="Projects.cs" />

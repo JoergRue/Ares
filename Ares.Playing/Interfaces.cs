@@ -161,6 +161,10 @@ namespace Ares.Playing
         /// </summary>
         void MusicTagCategoriesOperatorChanged(bool isAndOperator);
 
+        /// <summary>
+        /// Music tags were completely changed.
+        /// </summary>
+        void MusicTagsChanged(System.Collections.Generic.ICollection<int> newTags, bool isAndOperator, int fadeTime);
     }
 
     /// <summary>

@@ -70,6 +70,8 @@ namespace Ares.ModelInfo
                 if (seqElements.Count > 0 && AlwaysStartsMusic(seqElements[0]))
                     return true;
             }
+            else if (element is IMusicByTags)
+                return true;
             return false;
         }
 
@@ -110,6 +112,8 @@ namespace Ares.ModelInfo
                     return true;
                 }
             }
+            else if (element is IMusicByTags)
+                return true;
 
             return false;
         }

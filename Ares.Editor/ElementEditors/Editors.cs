@@ -98,6 +98,12 @@ namespace Ares.Editor.ElementEditors
                     editor.SetContainer(element as Ares.Data.IElementContainer<Ares.Data.IParallelElement>, project);
                     ShowEditor(editor, parent);
                 }
+                else if (element is Ares.Data.IMusicByTags)
+                {
+                    MusicByTagsEditor editor = new MusicByTagsEditor();
+                    editor.SetElement(element as Ares.Data.IMusicByTags, project);
+                    ShowEditor(editor, parent);
+                }
                 else if (element is Ares.Data.IReferenceElement)
                 {
                     Ares.Data.IElement referencedElement = Ares.Data.DataModule.ElementRepository.GetElement((element as Ares.Data.IReferenceElement).ReferencedId);

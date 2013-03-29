@@ -467,6 +467,16 @@ namespace Ares.Players
             }
         }
 
+        public void MusicTagsChanged(ICollection<int> newTags, bool operatorIsAnd, int fadeTime)
+        {
+            lock (syncObject)
+            {
+                m_CurrentMusicTags.Clear();
+                m_CurrentMusicTags.UnionWith(newTags);
+                m_MusicTagCategoriesOperatorIsAnd = operatorIsAnd;
+            }
+        }
+
         private bool m_MusicTagCategoriesOperatorIsAnd = false;
 
         public bool IsMusicTagCategoriesOperatorAnd()

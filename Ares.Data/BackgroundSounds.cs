@@ -489,18 +489,6 @@ namespace Ares.Data
                 throw new NotImplementedException();
             }
 
-            /*
-            public IList<IElementReference> References
-            {
-                get { throw new NotImplementedException(); }
-            }
-
-            public void AddReference(IElementReference reference)
-            {
-                throw new NotImplementedException();
-            }
-             */
-
             public IElement InnerElement
             {
                 get { throw new NotImplementedException(); }

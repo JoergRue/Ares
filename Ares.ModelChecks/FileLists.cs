@@ -200,5 +200,14 @@ namespace Ares.ModelInfo
                 m_References.Remove(reference);
             }
         }
+
+        public void VisitMusicByTags(IMusicByTags musicByTags)
+        {
+            foreach (String file in musicByTags.GetAllMatchingFiles())
+            {
+                IFileElement element = Ares.Data.DataModule.ElementFactory.CreateFileElement(file, SoundFileType.Music);
+                element.Visit(this);
+            }
+        }
     }
 }

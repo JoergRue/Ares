@@ -196,7 +196,9 @@ namespace Ares.Playing
             }
         }
 
-        public abstract void StopMusic(int crossFadeMusicTime);
+        public virtual void VisitMusicByTags(IMusicByTags musicByTags) { }
+
+        public abstract bool StopMusic(int crossFadeMusicTime);
         public abstract void StopSounds();
         public abstract void SetSoundVolume(int volume);
 
@@ -411,8 +413,9 @@ namespace Ares.Playing
         
         // Because this player doesn't play music by itself, but delegates to sub-players,
         // no implementation is necessary
-        public override void StopMusic(int crossFadeMusicTime)
-        { 
+        public override bool StopMusic(int crossFadeMusicTime)
+        {
+            return false;
         }
 
         public override void StopSounds()
@@ -561,6 +564,27 @@ namespace Ares.Playing
             Client.SubPlayerStarted(subPlayer);
             Interlocked.Increment(ref m_ActiveSubPlayers);
             subPlayer.Start();
+        }
+
+        public override void VisitMusicByTags(IMusicByTags musicByTags)
+        {
+            try
+            {
+                var readIf = Ares.Tags.TagsModule.GetTagsDB().ReadInterface;
+                var choices = musicByTags.IsOperatorAnd ?
+                    readIf.GetAllFilesWithAnyTagInEachCategory(musicByTags.GetTags()) : readIf.GetAllFilesWithAnyTag(musicByTags.GetAllTags());
+                var musicList = TagsMusicPlayer.CreateTagsMusicList(musicByTags.Title, choices, musicByTags.FadeTime);
+                PlayingModule.ThePlayer.SetMusicByTagsElementPlayed(musicByTags);
+                if (PlayingModule.ThePlayer.ProjectCallbacks != null)
+                {
+                    PlayingModule.ThePlayer.ProjectCallbacks.MusicTagsChanged(musicByTags.GetAllTags(), musicByTags.IsOperatorAnd, musicByTags.FadeTime);
+                }
+                musicList.Visit(this);
+            }
+            catch (Ares.Tags.TagsDbException ex)
+            {
+                ErrorHandling.ErrorOccurred(musicByTags.Id, ex.Message);
+            }
         }
 
         // Interface for the mode player
@@ -897,10 +921,30 @@ namespace Ares.Playing
             }
         }
 
+        public void SetMusicByTagsElementPlayed(IMusicByTags element)
+        {
+            if (tagsPlayer == null)
+            {
+                tagsPlayer = new TagsMusicPlayer();
+            }
+            tagsPlayer.SetMusicByTagsElementPlayed(element);
+        }
+
         private void HandleTagChange(bool mustChangeTagMusic, bool wasPlayingTagMusic)
         {
             if (mustChangeTagMusic)
             {
+                if (tagsPlayer.MusicList.GetElements().Count == 0)
+                {
+                    if (m_ActiveMusicPlayer != null)
+                    {
+                        m_ActiveMusicPlayer.ChangeRandomList(tagsPlayer.MusicList);
+                    }
+                    // and a new title must be selected, because the old one
+                    // isn't eligible any more
+                    NextMusicTitle();
+                }
+                /*
                 // either the currently played title isn't eligible any more
                 // or no title was playing and now there are titles
                 if (wasPlayingTagMusic)
@@ -914,6 +958,7 @@ namespace Ares.Playing
                     // isn't eligible any more
                     NextMusicTitle();
                 }
+                */
                 else
                 {
                     // no tag music was playing, but now we have files
@@ -1081,7 +1126,7 @@ namespace Ares.Playing
             }
 
             ManualResetEvent stoppedEvent = null;
-            if (element.Trigger != null && element.Trigger.StopMusic)
+            if (element.Trigger != null && (element.Trigger.StopMusic || element.AlwaysStartsMusic()))
             {
                 int fadeTime = 0;
                 if (element.Trigger.CrossFadeMusic)

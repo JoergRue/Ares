@@ -101,6 +101,23 @@ namespace Ares.ModelInfo
             // no need to follow the reference, referenced element will be checked through its 'default' path
         }
 
+        public void VisitMusicByTags(IMusicByTags musicByTags)
+        {
+            // ignore missing tags here, because there is no way to remove them in the GUI anyway
+            /*
+            int languageId = m_TagLanguage;
+            if (m_TagLanguage == -1)
+                m_TagLanguage = Ares.Tags.TagsModule.GetTagsDB().TranslationsInterface.GetIdOfCurrentUILanguage();
+            List<int> tagIds = new List<int>();
+            tagIds.AddRange(musicByTags.GetAllTags());
+            var tagInfos = Ares.Tags.TagsModule.GetTagsDB().GetReadInterfaceByLanguage(m_TagLanguage).GetTagInfos(tagIds);
+            if (tagInfos.Count != tagIds.Count)
+            {
+                AddError(m_ModelErrors, ModelError.ErrorSeverity.Error, StringResources.TagNotFound, musicByTags);
+            }
+            */
+        }
+
         private void CheckCondition(IMacroCommand command)
         {
             switch (command.Condition.ConditionType)

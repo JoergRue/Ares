@@ -155,5 +155,43 @@ namespace Ares.ModelInfo
                 m_References.Remove(reference);
             }
         }
+
+        public void VisitMusicByTags(IMusicByTags musicByTags)
+        {
+            if (m_CurrentModeElement != null)
+            {
+                foreach (String file in musicByTags.GetAllMatchingFiles())
+                {
+                    if (GetAbsolutePath(file, SoundFileType.Music).Equals(m_SearchedPath, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        m_CurrentList.Add(m_CurrentModeElement);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    public static class MusicByTagsExtensions
+    {
+        public static IList<String> GetAllMatchingFiles(this IMusicByTags musicByTags)
+        {
+            try
+            {
+                var db = Ares.Tags.TagsModule.GetTagsDB().ReadInterface;
+                if (musicByTags.IsOperatorAnd)
+                {
+                    return db.GetAllFilesWithAnyTagInEachCategory(musicByTags.GetTags());
+                }
+                else
+                {
+                    return db.GetAllFilesWithAnyTag(musicByTags.GetAllTags());
+                }
+            }
+            catch (Ares.Tags.TagsDbException)
+            {
+                return new List<String>();
+            }
+        }
     }
 }

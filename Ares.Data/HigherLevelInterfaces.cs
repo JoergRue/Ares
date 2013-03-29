@@ -111,4 +111,41 @@ namespace Ares.Data
         /// </summary>
         IBackgroundSoundChoice AddImportedElement(IXmlWritable element);
     }
+
+    /// <summary>
+    /// Set to play music with a specific selection of tags.
+    /// </summary>
+    public interface IMusicByTags : IElement
+    {
+        /// <summary>
+        /// The selected tags.
+        /// </summary>
+        IDictionary<int, HashSet<int>> GetTags();
+
+        /// <summary>
+        /// The selected tags.
+        /// </summary>
+        HashSet<int> GetAllTags();
+
+        /// <summary>
+        /// Adds a tag
+        /// </summary>
+        void AddTag(int categoryId, int tagId);
+
+        /// <summary>
+        /// Removes a tag
+        /// </summary>
+        void RemoveTag(int categoryId, int tagId);
+
+        /// <summary>
+        /// Whether the categories are put together 
+        /// using 'and' or 'or'
+        /// </summary>
+        bool IsOperatorAnd { get; set; }
+
+        /// <summary>
+        /// Fade time for each music file
+        /// </summary>
+        int FadeTime { get; set; }
+    }
 }
