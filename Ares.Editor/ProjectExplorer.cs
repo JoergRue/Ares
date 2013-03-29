@@ -745,7 +745,7 @@ namespace Ares.Editor
             modeElement.Trigger = DataModule.ElementFactory.CreateNoTrigger();
             modeElement.Trigger.StopSounds = true;
             String name2 = StringResources.Music;
-            IRandomBackgroundMusicList element2 = DataModule.ElementFactory.CreateRandomBackgroundMusicList(name2);
+            IMusicByTags element2 = DataModule.ElementFactory.CreateMusicByTags(name2);
             AddContainerElement(element2);
             SelectedNode = scenarioNode;
             String name3 = StringResources.Sounds;
