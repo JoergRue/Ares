@@ -165,6 +165,11 @@ namespace Ares.Playing
         /// Music tags were completely changed.
         /// </summary>
         void MusicTagsChanged(System.Collections.Generic.ICollection<int> newTags, bool isAndOperator, int fadeTime);
+
+        /// <summary>
+        /// Music tag fading settings were changed.
+        /// </summary>
+        void MusicTagsFadingChanged(int fadeTime, bool fadeOnlyOnChange);
     }
 
     /// <summary>
@@ -304,6 +309,10 @@ namespace Ares.Playing
         /// an and- or an or-operator
         /// </summary>
         void SetMusicTagCategoriesOperator(bool isAndOperator);
+        /// <summary>
+        /// Sets music tag fading properties.
+        /// </summary>
+        void SetMusicTagFading(int fadeTime, bool fadeOnlyOnChange);
     }
 
     /// <summary>

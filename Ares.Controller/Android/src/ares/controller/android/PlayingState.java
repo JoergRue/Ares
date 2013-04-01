@@ -52,6 +52,8 @@ public class PlayingState implements INetworkClient {
 	private HashSet<Integer> activeTags = new HashSet<Integer>();
 	
 	private boolean tagCategoryOperatorIsAnd = false;
+	private int tagFadingTime = 0;
+	private boolean tagFadeOnlyOnChange = false;
 	
 	private String currentFileName = "";
 	private Configuration currentConfiguration = null;
@@ -102,6 +104,14 @@ public class PlayingState implements INetworkClient {
 	
 	public boolean isTagCategoryOperatorAnd() {
 		return tagCategoryOperatorIsAnd;
+	}
+	
+	public int getTagFadingTime() {
+		return tagFadingTime;
+	}
+	
+	public boolean getTagFadeOnlyOnChange() {
+		return tagFadeOnlyOnChange;
 	}
 	
 	public String getCurrentFileName() {
@@ -413,5 +423,20 @@ public class PlayingState implements INetworkClient {
 					client.configurationChanged(newConfiguration, fileName);
 			}
 		});
+	}
+
+	@Override
+	public void musicTagFadingChanged(final int fadeTime, final boolean fadeOnlyOnChange) {
+		handler.post(new Runnable() {
+			public void run() {
+				tagFadingTime = fadeTime;
+				tagFadeOnlyOnChange = fadeOnlyOnChange;
+				if (!hasClient())
+					return;
+				for (INetworkClient client : clients)
+					client.musicTagFadingChanged(fadeTime, fadeOnlyOnChange);
+			}
+		});
+		
 	}
 }

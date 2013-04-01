@@ -513,6 +513,14 @@ public final class ControlConnection {
 					  }
 					  break;
 				  }
+				  case 17:
+				  {
+					  boolean fadeOnlyOnChange = stream.read() == 1;
+					  stream.read();
+					  int fadeTime = readInt32(stream);
+					  networkClient.musicTagFadingChanged(fadeTime, fadeOnlyOnChange);
+					  break;
+				  }
 				  default:
 					  break;
 				  }
@@ -805,6 +813,31 @@ public final class ControlConnection {
 		  Messages.addMessage(MessageType.Warning, e.getLocalizedMessage());
           handleConnectionFailure(true);
 	  }	  	  
+  }
+  
+  public void setMusicTagsFading(int fadeTime, boolean onlyOnChange) {
+	    if (!isConnected()) {
+	        Messages.addMessage(MessageType.Warning, Localization.getString("ControlConnection.NoConnection")); //$NON-NLS-1$
+	        return;
+	      }
+	      if (state == State.ConnectionFailure) {
+	      	if (!tryReconnect()) {
+	      	      Messages.addMessage(MessageType.Warning, Localization.getString("ControlConnection.NoConnection")); //$NON-NLS-1$
+	      	      return;    		
+	      	}
+	      }
+	  try {
+		  byte[] bytes = new byte[1 + 2 * 4];
+		  bytes[0] = 14;
+		  java.nio.ByteBuffer buffer = java.nio.ByteBuffer.wrap(bytes);
+		  buffer.putInt(1, fadeTime);
+		  buffer.putInt(5, onlyOnChange ? 1 : 0);
+		  socket.getOutputStream().write(bytes);
+	  }
+	  catch (IOException e) {
+		  Messages.addMessage(MessageType.Warning, e.getLocalizedMessage());
+          handleConnectionFailure(true);
+	  }	  	  	  
   }
   
   private HashMap<KeyStroke, byte[]> commandMap = null;

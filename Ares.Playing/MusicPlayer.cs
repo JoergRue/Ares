@@ -520,7 +520,15 @@ namespace Ares.Playing
             m_TagsSetByCategory.Clear();
             m_CurrentChoices.Clear();
             UpdateMusicList();
-            return hadFiles;
+            if (m_MusicByTagsElementPlayed)
+            {
+                m_MusicByTagsElementPlayed = false;
+                return true;
+            }
+            else
+            {
+                return hadFiles;
+            }
         }
 
         private bool m_CategoriesOperatorIsAnd = false;
@@ -559,6 +567,25 @@ namespace Ares.Playing
         {
             Ares.Data.DataModule.ElementRepository.DeleteElement(m_MusicList.Id);
             ProjectCallbacks.Instance.RemoveCallbacks(this);
+        }
+
+        public void SetFading(int fadeTime, bool fadeOnlyOnChange)
+        {
+            m_FadeTime = fadeTime;
+            m_FadeOnlyOnChange = fadeOnlyOnChange;
+            if (m_MusicList != null)
+            {
+                foreach (IFileElement element in ((IMusicList)m_MusicList).GetFileElements())
+                {
+                    element.Effects.FadeInTime = fadeOnlyOnChange ? 0 : m_FadeTime / 2;
+                    element.Effects.FadeOutTime = fadeOnlyOnChange ? 0 : m_FadeTime / 2;
+                }
+            }
+            if (m_ModeElement != null && m_ModeElement.Trigger != null)
+            {
+                m_ModeElement.Trigger.FadeMusic = m_FadeTime > 0;
+                m_ModeElement.Trigger.FadeMusicTime = m_FadeTime;
+            }
         }
 
         public void SetMusicByTagsElementPlayed(Ares.Data.IMusicByTags musicByTags)
@@ -757,6 +784,11 @@ namespace Ares.Playing
         public void MusicTagsChanged(ICollection<int> newTags, bool isAndOperator, int fadeTime)
         {
         }
+
+        public void MusicTagsFadingChanged(int fadeTime, bool fadeOnlyOnChange)
+        {
+        }
+
     }
 
     class SingleMusicPlayer : MusicPlayer, IMusicPlayer

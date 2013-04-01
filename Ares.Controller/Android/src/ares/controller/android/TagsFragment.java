@@ -25,7 +25,10 @@ import java.util.List;
 import java.util.Map;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -38,7 +41,6 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.CompoundButton;
 import android.widget.GridView;
-import android.widget.RadioButton;
 import android.widget.ToggleButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.Spinner;
@@ -61,11 +63,36 @@ public class TagsFragment extends ModeLikeFragment implements INetworkClient {
         }
     }
     
-    public void onStart() {
+    public void preferencesChanged() {
+    	onPrefsChanged();
+    }
+    
+    private boolean inPreferences = false;
+    
+    protected boolean showMainActivityOnDisconnect() {
+    	return !isOnXLargeScreen() && !inPreferences;
+    }
+
+	private void showPreferences() {
+		if (Control.getInstance().isConnected())
+		{
+			SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext()).edit();
+			prefs.putString("tag_categories_op", PlayingState.getInstance().isTagCategoryOperatorAnd() ? "and" : "or");
+			prefs.putString("tag_fading_time", "" + PlayingState.getInstance().getTagFadingTime());
+			prefs.putBoolean("tag_fading_only_on_change", PlayingState.getInstance().getTagFadeOnlyOnChange());
+			prefs.commit();
+		}
+		inPreferences = true;
+		Intent intent = new Intent(getActivity().getBaseContext(), PrefsActivity.class);
+		getActivity().startActivityForResult(intent, ControlFragment.REQUEST_PREFS);
+	}
+
+	public void onStart() {
     	super.onStart();
     	uninitializeViews();
     	initializeViews();
     	PlayingState.getInstance().addClient(this);
+    	inPreferences = false;
     }
     
     public void onStop() {
@@ -79,9 +106,13 @@ public class TagsFragment extends ModeLikeFragment implements INetworkClient {
     }
     
     private static final int REMOVE_ALL_TAGS = 8;
+    private static final int PREFERENCES = 9;
     
     public void onCreateOptionsMenu(android.view.Menu menu, MenuInflater inflater) {
     	menu.add(Menu.NONE, REMOVE_ALL_TAGS, Menu.NONE, R.string.ClearTags);
+    	if (!isOnXLargeScreen()) {
+    		menu.add(Menu.NONE, PREFERENCES, Menu.NONE, R.string.preferences);
+    	}
     	super.onCreateOptionsMenu(menu, inflater);
     }
     
@@ -91,6 +122,8 @@ public class TagsFragment extends ModeLikeFragment implements INetworkClient {
     	case REMOVE_ALL_TAGS:
     		Control.getInstance().removeAllTags();
     		break;
+    	case PREFERENCES:
+    		showPreferences();
     	}
     	return super.onOptionsItemSelected(menuItem);
     }
@@ -101,7 +134,6 @@ public class TagsFragment extends ModeLikeFragment implements INetworkClient {
     
     private void initializeViews() {
         updateCategorySpinner();
-        updateOperatorBox();
         updateTagButtons();
         m_Listen = true;
     }
@@ -149,28 +181,6 @@ public class TagsFragment extends ModeLikeFragment implements INetworkClient {
 			}
     	});
     }
-    
-    private void updateOperatorBox() {
-    	RadioButton andButton = (RadioButton)getActivity().findViewById(R.id.categoryAndButton);
-    	andButton.setChecked(PlayingState.getInstance().isTagCategoryOperatorAnd());
-    	andButton.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView,
-					boolean isChecked) {
-				Control.getInstance().setTagCategoryOperator(isChecked);
-			}
-    	});
-
-    	RadioButton orButton = (RadioButton)getActivity().findViewById(R.id.categoryOrButton);
-    	orButton.setChecked(!PlayingState.getInstance().isTagCategoryOperatorAnd());
-    	orButton.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView,
-					boolean isChecked) {
-				Control.getInstance().setTagCategoryOperator(!isChecked);
-			}
-    	});
-}
     
     private ButtonAdapter mAdapter;
     
@@ -235,7 +245,7 @@ public class TagsFragment extends ModeLikeFragment implements INetworkClient {
 
 	@Override
 	public void tagCategoryOperatorChanged(boolean operatorIsAnd) {
-		updateOperatorBox();
+		// not handled directly
 	}
 
 	@Override
@@ -361,5 +371,10 @@ public class TagsFragment extends ModeLikeFragment implements INetworkClient {
 	public void configurationChanged(Configuration newConfiguration,
 			String fileName) {
 		// tags change will be reported separately
+	}
+
+	@Override
+	public void musicTagFadingChanged(int fadeTime, boolean fadeOnlyOnChange) {
+		// not handled directly
 	}
 }

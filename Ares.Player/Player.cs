@@ -101,7 +101,10 @@ namespace Ares.Player
 #if !MONO
         void m_KeyboardHookManager_KeyDown(object sender, KeyEventArgs e)
         {
-            m_PlayingControl.KeyReceived(GetPlayersKey(e.KeyData));
+            if (!tagFadeUpDown.ContainsFocus)
+            {
+                m_PlayingControl.KeyReceived(GetPlayersKey(e.KeyData));
+            }
         }
 #endif
 
@@ -704,7 +707,7 @@ namespace Ares.Player
         {
 #if MONO
             const int WM_KEYDOWN = 0x100;
-            if (msg.Msg == WM_KEYDOWN)
+            if (msg.Msg == WM_KEYDOWN && !tagFadeUpDown.ContainsFocus)
             {
                 return m_PlayingControl.KeyReceived(GetPlayersKey(keyData));
             }
@@ -837,6 +840,28 @@ namespace Ares.Player
                 m_Network.InformClientOfVolume(VolumeTarget.Sounds, control.SoundVolume);
                 Settings.Settings.Instance.SoundVolume = control.SoundVolume;
                 settingsChanged = true;
+            }
+            int musicFadeTime; bool fadeOnlyOnChange;
+            int oldValue = (int)tagFadeUpDown.Value; // reading the value may update the value -- and fire a valueChange!
+            control.GetMusicTagsFading(out musicFadeTime, out fadeOnlyOnChange);
+            bool fadeChanged = false;
+            if (musicFadeTime != oldValue)
+            {
+                tagFadeUpDown.Value = musicFadeTime;
+                Settings.Settings.Instance.TagMusicFadeTime = musicFadeTime;
+                fadeChanged = true;
+                settingsChanged = true;
+            }
+            if (fadeOnlyOnChange != fadeOnlyOnChangeBox.Checked)
+            {
+                fadeOnlyOnChangeBox.Checked = fadeOnlyOnChange;
+                Settings.Settings.Instance.TagMusicFadeOnlyOnChange = fadeOnlyOnChange;
+                fadeChanged = true;
+                settingsChanged = true;
+            }
+            if (fadeChanged)
+            {
+                m_Network.InformClientOfFading(musicFadeTime, fadeOnlyOnChange);
             }
             if (settingsChanged)
             {
@@ -993,6 +1018,11 @@ namespace Ares.Player
             m_PlayingControl.MusicVolume = settings.MusicVolume;
             m_PlayingControl.SoundVolume = settings.SoundVolume;
             commitVolumes = true;
+            commitFading = false;
+            tagFadeUpDown.Value = settings.TagMusicFadeTime;
+            fadeOnlyOnChangeBox.Checked = settings.TagMusicFadeOnlyOnChange;
+            m_PlayingControl.SetMusicTagFading(settings.TagMusicFadeTime, settings.TagMusicFadeOnlyOnChange);
+            commitFading = true;
             if (fundamentalChange)
             {
                 if (m_Network != null && m_Network.ClientConnected)
@@ -1153,6 +1183,11 @@ namespace Ares.Player
             m_PlayingControl.SetMusicTagCategoriesOperator(operatorIsAnd);
         }
 
+        public void SetMusicTagsFading(Int32 fadeTime, bool onlyOnChange)
+        {
+            m_PlayingControl.SetMusicTagFading(fadeTime, onlyOnChange);
+        }
+
         private bool m_WasConnected = false;
 
         private void UpdateClientData()
@@ -1165,7 +1200,8 @@ namespace Ares.Player
                     m_PlayingControl.SoundVolume, m_PlayingControl.CurrentMode, MusicInfo.GetInfo(m_PlayingControl.CurrentMusicElement),
                     m_PlayingControl.CurrentModeElements, m_Project, 
                     m_PlayingControl.CurrentMusicList, m_PlayingControl.MusicRepeat,
-                    m_TagLanguageId, new List<int>(m_PlayingControl.GetCurrentMusicTags()), m_PlayingControl.IsMusicTagCategoriesOperatorAnd());
+                    m_TagLanguageId, new List<int>(m_PlayingControl.GetCurrentMusicTags()), m_PlayingControl.IsMusicTagCategoriesOperatorAnd(),
+                    Settings.Settings.Instance.TagMusicFadeTime, Settings.Settings.Instance.TagMusicFadeOnlyOnChange);
                 disconnectButton.Text = StringResources.Disconnect;
                 m_WasConnected = true;
             }
@@ -1547,6 +1583,36 @@ namespace Ares.Player
             if (m_TagsControlsActive)
             {
                 m_PlayingControl.SetMusicTagCategoriesOperator(tagCategoriesAndButton.Checked);
+            }
+        }
+
+        private bool commitFading = true;
+
+        private void tagFadeUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            int fadeTime = (int)tagFadeUpDown.Value;
+            if (commitFading)
+            {
+                Settings.Settings.Instance.TagMusicFadeTime = fadeTime;
+                Settings.Settings.Instance.Commit();
+            }
+            if (m_PlayingControl != null)
+            {
+                m_PlayingControl.SetMusicTagFading(fadeTime, Settings.Settings.Instance.TagMusicFadeOnlyOnChange);
+            }
+        }
+
+        private void fadeOnlyOnChangeBox_CheckedChanged(object sender, EventArgs e)
+        {
+            bool value = fadeOnlyOnChangeBox.Checked;
+            if (commitFading)
+            {
+                Settings.Settings.Instance.TagMusicFadeOnlyOnChange = value;
+                Settings.Settings.Instance.Commit();
+            }
+            if (m_PlayingControl != null)
+            {
+                m_PlayingControl.SetMusicTagFading(Settings.Settings.Instance.TagMusicFadeTime, value);
             }
         }
     }

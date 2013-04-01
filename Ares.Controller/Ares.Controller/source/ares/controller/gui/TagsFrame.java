@@ -36,12 +36,17 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JToggleButton;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import ares.controller.control.ComponentKeys;
 import ares.controller.util.Localization;
@@ -124,6 +129,13 @@ public class TagsFrame extends SubFrame {
 		listenForSelection = false;
 		categoryOrButton.setSelected(!isAndOperator);
 		categoryAndButton.setSelected(isAndOperator);
+		listenForSelection = true;
+	}
+	
+	public void setFading(int fadeTime, boolean fadeOnlyOnChange) {
+		listenForSelection = false;
+		((SpinnerNumberModel)fadingSpinner.getModel()).setValue(fadeTime);
+		fadingBox.setSelected(fadeOnlyOnChange);
 		listenForSelection = true;
 	}
 	
@@ -255,7 +267,45 @@ public class TagsFrame extends SubFrame {
 			}
 		});
 		categoriesPanel.add(categoryAndButton);
-		mainPanel.add(categoriesPanel, BorderLayout.NORTH);
+
+		JPanel fadingPanel = new JPanel();
+		fadingPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), Localization.getString("TagsFrame.Fading"))); //$NON-NLS-1$
+		fadingPanel.setLayout(new BoxLayout(fadingPanel, BoxLayout.LINE_AXIS));
+		fadingLabel1 = new JLabel(Localization.getString("TagsFrame.FadeBetweenMusic")); //$NON-NLS-1$
+		fadingPanel.add(fadingLabel1);
+		fadingPanel.add(Box.createRigidArea(new Dimension(5, 0)));
+		fadingSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 50000, 100));
+		fadingSpinner.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent arg0) {
+				if (!listenForSelection)
+					return;
+				Control.getInstance().setMusicTagsFading(((SpinnerNumberModel)fadingSpinner.getModel()).getNumber().intValue(), fadingBox.isSelected());
+			}
+		});
+		fadingSpinner.setMaximumSize(new Dimension(100, fadingSpinner.getMaximumSize().height));
+		fadingPanel.add(fadingSpinner);
+		fadingPanel.add(Box.createRigidArea(new Dimension(5, 0)));
+		fadingLabel2 = new JLabel(Localization.getString("TagsFrame.ms")); //$NON-NLS-1$
+		fadingPanel.add(fadingLabel2);
+		fadingPanel.add(Box.createRigidArea(new Dimension(5, 0)));
+		fadingBox = new JCheckBox(Localization.getString("TagsFrame.OnlyOnTagChanges")); //$NON-NLS-1$
+		fadingBox.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if (!listenForSelection)
+					return;
+				Control.getInstance().setMusicTagsFading(((SpinnerNumberModel)fadingSpinner.getModel()).getNumber().intValue(), fadingBox.isSelected());
+			}
+		});
+		fadingPanel.add(fadingBox);
+		fadingPanel.add(Box.createHorizontalGlue());
+		
+		JPanel northPanel = new JPanel(new BorderLayout(0, 0));
+		northPanel.add(categoriesPanel, BorderLayout.SOUTH);
+		northPanel.add(fadingPanel, BorderLayout.NORTH);
+
+		mainPanel.add(northPanel, BorderLayout.NORTH);
 		
 		tagsPanel = new JPanel();
 		tagsPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), Localization.getString("TagsFrame.Tags"))); //$NON-NLS-1$
@@ -303,4 +353,9 @@ public class TagsFrame extends SubFrame {
 	private JRadioButton categoryOrButton;
 	private JButton clearTagsButton;
 	private JLabel activeTagsLabel;
+	
+	private JLabel fadingLabel1;
+	private JSpinner fadingSpinner;
+	private JLabel fadingLabel2;
+	private JCheckBox fadingBox;
 }

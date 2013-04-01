@@ -19,7 +19,10 @@
  */
 package ares.controller.android;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
 
 public class TagsActivity extends ModeLikeActivity {
 
@@ -27,4 +30,22 @@ public class TagsActivity extends ModeLikeActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.tags_activity);
 	}
+
+    private void setMessageFilter() {
+		String messageSetting = PreferenceManager.getDefaultSharedPreferences(getBaseContext()).getString("message_level", "Error");
+		MessageHandler.getInstance().setFilter(messageSetting);
+	}
+
+    public synchronized void onActivityResult(final int requestCode, int resultCode, final Intent data) {
+    	TagsFragment tagsFragment = (TagsFragment)getSupportFragmentManager().findFragmentById(R.id.tags_fragment);
+    	if (tagsFragment == null) {
+    		Log.e(getClass().getName(), "Could not find tags fragment!");
+    		return;
+    	}
+    	if (requestCode == ControlFragment.REQUEST_PREFS) {
+    		setMessageFilter();
+    		tagsFragment.preferencesChanged();
+    	}
+    }
+    
 }

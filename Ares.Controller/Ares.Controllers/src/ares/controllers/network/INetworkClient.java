@@ -39,6 +39,7 @@ public interface INetworkClient {
 	void activeTagsChanged(List<Integer> newActiveTags);
 	void tagSwitched(int tagId, boolean isActive);
 	void tagCategoryOperatorChanged(boolean operatorIsAnd);
+	void musicTagFadingChanged(int fadeTime, boolean fadeOnlyOnChange);
 	
 	void projectFilesRetrieved(List<String> files);
 	void configurationChanged(Configuration newConfiguration, String fileName);

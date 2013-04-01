@@ -77,6 +77,9 @@ namespace Ares.Settings
         public String OnlineDBUserId { get; set; }
         public bool ShowDialogAfterUpload { get; set; }
         public bool ShowDialogAfterDownload { get; set; }
+
+        public int TagMusicFadeTime { get; set; }
+        public bool TagMusicFadeOnlyOnChange { get; set; }
     }
 
     public class Settings
@@ -134,6 +137,9 @@ namespace Ares.Settings
         public String OnlineDBUserId { get { return Data.OnlineDBUserId; } set { Data.OnlineDBUserId = value; } }
         public bool ShowDialogAfterUpload { get { return Data.ShowDialogAfterUpload; }  set { Data.ShowDialogAfterUpload = value; } }
         public bool ShowDialogAfterDownload { get { return Data.ShowDialogAfterDownload; } set { Data.ShowDialogAfterDownload = value; } }
+
+        public int TagMusicFadeTime { get { return Data.TagMusicFadeTime; } set { Data.TagMusicFadeTime = value; } }
+        public bool TagMusicFadeOnlyOnChange { get { return Data.TagMusicFadeOnlyOnChange; } set { Data.TagMusicFadeOnlyOnChange = value; } }
 
         public static Settings Instance
         {
@@ -328,6 +334,8 @@ namespace Ares.Settings
             OnlineDBUserId = String.Empty;
             ShowDialogAfterDownload = true;
             ShowDialogAfterUpload = true;
+            TagMusicFadeTime = 0;
+            TagMusicFadeOnlyOnChange = false;
         }
 
         private void WriteSettings(XmlWriter writer)
@@ -375,6 +383,10 @@ namespace Ares.Settings
             writer.WriteAttributeString("UserId", OnlineDBUserId);
             writer.WriteAttributeString("DialogAfterDownload", ShowDialogAfterDownload ? "true" : "false");
             writer.WriteAttributeString("DialogAfterUpload", ShowDialogAfterUpload ? "true" : "false");
+            writer.WriteEndElement();
+            writer.WriteStartElement("TagMusicFading");
+            writer.WriteAttributeString("FadeTime", TagMusicFadeTime.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            writer.WriteAttributeString("FadeOnlyOnChange", TagMusicFadeOnlyOnChange ? "true" : "false");
             writer.WriteEndElement();
             writer.WriteEndElement();
         }
@@ -512,6 +524,19 @@ namespace Ares.Settings
                     OnlineDBUserId = reader.GetAttribute("UserId");
                     ShowDialogAfterUpload = reader.GetBooleanAttributeOrDefault("DialogAfterUpload", true);
                     ShowDialogAfterDownload = reader.GetBooleanAttributeOrDefault("DialogAfterDownload", true);
+                    if (reader.IsEmptyElement)
+                        reader.Read();
+                    else
+                    {
+                        reader.Read();
+                        reader.ReadInnerXml();
+                        reader.ReadEndElement();
+                    }
+                }
+                else if (reader.IsStartElement("TagMusicFading"))
+                {
+                    TagMusicFadeTime = reader.GetIntegerAttributeOrDefault("FadeTime", 0);
+                    TagMusicFadeOnlyOnChange = reader.GetBooleanAttributeOrDefault("FadeOnlyOnChange", false);
                     if (reader.IsEmptyElement)
                         reader.Read();
                     else

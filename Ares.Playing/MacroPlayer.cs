@@ -211,6 +211,10 @@ namespace Ares.Playing
         public void MusicTagsChanged(System.Collections.Generic.ICollection<int> newTags, bool isAndOperator, int fadeTime)
         {
         }
+
+        public void MusicTagsFadingChanged(int fadeTime, bool fadeOnlyOnChange)
+        {
+        }
     }
 
     class MacroPlayer : ElementPlayerBase, IMacroCommandVisitor

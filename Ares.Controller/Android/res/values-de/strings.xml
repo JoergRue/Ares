@@ -74,4 +74,22 @@
     <string name="CategoryOperatorIsOr">ODER: Musik muss irgendeinen Tag haben</string>
     <string name="SelectProject">Projekt auswählen:</string>
     <string name="NoProjects">Derzeit sind im Player keine Projekte verfügbar.</string>
+    <string name="general">Allgemein</string>
+    <string name="playerConnection">Verbindung zum Player</string>
+    <string name="tagMusic">Musik per Tags abspielen</string>
+    <string-array name="tag_categories_values">
+        <item >or</item>
+        <item >and</item>
+    </string-array>
+    <string-array name="tag_categories_entries">
+        <item >ODER: Tag in irgendeiner Kategorie</item>
+        <item >UND: Tag in jeder Kategorie</item>
+    </string-array>
+    <string name="tag_categories_op_title">Kategorien</string>
+    <string name="tag_categories_op_desc">Verknüpfen von Kategorien mit UND oder ODER</string>
+    <string name="tag_fading_time">Blendzeit</string>
+    <string name="tag_fading_time_desc">Blendzeit zwischen Musikstücken</string>
+    <string name="tagFadingOnChange">Nur bei neuen Tags</string>
+    <string name="tagFadingOnChangeDesc">Nur blenden, wenn sich die Tags ändern</string>
+    <string name="invalid_fading_time">Bitte eine positive Zahl &lt; 50000 eingeben</string>
 </resources>

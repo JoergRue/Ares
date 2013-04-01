@@ -57,13 +57,17 @@ public abstract class ModeLikeFragment extends ConnectedFragment {
         }
         // else control fragment is displayed and will manage the connection
 	}
+	
+	protected boolean showMainActivityOnDisconnect() {
+    	// not connected, not in control fragment, not in main activity
+    	// switch to main activity so that control fragment is displayed
+    	// and connection can be restored
+		return !isOnXLargeScreen(); 
+	}
 
 	protected void onDisconnect(boolean startServerSearch) {
 		super.onDisconnect(startServerSearch);
-		if (!isOnXLargeScreen()) {
-        	// not connected, not in control fragment, not in main activity
-        	// switch to main activity so that control fragment is displayed
-        	// and connection can be restored
+		if (showMainActivityOnDisconnect()) {
         	Intent intent = new Intent(getActivity().getBaseContext(), MainActivity.class);
         	startActivity(intent);    	
         }

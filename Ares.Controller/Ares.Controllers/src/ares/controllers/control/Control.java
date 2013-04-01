@@ -202,6 +202,15 @@ public final class Control {
 	  }	  	  	  
   }
   
+  public void setMusicTagsFading(int fadeTime, boolean onlyOnChange) {
+	  if (connection == null || !connection.isConnected()) {
+		  Messages.addMessage(MessageType.Warning, Localization.getString("Control.noConnection")); //$NON-NLS-1$
+	  }
+	  else {
+		  connection.setMusicTagsFading(fadeTime, onlyOnChange);
+	  }	  	  	  	  
+  }
+  
   public boolean isConnected() {
     return connection != null;
   }

@@ -84,6 +84,7 @@ namespace Ares.Controllers
         void ActiveTagsChanged(List<int> activeTags);
         void TagStateChanged(int tagId, bool isActive);
         void TagCategoryOperatorChanged(bool operatorIsAnd);
+        void TagFadingChanged(int fadeTime, bool onlyOnChange);
 
         void ProjectFilesRetrieved(List<String> files);
         void ConfigurationChanged(Configuration newConfiguration, String fileName);
@@ -649,6 +650,15 @@ namespace Ares.Controllers
                                     }
                                     break;
                                 }
+                            case 17:
+                                {
+                                    bool onlyOnChange = buffer[1] == 1;
+                                    int fadeTime;
+                                    if (!ReadInt32(out fadeTime))
+                                        break;
+                                    m_NetworkClient.TagFadingChanged(fadeTime, onlyOnChange);
+                                    break;
+                                }
                             default:
                                 break;
                         }
@@ -989,6 +999,36 @@ namespace Ares.Controllers
             {
                 byte[] bytes = new byte[1];
                 bytes[0] = 13;
+                m_Socket.Send(bytes);
+            }
+            catch (SocketException ex)
+            {
+                Messages.AddMessage(MessageType.Warning, ex.Message);
+                HandleConnectionFailure(true);
+            }
+        }
+
+        public void SetTagFading(int fadeTime, bool onlyOnChange)
+        {
+            if (!Connected)
+            {
+                Messages.AddMessage(MessageType.Warning, StringResources.NoConnection);
+                return;
+            }
+            if (m_State == State.ConnectionFailure)
+            {
+                if (!TryReconnect())
+                {
+                    Messages.AddMessage(MessageType.Warning, StringResources.NoConnection);
+                    return;
+                }
+            }
+            try
+            {
+                byte[] bytes = new byte[1 + 4 + 4];
+                bytes[0] = 14;
+                AddInt32ToByteArray(bytes, 1, fadeTime);
+                AddInt32ToByteArray(bytes, 1 + 4, onlyOnChange ? 1 : 0);
                 m_Socket.Send(bytes);
             }
             catch (SocketException ex)

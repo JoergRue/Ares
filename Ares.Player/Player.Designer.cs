@@ -135,6 +135,10 @@ namespace Ares.Player
             this.currentTagsLabel = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.fadeOnlyOnChangeBox = new System.Windows.Forms.CheckBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.tagFadeUpDown = new System.Windows.Forms.NumericUpDown();
+            this.label16 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.tagCategoriesAndButton = new System.Windows.Forms.RadioButton();
@@ -158,6 +162,7 @@ namespace Ares.Player
             this.tagsPanel.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.groupBox6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tagFadeUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // projectNameLabel
@@ -758,6 +763,10 @@ namespace Ares.Player
             // groupBox6
             // 
             resources.ApplyResources(this.groupBox6, "groupBox6");
+            this.groupBox6.Controls.Add(this.fadeOnlyOnChangeBox);
+            this.groupBox6.Controls.Add(this.label17);
+            this.groupBox6.Controls.Add(this.tagFadeUpDown);
+            this.groupBox6.Controls.Add(this.label16);
             this.groupBox6.Controls.Add(this.label14);
             this.groupBox6.Controls.Add(this.label13);
             this.groupBox6.Controls.Add(this.tagCategoriesAndButton);
@@ -765,6 +774,39 @@ namespace Ares.Player
             this.groupBox6.Controls.Add(this.musicTagCategoryBox);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.TabStop = false;
+            // 
+            // fadeOnlyOnChangeBox
+            // 
+            resources.ApplyResources(this.fadeOnlyOnChangeBox, "fadeOnlyOnChangeBox");
+            this.fadeOnlyOnChangeBox.Name = "fadeOnlyOnChangeBox";
+            this.fadeOnlyOnChangeBox.UseVisualStyleBackColor = true;
+            this.fadeOnlyOnChangeBox.CheckedChanged += new System.EventHandler(this.fadeOnlyOnChangeBox_CheckedChanged);
+            // 
+            // label17
+            // 
+            resources.ApplyResources(this.label17, "label17");
+            this.label17.Name = "label17";
+            // 
+            // tagFadeUpDown
+            // 
+            this.tagFadeUpDown.Increment = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            resources.ApplyResources(this.tagFadeUpDown, "tagFadeUpDown");
+            this.tagFadeUpDown.Maximum = new decimal(new int[] {
+            50000,
+            0,
+            0,
+            0});
+            this.tagFadeUpDown.Name = "tagFadeUpDown";
+            this.tagFadeUpDown.ValueChanged += new System.EventHandler(this.tagFadeUpDown_ValueChanged);
+            // 
+            // label16
+            // 
+            resources.ApplyResources(this.label16, "label16");
+            this.label16.Name = "label16";
             // 
             // label14
             // 
@@ -853,6 +895,7 @@ namespace Ares.Player
             this.groupBox7.PerformLayout();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tagFadeUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -947,6 +990,10 @@ namespace Ares.Player
         private System.Windows.Forms.RadioButton tagCategoriesOrButton;
         private System.Windows.Forms.ComboBox musicTagCategoryBox;
         private System.Windows.Forms.Button clearTagsButton;
+        private System.Windows.Forms.CheckBox fadeOnlyOnChangeBox;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.NumericUpDown tagFadeUpDown;
+        private System.Windows.Forms.Label label16;
     }
 }
 

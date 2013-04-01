@@ -559,6 +559,7 @@ public final class MainFrame extends FrameController implements IMessageListener
 					tagsFrame.setTags(currentCategories, currentTags);
 					tagsFrame.setActiveTags(currentActiveTags);
 					tagsFrame.setCategoryOperator(tagCategoryOperatorIsAnd);
+					tagsFrame.setFading(musicTagsFadeTime, musicTagsFadeOnlyOnChange);
 					tagsFrame.setVisible(true);
 				}
 			} 
@@ -1421,6 +1422,23 @@ public final class MainFrame extends FrameController implements IMessageListener
 				tagCategoryOperatorIsAnd = isAndOperator;
 				if (tagsFrame != null) {
 					tagsFrame.setCategoryOperator(isAndOperator);
+				}
+			}
+		});
+	}
+	
+	private int musicTagsFadeTime = 0;
+	private boolean musicTagsFadeOnlyOnChange = false;
+	
+	@Override
+	public void musicTagFadingChanged(final int fadeTime, final boolean fadeOnlyOnChange)
+	{
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				musicTagsFadeTime = fadeTime;
+				musicTagsFadeOnlyOnChange = fadeOnlyOnChange;
+				if (tagsFrame != null) {
+					tagsFrame.setFading(fadeTime, fadeOnlyOnChange);
 				}
 			}
 		});

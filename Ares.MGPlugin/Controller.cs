@@ -245,9 +245,18 @@ namespace Ares.MGPlugin
                     Settings.Default.Save();
                     UpdateLastProjects(Controllers.Control.Instance.FilePath, Controllers.Control.Instance.Project.Title);
                 }
+                m_ModeElementTitles.Clear();
+                foreach (Ares.Controllers.Mode mode in configuration.Modes)
+                {
+                    foreach (Ares.Controllers.ModeElement element in mode.Elements)
+                    {
+                        m_ModeElementTitles[element.Id] = element.Title;
+                    }
+                }
             }
             else
             {
+                m_ModeElementTitles.Clear();
                 EnableProjectSpecificControls(false);
             }
             UpdateProjectTitle();
@@ -765,6 +774,18 @@ namespace Ares.MGPlugin
             );
         }
 
+        public void TagFadingChanged(int fadeTime, bool onlyOnChange)
+        {
+            DispatchToUIThread(() =>
+                {
+                    m_ListenToTagControls = false;
+                    tagFadeUpDown.Value = fadeTime;
+                    tagFadeOnlyOnChangeBox.Checked = onlyOnChange;
+                    m_ListenToTagControls = true;
+                }
+            );
+        }
+
         public void ConfigurationChanged(Ares.Controllers.Configuration config, String fileName)
         {
             DispatchToUIThread(() =>
@@ -1183,6 +1204,20 @@ namespace Ares.MGPlugin
             if (!m_ListenToTagControls)
                 return;
             Controllers.Control.Instance.RemoveAllTags();
+        }
+
+        private void tagFadeOnlyOnChangeBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!m_ListenToTagControls)
+                return;
+            Controllers.Control.Instance.SetTagFading((int)tagFadeUpDown.Value, tagFadeOnlyOnChangeBox.Checked);
+        }
+
+        private void tagFadeUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            if (!m_ListenToTagControls)
+                return;
+            Controllers.Control.Instance.SetTagFading((int)tagFadeUpDown.Value, tagFadeOnlyOnChangeBox.Checked);
         }
 
     }

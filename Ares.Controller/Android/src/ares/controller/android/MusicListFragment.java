@@ -224,4 +224,8 @@ public class MusicListFragment extends ModeLikeFragment implements INetworkClien
 			String fileName) {
 		// music list change is reported separately
 	}
+
+	@Override
+	public void musicTagFadingChanged(int fadeTime, boolean fadeOnlyOnChange) {
+	}
 }

@@ -28,6 +28,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.DialogInterface.OnDismissListener;
 import android.gesture.Gesture;
 import android.gesture.GestureLibraries;
@@ -399,6 +400,15 @@ public class ControlFragment extends ConnectedFragment implements INetworkClient
 	}
 
 	private void showPreferences() {
+		if (Control.getInstance().isConnected())
+		{
+			SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext()).edit();
+			prefs.putString("tag_categories_op", PlayingState.getInstance().isTagCategoryOperatorAnd() ? "and" : "or");
+			prefs.putString("tag_fading_time", "" + PlayingState.getInstance().getTagFadingTime());
+			prefs.putBoolean("tag_fading_only_on_change", PlayingState.getInstance().getTagFadeOnlyOnChange());
+			prefs.commit();
+		}
+		
 		Intent intent = new Intent(getActivity().getBaseContext(), PrefsActivity.class);
 		getActivity().startActivityForResult(intent, REQUEST_PREFS);
 	}
@@ -617,6 +627,11 @@ public class ControlFragment extends ConnectedFragment implements INetworkClient
 	public void configurationChanged(Configuration newConfiguration,
 			String fileName) {
 		projectOpened(newConfiguration, fileName);
+	}
+
+	@Override
+	public void musicTagFadingChanged(int fadeTime, boolean fadeOnlyOnChange) {
+		// nothing here
 	}
 	
 }

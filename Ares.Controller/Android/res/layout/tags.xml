@@ -72,25 +72,6 @@
         android:gravity="bottom"
         android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/CategoryOperatorDesc"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <RadioButton
-            android:id="@+id/categoryOrButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/CategoryOperatorIsOr" />
-
-        <RadioButton
-            android:id="@+id/categoryAndButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/CategoryOperatorIsAnd" />
-
     </LinearLayout>
 
 </LinearLayout>

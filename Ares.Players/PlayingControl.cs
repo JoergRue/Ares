@@ -177,6 +177,11 @@ namespace Ares.Players
             PlayingModule.ProjectPlayer.SetMusicTagCategoriesOperator(isAndOperator);
         }
 
+        public void SetMusicTagFading(int fadeTime, bool fadeOnlyChange)
+        {
+            PlayingModule.ProjectPlayer.SetMusicTagFading(fadeTime, fadeOnlyChange);
+        }
+
         private Playing.StreamingParameters CreateStreamingParameters()
         {
             Playing.StreamingParameters result = new StreamingParameters();
@@ -474,6 +479,27 @@ namespace Ares.Players
                 m_CurrentMusicTags.Clear();
                 m_CurrentMusicTags.UnionWith(newTags);
                 m_MusicTagCategoriesOperatorIsAnd = operatorIsAnd;
+            }
+        }
+
+        private int m_MusicTagsFadeTime;
+        private bool m_MusicTagsFadeOnlyOnChange;
+
+        public void MusicTagsFadingChanged(int fadeTime, bool fadeOnlyOnChange)
+        {
+            lock (syncObject)
+            {
+                m_MusicTagsFadeTime = fadeTime;
+                m_MusicTagsFadeOnlyOnChange = fadeOnlyOnChange;
+            }
+        }
+
+        public void GetMusicTagsFading(out int fadeTime, out bool fadeOnlyOnChange)
+        {
+            lock (syncObject)
+            {
+                fadeTime = m_MusicTagsFadeTime;
+                fadeOnlyOnChange = m_MusicTagsFadeOnlyOnChange;
             }
         }
 

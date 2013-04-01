@@ -254,5 +254,18 @@ namespace Ares.Controllers
                 m_Connection.RequestProjectFiles();
             }
         }
+
+        public void SetTagFading(int fadeTime, bool onlyOnChange)
+        {
+            if (m_Connection == null || !m_Connection.Connected)
+            {
+                Messages.AddMessage(MessageType.Warning, StringResources.NoConnection);
+            }
+            else
+            {
+                m_Connection.SetTagFading(fadeTime, onlyOnChange);
+            }
+
+        }
     }
 }

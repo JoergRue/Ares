@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -115,6 +116,8 @@ public abstract class ConnectedFragment extends Fragment implements IServerListe
 		super.onStop();
 	}
 	
+	private boolean setTagPreferencesOnConnect = false;
+	
 	protected void onPrefsChanged() {
 		if (!Control.getInstance().isConnected())
 		{
@@ -133,9 +136,34 @@ public abstract class ConnectedFragment extends Fragment implements IServerListe
 				tryConnect();
 			}
 		}    			
+		if (Control.getInstance().isConnected()) {
+			setTagPreferences();
+		}
+		else {
+			setTagPreferencesOnConnect = true;
+		}
+	}
+	
+	private void setTagPreferences() {
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
+		boolean onlyOnChange = prefs.getBoolean("tag_fading_only_on_change", false);
+		String fadeTimeString = prefs.getString("tag_fading_time", "0");
+		int fadeTime = 0;
+		try {
+			fadeTime = Integer.parseInt(fadeTimeString);
+		}
+		catch (NumberFormatException ex) {
+		}
+		Control.getInstance().setMusicTagsFading(fadeTime, onlyOnChange);
+		boolean isOperatorAnd = prefs.getString("tag_categories_op", "and").equals("and");
+		Control.getInstance().setTagCategoryOperator(isOperatorAnd);		
 	}
 	
 	protected void onConnect(ServerInfo info) {
+		if (setTagPreferencesOnConnect) {
+			setTagPreferences();
+			setTagPreferencesOnConnect = false;
+		}
 	}
 	
 	protected void onDisconnect(boolean startServerSearch) {

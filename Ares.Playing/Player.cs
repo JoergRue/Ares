@@ -875,6 +875,7 @@ namespace Ares.Playing
                 tagsPlayer = new TagsMusicPlayer();
                 bool dummy;
                 tagsPlayer.SetCategoriesOperator(m_MusicTagsCategoriesOperatorIsAnd, out dummy);
+                tagsPlayer.SetFading(m_MusicTagsFadeTime, m_MusicTagsFadeOnlyOnChange);
             }
             bool hadFiles = true;
             bool mustChange = tagsPlayer.AddTag(categoryId, tagId, out hadFiles);
@@ -926,8 +927,26 @@ namespace Ares.Playing
             if (tagsPlayer == null)
             {
                 tagsPlayer = new TagsMusicPlayer();
+                tagsPlayer.SetFading(m_MusicTagsFadeTime, m_MusicTagsFadeOnlyOnChange);
             }
             tagsPlayer.SetMusicByTagsElementPlayed(element);
+        }
+
+        private int m_MusicTagsFadeTime = 0;
+        private bool m_MusicTagsFadeOnlyOnChange = false;
+
+        public void SetMusicTagFading(int fadeTime, bool fadeOnlyOnChange)
+        {
+            m_MusicTagsFadeTime = fadeTime;
+            m_MusicTagsFadeOnlyOnChange = fadeOnlyOnChange;
+            if (tagsPlayer != null)
+            {
+                tagsPlayer.SetFading(fadeTime, fadeOnlyOnChange);
+            }
+            if (ProjectCallbacks != null)
+            {
+                ProjectCallbacks.MusicTagsFadingChanged(fadeTime, fadeOnlyOnChange);
+            }
         }
 
         private void HandleTagChange(bool mustChangeTagMusic, bool wasPlayingTagMusic)

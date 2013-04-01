@@ -72,20 +72,24 @@
             this.elementsPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.musicList = new System.Windows.Forms.ListBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.openButton = new System.Windows.Forms.ToolStripSplitButton();
+            this.messagesButton = new System.Windows.Forms.ToolStripButton();
+            this.settingsButton = new System.Windows.Forms.ToolStripButton();
+            this.aboutButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.stopButton = new System.Windows.Forms.ToolStripButton();
+            this.prevMusicButton = new System.Windows.Forms.ToolStripButton();
+            this.nextMusicButton = new System.Windows.Forms.ToolStripButton();
+            this.repeatButton = new System.Windows.Forms.ToolStripButton();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.overLayPanel = new System.Windows.Forms.Panel();
             this.overlayOKButton = new System.Windows.Forms.Button();
             this.overlayCloseButton = new System.Windows.Forms.Button();
-            this.openButton = new System.Windows.Forms.ToolStripSplitButton();
-            this.messagesButton = new System.Windows.Forms.ToolStripButton();
-            this.settingsButton = new System.Windows.Forms.ToolStripButton();
-            this.aboutButton = new System.Windows.Forms.ToolStripButton();
-            this.stopButton = new System.Windows.Forms.ToolStripButton();
-            this.prevMusicButton = new System.Windows.Forms.ToolStripButton();
-            this.nextMusicButton = new System.Windows.Forms.ToolStripButton();
-            this.repeatButton = new System.Windows.Forms.ToolStripButton();
+            this.label9 = new System.Windows.Forms.Label();
+            this.tagFadeUpDown = new System.Windows.Forms.NumericUpDown();
+            this.label10 = new System.Windows.Forms.Label();
+            this.tagFadeOnlyOnChangeBox = new System.Windows.Forms.CheckBox();
             this.transparentFlowLayoutPanel2 = new Ares.MGPlugin.TransparentFlowLayoutPanel();
             this.overlayLabel5 = new Ares.MGPlugin.TransparentLabel();
             this.settingsLabel = new Ares.MGPlugin.TransparentLinkLabel();
@@ -113,6 +117,7 @@
             this.groupBox6.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.overLayPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tagFadeUpDown)).BeginInit();
             this.transparentFlowLayoutPanel2.SuspendLayout();
             this.transparentFlowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
@@ -381,9 +386,9 @@
             this.groupBox7.Controls.Add(this.tagSelectionPanel);
             this.groupBox7.Controls.Add(this.currentTagsLabel);
             this.groupBox7.Controls.Add(this.label15);
-            this.groupBox7.Location = new System.Drawing.Point(-1, 126);
+            this.groupBox7.Location = new System.Drawing.Point(-1, 134);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(340, 236);
+            this.groupBox7.Size = new System.Drawing.Size(340, 228);
             this.groupBox7.TabIndex = 4;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Tags";
@@ -392,7 +397,7 @@
             // 
             this.clearTagsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.clearTagsButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.clearTagsButton.Location = new System.Drawing.Point(221, 160);
+            this.clearTagsButton.Location = new System.Drawing.Point(221, 152);
             this.clearTagsButton.Name = "clearTagsButton";
             this.clearTagsButton.Size = new System.Drawing.Size(113, 23);
             this.clearTagsButton.TabIndex = 11;
@@ -408,7 +413,7 @@
             this.tagSelectionPanel.AutoScroll = true;
             this.tagSelectionPanel.Location = new System.Drawing.Point(6, 17);
             this.tagSelectionPanel.Name = "tagSelectionPanel";
-            this.tagSelectionPanel.Size = new System.Drawing.Size(328, 133);
+            this.tagSelectionPanel.Size = new System.Drawing.Size(328, 125);
             this.tagSelectionPanel.TabIndex = 10;
             // 
             // currentTagsLabel
@@ -416,7 +421,7 @@
             this.currentTagsLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.currentTagsLabel.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.currentTagsLabel.Location = new System.Drawing.Point(9, 188);
+            this.currentTagsLabel.Location = new System.Drawing.Point(9, 180);
             this.currentTagsLabel.Name = "currentTagsLabel";
             this.currentTagsLabel.Size = new System.Drawing.Size(325, 36);
             this.currentTagsLabel.TabIndex = 9;
@@ -427,7 +432,7 @@
             this.label15.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label15.AutoSize = true;
             this.label15.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label15.Location = new System.Drawing.Point(6, 165);
+            this.label15.Location = new System.Drawing.Point(6, 157);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(128, 13);
             this.label15.TabIndex = 1;
@@ -437,6 +442,10 @@
             // 
             this.groupBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox6.Controls.Add(this.tagFadeOnlyOnChangeBox);
+            this.groupBox6.Controls.Add(this.label10);
+            this.groupBox6.Controls.Add(this.tagFadeUpDown);
+            this.groupBox6.Controls.Add(this.label9);
             this.groupBox6.Controls.Add(this.label14);
             this.groupBox6.Controls.Add(this.label13);
             this.groupBox6.Controls.Add(this.tagCategoriesAndButton);
@@ -444,7 +453,7 @@
             this.groupBox6.Controls.Add(this.musicTagCategoryBox);
             this.groupBox6.Location = new System.Drawing.Point(-1, 0);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(340, 130);
+            this.groupBox6.Size = new System.Drawing.Size(340, 139);
             this.groupBox6.TabIndex = 1;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Kategorien";
@@ -547,10 +556,91 @@
             this.toolStrip1.Size = new System.Drawing.Size(211, 25);
             this.toolStrip1.TabIndex = 0;
             // 
+            // openButton
+            // 
+            this.openButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.openButton.Image = ((System.Drawing.Image)(resources.GetObject("openButton.Image")));
+            this.openButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.openButton.Name = "openButton";
+            this.openButton.Size = new System.Drawing.Size(32, 22);
+            this.openButton.Text = "Projekt öffnen";
+            this.openButton.ButtonClick += new System.EventHandler(this.openButton_Click);
+            this.openButton.DropDownOpening += new System.EventHandler(this.openButton_DropDownOpening);
+            // 
+            // messagesButton
+            // 
+            this.messagesButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.messagesButton.Image = ((System.Drawing.Image)(resources.GetObject("messagesButton.Image")));
+            this.messagesButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.messagesButton.Name = "messagesButton";
+            this.messagesButton.Size = new System.Drawing.Size(23, 22);
+            this.messagesButton.Text = "Meldungen";
+            this.messagesButton.Click += new System.EventHandler(this.messagesButton_Click);
+            // 
+            // settingsButton
+            // 
+            this.settingsButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.settingsButton.Image = ((System.Drawing.Image)(resources.GetObject("settingsButton.Image")));
+            this.settingsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.settingsButton.Name = "settingsButton";
+            this.settingsButton.Size = new System.Drawing.Size(23, 22);
+            this.settingsButton.Text = "Einstellungen";
+            this.settingsButton.Click += new System.EventHandler(this.settingsButton_Click);
+            // 
+            // aboutButton
+            // 
+            this.aboutButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.aboutButton.Image = ((System.Drawing.Image)(resources.GetObject("aboutButton.Image")));
+            this.aboutButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.aboutButton.Name = "aboutButton";
+            this.aboutButton.Size = new System.Drawing.Size(23, 22);
+            this.aboutButton.Text = "Über";
+            this.aboutButton.Click += new System.EventHandler(this.aboutButton_Click);
+            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // stopButton
+            // 
+            this.stopButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.stopButton.Image = ((System.Drawing.Image)(resources.GetObject("stopButton.Image")));
+            this.stopButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.stopButton.Name = "stopButton";
+            this.stopButton.Size = new System.Drawing.Size(23, 22);
+            this.stopButton.Text = "Stoppe Alles";
+            this.stopButton.Click += new System.EventHandler(this.stopButton_Click);
+            // 
+            // prevMusicButton
+            // 
+            this.prevMusicButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.prevMusicButton.Image = ((System.Drawing.Image)(resources.GetObject("prevMusicButton.Image")));
+            this.prevMusicButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.prevMusicButton.Name = "prevMusicButton";
+            this.prevMusicButton.Size = new System.Drawing.Size(23, 22);
+            this.prevMusicButton.Text = "Letztes Musikstück";
+            this.prevMusicButton.Click += new System.EventHandler(this.prevMusicButton_Click);
+            // 
+            // nextMusicButton
+            // 
+            this.nextMusicButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.nextMusicButton.Image = ((System.Drawing.Image)(resources.GetObject("nextMusicButton.Image")));
+            this.nextMusicButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.nextMusicButton.Name = "nextMusicButton";
+            this.nextMusicButton.Size = new System.Drawing.Size(23, 22);
+            this.nextMusicButton.Text = "Nächstes Musikstück";
+            this.nextMusicButton.Click += new System.EventHandler(this.nextMusicButton_Click);
+            // 
+            // repeatButton
+            // 
+            this.repeatButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.repeatButton.Image = ((System.Drawing.Image)(resources.GetObject("repeatButton.Image")));
+            this.repeatButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.repeatButton.Name = "repeatButton";
+            this.repeatButton.Size = new System.Drawing.Size(23, 22);
+            this.repeatButton.Text = "Aktuelle Musik wiederholen";
+            this.repeatButton.Click += new System.EventHandler(this.repeatButton_Click);
             // 
             // openFileDialog1
             // 
@@ -600,86 +690,52 @@
             this.overlayCloseButton.UseVisualStyleBackColor = false;
             this.overlayCloseButton.Click += new System.EventHandler(this.overlayCloseButton_Click);
             // 
-            // openButton
+            // label9
             // 
-            this.openButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.openButton.Image = ((System.Drawing.Image)(resources.GetObject("openButton.Image")));
-            this.openButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.openButton.Name = "openButton";
-            this.openButton.Size = new System.Drawing.Size(32, 22);
-            this.openButton.Text = "Projekt öffnen";
-            this.openButton.ButtonClick += new System.EventHandler(this.openButton_Click);
-            this.openButton.DropDownOpening += new System.EventHandler(this.openButton_DropDownOpening);
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(6, 110);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(53, 13);
+            this.label9.TabIndex = 5;
+            this.label9.Text = "Blendzeit:";
             // 
-            // messagesButton
+            // tagFadeUpDown
             // 
-            this.messagesButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.messagesButton.Image = ((System.Drawing.Image)(resources.GetObject("messagesButton.Image")));
-            this.messagesButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.messagesButton.Name = "messagesButton";
-            this.messagesButton.Size = new System.Drawing.Size(23, 22);
-            this.messagesButton.Text = "Meldungen";
-            this.messagesButton.Click += new System.EventHandler(this.messagesButton_Click);
+            this.tagFadeUpDown.Increment = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.tagFadeUpDown.Location = new System.Drawing.Point(65, 108);
+            this.tagFadeUpDown.Maximum = new decimal(new int[] {
+            50000,
+            0,
+            0,
+            0});
+            this.tagFadeUpDown.Name = "tagFadeUpDown";
+            this.tagFadeUpDown.Size = new System.Drawing.Size(69, 20);
+            this.tagFadeUpDown.TabIndex = 6;
+            this.tagFadeUpDown.ValueChanged += new System.EventHandler(this.tagFadeUpDown_ValueChanged);
             // 
-            // settingsButton
+            // label10
             // 
-            this.settingsButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.settingsButton.Image = ((System.Drawing.Image)(resources.GetObject("settingsButton.Image")));
-            this.settingsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.settingsButton.Name = "settingsButton";
-            this.settingsButton.Size = new System.Drawing.Size(23, 22);
-            this.settingsButton.Text = "Einstellungen";
-            this.settingsButton.Click += new System.EventHandler(this.settingsButton_Click);
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(140, 112);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(20, 13);
+            this.label10.TabIndex = 7;
+            this.label10.Text = "ms";
             // 
-            // aboutButton
+            // tagFadeOnlyOnChangeBox
             // 
-            this.aboutButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.aboutButton.Image = ((System.Drawing.Image)(resources.GetObject("aboutButton.Image")));
-            this.aboutButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.aboutButton.Name = "aboutButton";
-            this.aboutButton.Size = new System.Drawing.Size(23, 22);
-            this.aboutButton.Text = "Über";
-            this.aboutButton.Click += new System.EventHandler(this.aboutButton_Click);
-            // 
-            // stopButton
-            // 
-            this.stopButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.stopButton.Image = ((System.Drawing.Image)(resources.GetObject("stopButton.Image")));
-            this.stopButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.stopButton.Name = "stopButton";
-            this.stopButton.Size = new System.Drawing.Size(23, 22);
-            this.stopButton.Text = "Stoppe Alles";
-            this.stopButton.Click += new System.EventHandler(this.stopButton_Click);
-            // 
-            // prevMusicButton
-            // 
-            this.prevMusicButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.prevMusicButton.Image = ((System.Drawing.Image)(resources.GetObject("prevMusicButton.Image")));
-            this.prevMusicButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.prevMusicButton.Name = "prevMusicButton";
-            this.prevMusicButton.Size = new System.Drawing.Size(23, 22);
-            this.prevMusicButton.Text = "Letztes Musikstück";
-            this.prevMusicButton.Click += new System.EventHandler(this.prevMusicButton_Click);
-            // 
-            // nextMusicButton
-            // 
-            this.nextMusicButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.nextMusicButton.Image = ((System.Drawing.Image)(resources.GetObject("nextMusicButton.Image")));
-            this.nextMusicButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.nextMusicButton.Name = "nextMusicButton";
-            this.nextMusicButton.Size = new System.Drawing.Size(23, 22);
-            this.nextMusicButton.Text = "Nächstes Musikstück";
-            this.nextMusicButton.Click += new System.EventHandler(this.nextMusicButton_Click);
-            // 
-            // repeatButton
-            // 
-            this.repeatButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.repeatButton.Image = ((System.Drawing.Image)(resources.GetObject("repeatButton.Image")));
-            this.repeatButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.repeatButton.Name = "repeatButton";
-            this.repeatButton.Size = new System.Drawing.Size(23, 22);
-            this.repeatButton.Text = "Aktuelle Musik wiederholen";
-            this.repeatButton.Click += new System.EventHandler(this.repeatButton_Click);
+            this.tagFadeOnlyOnChangeBox.AutoSize = true;
+            this.tagFadeOnlyOnChangeBox.Location = new System.Drawing.Point(166, 111);
+            this.tagFadeOnlyOnChangeBox.Name = "tagFadeOnlyOnChangeBox";
+            this.tagFadeOnlyOnChangeBox.Size = new System.Drawing.Size(127, 17);
+            this.tagFadeOnlyOnChangeBox.TabIndex = 8;
+            this.tagFadeOnlyOnChangeBox.Text = "Nur bei Tagänderung";
+            this.tagFadeOnlyOnChangeBox.UseVisualStyleBackColor = true;
+            this.tagFadeOnlyOnChangeBox.CheckedChanged += new System.EventHandler(this.tagFadeOnlyOnChangeBox_CheckedChanged);
             // 
             // transparentFlowLayoutPanel2
             // 
@@ -888,6 +944,7 @@
             this.toolStrip1.PerformLayout();
             this.overLayPanel.ResumeLayout(false);
             this.overLayPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tagFadeUpDown)).EndInit();
             this.transparentFlowLayoutPanel2.ResumeLayout(false);
             this.transparentFlowLayoutPanel2.PerformLayout();
             this.transparentFlowLayoutPanel1.ResumeLayout(false);
@@ -967,6 +1024,10 @@
         private System.Windows.Forms.FlowLayoutPanel tagSelectionPanel;
         private System.Windows.Forms.Label currentTagsLabel;
         private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.CheckBox tagFadeOnlyOnChangeBox;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.NumericUpDown tagFadeUpDown;
+        private System.Windows.Forms.Label label9;
 
     }
 }

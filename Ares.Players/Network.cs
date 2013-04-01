@@ -39,6 +39,7 @@ namespace Ares.Players
         void SwitchTag(Int32 categoryId, Int32 tagId, bool tagIsActive);
         void DeactivateAllTags();
         void SetTagCategoryOperator(bool operatorIsAnd);
+        void SetMusicTagsFading(Int32 fadeTime, bool onlyOnChange);
     }
 
     public class Network : Ares.Playing.IProjectPlayingCallbacks
@@ -165,9 +166,14 @@ namespace Ares.Players
             InformCategoryOperatorChanged(operatorIsAnd);
         }
 
+        public void InformClientOfFading(int fadeTime, bool fadeOnlyOnChange)
+        {
+            InformFading(fadeTime, fadeOnlyOnChange);
+        }
+
         public void InformClientOfEverything(int overallVolume, int musicVolume, int soundVolume, Ares.Data.IMode mode, MusicInfo music,
             System.Collections.Generic.IList<Ares.Data.IModeElement> elements, Ares.Data.IProject project, Int32 musicListId, bool musicRepeat,
-            int tagLanguageId, System.Collections.Generic.IList<int> activeTags, bool tagCategoryOperatorIsAnd)
+            int tagLanguageId, System.Collections.Generic.IList<int> activeTags, bool tagCategoryOperatorIsAnd, int fadeTime, bool fadeOnlyOnChange)
         {
             InformProjectModel(project);
             InformPossibleTags(tagLanguageId, project);
@@ -184,6 +190,8 @@ namespace Ares.Players
             InformRepeatChanged(musicRepeat);
             InformActiveTags(activeTags);
             InformCategoryOperatorChanged(tagCategoryOperatorIsAnd);
+            m_MusicTagsFadeOnlyOnChange = fadeOnlyOnChange;
+            InformFading(fadeTime, fadeOnlyOnChange);
         }
 
         public void ListenInThread()
@@ -676,6 +684,17 @@ namespace Ares.Players
                     {
                         InformPossibleProjects();
                     }
+                    else if (command == 14)
+                    {
+                        Int32 fadeTime = 0;
+                        bool success = ReadInt32(out fadeTime);
+                        Int32 onlyOnChange = 0;
+                        success = ReadInt32(out onlyOnChange) && success;
+                        if (success)
+                        {
+                            networkClient.SetMusicTagsFading(fadeTime, onlyOnChange == 1);
+                        }
+                    }
                     lock (syncObject)
                     {
                         goOn = continueListenForCommands;
@@ -940,6 +959,25 @@ namespace Ares.Players
                 package[0] = 14;
                 package[1] = (byte)(isAndOperator ? 1 : 0);
                 package[2] = 0;
+                lock (syncObject)
+                {
+                    client.GetStream().Write(package, 0, package.Length);
+                }
+            }
+        }
+
+        private void InformFading(int fadeTime, bool fadeOnlyOnChange)
+        {
+            if (ClientConnected)
+            {
+                byte[] ia = BitConverter.GetBytes(fadeTime);
+                if (BitConverter.IsLittleEndian)
+                    Array.Reverse(ia);
+                byte[] package = new byte[3 + ia.Length];
+                package[0] = 17;
+                package[1] = (byte)(fadeOnlyOnChange ? 1 : 0);
+                package[2] = 0;
+                Array.Copy(ia, 0, package, 3, ia.Length);
                 lock (syncObject)
                 {
                     client.GetStream().Write(package, 0, package.Length);
@@ -1370,6 +1408,7 @@ namespace Ares.Players
             {
                 InformActiveTags(new List<int>(newTags));
                 InformCategoryOperatorChanged(operatorIsAnd);
+                InformFading(fadeTime, m_MusicTagsFadeOnlyOnChange);
             }
             catch (System.IO.IOException e)
             {
@@ -1391,6 +1430,21 @@ namespace Ares.Players
             }
         }
 
+        public void MusicTagsFadingChanged(int fadeTime, bool fadeOnlyOnChange)
+        {
+            try
+            {
+                m_MusicTagsFadeOnlyOnChange = fadeOnlyOnChange;
+                InformFading(fadeTime, fadeOnlyOnChange);
+            }
+            catch (System.IO.IOException e)
+            {
+                Messages.AddMessage(MessageType.Warning, e.Message);
+                DoDisconnect(true);
+            }
+        }
+
+        private bool m_MusicTagsFadeOnlyOnChange;
 
         public void VolumeChanged(Ares.Playing.VolumeTarget target, int newValue)
         {
