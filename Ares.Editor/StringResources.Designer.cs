@@ -433,6 +433,15 @@ namespace Ares.Editor {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The file doesn&apos;t contain an Ares project. If it contains a project element (e.g. a scenario), import the file at a mode in the Project Explorer. ähnelt.
+        /// </summary>
+        internal static string ImportNoProject {
+            get {
+                return ResourceManager.GetString("ImportNoProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die The command still needs some data. Please select the necessary element(s). ähnelt.
         /// </summary>
         internal static string InsufficientCommandData {

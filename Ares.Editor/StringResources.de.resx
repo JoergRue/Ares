@@ -521,4 +521,7 @@ Soll es jetzt gespeichert werden?</value>
   <data name="MusicIdStats" xml:space="preserve">
     <value>Ids wurden für {0} der {1} Dateien gefunden.</value>
   </data>
+  <data name="ImportNoProject" xml:space="preserve">
+    <value>Die Datei enthält kein Ares-Projekt. Falls sie ein Projekt-Element (z.B. ein Szenario) enthält, importieren Sie die Datei an einem Modus im Projekt-Explorer.</value>
+  </data>
 </root>

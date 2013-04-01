@@ -649,15 +649,21 @@ namespace Ares.Editor
             }
         }
 
-        private void OpenProject(String filePath)
+        private bool OpenProject(String filePath)
         {
             if (!UnloadProject())
-                return;
+                return true;
 
+            bool result = true;
             try
             {
                 m_CurrentProject = Ares.Data.DataModule.ProjectManager.LoadProject(filePath);
                 Ares.Settings.Settings.Instance.RecentFiles.AddFile(new RecentFiles.ProjectEntry(m_CurrentProject.FileName, m_CurrentProject.Title));
+            }
+            catch (Ares.Data.InvalidProjectException)
+            {
+                m_CurrentProject = null;
+                result = false;
             }
             catch (Exception e)
             {
@@ -689,6 +695,7 @@ namespace Ares.Editor
             Ares.ModelInfo.ModelChecks.Instance.AdaptHiddenTags(m_CurrentProject);
             m_Instance.SetLoadedProject(filePath);
             UpdateGUI();
+            return result;
         }
 
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1166,7 +1173,10 @@ namespace Ares.Editor
                 }
                 else if (!cancelled)
                 {
-                    OpenProject(saveFileDialog.FileName);
+                    if (!OpenProject(saveFileDialog.FileName))
+                    {
+                        MessageBox.Show(this, StringResources.ImportNoProject, StringResources.Ares, MessageBoxButtons.OK);
+                    }
                 }
             });
             Ares.Editor.Actions.FilesWatcher.Instance.Enabled = true;

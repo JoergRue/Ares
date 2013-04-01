@@ -198,6 +198,8 @@ namespace Ares.ModelInfo
 
         public void AdaptHiddenTags(IProject project)
         {
+            if (project == null)
+                return;
             HashSet<int> hiddenCategories = project.GetHiddenTagCategories();
             HashSet<int> hiddenTags = project.GetHiddenTags();
             if (hiddenCategories.Count == 0 && hiddenTags.Count == 0)

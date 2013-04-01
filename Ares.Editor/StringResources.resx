@@ -520,4 +520,7 @@ You should adapt some settings first.</value>
   <data name="MusicIdStats" xml:space="preserve">
     <value>Ids were found for {0} of {1} files.</value>
   </data>
+  <data name="ImportNoProject" xml:space="preserve">
+    <value>The file doesn't contain an Ares project. If it contains a project element (e.g. a scenario), import the file at a mode in the Project Explorer.</value>
+  </data>
 </root>

@@ -23,6 +23,18 @@ using System.Xml;
 
 namespace Ares.Data
 {
+
+    /// <summary>
+    /// Exception thrown when opening a file which doesn't contain a project at all.
+    /// </summary>
+    public class InvalidProjectException : Exception
+    {
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        public InvalidProjectException() : base() { }
+    }
+
     /// <summary>
     /// Management of ARES projects.
     /// </summary>
@@ -100,7 +112,7 @@ namespace Ares.Data
             }
             else
             {
-                throw new XmlException(String.Format(StringResources.ExpectedElement, "Project"));
+                throw new InvalidProjectException();
             }
         }
 
