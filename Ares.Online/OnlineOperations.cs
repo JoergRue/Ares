@@ -60,7 +60,7 @@ namespace Ares.Online
             DoCheckForUpdate(parent, false, true, false);
         }
 
-        public static void CheckForNews(Form parent)
+        public static void CheckForNews(Form parent, bool manual)
         {
             String url = GetUrlBase();
             if (!System.Threading.Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName.StartsWith("de", StringComparison.InvariantCultureIgnoreCase))
@@ -68,7 +68,7 @@ namespace Ares.Online
                 url += "en/";
             }
             url += "ares_news.html";
-            FileDownloader<bool> downloader = new FileDownloader<bool>(parent, false, false);
+            FileDownloader<bool> downloader = new FileDownloader<bool>(parent, manual, manual);
             downloader.Download(url, StringResources.SearchingNews, NewsDownloaded);
         }
 
@@ -176,7 +176,7 @@ namespace Ares.Online
             DoDownloadSetup(parent, result.Result, main, false);
         }
 
-        private static void NewsDownloaded(System.Net.DownloadStringCompletedEventArgs result, Form parent, bool unused)
+        private static void NewsDownloaded(System.Net.DownloadStringCompletedEventArgs result, Form parent, bool manual)
         {
             if (result.Cancelled)
                 return;
@@ -187,7 +187,7 @@ namespace Ares.Online
             bool hasNews = false;
             String fileName = System.IO.Path.Combine(System.Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Ares");
             fileName = System.IO.Path.Combine(fileName, "ares_news.html");
-            if (System.IO.File.Exists(fileName))
+            if (!manual && System.IO.File.Exists(fileName))
             {
                 String fileContent = String.Empty;
                 try

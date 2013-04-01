@@ -973,7 +973,7 @@ namespace Ares.Editor
             if (Settings.Settings.Instance.CheckForUpdate)
             {
                 Ares.Online.OnlineOperations.CheckForUpdate(this, false);
-                Ares.Online.OnlineOperations.CheckForNews(this);
+                Ares.Online.OnlineOperations.CheckForNews(this, false);
             }
         }
 
@@ -1221,6 +1221,11 @@ namespace Ares.Editor
         private void tagsMenuItem_Click(object sender, EventArgs e)
         {
             ShowTagsEditor();
+        }
+
+        private void toolStripMenuItem1_Click_1(object sender, EventArgs e)
+        {
+            Ares.Online.OnlineOperations.CheckForNews(this, true);
         }
     }
 

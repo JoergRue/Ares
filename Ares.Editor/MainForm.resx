@@ -365,6 +365,12 @@
   <data name="checkForUpdateToolStripMenuItem.Text" xml:space="preserve">
     <value>Check for Update</value>
   </data>
+  <data name="toolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>176, 22</value>
+  </data>
+  <data name="toolStripMenuItem1.Text" xml:space="preserve">
+    <value>Show News</value>
+  </data>
   <data name="toolStripSeparator8.Size" type="System.Drawing.Size, System.Drawing">
     <value>173, 6</value>
   </data>
@@ -447,14 +453,14 @@
   <data name="newButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGkSURBVDhPjZFLSwJRFMcvQato1TboA7RqUZuofY9N65b1
-        JYKgD1CbCoWeRA/oAUIahEIvKsgkJKyw5yBmUY6lpjnOjPPv3Jk7akSDfzicyzn3979zzjBbsjyoaNpA
-        FHMMiDBoWp+USPSrou2sUrTBq44QCBewQ/nGOpu1XNemuPa/9GjDRRlYothm1plq6dtOePavsOEPY9UX
-        xIovOC6witQJuuyimOQQ17r1JbMU63YNmN86REfv8F8T6YZpl/4mA1N0mebHUz1wQFlpA+LNAqc3Vv0I
-        nF6ZJsveswmB0wh6f6g8An+RXi/vBGMmzDW9vGvCdgicDHLdR2VggfJDnXm2ajOcNaXpJdPENhK4JUNu
-        HS3dN7rhIei5BUiN0B+YEyhgGAbyBRVvqbxp0N4z9NvA1qLnWCC/VVR1fGQKiL1mnA1mN/YFUpFeMpDN
-        F/GSzOEu9uFs4F4LCKyigqIh+fkNKZFG5D7pbMCb1eKLS38piL9lEZVSCF2/1m5QvbiH+Ccub99xEn6u
-        3aB6cdePMoKRF+ydx2oz4NkpHA14s5ZgjLEf9Rg3M1VkvygAAAAASUVORK5CYII=
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGjSURBVDhPjZFLSwJRFMcvQato1TboA7RqUZuofY9N65b1
+        JYKgD5CbCoWeRA/oAUIZREFWVJBFSJgyPUVMpdSy0tR5/Tt35s5oRIN/OJzLOff3v3POMEuZzGBJUQYk
+        zDIgxKAofdFEol8WbWdpUsO2PEIg3MAO5Yh5Nmr5rg1x7X+pUsOVDSxSbDHzTLXcbSe8/hus7wWx4gtg
+        2RcYF1hFsosuuykmOMS1Zn7JDMWaVQPmNo/Q0Tv81yQaYUpwt0nHJF2m+fFUDxxSLrUB8WaB0xsre9g/
+        uzFMlrbPXQKnEdT+S3sE/iK9bu8EYwbMNbW0a8BWCJwM8t3HNjBP+aHOOJu1ac4aUlTNMLGMBG5Kz7SO
+        aveNHngJem4BsiP0B2YFCui6jkJRxku2YBi09wz9NrC04D0RyG+VZRVvH0XEUh/OBjPrfoFUpGo6Pgtl
+        JNN53MXenA08q/sCq6hYUpB+/0Y0kUPoPu1swJvV4ovLfZUQf/mEFM3iMpyq3aB6cQ/xd1zfvuI0+Fy7
+        QfXiwo8ZBEJJHFzEajPg2SkcDXizlmCMsR/pDjcvH6F2GgAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="newButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
@@ -849,6 +855,12 @@
     <value>checkForUpdateToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;checkForUpdateToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripMenuItem1.Name" xml:space="preserve">
+    <value>toolStripMenuItem1</value>
+  </data>
+  <data name="&gt;&gt;toolStripMenuItem1.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;toolStripSeparator8.Name" xml:space="preserve">
