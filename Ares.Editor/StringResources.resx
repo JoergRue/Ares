@@ -523,4 +523,7 @@ You should adapt some settings first.</value>
   <data name="ImportNoProject" xml:space="preserve">
     <value>The file doesn't contain an Ares project. If it contains a project element (e.g. a scenario), import the file at a mode in the Project Explorer.</value>
   </data>
+  <data name="OpenProjectError" xml:space="preserve">
+    <value>The file doesn't contain a valid Ares project. If it contains a project element (e.g. a szenario), import the file at a mode in the Project Explorer.</value>
+  </data>
 </root>

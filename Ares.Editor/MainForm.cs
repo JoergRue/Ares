@@ -631,7 +631,10 @@ namespace Ares.Editor
             DialogResult result = openFileDialog.ShowDialog(this);
             if (result != System.Windows.Forms.DialogResult.OK)
                 return;
-            OpenProject(openFileDialog.FileName);
+            if (!OpenProject(openFileDialog.FileName))
+            {
+                MessageBox.Show(this, StringResources.OpenProjectError, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void OpenProjectFromRequest(String projectName, String projectPath)
@@ -644,7 +647,10 @@ namespace Ares.Editor
             {
                 if (MessageBox.Show(this, String.Format(StringResources.OpenProjectQuestion, projectName), StringResources.Ares, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
                 {
-                    OpenProject(projectPath);
+                    if (!OpenProject(projectPath))
+                    {
+                        MessageBox.Show(this, StringResources.OpenProjectError, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
         }
@@ -802,7 +808,10 @@ namespace Ares.Editor
 
         void recentItem_Click(object sender, EventArgs e)
         {
-            OpenProject(((sender as ToolStripMenuItem).Tag as RecentFiles.ProjectEntry).FilePath);
+            if (!OpenProject(((sender as ToolStripMenuItem).Tag as RecentFiles.ProjectEntry).FilePath))
+            {
+                MessageBox.Show(this, StringResources.OpenProjectError, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void saveButton_Click(object sender, EventArgs e)
@@ -1175,7 +1184,7 @@ namespace Ares.Editor
                 {
                     if (!OpenProject(saveFileDialog.FileName))
                     {
-                        MessageBox.Show(this, StringResources.ImportNoProject, StringResources.Ares, MessageBoxButtons.OK);
+                        MessageBox.Show(this, StringResources.ImportNoProject, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             });

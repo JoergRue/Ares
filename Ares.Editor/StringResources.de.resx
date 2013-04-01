@@ -524,4 +524,7 @@ Soll es jetzt gespeichert werden?</value>
   <data name="ImportNoProject" xml:space="preserve">
     <value>Die Datei enthält kein Ares-Projekt. Falls sie ein Projekt-Element (z.B. ein Szenario) enthält, importieren Sie die Datei an einem Modus im Projekt-Explorer.</value>
   </data>
+  <data name="OpenProjectError" xml:space="preserve">
+    <value>Die Datei enthält kein gültiges Ares-Projekt. Falls sie ein Projekt-Element (z.B. ein Szenario) enthält, importieren Sie die Datei an einem Modus im Projekt-Explorer.</value>
+  </data>
 </root>

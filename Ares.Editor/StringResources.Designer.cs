@@ -876,6 +876,15 @@ namespace Ares.Editor {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The file doesn&apos;t contain a valid Ares project. If it contains a project element (e.g. a szenario), import the file at a mode in the Project Explorer. ähnelt.
+        /// </summary>
+        internal static string OpenProjectError {
+            get {
+                return ResourceManager.GetString("OpenProjectError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Open project {0}? ähnelt.
         /// </summary>
         internal static string OpenProjectQuestion {
