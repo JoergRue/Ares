@@ -62,7 +62,12 @@ namespace Ares.Online
 
         public static void CheckForNews(Form parent)
         {
-            String url = GetUrlBase() + "ares_news.html";
+            String url = GetUrlBase();
+            if (!System.Threading.Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName.StartsWith("de", StringComparison.InvariantCultureIgnoreCase))
+            {
+                url += "en/";
+            }
+            url += "ares_news.html";
             FileDownloader<bool> downloader = new FileDownloader<bool>(parent, false, false);
             downloader.Download(url, StringResources.SearchingNews, NewsDownloaded);
         }
