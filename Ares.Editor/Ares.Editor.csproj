@@ -163,6 +163,12 @@
     <Compile Include="Dialogs\AddTranslationDialog.Designer.cs">
       <DependentUpon>AddTranslationDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\ExceptionDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\ExceptionDialog.Designer.cs">
+      <DependentUpon>ExceptionDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\FileTagsDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -363,6 +369,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\AddTranslationDialog.resx">
       <DependentUpon>AddTranslationDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\ExceptionDialog.de.resx">
+      <DependentUpon>ExceptionDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\ExceptionDialog.resx">
+      <DependentUpon>ExceptionDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\FileTagsDialog.de.resx">
       <DependentUpon>FileTagsDialog.cs</DependentUpon>
@@ -742,6 +754,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\musicbytags_ref.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\error.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

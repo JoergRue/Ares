@@ -146,11 +146,17 @@ namespace Ares.Editor.ElementEditors
                 monitor.Close();
                 if (includeLog)
                 {
-                    String log = task2.Result;
-                    var dialog = new Dialogs.OnlineDbResultDialog();
-                    dialog.Log = log;
-                    dialog.SetIsUpload(usedFiles.Count, task.Result);
-                    dialog.ShowDialog(this);
+                    try
+                    {
+                        String log = task2.Result;
+                        var dialog = new Dialogs.OnlineDbResultDialog();
+                        dialog.Log = log;
+                        dialog.SetIsUpload(usedFiles.Count, task.Result);
+                        dialog.ShowDialog(this);
+                    }
+                    catch (AggregateException)
+                    {
+                    }
                 }
             }, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskContinuationOptions.NotOnFaulted, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
             
@@ -194,11 +200,17 @@ namespace Ares.Editor.ElementEditors
                 UpdateAll();
                 if (includeLog)
                 {
-                    String log = task2.Result;
-                    var dialog = new Dialogs.OnlineDbResultDialog();
-                    dialog.Log = log;
-                    dialog.SetIsDownload(m_Files.Count, nrOfFoundFiles, task.Result);
-                    dialog.ShowDialog(this);
+                    try
+                    {
+                        String log = task2.Result;
+                        var dialog = new Dialogs.OnlineDbResultDialog();
+                        dialog.Log = log;
+                        dialog.SetIsDownload(m_Files.Count, nrOfFoundFiles, task.Result);
+                        dialog.ShowDialog(this);
+                    }
+                    catch (AggregateException)
+                    {
+                    }
                 }
             }, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskContinuationOptions.NotOnFaulted, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
             task2.ContinueWith((t) =>
@@ -572,7 +584,14 @@ namespace Ares.Editor.ElementEditors
                 monitor.Close();
                 Ares.Editor.Actions.TagChanges.Instance.FireTagsDBChanged(this);
                 UpdateAll();
-                MessageBox.Show(this, String.Format(StringResources.TagsDownloadStats, task2.Result, m_Files.Count), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                try
+                {
+                    int result = task2.Result;
+                    MessageBox.Show(this, String.Format(StringResources.TagsDownloadStats, result, m_Files.Count), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (AggregateException)
+                {
+                }
             }, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskContinuationOptions.NotOnFaulted, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
             task2.ContinueWith((t) =>
             {

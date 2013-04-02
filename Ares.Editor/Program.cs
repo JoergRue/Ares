@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace Ares.Editor
 {
@@ -111,6 +112,9 @@ namespace Ares.Editor
                 MessageBox.Show(StringResources.BassInitFail, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return;
             }
+            Application.ThreadException += new System.Threading.ThreadExceptionEventHandler(Application_ThreadException);
+            Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
             try
             {
                 Application.Run(new MainForm());
@@ -119,6 +123,44 @@ namespace Ares.Editor
             {
             }
             Un4seen.Bass.Bass.BASS_Free();
+        }
+
+        static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            Exception ex = (Exception)e.ExceptionObject;
+            WriteExceptionTrace(ex);
+        }
+
+        static void WriteExceptionTrace(Exception ex)
+        {
+            try
+            {
+                String folder = System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData);
+                String path = System.IO.Path.Combine(folder, "Ares_Errors.log");
+                using (System.IO.StreamWriter writer = new System.IO.StreamWriter(path, true))
+                {
+                    writer.WriteLine(System.DateTime.Now.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                    writer.WriteLine(ex.GetType().Name + ": " + ex.Message);
+                    writer.WriteLine("Stack Trace:");
+                    writer.WriteLine(ex.StackTrace);
+                    writer.WriteLine("--------------------------------------------------");
+                    writer.Flush();
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        static void Application_ThreadException(object sender, System.Threading.ThreadExceptionEventArgs e)
+        {
+            WriteExceptionTrace(e.Exception);
+            Dialogs.ExceptionDialog dialog = new Dialogs.ExceptionDialog();
+            dialog.SetException(e.Exception);
+            if (dialog.ShowDialog() == DialogResult.Abort)
+            {
+                Application.Exit();
+            }
         }
     }
 }
