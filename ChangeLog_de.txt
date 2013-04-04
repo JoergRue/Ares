@@ -1,3 +1,13 @@
+Version 2.1.1
+----------------------------------------------------------------------------------
+- Editor / Player: Bugfix: Auswahl von Verzeichnissen im Einstellungs-Dialog ging 
+  nicht mehr
+- Editor: Bugfix: manchmal Absturz wenn Upload / Download von Tags nicht
+  funktionierte oder abgebrochen wurde
+- Editor: Bugfix: Absturz wenn versucht wurde, ein ungültiges Projekt zu öffnen
+- Editor: Bugfix: Absturz wenn versucht wurde, ein Projekt mit einem ungültigen
+  Element als oberstem Element in einem Modus zu öffnen
+  
 Version 2.1.0
 ----------------------------------------------------------------------------------
 - Editor: Dialog für Dateitags durch Editor-Fenster ersetzt
