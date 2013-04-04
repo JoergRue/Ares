@@ -160,6 +160,7 @@ namespace Ares.CommonGUI
             this.selectSoundButton.Name = "selectSoundButton";
             this.selectSoundButton.UseCompatibleTextRendering = true;
             this.selectSoundButton.UseVisualStyleBackColor = true;
+            this.selectSoundButton.Click += new System.EventHandler(this.selectSoundButton_Click);
             // 
             // label2
             // 
@@ -173,6 +174,7 @@ namespace Ares.CommonGUI
             this.selectMusicButton.Name = "selectMusicButton";
             this.selectMusicButton.UseCompatibleTextRendering = true;
             this.selectMusicButton.UseVisualStyleBackColor = true;
+            this.selectMusicButton.Click += new System.EventHandler(this.selectMusicButton_Click);
             // 
             // label1
             // 
@@ -200,6 +202,7 @@ namespace Ares.CommonGUI
             this.selectOtherDirButton.Name = "selectOtherDirButton";
             this.selectOtherDirButton.UseCompatibleTextRendering = true;
             this.selectOtherDirButton.UseVisualStyleBackColor = true;
+            this.selectOtherDirButton.Click += new System.EventHandler(this.selectOtherDirButton_Click);
             // 
             // otherDirLabel
             // 

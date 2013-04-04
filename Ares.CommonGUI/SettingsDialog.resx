@@ -262,7 +262,7 @@
     <value>soundDirLabel</value>
   </data>
   <data name="&gt;&gt;soundDirLabel.Type" xml:space="preserve">
-    <value>Ares.CommonGUI.PathLabel, Ares.CommonGUI, Version=2.0.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
+    <value>Ares.CommonGUI.PathLabel, Ares.CommonGUI, Version=2.1.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
   </data>
   <data name="&gt;&gt;soundDirLabel.Parent" xml:space="preserve">
     <value>groupBox2</value>
@@ -292,7 +292,7 @@
     <value>musicDirLabel</value>
   </data>
   <data name="&gt;&gt;musicDirLabel.Type" xml:space="preserve">
-    <value>Ares.CommonGUI.PathLabel, Ares.CommonGUI, Version=2.0.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
+    <value>Ares.CommonGUI.PathLabel, Ares.CommonGUI, Version=2.1.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
   </data>
   <data name="&gt;&gt;musicDirLabel.Parent" xml:space="preserve">
     <value>groupBox2</value>
@@ -499,7 +499,7 @@
     <value>otherDirLabel</value>
   </data>
   <data name="&gt;&gt;otherDirLabel.Type" xml:space="preserve">
-    <value>Ares.CommonGUI.PathLabel, Ares.CommonGUI, Version=2.0.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
+    <value>Ares.CommonGUI.PathLabel, Ares.CommonGUI, Version=2.1.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
   </data>
   <data name="&gt;&gt;otherDirLabel.Parent" xml:space="preserve">
     <value>groupBox1</value>
@@ -559,7 +559,7 @@
     <value>appDirLabel</value>
   </data>
   <data name="&gt;&gt;appDirLabel.Type" xml:space="preserve">
-    <value>Ares.CommonGUI.PathLabel, Ares.CommonGUI, Version=2.0.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
+    <value>Ares.CommonGUI.PathLabel, Ares.CommonGUI, Version=2.1.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
   </data>
   <data name="&gt;&gt;appDirLabel.Parent" xml:space="preserve">
     <value>groupBox1</value>
@@ -619,7 +619,7 @@
     <value>userDirLabel</value>
   </data>
   <data name="&gt;&gt;userDirLabel.Type" xml:space="preserve">
-    <value>Ares.CommonGUI.PathLabel, Ares.CommonGUI, Version=2.0.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
+    <value>Ares.CommonGUI.PathLabel, Ares.CommonGUI, Version=2.1.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
   </data>
   <data name="&gt;&gt;userDirLabel.Parent" xml:space="preserve">
     <value>groupBox1</value>

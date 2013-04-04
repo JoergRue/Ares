@@ -3,7 +3,7 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="Ares.Player\Player.cs">
     <Files>
       <File FileName="Ares.Settings\Settings.cs" Line="308" Column="44" />
-      <File FileName="Ares.Player\Player.cs" Line="196" Column="7" />
+      <File FileName="Ares.Player\Player.cs" Line="189" Column="10" />
       <File FileName="Ares.Settings\BasicSettings.cs" Line="104" Column="53" />
       <File FileName="Ares.Online\OnlineOperations.cs" Line="55" Column="1" />
       <File FileName="Ares.Playing\Player.cs" Line="579" Column="53" />

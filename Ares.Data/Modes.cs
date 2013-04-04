@@ -170,7 +170,10 @@ namespace Ares.Data
                             if (reader.IsStartElement("ModeElement"))
                             {
                                 ModeElement element = new ModeElement(reader);
-                                m_Elements.Add(element);
+                                if (element.StartElement != null)
+                                {
+                                    m_Elements.Add(element);
+                                }
                             }
                             else
                             {
