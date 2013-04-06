@@ -237,7 +237,7 @@ test
 
 }
 FileGroup ::36904AC1-ABF2-4646-9ECF-2C0CBC0BB8C5 -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows TarArchive ZipArchive} -name {Player And Editor} -parent FileGroups
-File ::85519505-B2E6-4155-96D6-3C0D6C533801 -type dir -name D:/Projekte/Ares/trunk/build/Ares/Player_Editor -location <%BaseDir%>/Ares/Player_Editor -parent 36904AC1-ABF2-4646-9ECF-2C0CBC0BB8C5
+File ::85519505-B2E6-4155-96D6-3C0D6C533801 -type dir -name D:/Projekte/Ares/branch_2.1.1/build/Ares/Player_Editor -location <%BaseDir%>/Ares/Player_Editor -parent 36904AC1-ABF2-4646-9ECF-2C0CBC0BB8C5
 File ::9956A220-D27D-48AB-B276-6E2E258EC915 -name Ares.Data.dll -parent 85519505-B2E6-4155-96D6-3C0D6C533801
 File ::41173F91-CA22-44C8-931E-04616C69B318 -name Ares.Editor.Actions.dll -active 0 -parent 85519505-B2E6-4155-96D6-3C0D6C533801
 File ::109F3842-88A6-48D5-B4F3-FF808918A644 -name Ares.Editor.Controls.dll -active 0 -parent 85519505-B2E6-4155-96D6-3C0D6C533801
@@ -299,40 +299,40 @@ File ::1DB14E5B-5166-460F-842A-36A35672A350 -name msvcp100.dll -active 0 -parent
 File ::67A73DDD-7F0A-481E-B930-DC49A8B23267 -name msvcr100.dll -active 0 -parent 85519505-B2E6-4155-96D6-3C0D6C533801
 File ::35ADFB73-0A5E-4253-91DB-2527769ABEC3 -name RestSharpLicence.txt -parent 85519505-B2E6-4155-96D6-3C0D6C533801
 File ::98D189EA-BBEE-4FE2-B99D-4C60EFE7C832 -name ServiceStackLicence.txt -parent 85519505-B2E6-4155-96D6-3C0D6C533801
-File ::95542296-8E72-4D8D-8ACE-B7B6AB1080E3 -name D:/Projekte/Ares/trunk/build/Ares/ServiceStackLicence.txt -parent 36904AC1-ABF2-4646-9ECF-2C0CBC0BB8C5
-File ::CCC6C317-4CCE-44B9-9FE1-9C12E10D1373 -name D:/Projekte/Ares/trunk/build/Ares/HtmlRendererLicence.txt -parent 36904AC1-ABF2-4646-9ECF-2C0CBC0BB8C5
+File ::95542296-8E72-4D8D-8ACE-B7B6AB1080E3 -name D:/Projekte/Ares/branch_2.1.1/build/Ares/ServiceStackLicence.txt -parent 36904AC1-ABF2-4646-9ECF-2C0CBC0BB8C5
+File ::CCC6C317-4CCE-44B9-9FE1-9C12E10D1373 -name D:/Projekte/Ares/branch_2.1.1/build/Ares/HtmlRendererLicence.txt -parent 36904AC1-ABF2-4646-9ECF-2C0CBC0BB8C5
 FileGroup ::68676E85-DEAC-451E-9016-59D1A2300E9B -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows TarArchive ZipArchive} -name Player -parent FileGroups
-File ::47DFEC14-D002-4E55-8F13-B613310C042C -name D:/Projekte/Ares/trunk/build/Ares/Player_Editor/Ares.Player.exe -location <%BaseDir%>/Ares/Player_Editor -parent 68676E85-DEAC-451E-9016-59D1A2300E9B
-File ::183D5336-C3DB-4D10-A1C9-893B83D8B44F -name D:/Projekte/Ares/trunk/build/Ares/Player_Editor/Ares.Player.exe.config -location <%BaseDir%>/Ares/Player_Editor -parent 68676E85-DEAC-451E-9016-59D1A2300E9B
-File ::0F8B9FC1-9BDE-49EC-9103-0CC62C7CA7DE -directory <%InstallDir%>/Player_Editor/de -name D:/Projekte/Ares/trunk/build/Ares/Player_Editor/de/Ares.Player.resources.dll -location <%BaseDir%>/Ares/Player_Editor/de -parent 68676E85-DEAC-451E-9016-59D1A2300E9B
-File ::CA1E9798-2A30-4C31-80BD-A586080F8934 -name D:/Projekte/Ares/trunk/build/Ares/MouseKeyboardHooksLicence.txt -parent 68676E85-DEAC-451E-9016-59D1A2300E9B
-File ::EF0E86AB-F73F-4E87-8FBD-D30D335D533C -name D:/Projekte/Ares/trunk/build/Ares/Player_Editor/MouseKeyboardActivityMonitor.dll -parent 68676E85-DEAC-451E-9016-59D1A2300E9B
+File ::47DFEC14-D002-4E55-8F13-B613310C042C -name D:/Projekte/Ares/branch_2.1.1/build/Ares/Player_Editor/Ares.Player.exe -location <%BaseDir%>/Ares/Player_Editor -parent 68676E85-DEAC-451E-9016-59D1A2300E9B
+File ::183D5336-C3DB-4D10-A1C9-893B83D8B44F -name D:/Projekte/Ares/branch_2.1.1/build/Ares/Player_Editor/Ares.Player.exe.config -location <%BaseDir%>/Ares/Player_Editor -parent 68676E85-DEAC-451E-9016-59D1A2300E9B
+File ::0F8B9FC1-9BDE-49EC-9103-0CC62C7CA7DE -directory <%InstallDir%>/Player_Editor/de -name D:/Projekte/Ares/branch_2.1.1/build/Ares/Player_Editor/de/Ares.Player.resources.dll -location <%BaseDir%>/Ares/Player_Editor/de -parent 68676E85-DEAC-451E-9016-59D1A2300E9B
+File ::CA1E9798-2A30-4C31-80BD-A586080F8934 -name D:/Projekte/Ares/branch_2.1.1/build/Ares/MouseKeyboardHooksLicence.txt -parent 68676E85-DEAC-451E-9016-59D1A2300E9B
+File ::EF0E86AB-F73F-4E87-8FBD-D30D335D533C -name D:/Projekte/Ares/branch_2.1.1/build/Ares/Player_Editor/MouseKeyboardActivityMonitor.dll -parent 68676E85-DEAC-451E-9016-59D1A2300E9B
 FileGroup ::5600FFDB-0F3C-4E9F-B311-0FACC5462967 -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows TarArchive ZipArchive} -name Editor -parent FileGroups
-File ::960E9C98-3E8C-479E-AE39-17842C3F4784 -name D:/Projekte/Ares/trunk/build/Ares/Player_Editor/Ares.Editor.Actions.dll -location <%BaseDir%>/Ares/Player_Editor -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
-File ::07A9F401-88DE-416E-9C01-274C8039279B -name D:/Projekte/Ares/trunk/build/Ares/Player_Editor/Ares.Editor.Controls.dll -location <%BaseDir%>/Ares/Player_Editor -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
-File ::96207246-9552-40EC-8799-AC68E7835029 -name D:/Projekte/Ares/trunk/build/Ares/Player_Editor/Ares.Editor.exe -location <%BaseDir%>/Ares/Player_Editor -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
-File ::D6FD9462-EB0B-4FD2-ACC0-B8F18BF140E3 -name D:/Projekte/Ares/trunk/build/Ares/Player_Editor/Ares.Editor.exe.config -location <%BaseDir%>/Ares/Player_Editor -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
-File ::54E80A65-6D71-4370-9EC8-5BF413FECA48 -name D:/Projekte/Ares/trunk/build/Ares/Player_Editor/WeifenLuo.WinFormsUI.Docking.dll -location <%BaseDir%>/Ares/Player_Editor -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
-File ::435DD4CA-211D-4123-8BEF-E8CA5EF49D91 -name D:/Projekte/Ares/trunk/build/Ares/Player_Editor/WeifenLuo.WinFormsUI.License.txt -location <%BaseDir%>/Ares/Player_Editor -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
-File ::C6241922-4C00-4126-A11A-DC8286FB423F -directory <%InstallDir%>/Player_Editor/de -name D:/Projekte/Ares/trunk/build/Ares/Player_Editor/de/Ares.Editor.Actions.resources.dll -location <%BaseDir%>/Ares/Player_Editor/de -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
-File ::E44F7ECB-9800-4E23-8EC6-C0F8384146D4 -directory <%InstallDir%>/Player_Editor/de -name D:/Projekte/Ares/trunk/build/Ares/Player_Editor/de/Ares.Editor.Controls.resources.dll -location <%BaseDir%>/Ares/Player_Editor/de -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
-File ::48546895-7EA3-45FE-A152-8FB3C6DE32AD -directory <%InstallDir%>/Player_Editor/de -name D:/Projekte/Ares/trunk/build/Ares/Player_Editor/de/Ares.Editor.resources.dll -location <%BaseDir%>/Ares/Player_Editor/de -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
-File ::0BC45CFC-3503-4F20-A24B-5A30994564A6 -name D:/Projekte/Ares/trunk/build/Ares/Player_Editor/Ares.CommonGUI.dll -location <%BaseDir%>/Ares/Player_Editor -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
-File ::97DB562F-ADF5-4AAE-A135-84059E261AED -name D:/Projekte/Ares/trunk/build/Ares/Player_Editor/Ares.TagsImport.dll -location <%BaseDir%>/Ares/Player_Editor -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
-File ::E879BF94-F573-4B01-B023-681D9AAAC2C6 -name D:/Projekte/Ares/trunk/build/Ares/Player_Editor/Ares.TagsImport.dll.config -location <%BaseDir%>/Ares/Player_Editor -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
-File ::3A173599-F8AA-46BC-BBF3-DC6C92811554 -name D:/Projekte/Ares/trunk/build/Ares/Player_Editor/avcodec-54.dll -location <%BaseDir%>/Ares/Player_Editor -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
-File ::7176BC21-386A-4F30-A91B-61476B44D453 -name D:/Projekte/Ares/trunk/build/Ares/Player_Editor/avutil-52.dll -location <%BaseDir%>/Ares/Player_Editor -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
-File ::7D0BA939-B706-4D30-B460-2F45CCABDEA3 -name D:/Projekte/Ares/trunk/build/Ares/Player_Editor/chromaprint.dll -location <%BaseDir%>/Ares/Player_Editor -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
-File ::AFC7BFB3-B3A7-4CA7-A1A1-94C54318E5EB -name D:/Projekte/Ares/trunk/build/Ares/Player_Editor/RestSharp.dll -location <%BaseDir%>/Ares/Player_Editor -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
-File ::3D4436CD-57DB-49DA-A8CF-8568412FFBE6 -name D:/Projekte/Ares/trunk/build/Ares/Player_Editor/System.Threading.dll -location <%BaseDir%>/Ares/Player_Editor -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
-File ::F7F91345-BE21-4489-8178-1DE19492567E -directory <%InstallDir%>/Player_Editor/de -name D:/Projekte/Ares/trunk/build/Ares/Player_Editor/de/Ares.TagsImport.resources.dll -location <%BaseDir%>/Ares/Player_Editor/de -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
-File ::25794162-23F9-4567-ACF8-2E2851301614 -name D:/Projekte/Ares/trunk/build/Ares/ChromaprintLicence.txt -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
-File ::204121E1-4E0F-4ED6-AFDA-3CDEF83D3C68 -name D:/Projekte/Ares/trunk/build/Ares/FfmpegLicence.txt -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
-File ::1BFEDD8B-74E8-4496-9D22-98F331D13A9C -name D:/Projekte/Ares/trunk/build/Ares/RestSharpLicence.txt -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
-File ::737D2D8F-8B11-42B1-8F8F-757F05A9E160 -name D:/Projekte/Ares/trunk/build/Ares/Player_Editor/msvcp100.dll -location <%BaseDir%>/Ares/Player_Editor -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
-File ::7F6E31D7-656B-4691-8C1B-3368F0AD2344 -name D:/Projekte/Ares/trunk/build/Ares/Player_Editor/msvcr100.dll -location <%BaseDir%>/Ares/Player_Editor -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
+File ::960E9C98-3E8C-479E-AE39-17842C3F4784 -name D:/Projekte/Ares/branch_2.1.1/build/Ares/Player_Editor/Ares.Editor.Actions.dll -location <%BaseDir%>/Ares/Player_Editor -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
+File ::07A9F401-88DE-416E-9C01-274C8039279B -name D:/Projekte/Ares/branch_2.1.1/build/Ares/Player_Editor/Ares.Editor.Controls.dll -location <%BaseDir%>/Ares/Player_Editor -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
+File ::96207246-9552-40EC-8799-AC68E7835029 -name D:/Projekte/Ares/branch_2.1.1/build/Ares/Player_Editor/Ares.Editor.exe -location <%BaseDir%>/Ares/Player_Editor -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
+File ::D6FD9462-EB0B-4FD2-ACC0-B8F18BF140E3 -name D:/Projekte/Ares/branch_2.1.1/build/Ares/Player_Editor/Ares.Editor.exe.config -location <%BaseDir%>/Ares/Player_Editor -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
+File ::54E80A65-6D71-4370-9EC8-5BF413FECA48 -name D:/Projekte/Ares/branch_2.1.1/build/Ares/Player_Editor/WeifenLuo.WinFormsUI.Docking.dll -location <%BaseDir%>/Ares/Player_Editor -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
+File ::435DD4CA-211D-4123-8BEF-E8CA5EF49D91 -name D:/Projekte/Ares/branch_2.1.1/build/Ares/Player_Editor/WeifenLuo.WinFormsUI.License.txt -location <%BaseDir%>/Ares/Player_Editor -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
+File ::C6241922-4C00-4126-A11A-DC8286FB423F -directory <%InstallDir%>/Player_Editor/de -name D:/Projekte/Ares/branch_2.1.1/build/Ares/Player_Editor/de/Ares.Editor.Actions.resources.dll -location <%BaseDir%>/Ares/Player_Editor/de -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
+File ::E44F7ECB-9800-4E23-8EC6-C0F8384146D4 -directory <%InstallDir%>/Player_Editor/de -name D:/Projekte/Ares/branch_2.1.1/build/Ares/Player_Editor/de/Ares.Editor.Controls.resources.dll -location <%BaseDir%>/Ares/Player_Editor/de -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
+File ::48546895-7EA3-45FE-A152-8FB3C6DE32AD -directory <%InstallDir%>/Player_Editor/de -name D:/Projekte/Ares/branch_2.1.1/build/Ares/Player_Editor/de/Ares.Editor.resources.dll -location <%BaseDir%>/Ares/Player_Editor/de -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
+File ::0BC45CFC-3503-4F20-A24B-5A30994564A6 -name D:/Projekte/Ares/branch_2.1.1/build/Ares/Player_Editor/Ares.CommonGUI.dll -location <%BaseDir%>/Ares/Player_Editor -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
+File ::97DB562F-ADF5-4AAE-A135-84059E261AED -name D:/Projekte/Ares/branch_2.1.1/build/Ares/Player_Editor/Ares.TagsImport.dll -location <%BaseDir%>/Ares/Player_Editor -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
+File ::E879BF94-F573-4B01-B023-681D9AAAC2C6 -name D:/Projekte/Ares/branch_2.1.1/build/Ares/Player_Editor/Ares.TagsImport.dll.config -location <%BaseDir%>/Ares/Player_Editor -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
+File ::3A173599-F8AA-46BC-BBF3-DC6C92811554 -name D:/Projekte/Ares/branch_2.1.1/build/Ares/Player_Editor/avcodec-54.dll -location <%BaseDir%>/Ares/Player_Editor -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
+File ::7176BC21-386A-4F30-A91B-61476B44D453 -name D:/Projekte/Ares/branch_2.1.1/build/Ares/Player_Editor/avutil-52.dll -location <%BaseDir%>/Ares/Player_Editor -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
+File ::7D0BA939-B706-4D30-B460-2F45CCABDEA3 -name D:/Projekte/Ares/branch_2.1.1/build/Ares/Player_Editor/chromaprint.dll -location <%BaseDir%>/Ares/Player_Editor -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
+File ::AFC7BFB3-B3A7-4CA7-A1A1-94C54318E5EB -name D:/Projekte/Ares/branch_2.1.1/build/Ares/Player_Editor/RestSharp.dll -location <%BaseDir%>/Ares/Player_Editor -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
+File ::3D4436CD-57DB-49DA-A8CF-8568412FFBE6 -name D:/Projekte/Ares/branch_2.1.1/build/Ares/Player_Editor/System.Threading.dll -location <%BaseDir%>/Ares/Player_Editor -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
+File ::F7F91345-BE21-4489-8178-1DE19492567E -directory <%InstallDir%>/Player_Editor/de -name D:/Projekte/Ares/branch_2.1.1/build/Ares/Player_Editor/de/Ares.TagsImport.resources.dll -location <%BaseDir%>/Ares/Player_Editor/de -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
+File ::25794162-23F9-4567-ACF8-2E2851301614 -name D:/Projekte/Ares/branch_2.1.1/build/Ares/ChromaprintLicence.txt -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
+File ::204121E1-4E0F-4ED6-AFDA-3CDEF83D3C68 -name D:/Projekte/Ares/branch_2.1.1/build/Ares/FfmpegLicence.txt -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
+File ::1BFEDD8B-74E8-4496-9D22-98F331D13A9C -name D:/Projekte/Ares/branch_2.1.1/build/Ares/RestSharpLicence.txt -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
+File ::737D2D8F-8B11-42B1-8F8F-757F05A9E160 -name D:/Projekte/Ares/branch_2.1.1/build/Ares/Player_Editor/msvcp100.dll -location <%BaseDir%>/Ares/Player_Editor -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
+File ::7F6E31D7-656B-4691-8C1B-3368F0AD2344 -name D:/Projekte/Ares/branch_2.1.1/build/Ares/Player_Editor/msvcr100.dll -location <%BaseDir%>/Ares/Player_Editor -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
 FileGroup ::953890EA-7233-446E-AF22-E9084BF13BF4 -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows TarArchive ZipArchive} -name {Controller Common} -parent FileGroups
-File ::91F171A1-E4C0-4BED-ACD5-C4ADACD8CC2C -type dir -name D:/Projekte/Ares/trunk/build/Ares/Controller -location <%BaseDir%>/Ares/Controller -parent 953890EA-7233-446E-AF22-E9084BF13BF4
+File ::91F171A1-E4C0-4BED-ACD5-C4ADACD8CC2C -type dir -name D:/Projekte/Ares/branch_2.1.1/build/Ares/Controller -location <%BaseDir%>/Ares/Controller -parent 953890EA-7233-446E-AF22-E9084BF13BF4
 File ::EAC8BD0A-D043-4FCE-9AB0-851CD5961292 -name Ares.Controller.exe -active 0 -parent 91F171A1-E4C0-4BED-ACD5-C4ADACD8CC2C
 File ::6BE764A0-FD6E-4270-803F-D802687089A3 -name Ares.Controller.jar -active 0 -parent 91F171A1-E4C0-4BED-ACD5-C4ADACD8CC2C
 File ::3D3CFD17-4CC9-47D7-A62E-4EF7F94126AC -name Ares.ico -active 0 -parent 91F171A1-E4C0-4BED-ACD5-C4ADACD8CC2C
@@ -360,21 +360,21 @@ File ::11831456-14E1-47FC-B84B-D25ACAA3BD05 -name Ares.Controller.sh -active 0 -
 File ::A0723606-79F3-4F68-AE84-08016AD51869 -name Ares.png -parent 91F171A1-E4C0-4BED-ACD5-C4ADACD8CC2C
 File ::5686986F-FD7B-41ED-A112-C1B08A342D49 -name Ares.Controllers.jar -parent 91F171A1-E4C0-4BED-ACD5-C4ADACD8CC2C
 File ::E0E14B08-EECE-4088-B068-43D8FDD3F8D5 -name controllers_res.jar -parent 91F171A1-E4C0-4BED-ACD5-C4ADACD8CC2C
-File ::0F28FA5E-61E1-42AF-9492-8B01FC35991B -name D:/Projekte/Ares/trunk/build/Ares/license-gplv3.txt -parent 953890EA-7233-446E-AF22-E9084BF13BF4
+File ::0F28FA5E-61E1-42AF-9492-8B01FC35991B -name D:/Projekte/Ares/branch_2.1.1/build/Ares/license-gplv3.txt -parent 953890EA-7233-446E-AF22-E9084BF13BF4
 FileGroup ::F15BCB0E-1F11-4A72-9067-9D94B8381202 -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows TarArchive ZipArchive} -name {Controller Windows} -parent FileGroups
-File ::A279A555-6234-41D5-A0CE-F9C5F327953A -name D:/Projekte/Ares/trunk/build/Ares/Controller/Ares.Controller.exe -location <%BaseDir%>/Ares/Controller -parent F15BCB0E-1F11-4A72-9067-9D94B8381202
-File ::FFAF3037-9AED-4D83-912D-CA85674399FB -name D:/Projekte/Ares/trunk/build/Ares/Controller/Ares.ico -location <%BaseDir%>/Ares/Controller -parent F15BCB0E-1F11-4A72-9067-9D94B8381202
+File ::A279A555-6234-41D5-A0CE-F9C5F327953A -name D:/Projekte/Ares/branch_2.1.1/build/Ares/Controller/Ares.Controller.exe -location <%BaseDir%>/Ares/Controller -parent F15BCB0E-1F11-4A72-9067-9D94B8381202
+File ::FFAF3037-9AED-4D83-912D-CA85674399FB -name D:/Projekte/Ares/branch_2.1.1/build/Ares/Controller/Ares.ico -location <%BaseDir%>/Ares/Controller -parent F15BCB0E-1F11-4A72-9067-9D94B8381202
 FileGroup ::1BEEB448-5AB6-4944-BCB9-691EC0289441 -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows TarArchive ZipArchive} -name {Controller Linux} -parent FileGroups
-File ::7995C5A5-DD82-4576-917C-30906A84A55E -name D:/Projekte/Ares/trunk/build/Ares/Controller/Ares.Controller.jar -location <%BaseDir%>/Ares/Controller -parent 1BEEB448-5AB6-4944-BCB9-691EC0289441
-File ::D1F1F081-7770-428F-A57F-E1BE2DD0779E -name D:/Projekte/Ares/trunk/build/Ares/Controller/Ares.Controller.sh -location <%BaseDir%>/Ares/Controller -parent 1BEEB448-5AB6-4944-BCB9-691EC0289441
-File ::112033EB-C7CC-4CF3-A729-8AE238CB6DC0 -name D:/Projekte/Ares/trunk/build/Ares/Controller/Ares.png -location <%BaseDir%>/Ares/Controller -parent 1BEEB448-5AB6-4944-BCB9-691EC0289441
+File ::7995C5A5-DD82-4576-917C-30906A84A55E -name D:/Projekte/Ares/branch_2.1.1/build/Ares/Controller/Ares.Controller.jar -location <%BaseDir%>/Ares/Controller -parent 1BEEB448-5AB6-4944-BCB9-691EC0289441
+File ::D1F1F081-7770-428F-A57F-E1BE2DD0779E -name D:/Projekte/Ares/branch_2.1.1/build/Ares/Controller/Ares.Controller.sh -location <%BaseDir%>/Ares/Controller -parent 1BEEB448-5AB6-4944-BCB9-691EC0289441
+File ::112033EB-C7CC-4CF3-A729-8AE238CB6DC0 -name D:/Projekte/Ares/branch_2.1.1/build/Ares/Controller/Ares.png -location <%BaseDir%>/Ares/Controller -parent 1BEEB448-5AB6-4944-BCB9-691EC0289441
 FileGroup ::7083DB58-DCBB-45E7-84F3-372716EE81BB -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows TarArchive ZipArchive} -name {Ares Common} -parent FileGroups
-File ::412CD745-9507-4DCD-A4D6-C2749D8A23C2 -name D:/Projekte/Ares/trunk/build/Ares/ChangeLog.txt -location <%BaseDir%>/Ares -parent 7083DB58-DCBB-45E7-84F3-372716EE81BB
-File ::9149EEDF-1165-49A8-AE9D-539D8575D705 -name D:/Projekte/Ares/trunk/build/Ares/LICENSE.txt -location <%BaseDir%>/Ares -parent 7083DB58-DCBB-45E7-84F3-372716EE81BB
-File ::AA68F733-4C4C-41A1-92A5-A8EA74DE556C -name D:/Projekte/Ares/trunk/build/Ares/lizenz-deutsch.txt -location <%BaseDir%>/Ares -parent 7083DB58-DCBB-45E7-84F3-372716EE81BB
-File ::65ECB07E-047F-4F7A-AA2D-F0127D49EFE1 -name D:/Projekte/Ares/trunk/build/Ares/ChangeLog_de.txt -location <%BaseDir%>/Ares -parent 7083DB58-DCBB-45E7-84F3-372716EE81BB
+File ::412CD745-9507-4DCD-A4D6-C2749D8A23C2 -name D:/Projekte/Ares/branch_2.1.1/build/Ares/ChangeLog.txt -location <%BaseDir%>/Ares -parent 7083DB58-DCBB-45E7-84F3-372716EE81BB
+File ::9149EEDF-1165-49A8-AE9D-539D8575D705 -name D:/Projekte/Ares/branch_2.1.1/build/Ares/LICENSE.txt -location <%BaseDir%>/Ares -parent 7083DB58-DCBB-45E7-84F3-372716EE81BB
+File ::AA68F733-4C4C-41A1-92A5-A8EA74DE556C -name D:/Projekte/Ares/branch_2.1.1/build/Ares/lizenz-deutsch.txt -location <%BaseDir%>/Ares -parent 7083DB58-DCBB-45E7-84F3-372716EE81BB
+File ::65ECB07E-047F-4F7A-AA2D-F0127D49EFE1 -name D:/Projekte/Ares/branch_2.1.1/build/Ares/ChangeLog_de.txt -location <%BaseDir%>/Ares -parent 7083DB58-DCBB-45E7-84F3-372716EE81BB
 FileGroup ::1B81444E-DFA2-4A82-92CB-E6F0771F06DA -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows TarArchive ZipArchive} -name {Player Linux} -parent FileGroups
-File ::C17D4904-E0C0-4389-B37A-799FD29270B1 -type dir -name D:/Projekte/Ares/trunk/build/Ares/Player -parent 1B81444E-DFA2-4A82-92CB-E6F0771F06DA
+File ::C17D4904-E0C0-4389-B37A-799FD29270B1 -type dir -name D:/Projekte/Ares/branch_2.1.1/build/Ares/Player -parent 1B81444E-DFA2-4A82-92CB-E6F0771F06DA
 File ::C6FB3C77-63D2-4922-85AF-E8F60CF8FE87 -name Ares.Data.dll -parent C17D4904-E0C0-4389-B37A-799FD29270B1
 File ::41806477-3FBA-474E-B243-8F3C20F7768B -name Ares.ModelInfo.dll -parent C17D4904-E0C0-4389-B37A-799FD29270B1
 File ::54ABD12B-0DE7-4A2B-929B-6F7AE151616A -name Ares.Online.dll -parent C17D4904-E0C0-4389-B37A-799FD29270B1
@@ -407,8 +407,8 @@ File ::EE732BCF-8162-4A6D-8811-1FD9AD314CC6 -name HtmlRenderer.dll -parent C17D4
 File ::4209CED8-AC21-47AA-8884-90A1DCD251EB -name ServiceStack.Text.dll -parent C17D4904-E0C0-4389-B37A-799FD29270B1
 File ::7CAF979B-3F34-4CFC-B3DD-E2CD09D46701 -name System.Data.SQLite.dll -parent C17D4904-E0C0-4389-B37A-799FD29270B1
 File ::5EA75B8C-E8DA-496F-ADFD-23099CC9DF14 -name Ares.CommonGUI.dll -parent C17D4904-E0C0-4389-B37A-799FD29270B1
-File ::0E8DB0B9-DFBE-4DEC-8A9E-1847C37B9DE5 -name D:/Projekte/Ares/trunk/build/Ares/HtmlRendererLicence.txt -parent 1B81444E-DFA2-4A82-92CB-E6F0771F06DA
-File ::4CFC768F-2DEA-4336-8EF7-48370D3D043D -name D:/Projekte/Ares/trunk/build/Ares/ServiceStackLicence.txt -parent 1B81444E-DFA2-4A82-92CB-E6F0771F06DA
+File ::0E8DB0B9-DFBE-4DEC-8A9E-1847C37B9DE5 -name D:/Projekte/Ares/branch_2.1.1/build/Ares/HtmlRendererLicence.txt -parent 1B81444E-DFA2-4A82-92CB-E6F0771F06DA
+File ::4CFC768F-2DEA-4336-8EF7-48370D3D043D -name D:/Projekte/Ares/branch_2.1.1/build/Ares/ServiceStackLicence.txt -parent 1B81444E-DFA2-4A82-92CB-E6F0771F06DA
 Component ::9007BFE7-966A-4832-9DD3-CC572BE38EC3 -setup Install -active Yes -platforms Windows -name Editor -parent Components
 Component ::1067F309-D8C3-41F5-A545-08D4EE16F22C -setup Install -active Yes -platforms Windows -name Player -parent Components
 Component ::1D3073BA-AA49-466B-AF04-52B9B8B314C8 -setup Install -active Yes -platforms {Solaris-x86 Windows} -name {Controller Windows} -parent Components
