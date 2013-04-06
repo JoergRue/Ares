@@ -127,11 +127,11 @@
   <data name="label1.Text" xml:space="preserve">
     <value>Sprache, die im Projekt für Tags verwendet wird:</value>
   </data>
-  <data name="groupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>220, 239</value>
-  </data>
   <data name="tagsBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>214, 220</value>
+  </data>
+  <data name="groupBox2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>220, 239</value>
   </data>
   <data name="groupBox1.Text" xml:space="preserve">
     <value>Kategorien</value>

@@ -84,9 +84,10 @@ namespace Ares.Editor.Dialogs
             // 
             // tagsBox
             // 
-            this.tagsBox.CheckOnClick = true;
             resources.ApplyResources(this.tagsBox, "tagsBox");
+            this.tagsBox.CheckOnClick = true;
             this.tagsBox.FormattingEnabled = true;
+            this.tagsBox.MultiColumn = true;
             this.tagsBox.Name = "tagsBox";
             this.tagsBox.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.tagsBox_ItemCheck);
             // 

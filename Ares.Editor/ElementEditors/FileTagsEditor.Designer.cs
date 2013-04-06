@@ -96,6 +96,7 @@ namespace Ares.Editor.ElementEditors
             resources.ApplyResources(this.tagsBox, "tagsBox");
             this.tagsBox.CheckOnClick = true;
             this.tagsBox.FormattingEnabled = true;
+            this.tagsBox.MultiColumn = true;
             this.tagsBox.Name = "tagsBox";
             this.toolTip1.SetToolTip(this.tagsBox, resources.GetString("tagsBox.ToolTip"));
             this.tagsBox.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.tagsBox_ItemCheck);
