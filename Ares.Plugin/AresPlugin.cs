@@ -403,12 +403,15 @@ namespace Ares.Plugin
         {
             if (m_Network.ClientConnected)
             {
+                int fadeTime = 0; bool fadeOnlyOnChange = false;
+                m_PlayingControl.GetMusicTagsFading(out fadeTime, out fadeOnlyOnChange);
                 networkLabel.Label = StringResources.ConnectedWith + m_Network.ClientName;
                 m_Network.InformClientOfEverything(m_PlayingControl.GlobalVolume, m_PlayingControl.MusicVolume,
                     m_PlayingControl.SoundVolume, m_PlayingControl.CurrentMode, MusicInfo.GetInfo(m_PlayingControl.CurrentMusicElement),
                     m_PlayingControl.CurrentModeElements, m_Project,
                     m_PlayingControl.CurrentMusicList, m_PlayingControl.MusicRepeat, m_TagLanguageId, 
-                    new List<int>(m_PlayingControl.GetCurrentMusicTags()), m_PlayingControl.IsMusicTagCategoriesOperatorAnd());
+                    new List<int>(m_PlayingControl.GetCurrentMusicTags()), m_PlayingControl.IsMusicTagCategoriesOperatorAnd(), 
+                    fadeTime, fadeOnlyOnChange);
                 disconnectButton.IsEnabled = true;
             }
             else
@@ -710,6 +713,11 @@ namespace Ares.Plugin
         public void DeactivateAllTags()
         {
             m_PlayingControl.RemoveAllMusicTags();
+        }
+
+        public void SetMusicTagsFading(int fadeTime, bool fadeOnlyOnChange)
+        {
+            m_PlayingControl.SetMusicTagFading(fadeTime, fadeOnlyOnChange);
         }
     }
 }
