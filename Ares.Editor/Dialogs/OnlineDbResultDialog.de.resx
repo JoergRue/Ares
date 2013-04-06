@@ -124,10 +124,33 @@
   <data name="showLogButton.Text" xml:space="preserve">
     <value>Zeige Datenbank-Log ...</value>
   </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="tableLayoutPanel1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="okButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>329, 133</value>
+  </data>
   <data name="removeDialogBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>195, 17</value>
   </data>
   <data name="removeDialogBox.Text" xml:space="preserve">
     <value>Diese Meldung nicht mehr anzeigen</value>
+  </data>
+  <data name="addIdsLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>165, 13</value>
+  </data>
+  <data name="addIdsLabel.Text" xml:space="preserve">
+    <value>Wie man IDs hinzufügen kann  ...</value>
+  </data>
+  <data name="tableLayoutPanel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>410, 162</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>410, 162</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
 </root>

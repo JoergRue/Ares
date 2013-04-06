@@ -26,6 +26,11 @@ namespace Ares.Editor.Dialogs
             resultLabel.Text = String.Format(StringResources.DownloadOperationSuccess, sMusicDb);
             musicIdsLabel.Text = String.Format(StringResources.MusicIdStats, nrOfFilesWithId, nrOfFiles);
             secondLabel.Text = String.Format(StringResources.TagsDownloadStats, nrOfFoundFiles, nrOfFiles);
+            if (nrOfFilesWithId == nrOfFiles)
+            {
+                addIdsLabel.Text = String.Empty;
+                addIdsLabel.Visible = false;
+            }
         }
 
         public void SetIsUpload(int nrOfFiles, int nrOfFilesWithId)
@@ -34,6 +39,12 @@ namespace Ares.Editor.Dialogs
             resultLabel.Text = String.Format(StringResources.UploadOperationSuccess, sMusicDb);
             musicIdsLabel.Text = String.Format(StringResources.MusicIdStats, nrOfFilesWithId, nrOfFiles);
             secondLabel.Text = String.Empty;
+            secondLabel.Visible = false;
+            if (nrOfFilesWithId == nrOfFiles)
+            {
+                addIdsLabel.Text = String.Empty;
+                addIdsLabel.Visible = false;
+            }
         }
 
         public String Log { get; set; }
@@ -70,6 +81,12 @@ namespace Ares.Editor.Dialogs
             {
                 MessageBox.Show(this, ex.Message, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void addIdsLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            String linkTarget = "http://musicbrainz.org/doc/AcoustID";
+            System.Diagnostics.Process.Start(linkTarget);
         }
 
 

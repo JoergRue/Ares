@@ -35,8 +35,11 @@
             this.removeDialogBox = new System.Windows.Forms.CheckBox();
             this.okButton = new System.Windows.Forms.Button();
             this.secondLabel = new System.Windows.Forms.Label();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.musicIdsLabel = new System.Windows.Forms.Label();
+            this.addIdsLabel = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // resultLabel
@@ -56,6 +59,7 @@
             this.pictureBox1.Image = global::Ares.Editor.ImageResources.Information;
             resources.ApplyResources(this.pictureBox1, "pictureBox1");
             this.pictureBox1.Name = "pictureBox1";
+            this.tableLayoutPanel1.SetRowSpan(this.pictureBox1, 3);
             this.pictureBox1.TabStop = false;
             // 
             // removeDialogBox
@@ -77,10 +81,30 @@
             resources.ApplyResources(this.secondLabel, "secondLabel");
             this.secondLabel.Name = "secondLabel";
             // 
+            // tableLayoutPanel1
+            // 
+            resources.ApplyResources(this.tableLayoutPanel1, "tableLayoutPanel1");
+            this.tableLayoutPanel1.Controls.Add(this.secondLabel, 2, 3);
+            this.tableLayoutPanel1.Controls.Add(this.pictureBox1, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.okButton, 1, 6);
+            this.tableLayoutPanel1.Controls.Add(this.removeDialogBox, 2, 5);
+            this.tableLayoutPanel1.Controls.Add(this.resultLabel, 2, 0);
+            this.tableLayoutPanel1.Controls.Add(this.showLogButton, 2, 4);
+            this.tableLayoutPanel1.Controls.Add(this.musicIdsLabel, 2, 1);
+            this.tableLayoutPanel1.Controls.Add(this.addIdsLabel, 2, 2);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            // 
             // musicIdsLabel
             // 
             resources.ApplyResources(this.musicIdsLabel, "musicIdsLabel");
             this.musicIdsLabel.Name = "musicIdsLabel";
+            // 
+            // addIdsLabel
+            // 
+            resources.ApplyResources(this.addIdsLabel, "addIdsLabel");
+            this.addIdsLabel.Name = "addIdsLabel";
+            this.addIdsLabel.TabStop = true;
+            this.addIdsLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.addIdsLabel_LinkClicked);
             // 
             // OnlineDbResultDialog
             // 
@@ -88,20 +112,15 @@
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.okButton;
-            this.Controls.Add(this.musicIdsLabel);
-            this.Controls.Add(this.secondLabel);
-            this.Controls.Add(this.okButton);
-            this.Controls.Add(this.removeDialogBox);
-            this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.showLogButton);
-            this.Controls.Add(this.resultLabel);
+            this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "OnlineDbResultDialog";
-            this.ShowIcon = false;
             this.ShowInTaskbar = false;
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -115,6 +134,8 @@
         private System.Windows.Forms.CheckBox removeDialogBox;
         private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.Label secondLabel;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label musicIdsLabel;
+        private System.Windows.Forms.LinkLabel addIdsLabel;
     }
 }
