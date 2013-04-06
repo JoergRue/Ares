@@ -1841,7 +1841,7 @@ namespace Ares.Editor
                     {
                         String tempFileName = System.IO.Path.GetTempFileName() + ".ares";
                         Ares.CommonGUI.ProgressMonitor monitor = new Ares.CommonGUI.ProgressMonitor(this, StringResources.Importing);
-                        Ares.ModelInfo.Importer.Import(monitor, fileName, tempFileName, (error, cancelled) =>
+                        Ares.ModelInfo.Importer.Import(monitor, fileName, tempFileName, false, (error, cancelled) =>
                         {
                             monitor.Close();
                             if (error != null)

@@ -251,8 +251,63 @@ namespace Ares.Plugin
             }
             if (System.IO.File.Exists(path))
             {
-                OpenProject(path, true);
+                if (path.EndsWith(".apkg", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    ImportProject(path);
+                }
+                else
+                {
+                    OpenProject(path, true);
+                }
             }
+        }
+
+        private class DummyProgressMonitor : Ares.ModelInfo.IProgressMonitor
+        {
+            public bool Canceled
+            {
+                get { return false; }
+            }
+
+            public void IncreaseProgress(double percent)
+            {
+            }
+
+            public void IncreaseProgress(double percent, string text)
+            {
+            }
+
+            public void SetProgress(int percent, string text)
+            {
+            }
+
+            public void SetIndeterminate(string text)
+            {
+            }
+        }
+
+        private void ImportProject(String fileName)
+        {
+            String defaultProjectName = fileName;
+            if (defaultProjectName.EndsWith(".apkg"))
+            {
+                defaultProjectName = defaultProjectName.Substring(0, defaultProjectName.Length - 5);
+            }
+            defaultProjectName = defaultProjectName + ".ares";
+            String projectFileName = defaultProjectName;
+
+            
+            Ares.ModelInfo.Importer.Import(new DummyProgressMonitor(), fileName, projectFileName, true, (error, cancelled) =>
+            {
+                if (error != null)
+                {
+                    m_Network.ErrorOccurred(-1, String.Format(StringResources.LoadError, error.Message));
+                }
+                else if (!cancelled)
+                {
+                    OpenProject(projectFileName, true);
+                }
+            });
         }
 
         public void PlayOtherMusic(int musicId)

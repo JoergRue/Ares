@@ -1087,10 +1087,15 @@ namespace Ares.Players
             {
                 String directory = networkClient.GetProjectsDirectory();
                 String[] files1 = System.IO.Directory.GetFiles(directory, "*.ares");
-                String[] files = new String[files1.Length];
+                String[] files2 = System.IO.Directory.GetFiles(directory, "*.apkg");
+                String[] files = new String[files1.Length + files2.Length];
                 for (int i = 0; i < files1.Length; ++i)
                 {
                     files[i] = System.IO.Path.GetFileName(files1[i]);
+                }
+                for (int i = 0; i < files2.Length; ++i)
+                {
+                    files[i + files1.Length] = System.IO.Path.GetFileName(files2[i]);
                 }
                 Array.Sort(files, StringComparer.CurrentCultureIgnoreCase);
                 // start packet for project files

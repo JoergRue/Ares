@@ -37,10 +37,11 @@ namespace Ares.ModelInfo
 		
         public static void Import(IProgressMonitor monitor, 
 		                          String importFileName, String targetFileName,
+                                  bool silent,
             					  System.Action<Exception, bool> dataLoaded)
         {
             Importer importer = new Importer();
-            importer.DoImport(monitor, importFileName, targetFileName, dataLoaded);
+            importer.DoImport(monitor, importFileName, targetFileName, silent, dataLoaded);
         }
 
         private Importer()
@@ -49,6 +50,7 @@ namespace Ares.ModelInfo
 
         private void DoImport(IProgressMonitor monitor, 
 		                      String importFileName, String targetFileName,
+                              bool silent,
             				  System.Action<Exception, bool> dataLoaded)
         {
             m_Monitor = monitor;
@@ -57,7 +59,7 @@ namespace Ares.ModelInfo
             {
                 long overallSize = 0;
                 bool overWrite = false;
-                bool hasAskedForOverwrite = false;
+                bool hasAskedForOverwrite = silent;
                 bool hasInnerFile = false;
                 using (ZipFile file = new ZipFile(importFileName))
                 {

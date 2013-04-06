@@ -1172,7 +1172,7 @@ namespace Ares.Editor
 
             Ares.Editor.Actions.FilesWatcher.Instance.Enabled = false;
             Ares.CommonGUI.ProgressMonitor monitor = new Ares.CommonGUI.ProgressMonitor(this, StringResources.Importing);
-            Ares.ModelInfo.Importer.Import(monitor, fileName, saveFileDialog.FileName, (error, cancelled) => 
+            Ares.ModelInfo.Importer.Import(monitor, fileName, saveFileDialog.FileName, false, (error, cancelled) => 
             {
                 monitor.Close();
                 if (error != null)

@@ -256,7 +256,14 @@ namespace Ares.Player
             }
             if (System.IO.File.Exists(path) && !path.Equals(m_CurrentProjectPath, StringComparison.OrdinalIgnoreCase))
             {
-                OpenProject(path, true);
+                if (path.EndsWith(".apkg", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    ImportProject(path, true);
+                }
+                else
+                {
+                    OpenProject(path, true);
+                }
             }
         }
 
@@ -1330,7 +1337,7 @@ namespace Ares.Player
             if (!String.IsNullOrEmpty(projectName))
             {
                 if (projectName.EndsWith(".apkg", StringComparison.InvariantCultureIgnoreCase))
-                    ImportProject(projectName);
+                    ImportProject(projectName, false);
                 else
                     OpenProject(projectName, false);
             }
@@ -1461,10 +1468,10 @@ namespace Ares.Player
             DialogResult result = importFileDialog.ShowDialog(this);
             if (result != System.Windows.Forms.DialogResult.OK)
                 return;
-            ImportProject(importFileDialog.FileName);
+            ImportProject(importFileDialog.FileName, false);
         }
 
-        private void ImportProject(String fileName)
+        private void ImportProject(String fileName, bool controllerRequest)
         {
             String defaultProjectName = fileName;
             if (defaultProjectName.EndsWith(".apkg"))
@@ -1472,23 +1479,35 @@ namespace Ares.Player
                 defaultProjectName = defaultProjectName.Substring(0, defaultProjectName.Length - 5);
             }
             defaultProjectName = defaultProjectName + ".ares";
-            saveFileDialog.FileName = defaultProjectName;
-            DialogResult result = saveFileDialog.ShowDialog(this);
-            if (result != System.Windows.Forms.DialogResult.OK)
-                return;
+            String projectFileName = defaultProjectName;
+            if (!controllerRequest)
+            {
+                saveFileDialog.FileName = defaultProjectName;
+                DialogResult result = saveFileDialog.ShowDialog(this);
+                if (result != System.Windows.Forms.DialogResult.OK)
+                    return;
+                projectFileName = saveFileDialog.FileName;
+            }
 
             Ares.CommonGUI.ProgressMonitor monitor = new Ares.CommonGUI.ProgressMonitor(this, StringResources.Importing);
-            Ares.ModelInfo.Importer.Import(monitor, fileName, saveFileDialog.FileName, (error, cancelled) => 
+            Ares.ModelInfo.Importer.Import(monitor, fileName, projectFileName, controllerRequest, (error, cancelled) => 
             {
                 monitor.Close();
                 if (error != null)
                 {
-                    System.Windows.Forms.MessageBox.Show(String.Format(StringResources.ImportError, error.Message), StringResources.Ares,
-                        System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                    if (controllerRequest)
+                    {
+                        m_Network.ErrorOccurred(-1, String.Format(StringResources.LoadError, error.Message));
+                    }
+                    else
+                    {
+                        System.Windows.Forms.MessageBox.Show(String.Format(StringResources.ImportError, error.Message), StringResources.Ares,
+                            System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                    }
                 }
                 else if (!cancelled)
                 {
-                    OpenProject(saveFileDialog.FileName, false);
+                    OpenProject(projectFileName, controllerRequest);
                 }
             });
         }

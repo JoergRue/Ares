@@ -22,6 +22,8 @@ package ares.controller.gui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -98,6 +100,14 @@ public class FileSelectionDialog extends BGDialog {
 			  if (filesList == null) {
 				  filesList = new JList(files.toArray());
 				  filesList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+				  filesList.addMouseListener(new MouseAdapter() {
+					  public void mouseClicked(MouseEvent evt) {
+						  if (evt.getClickCount() == 2 && filesList.getSelectedIndex() != -1) {
+							  selectedFile = files.get(filesList.getSelectedIndex());
+							  dispose();
+						  }
+					  }
+				  });
 			  }
 			  return filesList;
 		  }

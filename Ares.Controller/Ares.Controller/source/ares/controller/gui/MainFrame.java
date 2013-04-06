@@ -834,7 +834,7 @@ public final class MainFrame extends FrameController implements IMessageListener
 	if (isLocalPlayer) {
 	    JFileChooser chooser = new JFileChooser();
 	    chooser.setAcceptAllFileFilterUsed(true);
-	    chooser.setFileFilter(new ExampleFileFilter("ares", Localization.getString("MainFrame.ConfigFiles"))); //$NON-NLS-1$ //$NON-NLS-2$
+	    chooser.setFileFilter(new ExampleFileFilter(new String[] {"ares", "apkg"}, Localization.getString("MainFrame.ConfigFiles"))); //$NON-NLS-1$ //$NON-NLS-2$
 	    chooser.setCurrentDirectory(Directories.getLastUsedDirectory(this, "ConfigurationFiles")); //$NON-NLS-1$
 	    chooser.setMultiSelectionEnabled(false);
 	    if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {

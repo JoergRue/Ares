@@ -64,6 +64,10 @@
             this.currentTagsLabel = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.tagFadeOnlyOnChangeBox = new System.Windows.Forms.CheckBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.tagFadeUpDown = new System.Windows.Forms.NumericUpDown();
+            this.label9 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.tagCategoriesAndButton = new System.Windows.Forms.RadioButton();
@@ -84,12 +88,6 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.overLayPanel = new System.Windows.Forms.Panel();
-            this.overlayOKButton = new System.Windows.Forms.Button();
-            this.overlayCloseButton = new System.Windows.Forms.Button();
-            this.label9 = new System.Windows.Forms.Label();
-            this.tagFadeUpDown = new System.Windows.Forms.NumericUpDown();
-            this.label10 = new System.Windows.Forms.Label();
-            this.tagFadeOnlyOnChangeBox = new System.Windows.Forms.CheckBox();
             this.transparentFlowLayoutPanel2 = new Ares.MGPlugin.TransparentFlowLayoutPanel();
             this.overlayLabel5 = new Ares.MGPlugin.TransparentLabel();
             this.settingsLabel = new Ares.MGPlugin.TransparentLinkLabel();
@@ -102,8 +100,10 @@
             this.overlayLabel2 = new Ares.MGPlugin.TransparentLabel();
             this.homepageLabel = new Ares.MGPlugin.TransparentLinkLabel();
             this.overlayLabel9 = new Ares.MGPlugin.TransparentLabel();
+            this.overlayOKButton = new System.Windows.Forms.Button();
             this.overlayLabel7 = new Ares.MGPlugin.TransparentLabel();
             this.overlayLabel1 = new Ares.MGPlugin.TransparentLabel();
+            this.overlayCloseButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.soundsBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.musicBar)).BeginInit();
@@ -115,9 +115,9 @@
             this.tagsPanel.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.groupBox6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tagFadeUpDown)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.overLayPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tagFadeUpDown)).BeginInit();
             this.transparentFlowLayoutPanel2.SuspendLayout();
             this.transparentFlowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
@@ -458,6 +458,53 @@
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Kategorien";
             // 
+            // tagFadeOnlyOnChangeBox
+            // 
+            this.tagFadeOnlyOnChangeBox.AutoSize = true;
+            this.tagFadeOnlyOnChangeBox.Location = new System.Drawing.Point(166, 111);
+            this.tagFadeOnlyOnChangeBox.Name = "tagFadeOnlyOnChangeBox";
+            this.tagFadeOnlyOnChangeBox.Size = new System.Drawing.Size(127, 17);
+            this.tagFadeOnlyOnChangeBox.TabIndex = 8;
+            this.tagFadeOnlyOnChangeBox.Text = "Nur bei Tagänderung";
+            this.tagFadeOnlyOnChangeBox.UseVisualStyleBackColor = true;
+            this.tagFadeOnlyOnChangeBox.CheckedChanged += new System.EventHandler(this.tagFadeOnlyOnChangeBox_CheckedChanged);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(140, 112);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(20, 13);
+            this.label10.TabIndex = 7;
+            this.label10.Text = "ms";
+            // 
+            // tagFadeUpDown
+            // 
+            this.tagFadeUpDown.Increment = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.tagFadeUpDown.Location = new System.Drawing.Point(65, 108);
+            this.tagFadeUpDown.Maximum = new decimal(new int[] {
+            50000,
+            0,
+            0,
+            0});
+            this.tagFadeUpDown.Name = "tagFadeUpDown";
+            this.tagFadeUpDown.Size = new System.Drawing.Size(69, 20);
+            this.tagFadeUpDown.TabIndex = 6;
+            this.tagFadeUpDown.ValueChanged += new System.EventHandler(this.tagFadeUpDown_ValueChanged);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(6, 110);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(53, 13);
+            this.label9.TabIndex = 5;
+            this.label9.Text = "Blendzeit:";
+            // 
             // label14
             // 
             this.label14.AutoSize = true;
@@ -645,7 +692,7 @@
             // openFileDialog1
             // 
             this.openFileDialog1.DefaultExt = "ares";
-            this.openFileDialog1.Filter = "Ares Projekte|*.ares";
+            this.openFileDialog1.Filter = "Ares Projekte|*.ares|Gepackte Projekte|*.apkg";
             // 
             // overLayPanel
             // 
@@ -663,79 +710,6 @@
             this.overLayPanel.Size = new System.Drawing.Size(968, 418);
             this.overLayPanel.TabIndex = 5;
             this.overLayPanel.Visible = false;
-            // 
-            // overlayOKButton
-            // 
-            this.overlayOKButton.Location = new System.Drawing.Point(735, 206);
-            this.overlayOKButton.Name = "overlayOKButton";
-            this.overlayOKButton.Size = new System.Drawing.Size(75, 23);
-            this.overlayOKButton.TabIndex = 11;
-            this.overlayOKButton.Text = "OK";
-            this.overlayOKButton.UseVisualStyleBackColor = true;
-            this.overlayOKButton.Click += new System.EventHandler(this.overlayOKButton_Click);
-            // 
-            // overlayCloseButton
-            // 
-            this.overlayCloseButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(177)))), ((int)(((byte)(177)))), ((int)(((byte)(177)))));
-            this.overlayCloseButton.FlatAppearance.BorderColor = System.Drawing.Color.Silver;
-            this.overlayCloseButton.FlatAppearance.BorderSize = 0;
-            this.overlayCloseButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Silver;
-            this.overlayCloseButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
-            this.overlayCloseButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.overlayCloseButton.Image = global::Ares.MGPlugin.Properties.Resources.eventlogError;
-            this.overlayCloseButton.Location = new System.Drawing.Point(795, 18);
-            this.overlayCloseButton.Name = "overlayCloseButton";
-            this.overlayCloseButton.Size = new System.Drawing.Size(30, 34);
-            this.overlayCloseButton.TabIndex = 0;
-            this.overlayCloseButton.UseVisualStyleBackColor = false;
-            this.overlayCloseButton.Click += new System.EventHandler(this.overlayCloseButton_Click);
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(6, 110);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(53, 13);
-            this.label9.TabIndex = 5;
-            this.label9.Text = "Blendzeit:";
-            // 
-            // tagFadeUpDown
-            // 
-            this.tagFadeUpDown.Increment = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-            this.tagFadeUpDown.Location = new System.Drawing.Point(65, 108);
-            this.tagFadeUpDown.Maximum = new decimal(new int[] {
-            50000,
-            0,
-            0,
-            0});
-            this.tagFadeUpDown.Name = "tagFadeUpDown";
-            this.tagFadeUpDown.Size = new System.Drawing.Size(69, 20);
-            this.tagFadeUpDown.TabIndex = 6;
-            this.tagFadeUpDown.ValueChanged += new System.EventHandler(this.tagFadeUpDown_ValueChanged);
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(140, 112);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(20, 13);
-            this.label10.TabIndex = 7;
-            this.label10.Text = "ms";
-            // 
-            // tagFadeOnlyOnChangeBox
-            // 
-            this.tagFadeOnlyOnChangeBox.AutoSize = true;
-            this.tagFadeOnlyOnChangeBox.Location = new System.Drawing.Point(166, 111);
-            this.tagFadeOnlyOnChangeBox.Name = "tagFadeOnlyOnChangeBox";
-            this.tagFadeOnlyOnChangeBox.Size = new System.Drawing.Size(127, 17);
-            this.tagFadeOnlyOnChangeBox.TabIndex = 8;
-            this.tagFadeOnlyOnChangeBox.Text = "Nur bei Tagänderung";
-            this.tagFadeOnlyOnChangeBox.UseVisualStyleBackColor = true;
-            this.tagFadeOnlyOnChangeBox.CheckedChanged += new System.EventHandler(this.tagFadeOnlyOnChangeBox_CheckedChanged);
             // 
             // transparentFlowLayoutPanel2
             // 
@@ -886,6 +860,16 @@
             this.overlayLabel9.TabIndex = 12;
             this.overlayLabel9.Text = "Ares Controller Plugin";
             // 
+            // overlayOKButton
+            // 
+            this.overlayOKButton.Location = new System.Drawing.Point(735, 206);
+            this.overlayOKButton.Name = "overlayOKButton";
+            this.overlayOKButton.Size = new System.Drawing.Size(75, 23);
+            this.overlayOKButton.TabIndex = 11;
+            this.overlayOKButton.Text = "OK";
+            this.overlayOKButton.UseVisualStyleBackColor = true;
+            this.overlayOKButton.Click += new System.EventHandler(this.overlayOKButton_Click);
+            // 
             // overlayLabel7
             // 
             this.overlayLabel7.AutoSize = true;
@@ -909,6 +893,22 @@
             this.overlayLabel1.Text = "Ares (Aural RPG Experience System) ist ein Programm, mit dem man während des Roll" +
     "enspiels passende Musik und Geräusche abspielen kann. Mit diesem Plugin lässt si" +
     "ch der Ares Player steuern.";
+            // 
+            // overlayCloseButton
+            // 
+            this.overlayCloseButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(177)))), ((int)(((byte)(177)))), ((int)(((byte)(177)))));
+            this.overlayCloseButton.FlatAppearance.BorderColor = System.Drawing.Color.Silver;
+            this.overlayCloseButton.FlatAppearance.BorderSize = 0;
+            this.overlayCloseButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Silver;
+            this.overlayCloseButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
+            this.overlayCloseButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.overlayCloseButton.Image = global::Ares.MGPlugin.Properties.Resources.eventlogError;
+            this.overlayCloseButton.Location = new System.Drawing.Point(795, 18);
+            this.overlayCloseButton.Name = "overlayCloseButton";
+            this.overlayCloseButton.Size = new System.Drawing.Size(30, 34);
+            this.overlayCloseButton.TabIndex = 0;
+            this.overlayCloseButton.UseVisualStyleBackColor = false;
+            this.overlayCloseButton.Click += new System.EventHandler(this.overlayCloseButton_Click);
             // 
             // Controller
             // 
@@ -940,11 +940,11 @@
             this.groupBox7.PerformLayout();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tagFadeUpDown)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.overLayPanel.ResumeLayout(false);
             this.overLayPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tagFadeUpDown)).EndInit();
             this.transparentFlowLayoutPanel2.ResumeLayout(false);
             this.transparentFlowLayoutPanel2.PerformLayout();
             this.transparentFlowLayoutPanel1.ResumeLayout(false);

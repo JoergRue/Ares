@@ -30,8 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FileSelectionDialog));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.fileList = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.fileList = new System.Windows.Forms.ListBox();
             this.cancelButton = new System.Windows.Forms.Button();
             this.okButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
@@ -51,6 +51,16 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Projekt";
             // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 172);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(311, 13);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Sie können nur Dateien aus dem aktuellen Player-Ordner öffnen.";
+            // 
             // fileList
             // 
             this.fileList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -61,16 +71,7 @@
             this.fileList.Name = "fileList";
             this.fileList.Size = new System.Drawing.Size(331, 147);
             this.fileList.TabIndex = 0;
-            // 
-            // label1
-            // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 172);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(311, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Sie können nur Dateien aus dem aktuellen Player-Ordner öffnen.";
+            this.fileList.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.fileList_MouseDoubleClick);
             // 
             // cancelButton
             // 

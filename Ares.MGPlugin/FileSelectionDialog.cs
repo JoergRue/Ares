@@ -39,5 +39,14 @@ namespace Ares.MGPlugin
             if (index >= 0 && index < m_Files.Count)
                 m_SelectedFile = m_Files[index];
         }
+
+        private void fileList_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            int index = fileList.SelectedIndex;
+            if (index >= 0 && index < m_Files.Count)
+            {
+                okButton.PerformClick();
+            }
+        }
     }
 }
