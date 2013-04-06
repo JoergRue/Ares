@@ -1172,7 +1172,7 @@ namespace Ares.Playing
                         DoStartElement(element, player, element.Trigger.FadeMusicTime / 2);
                     }
                 },
-                null, element.Trigger.FadeMusicTime / 2, true);
+                null, element.Trigger.FadeMusicTime / 2 + 200, true);
                 m_RegisteredWaitHandle = handle;
             }
             else if (element.Trigger != null && element.Trigger.CrossFadeMusic && element.Trigger.FadeMusicTime > 0)

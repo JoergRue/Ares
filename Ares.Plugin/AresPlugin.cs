@@ -395,6 +395,25 @@ namespace Ares.Plugin
                 soundsVolumeBar.IntValue = control.SoundVolume;
                 m_Network.InformClientOfVolume(VolumeTarget.Sounds, control.SoundVolume);
             }
+            int oldTagFadeTime = Settings.Settings.Instance.TagMusicFadeTime;
+            bool oldTagOnChange = Settings.Settings.Instance.TagMusicFadeOnlyOnChange;
+            int newTagFadeTime; bool newTagOnChange;
+            m_PlayingControl.GetMusicTagsFading(out newTagFadeTime, out newTagOnChange);
+            bool change = false;
+            if (oldTagFadeTime != newTagFadeTime)
+            {
+                Settings.Settings.Instance.TagMusicFadeTime = newTagFadeTime;
+                change = true;
+            }
+            if (oldTagOnChange != newTagOnChange)
+            {
+                Settings.Settings.Instance.TagMusicFadeOnlyOnChange = newTagOnChange;
+                change = true;
+            }
+            if (change)
+            {
+                m_Network.InformClientOfFading(newTagFadeTime, newTagOnChange);
+            }
         }
 
         private int m_TagLanguageId = -1;
@@ -403,15 +422,13 @@ namespace Ares.Plugin
         {
             if (m_Network.ClientConnected)
             {
-                int fadeTime = 0; bool fadeOnlyOnChange = false;
-                m_PlayingControl.GetMusicTagsFading(out fadeTime, out fadeOnlyOnChange);
                 networkLabel.Label = StringResources.ConnectedWith + m_Network.ClientName;
                 m_Network.InformClientOfEverything(m_PlayingControl.GlobalVolume, m_PlayingControl.MusicVolume,
                     m_PlayingControl.SoundVolume, m_PlayingControl.CurrentMode, MusicInfo.GetInfo(m_PlayingControl.CurrentMusicElement),
                     m_PlayingControl.CurrentModeElements, m_Project,
                     m_PlayingControl.CurrentMusicList, m_PlayingControl.MusicRepeat, m_TagLanguageId, 
                     new List<int>(m_PlayingControl.GetCurrentMusicTags()), m_PlayingControl.IsMusicTagCategoriesOperatorAnd(), 
-                    fadeTime, fadeOnlyOnChange);
+                    Settings.Settings.Instance.TagMusicFadeTime, Settings.Settings.Instance.TagMusicFadeOnlyOnChange);
                 disconnectButton.IsEnabled = true;
             }
             else
@@ -477,6 +494,8 @@ namespace Ares.Plugin
             m_PlayingControl.GlobalVolume = Settings.Settings.Instance.GlobalVolume;
             m_PlayingControl.MusicVolume = Settings.Settings.Instance.MusicVolume;
             m_PlayingControl.SoundVolume = Settings.Settings.Instance.SoundVolume;
+
+            m_PlayingControl.SetMusicTagFading(Settings.Settings.Instance.TagMusicFadeTime, Settings.Settings.Instance.TagMusicFadeOnlyOnChange);
 
             m_Network = new Network(this);
             if (Settings.Settings.Instance.IPAddress.Length == 0)

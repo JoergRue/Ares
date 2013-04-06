@@ -252,7 +252,8 @@ namespace Ares.Playing
                 {
                     fadeOutLength = remaining;
                 }
-                if (Bass.BASS_ChannelSetSync(handle, BASSSync.BASS_SYNC_POS, pos + fadeOutLength, m_StopSync, new IntPtr(0)) == 0)
+                // if (Bass.BASS_ChannelSetSync(handle, BASSSync.BASS_SYNC_POS, pos + fadeOutLength, m_StopSync, new IntPtr(0)) == 0)
+                if (Bass.BASS_ChannelSetSync(handle, BASSSync.BASS_SYNC_SLIDE | BASSSync.BASS_SYNC_ONETIME, 0, m_StopSync, new IntPtr(handle)) == 0)
                 {
                     // on error, just stop the file
                     Bass.BASS_ChannelStop(handle);
@@ -525,8 +526,21 @@ namespace Ares.Playing
 
         private void StopSync(int handle, int channel, int data, IntPtr user)
         {
-            Bass.BASS_ChannelStop(channel);
-            FileFinished(channel);
+            if (user.ToInt32() == channel)
+            {
+                if (data == 2) // BASS_SLIDE_VOL
+                {
+                    float val = 1.0f;
+                    if (Bass.BASS_ChannelGetAttribute(channel, BASSAttribute.BASS_ATTRIB_VOL, ref val))
+                    {
+                        if (val < 0.001)
+                        {
+                            Bass.BASS_ChannelStop(channel);
+                            FileFinished(channel);
+                        }
+                    }
+                }
+            }
         }
 
         private void FadeOutSync(int handle, int channel, int data, IntPtr user)
