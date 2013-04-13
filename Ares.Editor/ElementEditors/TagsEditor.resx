@@ -117,763 +117,838 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 9</value>
-  </data>
-  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>186, 13</value>
-  </data>
-  <data name="label1.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="label1.Text" xml:space="preserve">
-    <value>Language used for tags in the project:</value>
-  </data>
-  <data name="&gt;&gt;label1.Name" xml:space="preserve">
-    <value>label1</value>
-  </data>
-  <data name="&gt;&gt;label1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="languageSelectionBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>201, 6</value>
-  </data>
-  <data name="languageSelectionBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 21</value>
-  </data>
-  <data name="languageSelectionBox.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;languageSelectionBox.Name" xml:space="preserve">
-    <value>languageSelectionBox</value>
-  </data>
-  <data name="&gt;&gt;languageSelectionBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;languageSelectionBox.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;languageSelectionBox.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="categoryHiddenBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="categoryHiddenBox.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="categoryHiddenBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>241, 106</value>
-  </data>
-  <data name="categoryHiddenBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 17</value>
-  </data>
-  <data name="categoryHiddenBox.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="categoryHiddenBox.Text" xml:space="preserve">
-    <value>Hidden</value>
-  </data>
-  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <data name="categoryHiddenBox.ToolTip" xml:space="preserve">
-    <value>Hides the category for the current project in Player / Controller</value>
-  </data>
-  <data name="&gt;&gt;categoryHiddenBox.Name" xml:space="preserve">
-    <value>categoryHiddenBox</value>
-  </data>
-  <data name="&gt;&gt;categoryHiddenBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;categoryHiddenBox.Parent" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="&gt;&gt;categoryHiddenBox.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="deleteCategoryButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="deleteCategoryButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>241, 77</value>
-  </data>
-  <data name="deleteCategoryButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
-  </data>
-  <data name="deleteCategoryButton.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="deleteCategoryButton.Text" xml:space="preserve">
-    <value>Delete ...</value>
-  </data>
-  <data name="&gt;&gt;deleteCategoryButton.Name" xml:space="preserve">
-    <value>deleteCategoryButton</value>
-  </data>
-  <data name="&gt;&gt;deleteCategoryButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;deleteCategoryButton.Parent" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="&gt;&gt;deleteCategoryButton.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="renameCategoryButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="renameCategoryButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>241, 48</value>
-  </data>
-  <data name="renameCategoryButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
-  </data>
-  <data name="renameCategoryButton.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="renameCategoryButton.Text" xml:space="preserve">
-    <value>Rename ...</value>
-  </data>
-  <data name="&gt;&gt;renameCategoryButton.Name" xml:space="preserve">
-    <value>renameCategoryButton</value>
-  </data>
-  <data name="&gt;&gt;renameCategoryButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;renameCategoryButton.Parent" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="&gt;&gt;renameCategoryButton.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="addCategoryButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="addCategoryButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>241, 19</value>
-  </data>
-  <data name="addCategoryButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
-  </data>
-  <data name="addCategoryButton.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="addCategoryButton.Text" xml:space="preserve">
-    <value>Add ...</value>
-  </data>
-  <data name="&gt;&gt;addCategoryButton.Name" xml:space="preserve">
-    <value>addCategoryButton</value>
-  </data>
-  <data name="&gt;&gt;addCategoryButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;addCategoryButton.Parent" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="&gt;&gt;addCategoryButton.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="categoriesList.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
-  </data>
-  <data name="categoriesList.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 19</value>
-  </data>
-  <data name="categoriesList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>229, 186</value>
-  </data>
-  <data name="categoriesList.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;categoriesList.Name" xml:space="preserve">
-    <value>categoriesList</value>
-  </data>
-  <data name="&gt;&gt;categoriesList.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ListBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;categoriesList.Parent" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="&gt;&gt;categoriesList.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="groupBox1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
-  </data>
-  <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>324, 210</value>
-  </data>
-  <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="groupBox1.Text" xml:space="preserve">
-    <value>Categories</value>
-  </data>
-  <data name="&gt;&gt;groupBox1.Name" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="&gt;&gt;groupBox1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;groupBox1.Parent" xml:space="preserve">
-    <value>tableLayoutPanel1</value>
-  </data>
-  <data name="&gt;&gt;groupBox1.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="tableLayoutPanel1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
-  </data>
-  <data name="tableLayoutPanel1.ColumnCount" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="translationsLabel.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="translationsLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 19</value>
-  </data>
-  <data name="translationsLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>86, 13</value>
-  </data>
-  <data name="translationsLabel.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="translationsLabel.Text" xml:space="preserve">
-    <value>translationsLabel</value>
-  </data>
-  <data name="&gt;&gt;translationsLabel.Name" xml:space="preserve">
-    <value>translationsLabel</value>
-  </data>
-  <data name="&gt;&gt;translationsLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;translationsLabel.Parent" xml:space="preserve">
+  <data name="&gt;&gt;deleteTranslationButton.Parent" xml:space="preserve">
     <value>groupBox4</value>
   </data>
-  <data name="&gt;&gt;translationsLabel.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="addTagButton.ToolTip" xml:space="preserve">
+    <value />
   </data>
-  <data name="translationsList.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
+  <data name="renameTagButton.ToolTip" xml:space="preserve">
+    <value />
   </data>
-  <data name="langColHeader.Text" xml:space="preserve">
-    <value>Language</value>
-  </data>
-  <data name="langColHeader.Width" type="System.Int32, mscorlib">
-    <value>25</value>
-  </data>
-  <data name="nameColHeader.Text" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="nameColHeader.Width" type="System.Int32, mscorlib">
-    <value>25</value>
-  </data>
-  <data name="translationsList.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 48</value>
-  </data>
-  <data name="translationsList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>229, 156</value>
-  </data>
-  <data name="translationsList.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;translationsList.Name" xml:space="preserve">
-    <value>translationsList</value>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="deleteCategoryButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>241, 77</value>
   </data>
   <data name="&gt;&gt;translationsList.Type" xml:space="preserve">
     <value>System.Windows.Forms.ListView, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;translationsList.Parent" xml:space="preserve">
+  <data name="nameColHeader.Text" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="&gt;&gt;addTranslationButton.Parent" xml:space="preserve">
     <value>groupBox4</value>
   </data>
-  <data name="&gt;&gt;translationsList.ZOrder" xml:space="preserve">
-    <value>1</value>
+  <data name="tagsList.ToolTip" xml:space="preserve">
+    <value />
   </data>
-  <data name="deleteTranslationButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
+  <data name="&gt;&gt;renameCategoryButton.Name" xml:space="preserve">
+    <value>renameCategoryButton</value>
   </data>
-  <data name="deleteTranslationButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>241, 106</value>
+  <data name="translationsList.ToolTip" xml:space="preserve">
+    <value />
   </data>
-  <data name="deleteTranslationButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
+  <data name="tableLayoutPanel1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 33</value>
   </data>
-  <data name="deleteTranslationButton.TabIndex" type="System.Int32, mscorlib">
+  <data name="groupBox3.Text" xml:space="preserve">
+    <value>Languages</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="categoriesList.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="tagsList.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="&gt;&gt;translationsLabel.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;addTagButton.Parent" xml:space="preserve">
+    <value>groupBox2</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="deleteTranslationButton.Text" xml:space="preserve">
-    <value>Delete ...</value>
+  <data name="addCategoryButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
   </data>
-  <data name="&gt;&gt;deleteTranslationButton.Name" xml:space="preserve">
-    <value>deleteTranslationButton</value>
+  <data name="renameCategoryButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
   </data>
-  <data name="&gt;&gt;deleteTranslationButton.Type" xml:space="preserve">
+  <data name="tagsList.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 19</value>
+  </data>
+  <data name="deleteLanguageButton.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="addTagButton.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;translationsList.Name" xml:space="preserve">
+    <value>translationsList</value>
+  </data>
+  <data name="&gt;&gt;addTagButton.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="groupBox4.Text" xml:space="preserve">
+    <value>Translations</value>
+  </data>
+  <data name="groupBox1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="addLanguageButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>241, 19</value>
+  </data>
+  <data name="groupBox4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>324, 210</value>
+  </data>
+  <data name="&gt;&gt;deleteLanguageButton.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;deleteTranslationButton.Parent" xml:space="preserve">
-    <value>groupBox4</value>
+  <data name="languagesList.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
   </data>
-  <data name="&gt;&gt;deleteTranslationButton.ZOrder" xml:space="preserve">
-    <value>2</value>
+  <data name="&gt;&gt;deleteCategoryButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="renameTranslationButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
+  <data name="&gt;&gt;languageSelectionBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="renameTranslationButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>241, 77</value>
+  <data name="tagHiddenBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>241, 106</value>
   </data>
-  <data name="renameTranslationButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
+  <data name="languagesList.Size" type="System.Drawing.Size, System.Drawing">
+    <value>229, 186</value>
+  </data>
+  <data name="addTranslationButton.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;addCategoryButton.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;groupBox2.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
   </data>
   <data name="renameTranslationButton.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <data name="renameTranslationButton.Text" xml:space="preserve">
-    <value>Rename ...</value>
+  <data name="addTranslationButton.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
   </data>
-  <data name="&gt;&gt;renameTranslationButton.Name" xml:space="preserve">
-    <value>renameTranslationButton</value>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Tags Management</value>
   </data>
-  <data name="&gt;&gt;renameTranslationButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="addTagButton.Text" xml:space="preserve">
+    <value>Add ...</value>
   </data>
-  <data name="&gt;&gt;renameTranslationButton.Parent" xml:space="preserve">
-    <value>groupBox4</value>
+  <data name="&gt;&gt;translationsLabel.Name" xml:space="preserve">
+    <value>translationsLabel</value>
   </data>
-  <data name="&gt;&gt;renameTranslationButton.ZOrder" xml:space="preserve">
+  <data name="renameTagButton.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="languagesList.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="groupBox2.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="&gt;&gt;label1.Name" xml:space="preserve">
+    <value>label1</value>
+  </data>
+  <data name="&gt;&gt;renameTagButton.Name" xml:space="preserve">
+    <value>renameTagButton</value>
+  </data>
+  <data name="renameCategoryButton.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="deleteTranslationButton.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
-  <data name="addTranslationButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+  <data name="deleteLanguageButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
   <data name="addTranslationButton.Location" type="System.Drawing.Point, System.Drawing">
     <value>241, 48</value>
   </data>
-  <data name="addTranslationButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
+  <data name="&gt;&gt;categoriesList.Name" xml:space="preserve">
+    <value>categoriesList</value>
   </data>
-  <data name="addTranslationButton.TabIndex" type="System.Int32, mscorlib">
+  <data name="&gt;&gt;tagHiddenBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="languagesList.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 19</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.Name" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="renameTagButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="&gt;&gt;translationsList.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="addTranslationButton.Text" xml:space="preserve">
-    <value>Add ...</value>
-  </data>
-  <data name="&gt;&gt;addTranslationButton.Name" xml:space="preserve">
-    <value>addTranslationButton</value>
-  </data>
-  <data name="&gt;&gt;addTranslationButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;addTranslationButton.Parent" xml:space="preserve">
-    <value>groupBox4</value>
-  </data>
-  <data name="&gt;&gt;addTranslationButton.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="groupBox4.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="groupBox4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>333, 219</value>
-  </data>
-  <data name="groupBox4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>324, 210</value>
-  </data>
-  <data name="groupBox4.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="groupBox4.Text" xml:space="preserve">
-    <value>Translations</value>
-  </data>
-  <data name="&gt;&gt;groupBox4.Name" xml:space="preserve">
-    <value>groupBox4</value>
-  </data>
-  <data name="&gt;&gt;groupBox4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;groupBox4.Parent" xml:space="preserve">
-    <value>tableLayoutPanel1</value>
-  </data>
-  <data name="&gt;&gt;groupBox4.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="deleteLanguageButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="deleteLanguageButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>241, 77</value>
-  </data>
-  <data name="deleteLanguageButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
-  </data>
-  <data name="deleteLanguageButton.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="deleteLanguageButton.Text" xml:space="preserve">
-    <value>Delete ...</value>
-  </data>
-  <data name="&gt;&gt;deleteLanguageButton.Name" xml:space="preserve">
-    <value>deleteLanguageButton</value>
-  </data>
-  <data name="&gt;&gt;deleteLanguageButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;deleteLanguageButton.Parent" xml:space="preserve">
-    <value>groupBox3</value>
-  </data>
-  <data name="&gt;&gt;deleteLanguageButton.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="renameLanguageButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="renameLanguageButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>241, 48</value>
-  </data>
-  <data name="renameLanguageButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
-  </data>
-  <data name="renameLanguageButton.TabIndex" type="System.Int32, mscorlib">
+  <data name="&gt;&gt;addLanguageButton.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="renameLanguageButton.Text" xml:space="preserve">
-    <value>Rename ...</value>
+  <data name="&gt;&gt;renameTagButton.Parent" xml:space="preserve">
+    <value>groupBox2</value>
   </data>
-  <data name="&gt;&gt;renameLanguageButton.Name" xml:space="preserve">
-    <value>renameLanguageButton</value>
+  <data name="languageSelectionBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>201, 6</value>
   </data>
-  <data name="&gt;&gt;renameLanguageButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="addCategoryButton.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="groupBox3.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="&gt;&gt;toolTip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;renameTranslationButton.Parent" xml:space="preserve">
+    <value>groupBox4</value>
+  </data>
+  <data name="languagesList.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="deleteTranslationButton.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="translationsList.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 48</value>
   </data>
   <data name="&gt;&gt;renameLanguageButton.Parent" xml:space="preserve">
     <value>groupBox3</value>
   </data>
-  <data name="&gt;&gt;renameLanguageButton.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;addLanguageButton.Parent" xml:space="preserve">
+    <value>groupBox3</value>
+  </data>
+  <data name="tableLayoutPanel1.ColumnCount" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;addCategoryButton.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;languageSelectionBox.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="addLanguageButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+  <data name="addCategoryButton.Text" xml:space="preserve">
+    <value>Add ...</value>
+  </data>
+  <data name="langColHeader.Text" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="renameTranslationButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>241, 77</value>
+  </data>
+  <data name="deleteTagButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>241, 77</value>
+  </data>
+  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="deleteTranslationButton.Text" xml:space="preserve">
+    <value>Delete ...</value>
+  </data>
+  <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="groupBox3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>324, 210</value>
+  </data>
+  <data name="&gt;&gt;tagsList.Parent" xml:space="preserve">
+    <value>groupBox2</value>
+  </data>
+  <data name="renameTranslationButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
-  <data name="addLanguageButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>241, 19</value>
+  <data name="groupBox2.Text" xml:space="preserve">
+    <value>Tags</value>
   </data>
-  <data name="addLanguageButton.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="categoryHiddenBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="addTranslationButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="&gt;&gt;deleteLanguageButton.Name" xml:space="preserve">
+    <value>deleteLanguageButton</value>
+  </data>
+  <data name="tagHiddenBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="groupBox4.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="categoryHiddenBox.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;renameCategoryButton.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;groupBox3.Name" xml:space="preserve">
+    <value>groupBox3</value>
+  </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 13</value>
+  </data>
+  <data name="&gt;&gt;renameTagButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="addCategoryButton.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="nameColHeader.Width" type="System.Int32, mscorlib">
+    <value>25</value>
+  </data>
+  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 9</value>
+  </data>
+  <data name="&gt;&gt;langColHeader.Name" xml:space="preserve">
+    <value>langColHeader</value>
+  </data>
+  <data name="renameTagButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
   </data>
   <data name="addLanguageButton.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="addLanguageButton.Text" xml:space="preserve">
-    <value>Add ...</value>
-  </data>
-  <data name="&gt;&gt;addLanguageButton.Name" xml:space="preserve">
-    <value>addLanguageButton</value>
-  </data>
-  <data name="&gt;&gt;addLanguageButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;addLanguageButton.Parent" xml:space="preserve">
-    <value>groupBox3</value>
-  </data>
-  <data name="&gt;&gt;addLanguageButton.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="languagesList.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
-  </data>
-  <data name="languagesList.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 19</value>
-  </data>
-  <data name="languagesList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>229, 186</value>
-  </data>
-  <data name="languagesList.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;languagesList.Name" xml:space="preserve">
-    <value>languagesList</value>
-  </data>
-  <data name="&gt;&gt;languagesList.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ListBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;languagesList.Parent" xml:space="preserve">
-    <value>groupBox3</value>
-  </data>
-  <data name="&gt;&gt;languagesList.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="groupBox3.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="groupBox3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 219</value>
-  </data>
-  <data name="groupBox3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>324, 210</value>
-  </data>
-  <data name="groupBox3.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="groupBox3.Text" xml:space="preserve">
-    <value>Languages</value>
-  </data>
-  <data name="&gt;&gt;groupBox3.Name" xml:space="preserve">
-    <value>groupBox3</value>
-  </data>
-  <data name="&gt;&gt;groupBox3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;groupBox3.Parent" xml:space="preserve">
     <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>TagsEditor</value>
+  </data>
+  <data name="categoryHiddenBox.ToolTip" xml:space="preserve">
+    <value>Hides the category for the current project in Player / Controller</value>
+  </data>
+  <data name="tagsList.Size" type="System.Drawing.Size, System.Drawing">
+    <value>229, 186</value>
+  </data>
+  <data name="&gt;&gt;renameTranslationButton.ZOrder" xml:space="preserve">
+    <value>3</value>
   </data>
   <data name="&gt;&gt;groupBox3.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="tagHiddenBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
+  <data name="&gt;&gt;translationsLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="tagHiddenBox.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="tagHiddenBox.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="categoryHiddenBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>241, 106</value>
   </data>
-  <data name="tagHiddenBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 17</value>
+  <data name="addTagButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>241, 19</value>
   </data>
-  <data name="tagHiddenBox.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
+  <data name="&gt;&gt;tagsList.Name" xml:space="preserve">
+    <value>tagsList</value>
   </data>
-  <data name="tagHiddenBox.Text" xml:space="preserve">
-    <value>Hidden</value>
+  <data name="&gt;&gt;groupBox2.Name" xml:space="preserve">
+    <value>groupBox2</value>
   </data>
-  <data name="tagHiddenBox.ToolTip" xml:space="preserve">
-    <value>Hides the tag for the current project in Player / Controller</value>
+  <data name="tableLayoutPanel1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="addCategoryButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="&gt;&gt;addTagButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;languagesList.Parent" xml:space="preserve">
+    <value>groupBox3</value>
+  </data>
+  <data name="&gt;&gt;categoriesList.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="categoriesList.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="&gt;&gt;groupBox4.Name" xml:space="preserve">
+    <value>groupBox4</value>
+  </data>
+  <data name="tableLayoutPanel1.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;addTagButton.Name" xml:space="preserve">
+    <value>addTagButton</value>
+  </data>
+  <data name="&gt;&gt;addLanguageButton.Name" xml:space="preserve">
+    <value>addLanguageButton</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;deleteTagButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="renameTranslationButton.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;deleteTagButton.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;deleteCategoryButton.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="tableLayoutPanel1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="renameCategoryButton.Text" xml:space="preserve">
+    <value>Rename ...</value>
+  </data>
+  <data name="renameLanguageButton.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="addLanguageButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="languageSelectionBox.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="languageSelectionBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 21</value>
+  </data>
+  <data name="deleteTagButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="&gt;&gt;deleteTranslationButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;groupBox2.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;addLanguageButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;groupBox4.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="tableLayoutPanel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>660, 432</value>
+  </data>
+  <data name="&gt;&gt;renameLanguageButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tagsList.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ListBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="&gt;&gt;groupBox4.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+  <data name="tableLayoutPanel1.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="groupBox4" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="groupBox3" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="groupBox2" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="groupBox1" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,50,Percent,50" /&gt;&lt;Rows Styles="Percent,50,Percent,50" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
+  <data name="translationsList.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="translationsLabel.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="&gt;&gt;tagHiddenBox.Name" xml:space="preserve">
     <value>tagHiddenBox</value>
   </data>
-  <data name="&gt;&gt;tagHiddenBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;renameTagButton.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="renameTagButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>241, 48</value>
+  </data>
+  <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 8.25pt</value>
+  </data>
+  <data name="renameCategoryButton.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="translationsList.Size" type="System.Drawing.Size, System.Drawing">
+    <value>229, 156</value>
+  </data>
+  <data name="&gt;&gt;languagesList.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="groupBox1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;categoryHiddenBox.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;nameColHeader.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="deleteTranslationButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="addLanguageButton.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tagHiddenBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="&gt;&gt;renameCategoryButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="languageSelectionBox.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;deleteTagButton.Parent" xml:space="preserve">
+    <value>groupBox2</value>
+  </data>
+  <data name="addTagButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="label1.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="renameCategoryButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>241, 48</value>
   </data>
   <data name="&gt;&gt;tagHiddenBox.Parent" xml:space="preserve">
     <value>groupBox2</value>
   </data>
-  <data name="&gt;&gt;tagHiddenBox.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="deleteTagButton.Text" xml:space="preserve">
+    <value>Delete ...</value>
+  </data>
+  <data name="&gt;&gt;languageSelectionBox.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
   <data name="deleteTagButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
-  <data name="deleteTagButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>241, 77</value>
+  <data name="&gt;&gt;toolTip1.Name" xml:space="preserve">
+    <value>toolTip1</value>
   </data>
-  <data name="deleteTagButton.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="&gt;&gt;addCategoryButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="deleteTranslationButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>241, 106</value>
+  </data>
+  <data name="categoriesList.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;deleteCategoryButton.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;deleteCategoryButton.Name" xml:space="preserve">
+    <value>deleteCategoryButton</value>
+  </data>
+  <data name="$this.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="addTagButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="&gt;&gt;groupBox2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="translationsList.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="deleteCategoryButton.Text" xml:space="preserve">
+    <value>Delete ...</value>
+  </data>
+  <data name="&gt;&gt;groupBox3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="deleteCategoryButton.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;languagesList.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ListBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="groupBox2.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="addLanguageButton.Text" xml:space="preserve">
+    <value>Add ...</value>
+  </data>
+  <data name="&gt;&gt;addTranslationButton.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="translationsLabel.Text" xml:space="preserve">
+    <value>translationsLabel</value>
+  </data>
+  <data name="groupBox4.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;categoriesList.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>WeifenLuo.WinFormsUI.Docking.DockContent, WeifenLuo.WinFormsUI.Docking, Version=2.3.2.18742, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
+  </data>
+  <data name="renameLanguageButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="renameTagButton.Text" xml:space="preserve">
+    <value>Rename ...</value>
+  </data>
+  <data name="tagsList.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="categoryHiddenBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 17</value>
+  </data>
+  <data name="translationsLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;langColHeader.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="deleteCategoryButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="tagHiddenBox.Text" xml:space="preserve">
+    <value>Hidden</value>
+  </data>
+  <data name="categoriesList.Size" type="System.Drawing.Size, System.Drawing">
+    <value>229, 186</value>
+  </data>
+  <data name="categoryHiddenBox.Text" xml:space="preserve">
+    <value>Hidden</value>
+  </data>
+  <data name="groupBox2.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;addCategoryButton.Name" xml:space="preserve">
+    <value>addCategoryButton</value>
+  </data>
+  <data name="&gt;&gt;translationsLabel.Parent" xml:space="preserve">
+    <value>groupBox4</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="deleteLanguageButton.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;tagsList.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>324, 210</value>
+  </data>
+  <data name="groupBox4.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;categoryHiddenBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;nameColHeader.Name" xml:space="preserve">
+    <value>nameColHeader</value>
+  </data>
+  <data name="groupBox3.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;renameTranslationButton.Name" xml:space="preserve">
+    <value>renameTranslationButton</value>
+  </data>
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>186, 13</value>
+  </data>
+  <data name="groupBox2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>333, 3</value>
+  </data>
+  <data name="translationsLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 19</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="deleteCategoryButton.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;renameTranslationButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;translationsList.Parent" xml:space="preserve">
+    <value>groupBox4</value>
+  </data>
+  <data name="&gt;&gt;groupBox4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Language used for tags in the project:</value>
+  </data>
+  <data name="translationsLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="deleteLanguageButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="categoriesList.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 19</value>
+  </data>
+  <data name="categoryHiddenBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="renameTranslationButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
   </data>
   <data name="deleteTagButton.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
-  <data name="deleteTagButton.Text" xml:space="preserve">
-    <value>Delete ...</value>
-  </data>
-  <data name="&gt;&gt;deleteTagButton.Name" xml:space="preserve">
-    <value>deleteTagButton</value>
-  </data>
-  <data name="&gt;&gt;deleteTagButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;deleteTagButton.Parent" xml:space="preserve">
-    <value>groupBox2</value>
-  </data>
-  <data name="&gt;&gt;deleteTagButton.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="renameTagButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+  <data name="renameLanguageButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
-  <data name="renameTagButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>241, 48</value>
-  </data>
-  <data name="renameTagButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
-  </data>
-  <data name="renameTagButton.TabIndex" type="System.Int32, mscorlib">
+  <data name="renameLanguageButton.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <data name="renameTagButton.Text" xml:space="preserve">
-    <value>Rename ...</value>
-  </data>
-  <data name="&gt;&gt;renameTagButton.Name" xml:space="preserve">
-    <value>renameTagButton</value>
-  </data>
-  <data name="&gt;&gt;renameTagButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;renameTagButton.Parent" xml:space="preserve">
-    <value>groupBox2</value>
-  </data>
-  <data name="&gt;&gt;renameTagButton.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="addTagButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="addTagButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>241, 19</value>
-  </data>
-  <data name="addTagButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
-  </data>
-  <data name="addTagButton.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="addTagButton.Text" xml:space="preserve">
-    <value>Add ...</value>
-  </data>
-  <data name="&gt;&gt;addTagButton.Name" xml:space="preserve">
-    <value>addTagButton</value>
-  </data>
-  <data name="&gt;&gt;addTagButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;addTagButton.Parent" xml:space="preserve">
-    <value>groupBox2</value>
-  </data>
-  <data name="&gt;&gt;addTagButton.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="tagsList.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
-  </data>
-  <data name="tagsList.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 19</value>
-  </data>
-  <data name="tagsList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>229, 186</value>
-  </data>
-  <data name="tagsList.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;tagsList.Name" xml:space="preserve">
-    <value>tagsList</value>
-  </data>
-  <data name="&gt;&gt;tagsList.Type" xml:space="preserve">
+  <data name="&gt;&gt;categoriesList.Type" xml:space="preserve">
     <value>System.Windows.Forms.ListBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;tagsList.Parent" xml:space="preserve">
-    <value>groupBox2</value>
+  <data name="groupBox3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 219</value>
   </data>
-  <data name="&gt;&gt;tagsList.ZOrder" xml:space="preserve">
+  <data name="deleteLanguageButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>241, 77</value>
+  </data>
+  <data name="label1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;renameLanguageButton.Name" xml:space="preserve">
+    <value>renameLanguageButton</value>
+  </data>
+  <data name="&gt;&gt;categoryHiddenBox.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="translationsLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>86, 13</value>
+  </data>
+  <data name="&gt;&gt;categoryHiddenBox.Name" xml:space="preserve">
+    <value>categoryHiddenBox</value>
+  </data>
+  <data name="langColHeader.Width" type="System.Int32, mscorlib">
+    <value>25</value>
+  </data>
+  <data name="groupBox1.Text" xml:space="preserve">
+    <value>Categories</value>
+  </data>
+  <data name="deleteCategoryButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="addTranslationButton.Text" xml:space="preserve">
+    <value>Add ...</value>
+  </data>
+  <data name="&gt;&gt;languageSelectionBox.Name" xml:space="preserve">
+    <value>languageSelectionBox</value>
+  </data>
+  <data name="tagHiddenBox.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
-  </data>
-  <data name="groupBox2.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="groupBox2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>333, 3</value>
-  </data>
-  <data name="groupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>324, 210</value>
-  </data>
-  <data name="groupBox2.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="groupBox2.Text" xml:space="preserve">
-    <value>Tags</value>
-  </data>
-  <data name="&gt;&gt;groupBox2.Name" xml:space="preserve">
-    <value>groupBox2</value>
-  </data>
-  <data name="&gt;&gt;groupBox2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;groupBox2.Parent" xml:space="preserve">
-    <value>tableLayoutPanel1</value>
-  </data>
-  <data name="&gt;&gt;groupBox2.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="tableLayoutPanel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 33</value>
-  </data>
-  <data name="tableLayoutPanel1.RowCount" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="tableLayoutPanel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>660, 432</value>
-  </data>
-  <data name="tableLayoutPanel1.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
   </data>
   <data name="&gt;&gt;tableLayoutPanel1.Name" xml:space="preserve">
     <value>tableLayoutPanel1</value>
   </data>
-  <data name="&gt;&gt;tableLayoutPanel1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;deleteLanguageButton.Parent" xml:space="preserve">
+    <value>groupBox3</value>
   </data>
-  <data name="&gt;&gt;tableLayoutPanel1.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="groupBox4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>333, 219</value>
   </data>
-  <data name="&gt;&gt;tableLayoutPanel1.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;deleteTranslationButton.Name" xml:space="preserve">
+    <value>deleteTranslationButton</value>
+  </data>
+  <data name="tableLayoutPanel1.RowCount" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;addTranslationButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;renameLanguageButton.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="deleteTranslationButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="renameTranslationButton.Text" xml:space="preserve">
+    <value>Rename ...</value>
+  </data>
+  <data name="&gt;&gt;deleteLanguageButton.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="tableLayoutPanel1.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="groupBox4" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="groupBox3" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="groupBox2" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="groupBox1" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,50,Percent,50" /&gt;&lt;Rows Styles="Percent,50,Percent,50" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  <data name="&gt;&gt;tagHiddenBox.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <data name="&gt;&gt;renameCategoryButton.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="addTranslationButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="tagHiddenBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 17</value>
+  </data>
+  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
-  </metadata>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 13</value>
+  </data>
+  <data name="tagHiddenBox.ToolTip" xml:space="preserve">
+    <value>Hides the tag for the current project in Player / Controller</value>
+  </data>
+  <data name="&gt;&gt;addTranslationButton.Name" xml:space="preserve">
+    <value>addTranslationButton</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>684, 477</value>
   </data>
-  <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 8.25pt</value>
+  <data name="&gt;&gt;languagesList.Name" xml:space="preserve">
+    <value>languagesList</value>
   </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>Tags Management</value>
+  <data name="groupBox3.ToolTip" xml:space="preserve">
+    <value />
   </data>
-  <data name="&gt;&gt;langColHeader.Name" xml:space="preserve">
-    <value>langColHeader</value>
+  <data name="&gt;&gt;deleteTranslationButton.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
-  <data name="&gt;&gt;langColHeader.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="addLanguageButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
   </data>
-  <data name="&gt;&gt;nameColHeader.Name" xml:space="preserve">
-    <value>nameColHeader</value>
+  <data name="&gt;&gt;deleteTagButton.Name" xml:space="preserve">
+    <value>deleteTagButton</value>
   </data>
-  <data name="&gt;&gt;nameColHeader.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="deleteLanguageButton.Text" xml:space="preserve">
+    <value>Delete ...</value>
   </data>
-  <data name="&gt;&gt;toolTip1.Name" xml:space="preserve">
-    <value>toolTip1</value>
+  <data name="groupBox2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>324, 210</value>
   </data>
-  <data name="&gt;&gt;toolTip1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="deleteTagButton.ToolTip" xml:space="preserve">
+    <value />
   </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>TagsEditor</value>
+  <data name="renameLanguageButton.Text" xml:space="preserve">
+    <value>Rename ...</value>
   </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>WeifenLuo.WinFormsUI.Docking.DockContent, WeifenLuo.WinFormsUI.Docking, Version=2.3.2.18742, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
+  <data name="renameLanguageButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>241, 48</value>
   </data>
+  <data name="addCategoryButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>241, 19</value>
+  </data>
+  <data name="renameCategoryButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
 </root>

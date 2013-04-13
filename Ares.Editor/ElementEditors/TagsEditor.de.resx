@@ -124,11 +124,14 @@
   <data name="label1.Text" xml:space="preserve">
     <value>Sprache, die im Projekt für Tags verwendet wird:</value>
   </data>
+  <data name="label1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="languageSelectionBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>251, 6</value>
   </data>
-  <data name="groupBox1.Text" xml:space="preserve">
-    <value>Kategorien</value>
+  <data name="languageSelectionBox.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="categoryHiddenBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>71, 17</value>
@@ -146,11 +149,17 @@
   <data name="deleteCategoryButton.Text" xml:space="preserve">
     <value>Löschen ...</value>
   </data>
+  <data name="deleteCategoryButton.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="renameCategoryButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="renameCategoryButton.Text" xml:space="preserve">
     <value>Name ..</value>
+  </data>
+  <data name="renameCategoryButton.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="addCategoryButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -158,32 +167,77 @@
   <data name="addCategoryButton.Text" xml:space="preserve">
     <value>Neu ...</value>
   </data>
-  <data name="groupBox4.Text" xml:space="preserve">
-    <value>Übersetzungen</value>
+  <data name="addCategoryButton.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="categoriesList.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="groupBox1.Text" xml:space="preserve">
+    <value>Kategorien</value>
+  </data>
+  <data name="groupBox1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="translationsLabel.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="langColHeader.Text" xml:space="preserve">
     <value>Sprache</value>
   </data>
+  <data name="translationsList.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="deleteTranslationButton.Text" xml:space="preserve">
     <value>Löschen ...</value>
+  </data>
+  <data name="deleteTranslationButton.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="renameTranslationButton.Text" xml:space="preserve">
     <value>Name ...</value>
   </data>
+  <data name="renameTranslationButton.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="addTranslationButton.Text" xml:space="preserve">
     <value>Neu ...</value>
   </data>
-  <data name="groupBox3.Text" xml:space="preserve">
-    <value>Sprachen</value>
+  <data name="addTranslationButton.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="groupBox4.Text" xml:space="preserve">
+    <value>Übersetzungen</value>
+  </data>
+  <data name="groupBox4.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="deleteLanguageButton.Text" xml:space="preserve">
     <value>Löschen ...</value>
   </data>
+  <data name="deleteLanguageButton.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="renameLanguageButton.Text" xml:space="preserve">
     <value>Name ...</value>
   </data>
+  <data name="renameLanguageButton.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="addLanguageButton.Text" xml:space="preserve">
     <value>Neu ...</value>
+  </data>
+  <data name="addLanguageButton.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="languagesList.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="groupBox3.Text" xml:space="preserve">
+    <value>Sprachen</value>
+  </data>
+  <data name="groupBox3.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="tagHiddenBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>71, 17</value>
@@ -197,13 +251,34 @@
   <data name="deleteTagButton.Text" xml:space="preserve">
     <value>Löschen ...</value>
   </data>
+  <data name="deleteTagButton.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="renameTagButton.Text" xml:space="preserve">
     <value>Name ...</value>
+  </data>
+  <data name="renameTagButton.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="addTagButton.Text" xml:space="preserve">
     <value>Neu ...</value>
   </data>
+  <data name="addTagButton.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tagsList.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="groupBox2.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tableLayoutPanel1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Tag-Verwaltung</value>
+  </data>
+  <data name="$this.ToolTip" xml:space="preserve">
+    <value />
   </data>
 </root>
