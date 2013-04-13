@@ -553,6 +553,16 @@ namespace Ares.Data
         Int32 FadeMusicTime { get; set; }
 
         /// <summary>
+        /// If there shall be fading for old looped sounds.
+        /// </summary>
+        bool FadeSounds { get; set; }
+
+        /// <summary>
+        /// Fading time for sounds, in milliseconds.
+        /// </summary>
+        Int32 FadeSoundTime { get; set; }
+
+        /// <summary>
         /// Serializes to an xml stream.
         /// </summary>
         /// <param name="writer">Writer for the xml</param>

@@ -36,6 +36,10 @@ namespace Ares.Data
 
         public Int32 FadeMusicTime { get; set; }
 
+        public bool FadeSounds { get; set; }
+
+        public Int32 FadeSoundTime { get; set; }
+
         protected void DoWriteToXml(System.Xml.XmlWriter writer)
         {
             writer.WriteAttributeString("stopMusic", StopMusic ? "true" : "false");
@@ -44,6 +48,8 @@ namespace Ares.Data
             writer.WriteAttributeString("crossFadeMusic", CrossFadeMusic ? "true" : "false");
             writer.WriteAttributeString("fadeMusic", FadeMusic ? "true" : "false");
             writer.WriteAttributeString("crossFadeMusicTime", FadeMusicTime.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            writer.WriteAttributeString("fadeSounds", FadeSounds ? "true" : "false");
+            writer.WriteAttributeString("fadeSoundTime", FadeSoundTime.ToString(System.Globalization.CultureInfo.InvariantCulture));
         }
 
         protected Trigger()
@@ -63,6 +69,8 @@ namespace Ares.Data
             CrossFadeMusic = reader.GetBooleanAttributeOrDefault("crossFadeMusic", false);
             FadeMusic = reader.GetBooleanAttributeOrDefault("fadeMusic", false);
             FadeMusicTime = reader.GetIntegerAttributeOrDefault("crossFadeMusicTime", 0);
+            FadeSounds = reader.GetBooleanAttributeOrDefault("fadeSounds", false);
+            FadeSoundTime = reader.GetIntegerAttributeOrDefault("fadeSoundTime", 0);
         }
     }
 

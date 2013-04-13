@@ -199,7 +199,7 @@ namespace Ares.Playing
         public virtual void VisitMusicByTags(IMusicByTags musicByTags) { }
 
         public abstract bool StopMusic(int crossFadeMusicTime);
-        public abstract void StopSounds();
+        public abstract bool StopSounds(int fadeTime);
         public abstract void SetSoundVolume(int volume);
 
         protected int CurrentPlayedHandle { get; set; }
@@ -418,23 +418,26 @@ namespace Ares.Playing
             return false;
         }
 
-        public override void StopSounds()
+        public override bool StopSounds(int fadeTime)
         {
             lock (syncObject)
             {
                 m_StopSounds = true;
             }
+            bool mustStop = false;
             Action action = StopDelayWait();
-            if (StopCurrentFile(false, 0) || action != null)
+            if (StopCurrentFile(fadeTime > 0, fadeTime) || action != null)
             {
                 // was playing a sound --> stop everything
                 lock (syncObject)
                 {
                     m_StopAll = true;
                 }
+                mustStop = true;
             }
             if (action != null)
                 action();
+            return mustStop;
         }
 
         public override void SetSoundVolume(int volume)
@@ -1026,14 +1029,21 @@ namespace Ares.Playing
             return mre;
         }
 
-        private void StopSounds()
+        private List<ManualResetEvent> StopSounds(int fadeTime)
         {
             List<StartElementPlayer> copy = new List<StartElementPlayer>();
             foreach (IElement key in m_Players.Keys)
             {
                 copy.AddRange(m_Players[key]);
             }
-            copy.ForEach(player => player.StopSounds());
+            List<ManualResetEvent> events = new List<ManualResetEvent>();
+            foreach (StartElementPlayer player in copy)
+            {
+                ManualResetEvent mre = player.StopSounds(fadeTime);
+                if (mre != null)
+                    events.Add(mre);
+            }
+            return events;
         }
 
         public void SetVolume(VolumeTarget target, Int32 value)
@@ -1133,7 +1143,6 @@ namespace Ares.Playing
             DoStopElement(element);
         }
 
-        private RegisteredWaitHandle m_RegisteredWaitHandle;
         private ModeElementPlayer m_NextModeElementPlayer;
 
         private void StartElement(IModeElement element)
@@ -1144,36 +1153,45 @@ namespace Ares.Playing
                 m_NextModeElementPlayer = null;
             }
 
-            ManualResetEvent stoppedEvent = null;
+            List<ManualResetEvent> stoppedEvents = new List<ManualResetEvent>();
+            int fadeMusicTime = 0;
             if (element.Trigger != null && (element.Trigger.StopMusic || element.AlwaysStartsMusic()))
             {
-                int fadeTime = 0;
                 if (element.Trigger.CrossFadeMusic)
-                    fadeTime = element.Trigger.FadeMusicTime * 2; // because it will be calculated / 2 later again
+                    fadeMusicTime = element.Trigger.FadeMusicTime * 2; // because it will be calculated / 2 later again
                 else if (element.Trigger.FadeMusic)
-                    fadeTime = element.Trigger.FadeMusicTime;
-                stoppedEvent = StopMusic(fadeTime);
+                    fadeMusicTime = element.Trigger.FadeMusicTime;
+                var stoppedEvent = StopMusic(fadeMusicTime);
+                if (stoppedEvent != null)
+                    stoppedEvents.Add(stoppedEvent);
+                else
+                    fadeMusicTime = 0;
             }
+            int fadeSoundsTime = 0;
             if (element.Trigger != null && element.Trigger.StopSounds)
             {
-                StopSounds();
+                if (element.Trigger.FadeSounds)
+                    fadeSoundsTime = element.Trigger.FadeSoundTime;
+                var stoppedEvents2 = StopSounds(fadeSoundsTime);
+                stoppedEvents.AddRange(stoppedEvents2);
+                if (stoppedEvents2.Count == 0)
+                    fadeSoundsTime = 0;
             }
             ModeElementPlayer player = new ModeElementPlayer(element, ProjectCallbacks, player2 => PlayerStopped(player2, element));
-            if (stoppedEvent != null && element.Trigger.FadeMusic && element.Trigger.FadeMusicTime > 0)
+            if (stoppedEvents.Count > 0)
             {
-                RegisteredWaitHandle handle = null;
                 m_NextModeElementPlayer = player;
-                handle = ThreadPool.RegisterWaitForSingleObject(stoppedEvent, (Object state, bool timedOut) =>
+                int maxFadeTime = Math.Max(fadeMusicTime / 2, fadeSoundsTime);
+                ThreadPool.QueueUserWorkItem((Object state) =>
                 {
-                    handle.Unregister(null);
+                    bool timedOut = !WaitHandle.WaitAll(stoppedEvents.ToArray(), maxFadeTime + 100);
                     if (timedOut && !player.Stopped)
                     {
                         m_NextModeElementPlayer = null;
-                        DoStartElement(element, player, element.Trigger.FadeMusicTime / 2);
+                        DoStartElement(element, player, fadeMusicTime);
                     }
                 },
-                null, element.Trigger.FadeMusicTime / 2 + 200, true);
-                m_RegisteredWaitHandle = handle;
+                null);
             }
             else if (element.Trigger != null && element.Trigger.CrossFadeMusic && element.Trigger.FadeMusicTime > 0)
             {

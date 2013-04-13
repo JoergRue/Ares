@@ -128,8 +128,9 @@ namespace Ares.Playing
             return true;
         }
 
-        public override void StopSounds()
+        public override bool StopSounds(int fadeTime)
         {
+            return false;
         }
 
         public override void SetSoundVolume(int volume)

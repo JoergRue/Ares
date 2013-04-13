@@ -37,6 +37,7 @@ namespace Ares.Editor.ElementEditors
             m_Project = project;
             m_Tooltip = new ToolTip();
             m_Tooltip.SetToolTip(allCrossFadeButton, StringResources.SetFadingForAll);
+            m_Tooltip.SetToolTip(allSoundsFadeButton, StringResources.SetFadingForAll);
         }
 
         private ToolTip m_Tooltip;
@@ -108,6 +109,8 @@ namespace Ares.Editor.ElementEditors
                 fadeButton.Checked = trigger.FadeMusic;
                 noFadeButton.Checked = !trigger.FadeMusic && !trigger.CrossFadeMusic;
                 crossFadingUpDown.Value = trigger.FadeMusicTime;
+                fadeOutSoundsBox.Checked = trigger.FadeSounds;
+                fadeOutSoundsUpDown.Value = trigger.FadeSoundTime;
             }
             else
             {
@@ -118,6 +121,8 @@ namespace Ares.Editor.ElementEditors
                 fadeButton.Checked = false;
                 noFadeButton.Checked = true;
                 crossFadingUpDown.Value = 0;
+                fadeOutSoundsBox.Checked = false;
+                fadeOutSoundsUpDown.Value = 0;
             }
             UpdateTriggerDesc();
             UpdateErrorProvider();
@@ -178,6 +183,9 @@ namespace Ares.Editor.ElementEditors
             noFadeButton.Enabled = stopMusicBox.Checked;
             crossFadingUpDown.Enabled = stopMusicBox.Checked && (crossFadeButton.Checked || fadeButton.Checked);
             allCrossFadeButton.Enabled = stopMusicBox.Checked;
+            fadeOutSoundsBox.Enabled = stopSoundsBox.Checked;
+            fadeOutSoundsUpDown.Enabled = stopSoundsBox.Checked && fadeOutSoundsBox.Checked;
+            allSoundsFadeButton.Enabled = stopSoundsBox.Checked;
         }
 
         private void Commit()
@@ -191,6 +199,8 @@ namespace Ares.Editor.ElementEditors
                 trigger.CrossFadeMusic = crossFadeButton.Checked;
                 trigger.FadeMusic = fadeButton.Checked;
                 trigger.FadeMusicTime = (Int32)crossFadingUpDown.Value;
+                trigger.FadeSounds = fadeOutSoundsBox.Checked;
+                trigger.FadeSoundTime = (Int32)fadeOutSoundsUpDown.Value;
                 Ares.Editor.Actions.Actions.Instance.AddNew(new Ares.Editor.Actions.SetModeElementTriggerAction(m_Element, trigger), m_Project);
             }
             else
@@ -201,6 +211,8 @@ namespace Ares.Editor.ElementEditors
                 trigger.CrossFadeMusic = crossFadeButton.Checked;
                 trigger.FadeMusic = fadeButton.Checked;
                 trigger.FadeMusicTime = (Int32)crossFadingUpDown.Value;
+                trigger.FadeSounds = fadeOutSoundsBox.Checked;
+                trigger.FadeSoundTime = (Int32)fadeOutSoundsUpDown.Value;
                 Ares.Editor.Actions.Actions.Instance.AddNew(new Ares.Editor.Actions.SetModeElementTriggerAction(m_Element, trigger), m_Project);
             }
         }
@@ -210,6 +222,9 @@ namespace Ares.Editor.ElementEditors
             if (!listen)
                 return;
             Commit();
+            fadeOutSoundsBox.Enabled = stopSoundsBox.Checked;
+            fadeOutSoundsUpDown.Enabled = stopSoundsBox.Checked && fadeOutSoundsBox.Checked;
+            allSoundsFadeButton.Enabled = stopSoundsBox.Checked;
         }
 
         private void SelectKey()
@@ -270,7 +285,7 @@ namespace Ares.Editor.ElementEditors
 
         private void allCrossFadeButton_Click(object sender, EventArgs e)
         {
-            Ares.Editor.Actions.Actions.Instance.AddNew(new Ares.Editor.Actions.SetAllTriggerFadingAction(
+            Ares.Editor.Actions.Actions.Instance.AddNew(new Ares.Editor.Actions.SetAllTriggerMusicFadingAction(
                 fadeButton.Checked, crossFadeButton.Checked, (int)crossFadingUpDown.Value, m_Project), m_Project);
         }
 
@@ -280,6 +295,28 @@ namespace Ares.Editor.ElementEditors
                 return;
             Ares.Editor.Actions.Actions.Instance.AddNew(new Ares.Editor.Actions.SetModeElementVisibleAction(
                 m_Element, !hideInPlayerBox.Checked), m_Project);
+        }
+
+        private void fadeOutSoundsBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!listen)
+                return;
+            fadeOutSoundsUpDown.Enabled = stopSoundsBox.Checked && fadeOutSoundsBox.Checked;
+            allSoundsFadeButton.Enabled = stopSoundsBox.Checked;
+            Commit();
+        }
+
+        private void fadeOutSoundsUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            if (!listen)
+                return;
+            Commit();
+        }
+
+        private void allSoundsFadeButton_Click(object sender, EventArgs e)
+        {
+            Ares.Editor.Actions.Actions.Instance.AddNew(new Ares.Editor.Actions.SetAllTriggerSoundFadingAction(
+                fadeOutSoundsBox.Checked, (int)fadeOutSoundsUpDown.Value, m_Project), m_Project);
         }
 
 

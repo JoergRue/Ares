@@ -63,6 +63,11 @@ namespace Ares.Editor.ElementEditors
             this.label1 = new System.Windows.Forms.Label();
             this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.allSoundsFadeButton = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.fadeOutSoundsUpDown = new System.Windows.Forms.NumericUpDown();
+            this.fadeOutSoundsBox = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
             this.crossFadeButton = new System.Windows.Forms.RadioButton();
             this.fadeButton = new System.Windows.Forms.RadioButton();
@@ -78,6 +83,7 @@ namespace Ares.Editor.ElementEditors
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.fadeOutSoundsUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.crossFadingUpDown)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.SuspendLayout();
@@ -134,6 +140,11 @@ namespace Ares.Editor.ElementEditors
             // groupBox2
             // 
             resources.ApplyResources(this.groupBox2, "groupBox2");
+            this.groupBox2.Controls.Add(this.label4);
+            this.groupBox2.Controls.Add(this.allSoundsFadeButton);
+            this.groupBox2.Controls.Add(this.label5);
+            this.groupBox2.Controls.Add(this.fadeOutSoundsUpDown);
+            this.groupBox2.Controls.Add(this.fadeOutSoundsBox);
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Controls.Add(this.crossFadeButton);
             this.groupBox2.Controls.Add(this.fadeButton);
@@ -150,6 +161,61 @@ namespace Ares.Editor.ElementEditors
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.TabStop = false;
             this.groupBox2.UseCompatibleTextRendering = true;
+            // 
+            // label4
+            // 
+            resources.ApplyResources(this.label4, "label4");
+            this.errorProvider.SetError(this.label4, resources.GetString("label4.Error"));
+            this.errorProvider.SetIconAlignment(this.label4, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("label4.IconAlignment"))));
+            this.errorProvider.SetIconPadding(this.label4, ((int)(resources.GetObject("label4.IconPadding"))));
+            this.label4.Name = "label4";
+            // 
+            // allSoundsFadeButton
+            // 
+            resources.ApplyResources(this.allSoundsFadeButton, "allSoundsFadeButton");
+            this.errorProvider.SetError(this.allSoundsFadeButton, resources.GetString("allSoundsFadeButton.Error"));
+            this.errorProvider.SetIconAlignment(this.allSoundsFadeButton, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("allSoundsFadeButton.IconAlignment"))));
+            this.errorProvider.SetIconPadding(this.allSoundsFadeButton, ((int)(resources.GetObject("allSoundsFadeButton.IconPadding"))));
+            this.allSoundsFadeButton.Name = "allSoundsFadeButton";
+            this.allSoundsFadeButton.UseVisualStyleBackColor = true;
+            this.allSoundsFadeButton.Click += new System.EventHandler(this.allSoundsFadeButton_Click);
+            // 
+            // label5
+            // 
+            resources.ApplyResources(this.label5, "label5");
+            this.errorProvider.SetError(this.label5, resources.GetString("label5.Error"));
+            this.errorProvider.SetIconAlignment(this.label5, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("label5.IconAlignment"))));
+            this.errorProvider.SetIconPadding(this.label5, ((int)(resources.GetObject("label5.IconPadding"))));
+            this.label5.Name = "label5";
+            // 
+            // fadeOutSoundsUpDown
+            // 
+            resources.ApplyResources(this.fadeOutSoundsUpDown, "fadeOutSoundsUpDown");
+            this.errorProvider.SetError(this.fadeOutSoundsUpDown, resources.GetString("fadeOutSoundsUpDown.Error"));
+            this.errorProvider.SetIconAlignment(this.fadeOutSoundsUpDown, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("fadeOutSoundsUpDown.IconAlignment"))));
+            this.errorProvider.SetIconPadding(this.fadeOutSoundsUpDown, ((int)(resources.GetObject("fadeOutSoundsUpDown.IconPadding"))));
+            this.fadeOutSoundsUpDown.Increment = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.fadeOutSoundsUpDown.Maximum = new decimal(new int[] {
+            30000,
+            0,
+            0,
+            0});
+            this.fadeOutSoundsUpDown.Name = "fadeOutSoundsUpDown";
+            this.fadeOutSoundsUpDown.ValueChanged += new System.EventHandler(this.fadeOutSoundsUpDown_ValueChanged);
+            // 
+            // fadeOutSoundsBox
+            // 
+            resources.ApplyResources(this.fadeOutSoundsBox, "fadeOutSoundsBox");
+            this.errorProvider.SetError(this.fadeOutSoundsBox, resources.GetString("fadeOutSoundsBox.Error"));
+            this.errorProvider.SetIconAlignment(this.fadeOutSoundsBox, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("fadeOutSoundsBox.IconAlignment"))));
+            this.errorProvider.SetIconPadding(this.fadeOutSoundsBox, ((int)(resources.GetObject("fadeOutSoundsBox.IconPadding"))));
+            this.fadeOutSoundsBox.Name = "fadeOutSoundsBox";
+            this.fadeOutSoundsBox.UseVisualStyleBackColor = true;
+            this.fadeOutSoundsBox.CheckedChanged += new System.EventHandler(this.fadeOutSoundsBox_CheckedChanged);
             // 
             // label3
             // 
@@ -296,6 +362,7 @@ namespace Ares.Editor.ElementEditors
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.fadeOutSoundsUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.crossFadingUpDown)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
@@ -323,5 +390,10 @@ namespace Ares.Editor.ElementEditors
         private System.Windows.Forms.RadioButton noFadeButton;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.CheckBox hideInPlayerBox;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button allSoundsFadeButton;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.NumericUpDown fadeOutSoundsUpDown;
+        private System.Windows.Forms.CheckBox fadeOutSoundsBox;
     }
 }

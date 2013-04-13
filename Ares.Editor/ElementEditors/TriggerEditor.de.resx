@@ -124,6 +124,29 @@
   <data name="hideInPlayerBox.Text" xml:space="preserve">
     <value>In Player / Controller nicht anzeigen</value>
   </data>
+  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>56, 13</value>
+  </data>
+  <data name="label4.Text" xml:space="preserve">
+    <value>Blendzeit: </value>
+  </data>
+  <data name="allSoundsFadeButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADrwAAA68AZW8ckkAAAEkSURBVDhPpZJLa4QwFIX7/3+G7qerzrIzvsdaN6MrGRVE
+        Lb7FglRBTpPblo5W6LQeOCS55ny5JN5hoaZpUNf1zLz2kqY0X2oGaNoWYRiiZYGqqsg182vXYRgG3O92
+        yLLsc/eHZoCUnfLWeT9s2zY5jmOcdH0GIUBZlshZsSwK5HlOLpj5RlmS4Ps+oiiiDjiEj+M4fgMKFlw7
+        mdt1XYiiSN1JxyPMk0F1VVVvAwRBgGmasN8/UMA0n6iuqhqtfwXw2/c8D5eLz0IKXMehus7u4ibAtXVN
+        3QZQZBnO+UzzfwFkRdoGUJSNHXCA62wByAqeLQuHwyMsNl4BytXA0rqm0SskSUJhrj91IAgCDMOg4JcI
+        0Pc9JPbPc8vsqdbMv/H25wLeAST7tgPbG4wuAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="fadeOutSoundsBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>177, 17</value>
+  </data>
+  <data name="fadeOutSoundsBox.Text" xml:space="preserve">
+    <value>Endlose Geräusche ausblenden</value>
+  </data>
   <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
     <value>59, 13</value>
   </data>
@@ -151,12 +174,12 @@
   <data name="allCrossFadeButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADrwAAA68AZW8ckkAAAEmSURBVDhPpZNNa4NAEIbz/3+G3tNTc2zirh+x1kv0JDGC
-        qMVvsSBVkLe7SylqUip14GVhdJ6Z2ZndYWF1XaOqqpm47z1JhG9pu6mjbhoEQYCGBZRlKVQxfbQt+r7H
-        036PNE1njBkgYVk+W+9Otm2DK4oinHV9BhGAoiiQMXKR58iyTChn4tmIosD3fYRhKCrgEH4OwyAqEYCc
-        BT7KzH2u60KWZfDqlNMJ5tkQ/6qqug5wu90wjiMOh2cRYJqv3wBtHYDfvud5uF59lpXCdRwB0NldrGph
-        2pquqdsAlBA4l8v/KyBU2QagdGMFHOA6G1qghOLNsnA8vsBi52QKxa+LNJ+CJqYQx/HPe/hzE6cASZJg
-        GMb9Y+q6DgrbeS7CRvVI/Bsvf2lfJPu2AzV45soAAAAASUVORK5CYII=
+        YQUAAAAJcEhZcwAADrwAAA68AZW8ckkAAAEkSURBVDhPpZJLa4QwFIX7/3+G7qerzrIzvsdaN6MrGRVE
+        Lb7FglRBTpPblo5W6LQeOCS55ny5JN5hoaZpUNf1zLz2kqY0X2oGaNoWYRiiZYGqqsg182vXYRgG3O92
+        yLLsc/eHZoCUnfLWeT9s2zY5jmOcdH0GIUBZlshZsSwK5HlOLpj5RlmS4Ps+oiiiDjiEj+M4fgMKFlw7
+        mdt1XYiiSN1JxyPMk0F1VVVvAwRBgGmasN8/UMA0n6iuqhqtfwXw2/c8D5eLz0IKXMehus7u4ibAtXVN
+        3QZQZBnO+UzzfwFkRdoGUJSNHXCA62wByAqeLQuHwyMsNl4BytXA0rqm0SskSUJhrj91IAgCDMOg4JcI
+        0Pc9JPbPc8vsqdbMv/H25wLeAST7tgPbG4wuAAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="label2.Location" type="System.Drawing.Point, System.Drawing">

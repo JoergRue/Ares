@@ -727,9 +727,9 @@ namespace Ares.Editor.Actions
         private ITrigger m_NewTrigger;
     }
 
-    public class SetAllTriggerFadingAction : Action
+    public class SetAllTriggerMusicFadingAction : Action
     {
-        public SetAllTriggerFadingAction(bool fade, bool crossFade, int fadeTime, Ares.Data.IProject project)
+        public SetAllTriggerMusicFadingAction(bool fade, bool crossFade, int fadeTime, Ares.Data.IProject project)
         {
             m_Fade = fade;
             m_CrossFade = crossFade;
@@ -809,4 +809,78 @@ namespace Ares.Editor.Actions
         private List<int> m_OldFadeTimes;
     }
 
+    public class SetAllTriggerSoundFadingAction : Action
+    {
+        public SetAllTriggerSoundFadingAction(bool fade, int fadeTime, Ares.Data.IProject project)
+        {
+            m_Fade = fade;
+            m_FadeTime = fadeTime;
+
+            m_OldFades = new List<bool>();
+            m_OldFadeTimes = new List<int>();
+            m_OldStopSounds = new List<bool>();
+            m_Triggers = new List<ITrigger>();
+            m_TriggeredElementIds = new List<int>();
+
+            if (project != null)
+            {
+                foreach (IMode mode in project.GetModes())
+                {
+                    foreach (IModeElement modeElement in mode.GetElements())
+                    {
+                        if (modeElement.Trigger == null)
+                        {
+                            modeElement.Trigger = Ares.Data.DataModule.ElementFactory.CreateNoTrigger();
+                        }
+                        if ((modeElement.Trigger.StopSounds))
+                        {
+                            m_Triggers.Add(modeElement.Trigger);
+                            m_TriggeredElementIds.Add(modeElement.Id);
+                            m_OldFades.Add(modeElement.Trigger.FadeSounds);
+                            m_OldFadeTimes.Add(modeElement.Trigger.FadeSoundTime);
+                            m_OldStopSounds.Add(modeElement.Trigger.StopSounds);
+                        }
+
+                    }
+                }
+            }
+        }
+
+        public override void Do(Ares.Data.IProject project)
+        {
+            foreach (ITrigger trigger in m_Triggers)
+            {
+                trigger.FadeSounds = m_Fade;
+                trigger.FadeSoundTime = m_FadeTime;
+                trigger.StopSounds = true;
+            }
+            foreach (int id in m_TriggeredElementIds)
+            {
+                ElementChanges.Instance.ElementTriggerChanged(id);
+            }
+        }
+
+        public override void Undo(Ares.Data.IProject project)
+        {
+            for (int i = 0; i < m_Triggers.Count; ++i)
+            {
+                m_Triggers[i].FadeSounds = m_OldFades[i];
+                m_Triggers[i].FadeSoundTime = m_OldFadeTimes[i];
+                m_Triggers[i].StopSounds = m_OldStopSounds[i];
+            }
+            foreach (int id in m_TriggeredElementIds)
+            {
+                ElementChanges.Instance.ElementTriggerChanged(id);
+            }
+        }
+
+        private bool m_Fade;
+        private int m_FadeTime;
+
+        private List<ITrigger> m_Triggers;
+        private List<int> m_TriggeredElementIds;
+        private List<bool> m_OldFades;
+        private List<bool> m_OldStopSounds;
+        private List<int> m_OldFadeTimes;
+    }
 }

@@ -87,7 +87,7 @@ namespace Ares.Playing
             return mustStop ? m_StoppedEvent : null;
         }
 
-        public void StopSounds()
+        public ManualResetEvent StopSounds(int fadeTime)
         {
             List<ElementPlayerBase> players = new List<ElementPlayerBase>();
             lock (syncObject)
@@ -95,10 +95,15 @@ namespace Ares.Playing
                 players.AddRange(m_SubPlayers.Keys);
                 m_SoundsStopped = true;
             }
+            bool mustStop = false;
             foreach (ElementPlayerBase player in players)
             {
-                player.StopSounds();
+                if (player.StopSounds(fadeTime))
+                {
+                    mustStop = true;
+                }
             }
+            return mustStop ? m_StoppedEvent : null;
         }
 
         public void SetSoundVolume(int volume)
@@ -148,7 +153,7 @@ namespace Ares.Playing
                 Monitor.Exit(syncObject);
             }
             if (stopSounds)
-                StopSounds();
+                StopSounds(0);
             if (stopMusic)
                 StopMusic(0);
         }
