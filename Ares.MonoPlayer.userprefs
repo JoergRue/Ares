@@ -1,6 +1,6 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Mono_Release" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Ares.Player\Player.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Ares.Data\ElementFactory.cs">
     <Files>
       <File FileName="Ares.Settings\Settings.cs" Line="308" Column="44" />
       <File FileName="Ares.Player\Player.cs" Line="196" Column="7" />
@@ -12,11 +12,12 @@
       <File FileName="Ares.ModelChecks\ImportExport.cs" Line="34" Column="17" />
       <File FileName="Ares.Playing\MusicPlayer.cs" Line="611" Column="17" />
       <File FileName="Ares.Tags\SQLiteTagsDB.cs" Line="175" Column="21" />
+      <File FileName="Ares.Data\ElementFactory.cs" Line="184" Column="33" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
-          <Node name="Ares.Online_Mono" selected="True" />
+          <Node name="Ares.Data_Mono" expanded="True" selected="True" />
         </State>
       </Pad>
       <Pad Id="ClassPad">

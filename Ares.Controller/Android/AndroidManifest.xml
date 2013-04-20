@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="ares.controller.android"
-      android:versionName="2.3" android:versionCode="8">
+      android:versionName="2.2" android:versionCode="7">
     <uses-sdk android:minSdkVersion="7" android:targetSdkVersion="14"/>
     <supports-screens android:xlargeScreens="true" />
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>

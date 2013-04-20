@@ -108,6 +108,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XmlHelpers.cs" />
     <Compile Include="Macros.cs" />
+    <Compile Include="MusicByTags.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ares.snk" />

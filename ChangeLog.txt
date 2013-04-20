@@ -1,3 +1,29 @@
+Version 2.2.0
+----------------------------------------------------------------------------------
+- General: Added 'Music by Tags' element to quickly set a tags selection
+- General: Fading possible when playing music selected by tags
+- General: Endless (background) sounds can be faded out when starting an element
+- General: packed projects can be opened from the controllers
+- Editor: 'Add scenario' adds a Music by Tags element instead of a Random 
+  Music List element
+- Editor: use different files for German / English news
+- Editor: menu entry to show news manually
+- Editor: hint when opening / importing a project element as a project
+- Editor: hint about adding IDs when uploading / downloading tags
+- Editor: tag lists use multiple columns
+- Editor: default file name for first save of new projects
+- Editor: progress dialog when adding multiple files to a list
+- Editor: drag & drop from File Explorer to a list inserts only files which
+  match the current tag filter in the File Explorer
+- Editor: exception dialog and log on unhandled exceptions
+- Editor: Bugfix: 'use for all mode elements' button in start settings editor 
+  didn't affect mode elements which didn't have start settings yet
+- Player: Behavior of stop music / stop sounds changed so that it doesn't stop the
+  whole played mode element, but only all music / sounds of the element
+- Player: Bugfix: unnecessary delay when starting an element which should fade out
+  music if only sound is being played
+- Controller/Android: use tablet mode on 7 inch devices
+
 Version 2.1.1
 ----------------------------------------------------------------------------------
 - Editor / Player: Bugfix: directory selection in settings dialog didn't work

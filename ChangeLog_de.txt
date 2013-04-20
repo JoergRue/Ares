@@ -1,3 +1,33 @@
+Version 2.2.0
+----------------------------------------------------------------------------------
+- Allgemein: "Musikauswahl über Tags"-Element hinzugefügt, um schnell eine 
+  Tagauswahl zu setzen
+- Allgemein: Blenden beim Abspielen von Musik über Tags möglich
+- Allgemein: Endlose (Hintergrund-)Geräusche können ausgeblendet werden, wenn man
+  ein anderes Element startet
+- Allgemein: gepackte Projekte können von den Controllern aus geöffnet werden
+- Editor: "Szenario hinzufügen" fügt ein "Musikauswahl über Tags"-Element statt
+  eines "Zufällige Musikliste"-Elements ein
+- Editor: für deutsche / englische Neuigkeiten werden unterschiedliche Dateien 
+  verwendet
+- Editor: Menüeintrag, um Neuigkeiten manuell anzuzeigen
+- Editor: Hinweis, wenn man ein Projekt-Element als Projekt zu öffnen oder zu 
+  importieren versucht
+- Editor: Hinweis bezüglich Hinzufügen von IDs beim Up-/Download von Tags
+- Editor: Taglisten verwenden mehrere Spalten
+- Editor: Default-Dateiname beim Speichern eines neuen Projektes
+- Editor: Fortschrittsdialog beim Hinzufügen von mehreren Dateien zu einer Liste
+- Editor: Drag & Drop vom Datei-Explorer zu einer Liste fügt nur die Dateien ein,
+  die zum aktuellen Tag-Filter im Datei-Explorer passen
+- Editor: Dialog und Log bei unbehandelten Ausnahmen
+- Editor: Bugfix: 'verwende für alle Modus-Elemente'-Button im Start-Editor 
+  änderte keine Mode-Elemente, die noch gar keine Start-Einstellungen hatten
+- Player: Verhalten von Stoppe Musik / Stoppe Geräusche geändert, sodass es nicht
+  das ganze Modus-Element stoppt, sondern nur alle Musik / Geräusche des Elements
+- Player: Bugfix: unnötige Verzögerung beim Start eines Elements, das Musik
+  ausblenden sollte, wenn nur Geräusche abgespielt wurden
+- Controller/Android: verwendet Tablet-Modus auf 7-Zoll-Geräten
+
 Version 2.1.1
 ----------------------------------------------------------------------------------
 - Editor / Player: Bugfix: Auswahl von Verzeichnissen im Einstellungs-Dialog ging 
