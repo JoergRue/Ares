@@ -245,7 +245,7 @@ namespace Ares.Playing
             State = MacroPlayerState.Finished;
             if (Client != null)
             {
-                Client.SubPlayerFinished(this, false);
+                Client.SubPlayerFinished(this, false, false);
             }
         }
 

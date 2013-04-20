@@ -127,20 +127,12 @@ namespace Ares.Playing
             }
         }
 
-        public void SubPlayerFinished(ElementPlayerBase subPlayer, bool stopAll)
+        public void SubPlayerFinished(ElementPlayerBase subPlayer, bool stopMusic, bool stopSounds)
         {
-            bool stopMusic = false;
-            bool stopSounds = false;
             Monitor.Enter(syncObject);
             m_SubPlayers.Remove(subPlayer);
-            if (stopAll && !m_MusicStopped)
-            {
-                stopMusic = true;
-            }
-            if (stopAll && !m_SoundsStopped)
-            {
-                stopSounds = true;
-            }
+            stopMusic = stopMusic && !m_MusicStopped;
+            stopSounds = stopSounds && !m_SoundsStopped;
             if (m_SubPlayers.Count == 0 && Playing)
             {
                 Playing = false;

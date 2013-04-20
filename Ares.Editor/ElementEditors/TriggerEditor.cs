@@ -122,6 +122,7 @@ namespace Ares.Editor.ElementEditors
                 noFadeButton.Checked = true;
                 crossFadingUpDown.Value = 0;
                 fadeOutSoundsBox.Checked = false;
+                fadeOutSoundsBox.Enabled = false;
                 fadeOutSoundsUpDown.Value = 0;
             }
             UpdateTriggerDesc();
@@ -183,8 +184,8 @@ namespace Ares.Editor.ElementEditors
             noFadeButton.Enabled = stopMusicBox.Checked;
             crossFadingUpDown.Enabled = stopMusicBox.Checked && (crossFadeButton.Checked || fadeButton.Checked);
             allCrossFadeButton.Enabled = stopMusicBox.Checked;
-            fadeOutSoundsBox.Enabled = stopSoundsBox.Checked;
-            fadeOutSoundsUpDown.Enabled = stopSoundsBox.Checked && fadeOutSoundsBox.Checked;
+            fadeOutSoundsBox.Enabled = stopSoundsBox.Checked && (!stopMusicBox.Checked || !crossFadeButton.Checked);
+            fadeOutSoundsUpDown.Enabled = stopSoundsBox.Checked && fadeOutSoundsBox.Enabled && fadeOutSoundsBox.Checked;
             allSoundsFadeButton.Enabled = stopSoundsBox.Checked;
         }
 
@@ -222,7 +223,7 @@ namespace Ares.Editor.ElementEditors
             if (!listen)
                 return;
             Commit();
-            fadeOutSoundsBox.Enabled = stopSoundsBox.Checked;
+            fadeOutSoundsBox.Enabled = stopSoundsBox.Checked && (!stopMusicBox.Checked || !crossFadeButton.Checked);
             fadeOutSoundsUpDown.Enabled = stopSoundsBox.Checked && fadeOutSoundsBox.Checked;
             allSoundsFadeButton.Enabled = stopSoundsBox.Checked;
         }
@@ -260,6 +261,10 @@ namespace Ares.Editor.ElementEditors
             noFadeButton.Enabled = stopMusicBox.Checked;
             crossFadingUpDown.Enabled = stopMusicBox.Checked && (crossFadeButton.Checked || fadeButton.Checked);
             allCrossFadeButton.Enabled = stopMusicBox.Checked;
+            fadeOutSoundsBox.Enabled = !stopMusicBox.Checked || !crossFadeButton.Checked;
+            fadeOutSoundsUpDown.Enabled = stopSoundsBox.Checked && fadeOutSoundsBox.Enabled && fadeOutSoundsBox.Checked;
+            if (stopMusicBox.Checked && crossFadeButton.Checked)
+                fadeOutSoundsBox.Checked = false;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -273,6 +278,17 @@ namespace Ares.Editor.ElementEditors
                 return;
             crossFadingUpDown.Enabled = stopMusicBox.Checked && (crossFadeButton.Checked || fadeButton.Checked);
             allCrossFadeButton.Enabled = stopMusicBox.Checked;
+            if (crossFadeButton.Checked)
+            {
+                fadeOutSoundsBox.Checked = false;
+                fadeOutSoundsBox.Enabled = false;
+                fadeOutSoundsUpDown.Enabled = false;
+            }
+            else
+            {
+                fadeOutSoundsBox.Enabled = true;
+                fadeOutSoundsUpDown.Enabled = stopSoundsBox.Checked && fadeOutSoundsBox.Checked;
+            }
             Commit();
         }
 
@@ -301,7 +317,7 @@ namespace Ares.Editor.ElementEditors
         {
             if (!listen)
                 return;
-            fadeOutSoundsUpDown.Enabled = stopSoundsBox.Checked && fadeOutSoundsBox.Checked;
+            fadeOutSoundsUpDown.Enabled = stopSoundsBox.Checked && fadeOutSoundsBox.Enabled && fadeOutSoundsBox.Checked;
             allSoundsFadeButton.Enabled = stopSoundsBox.Checked;
             Commit();
         }

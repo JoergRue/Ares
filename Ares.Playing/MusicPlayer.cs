@@ -60,7 +60,7 @@ namespace Ares.Playing
                     {
                         PlayingModule.ThePlayer.ProjectCallbacks.MusicPlaylistFinished();
                     }
-                    Client.SubPlayerFinished(this, stop);
+                    Client.SubPlayerFinished(this, stop, false);
                 }
                 else if (!success)
                 {
@@ -220,7 +220,7 @@ namespace Ares.Playing
                 {
                     PlayingModule.ThePlayer.ProjectCallbacks.MusicPlaylistFinished();
                 }
-                Client.SubPlayerFinished(this, shallStop);
+                Client.SubPlayerFinished(this, shallStop, false);
                 return;
             }
             ++m_Index;
@@ -239,7 +239,7 @@ namespace Ares.Playing
                     {
                         PlayingModule.ThePlayer.ProjectCallbacks.MusicPlaylistFinished();
                     }
-                    Client.SubPlayerFinished(this, false);
+                    Client.SubPlayerFinished(this, false, false);
                 }
             }
             else
@@ -288,7 +288,7 @@ namespace Ares.Playing
             }
             else
             {
-                Client.SubPlayerFinished(this, false);
+                Client.SubPlayerFinished(this, false, false);
             }
         }
 
@@ -345,7 +345,7 @@ namespace Ares.Playing
                 {
                     PlayingModule.ThePlayer.ProjectCallbacks.MusicPlaylistFinished();
                 }
-                Client.SubPlayerFinished(this, stop);
+                Client.SubPlayerFinished(this, stop, false);
             }
             else if (m_FixedNext != -1)
             {
@@ -383,7 +383,7 @@ namespace Ares.Playing
                     {
                         PlayingModule.ThePlayer.ProjectCallbacks.MusicPlaylistFinished();
                     }
-                    Client.SubPlayerFinished(this, stop);
+                    Client.SubPlayerFinished(this, stop, false);
                 }
             }
         }
@@ -403,7 +403,7 @@ namespace Ares.Playing
         {
             if (RandomMusicList.GetElements().Count == 0)
             {
-                Client.SubPlayerFinished(this, false);
+                Client.SubPlayerFinished(this, false, false);
                 return;
             }
             PlayingModule.ThePlayer.ActiveMusicPlayer = this; // once early to stop previous music player
@@ -800,7 +800,7 @@ namespace Ares.Playing
 
         public override void PlayNext()
         {
-            Client.SubPlayerFinished(this, false);
+            Client.SubPlayerFinished(this, false, false);
         }
 
         protected override bool IsSingleFileList()
