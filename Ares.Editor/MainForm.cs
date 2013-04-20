@@ -599,6 +599,10 @@ namespace Ares.Editor
             {
                 saveFileDialog.FileName = m_CurrentProject.FileName;
             }
+            else if (!String.IsNullOrEmpty(m_CurrentProject.Title))
+            {
+                saveFileDialog.FileName = m_CurrentProject.Title + ".ares";
+            }
             DialogResult result = saveFileDialog.ShowDialog(this);
             if (result != System.Windows.Forms.DialogResult.OK)
                 return false;
