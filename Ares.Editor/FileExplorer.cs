@@ -231,7 +231,10 @@ namespace Ares.Editor
             {
                 List<DraggedItem> items = new List<DraggedItem>();
                 treeView1.SelectedNodes.ForEach(node => items.Add((DraggedItem)node.Tag));
-                DoDragDrop(items, DragDropEffects.Copy | DragDropEffects.Move);
+                FileDragInfo info = new FileDragInfo();
+                info.DraggedItems = items;
+                info.TagsFilter = m_IsTagFilterActive ? m_TagsFilter : null;
+                DoDragDrop(info, DragDropEffects.Copy | DragDropEffects.Move);
                 m_InDrag = false;
             }
         }
@@ -630,7 +633,7 @@ namespace Ares.Editor
 
         private void CheckAllowedDrop(DragEventArgs e)
         {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop) || e.Data.GetDataPresent(typeof(List<DraggedItem>)))
+            if (e.Data.GetDataPresent(DataFormats.FileDrop) || e.Data.GetDataPresent(typeof(FileDragInfo)))
             {
                 if (((e.KeyState & 8) == 8) && ((e.AllowedEffect & DragDropEffects.Copy) == DragDropEffects.Copy))
                 {
@@ -686,9 +689,9 @@ namespace Ares.Editor
                         files.Add(a.GetValue(i).ToString());
                 }
             }
-            else if (e.Data.GetDataPresent(typeof(List<DraggedItem>)))
+            else if (e.Data.GetDataPresent(typeof(FileDragInfo)))
             {
-                List<DraggedItem> items = (List<DraggedItem>)e.Data.GetData(typeof(List<DraggedItem>));
+                List<DraggedItem> items = ((FileDragInfo)e.Data.GetData(typeof(FileDragInfo))).DraggedItems;
                 if (items != null)
                 {
                     for (int i = 0; i < items.Count; ++i)
@@ -961,8 +964,7 @@ namespace Ares.Editor
 
         private bool m_IsTagFilterActive = false;
         private HashSet<String> m_FilteredFiles = new HashSet<string>(StringComparer.CurrentCultureIgnoreCase);
-        private Dictionary<int, HashSet<int>> m_FilterTagsByCategories = new Dictionary<int, HashSet<int>>();
-        private bool m_CombineFilterCategoriesWithAnd = false;
+        private TagsFilter m_TagsFilter = new TagsFilter();
 
         private void RetrieveFilteredFiles()
         {
@@ -973,14 +975,14 @@ namespace Ares.Editor
                     languageId = Ares.Tags.TagsModule.GetTagsDB().TranslationsInterface.GetIdOfCurrentUILanguage();
                 var dbRead = Ares.Tags.TagsModule.GetTagsDB().ReadInterface;
                 IList<String> files;
-                if (m_CombineFilterCategoriesWithAnd)
+                if (m_TagsFilter.CombineCategoriesWithAnd)
                 {
-                    files = dbRead.GetAllFilesWithAnyTagInEachCategory(m_FilterTagsByCategories);
+                    files = dbRead.GetAllFilesWithAnyTagInEachCategory(m_TagsFilter.TagsByCategories);
                 }
                 else
                 {
                     HashSet<int> allTags = new HashSet<int>();
-                    foreach (var entry in m_FilterTagsByCategories)
+                    foreach (var entry in m_TagsFilter.TagsByCategories)
                     {
                         allTags.UnionWith(entry.Value);
                     }
@@ -1015,15 +1017,15 @@ namespace Ares.Editor
                 }
             }
             dialog.LanguageId = languageId;
-            dialog.CombineCategoriesWithAnd = m_CombineFilterCategoriesWithAnd;
-            dialog.TagsByCategory = m_FilterTagsByCategories;
+            dialog.CombineCategoriesWithAnd = m_TagsFilter.CombineCategoriesWithAnd;
+            dialog.TagsByCategory = m_TagsFilter.TagsByCategories;
             if (dialog.ShowDialog(this) == DialogResult.OK)
             {
                 m_Project.TagLanguageId = dialog.LanguageId;
-                m_CombineFilterCategoriesWithAnd = dialog.CombineCategoriesWithAnd;
-                m_FilterTagsByCategories = dialog.TagsByCategory;
-                tagFilterButton.Checked = m_FilterTagsByCategories.Count > 0;
-                m_IsTagFilterActive = m_FilterTagsByCategories.Count > 0;
+                m_TagsFilter.CombineCategoriesWithAnd = dialog.CombineCategoriesWithAnd;
+                m_TagsFilter.TagsByCategories = dialog.TagsByCategory;
+                tagFilterButton.Checked = m_TagsFilter.TagsByCategories.Count > 0;
+                m_IsTagFilterActive = m_TagsFilter.TagsByCategories.Count > 0;
                 if (m_IsTagFilterActive)
                 {
                     RetrieveFilteredFiles();
@@ -1049,6 +1051,20 @@ namespace Ares.Editor
         public DraggedItemType NodeType { get; set; }
         public FileType ItemType { get; set; }
         public String RelativePath { get; set; }
+    }
+
+    public class TagsFilter
+    {
+        public bool CombineCategoriesWithAnd { get; set; }
+        public Dictionary<int, HashSet<int>> TagsByCategories { get { return mTagsByCategories; } set { mTagsByCategories = value; } }
+
+        private Dictionary<int, HashSet<int>> mTagsByCategories = new Dictionary<int, HashSet<int>>();
+    }
+
+    public class FileDragInfo
+    {
+        public List<DraggedItem> DraggedItems { get; set; }
+        public TagsFilter TagsFilter { get; set; }
     }
 
     public static class FileSearch

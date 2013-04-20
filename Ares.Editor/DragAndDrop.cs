@@ -27,12 +27,12 @@ namespace Ares.Editor
 {
     class DragAndDrop
     {
-        public static IEnumerable<IElement> GetElementsFromDroppedItems(List<DraggedItem> draggedItems)
+        public static IEnumerable<IElement> GetElementsFromDroppedItems(FileDragInfo dragInfo)
         {
-            return DoGetElementsFromDroppedItems(draggedItems, Settings.Settings.Instance.MusicDirectory, Settings.Settings.Instance.SoundDirectory, null, null);
+            return DoGetElementsFromDroppedItems(dragInfo, Settings.Settings.Instance.MusicDirectory, Settings.Settings.Instance.SoundDirectory, null, null);
         }
 
-        public static System.Threading.Tasks.Task<IList<IElement>> GetElementsFromDroppedItemsAsync(List<DraggedItem> draggedItems, System.Threading.CancellationTokenSource tokenSource, Ares.ModelInfo.IProgressMonitor progressMonitor)
+        public static System.Threading.Tasks.Task<IList<IElement>> GetElementsFromDroppedItemsAsync(FileDragInfo dragInfo, System.Threading.CancellationTokenSource tokenSource, Ares.ModelInfo.IProgressMonitor progressMonitor)
         {
             String musicDirectory = Settings.Settings.Instance.MusicDirectory;
             String soundDirectory = Settings.Settings.Instance.SoundDirectory;
@@ -40,7 +40,7 @@ namespace Ares.Editor
                 {
                     try
                     {
-                        var result = new List<IElement>(DoGetElementsFromDroppedItems(draggedItems, musicDirectory, soundDirectory, tokenSource, progressMonitor));
+                        var result = new List<IElement>(DoGetElementsFromDroppedItems(dragInfo, musicDirectory, soundDirectory, tokenSource, progressMonitor));
                         return (IList<IElement>)result;
                     }
                     catch (OperationCanceledException)
@@ -54,7 +54,7 @@ namespace Ares.Editor
                 });
         }
 
-        private static IEnumerable<IElement> DoGetElementsFromDroppedItems(List<DraggedItem> draggedItems, String musicDirectory, String soundDirectory, 
+        private static IEnumerable<IElement> DoGetElementsFromDroppedItems(FileDragInfo dragInfo, String musicDirectory, String soundDirectory, 
             System.Threading.CancellationTokenSource tokenSource, Ares.ModelInfo.IProgressMonitor progressMonitor)
         {
             Ares.TagsImport.SequentialProgressMonitor monitor1 = null, monitor2 = null;
@@ -62,15 +62,49 @@ namespace Ares.Editor
             {
                 monitor1 = new TagsImport.SequentialProgressMonitor(progressMonitor, 0.1, 9.9);
             }
-            Dictionary<string, DraggedItem> uniqueItems = new Dictionary<string, DraggedItem>();
-            foreach (DraggedItem item in draggedItems)
+
+            HashSet<String> allowedItems = null;
+            if (dragInfo.TagsFilter != null)
             {
-                AddItemsToSet(uniqueItems, item, musicDirectory, soundDirectory, tokenSource);
+                IList<String> files = null;
+                try
+                {
+                    var dbRead = Ares.Tags.TagsModule.GetTagsDB().ReadInterface;
+                    if (dragInfo.TagsFilter.CombineCategoriesWithAnd)
+                    {
+                        files = dbRead.GetAllFilesWithAnyTagInEachCategory(dragInfo.TagsFilter.TagsByCategories);
+                    }
+                    else
+                    {
+                        HashSet<int> allTags = new HashSet<int>();
+                        foreach (var entry in dragInfo.TagsFilter.TagsByCategories)
+                        {
+                            allTags.UnionWith(entry.Value);
+                        }
+                        files = dbRead.GetAllFilesWithAnyTag(allTags);
+                    }
+                }
+                catch (Ares.Tags.TagsDbException)
+                {
+                    files = null;
+                }
+                if (files != null)
+                {
+                    allowedItems = new HashSet<string>();
+                    allowedItems.UnionWith(files);
+                }
+            }
+
+            Dictionary<string, DraggedItem> uniqueItems = new Dictionary<string, DraggedItem>();
+            foreach (DraggedItem item in dragInfo.DraggedItems)
+            {
+                AddItemsToSet(uniqueItems, item, allowedItems, musicDirectory, soundDirectory, tokenSource);
                 if (tokenSource != null)
                     tokenSource.Token.ThrowIfCancellationRequested();
                 if (monitor1 != null)
-                    monitor1.IncreaseProgress(100.0 / draggedItems.Count);
+                    monitor1.IncreaseProgress(100.0 / dragInfo.DraggedItems.Count);
             }
+
             if (progressMonitor != null)
                 monitor2 = new TagsImport.SequentialProgressMonitor(progressMonitor, 10.0, 90.0);
             foreach (DraggedItem item in uniqueItems.Values)
@@ -100,7 +134,8 @@ namespace Ares.Editor
             return element;
         }
 
-        private static void AddItemsToSet(Dictionary<String, DraggedItem> uniqueItems, DraggedItem item, String musicDirectory, String soundDirectory, System.Threading.CancellationTokenSource tokenSource)
+        private static void AddItemsToSet(Dictionary<String, DraggedItem> uniqueItems, DraggedItem item, HashSet<String> allowedItems, 
+            String musicDirectory, String soundDirectory, System.Threading.CancellationTokenSource tokenSource)
         {
             String baseDir = item.ItemType == FileType.Music ? musicDirectory : soundDirectory;
             String path = System.IO.Path.Combine(baseDir, item.RelativePath);
@@ -111,7 +146,7 @@ namespace Ares.Editor
                     foreach (String file in FileSearch.GetFilesInDirectory(item.ItemType, path, true))
                     {
                         AddItemsToSet(uniqueItems, new DraggedItem { NodeType = DraggedItemType.File, ItemType = item.ItemType, RelativePath = file.Substring(baseDir.Length + 1) }, 
-                            musicDirectory, soundDirectory, tokenSource);
+                            allowedItems, musicDirectory, soundDirectory, tokenSource);
                         if (tokenSource != null)
                             tokenSource.Token.ThrowIfCancellationRequested();
                     }
@@ -119,10 +154,13 @@ namespace Ares.Editor
             }
             else
             {
-                String key = System.IO.Path.GetFullPath(path);
-                if (!uniqueItems.ContainsKey(path))
+                if (allowedItems == null || allowedItems.Contains(item.RelativePath, StringComparer.InvariantCultureIgnoreCase))
                 {
-                    uniqueItems[key] = item;
+                    String key = System.IO.Path.GetFullPath(path);
+                    if (!uniqueItems.ContainsKey(path))
+                    {
+                        uniqueItems[key] = item;
+                    }
                 }
             }
         }
