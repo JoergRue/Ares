@@ -249,8 +249,35 @@ namespace Ares.Editor.ElementEditors
             List<DraggedItem> list = e.Data.GetData(typeof(List<DraggedItem>)) as List<DraggedItem>;
             if (list != null)
             {
-                List<Ares.Data.IElement> elements = new List<Ares.Data.IElement>(DragAndDrop.GetElementsFromDroppedItems(list));
-                ContainerControl.AddElements(elements, row);
+                if (list.Count > 1 || list[0].NodeType == DraggedItemType.Directory)
+                {
+                    System.Threading.CancellationTokenSource tokenSource = new System.Threading.CancellationTokenSource();
+                    TaskProgressMonitor monitor = new TaskProgressMonitor(this, StringResources.AddingFiles, tokenSource);
+                    monitor.IncreaseProgress(0.1, StringResources.GettingTitles);
+                    var task = DragAndDrop.GetElementsFromDroppedItemsAsync(list, tokenSource, monitor);
+                    task.ContinueWith((t) =>
+                    {
+                        monitor.Close();
+                        try
+                        {
+                            var result = task.Result;
+                            if (result != null)
+                                ContainerControl.AddElements(result, row);
+                        }
+                        catch (AggregateException)
+                        {
+                        }
+                    }, tokenSource.Token, System.Threading.Tasks.TaskContinuationOptions.OnlyOnRanToCompletion, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
+                    task.ContinueWith((t) =>
+                    {
+                        monitor.Close();
+                    }, tokenSource.Token, System.Threading.Tasks.TaskContinuationOptions.NotOnRanToCompletion, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
+                }
+                else
+                {
+                    List<Ares.Data.IElement> elements = new List<Ares.Data.IElement>(DragAndDrop.GetElementsFromDroppedItems(list));
+                    ContainerControl.AddElements(elements, row);
+                }
             }
         }
 

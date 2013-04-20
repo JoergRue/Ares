@@ -503,11 +503,11 @@ namespace Ares.Editor.Actions
             {
                 m_Container.InsertGeneralElement(index, element);
                 Data.DataModule.ElementRepository.AddElement(element);
-                Ares.ModelInfo.ModelChecks.Instance.CheckAll(project);
                 ElementRemoval.NotifyUndo(element);
                 ++index;
             }
             ElementChanges.Instance.ElementChanged(m_Container.Id);
+            Ares.ModelInfo.ModelChecks.Instance.CheckAll(project);
         }
 
         public override void Undo(Ares.Data.IProject project)
@@ -516,10 +516,10 @@ namespace Ares.Editor.Actions
             {
                 m_Container.RemoveElement(element.Id);
                 Data.DataModule.ElementRepository.DeleteElement(element.Id);
-                Ares.ModelInfo.ModelChecks.Instance.CheckAll(project);
                 ElementRemoval.NotifyRemoval(element);
             }
             ElementChanges.Instance.ElementChanged(m_Container.Id);
+            Ares.ModelInfo.ModelChecks.Instance.CheckAll(project);
         }
 
         private IGeneralElementContainer m_Container;

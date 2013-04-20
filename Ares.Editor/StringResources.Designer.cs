@@ -70,6 +70,15 @@ namespace Ares.Editor {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Adding files ... ähnelt.
+        /// </summary>
+        internal static string AddingFiles {
+            get {
+                return ResourceManager.GetString("AddingFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die All ähnelt.
         /// </summary>
         internal static string All {
@@ -402,6 +411,15 @@ namespace Ares.Editor {
         internal static string General {
             get {
                 return ResourceManager.GetString("General", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Getting titles from ID3 tags ... ähnelt.
+        /// </summary>
+        internal static string GettingTitles {
+            get {
+                return ResourceManager.GetString("GettingTitles", resourceCulture);
             }
         }
         

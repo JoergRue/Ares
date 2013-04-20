@@ -29,21 +29,64 @@ namespace Ares.Editor
     {
         public static IEnumerable<IElement> GetElementsFromDroppedItems(List<DraggedItem> draggedItems)
         {
+            return DoGetElementsFromDroppedItems(draggedItems, Settings.Settings.Instance.MusicDirectory, Settings.Settings.Instance.SoundDirectory, null, null);
+        }
+
+        public static System.Threading.Tasks.Task<IList<IElement>> GetElementsFromDroppedItemsAsync(List<DraggedItem> draggedItems, System.Threading.CancellationTokenSource tokenSource, Ares.ModelInfo.IProgressMonitor progressMonitor)
+        {
+            String musicDirectory = Settings.Settings.Instance.MusicDirectory;
+            String soundDirectory = Settings.Settings.Instance.SoundDirectory;
+            return System.Threading.Tasks.Task.Factory.StartNew(() =>
+                {
+                    try
+                    {
+                        var result = new List<IElement>(DoGetElementsFromDroppedItems(draggedItems, musicDirectory, soundDirectory, tokenSource, progressMonitor));
+                        return (IList<IElement>)result;
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        return null;
+                    }
+                    catch (AggregateException)
+                    {
+                        return null;
+                    }
+                });
+        }
+
+        private static IEnumerable<IElement> DoGetElementsFromDroppedItems(List<DraggedItem> draggedItems, String musicDirectory, String soundDirectory, 
+            System.Threading.CancellationTokenSource tokenSource, Ares.ModelInfo.IProgressMonitor progressMonitor)
+        {
+            Ares.TagsImport.SequentialProgressMonitor monitor1 = null, monitor2 = null;
+            if (progressMonitor != null)
+            {
+                monitor1 = new TagsImport.SequentialProgressMonitor(progressMonitor, 0.1, 9.9);
+            }
             Dictionary<string, DraggedItem> uniqueItems = new Dictionary<string, DraggedItem>();
             foreach (DraggedItem item in draggedItems)
             {
-                AddItemsToSet(uniqueItems, item);
+                AddItemsToSet(uniqueItems, item, musicDirectory, soundDirectory, tokenSource);
+                if (tokenSource != null)
+                    tokenSource.Token.ThrowIfCancellationRequested();
+                if (monitor1 != null)
+                    monitor1.IncreaseProgress(100.0 / draggedItems.Count);
             }
+            if (progressMonitor != null)
+                monitor2 = new TagsImport.SequentialProgressMonitor(progressMonitor, 10.0, 90.0);
             foreach (DraggedItem item in uniqueItems.Values)
             {
-                yield return CreateFileElement(item);
+                yield return CreateFileElement(item, musicDirectory, soundDirectory);
+                if (tokenSource != null)
+                    tokenSource.Token.ThrowIfCancellationRequested();
+                if (monitor2 != null)
+                    monitor2.IncreaseProgress(100.0 / uniqueItems.Count);
             }
         }
 
-        private static IElement CreateFileElement(DraggedItem item)
+        private static IElement CreateFileElement(DraggedItem item, String musicDirectory, String soundDirectory)
         {
             IFileElement element = Ares.Data.DataModule.ElementFactory.CreateFileElement(item.RelativePath, item.ItemType == FileType.Music ? SoundFileType.Music : SoundFileType.SoundEffect);
-            String dir = item.ItemType == FileType.Music ? Settings.Settings.Instance.MusicDirectory : Settings.Settings.Instance.SoundDirectory;
+            String dir = item.ItemType == FileType.Music ? musicDirectory : soundDirectory;
             String path = System.IO.Path.Combine(dir, item.RelativePath);
             Un4seen.Bass.AddOn.Tags.TAG_INFO tag = Un4seen.Bass.AddOn.Tags.BassTags.BASS_TAG_GetFromFile(path, true, true);
             if (tag != null)
@@ -57,9 +100,9 @@ namespace Ares.Editor
             return element;
         }
 
-        private static void AddItemsToSet(Dictionary<String, DraggedItem> uniqueItems, DraggedItem item)
+        private static void AddItemsToSet(Dictionary<String, DraggedItem> uniqueItems, DraggedItem item, String musicDirectory, String soundDirectory, System.Threading.CancellationTokenSource tokenSource)
         {
-            String baseDir = item.ItemType == FileType.Music ? Ares.Settings.Settings.Instance.MusicDirectory : Ares.Settings.Settings.Instance.SoundDirectory;
+            String baseDir = item.ItemType == FileType.Music ? musicDirectory : soundDirectory;
             String path = System.IO.Path.Combine(baseDir, item.RelativePath);
             if (item.NodeType == DraggedItemType.Directory)
             {
@@ -67,7 +110,10 @@ namespace Ares.Editor
                 {
                     foreach (String file in FileSearch.GetFilesInDirectory(item.ItemType, path, true))
                     {
-                        AddItemsToSet(uniqueItems, new DraggedItem { NodeType = DraggedItemType.File, ItemType = item.ItemType, RelativePath = file.Substring(baseDir.Length + 1) });
+                        AddItemsToSet(uniqueItems, new DraggedItem { NodeType = DraggedItemType.File, ItemType = item.ItemType, RelativePath = file.Substring(baseDir.Length + 1) }, 
+                            musicDirectory, soundDirectory, tokenSource);
+                        if (tokenSource != null)
+                            tokenSource.Token.ThrowIfCancellationRequested();
                     }
                 }
             }
