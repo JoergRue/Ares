@@ -40,11 +40,11 @@ public abstract class ConnectedFragment extends Fragment implements IServerListe
 
 	private ServerSearch serverSearch = null;
 	
-	private static Boolean sOnXLargeScreen = null;
+	private static Boolean sOnTablet = null;
 	
-	protected boolean isOnXLargeScreen() 
+	protected boolean isOnTablet() 
 	{
-		if (sOnXLargeScreen == null) {
+		if (sOnTablet == null) {
 		     Configuration conf = getResources().getConfiguration();
 		     int screenLayout = 1; // application default behavior
 		     try {
@@ -53,14 +53,15 @@ public abstract class ConnectedFragment extends Fragment implements IServerListe
 			     // Configuration.SCREENLAYOUT_SIZE_MASK == 15
 			     int screenType = screenLayout & 15;
 			     // Configuration.SCREENLAYOUT_SIZE_XLARGE == 4
-		         sOnXLargeScreen = (screenType == 4); 
+			     // Configuration.SCREENLAYOUT_SIZE_LARGE == 3
+		         sOnTablet = (screenType == 4) || (screenType == 3); 
 		     } 
 		     catch (Exception e) {
 		         // NoSuchFieldException or related stuff
-		    	 sOnXLargeScreen = false;
+		    	 sOnTablet = false;
 		     }
 		}
-		return sOnXLargeScreen;
+		return sOnTablet;
 	}
 	
 	protected boolean isControlFragment() {
@@ -77,7 +78,7 @@ public abstract class ConnectedFragment extends Fragment implements IServerListe
         
 		ConnectionManager.getInstance().addClient();
 		
-		if (Control.getInstance().getConfiguration() == null && !isOnXLargeScreen() && !isControlFragment()) {
+		if (Control.getInstance().getConfiguration() == null && !isOnTablet() && !isControlFragment()) {
 			// no configuration loaded, not in control fragment, not in main activity
         	// switch to main activity so that control fragment is displayed
         	// and project can be opened
@@ -93,7 +94,7 @@ public abstract class ConnectedFragment extends Fragment implements IServerListe
         	// Log.d("ConnectedFragment", "Already connected");
         	connectWithFirstServer = false;
         }
-        else if (isControlFragment() || !isOnXLargeScreen()){
+        else if (isControlFragment() || !isOnTablet()){
         	// not connected, in own activity --> search for servers
         	servers.clear();
         	serverNames.clear();
@@ -132,7 +133,7 @@ public abstract class ConnectedFragment extends Fragment implements IServerListe
 		serverSearch = new ServerSearch(this, getServerSearchPort());
 		if (!Control.getInstance().isConnected()) 
 		{
-			if (isControlFragment() || !isOnXLargeScreen()) {
+			if (isControlFragment() || !isOnTablet()) {
 				tryConnect();
 			}
 		}    			
@@ -167,7 +168,7 @@ public abstract class ConnectedFragment extends Fragment implements IServerListe
 	}
 	
 	protected void onDisconnect(boolean startServerSearch) {
-		if (startServerSearch && (isControlFragment() || !isOnXLargeScreen())) {
+		if (startServerSearch && (isControlFragment() || !isOnTablet())) {
 			if (!serverSearch.isSearching()) {
 	    		Log.d("ConnectedFragment", "Starting server search");
 				serverSearch.startSearch();

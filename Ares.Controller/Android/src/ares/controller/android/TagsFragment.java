@@ -58,7 +58,7 @@ public class TagsFragment extends ModeLikeFragment implements INetworkClient {
 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (!isOnXLargeScreen()) {
+        if (!isOnTablet()) {
         	registerGestures();
         }
     }
@@ -70,7 +70,7 @@ public class TagsFragment extends ModeLikeFragment implements INetworkClient {
     private boolean inPreferences = false;
     
     protected boolean showMainActivityOnDisconnect() {
-    	return !isOnXLargeScreen() && !inPreferences;
+    	return !isOnTablet() && !inPreferences;
     }
 
 	private void showPreferences() {
@@ -110,7 +110,7 @@ public class TagsFragment extends ModeLikeFragment implements INetworkClient {
     
     public void onCreateOptionsMenu(android.view.Menu menu, MenuInflater inflater) {
     	menu.add(Menu.NONE, REMOVE_ALL_TAGS, Menu.NONE, R.string.ClearTags);
-    	if (!isOnXLargeScreen()) {
+    	if (!isOnTablet()) {
     		menu.add(Menu.NONE, PREFERENCES, Menu.NONE, R.string.preferences);
     	}
     	super.onCreateOptionsMenu(menu, inflater);

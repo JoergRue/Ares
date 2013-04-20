@@ -48,7 +48,7 @@ public abstract class ModeLikeFragment extends ConnectedFragment {
         	// everything ok
         	// Log.d("ConnectedFragment", "Already connected");
         }
-        else if (!isOnXLargeScreen()) {
+        else if (!isOnTablet()) {
         	// not connected, not in control fragment, not in main activity
         	// switch to main activity so that control fragment is displayed
         	// and connection can be restored
@@ -62,7 +62,7 @@ public abstract class ModeLikeFragment extends ConnectedFragment {
     	// not connected, not in control fragment, not in main activity
     	// switch to main activity so that control fragment is displayed
     	// and connection can be restored
-		return !isOnXLargeScreen(); 
+		return !isOnTablet(); 
 	}
 
 	protected void onDisconnect(boolean startServerSearch) {
@@ -120,7 +120,7 @@ public abstract class ModeLikeFragment extends ConnectedFragment {
 
 	public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (!isOnXLargeScreen())
+        if (!isOnTablet())
     	{
         	mMode = getActivity().getIntent().getIntExtra(ModeLikeActivity.MODE_INDEX, 0);
     	}
@@ -134,7 +134,7 @@ public abstract class ModeLikeFragment extends ConnectedFragment {
     private static final int SHOW_MAIN = 1;
     
     public void onCreateOptionsMenu(android.view.Menu menu, MenuInflater inflater) {
-    	if (!isOnXLargeScreen())
+    	if (!isOnTablet())
     	{
     		menu.add(Menu.NONE, SHOW_MAIN, Menu.NONE, R.string.show_main);
         	menu.add(Menu.NONE, SHOW_MODES, Menu.NONE, R.string.ShowModes);
@@ -161,7 +161,7 @@ public abstract class ModeLikeFragment extends ConnectedFragment {
     		mode = Control.getInstance().getConfiguration().getModes().size() - 1;
     	}
     	showMode(mode, ControllerActivity.ANIM_MOVE_LEFT);
-    	if (!isOnXLargeScreen()) {
+    	if (!isOnTablet()) {
     		getActivity().overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
     	}
     }
@@ -172,35 +172,35 @@ public abstract class ModeLikeFragment extends ConnectedFragment {
     		mode = -2;
     	}
     	showMode(mode, ControllerActivity.ANIM_MOVE_RIGHT);
-    	if (!isOnXLargeScreen()) {
+    	if (!isOnTablet()) {
     		getActivity().overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
     	}
     }
     
     private void showModes() {
-    	if (isOnXLargeScreen())
+    	if (isOnTablet())
     		return;
 		Intent intent = new Intent(getActivity().getBaseContext(), ModesActivity.class);
 		intent.putExtra(ControllerActivity.ANIMATION_TYPE, ControllerActivity.ANIM_MOVE_DOWN);
 		startActivity(intent);
-		if (!isOnXLargeScreen()) {
+		if (!isOnTablet()) {
     		getActivity().overridePendingTransition(R.anim.slide_from_bottom, R.anim.slide_to_top);
 		}
     }
     
     private void showMainControls() {
-    	if (isOnXLargeScreen())
+    	if (isOnTablet())
     		return;
     	Intent intent = new Intent(getActivity().getBaseContext(), MainActivity.class);
     	intent.putExtra(ControllerActivity.ANIMATION_TYPE, ControllerActivity.ANIM_MOVE_UP);
     	startActivity(intent);    	
-    	if (!isOnXLargeScreen()) {
+    	if (!isOnTablet()) {
     		getActivity().overridePendingTransition(R.anim.slide_from_top, R.anim.slide_to_bottom);
     	}
     }
     
     private void showMode(int mode, int backAnimation) {
-    	if (!isOnXLargeScreen()) {
+    	if (!isOnTablet()) {
 	    	if (mode == -1) {
 	    		// special case: music list
 				Intent intent = new Intent(getActivity().getBaseContext(), MusicListActivity.class);

@@ -52,7 +52,7 @@ public class ModesFragment extends ConnectedFragment {
         	// everything ok
         	// Log.d("ConnectedFragment", "Already connected");
         }
-        else if (!isOnXLargeScreen()) {
+        else if (!isOnTablet()) {
         	// not connected, not in control fragment, not in main activity
         	// switch to main activity so that control fragment is displayed
         	// and connection can be restored
@@ -64,7 +64,7 @@ public class ModesFragment extends ConnectedFragment {
 
 	protected void onDisconnect(boolean startServerSearch) {
 		super.onDisconnect(startServerSearch);
-		if (!isOnXLargeScreen()) {
+		if (!isOnTablet()) {
         	// not connected, not in control fragment, not in main activity
         	// switch to main activity so that control fragment is displayed
         	// and connection can be restored
@@ -116,7 +116,7 @@ public class ModesFragment extends ConnectedFragment {
     
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (!isOnXLargeScreen()) {
+        if (!isOnTablet()) {
         	registerGestures();
         }
     	GridView buttonGrid = (GridView)getActivity().findViewById(R.id.buttonGrid);
@@ -136,16 +136,18 @@ public class ModesFragment extends ConnectedFragment {
     }
     
     public void projectLoaded() {
-    	GridView buttonGrid = (GridView)getActivity().findViewById(R.id.buttonGrid);
-    	mAdapter = new ButtonAdapter(getActivity());
-    	buttonGrid.setAdapter(mAdapter);    		
+    	if (getActivity() != null) {
+    		GridView buttonGrid = (GridView)getActivity().findViewById(R.id.buttonGrid);
+    		mAdapter = new ButtonAdapter(getActivity());
+    		buttonGrid.setAdapter(mAdapter);
+    	}
     }
     
 	private void showLastMode() {
 		if (Control.getInstance().getConfiguration() == null)
 			return;
 		showMode(Control.getInstance().getConfiguration().getModes().size() - 1, ControllerActivity.ANIM_MOVE_LEFT);
-		if (!isOnXLargeScreen()) { 
+		if (!isOnTablet()) { 
 			getActivity().overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
 		}
 	}
@@ -154,13 +156,13 @@ public class ModesFragment extends ConnectedFragment {
 		if (Control.getInstance().getConfiguration() == null)
 			return;
 		showMode(-2, ControllerActivity.ANIM_MOVE_RIGHT);
-		if (!isOnXLargeScreen()) { 
+		if (!isOnTablet()) { 
 			getActivity().overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
 		}
 	}
 	
 	private void showMode(int index, int animation) {
-		if (!isOnXLargeScreen()) {
+		if (!isOnTablet()) {
 	    	if (index == -1) {
 	    		// special case: music list
 				Intent intent = new Intent(getActivity().getBaseContext(), MusicListActivity.class);
@@ -199,7 +201,7 @@ public class ModesFragment extends ConnectedFragment {
 	}
 
 	private void showMainControls(boolean moveUp) {
-		if (isOnXLargeScreen())
+		if (isOnTablet())
 			return;
 		Intent intent = new Intent(getActivity().getBaseContext(), MainActivity.class);
 		intent.putExtra(ControllerActivity.ANIMATION_TYPE, moveUp ? ControllerActivity.ANIM_MOVE_UP : ControllerActivity.ANIM_MOVE_DOWN);
@@ -220,7 +222,7 @@ public class ModesFragment extends ConnectedFragment {
     	}
     	
 		public void onClick(View v) {
-			if (!isOnXLargeScreen()) {
+			if (!isOnTablet()) {
 		    	if (mMode == -1) {
 		    		// special case: music list
 					Intent intent = new Intent(getActivity().getBaseContext(), MusicListActivity.class);

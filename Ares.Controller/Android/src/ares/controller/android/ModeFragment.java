@@ -47,7 +47,7 @@ public class ModeFragment extends ModeLikeFragment {
 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (!isOnXLargeScreen()) {
+        if (!isOnTablet()) {
         	registerGestures();
         }
     }

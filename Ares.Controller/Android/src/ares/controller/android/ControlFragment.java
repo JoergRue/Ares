@@ -153,7 +153,7 @@ public class ControlFragment extends ConnectedFragment implements INetworkClient
     public void onActivityCreated(Bundle savedInstanceState) {
     	super.onActivityCreated(savedInstanceState);
     	
-    	if (!isOnXLargeScreen())
+    	if (!isOnTablet())
         {
     		registerGestures();
         }
@@ -169,7 +169,7 @@ public class ControlFragment extends ConnectedFragment implements INetworkClient
         	this.fileToOpenDelayed = getActivity().getPreferences(Activity.MODE_PRIVATE).getString(LAST_PROJECT, ""); 
         }
         
-        if (!isOnXLargeScreen()) {
+        if (!isOnTablet()) {
 	        modesButton = (Button)getActivity().findViewById(R.id.modesButton);
 	        if (modesButton != null) {
 		        modesButton.setEnabled(Control.getInstance().getConfiguration() != null);
@@ -219,7 +219,7 @@ public class ControlFragment extends ConnectedFragment implements INetworkClient
         normalRepeatBmp = ((BitmapDrawable)getResources().getDrawable(R.drawable.repeat)).getBitmap();
         selectedRepeatBmp = ((BitmapDrawable)getResources().getDrawable(R.drawable.repeatred)).getBitmap();
         
-        if (isOnXLargeScreen()) {
+        if (isOnTablet()) {
         	FragmentManager fragmentManager = getFragmentManager();
         	if (fragmentManager.findFragmentById(R.id.modeFragmentContainer) == null) {
 	        	ModeFragment fragment = new ModeFragment();
@@ -316,7 +316,7 @@ public class ControlFragment extends ConnectedFragment implements INetworkClient
 		if (modesButton != null) {
 			modesButton.setEnabled(Control.getInstance().getConfiguration() != null);
 		}
-		if (isOnXLargeScreen()) {
+		if (isOnTablet()) {
 			Fragment fragment = getFragmentManager().findFragmentById(R.id.modeFragmentContainer);
 			ModeLikeFragment modeFragment = (ModeLikeFragment)fragment;
 			if (modeFragment != null) {
@@ -352,7 +352,7 @@ public class ControlFragment extends ConnectedFragment implements INetworkClient
 	private void showModes(boolean moveUp) {
 		if (Control.getInstance().getConfiguration() == null)
 			return;
-		if (!isOnXLargeScreen())
+		if (!isOnTablet())
 		{
 			showModesActivity(moveUp ? ControllerActivity.ANIM_MOVE_UP : ControllerActivity.ANIM_MOVE_DOWN);
 			if (moveUp) {
@@ -365,7 +365,7 @@ public class ControlFragment extends ConnectedFragment implements INetworkClient
 	}
 	
 	private void showLastMode() {
-		if (isOnXLargeScreen())
+		if (isOnTablet())
 			return;
 		if (Control.getInstance().getConfiguration() == null)
 			return;
@@ -374,7 +374,7 @@ public class ControlFragment extends ConnectedFragment implements INetworkClient
 	}
 	
 	private void showFirstMode() {
-		if (isOnXLargeScreen())
+		if (isOnTablet())
 			return;
 		if (Control.getInstance().getConfiguration() == null)
 			return;
@@ -383,7 +383,7 @@ public class ControlFragment extends ConnectedFragment implements INetworkClient
 	}
 	
 	private void showMode(int index, int animation) {
-		if (isOnXLargeScreen())
+		if (isOnTablet())
 			return;
 		Intent intent = new Intent(getActivity().getBaseContext(), ModeActivity.class);
 		intent.putExtra(ModeLikeActivity.MODE_INDEX, index);
@@ -392,7 +392,7 @@ public class ControlFragment extends ConnectedFragment implements INetworkClient
 	}
 
 	private void showModesActivity(int animation) {
-		if (isOnXLargeScreen())
+		if (isOnTablet())
 			return;
 		Intent intent = new Intent(getActivity().getBaseContext(), ModesActivity.class);
 		intent.putExtra(ControllerActivity.ANIMATION_TYPE, animation);
