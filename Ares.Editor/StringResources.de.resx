@@ -533,4 +533,7 @@ Soll es jetzt gespeichert werden?</value>
   <data name="GettingTitles" xml:space="preserve">
     <value>Hole Titel aus ID3-Tags ...</value>
   </data>
+  <data name="TagsCleanedUp" xml:space="preserve">
+    <value>Tag-Datenbasis wurde gesäubert. Log anzeigen?</value>
+  </data>
 </root>

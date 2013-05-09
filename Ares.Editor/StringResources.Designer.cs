@@ -1129,6 +1129,15 @@ namespace Ares.Editor {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Tags database has been cleaned up. Show log? ähnelt.
+        /// </summary>
+        internal static string TagsCleanedUp {
+            get {
+                return ResourceManager.GetString("TagsCleanedUp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Error accessing tags database:
         ///{0} ähnelt.
         /// </summary>

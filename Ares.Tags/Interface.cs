@@ -410,6 +410,11 @@ namespace Ares.Tags
         /// which can be confirmed.
         /// </summary>
         bool CanConfirmTags(IList<String> files);
+
+        /// <summary>
+        /// Cleans the database, removing stale entries.
+        /// </summary>
+        void CleanupDB(System.IO.TextWriter logStream, String musicPath, int languageId);
     }
 
     /// <summary>

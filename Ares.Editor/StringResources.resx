@@ -532,4 +532,7 @@ You should adapt some settings first.</value>
   <data name="GettingTitles" xml:space="preserve">
     <value>Getting titles from ID3 tags ...</value>
   </data>
+  <data name="TagsCleanedUp" xml:space="preserve">
+    <value>Tags database has been cleaned up. Show log?</value>
+  </data>
 </root>

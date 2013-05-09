@@ -1025,5 +1025,33 @@ namespace Ares.Editor.ElementEditors
             }
         }
 
+        private void cleanupDBButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                String tempFileName = System.IO.Path.GetTempFileName() + ".txt";
+                using (System.IO.StreamWriter writer = new System.IO.StreamWriter(tempFileName))
+                {
+                    Ares.Tags.TagsModule.GetTagsDB().WriteInterface.CleanupDB(writer, Ares.Settings.Settings.Instance.MusicDirectory, m_LanguageId);
+                    Ares.Editor.Actions.TagChanges.Instance.FireTagsDBChanged(this);
+                    m_Listen = false;
+                    UpdateAll();
+                    m_Listen = true;
+                    if (MessageBox.Show(this, StringResources.TagsCleanedUp, StringResources.Ares, MessageBoxButtons.YesNo, MessageBoxIcon.None) == System.Windows.Forms.DialogResult.Yes)
+                    {
+                        System.Diagnostics.Process.Start(tempFileName);
+                    }
+                }
+            }
+            catch (Ares.Tags.TagsDbException ex)
+            {
+                MessageBox.Show(this, String.Format(StringResources.TagsDbError, ex.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, ex.Message, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
     }
 }

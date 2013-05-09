@@ -352,6 +352,26 @@ namespace Ares.Tags
             }
         }
 
+        public void CleanupDB(System.IO.TextWriter logStream, String musicPath, int langId)
+        {
+            if (m_Connection == null)
+            {
+                throw new TagsDbException("No Connection to DB file!");
+            }
+            try
+            {
+                DoCleanupDB(logStream, musicPath, langId);
+            }
+            catch (System.Data.DataException ex)
+            {
+                throw new TagsDbException(ex.Message, ex);
+            }
+            catch (DbException ex)
+            {
+                throw new TagsDbException(ex.Message, ex);
+            }
+        }
+
         private void DoAddFileTags(DbTransaction transaction, String path, IList<int> tagIds)
         {
             if (tagIds.Count == 0)
@@ -760,6 +780,128 @@ namespace Ares.Tags
                 }
             }
             return false;
+        }
+
+        private void DoCleanupDB(System.IO.TextWriter logStream, String musicPath, int langId)
+        {
+            using (DbTransaction transaction = m_Connection.BeginTransaction())
+            {
+                // 1. Remove all files which do not exist
+                if (logStream != null)
+                {
+                    logStream.WriteLine("Removing entries for files which don't exist any more:");
+                }
+                String query = String.Format("SELECT DISTINCT {0} FROM {1}", Schema.PATH_COLUMN, Schema.FILES_TABLE);
+                String removal = String.Format("DELETE FROM {0} WHERE {1}=@Path", Schema.FILES_TABLE, Schema.PATH_COLUMN);
+                using (DbCommand queryCmd = DbUtils.CreateDbCommand(query, m_Connection, transaction),
+                       removalCmd = DbUtils.CreateDbCommand(removal, m_Connection, transaction))
+                {
+                    DbParameter pathParam = removalCmd.AddParameter("@Path", System.Data.DbType.String);
+                    using (DbDataReader reader = queryCmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            String relativePath = reader.GetString(0);
+                            String path = System.IO.Path.Combine(musicPath, relativePath);
+                            if (!System.IO.File.Exists(path))
+                            {
+                                if (logStream != null)
+                                    logStream.WriteLine(path);
+                                pathParam.Value = relativePath;
+                                removalCmd.ExecuteNonQuery();
+                            }
+                        }
+                    }
+                }
+                
+                // 2. Remove all tags which are not assigned to any file
+                if (logStream != null)
+                {
+                    logStream.WriteLine();
+                    logStream.WriteLine("Removing unused tags:");
+                    String tagsQuery = String.Format("SELECT DISTINCT {0} FROM {1} WHERE {0} NOT IN (SELECT DISTINCT {2} FROM {3}) AND {0} NOT IN (SELECT DISTINCT {2} FROM {4})",
+                        Schema.ID_COLUMN, Schema.TAGS_TABLE, Schema.TAG_COLUMN, Schema.FILETAGS_TABLE, Schema.REMOVEDTAGS_TABLE);
+                    // must use a separate query for the tag name because the tag might not have a name in the language
+                    String tagNameQuery = String.Format("SELECT {0} FROM {1} WHERE {2}=@TagId AND {3}=@LangId",
+                        Schema.NAME_COLUMN, Schema.TAGNAMES_TABLE, Schema.TAG_COLUMN, Schema.LANGUAGE_COLUMN);
+                    using (DbCommand tagsQueryCmd = DbUtils.CreateDbCommand(tagsQuery, m_Connection, transaction),
+                           tagNameQueryCmd = DbUtils.CreateDbCommand(tagNameQuery, m_Connection, transaction))
+                    {
+                        tagNameQueryCmd.AddParameterWithValue("@LangId", (long)langId);
+                        DbParameter tagIdParam = tagNameQueryCmd.AddParameter("@TagId", System.Data.DbType.Int64);
+                        using (DbDataReader reader = tagsQueryCmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                long id = reader.GetInt64(0);
+                                tagIdParam.Value = id;
+                                using (DbDataReader reader2 = tagNameQueryCmd.ExecuteReader())
+                                {
+                                    if (reader2.Read())
+                                    {
+                                        logStream.WriteLine(String.Format("{1} (Name: {0})", reader2.GetString(0), id));
+                                    }
+                                    else
+                                    {
+                                        logStream.WriteLine(String.Format("{0}", id));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                String tagRemoval = String.Format("DELETE FROM {0} WHERE {1} NOT IN (SELECT DISTINCT {2} FROM {3}) AND {1} NOT IN (SELECT DISTINCT {2} FROM {4})",
+                    Schema.TAGS_TABLE, Schema.ID_COLUMN, Schema.TAG_COLUMN, Schema.FILETAGS_TABLE, Schema.REMOVEDTAGS_TABLE);
+                using (DbCommand tagRemoveCmd = DbUtils.CreateDbCommand(tagRemoval, m_Connection, transaction))
+                {
+                    tagRemoveCmd.ExecuteNonQuery();
+                }
+
+                // 3. Remove all categories without tags
+                if (logStream != null)
+                {
+                    logStream.WriteLine();
+                    logStream.WriteLine("Removing empty categories: ");
+                    String categoryQuery = String.Format("SELECT DISTINCT {0} FROM {1} WHERE {0} NOT IN (SELECT DISTINCT {2} FROM {3})",
+                        Schema.ID_COLUMN, Schema.CATEGORIES_TABLE, Schema.CATEGORY_COLUMN, Schema.TAGS_TABLE);
+                    String categoryNameQuery = String.Format("SELECT {0} FROM {1} WHERE {2}=@CategoryId AND {3}=@LangId",
+                        Schema.NAME_COLUMN, Schema.CATEGORYNAMES_TABLE, Schema.CATEGORY_COLUMN, Schema.LANGUAGE_COLUMN);
+                    using (DbCommand categoryQueryCmd = DbUtils.CreateDbCommand(categoryQuery, m_Connection, transaction),
+                           categoryNameQueryCmd = DbUtils.CreateDbCommand(categoryNameQuery, m_Connection, transaction))
+                    {
+                        categoryNameQueryCmd.AddParameterWithValue("@LangId", (long)langId);
+                        DbParameter categoryIdParam = categoryNameQueryCmd.AddParameter("@CategoryId", System.Data.DbType.Int64);
+                        using (DbDataReader reader = categoryQueryCmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                long id = reader.GetInt64(0);
+                                categoryIdParam.Value = id;
+                                using (DbDataReader reader2 = categoryNameQueryCmd.ExecuteReader())
+                                {
+                                    if (reader2.Read())
+                                    {
+                                        logStream.WriteLine(String.Format("{1} (Name: {0})", reader2.GetString(0), id));
+                                    }
+                                    else
+                                    {
+                                        logStream.WriteLine(String.Format("{0}", id));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                String categoryRemoval = String.Format("DELETE FROM {0} WHERE {1} NOT IN (SELECT DISTINCT {2} FROM {3})",
+                    Schema.CATEGORIES_TABLE, Schema.ID_COLUMN, Schema.CATEGORY_COLUMN, Schema.TAGS_TABLE);
+                using (DbCommand categoryRemoveCmd = DbUtils.CreateDbCommand(categoryRemoval, m_Connection, transaction))
+                {
+                    categoryRemoveCmd.ExecuteNonQuery();
+                }
+
+                // Done
+                transaction.Commit();
+            }
         }
 
         private static void AssignStringOrNull(DbParameter param, String value)
