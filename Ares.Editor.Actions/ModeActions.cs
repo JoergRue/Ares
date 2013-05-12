@@ -213,4 +213,82 @@ namespace Ares.Editor.Actions
         private int m_OldKey;
         private int m_NewKey;
     }
+
+    public class ModeMoveAction : Action
+    {
+        public ModeMoveAction(Ares.Data.IMode mode, int oldIndex, int newIndex, TreeNode parentNode, System.Action adaptButtons)
+        {
+            m_Mode = mode;
+            m_OldIndex = oldIndex;
+            m_NewIndex = newIndex;
+            m_ParentNode = parentNode;
+            m_AdaptButtons = adaptButtons;
+        }
+
+        public override void Do(IProject project)
+        {
+            project.RemoveMode(m_Mode);
+            project.InsertMode(m_NewIndex, m_Mode);
+            TreeNode node = m_ParentNode.Nodes[m_OldIndex];
+            m_ParentNode.Nodes.RemoveAt(m_OldIndex);
+            m_ParentNode.Nodes.Insert(m_NewIndex, node);
+            m_AdaptButtons();
+        }
+
+        public override void Undo(IProject project)
+        {
+            project.RemoveMode(m_Mode);
+            project.InsertMode(m_OldIndex, m_Mode);
+            TreeNode node = m_ParentNode.Nodes[m_NewIndex];
+            m_ParentNode.Nodes.RemoveAt(m_NewIndex);
+            m_ParentNode.Nodes.Insert(m_OldIndex, node);
+            m_AdaptButtons();
+        }
+
+        private TreeNode m_ParentNode;
+        private Ares.Data.IMode m_Mode;
+        private int m_OldIndex;
+        private int m_NewIndex;
+        private System.Action m_AdaptButtons;
+    }
+
+    public class ModeElementMoveAction : Action
+    {
+        public ModeElementMoveAction(Ares.Data.IMode mode, int oldIndex, int newIndex, TreeNode parentNode, System.Action adaptButtons)
+        {
+            m_Mode = mode;
+            m_Element = mode.GetElements()[oldIndex];
+            m_OldIndex = oldIndex;
+            m_NewIndex = newIndex;
+            m_ParentNode = parentNode;
+            m_AdaptButtons = adaptButtons;
+        }
+
+        public override void Do(IProject project)
+        {
+            m_Mode.RemoveElement(m_Element);
+            m_Mode.InsertElement(m_NewIndex, m_Element);
+            TreeNode node = m_ParentNode.Nodes[m_OldIndex];
+            m_ParentNode.Nodes.RemoveAt(m_OldIndex);
+            m_ParentNode.Nodes.Insert(m_NewIndex, node);
+            m_AdaptButtons();
+        }
+
+        public override void Undo(IProject project)
+        {
+            m_Mode.RemoveElement(m_Element);
+            m_Mode.InsertElement(m_OldIndex, m_Element);
+            TreeNode node = m_ParentNode.Nodes[m_NewIndex];
+            m_ParentNode.Nodes.RemoveAt(m_NewIndex);
+            m_ParentNode.Nodes.Insert(m_OldIndex, node);
+            m_AdaptButtons();
+        }
+
+        private TreeNode m_ParentNode;
+        private Ares.Data.IMode m_Mode;
+        private Ares.Data.IModeElement m_Element;
+        private int m_OldIndex;
+        private int m_NewIndex;
+        private System.Action m_AdaptButtons;
+    }
 }

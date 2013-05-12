@@ -519,6 +519,30 @@
   <data name="setKeyButton.Text" xml:space="preserve">
     <value>Taste wählen ...</value>
   </data>
+  <data name="moveDownButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAC/SURBVDhPYxgFOMDijVsZpq7YxdA67yBDxfTjDPl9Z6Ay
+        RAKQAR2vLsMxUQacPreCYc+hNQybdm4AG7Ds+0EUA5I7LzFEN11nCKy+DdWBBdw9u6D179/9bH//zmI4
+        9mcD3JDqt7cZij8+Yqg6eQGqEg+4fx5siM/fv+s4/n6dw3DswwaG/kenGcp3n4eqIAKcO7ccZEgA0BC2
+        vz/mMFQdIcJmdHD87KrGv3/3Mkw7fxAqQgY4fGYNlDUKcAIGBgCkqmj/nDGwggAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="moveDownButton.Text" xml:space="preserve">
+    <value>Nach unten schieben</value>
+  </data>
+  <data name="moveUpButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADBSURBVDhPYxgFBMDhM2ugLDLA8bOrGv/+3csw7fxBqAgJ
+        4Ny55a1//+4P+Pt3HdvfH3MYqo5cgMoQAe6fXwDS7APUzPH36xyGYx82MPQ/Os1Qvvs8VAUecPcsWDPb
+        37+zGI792cCw7PtBho5Xlxmq395mKP74iKHqJB6XnD63gmHPoTUMm3ZuYFi8cStcMwjn951hSO68xBDd
+        dJ0hsPo2VAceADIAphlmAEkAZMDUFbsYWucdZKiYfpx0A0YSYGAAAMpXaP91bSq6AAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="moveUpButton.Text" xml:space="preserve">
+    <value>Nach oben schieben</value>
+  </data>
   <data name="exportDialog.Filter" xml:space="preserve">
     <value>Ares Projekte|*.ares|Gepackte Ares Projekte|*.apkg|Alle Dateien|*.*</value>
   </data>

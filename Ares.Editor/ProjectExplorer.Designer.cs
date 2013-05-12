@@ -135,6 +135,8 @@ namespace Ares.Editor
             this.playButton = new System.Windows.Forms.ToolStripButton();
             this.stopButton = new System.Windows.Forms.ToolStripButton();
             this.setKeyButton = new System.Windows.Forms.ToolStripButton();
+            this.moveDownButton = new System.Windows.Forms.ToolStripButton();
+            this.moveUpButton = new System.Windows.Forms.ToolStripButton();
             this.exportDialog = new System.Windows.Forms.SaveFileDialog();
             this.importDialog = new System.Windows.Forms.OpenFileDialog();
             this.projectContextMenu.SuspendLayout();
@@ -717,7 +719,9 @@ namespace Ares.Editor
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.playButton,
             this.stopButton,
-            this.setKeyButton});
+            this.setKeyButton,
+            this.moveDownButton,
+            this.moveUpButton});
             this.toolStrip1.Name = "toolStrip1";
             // 
             // playButton
@@ -743,6 +747,20 @@ namespace Ares.Editor
             this.setKeyButton.Image = global::Ares.Editor.ImageResources.interrogation;
             this.setKeyButton.Name = "setKeyButton";
             this.setKeyButton.Click += new System.EventHandler(this.setKeyButton_Click);
+            // 
+            // moveDownButton
+            // 
+            resources.ApplyResources(this.moveDownButton, "moveDownButton");
+            this.moveDownButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.moveDownButton.Name = "moveDownButton";
+            this.moveDownButton.Click += new System.EventHandler(this.moveDownButton_Click);
+            // 
+            // moveUpButton
+            // 
+            resources.ApplyResources(this.moveUpButton, "moveUpButton");
+            this.moveUpButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.moveUpButton.Name = "moveUpButton";
+            this.moveUpButton.Click += new System.EventHandler(this.moveUpButton_Click);
             // 
             // exportDialog
             // 
@@ -862,5 +880,7 @@ namespace Ares.Editor
         private System.Windows.Forms.ToolStripMenuItem tagsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem musicByTagsToolStripItem;
         private System.Windows.Forms.ToolStripMenuItem addMusicByTagsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton moveUpButton;
+        private System.Windows.Forms.ToolStripButton moveDownButton;
     }
 }

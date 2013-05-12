@@ -1237,6 +1237,7 @@ namespace Ares.Editor
         private void projectTree_AfterSelect(object sender, TreeViewEventArgs e)
         {
             playButton.Enabled = PlayingPossible;
+            AdaptMoveButtons();
             AddChangeListener();
         }
 
@@ -2223,6 +2224,166 @@ namespace Ares.Editor
         private void addMusicByTagsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AddMusicByTags();
+        }
+
+        private void moveUpButton_Click(object sender, EventArgs e)
+        {
+            MoveUp();
+        }
+
+        private void MoveUp()
+        {
+            if (SelectedNode != null && SelectedNode.Tag != null)
+            {
+                IMode mode = SelectedNode.Tag as IMode;
+                if (mode != null)
+                {
+                    int index = 0;
+                    for (; index < m_Project.GetModes().Count; ++index)
+                    {
+                        if (m_Project.GetModes()[index] == mode)
+                            break;
+                    }
+                    if (index < m_Project.GetModes().Count && index > 0)
+                    {
+                        Actions.Actions.Instance.AddNew(new Actions.ModeMoveAction(mode, index, index - 1, SelectedNode.Parent, () => AdaptMoveButtons()), m_Project);
+                    }
+                    return;
+                }
+                IModeElement modeElement = SelectedNode.Tag as IModeElement;
+                if (modeElement == null)
+                    return;
+                mode = SelectedNode.Parent.Tag as IMode;
+                if (mode != null)
+                {
+                    int index = 0;
+                    for (; index < mode.GetElements().Count; ++index)
+                    {
+                        if (mode.GetElements()[index] == modeElement)
+                            break;
+                    }
+                    if (index < mode.GetElements().Count && index > 0)
+                    {
+                        Actions.Actions.Instance.AddNew(new Actions.ModeElementMoveAction(mode, index, index - 1, SelectedNode.Parent, () => AdaptMoveButtons()), m_Project);
+                    }
+                }
+            }
+        }
+
+        private void MoveDown()
+        {
+            if (SelectedNode != null && SelectedNode.Tag != null)
+            {
+                IMode mode = SelectedNode.Tag as IMode;
+                if (mode != null)
+                {
+                    int index = 0;
+                    for (; index < m_Project.GetModes().Count; ++index)
+                    {
+                        if (m_Project.GetModes()[index] == mode)
+                            break;
+                    }
+                    if (index < m_Project.GetModes().Count - 1)
+                    {
+                        Actions.Actions.Instance.AddNew(new Actions.ModeMoveAction(mode, index, index + 1, SelectedNode.Parent, () => AdaptMoveButtons()), m_Project);
+                    }
+                    return;
+                }
+                IModeElement modeElement = SelectedNode.Tag as IModeElement;
+                if (modeElement == null)
+                    return;
+                mode = SelectedNode.Parent.Tag as IMode;
+                if (mode != null)
+                {
+                    int index = 0;
+                    for (; index < mode.GetElements().Count; ++index)
+                    {
+                        if (mode.GetElements()[index] == modeElement)
+                            break;
+                    }
+                    if (index < mode.GetElements().Count - 1)
+                    {
+                        Actions.Actions.Instance.AddNew(new Actions.ModeElementMoveAction(mode, index, index + 1, SelectedNode.Parent, () => AdaptMoveButtons()), m_Project);
+                    }
+                }
+            }
+        }
+
+        private void AdaptMoveButtons()
+        {
+            moveUpButton.Enabled = CanMoveUp();
+            moveDownButton.Enabled = CanMoveDown();
+        }
+
+        private void moveDownButton_Click(object sender, EventArgs e)
+        {
+            MoveDown();
+        }
+
+        private bool CanMoveDown()
+        {
+            if (SelectedNode != null && SelectedNode.Tag != null)
+            {
+                IMode mode = SelectedNode.Tag as IMode;
+                if (mode != null)
+                {
+                    int index = 0;
+                    for (; index < m_Project.GetModes().Count; ++index)
+                    {
+                        if (m_Project.GetModes()[index] == mode)
+                            break;
+                    }
+                    return index < m_Project.GetModes().Count - 1;
+                }
+                IModeElement modeElement = SelectedNode.Tag as IModeElement;
+                if (modeElement == null)
+                    return false;
+                mode = SelectedNode.Parent.Tag as IMode;
+                if (mode != null)
+                {
+                    int index = 0;
+                    for (; index < mode.GetElements().Count; ++index)
+                    {
+                        if (mode.GetElements()[index] == modeElement)
+                            break;
+                    }
+                    return index < mode.GetElements().Count - 1;
+                }
+            }
+            return false;
+        }
+
+        private bool CanMoveUp()
+        {
+            if (SelectedNode != null && SelectedNode.Tag != null)
+            {
+                IMode mode = SelectedNode.Tag as IMode;
+                if (mode != null)
+                {
+                    int index = 0;
+                    for (; index < m_Project.GetModes().Count; ++index)
+                    {
+                        if (m_Project.GetModes()[index] == mode)
+                            break;
+                    }
+                    return index > 0 && index < m_Project.GetModes().Count;
+                }
+                IModeElement modeElement = SelectedNode.Tag as IModeElement;
+                if (modeElement == null)
+                    return false;
+                mode = SelectedNode.Parent.Tag as IMode;
+                if (mode != null)
+                {
+                    int index = 0;
+                    for (; index < mode.GetElements().Count; ++index)
+                    {
+                        if (mode.GetElements()[index] == modeElement)
+                            break;
+                    }
+                    return index > 0 && index < mode.GetElements().Count;
+                }
+            }
+            return false;
         }
 
     }
