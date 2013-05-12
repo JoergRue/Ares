@@ -60,6 +60,8 @@ namespace Ares.Editor
             {
                 tagFilterButton.Enabled = false;
                 tagFilterButton.Visible = false;
+                tagButton.Enabled = false;
+                tagButton.Visible = false;
             }
             ReFillTree();
             if (fileType == FileType.Music)
@@ -958,6 +960,11 @@ namespace Ares.Editor
 
         private void tagsToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            SetTags();
+        }
+
+        private void SetTags()
+        {
             List<String> files = GetSelectedFiles();
             m_Parent.ShowFileTagsEditor(files);
         }
@@ -1032,6 +1039,11 @@ namespace Ares.Editor
                 }
                 ReFillTree();
             }
+        }
+
+        private void tagButton_Click(object sender, EventArgs e)
+        {
+            SetTags();
         }
 
     }

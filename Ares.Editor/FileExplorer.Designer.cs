@@ -75,6 +75,7 @@ namespace Ares.Editor
             this.searchBox = new System.Windows.Forms.ToolStripTextBox();
             this.searchButton = new System.Windows.Forms.ToolStripButton();
             this.showInfoButton = new System.Windows.Forms.ToolStripButton();
+            this.tagButton = new System.Windows.Forms.ToolStripButton();
             this.tagFilterButton = new System.Windows.Forms.ToolStripButton();
             this.fileNodeContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.playToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -100,19 +101,17 @@ namespace Ares.Editor
             // 
             // splitContainer1.Panel1
             // 
-            resources.ApplyResources(this.splitContainer1.Panel1, "splitContainer1.Panel1");
             this.splitContainer1.Panel1.Controls.Add(this.treeView1);
             // 
             // splitContainer1.Panel2
             // 
-            resources.ApplyResources(this.splitContainer1.Panel2, "splitContainer1.Panel2");
             this.splitContainer1.Panel2.Controls.Add(this.informationBox);
             this.splitContainer1.Panel2.Controls.Add(this.label1);
             // 
             // treeView1
             // 
-            resources.ApplyResources(this.treeView1, "treeView1");
             this.treeView1.AllowDrop = true;
+            resources.ApplyResources(this.treeView1, "treeView1");
             this.treeView1.Name = "treeView1";
             this.treeView1.SelectedNodes = ((System.Collections.Generic.List<System.Windows.Forms.TreeNode>)(resources.GetObject("treeView1.SelectedNodes")));
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
@@ -139,7 +138,6 @@ namespace Ares.Editor
             // 
             // toolStrip1
             // 
-            resources.ApplyResources(this.toolStrip1, "toolStrip1");
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.playButton,
             this.stopButton,
@@ -147,64 +145,72 @@ namespace Ares.Editor
             this.searchBox,
             this.searchButton,
             this.showInfoButton,
+            this.tagButton,
             this.tagFilterButton});
+            resources.ApplyResources(this.toolStrip1, "toolStrip1");
             this.toolStrip1.Name = "toolStrip1";
             // 
             // playButton
             // 
-            resources.ApplyResources(this.playButton, "playButton");
             this.playButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.playButton, "playButton");
             this.playButton.Image = global::Ares.Editor.ImageResources.RunSmall;
             this.playButton.Name = "playButton";
             this.playButton.Click += new System.EventHandler(this.playButton_Click);
             // 
             // stopButton
             // 
-            resources.ApplyResources(this.stopButton, "stopButton");
             this.stopButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.stopButton, "stopButton");
             this.stopButton.Image = global::Ares.Editor.ImageResources.StopSmall;
             this.stopButton.Name = "stopButton";
             this.stopButton.Click += new System.EventHandler(this.stopButton_Click);
             // 
             // refreshButton
             // 
-            resources.ApplyResources(this.refreshButton, "refreshButton");
             this.refreshButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.refreshButton, "refreshButton");
             this.refreshButton.Name = "refreshButton";
             this.refreshButton.Click += new System.EventHandler(this.refreshButton_Click);
             // 
             // searchBox
             // 
-            resources.ApplyResources(this.searchBox, "searchBox");
             this.searchBox.Name = "searchBox";
+            resources.ApplyResources(this.searchBox, "searchBox");
             this.searchBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.searchBox_KeyPress);
             // 
             // searchButton
             // 
-            resources.ApplyResources(this.searchButton, "searchButton");
             this.searchButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.searchButton, "searchButton");
             this.searchButton.Name = "searchButton";
             this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
             // 
             // showInfoButton
             // 
-            resources.ApplyResources(this.showInfoButton, "showInfoButton");
             this.showInfoButton.Checked = true;
             this.showInfoButton.CheckState = System.Windows.Forms.CheckState.Checked;
             this.showInfoButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.showInfoButton, "showInfoButton");
             this.showInfoButton.Name = "showInfoButton";
             this.showInfoButton.Click += new System.EventHandler(this.showInfoButton_Click);
             // 
+            // tagButton
+            // 
+            this.tagButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.tagButton, "tagButton");
+            this.tagButton.Name = "tagButton";
+            this.tagButton.Click += new System.EventHandler(this.tagButton_Click);
+            // 
             // tagFilterButton
             // 
-            resources.ApplyResources(this.tagFilterButton, "tagFilterButton");
             this.tagFilterButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.tagFilterButton, "tagFilterButton");
             this.tagFilterButton.Name = "tagFilterButton";
             this.tagFilterButton.Click += new System.EventHandler(this.tagFilterButton_Click);
             // 
             // fileNodeContextMenu
             // 
-            resources.ApplyResources(this.fileNodeContextMenu, "fileNodeContextMenu");
             this.fileNodeContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.playToolStripMenuItem,
             this.stopToolStripMenuItem,
@@ -216,59 +222,60 @@ namespace Ares.Editor
             this.pasteToolStripMenuItem,
             this.deleteToolStripMenuItem});
             this.fileNodeContextMenu.Name = "contextMenuStrip1";
+            resources.ApplyResources(this.fileNodeContextMenu, "fileNodeContextMenu");
             this.fileNodeContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.fileNodeContextMenu_Opening);
             // 
             // playToolStripMenuItem
             // 
-            resources.ApplyResources(this.playToolStripMenuItem, "playToolStripMenuItem");
             this.playToolStripMenuItem.Name = "playToolStripMenuItem";
+            resources.ApplyResources(this.playToolStripMenuItem, "playToolStripMenuItem");
             this.playToolStripMenuItem.Click += new System.EventHandler(this.playToolStripMenuItem_Click);
             // 
             // stopToolStripMenuItem
             // 
-            resources.ApplyResources(this.stopToolStripMenuItem, "stopToolStripMenuItem");
             this.stopToolStripMenuItem.Name = "stopToolStripMenuItem";
+            resources.ApplyResources(this.stopToolStripMenuItem, "stopToolStripMenuItem");
             this.stopToolStripMenuItem.Click += new System.EventHandler(this.stopToolStripMenuItem_Click);
             // 
             // editToolStripMenuItem
             // 
-            resources.ApplyResources(this.editToolStripMenuItem, "editToolStripMenuItem");
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+            resources.ApplyResources(this.editToolStripMenuItem, "editToolStripMenuItem");
             this.editToolStripMenuItem.Click += new System.EventHandler(this.editToolStripMenuItem_Click);
             // 
             // editTagsMenuItem
             // 
-            resources.ApplyResources(this.editTagsMenuItem, "editTagsMenuItem");
             this.editTagsMenuItem.Name = "editTagsMenuItem";
+            resources.ApplyResources(this.editTagsMenuItem, "editTagsMenuItem");
             this.editTagsMenuItem.Click += new System.EventHandler(this.tagsToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
-            resources.ApplyResources(this.toolStripSeparator1, "toolStripSeparator1");
             this.toolStripSeparator1.Name = "toolStripSeparator1";
+            resources.ApplyResources(this.toolStripSeparator1, "toolStripSeparator1");
             // 
             // copyToolStripMenuItem
             // 
-            resources.ApplyResources(this.copyToolStripMenuItem, "copyToolStripMenuItem");
             this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
+            resources.ApplyResources(this.copyToolStripMenuItem, "copyToolStripMenuItem");
             this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
             // 
             // copyToolStripMenuItem1
             // 
-            resources.ApplyResources(this.copyToolStripMenuItem1, "copyToolStripMenuItem1");
             this.copyToolStripMenuItem1.Name = "copyToolStripMenuItem1";
+            resources.ApplyResources(this.copyToolStripMenuItem1, "copyToolStripMenuItem1");
             this.copyToolStripMenuItem1.Click += new System.EventHandler(this.copyToolStripMenuItem1_Click);
             // 
             // pasteToolStripMenuItem
             // 
-            resources.ApplyResources(this.pasteToolStripMenuItem, "pasteToolStripMenuItem");
             this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
+            resources.ApplyResources(this.pasteToolStripMenuItem, "pasteToolStripMenuItem");
             this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
             // 
             // deleteToolStripMenuItem
             // 
-            resources.ApplyResources(this.deleteToolStripMenuItem, "deleteToolStripMenuItem");
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            resources.ApplyResources(this.deleteToolStripMenuItem, "deleteToolStripMenuItem");
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
             // FileExplorer
@@ -314,5 +321,6 @@ namespace Ares.Editor
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.ToolStripButton tagFilterButton;
         private System.Windows.Forms.ToolStripMenuItem editTagsMenuItem;
+        private System.Windows.Forms.ToolStripButton tagButton;
     }
 }
