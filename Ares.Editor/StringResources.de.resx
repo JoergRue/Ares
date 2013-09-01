@@ -536,4 +536,10 @@ Soll es jetzt gespeichert werden?</value>
   <data name="TagsCleanedUp" xml:space="preserve">
     <value>Tag-Datenbasis wurde gesäubert. Log anzeigen?</value>
   </data>
+  <data name="BassAacLoadFail1" xml:space="preserve">
+    <value>Konnte BASS AAC AddOn-Library nicht laden. Installationsproblem?</value>
+  </data>
+  <data name="BassFlacLoadFail1" xml:space="preserve">
+    <value>Konnte BASS Flac AddOn-Library nicht laden. Installationsproblem?</value>
+  </data>
 </root>

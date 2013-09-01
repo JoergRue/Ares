@@ -123,6 +123,9 @@
   <data name="AresPlayer" xml:space="preserve">
     <value>Ares Player - {0}</value>
   </data>
+  <data name="BassAacLoadFail1" xml:space="preserve">
+    <value>Could not load BASS AAC add-on library. Installation problem?</value>
+  </data>
   <data name="BassDeviceAlready" xml:space="preserve">
     <value>Device already initialized.</value>
   </data>
@@ -137,6 +140,9 @@
   </data>
   <data name="BassDeviceInvalid" xml:space="preserve">
     <value>Invalid device. Are soundcard and speakers installed properly?</value>
+  </data>
+  <data name="BassFlacLoadFail1" xml:space="preserve">
+    <value>Could not load BASS Flac add-on library. Installation problem?</value>
   </data>
   <data name="BassFxLoadFail" xml:space="preserve">
     <value>Could not load BASS Fx add-on library. Installation problem?</value>

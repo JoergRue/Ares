@@ -65,6 +65,15 @@ namespace Ares.Player
             return String.Format(StringResources.BassInitFail, GetBassInitErrorMessage(), StringResources.NoDevice);
         }
 
+        private static bool IsLinux
+        {
+            get
+            {
+                int p = (int)Environment.OSVersion.Platform;
+                return (p == 4) || (p == 6) || (p == 128);
+            }
+        }
+
         /// <summary>
         /// Der Haupteinstiegspunkt für die Anwendung.
         /// </summary>
@@ -83,6 +92,7 @@ namespace Ares.Player
             }
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            int bassPlugin1, bassPlugin2;
             try
             {
                 BassRegistration.Registration.RegisterBass();
@@ -105,6 +115,18 @@ namespace Ares.Player
                     return;
                 }
 #endif
+                String flacPlugin = IsLinux ? "libbassflag.so" : "bassflac.dll";
+                bassPlugin1 = Un4seen.Bass.Bass.BASS_PluginLoad(flacPlugin);
+                if (bassPlugin1 == 0 && Un4seen.Bass.Bass.BASS_ErrorGetCode() != Un4seen.Bass.BASSError.BASS_ERROR_ALREADY)
+                {
+                    MessageBox.Show(StringResources.BassFlacLoadFail1, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                }
+                String aacPlugin = IsLinux ? "libbass_aac.so" : "bass_aac.dll";
+                bassPlugin2 = Un4seen.Bass.Bass.BASS_PluginLoad("bass_aac.dll");
+                if (bassPlugin2 == 0 && Un4seen.Bass.Bass.BASS_ErrorGetCode() != Un4seen.Bass.BASSError.BASS_ERROR_ALREADY)
+                {
+                    MessageBox.Show(StringResources.BassAacLoadFail1, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                }
             }
             catch (Exception ex)
             {
