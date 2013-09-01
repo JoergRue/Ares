@@ -14,12 +14,12 @@ namespace Ares.TagsImport
     public class FileOperations
     {
         private IProgressMonitor m_Monitor;
-        private CancellationTokenSource m_TokenSource;
+        private CancellationToken m_Token;
 
-        public static Task CopyOrMove(IProgressMonitor monitor, Ares.Data.IProject project, String musicDir, String soundsDir, System.Collections.Generic.Dictionary<String, object> uniqueElements, 
-            bool move, String targetPath, CancellationTokenSource tokenSource)
+        public static Task CopyOrMoveAsync(IProgressMonitor monitor, Ares.Data.IProject project, String musicDir, String soundsDir, System.Collections.Generic.Dictionary<String, object> uniqueElements, 
+            bool move, String targetPath, CancellationToken token)
         {
-            FileOperations privateInstance = new FileOperations(monitor, tokenSource);
+            FileOperations privateInstance = new FileOperations(monitor, token);
             FileOpData data = new FileOpData();
             data.TargetPath = targetPath;
             data.UniqueElements = uniqueElements;
@@ -40,10 +40,10 @@ namespace Ares.TagsImport
             public String SoundsDirectory { get; set; }
         }
 
-        private FileOperations(IProgressMonitor monitor, CancellationTokenSource tokenSource)
+        private FileOperations(IProgressMonitor monitor, CancellationToken token)
         {
             m_Monitor = monitor;
-            m_TokenSource = tokenSource;
+            m_Token  = token;
         }
 
         private void DoCopyOrMove(FileOpData data)
@@ -99,7 +99,7 @@ namespace Ares.TagsImport
                     currentBytes += GetBytes(fileTargetPath);
                     ReportProgress(currentBytes, allBytes, ref lastPercent, fileTargetPath);
                 }
-                m_TokenSource.Token.ThrowIfCancellationRequested();
+                m_Token.ThrowIfCancellationRequested();
             }
 
             if (data.Move)
@@ -176,7 +176,7 @@ namespace Ares.TagsImport
             {
                 lastPercent = currentPercent;
                 m_Monitor.SetProgress(currentPercent, System.IO.Path.GetFileName(file));
-                m_TokenSource.Token.ThrowIfCancellationRequested();
+                m_Token.ThrowIfCancellationRequested();
             }
         }
 
@@ -214,14 +214,14 @@ namespace Ares.TagsImport
                 foreach (System.IO.DirectoryInfo subDir in info.GetDirectories())
                 {
                     CopyDirectory(subDir.FullName, System.IO.Path.Combine(destination, subDir.Name), ref currentBytes, allBytes, ref lastPercent);
-                    m_TokenSource.Token.ThrowIfCancellationRequested();
+                    m_Token.ThrowIfCancellationRequested();
                 }
                 foreach (System.IO.FileInfo file in info.GetFiles())
                 {
                     System.IO.File.Copy(file.FullName, System.IO.Path.Combine(destination, file.Name), true);
                     currentBytes += GetBytes(file.FullName);
                     ReportProgress(currentBytes, allBytes, ref lastPercent, file.FullName);
-                    m_TokenSource.Token.ThrowIfCancellationRequested();
+                    m_Token.ThrowIfCancellationRequested();
                 }
             }
         }

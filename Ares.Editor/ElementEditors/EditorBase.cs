@@ -254,7 +254,7 @@ namespace Ares.Editor.ElementEditors
                     System.Threading.CancellationTokenSource tokenSource = new System.Threading.CancellationTokenSource();
                     TaskProgressMonitor monitor = new TaskProgressMonitor(this, StringResources.AddingFiles, tokenSource);
                     monitor.IncreaseProgress(0.1, StringResources.GettingTitles);
-                    var task = DragAndDrop.GetElementsFromDroppedItemsAsync(info, tokenSource, monitor);
+                    var task = DragAndDrop.GetElementsFromDroppedItemsAsync(info, tokenSource.Token, monitor);
                     task.ContinueWith((t) =>
                     {
                         monitor.Close();

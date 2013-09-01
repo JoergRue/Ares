@@ -59,18 +59,21 @@ namespace Ares.TagsImport
     public class GlobalDbUpload
     {
         private Ares.ModelInfo.IProgressMonitor m_Monitor;
-        private CancellationTokenSource m_TokenSource;
+        private CancellationToken m_Token;
 
-        public static String UploadTags(Ares.ModelInfo.IProgressMonitor monitor, IList<String> files, String user, bool includeLog, CancellationTokenSource cancellationTokenSource)
+        public static Task<String> UploadTagsAsync(Ares.ModelInfo.IProgressMonitor monitor, IList<String> files, String user, bool includeLog, CancellationToken cancellationToken)
         {
-            GlobalDbUpload instance = new GlobalDbUpload(monitor, cancellationTokenSource);
-            return instance.DoUploadTags(files, user, includeLog);
+            GlobalDbUpload instance = new GlobalDbUpload(monitor, cancellationToken);
+            return Task.Factory.StartNew(() =>
+                {
+                    return instance.DoUploadTags(files, user, includeLog);
+                });
         }
 
-        private GlobalDbUpload(Ares.ModelInfo.IProgressMonitor monitor, CancellationTokenSource tokenSource)
+        private GlobalDbUpload(Ares.ModelInfo.IProgressMonitor monitor, CancellationToken token)
         {
             m_Monitor = monitor;
-            m_TokenSource = tokenSource;
+            m_Token = token;
         }
 
         private static String ObfuscateUser(String user)
@@ -117,7 +120,7 @@ namespace Ares.TagsImport
                 client.Timeout = 20 * 1000;
                 var response = client.Execute<UploadResponse>(request);
 
-                m_TokenSource.Token.ThrowIfCancellationRequested();
+                m_Token.ThrowIfCancellationRequested();
                 if (response.ErrorException != null)
                 {
                     throw new GlobalDbException(response.ErrorException);
@@ -143,18 +146,29 @@ namespace Ares.TagsImport
     public class GlobalDbDownload
     {
         private Ares.ModelInfo.IProgressMonitor m_Monitor;
-        private CancellationTokenSource m_TokenSource;
+        private CancellationToken m_Token;
 
-        public static String DownloadTags(Ares.ModelInfo.IProgressMonitor monitor, IList<String> files, out int nrOfFoundFiles, bool includeLog, CancellationTokenSource cancellationTokenSource)
+        public class DownloadResult
         {
-            GlobalDbDownload instance = new GlobalDbDownload(monitor, cancellationTokenSource);
-            return instance.DoDownloadTags(files, out nrOfFoundFiles, includeLog);
+            public String Result { get; set; }
+            public int NrOfFoundFiles { get; set; }
         }
 
-        private GlobalDbDownload(Ares.ModelInfo.IProgressMonitor monitor, CancellationTokenSource tokenSource)
+        public static Task<DownloadResult> DownloadTagsAsync(Ares.ModelInfo.IProgressMonitor monitor, IList<String> files, bool includeLog, CancellationToken cancellationToken)
+        {
+            GlobalDbDownload instance = new GlobalDbDownload(monitor, cancellationToken);
+            return Task.Factory.StartNew(() =>
+                {
+                    int nrOfFoundFiles = 0;
+                    String res = instance.DoDownloadTags(files, out nrOfFoundFiles, includeLog);
+                    return new DownloadResult { Result = res, NrOfFoundFiles = nrOfFoundFiles };
+                });
+        }
+
+        private GlobalDbDownload(Ares.ModelInfo.IProgressMonitor monitor, CancellationToken token)
         {
             m_Monitor = monitor;
-            m_TokenSource = tokenSource;
+            m_Token = token;
         }
 
         private String DoDownloadTags(IList<String> files, out int nrOfFoundFiles, bool includeLog)
@@ -198,7 +212,7 @@ namespace Ares.TagsImport
                 client.BaseUrl = GlobalDb.BaseUrl;
                 client.Timeout = 20 * 1000;
                 var response = client.Execute<DownloadResponse>(request);
-                m_TokenSource.Token.ThrowIfCancellationRequested();
+                m_Token.ThrowIfCancellationRequested();
                 if (response.ErrorException != null)
                 {
                     throw new GlobalDbException(response.ErrorException);

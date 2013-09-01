@@ -743,7 +743,7 @@ namespace Ares.Editor
             Ares.Settings.Settings settings = Ares.Settings.Settings.Instance;
             System.Threading.CancellationTokenSource tokenSource = new System.Threading.CancellationTokenSource();
             Ares.CommonGUI.ProgressMonitorBase monitor = new TaskProgressMonitor(this, move ? StringResources.Moving : StringResources.Copying, tokenSource);
-            var task = Ares.TagsImport.FileOperations.CopyOrMove(monitor, m_Project, settings.MusicDirectory, settings.SoundDirectory, uniqueElements, move, targetPath, tokenSource);
+            var task = Ares.TagsImport.FileOperations.CopyOrMoveAsync(monitor, m_Project, settings.MusicDirectory, settings.SoundDirectory, uniqueElements, move, targetPath, tokenSource.Token);
             task.ContinueWith( (task2) =>
             {
                 monitor.Close();

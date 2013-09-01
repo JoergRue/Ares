@@ -29,10 +29,10 @@ namespace Ares.Editor
     {
         public static IEnumerable<IElement> GetElementsFromDroppedItems(FileDragInfo dragInfo)
         {
-            return DoGetElementsFromDroppedItems(dragInfo, Settings.Settings.Instance.MusicDirectory, Settings.Settings.Instance.SoundDirectory, null, null);
+            return DoGetElementsFromDroppedItems(dragInfo, Settings.Settings.Instance.MusicDirectory, Settings.Settings.Instance.SoundDirectory, System.Threading.CancellationToken.None, null);
         }
 
-        public static System.Threading.Tasks.Task<IList<IElement>> GetElementsFromDroppedItemsAsync(FileDragInfo dragInfo, System.Threading.CancellationTokenSource tokenSource, Ares.ModelInfo.IProgressMonitor progressMonitor)
+        public static System.Threading.Tasks.Task<IList<IElement>> GetElementsFromDroppedItemsAsync(FileDragInfo dragInfo, System.Threading.CancellationToken token, Ares.ModelInfo.IProgressMonitor progressMonitor)
         {
             String musicDirectory = Settings.Settings.Instance.MusicDirectory;
             String soundDirectory = Settings.Settings.Instance.SoundDirectory;
@@ -40,7 +40,7 @@ namespace Ares.Editor
                 {
                     try
                     {
-                        var result = new List<IElement>(DoGetElementsFromDroppedItems(dragInfo, musicDirectory, soundDirectory, tokenSource, progressMonitor));
+                        var result = new List<IElement>(DoGetElementsFromDroppedItems(dragInfo, musicDirectory, soundDirectory, token, progressMonitor));
                         return (IList<IElement>)result;
                     }
                     catch (OperationCanceledException)
@@ -55,7 +55,7 @@ namespace Ares.Editor
         }
 
         private static IEnumerable<IElement> DoGetElementsFromDroppedItems(FileDragInfo dragInfo, String musicDirectory, String soundDirectory, 
-            System.Threading.CancellationTokenSource tokenSource, Ares.ModelInfo.IProgressMonitor progressMonitor)
+            System.Threading.CancellationToken token, Ares.ModelInfo.IProgressMonitor progressMonitor)
         {
             Ares.TagsImport.SequentialProgressMonitor monitor1 = null, monitor2 = null;
             if (progressMonitor != null)
@@ -98,9 +98,8 @@ namespace Ares.Editor
             Dictionary<string, DraggedItem> uniqueItems = new Dictionary<string, DraggedItem>();
             foreach (DraggedItem item in dragInfo.DraggedItems)
             {
-                AddItemsToSet(uniqueItems, item, allowedItems, musicDirectory, soundDirectory, tokenSource);
-                if (tokenSource != null)
-                    tokenSource.Token.ThrowIfCancellationRequested();
+                AddItemsToSet(uniqueItems, item, allowedItems, musicDirectory, soundDirectory, token);
+                token.ThrowIfCancellationRequested();
                 if (monitor1 != null)
                     monitor1.IncreaseProgress(100.0 / dragInfo.DraggedItems.Count);
             }
@@ -110,8 +109,7 @@ namespace Ares.Editor
             foreach (DraggedItem item in uniqueItems.Values)
             {
                 yield return CreateFileElement(item, musicDirectory, soundDirectory);
-                if (tokenSource != null)
-                    tokenSource.Token.ThrowIfCancellationRequested();
+                token.ThrowIfCancellationRequested();
                 if (monitor2 != null)
                     monitor2.IncreaseProgress(100.0 / uniqueItems.Count);
             }
@@ -135,7 +133,7 @@ namespace Ares.Editor
         }
 
         private static void AddItemsToSet(Dictionary<String, DraggedItem> uniqueItems, DraggedItem item, HashSet<String> allowedItems, 
-            String musicDirectory, String soundDirectory, System.Threading.CancellationTokenSource tokenSource)
+            String musicDirectory, String soundDirectory, System.Threading.CancellationToken token)
         {
             String baseDir = item.ItemType == FileType.Music ? musicDirectory : soundDirectory;
             String path = System.IO.Path.Combine(baseDir, item.RelativePath);
@@ -146,9 +144,8 @@ namespace Ares.Editor
                     foreach (String file in FileSearch.GetFilesInDirectory(item.ItemType, path, true))
                     {
                         AddItemsToSet(uniqueItems, new DraggedItem { NodeType = DraggedItemType.File, ItemType = item.ItemType, RelativePath = file.Substring(baseDir.Length + 1) }, 
-                            allowedItems, musicDirectory, soundDirectory, tokenSource);
-                        if (tokenSource != null)
-                            tokenSource.Token.ThrowIfCancellationRequested();
+                            allowedItems, musicDirectory, soundDirectory, token);
+                        token.ThrowIfCancellationRequested();
                     }
                 }
             }

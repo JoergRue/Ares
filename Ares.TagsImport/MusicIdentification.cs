@@ -34,20 +34,20 @@ namespace Ares.TagsImport
     public class MusicIdentification
     {
         private Ares.ModelInfo.IProgressMonitor m_Monitor;
-        private CancellationTokenSource m_TokenSource;
+        private CancellationToken m_Token;
 
-        public static Task<int> UpdateMusicIdentification(Ares.ModelInfo.IProgressMonitor monitor, IList<String> files, String musicDirectory,
-            CancellationTokenSource cancellationTokenSource)
+        public static Task<int> UpdateMusicIdentificationAsync(Ares.ModelInfo.IProgressMonitor monitor, IList<String> files, String musicDirectory,
+            CancellationToken cancellationToken)
         {
-            MusicIdentification identification = new MusicIdentification(monitor, cancellationTokenSource);
-            return identification.DoUpdate(files, musicDirectory);
+            MusicIdentification identification = new MusicIdentification(monitor, cancellationToken);
+            return identification.DoUpdateAsync(files, musicDirectory);
         }
 
 
-        private MusicIdentification(Ares.ModelInfo.IProgressMonitor monitor, CancellationTokenSource tokenSource)
+        private MusicIdentification(Ares.ModelInfo.IProgressMonitor monitor, CancellationToken token)
         {
             m_Monitor = monitor;
-            m_TokenSource = tokenSource;
+            m_Token = token;
         }
 
         private static bool NeedsRetrieval(Ares.Tags.FileIdentification item)
@@ -75,13 +75,13 @@ namespace Ares.TagsImport
                 var task2 = Task.Factory.StartNew(() =>
                 {
                     retriever.RetrieveFileInfo(path, retrievedInfo[fileIndex], progressMon);
-                }, m_TokenSource.Token);
+                }, m_Token);
                 subTasks.Add(task2);
             }
             return subTasks;
         }
 
-        private Task<int> DoUpdate(IList<String> files, String musicDirectory)
+        private Task<int> DoUpdateAsync(IList<String> files, String musicDirectory)
         {
             m_Monitor.IncreaseProgress(0.0);
             int countWithId = 0;
@@ -111,7 +111,7 @@ namespace Ares.TagsImport
                 return Task.Factory.StartNew(() => { return countWithId;  });
 
             String basePath = musicDirectory;
-            MusicIdentificationRetriever retriever = new MusicIdentificationRetriever(m_TokenSource);
+            MusicIdentificationRetriever retriever = new MusicIdentificationRetriever(m_Token);
             
             List<Task> tasks = new List<Task>();
             m_Monitor.IncreaseProgress(5);
@@ -149,7 +149,7 @@ namespace Ares.TagsImport
                     }
                     retriever.Dispose();
                     return countWithId;
-                }, m_TokenSource.Token);
+                }, m_Token);
 
             return task;
         }
@@ -163,12 +163,12 @@ namespace Ares.TagsImport
         private const int ARTIST = 4;
         private const int TITLE = 8;
 
-        private CancellationTokenSource m_TokenSource;
+        private CancellationToken m_Token;
         private AcoustAPI m_AcoustAPI;
 
-        public MusicIdentificationRetriever(CancellationTokenSource tokenSource)
+        public MusicIdentificationRetriever(CancellationToken token)
         {
-            m_TokenSource = tokenSource;
+            m_Token = token;
             m_AcoustAPI = new AcoustAPI();
         }
 
@@ -224,14 +224,14 @@ namespace Ares.TagsImport
                     }
                     progressMonitor.IncreaseProgress(15);
                     return query;
-                }, m_TokenSource.Token, TaskCreationOptions.AttachedToParent, TaskScheduler.Default);
+                }, m_Token, TaskCreationOptions.AttachedToParent, TaskScheduler.Default);
 
 
             var acoustIdTask = id3Task.ContinueWith((task) =>
                 {
                     SequentialProgressMonitor subMon = new SequentialProgressMonitor(progressMonitor, 15, 55);
                     return id3Task.Result != 0 ? QueryForAcoustId(fileName, subMon) : null;
-                }, m_TokenSource.Token, TaskContinuationOptions.OnlyOnRanToCompletion | TaskContinuationOptions.AttachedToParent, TaskScheduler.Default);
+                }, m_Token, TaskContinuationOptions.OnlyOnRanToCompletion | TaskContinuationOptions.AttachedToParent, TaskScheduler.Default);
 
             var lastTask = acoustIdTask.ContinueWith((task) =>
                 {
@@ -245,7 +245,7 @@ namespace Ares.TagsImport
                         }
                     }
                     progressMonitor.IncreaseProgress(30);
-                }, m_TokenSource.Token, TaskContinuationOptions.OnlyOnRanToCompletion | TaskContinuationOptions.AttachedToParent, TaskScheduler.Default);
+                }, m_Token, TaskContinuationOptions.OnlyOnRanToCompletion | TaskContinuationOptions.AttachedToParent, TaskScheduler.Default);
                 
         }
 
@@ -257,21 +257,21 @@ namespace Ares.TagsImport
                     Int16[] data = PcmExtractor.ExtractPcm(fileName, out seconds);
                     progressMonitor.IncreaseProgress(25);
                     return new PcmInfo { Data = data, Seconds = seconds };
-                }, m_TokenSource.Token, TaskCreationOptions.AttachedToParent, TaskScheduler.Default);
+                }, m_Token, TaskCreationOptions.AttachedToParent, TaskScheduler.Default);
 
             var chromaTask = pcmTask.ContinueWith((task) =>
                 {
                     var result = (pcmTask.Result != null && pcmTask.Result.Data != null) ? new ChromaPrintInfo { Code = ChromaPrint.CalculateChromaprintCode(pcmTask.Result.Data), Seconds = pcmTask.Result.Seconds } : null;
                     progressMonitor.IncreaseProgress(15);
                     return result;
-                }, m_TokenSource.Token, TaskContinuationOptions.OnlyOnRanToCompletion | TaskContinuationOptions.AttachedToParent, TaskScheduler.Default);
+                }, m_Token, TaskContinuationOptions.OnlyOnRanToCompletion | TaskContinuationOptions.AttachedToParent, TaskScheduler.Default);
 
             var acoustTask = chromaTask.ContinueWith((task) =>
                 {
                     var result = (chromaTask.Result != null && !String.IsNullOrEmpty(chromaTask.Result.Code)) ? m_AcoustAPI.IdentifySong(chromaTask.Result.Code, chromaTask.Result.Seconds) : null;
                     progressMonitor.IncreaseProgress(60);
                     return result;
-                }, m_TokenSource.Token, TaskContinuationOptions.OnlyOnRanToCompletion | TaskContinuationOptions.AttachedToParent, TaskScheduler.Default);
+                }, m_Token, TaskContinuationOptions.OnlyOnRanToCompletion | TaskContinuationOptions.AttachedToParent, TaskScheduler.Default);
             try
             {
                 return acoustTask.Result;

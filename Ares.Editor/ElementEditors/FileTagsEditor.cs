@@ -25,6 +25,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Threading.Tasks;
 
 using Ares.Tags;
 
@@ -80,7 +81,7 @@ namespace Ares.Editor.ElementEditors
                 var tokenSource = new System.Threading.CancellationTokenSource();
                 Ares.CommonGUI.ProgressMonitorBase monitor = new TaskProgressMonitor(this, StringResources.ExtractingTags, tokenSource);
 
-                var task = Ares.TagsImport.TagExtractor.ExtractTags(monitor, m_Files, Ares.Settings.Settings.Instance.MusicDirectory, languageId, interpret, album, genre, mood, tokenSource);
+                var task = Ares.TagsImport.TagExtractor.ExtractTagsAsync(monitor, m_Files, Ares.Settings.Settings.Instance.MusicDirectory, languageId, interpret, album, genre, mood, tokenSource.Token);
                 task.ContinueWith((task2) =>
                 {
                     monitor.Close();
@@ -135,11 +136,11 @@ namespace Ares.Editor.ElementEditors
                     usedFiles.Add(file);
                 }
             }
-            var task = Ares.TagsImport.MusicIdentification.UpdateMusicIdentification(monitor, usedFiles, Ares.Settings.Settings.Instance.MusicDirectory, tokenSource);
+            var task = Ares.TagsImport.MusicIdentification.UpdateMusicIdentificationAsync(monitor, usedFiles, Ares.Settings.Settings.Instance.MusicDirectory, tokenSource.Token);
             var task2 = task.ContinueWith((t) =>
             {
-                return Ares.TagsImport.GlobalDbUpload.UploadTags(monitor, usedFiles, user, includeLog, tokenSource);
-            }, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskContinuationOptions.NotOnFaulted, System.Threading.Tasks.TaskScheduler.Default);
+                return Ares.TagsImport.GlobalDbUpload.UploadTagsAsync(monitor, usedFiles, user, includeLog, tokenSource.Token);
+            }, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskContinuationOptions.NotOnFaulted, System.Threading.Tasks.TaskScheduler.Default).Unwrap();
             
             task2.ContinueWith((t) =>
             {
@@ -186,12 +187,11 @@ namespace Ares.Editor.ElementEditors
             System.Threading.CancellationTokenSource tokenSource = new System.Threading.CancellationTokenSource();
             TaskProgressMonitor monitor = new TaskProgressMonitor(this, StringResources.DownloadingTags, tokenSource);
             monitor.IncreaseProgress(0.1, StringResources.ExtractingMusicIds);
-            var task = Ares.TagsImport.MusicIdentification.UpdateMusicIdentification(monitor, m_Files, Ares.Settings.Settings.Instance.MusicDirectory, tokenSource);
-            int nrOfFoundFiles = 0;
+            var task = Ares.TagsImport.MusicIdentification.UpdateMusicIdentificationAsync(monitor, m_Files, Ares.Settings.Settings.Instance.MusicDirectory, tokenSource.Token);
             var task2 = task.ContinueWith((t) =>
             {
-                return Ares.TagsImport.GlobalDbDownload.DownloadTags(monitor, m_Files, out nrOfFoundFiles, includeLog, tokenSource);
-            }, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskContinuationOptions.NotOnFaulted, System.Threading.Tasks.TaskScheduler.Default);
+                return Ares.TagsImport.GlobalDbDownload.DownloadTagsAsync(monitor, m_Files, includeLog, tokenSource.Token);
+            }, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskContinuationOptions.NotOnFaulted, System.Threading.Tasks.TaskScheduler.Default).Unwrap();
 
             task2.ContinueWith((t) =>
             {
@@ -202,10 +202,10 @@ namespace Ares.Editor.ElementEditors
                 {
                     try
                     {
-                        String log = task2.Result;
+                        String log = task2.Result.Result;
                         var dialog = new Dialogs.OnlineDbResultDialog();
                         dialog.Log = log;
-                        dialog.SetIsDownload(m_Files.Count, nrOfFoundFiles, task.Result);
+                        dialog.SetIsDownload(m_Files.Count, task2.Result.NrOfFoundFiles, task.Result);
                         dialog.ShowDialog(this);
                     }
                     catch (AggregateException)
@@ -571,13 +571,13 @@ namespace Ares.Editor.ElementEditors
             TaskProgressMonitor monitor = new TaskProgressMonitor(this, StringResources.DownloadingTags, tokenSource);
             monitor.IncreaseProgress(0.1, StringResources.ExtractingMusicIds);
             Ares.TagsImport.SequentialProgressMonitor musicIdMonitor = new TagsImport.SequentialProgressMonitor(monitor, 0.1, 89.9);
-            var task = Ares.TagsImport.MusicIdentification.UpdateMusicIdentification(musicIdMonitor, m_Files, Ares.Settings.Settings.Instance.MusicDirectory, tokenSource);
+            var task = Ares.TagsImport.MusicIdentification.UpdateMusicIdentificationAsync(musicIdMonitor, m_Files, Ares.Settings.Settings.Instance.MusicDirectory, tokenSource.Token);
             var task2 = task.ContinueWith((t) =>
             {
                 var dbRead = Ares.Tags.TagsModule.GetTagsDB().ReadInterface;
                 var fileIds = dbRead.GetIdentificationForFiles(m_Files);
-                return Ares.TagsImport.TagsFromIds.SetTagsFromIds(monitor, fileIds, m_LanguageId, true, true, tokenSource);
-            }, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskContinuationOptions.NotOnFaulted, System.Threading.Tasks.TaskScheduler.Default);
+                return Ares.TagsImport.TagsFromIds.SetTagsFromIdsAsync(monitor, fileIds, m_LanguageId, true, true, tokenSource.Token);
+            }, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskContinuationOptions.NotOnFaulted, System.Threading.Tasks.TaskScheduler.Default).Unwrap();
 
             task2.ContinueWith((t) =>
             {

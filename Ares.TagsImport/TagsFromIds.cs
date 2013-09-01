@@ -30,18 +30,22 @@ namespace Ares.TagsImport
     public class TagsFromIds
     {
         private Ares.ModelInfo.IProgressMonitor m_Monitor;
-        private CancellationTokenSource m_TokenSource;
+        private CancellationToken m_Token;
 
-        public static int SetTagsFromIds(Ares.ModelInfo.IProgressMonitor progressMonitor, IList<FileIdentification> files, int languageId, bool interpret, bool album, CancellationTokenSource tokenSource)
+        public static Task<int> SetTagsFromIdsAsync(Ares.ModelInfo.IProgressMonitor progressMonitor, IList<FileIdentification> files, int languageId, bool interpret, bool album, CancellationToken token)
         {
-            TagsFromIds processor = new TagsFromIds(progressMonitor, tokenSource);
-            return processor.DoSetTags(files, languageId, interpret, album);
+            return Task.Factory.StartNew(() =>
+                {
+                    TagsFromIds processor = new TagsFromIds(progressMonitor, token);
+                    return processor.DoSetTags(files, languageId, interpret, album);
+
+                });
         }
 
-        private TagsFromIds(Ares.ModelInfo.IProgressMonitor progressMonitor, CancellationTokenSource tokenSource)
+        private TagsFromIds(Ares.ModelInfo.IProgressMonitor progressMonitor, CancellationToken token)
         {
             m_Monitor = progressMonitor;
-            m_TokenSource = tokenSource;
+            m_Token = token;
         }
 
         private int DoSetTags(IList<FileIdentification> files, int languageId, bool interpret, bool album)
@@ -75,7 +79,7 @@ namespace Ares.TagsImport
                 albums.Add(file.Album != null ? file.Album : String.Empty);
             }
             m_Monitor.SetProgress(90, StringResources.AddingTags);
-            m_TokenSource.Token.ThrowIfCancellationRequested();
+            m_Token.ThrowIfCancellationRequested();
             var dbRead = Ares.Tags.TagsModule.GetTagsDB().GetReadInterfaceByLanguage(languageId);
             var dbWrite = Ares.Tags.TagsModule.GetTagsDB().GetWriteInterfaceByLanguage(languageId);
             var categories = dbRead.GetAllCategories();
@@ -114,7 +118,7 @@ namespace Ares.TagsImport
                 currentCount += albumTags.Count;
             }
             m_Monitor.SetProgress(99, StringResources.SettingFileTags);
-            m_TokenSource.Token.ThrowIfCancellationRequested();
+            m_Token.ThrowIfCancellationRequested();
 
             List<IList<int>> newTags = new List<IList<int>>();
             List<int> fileIds = new List<int>();
@@ -155,7 +159,7 @@ namespace Ares.TagsImport
                 {
                     m_Monitor.SetProgress(percent, StringResources.AddingTags);
                     lastPercent = percent;
-                    m_TokenSource.Token.ThrowIfCancellationRequested();
+                    m_Token.ThrowIfCancellationRequested();
                 }
             }
         }
