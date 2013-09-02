@@ -142,6 +142,11 @@ namespace Ares.Playing
         void MusicRepeatChanged(bool repeat);
 
         /// <summary>
+        /// Playing music on all channels was changed
+        /// </summary>
+        void MusicOnAllSpeakersChanged(bool onAllSpeakers);
+
+        /// <summary>
         /// A new tag was added to the set of possible tags.
         /// </summary>
         void MusicTagAdded(int tagId);
@@ -313,6 +318,10 @@ namespace Ares.Playing
         /// Sets music tag fading properties.
         /// </summary>
         void SetMusicTagFading(int fadeTime, bool fadeOnlyOnChange);
+        /// <summary>
+        /// Sets whether music is played on all speakers.
+        /// </summary>
+        void SetPlayMusicOnAllSpeakers(bool onAllSpeakers);
     }
 
     /// <summary>

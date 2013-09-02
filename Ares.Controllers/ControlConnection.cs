@@ -79,6 +79,7 @@ namespace Ares.Controllers
         void MusicChanged(String newMusic, String shortTitle);
         void MusicListChanged(List<MusicListItem> newList);
         void MusicRepeatChanged(bool repeat);
+        void MusicOnAllSpeakersChanged(bool onAllSpeakers);
 
         void TagsChanged(List<MusicTagCategory> categories, Dictionary<int, List<MusicTag>> tagsPerCategory);
         void ActiveTagsChanged(List<int> activeTags);
@@ -659,6 +660,12 @@ namespace Ares.Controllers
                                     m_NetworkClient.TagFadingChanged(fadeTime, onlyOnChange);
                                     break;
                                 }
+                            case 18:
+                                {
+                                    bool onAllSpeakers = buffer[1] == 1;
+                                    m_NetworkClient.MusicOnAllSpeakersChanged(onAllSpeakers);
+                                    break;
+                                }
                             default:
                                 break;
                         }
@@ -873,6 +880,36 @@ namespace Ares.Controllers
                 Int32 val = repeat ? 1 : 0;
                 byte[] bytes = new byte[1 + 4];
                 bytes[0] = 9;
+                AddInt32ToByteArray(bytes, 1, val);
+                m_Socket.Send(bytes);
+            }
+            catch (SocketException ex)
+            {
+                Messages.AddMessage(MessageType.Warning, ex.Message);
+                HandleConnectionFailure(true);
+            }
+        }
+
+        public void SetMusicOnAllSpeakers(bool onAllSpeakers)
+        {
+            if (!Connected)
+            {
+                Messages.AddMessage(MessageType.Warning, StringResources.NoConnection);
+                return;
+            }
+            if (m_State == State.ConnectionFailure)
+            {
+                if (!TryReconnect())
+                {
+                    Messages.AddMessage(MessageType.Warning, StringResources.NoConnection);
+                    return;
+                }
+            }
+            try
+            {
+                Int32 val = onAllSpeakers ? 1 : 0;
+                byte[] bytes = new byte[1 + 4];
+                bytes[0] = 15;
                 AddInt32ToByteArray(bytes, 1, val);
                 m_Socket.Send(bytes);
             }

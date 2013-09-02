@@ -182,6 +182,11 @@ namespace Ares.Players
             PlayingModule.ProjectPlayer.SetMusicTagFading(fadeTime, fadeOnlyChange);
         }
 
+        public void SetPlayMusicOnAllSpeakers(bool onAllSpeakers)
+        {
+            PlayingModule.ProjectPlayer.SetPlayMusicOnAllSpeakers(onAllSpeakers);
+        }
+
         private Playing.StreamingParameters CreateStreamingParameters()
         {
             Playing.StreamingParameters result = new StreamingParameters();
@@ -320,12 +325,21 @@ namespace Ares.Players
         }
 
         private bool m_MusicRepeat = false;
+        private bool m_MusicOnAllSpeakers = false;
 
         public bool MusicRepeat
         {
             get
             {
                 return m_MusicRepeat;
+            }
+        }
+
+        public bool MusicOnAllSpeakers
+        {
+            get
+            {
+                return m_MusicOnAllSpeakers;
             }
         }
 
@@ -435,6 +449,14 @@ namespace Ares.Players
             lock (syncObject)
             {
                 m_MusicRepeat = repeat;
+            }
+        }
+
+        public void MusicOnAllSpeakersChanged(bool onAllSpeakers)
+        {
+            lock (syncObject)
+            {
+                m_MusicOnAllSpeakers = onAllSpeakers;
             }
         }
 

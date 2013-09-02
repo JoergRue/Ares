@@ -29,6 +29,23 @@ namespace Ares.Playing
         {
             int channel = 0;
             BASSFlag speakerFlag = GetSpeakerFlag(file);
+            BASSFlag decodeFlag = BASSFlag.BASS_STREAM_DECODE;
+            if (file.SoundFileType == SoundFileType.Music && file.Effects.SpeakerAssignment.Active)
+            {
+                switch (file.Effects.SpeakerAssignment.Assignment)
+                {
+                    case Data.SpeakerAssignment.AllSpeakers:
+                    case Data.SpeakerAssignment.BothCenterRears:
+                    case Data.SpeakerAssignment.BothFronts:
+                    case Data.SpeakerAssignment.BothRears:
+                    case Data.SpeakerAssignment.CenterAndSubwoofer:
+                    case Data.SpeakerAssignment.Default:
+                        break;
+                    default:
+                        decodeFlag |= BASSFlag.BASS_SAMPLE_MONO;
+                        break;
+                }
+            }
 #if MONO
 			byte[] buffer = null;
 			long length = 0;
@@ -46,9 +63,9 @@ namespace Ares.Playing
 				return 0;
 			}
 			System.Runtime.InteropServices.GCHandle gcHandle = System.Runtime.InteropServices.GCHandle.Alloc(buffer, System.Runtime.InteropServices.GCHandleType.Pinned);
-			channel = Bass.BASS_StreamCreateFile(gcHandle.AddrOfPinnedObject(), 0L, length, BASSFlag.BASS_STREAM_DECODE);
+			channel = Bass.BASS_StreamCreateFile(gcHandle.AddrOfPinnedObject(), 0L, length, decodeFlag);
 #else
-            channel = Bass.BASS_StreamCreateFile(file.Path, 0, 0, BASSFlag.BASS_STREAM_DECODE);
+            channel = Bass.BASS_StreamCreateFile(file.Path, 0, 0, decodeFlag);
 #endif
             if (channel == 0)
             {
@@ -59,7 +76,27 @@ namespace Ares.Playing
                 return 0;
             }
             bool isStreaming = BassStreamer.Instance.IsStreaming;
-            Un4seen.Bass.BASSFlag flags = isStreaming ? BASSFlag.BASS_FX_FREESOURCE | BASSFlag.BASS_STREAM_DECODE : BASSFlag.BASS_STREAM_AUTOFREE | BASSFlag.BASS_FX_FREESOURCE | speakerFlag;
+            bool useMultiSpeakerChannels = false;
+            int speakers = 2;
+            int origChannel = channel;
+            if (!isStreaming 
+                && file.Effects.SpeakerAssignment.Active && file.Effects.SpeakerAssignment.Assignment == Data.SpeakerAssignment.AllSpeakers 
+                && !file.Effects.Balance.Active && !file.Effects.Pitch.Active && !file.Effects.Tempo.Active)
+            {
+                speakers = Bass.BASS_GetInfo().speakers;
+                if (speakers > 2)
+                {
+                    useMultiSpeakerChannels = true;
+                }
+            }
+
+            Un4seen.Bass.BASSFlag flags = BASSFlag.BASS_DEFAULT;
+            if (isStreaming)
+                flags = BASSFlag.BASS_FX_FREESOURCE | BASSFlag.BASS_STREAM_DECODE;
+            else if (useMultiSpeakerChannels)
+                flags = BASSFlag.BASS_FX_FREESOURCE | BASSFlag.BASS_STREAM_DECODE;
+            else
+                flags = BASSFlag.BASS_STREAM_AUTOFREE | BASSFlag.BASS_FX_FREESOURCE | speakerFlag;
             channel = Un4seen.Bass.AddOn.Fx.BassFx.BASS_FX_TempoCreate(channel, flags);
             if (channel == 0)
             {
@@ -69,7 +106,58 @@ namespace Ares.Playing
                 ErrorHandling.BassErrorOccurred(file.Id, StringResources.FilePlayingError);
                 return 0;
             }
-            else
+            bool result = true;
+            if (useMultiSpeakerChannels)
+            {
+                int splitStream = Un4seen.Bass.AddOn.Mix.BassMix.BASS_Split_StreamCreate(channel, BASSFlag.BASS_STREAM_AUTOFREE | BASSFlag.BASS_SPEAKER_FRONT, null);
+                if (splitStream == 0)
+                {
+                    result = false;
+                }
+                else
+                {
+                    int splitStream2 = Un4seen.Bass.AddOn.Mix.BassMix.BASS_Split_StreamCreate(channel, BASSFlag.BASS_STREAM_AUTOFREE | BASSFlag.BASS_SPEAKER_REAR, null);
+                    if (splitStream2 == 0)
+                    {
+                        result = false;
+                    }
+                    else
+                    {
+                        Bass.BASS_ChannelSetLink(splitStream, splitStream2);
+                        m_LinkedChannels[splitStream] = new List<int>();
+                        m_LinkedChannels[splitStream].Add(splitStream2);
+                    }
+                    if (result && speakers > 4)
+                    {
+                        int splitStream3 = Un4seen.Bass.AddOn.Mix.BassMix.BASS_Split_StreamCreate(channel, BASSFlag.BASS_STREAM_AUTOFREE | BASSFlag.BASS_SPEAKER_CENLFE, null);
+                        if (splitStream3 == 0)
+                        {
+                            result = false;
+                        }
+                        else
+                        {
+                            Bass.BASS_ChannelSetLink(splitStream, splitStream3);
+                            m_LinkedChannels[splitStream].Add(splitStream3);
+                        }
+                    }
+                    if (result && speakers > 6)
+                    {
+                        int splitStream4 = Un4seen.Bass.AddOn.Mix.BassMix.BASS_Split_StreamCreate(channel, BASSFlag.BASS_STREAM_AUTOFREE | BASSFlag.BASS_SPEAKER_REAR2, null);
+                        if (splitStream4 == 0)
+                        {
+                            result = false;
+                        }
+                        else
+                        {
+                            Bass.BASS_ChannelSetLink(splitStream, splitStream4);
+                            m_LinkedChannels[splitStream].Add(splitStream4);
+                        }
+                    }
+                    if (result)
+                        channel = splitStream;
+                }
+            }
+            if (result)
             {
                 lock (m_Mutex)
                 {
@@ -95,6 +183,10 @@ namespace Ares.Playing
                         {
                             m_RunningStreams.Remove(channel);
                             m_RunningFilesVolumes.Remove(channel);
+                            if (m_LinkedChannels.ContainsKey(channel))
+                            {
+                                m_LinkedChannels.Remove(channel);
+                            }
                         }
                         return 0;
                     }
@@ -163,7 +255,7 @@ namespace Ares.Playing
                         return 0;
                     }
                 }
-                if (file.Effects != null && file.Effects.Balance.Active)
+                if (file.Effects != null && file.Effects.Balance.Active && !useMultiSpeakerChannels)
                 {
                     SetBalanceEffect(channel, file.Id, file.Effects.Balance);
                 }
@@ -183,6 +275,20 @@ namespace Ares.Playing
                         ErrorHandling.BassErrorOccurred(file.Id, StringResources.SetEffectError);
                         return 0;
                     }
+                    if (m_LinkedChannels.ContainsKey(channel)) foreach (int splitStream2 in m_LinkedChannels[channel])
+                        {
+                            int volFx2 = splitStream2 != 0 ? Bass.BASS_ChannelSetFX(splitStream2, BASSFXType.BASS_FX_BFX_VOLUME, 1) : 0;
+                            if (splitStream2 != 0 && volFx2 == 0)
+                            {
+                                ErrorHandling.BassErrorOccurred(file.Id, StringResources.SetEffectError);
+                                return 0;
+                            }
+                            if (volFx2 != 0 && !Bass.BASS_FXSetParameters(volFx2, fxVol))
+                            {
+                                ErrorHandling.BassErrorOccurred(file.Id, StringResources.SetEffectError);
+                                return 0;
+                            }
+                        }
                 }
                 if (file.Effects != null && file.Effects.Reverb.Active)
                 {
@@ -199,12 +305,33 @@ namespace Ares.Playing
                         ErrorHandling.BassErrorOccurred(file.Id, StringResources.SetEffectError);
                         return 0;
                     }
+                    if (m_LinkedChannels.ContainsKey(channel)) foreach (int splitStream2 in m_LinkedChannels[channel])
+                        {
+                            int reverbFx2 = splitStream2 != 0 ? Bass.BASS_ChannelSetFX(splitStream2, BASSFXType.BASS_FX_BFX_REVERB, 1) : 0;
+                            if (splitStream2 != 0 && reverbFx2 == 0)
+                            {
+                                ErrorHandling.BassErrorOccurred(file.Id, StringResources.SetEffectError);
+                                return 0;
+                            }
+                            if (reverbFx2 != 0 && !Bass.BASS_FXSetParameters(reverbFx2, fxReverb))
+                            {
+                                ErrorHandling.BassErrorOccurred(file.Id, StringResources.SetEffectError);
+                                return 0;
+                            }
+                        }
                 }
                 if (loop)
                 {
                     Bass.BASS_ChannelFlags(channel, BASSFlag.BASS_SAMPLE_LOOP, BASSFlag.BASS_SAMPLE_LOOP);
                 }
-                bool result = isStreaming ? BassStreamer.Instance.AddChannel(channel) : Bass.BASS_ChannelPlay(channel, false);
+                if (isStreaming)
+                {
+                    result = BassStreamer.Instance.AddChannel(channel);
+                }
+                else
+                {
+                    result = Bass.BASS_ChannelPlay(channel, false);
+                }
                 if (!result)
                 {
 #if MONO
@@ -220,6 +347,11 @@ namespace Ares.Playing
                     return 0;
                 }
                 return channel;
+            }
+            else
+            {
+                ErrorHandling.BassErrorOccurred(file.Id, StringResources.FilePlayingError);
+                return 0;
             }
         }
 
@@ -350,6 +482,9 @@ namespace Ares.Playing
                         flag = BASSFlag.BASS_SPEAKER_CENLFE;
                         neededNrOfSpeakers = 5;
                         break;
+                    case Data.SpeakerAssignment.AllSpeakers:
+                        flag = BASSFlag.BASS_DEFAULT;
+                        break;
                     default:
                         break;
                 }
@@ -375,7 +510,7 @@ namespace Ares.Playing
             }
         }
 
-        private static bool SetBalanceEffect(int channel, int id, Data.IBalanceEffect effect)
+        private bool SetBalanceEffect(int channel, int id, Data.IBalanceEffect effect)
         {
             if (!effect.IsPanning)
             {
@@ -386,10 +521,7 @@ namespace Ares.Playing
                     ErrorHandling.BassErrorOccurred(id, StringResources.SetEffectError);
                     return false;
                 }
-                else
-                {
-                    return true;
-                }
+                return true;
             }
             else
             {
@@ -435,6 +567,11 @@ namespace Ares.Playing
                 {
                     error = true;
                 }
+                if (m_LinkedChannels.ContainsKey(handle)) foreach (int secondChannel in m_LinkedChannels[handle])
+                        if (secondChannel != 0 && !Un4seen.Bass.Bass.BASS_ChannelSetAttribute(secondChannel, BASSAttribute.BASS_ATTRIB_VOL, specificVolume))
+                        {
+                            error = true;
+                        }
             }
             if (error)
             {
@@ -479,12 +616,24 @@ namespace Ares.Playing
                     ErrorHandling.BassErrorOccurred(file.Id, StringResources.SetVolumeError);
                     return false;
                 }
+                if (m_LinkedChannels.ContainsKey(channel)) foreach (int secondChannel in m_LinkedChannels[channel])
+                        if (secondChannel != 0 && !Bass.BASS_ChannelSetAttribute(secondChannel, BASSAttribute.BASS_ATTRIB_VOL, 0.0f))
+                        {
+                            ErrorHandling.BassErrorOccurred(file.Id, StringResources.SetVolumeError);
+                            return false;
+                        }
                 int maxFadeInTime = file.Effects != null ? Math.Max(file.Effects.FadeInTime, fadeInTime) : fadeInTime;
                 if (!Bass.BASS_ChannelSlideAttribute(channel, BASSAttribute.BASS_ATTRIB_VOL, volume, maxFadeInTime))
                 {
                     ErrorHandling.BassErrorOccurred(file.Id, StringResources.SetVolumeError);
                     return false;
                 }
+                if (m_LinkedChannels.ContainsKey(channel)) foreach (int secondChannel in m_LinkedChannels[channel])
+                        if (secondChannel != 0 && !Bass.BASS_ChannelSlideAttribute(secondChannel, BASSAttribute.BASS_ATTRIB_VOL, volume, maxFadeInTime))
+                        {
+                            ErrorHandling.BassErrorOccurred(file.Id, StringResources.SetVolumeError);
+                            return false;
+                        }
             }
             else
             {
@@ -493,6 +642,12 @@ namespace Ares.Playing
                     ErrorHandling.BassErrorOccurred(file.Id, StringResources.SetVolumeError);
                     return false;
                 }
+                if (m_LinkedChannels.ContainsKey(channel)) foreach (int secondChannel in m_LinkedChannels[channel])
+                        if (secondChannel != 0 && !Bass.BASS_ChannelSetAttribute(secondChannel, BASSAttribute.BASS_ATTRIB_VOL, volume))
+                        {
+                            ErrorHandling.BassErrorOccurred(file.Id, StringResources.SetVolumeError);
+                            return false;
+                        }
             }
             return true;
         }
@@ -506,6 +661,7 @@ namespace Ares.Playing
             m_StopSync = new SYNCPROC(StopSync);
             m_RunningStreams = new Dictionary<int, Action>();
             m_RunningFilesVolumes = new Dictionary<int, float>();
+            m_LinkedChannels = new Dictionary<int, List<int>>();
         }
 
         public void Dispose()
@@ -558,6 +714,10 @@ namespace Ares.Playing
         private void FadeOut(int channel, int time)
         {
             Bass.BASS_ChannelSlideAttribute(channel, BASSAttribute.BASS_ATTRIB_VOL, 0.0f, time);
+            if (m_LinkedChannels.ContainsKey(channel)) foreach (int secondChannel in m_LinkedChannels[channel])
+            {
+                Bass.BASS_ChannelSlideAttribute(secondChannel, BASSAttribute.BASS_ATTRIB_VOL, 0.0f, time);
+            }
         }
 
         private void FileFinished(int channel)
@@ -573,6 +733,10 @@ namespace Ares.Playing
                 if (m_RunningFilesVolumes.ContainsKey(channel))
                 {
                     m_RunningFilesVolumes.Remove(channel);
+                }
+                if (m_LinkedChannels.ContainsKey(channel))
+                {
+                    m_LinkedChannels.Remove(channel);
                 }
             }
 
@@ -593,6 +757,7 @@ namespace Ares.Playing
 
         private Dictionary<int, Action> m_RunningStreams;
         private Dictionary<int, float> m_RunningFilesVolumes;
+        private Dictionary<int, List<int>> m_LinkedChannels; // for volume changes
         private Object m_Mutex = new Int16();
 
     }

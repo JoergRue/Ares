@@ -117,7 +117,7 @@ public abstract class ConnectedFragment extends Fragment implements IServerListe
 		super.onStop();
 	}
 	
-	private boolean setTagPreferencesOnConnect = false;
+	private boolean setPlayerPreferencesOnConnect = false;
 	
 	protected void onPrefsChanged() {
 		if (!Control.getInstance().isConnected())
@@ -138,17 +138,18 @@ public abstract class ConnectedFragment extends Fragment implements IServerListe
 			}
 		}    			
 		if (Control.getInstance().isConnected()) {
-			setTagPreferences();
+			setPlayerPreferences();
 		}
 		else {
-			setTagPreferencesOnConnect = true;
+			setPlayerPreferencesOnConnect = true;
 		}
 	}
 	
-	private void setTagPreferences() {
+	private void setPlayerPreferences() {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
 		boolean onlyOnChange = prefs.getBoolean("tag_fading_only_on_change", false);
 		String fadeTimeString = prefs.getString("tag_fading_time", "0");
+		boolean musicOnAllSpeakers = prefs.getBoolean("music_on_all_speakers", false);
 		int fadeTime = 0;
 		try {
 			fadeTime = Integer.parseInt(fadeTimeString);
@@ -157,13 +158,14 @@ public abstract class ConnectedFragment extends Fragment implements IServerListe
 		}
 		Control.getInstance().setMusicTagsFading(fadeTime, onlyOnChange);
 		boolean isOperatorAnd = prefs.getString("tag_categories_op", "and").equals("and");
-		Control.getInstance().setTagCategoryOperator(isOperatorAnd);		
+		Control.getInstance().setTagCategoryOperator(isOperatorAnd);	
+		Control.getInstance().setMusicOnAllSpeakers(musicOnAllSpeakers);
 	}
 	
 	protected void onConnect(ServerInfo info) {
-		if (setTagPreferencesOnConnect) {
-			setTagPreferences();
-			setTagPreferencesOnConnect = false;
+		if (setPlayerPreferencesOnConnect) {
+			setPlayerPreferences();
+			setPlayerPreferencesOnConnect = false;
 		}
 	}
 	

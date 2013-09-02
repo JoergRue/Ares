@@ -150,6 +150,12 @@
     <Compile Include="MessagesForm.Designer.cs">
       <DependentUpon>MessagesForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="MusicPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MusicPage.Designer.cs">
+      <DependentUpon>MusicPage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Player.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -179,6 +185,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MessagesForm.resx">
       <DependentUpon>MessagesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MusicPage.de.resx">
+      <DependentUpon>MusicPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MusicPage.resx">
+      <DependentUpon>MusicPage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Player.de.resx">
       <DependentUpon>Player.cs</DependentUpon>

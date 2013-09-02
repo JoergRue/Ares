@@ -194,7 +194,8 @@ namespace Ares.Data
         BothFronts,
         BothRears,
         BothCenterRears,
-        CenterAndSubwoofer
+        CenterAndSubwoofer,
+        AllSpeakers
     }
 
     /// <summary>

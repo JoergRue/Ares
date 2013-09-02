@@ -52,6 +52,7 @@ namespace Ares.Editor.Controls
                 twoSpeakersBox.Enabled = false;
                 twoSpeakersBox.SelectedIndex = 0;
                 twoSpeakersButton.Checked = false;
+                allSpeakersButton.Checked = false;
             }
             else
             {
@@ -65,6 +66,7 @@ namespace Ares.Editor.Controls
                         twoSpeakersBox.Enabled = false;
                         twoSpeakersButton.Checked = false;
                         defaultButton.Checked = false;
+                        allSpeakersButton.Checked = false;
                         break;
                     case Data.SpeakerAssignment.RightFront:
                         oneSpeakerBox.SelectedIndex = 1;
@@ -73,6 +75,7 @@ namespace Ares.Editor.Controls
                         twoSpeakersBox.Enabled = false;
                         twoSpeakersButton.Checked = false;
                         defaultButton.Checked = false;
+                        allSpeakersButton.Checked = false;
                         break;
                     case Data.SpeakerAssignment.Center:
                         oneSpeakerBox.SelectedIndex = 2;
@@ -81,6 +84,7 @@ namespace Ares.Editor.Controls
                         twoSpeakersBox.Enabled = false;
                         twoSpeakersButton.Checked = false;
                         defaultButton.Checked = false;
+                        allSpeakersButton.Checked = false;
                         break;
                     case Data.SpeakerAssignment.LeftBack:
                         oneSpeakerBox.SelectedIndex = 3;
@@ -89,6 +93,7 @@ namespace Ares.Editor.Controls
                         twoSpeakersBox.Enabled = false;
                         twoSpeakersButton.Checked = false;
                         defaultButton.Checked = false;
+                        allSpeakersButton.Checked = false;
                         break;
                     case Data.SpeakerAssignment.RightBack:
                         oneSpeakerBox.SelectedIndex = 4;
@@ -97,6 +102,7 @@ namespace Ares.Editor.Controls
                         twoSpeakersBox.Enabled = false;
                         twoSpeakersButton.Checked = false;
                         defaultButton.Checked = false;
+                        allSpeakersButton.Checked = false;
                         break;
                     case Data.SpeakerAssignment.LeftCenterBack:
                         oneSpeakerBox.SelectedIndex = 5;
@@ -105,6 +111,7 @@ namespace Ares.Editor.Controls
                         twoSpeakersBox.Enabled = false;
                         twoSpeakersButton.Checked = false;
                         defaultButton.Checked = false;
+                        allSpeakersButton.Checked = false;
                         break;
                     case Data.SpeakerAssignment.RightCenterBack:
                         oneSpeakerBox.SelectedIndex = 6;
@@ -113,6 +120,7 @@ namespace Ares.Editor.Controls
                         twoSpeakersBox.Enabled = false;
                         twoSpeakersButton.Checked = false;
                         defaultButton.Checked = false;
+                        allSpeakersButton.Checked = false;
                         break;
                     case Data.SpeakerAssignment.Subwoofer:
                         oneSpeakerBox.SelectedIndex = 7;
@@ -121,6 +129,7 @@ namespace Ares.Editor.Controls
                         twoSpeakersBox.Enabled = false;
                         twoSpeakersButton.Checked = false;
                         defaultButton.Checked = false;
+                        allSpeakersButton.Checked = false;
                         break;
                     case Data.SpeakerAssignment.BothFronts:
                         oneSpeakerBox.SelectedIndex = 0;
@@ -129,6 +138,7 @@ namespace Ares.Editor.Controls
                         twoSpeakersBox.SelectedIndex = 0;
                         twoSpeakersButton.Checked = true;
                         defaultButton.Checked = false;
+                        allSpeakersButton.Checked = false;
                         break;
                     case Data.SpeakerAssignment.BothRears:
                         oneSpeakerBox.SelectedIndex = 0;
@@ -137,6 +147,7 @@ namespace Ares.Editor.Controls
                         twoSpeakersBox.SelectedIndex = 1;
                         twoSpeakersButton.Checked = true;
                         defaultButton.Checked = false;
+                        allSpeakersButton.Checked = false;
                         break;
                     case Data.SpeakerAssignment.BothCenterRears:
                         oneSpeakerBox.SelectedIndex = 0;
@@ -145,6 +156,7 @@ namespace Ares.Editor.Controls
                         twoSpeakersBox.SelectedIndex = 2;
                         twoSpeakersButton.Checked = true;
                         defaultButton.Checked = false;
+                        allSpeakersButton.Checked = false;
                         break;
                     case Data.SpeakerAssignment.CenterAndSubwoofer:
                         oneSpeakerBox.SelectedIndex = 0;
@@ -153,6 +165,17 @@ namespace Ares.Editor.Controls
                         twoSpeakersBox.SelectedIndex = 3;
                         twoSpeakersButton.Checked = true;
                         defaultButton.Checked = false;
+                        allSpeakersButton.Checked = false;
+                        break;
+                    case Data.SpeakerAssignment.AllSpeakers:
+                        oneSpeakerBox.SelectedIndex = 0;
+                        oneSpeakerBox.Enabled = false;
+                        oneSpeakerButton.Checked = false;
+                        twoSpeakersBox.SelectedIndex = 0;
+                        twoSpeakersButton.Checked = false;
+                        twoSpeakersBox.Enabled = false;
+                        defaultButton.Checked = false;
+                        allSpeakersButton.Checked = true;
                         break;
                     case Data.SpeakerAssignment.Default:
                     default:
@@ -163,6 +186,7 @@ namespace Ares.Editor.Controls
                         twoSpeakersButton.Checked = false;
                         twoSpeakersBox.Enabled = false;
                         defaultButton.Checked = true;
+                        allSpeakersButton.Checked = false;
                         break;
                 }
             }
@@ -245,6 +269,10 @@ namespace Ares.Editor.Controls
                             break;
                     }
                 }
+                else if (allSpeakersButton.Checked)
+                {
+                    assignment = Data.SpeakerAssignment.AllSpeakers;
+                }
             }
             Action.SetData(true, random, assignment);
         }
@@ -290,6 +318,11 @@ namespace Ares.Editor.Controls
             {
                 Actions.Playing.Instance.StopElement(Element);
             }
+        }
+
+        private void allSpeakersButton_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateControls();
         }
 
 

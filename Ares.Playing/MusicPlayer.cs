@@ -35,6 +35,7 @@ namespace Ares.Playing
         void PlayMusicTitle(Int32 elementId);
         bool RepeatCurrentMusic { set; }
         void ChangeRandomList(IRandomBackgroundMusicList newList);
+        void SetMusicOnAllSpeakers(bool onAllSpeakers);
     }
 
     abstract class MusicPlayer : ElementPlayerBase, IMusicPlayer
@@ -167,6 +168,11 @@ namespace Ares.Playing
                     ((FilePlayer)PlayingModule.FilePlayer).SetRepeatFile(CurrentPlayedHandle, value);
                 }
             }
+        }
+
+        public void SetMusicOnAllSpeakers(bool onAllSpeakers)
+        {
+            Client.SetMusicOnAllSpeakers(onAllSpeakers);
         }
 
         private bool m_RepeatCurrentMusic;
@@ -759,6 +765,10 @@ namespace Ares.Playing
         }
 
         public void MusicRepeatChanged(bool repeat)
+        {
+        }
+
+        public void MusicOnAllSpeakersChanged(bool onAllSpeakers)
         {
         }
 

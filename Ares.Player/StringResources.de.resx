@@ -201,6 +201,9 @@ Fehlermeldung: {0}
   <data name="LoadError" xml:space="preserve">
     <value>Fehler beim Laden des Projektes: {0}</value>
   </data>
+  <data name="Music" xml:space="preserve">
+    <value>Musik</value>
+  </data>
   <data name="MusicList" xml:space="preserve">
     <value>Musikliste</value>
   </data>

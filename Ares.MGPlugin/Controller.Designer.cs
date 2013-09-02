@@ -104,6 +104,8 @@
             this.overlayLabel7 = new Ares.MGPlugin.TransparentLabel();
             this.overlayLabel1 = new Ares.MGPlugin.TransparentLabel();
             this.overlayCloseButton = new System.Windows.Forms.Button();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.musicOnAllSpeakersBox = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.soundsBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.musicBar)).BeginInit();
@@ -121,6 +123,7 @@
             this.transparentFlowLayoutPanel2.SuspendLayout();
             this.transparentFlowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
+            this.groupBox8.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -707,7 +710,7 @@
             this.overLayPanel.Controls.Add(this.overlayCloseButton);
             this.overLayPanel.Location = new System.Drawing.Point(3, 40);
             this.overLayPanel.Name = "overLayPanel";
-            this.overLayPanel.Size = new System.Drawing.Size(968, 418);
+            this.overLayPanel.Size = new System.Drawing.Size(968, 434);
             this.overLayPanel.TabIndex = 5;
             this.overLayPanel.Visible = false;
             // 
@@ -910,6 +913,27 @@
             this.overlayCloseButton.UseVisualStyleBackColor = false;
             this.overlayCloseButton.Click += new System.EventHandler(this.overlayCloseButton_Click);
             // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.musicOnAllSpeakersBox);
+            this.groupBox8.Location = new System.Drawing.Point(3, 341);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(274, 61);
+            this.groupBox8.TabIndex = 6;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "Musik";
+            // 
+            // musicOnAllSpeakersBox
+            // 
+            this.musicOnAllSpeakersBox.AutoSize = true;
+            this.musicOnAllSpeakersBox.Location = new System.Drawing.Point(9, 19);
+            this.musicOnAllSpeakersBox.Name = "musicOnAllSpeakersBox";
+            this.musicOnAllSpeakersBox.Size = new System.Drawing.Size(186, 17);
+            this.musicOnAllSpeakersBox.TabIndex = 0;
+            this.musicOnAllSpeakersBox.Text = "Auf allen Lautsprechern abspielen";
+            this.musicOnAllSpeakersBox.UseVisualStyleBackColor = true;
+            this.musicOnAllSpeakersBox.CheckedChanged += new System.EventHandler(this.musicOnAllSpeakersBox_CheckedChanged);
+            // 
             // Controller
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -921,6 +945,7 @@
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.groupBox8);
             this.Name = "Controller";
             this.Size = new System.Drawing.Size(971, 505);
             this.Load += new System.EventHandler(this.Controller_Load);
@@ -951,6 +976,8 @@
             this.transparentFlowLayoutPanel1.PerformLayout();
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.PerformLayout();
+            this.groupBox8.ResumeLayout(false);
+            this.groupBox8.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1028,6 +1055,8 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.NumericUpDown tagFadeUpDown;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.CheckBox musicOnAllSpeakersBox;
 
     }
 }

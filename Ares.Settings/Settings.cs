@@ -80,6 +80,7 @@ namespace Ares.Settings
 
         public int TagMusicFadeTime { get; set; }
         public bool TagMusicFadeOnlyOnChange { get; set; }
+        public bool PlayMusicOnAllSpeakers { get; set; }
     }
 
     public class Settings
@@ -140,6 +141,7 @@ namespace Ares.Settings
 
         public int TagMusicFadeTime { get { return Data.TagMusicFadeTime; } set { Data.TagMusicFadeTime = value; } }
         public bool TagMusicFadeOnlyOnChange { get { return Data.TagMusicFadeOnlyOnChange; } set { Data.TagMusicFadeOnlyOnChange = value; } }
+        public bool PlayMusicOnAllSpeakers { get { return Data.PlayMusicOnAllSpeakers; } set { Data.PlayMusicOnAllSpeakers = value; } }
 
         public static Settings Instance
         {
@@ -336,6 +338,7 @@ namespace Ares.Settings
             ShowDialogAfterUpload = true;
             TagMusicFadeTime = 0;
             TagMusicFadeOnlyOnChange = false;
+            PlayMusicOnAllSpeakers = false;
         }
 
         private void WriteSettings(XmlWriter writer)
@@ -387,6 +390,9 @@ namespace Ares.Settings
             writer.WriteStartElement("TagMusicFading");
             writer.WriteAttributeString("FadeTime", TagMusicFadeTime.ToString(System.Globalization.CultureInfo.InvariantCulture));
             writer.WriteAttributeString("FadeOnlyOnChange", TagMusicFadeOnlyOnChange ? "true" : "false");
+            writer.WriteEndElement();
+            writer.WriteStartElement("Music");
+            writer.WriteAttributeString("PlayOnAllSpeakers", PlayMusicOnAllSpeakers ? "true" : "false");
             writer.WriteEndElement();
             writer.WriteEndElement();
         }
@@ -537,6 +543,18 @@ namespace Ares.Settings
                 {
                     TagMusicFadeTime = reader.GetIntegerAttributeOrDefault("FadeTime", 0);
                     TagMusicFadeOnlyOnChange = reader.GetBooleanAttributeOrDefault("FadeOnlyOnChange", false);
+                    if (reader.IsEmptyElement)
+                        reader.Read();
+                    else
+                    {
+                        reader.Read();
+                        reader.ReadInnerXml();
+                        reader.ReadEndElement();
+                    }
+                }
+                else if (reader.IsStartElement("Music"))
+                {
+                    PlayMusicOnAllSpeakers = reader.GetBooleanAttributeOrDefault("PlayOnAllSpeakers", false);
                     if (reader.IsEmptyElement)
                         reader.Read();
                     else

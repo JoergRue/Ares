@@ -465,6 +465,11 @@ namespace Ares.Plugin
                 Settings.Settings.Instance.TagMusicFadeOnlyOnChange = newTagOnChange;
                 change = true;
             }
+            bool oldOnAllSpeakers = Settings.Settings.Instance.PlayMusicOnAllSpeakers;
+            if (m_PlayingControl.MusicOnAllSpeakers != oldOnAllSpeakers)
+            {
+                Settings.Settings.Instance.PlayMusicOnAllSpeakers = m_PlayingControl.MusicOnAllSpeakers;
+            }
             if (change)
             {
                 m_Network.InformClientOfFading(newTagFadeTime, newTagOnChange);
@@ -483,7 +488,8 @@ namespace Ares.Plugin
                     m_PlayingControl.CurrentModeElements, m_Project,
                     m_PlayingControl.CurrentMusicList, m_PlayingControl.MusicRepeat, m_TagLanguageId, 
                     new List<int>(m_PlayingControl.GetCurrentMusicTags()), m_PlayingControl.IsMusicTagCategoriesOperatorAnd(), 
-                    Settings.Settings.Instance.TagMusicFadeTime, Settings.Settings.Instance.TagMusicFadeOnlyOnChange);
+                    Settings.Settings.Instance.TagMusicFadeTime, Settings.Settings.Instance.TagMusicFadeOnlyOnChange,
+                    Settings.Settings.Instance.PlayMusicOnAllSpeakers);
                 disconnectButton.IsEnabled = true;
             }
             else
@@ -551,6 +557,7 @@ namespace Ares.Plugin
             m_PlayingControl.SoundVolume = Settings.Settings.Instance.SoundVolume;
 
             m_PlayingControl.SetMusicTagFading(Settings.Settings.Instance.TagMusicFadeTime, Settings.Settings.Instance.TagMusicFadeOnlyOnChange);
+            m_PlayingControl.SetPlayMusicOnAllSpeakers(Settings.Settings.Instance.PlayMusicOnAllSpeakers);
 
             m_Network = new Network(this);
             if (Settings.Settings.Instance.IPAddress.Length == 0)
@@ -792,6 +799,11 @@ namespace Ares.Plugin
         public void SetMusicTagsFading(int fadeTime, bool fadeOnlyOnChange)
         {
             m_PlayingControl.SetMusicTagFading(fadeTime, fadeOnlyOnChange);
+        }
+
+        public void SetPlayMusicOnAllSpeakers(bool onAllSpeakers)
+        {
+            m_PlayingControl.SetPlayMusicOnAllSpeakers(onAllSpeakers);
         }
     }
 }

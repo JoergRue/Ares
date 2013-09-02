@@ -31,7 +31,7 @@ namespace Ares.Playing
     {
         public int PlayFile(IFileElement fileElement, int fadeInTime, Action<bool> afterPlayed, bool loop)
         {
-            SoundFile soundFile = new SoundFile(fileElement);
+            SoundFile soundFile = new SoundFile(fileElement, m_PlayMusicOnAllSpeakers);
             FileStarted(fileElement);
             int handle = PlayingModule.FilePlayer.PlayFile(soundFile, fadeInTime, (id, handle2) =>
             {
@@ -191,6 +191,11 @@ namespace Ares.Playing
             }
         }
 
+        public void SetMusicOnAllSpeakers(bool onAllSpeakers)
+        {
+            m_PlayMusicOnAllSpeakers = onAllSpeakers;
+        }
+
         protected abstract void FileStarted(IFileElement fileElement);
         protected abstract void FileFinished(Int32 id, Data.SoundFileType soundFileType);
 
@@ -199,7 +204,7 @@ namespace Ares.Playing
 
         protected abstract bool Playing { get; set; }
 
-        protected StartElementPlayer(IElement element, Action<StartElementPlayer> finishedAction)
+        protected StartElementPlayer(IElement element, Action<StartElementPlayer> finishedAction, bool playMusicOnAllSpeakers)
         {
             m_Element = element;
             m_CurrentFiles = new List<int>();
@@ -207,6 +212,7 @@ namespace Ares.Playing
             m_Stopped = false;
             m_StoppedEvent = new ManualResetEvent(false);
             m_FinishedAction = finishedAction;
+            m_PlayMusicOnAllSpeakers = playMusicOnAllSpeakers;
         }
 
         private Dictionary<ElementPlayerBase, bool> m_SubPlayers;
@@ -218,6 +224,8 @@ namespace Ares.Playing
         private Action<StartElementPlayer> m_FinishedAction;
 
         private IElement m_Element;
+        private bool m_PlayMusicOnAllSpeakers = false;
+
 
         protected Object syncObject = new Int16();
     }
@@ -250,8 +258,8 @@ namespace Ares.Playing
             set;
         }
 
-        public SingleElementPlayer(IElement element, IElementPlayingCallbacks callbacks, Action<StartElementPlayer> finishedAction)
-            : base(element, finishedAction)
+        public SingleElementPlayer(IElement element, IElementPlayingCallbacks callbacks, Action<StartElementPlayer> finishedAction, bool playMusicOnAllSpeakers)
+            : base(element, finishedAction, playMusicOnAllSpeakers)
         {
             m_Callbacks = callbacks;
             m_ElementId = element.Id;
@@ -326,8 +334,8 @@ namespace Ares.Playing
             }
         }
 
-        public ModeElementPlayer(IModeElement modeElement, IProjectPlayingCallbacks callbacks, Action<StartElementPlayer> finishedAction)
-            : base(modeElement.StartElement, finishedAction)
+        public ModeElementPlayer(IModeElement modeElement, IProjectPlayingCallbacks callbacks, Action<StartElementPlayer> finishedAction, bool playMusicOnAllSpeakers)
+            : base(modeElement.StartElement, finishedAction, playMusicOnAllSpeakers)
         {
             m_Mode = modeElement;
             m_Callbacks = callbacks;

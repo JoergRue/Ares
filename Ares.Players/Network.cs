@@ -40,6 +40,7 @@ namespace Ares.Players
         void DeactivateAllTags();
         void SetTagCategoryOperator(bool operatorIsAnd);
         void SetMusicTagsFading(Int32 fadeTime, bool onlyOnChange);
+        void SetPlayMusicOnAllSpeakers(bool onAllSpeakers);
     }
 
     public class Network : Ares.Playing.IProjectPlayingCallbacks
@@ -173,7 +174,8 @@ namespace Ares.Players
 
         public void InformClientOfEverything(int overallVolume, int musicVolume, int soundVolume, Ares.Data.IMode mode, MusicInfo music,
             System.Collections.Generic.IList<Ares.Data.IModeElement> elements, Ares.Data.IProject project, Int32 musicListId, bool musicRepeat,
-            int tagLanguageId, System.Collections.Generic.IList<int> activeTags, bool tagCategoryOperatorIsAnd, int fadeTime, bool fadeOnlyOnChange)
+            int tagLanguageId, System.Collections.Generic.IList<int> activeTags, bool tagCategoryOperatorIsAnd, int fadeTime, bool fadeOnlyOnChange,
+            bool musicOnAllChannels)
         {
             InformProjectModel(project);
             InformPossibleTags(tagLanguageId, project);
@@ -188,6 +190,7 @@ namespace Ares.Players
             }
             InformMusicList(musicListId);
             InformRepeatChanged(musicRepeat);
+            InformMusicOnAllChannelsChanged(musicOnAllChannels);
             InformActiveTags(activeTags);
             InformCategoryOperatorChanged(tagCategoryOperatorIsAnd);
             m_MusicTagsFadeOnlyOnChange = fadeOnlyOnChange;
@@ -695,6 +698,15 @@ namespace Ares.Players
                             networkClient.SetMusicTagsFading(fadeTime, onlyOnChange == 1);
                         }
                     }
+                    else if (command == 15)
+                    {
+                        Int32 onAllSpeakers = -1;
+                        bool success = ReadInt32(out onAllSpeakers);
+                        if (success)
+                        {
+                            networkClient.SetPlayMusicOnAllSpeakers(onAllSpeakers == 1);
+                        }
+                    }
                     lock (syncObject)
                     {
                         goOn = continueListenForCommands;
@@ -1081,6 +1093,21 @@ namespace Ares.Players
             }
         }
 
+        private void InformMusicOnAllChannelsChanged(bool onAllSpeakers)
+        {
+            if (ClientConnected)
+            {
+                byte[] package = new byte[3];
+                package[0] = 18;
+                package[1] = (byte)(onAllSpeakers ? 1 : 0);
+                package[2] = 0;
+                lock (syncObject)
+                {
+                    client.GetStream().Write(package, 0, package.Length);
+                }
+            }
+        }
+
         private void InformPossibleProjects()
         {
             if (ClientConnected)
@@ -1359,6 +1386,19 @@ namespace Ares.Players
             try
             {
                 InformRepeatChanged(repeat);
+            }
+            catch (System.IO.IOException e)
+            {
+                Messages.AddMessage(MessageType.Warning, e.Message);
+                DoDisconnect(true);
+            }
+        }
+
+        public void MusicOnAllSpeakersChanged(bool onAllSpeakers)
+        {
+            try
+            {
+                InformMusicOnAllChannelsChanged(onAllSpeakers);
             }
             catch (System.IO.IOException e)
             {

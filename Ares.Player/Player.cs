@@ -197,11 +197,13 @@ namespace Ares.Player
 #if !MONO
             dialog.AddPage(new StreamingPageHost());
 #endif
+            dialog.AddPage(new MusicPageHost());
             dialog.SetVisiblePage(-1);
             if (dialog.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
             {
                 m_PlayingControl.UpdateDirectories();
                 LoadTagsDB();
+                m_PlayingControl.SetPlayMusicOnAllSpeakers(settings.PlayMusicOnAllSpeakers);
             }
 #if !MONO
             m_KeyboardHookManager.Enabled = true;
@@ -800,6 +802,13 @@ namespace Ares.Player
                 repeat = false;
             }
             repeatButton.Checked = repeat;
+            bool settingsChanged = false;
+            bool onAllSpeakers = m_PlayingControl.MusicOnAllSpeakers;
+            if (onAllSpeakers != Ares.Settings.Settings.Instance.PlayMusicOnAllSpeakers)
+            {
+                Ares.Settings.Settings.Instance.PlayMusicOnAllSpeakers = onAllSpeakers;
+                settingsChanged = true;
+            }
             repeatCurrentMusicToolStripMenuItem.Checked = repeat;
             if (control.CurrentMusicList != lastMusicListId && modesList.SelectedIndex == 0)
             {
@@ -826,7 +835,6 @@ namespace Ares.Player
             }
             lastMusicListId = control.CurrentMusicList;
             m_Listen = true;
-            bool settingsChanged = false;
             if (overallVolumeBar.Value != control.GlobalVolume)
             {
                 overallVolumeBar.Value = control.GlobalVolume;
@@ -1029,6 +1037,7 @@ namespace Ares.Player
             tagFadeUpDown.Value = settings.TagMusicFadeTime;
             fadeOnlyOnChangeBox.Checked = settings.TagMusicFadeOnlyOnChange;
             m_PlayingControl.SetMusicTagFading(settings.TagMusicFadeTime, settings.TagMusicFadeOnlyOnChange);
+            m_PlayingControl.SetPlayMusicOnAllSpeakers(settings.PlayMusicOnAllSpeakers);
             commitFading = true;
             if (fundamentalChange)
             {
@@ -1195,6 +1204,11 @@ namespace Ares.Player
             m_PlayingControl.SetMusicTagFading(fadeTime, onlyOnChange);
         }
 
+        public void SetPlayMusicOnAllSpeakers(bool onAllSpeakers)
+        {
+            m_PlayingControl.SetPlayMusicOnAllSpeakers(onAllSpeakers);
+        }
+
         private bool m_WasConnected = false;
 
         private void UpdateClientData()
@@ -1208,7 +1222,8 @@ namespace Ares.Player
                     m_PlayingControl.CurrentModeElements, m_Project, 
                     m_PlayingControl.CurrentMusicList, m_PlayingControl.MusicRepeat,
                     m_TagLanguageId, new List<int>(m_PlayingControl.GetCurrentMusicTags()), m_PlayingControl.IsMusicTagCategoriesOperatorAnd(),
-                    Settings.Settings.Instance.TagMusicFadeTime, Settings.Settings.Instance.TagMusicFadeOnlyOnChange);
+                    Settings.Settings.Instance.TagMusicFadeTime, Settings.Settings.Instance.TagMusicFadeOnlyOnChange,
+                    Settings.Settings.Instance.PlayMusicOnAllSpeakers);
                 disconnectButton.Text = StringResources.Disconnect;
                 m_WasConnected = true;
             }

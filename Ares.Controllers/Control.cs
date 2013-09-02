@@ -207,6 +207,18 @@ namespace Ares.Controllers
             }
         }
 
+        public void SetMusicOnAllSpeakers(bool onAllSpeakers)
+        {
+            if (m_Connection == null || !m_Connection.Connected)
+            {
+                Messages.AddMessage(MessageType.Warning, StringResources.NoConnection);
+            }
+            else
+            {
+                m_Connection.SetMusicOnAllSpeakers(onAllSpeakers);
+            }
+        }
+
         public void SwitchTag(int categoryId, int tagId, bool active)
         {
             if (m_Connection == null || !m_Connection.Connected)

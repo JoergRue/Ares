@@ -52,6 +52,7 @@ namespace Ares.Editor.Controls
             this.stopButton = new System.Windows.Forms.Button();
             this.playButton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.allSpeakersButton = new System.Windows.Forms.RadioButton();
             this.label1 = new System.Windows.Forms.Label();
             this.oneSpeakerBox = new System.Windows.Forms.ComboBox();
             this.twoSpeakersBox = new System.Windows.Forms.ComboBox();
@@ -95,6 +96,7 @@ namespace Ares.Editor.Controls
             // groupBox1
             // 
             resources.ApplyResources(this.groupBox1, "groupBox1");
+            this.groupBox1.Controls.Add(this.allSpeakersButton);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.oneSpeakerBox);
             this.groupBox1.Controls.Add(this.twoSpeakersBox);
@@ -105,6 +107,15 @@ namespace Ares.Editor.Controls
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
             this.groupBox1.UseCompatibleTextRendering = true;
+            // 
+            // allSpeakersButton
+            // 
+            resources.ApplyResources(this.allSpeakersButton, "allSpeakersButton");
+            this.allSpeakersButton.Name = "allSpeakersButton";
+            this.allSpeakersButton.TabStop = true;
+            this.allSpeakersButton.UseCompatibleTextRendering = true;
+            this.allSpeakersButton.UseVisualStyleBackColor = true;
+            this.allSpeakersButton.CheckedChanged += new System.EventHandler(this.allSpeakersButton_CheckedChanged);
             // 
             // label1
             // 
@@ -225,5 +236,6 @@ namespace Ares.Editor.Controls
         private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.RadioButton allSpeakersButton;
     }
 }

@@ -57,7 +57,7 @@ namespace Ares.Playing
             private set;
         }
 
-        public SoundFile(IFileElement element)
+        public SoundFile(IFileElement element, bool playMusicOnAllSpeakers)
         {
             Id = element.Id;
             SoundFileType = element.SoundFileType == Data.SoundFileType.Music ? SoundFileType.Music : SoundFileType.SoundEffect;
@@ -65,6 +65,11 @@ namespace Ares.Playing
             Path = System.IO.Path.Combine(dir, element.FilePath);
             Volume = SoundFileType == Playing.SoundFileType.Music ? PlayingModule.ThePlayer.MusicVolume : PlayingModule.ThePlayer.SoundVolume;
             Effects = element.Effects;
+            if (playMusicOnAllSpeakers && element.SoundFileType == Data.SoundFileType.Music && !element.Effects.SpeakerAssignment.Active && !element.Effects.Balance.Active)
+            {
+                element.Effects.SpeakerAssignment.Active = true;
+                element.Effects.SpeakerAssignment.Assignment = SpeakerAssignment.AllSpeakers;
+            }
         }
     }
 
@@ -167,6 +172,7 @@ namespace Ares.Playing
 
         void SubPlayerStarted(ElementPlayerBase subPlayer);
         void SubPlayerFinished(ElementPlayerBase subPlayer, bool stopMusic, bool stopSounds);
+        void SetMusicOnAllSpeakers(bool onAllSpeakers);
     }
 
     abstract class ElementPlayerBase : IElementVisitor
@@ -380,6 +386,11 @@ namespace Ares.Playing
         public int PlayFile(IFileElement element, int fadeInTime, Action<bool> afterPlayed, bool loop)
         {
             return Client.PlayFile(element, fadeInTime, afterPlayed, loop);
+        }
+
+        public void SetMusicOnAllSpeakers(bool onAllSpeakers)
+        {
+            Client.SetMusicOnAllSpeakers(onAllSpeakers);
         }
 
         public bool Stopped { get { return Client.Stopped; } }
@@ -957,6 +968,19 @@ namespace Ares.Playing
             }
         }
 
+        private bool m_PlayMusicOnAllSpeakers = false;
+
+        public void SetPlayMusicOnAllSpeakers(bool onAllSpeakers)
+        {
+            m_PlayMusicOnAllSpeakers = onAllSpeakers;
+            if (m_ActiveMusicPlayer != null)
+                m_ActiveMusicPlayer.SetMusicOnAllSpeakers(onAllSpeakers);
+            if (ProjectCallbacks != null)
+            {
+                ProjectCallbacks.MusicOnAllSpeakersChanged(onAllSpeakers);
+            }
+        }
+
         public void SetMusicByTagsElementPlayed(IMusicByTags element)
         {
             if (tagsPlayer == null)
@@ -1209,7 +1233,7 @@ namespace Ares.Playing
                 if (stoppedEvents2.Count == 0)
                     fadeSoundsTime = 0;
             }
-            ModeElementPlayer player = new ModeElementPlayer(element, ProjectCallbacks, player2 => PlayerStopped(player2, element));
+            ModeElementPlayer player = new ModeElementPlayer(element, ProjectCallbacks, player2 => PlayerStopped(player2, element), m_PlayMusicOnAllSpeakers);
             if (element.Trigger != null && element.Trigger.CrossFadeMusic && element.Trigger.FadeMusicTime > 0)
             {
                 m_AllowTwoMusicPlayers = true;
@@ -1246,7 +1270,7 @@ namespace Ares.Playing
 
         public void PlayElement(IElement element)
         {
-            SingleElementPlayer player = new SingleElementPlayer(element, ElementCallbacks, player2 => PlayerStopped(player2, element));
+            SingleElementPlayer player = new SingleElementPlayer(element, ElementCallbacks, player2 => PlayerStopped(player2, element), m_PlayMusicOnAllSpeakers);
             DoStartElement(element, player, 0);
         }
 

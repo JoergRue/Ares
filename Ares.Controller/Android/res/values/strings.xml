@@ -74,7 +74,7 @@
     <string name="CategoryOperatorIsOr">OR: Music must have at least one tag in ANY category</string>
     <string name="SelectProject">Select Project:</string>
     <string name="NoProjects">There are currently no projects available for the Player.</string>
-    <string name="tagMusic">Playing music through tags</string>
+    <string name="tagMusic">Playing music</string>
     <string-array name="tag_categories_values">
         <item >or</item>
         <item >and</item>
@@ -92,4 +92,6 @@
         <string name="playerConnection">Connection to Player</string>
         <string name="general">General</string>
         <string name="invalid_fading_time">Please enter a positive number &lt; 50000</string>
+        <string name="MusicAllSpeakers">Music on all speakers</string>
+        <string name="MusicAllSpeakersDesc">Play music on all available speakers</string>
 </resources>

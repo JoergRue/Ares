@@ -76,7 +76,7 @@
     <string name="NoProjects">Derzeit sind im Player keine Projekte verfügbar.</string>
     <string name="general">Allgemein</string>
     <string name="playerConnection">Verbindung zum Player</string>
-    <string name="tagMusic">Musik per Tags abspielen</string>
+    <string name="tagMusic">Musik abspielen</string>
     <string-array name="tag_categories_values">
         <item >or</item>
         <item >and</item>
@@ -92,4 +92,6 @@
     <string name="tagFadingOnChange">Nur bei neuen Tags</string>
     <string name="tagFadingOnChangeDesc">Nur blenden, wenn sich die Tags ändern</string>
     <string name="invalid_fading_time">Bitte eine positive Zahl &lt; 50000 eingeben</string>
+    <string name="MusicAllSpeakers">Musik auf allen Lautsprechern</string>
+    <string name="MusicAllSpeakersDesc">Musik auf allen verfügbaren Lautsprechern abspielen</string>
 </resources>

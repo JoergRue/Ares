@@ -33,6 +33,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -673,6 +674,7 @@ public final class MainFrame extends FrameController implements IMessageListener
     		  .addComponent(getVolumesPanel())
     	      .addComponent(getStatePanel())
     	      .addComponent(getNetworkPanel())
+    	      .addComponent(getMusicPanel())
     	      .addComponent(getModesPanel())
     	      );
       layout.setVerticalGroup(layout.createSequentialGroup()
@@ -680,6 +682,7 @@ public final class MainFrame extends FrameController implements IMessageListener
     		  .addComponent(getVolumesPanel())
     	      .addComponent(getStatePanel())
     	      .addComponent(getNetworkPanel())
+    	      .addComponent(getMusicPanel())
     	      .addComponent(getModesPanel())
     	      );
   }
@@ -834,7 +837,7 @@ public final class MainFrame extends FrameController implements IMessageListener
 	if (isLocalPlayer) {
 	    JFileChooser chooser = new JFileChooser();
 	    chooser.setAcceptAllFileFilterUsed(true);
-	    chooser.setFileFilter(new ExampleFileFilter(new String[] {"ares", "apkg"}, Localization.getString("MainFrame.ConfigFiles"))); //$NON-NLS-1$ //$NON-NLS-2$
+	    chooser.setFileFilter(new ExampleFileFilter(new String[] {"ares", "apkg"}, Localization.getString("MainFrame.ConfigFiles"))); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	    chooser.setCurrentDirectory(Directories.getLastUsedDirectory(this, "ConfigurationFiles")); //$NON-NLS-1$
 	    chooser.setMultiSelectionEnabled(false);
 	    if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
@@ -884,6 +887,33 @@ public final class MainFrame extends FrameController implements IMessageListener
       networkPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED), Localization.getString("MainFrame.Network"), TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null)); //$NON-NLS-1$ //$NON-NLS-2$
     }
     return networkPanel;
+  }
+  
+  private JPanel musicPanel = null;
+  private JCheckBox musicOnAllSpeakersBox = null;
+  private boolean listenToMusicControls = true;
+  
+  private JCheckBox getMusicOnAllSpeakersBox() {
+	  if (musicOnAllSpeakersBox == null) {
+			 musicOnAllSpeakersBox = new JCheckBox(Localization.getString("MainFrame.MusicOnAllSpeakers")); //$NON-NLS-1$
+			 musicOnAllSpeakersBox.addActionListener(new ActionListener() {
+				 public void actionPerformed(ActionEvent e) {
+					 if (listenToMusicControls) {
+						 Control.getInstance().setMusicOnAllSpeakers(musicOnAllSpeakersBox.isSelected());
+					 }
+				 }
+			 });		  
+	  }
+	  return musicOnAllSpeakersBox;
+  }
+  
+  private JPanel getMusicPanel() {
+	  if (musicPanel == null) {
+		 musicPanel = new JPanel(new BorderLayout(5, 5));
+		 musicPanel.add(getMusicOnAllSpeakersBox(), BorderLayout.WEST);
+		 musicPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED), Localization.getString("MainFrame.Music2"))); //$NON-NLS-1$
+	  }
+	  return musicPanel;
   }
 
   /**
@@ -1362,6 +1392,16 @@ public final class MainFrame extends FrameController implements IMessageListener
 			public void run() {
 				getRepeatButton().setSelected(repeat);
 				repeatItem.setSelected(repeat);
+			}
+		});
+	}
+	
+	public void musicOnAllSpeakersChanged(final boolean onAllSpeakers) {
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				listenToMusicControls = false;
+				getMusicOnAllSpeakersBox().setSelected(onAllSpeakers);
+				listenToMusicControls = true;
 			}
 		});
 	}

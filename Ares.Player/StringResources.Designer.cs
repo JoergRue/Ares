@@ -325,6 +325,15 @@ namespace Ares.Player {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Music ähnelt.
+        /// </summary>
+        internal static string Music {
+            get {
+                return ResourceManager.GetString("Music", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Music List ähnelt.
         /// </summary>
         internal static string MusicList {

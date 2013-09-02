@@ -113,6 +113,7 @@ namespace Ares.MGPlugin
             nextMusicButton.Enabled = enabled;
             prevMusicButton.Enabled = enabled;
             repeatButton.Enabled = enabled;
+            musicOnAllSpeakersBox.Enabled = enabled;
             modesList.Items.Clear();
             elementsPanel.Controls.Clear();
             m_CurrentMode = String.Empty;
@@ -706,6 +707,21 @@ namespace Ares.MGPlugin
             );
         }
 
+        private bool m_IsMusicOnAllSpeakers = false;
+        private bool m_ListenToMusicControls = true;
+
+        public void MusicOnAllSpeakersChanged(bool onAllSpeakers)
+        {
+            DispatchToUIThread(() =>
+                {
+                    m_IsMusicOnAllSpeakers = onAllSpeakers;
+                    m_ListenToMusicControls = false;
+                    musicOnAllSpeakersBox.Checked = onAllSpeakers;
+                    m_ListenToMusicControls = true;
+                }
+            );
+        }
+
         List<Controllers.MusicListItem> m_CurrentMusicList = new List<Controllers.MusicListItem>();
 
         public void MusicListChanged(List<Controllers.MusicListItem> newList)
@@ -1218,6 +1234,13 @@ namespace Ares.MGPlugin
             if (!m_ListenToTagControls)
                 return;
             Controllers.Control.Instance.SetTagFading((int)tagFadeUpDown.Value, tagFadeOnlyOnChangeBox.Checked);
+        }
+
+        private void musicOnAllSpeakersBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!m_ListenToMusicControls)
+                return;
+            Controllers.Control.Instance.SetMusicOnAllSpeakers(musicOnAllSpeakersBox.Checked);
         }
 
     }

@@ -188,6 +188,10 @@ namespace Ares.Playing
         {
         }
 
+        public void MusicOnAllSpeakersChanged(bool onAllSpeakers)
+        {
+        }
+
         public void ErrorOccurred(int elementId, string errorMessage)
         {
         }

@@ -55,6 +55,8 @@ public class PlayingState implements INetworkClient {
 	private int tagFadingTime = 0;
 	private boolean tagFadeOnlyOnChange = false;
 	
+	private boolean musicOnAllSpeakers = false;
+	
 	private String currentFileName = "";
 	private Configuration currentConfiguration = null;
 
@@ -112,6 +114,10 @@ public class PlayingState implements INetworkClient {
 	
 	public boolean getTagFadeOnlyOnChange() {
 		return tagFadeOnlyOnChange;
+	}
+	
+	public boolean getMusicOnAllSpeakers() {
+		return musicOnAllSpeakers;
 	}
 	
 	public String getCurrentFileName() {
@@ -438,5 +444,18 @@ public class PlayingState implements INetworkClient {
 			}
 		});
 		
+	}
+
+	@Override
+	public void musicOnAllSpeakersChanged(final boolean onAllSpeakers) {
+		handler.post(new Runnable() {
+			public void run() {
+				musicOnAllSpeakers = onAllSpeakers;
+				if (!hasClient())
+					return;
+				for (INetworkClient client : clients)
+					client.musicOnAllSpeakersChanged(onAllSpeakers);
+			}
+		});		
 	}
 }

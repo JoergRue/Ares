@@ -377,4 +377,8 @@ public class TagsFragment extends ModeLikeFragment implements INetworkClient {
 	public void musicTagFadingChanged(int fadeTime, boolean fadeOnlyOnChange) {
 		// not handled directly
 	}
+
+	@Override
+	public void musicOnAllSpeakersChanged(boolean onAllSpeakers) {
+	}
 }

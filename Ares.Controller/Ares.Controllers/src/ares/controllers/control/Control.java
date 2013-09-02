@@ -166,6 +166,15 @@ public final class Control {
 	  }	  	  
   }
   
+  public void setMusicOnAllSpeakers(boolean onAllSpeakers) {
+	  if (connection == null || !connection.isConnected()) {
+		  Messages.addMessage(MessageType.Warning, Localization.getString("Control.noConnection")); //$NON-NLS-1$
+	  }
+	  else {
+		  connection.setMusicOnAllSpeakers(onAllSpeakers);
+	  }	  	  	  
+  }
+  
   public void switchTag(int categoryId, int tagId, boolean isActive) {
 	  if (connection == null || !connection.isConnected()) {
 		  Messages.addMessage(MessageType.Warning, Localization.getString("Control.noConnection")); //$NON-NLS-1$

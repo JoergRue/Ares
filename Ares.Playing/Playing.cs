@@ -204,6 +204,19 @@ namespace Ares.Playing
             }
         }
 
+        public void MusicOnAllSpeakersChanged(bool onAllSpeakers)
+        {
+            List<IProjectPlayingCallbacks> copy = null;
+            lock (syncObject)
+            {
+                copy = new List<IProjectPlayingCallbacks>(m_Clients);
+            }
+            foreach (IProjectPlayingCallbacks callback in copy)
+            {
+                callback.MusicOnAllSpeakersChanged(onAllSpeakers);
+            }
+        }
+
         public void ErrorOccurred(int elementId, string errorMessage)
         {
             List<IProjectPlayingCallbacks> copy = null;
