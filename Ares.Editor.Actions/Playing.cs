@@ -286,6 +286,12 @@ namespace Ares.Editor.Actions
             }
         }
 
+        public void AddMessage(Ares.Playing.MessageType messageType, String message)
+        {
+            if (messageType == Ares.Playing.MessageType.Error)
+                ErrorOccurred(-1, message);
+        }
+
         public class ErrorHandler
         {
             public System.Action<Ares.Data.IElement, String> ErrorHandlingMethod { get; set; }

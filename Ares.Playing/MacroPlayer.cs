@@ -196,6 +196,10 @@ namespace Ares.Playing
         {
         }
 
+        public void AddMessage(MessageType messageType, String message)
+        {
+        }
+
         public void MusicTagAdded(int tagId)
         {
         }

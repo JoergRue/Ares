@@ -556,5 +556,10 @@ namespace Ares.Players
                 Messages.AddMessage(MessageType.Error, errorMessage);
             }
         }
+
+        public void AddMessage(Playing.MessageType messageType, String message)
+        {
+            Messages.AddMessage((MessageType)(int)messageType, message);
+        }
     }
 }

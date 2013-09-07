@@ -102,6 +102,18 @@ namespace Ares.Playing
             }
         }
 
+        public static void AddMessage(MessageType messageType, String message)
+        {
+            if (PlayingModule.ThePlayer.ElementCallbacks != null)
+            {
+                PlayingModule.ThePlayer.ElementCallbacks.AddMessage(messageType, message);
+            }
+            else if (PlayingModule.ThePlayer.ProjectCallbacks != null)
+            {
+                PlayingModule.ThePlayer.ProjectCallbacks.AddMessage(messageType, message);
+            }
+        }
+
         private static String GetMsgForError(Un4seen.Bass.BASSError error)
         {
             switch (error)

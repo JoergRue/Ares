@@ -28,7 +28,6 @@ using System.Windows.Forms;
 
 using Ares.Data;
 using Ares.Players;
-using Ares.Playing;
 using Ares.Settings;
 
 namespace Ares.Player
@@ -152,10 +151,10 @@ namespace Ares.Player
 
         private void StopAllPlaying()
         {
-            PlayingModule.ProjectPlayer.StopAll();
-            if (PlayingModule.Streamer.IsStreaming)
+            Ares.Playing.PlayingModule.ProjectPlayer.StopAll();
+            if (Ares.Playing.PlayingModule.Streamer.IsStreaming)
             {
-                PlayingModule.Streamer.EndStreaming();
+                Ares.Playing.PlayingModule.Streamer.EndStreaming();
             }
         }
 
@@ -319,7 +318,7 @@ namespace Ares.Player
             }
             projectNameLabel.Text = m_Project != null ? m_Project.Title : StringResources.NoOpenedProject;
             this.Text = String.Format(StringResources.AresPlayer, projectNameLabel.Text);
-            PlayingModule.ProjectPlayer.SetProject(m_Project);
+            Ares.Playing.PlayingModule.ProjectPlayer.SetProject(m_Project);
             DoModelChecks();
             if (m_Project != null)
             {
@@ -838,21 +837,21 @@ namespace Ares.Player
             if (overallVolumeBar.Value != control.GlobalVolume)
             {
                 overallVolumeBar.Value = control.GlobalVolume;
-                m_Network.InformClientOfVolume(VolumeTarget.Both, control.GlobalVolume);
+                m_Network.InformClientOfVolume(Ares.Playing.VolumeTarget.Both, control.GlobalVolume);
                 Settings.Settings.Instance.GlobalVolume = control.GlobalVolume;
                 settingsChanged = true;
             }
             if (musicVolumeBar.Value != control.MusicVolume)
             {
                 musicVolumeBar.Value = control.MusicVolume;
-                m_Network.InformClientOfVolume(VolumeTarget.Music, control.MusicVolume);
+                m_Network.InformClientOfVolume(Ares.Playing.VolumeTarget.Music, control.MusicVolume);
                 Settings.Settings.Instance.MusicVolume = control.MusicVolume;
                 settingsChanged = true;
             }
             if (soundVolumeBar.Value != control.SoundVolume)
             {
                 soundVolumeBar.Value = control.SoundVolume;
-                m_Network.InformClientOfVolume(VolumeTarget.Sounds, control.SoundVolume);
+                m_Network.InformClientOfVolume(Ares.Playing.VolumeTarget.Sounds, control.SoundVolume);
                 Settings.Settings.Instance.SoundVolume = control.SoundVolume;
                 settingsChanged = true;
             }
@@ -892,7 +891,7 @@ namespace Ares.Player
         private void overallVolumeBar_Scroll(object sender, EventArgs e)
         {
             m_PlayingControl.GlobalVolume = overallVolumeBar.Value;
-            m_Network.InformClientOfVolume(VolumeTarget.Both, overallVolumeBar.Value);
+            m_Network.InformClientOfVolume(Ares.Playing.VolumeTarget.Both, overallVolumeBar.Value);
             if (!commitVolumes) return;
             Settings.Settings.Instance.GlobalVolume = overallVolumeBar.Value;
             Settings.Settings.Instance.Commit();
@@ -901,7 +900,7 @@ namespace Ares.Player
         private void musicVolumeBar_Scroll(object sender, EventArgs e)
         {
             m_PlayingControl.MusicVolume = musicVolumeBar.Value;
-            m_Network.InformClientOfVolume(VolumeTarget.Music, musicVolumeBar.Value);
+            m_Network.InformClientOfVolume(Ares.Playing.VolumeTarget.Music, musicVolumeBar.Value);
             if (!commitVolumes) return;
             Settings.Settings.Instance.MusicVolume = musicVolumeBar.Value;
             Settings.Settings.Instance.Commit();
@@ -910,7 +909,7 @@ namespace Ares.Player
         private void soundVolumeBar_Scroll(object sender, EventArgs e)
         {
             m_PlayingControl.SoundVolume = soundVolumeBar.Value;
-            m_Network.InformClientOfVolume(VolumeTarget.Sounds, soundVolumeBar.Value);
+            m_Network.InformClientOfVolume(Ares.Playing.VolumeTarget.Sounds, soundVolumeBar.Value);
             if (!commitVolumes) return;
             Settings.Settings.Instance.SoundVolume = soundVolumeBar.Value;
             Settings.Settings.Instance.Commit();
@@ -1123,13 +1122,13 @@ namespace Ares.Player
         {
             switch (target)
             {
-                case VolumeTarget.Both:
+                case Ares.Playing.VolumeTarget.Both:
                     m_PlayingControl.GlobalVolume = value;
                     break;
-                case VolumeTarget.Music:
+                case Ares.Playing.VolumeTarget.Music:
                     m_PlayingControl.MusicVolume = value;
                     break;
-                case VolumeTarget.Sounds:
+                case Ares.Playing.VolumeTarget.Sounds:
                     m_PlayingControl.SoundVolume = value;
                     break;
                 default:

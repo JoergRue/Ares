@@ -65,6 +65,11 @@ namespace Ares.Playing
         void StopFile(int handle, bool fadeOut, int fadeOutTime);
     }
 
+    public enum MessageType
+    {
+        Debug = 0, Info = 1, Warning = 2, Error = 3
+    }
+
     /// <summary>
     /// Base interface for callbacks during playing.
     /// </summary>
@@ -77,6 +82,11 @@ namespace Ares.Playing
         /// An error occurred while trying to play an element.
         /// </summary>
         void ErrorOccurred(int elementId, String errorMessage);
+
+        /// <summary>
+        /// A message occured during playing.
+        /// </summary>
+        void AddMessage(MessageType messageType, String message);
     }
 
     /// <summary>

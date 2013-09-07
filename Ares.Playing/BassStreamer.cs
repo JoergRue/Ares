@@ -25,10 +25,11 @@ namespace Ares.Playing
     {
         public void BeginStreaming(StreamingParameters parameters)
         {
+            ErrorSent = false;
             if (IsStreaming)
                 EndStreaming();
 
-            m_MixerChannel = Un4seen.Bass.AddOn.Mix.BassMix.BASS_Mixer_StreamCreate(44100, 2, Un4seen.Bass.BASSFlag.BASS_MIXER_RESUME);
+            m_MixerChannel = Un4seen.Bass.AddOn.Mix.BassMix.BASS_Mixer_StreamCreate(44100, 2, Un4seen.Bass.BASSFlag.BASS_MIXER_RESUME | Un4seen.Bass.BASSFlag.BASS_MIXER_NONSTOP);
             if (m_MixerChannel == 0)
             {
                 HandleBassError();
@@ -49,7 +50,9 @@ namespace Ares.Playing
                     Un4seen.Bass.Misc.EncoderOGG oggEnc = new Un4seen.Bass.Misc.EncoderOGG(m_MixerChannel);
                     oggEnc.OGG_Bitrate = (int)parameters.Bitrate;
                     oggEnc.OGG_TargetSampleRate = (int)Un4seen.Bass.Misc.EncoderOGG.SAMPLERATE.Hz_44100;
-                    oggEnc.OGG_UseQualityMode = oggEnc.OGG_Bitrate == 128;
+                    oggEnc.OGG_UseQualityMode = false; //oggEnc.OGG_Bitrate == 128;
+                    oggEnc.OGG_MaxBitrate = oggEnc.OGG_Bitrate;
+                    oggEnc.OGG_MinBitrate = oggEnc.OGG_Bitrate;
                     encoder = oggEnc;
                     break;
                 case StreamEncoding.Lame:
@@ -122,13 +125,37 @@ namespace Ares.Playing
             {
                 if (m_BroadCast == null)
                     return;
-                if (m_BroadCast.IsConnected)
+                if (e.EventType == Un4seen.Bass.Misc.BroadCastEventType.Connected)
                 {
-                    // ErrorHandling.ErrorOccurred(0, "Connected to Icecast");
+                    ErrorHandling.AddMessage(MessageType.Info, "Connected to Icecast Server");
                 }
-                else
+                else if (e.EventType == Un4seen.Bass.Misc.BroadCastEventType.ConnectionError)
                 {
-                    // ErrorHandling.ErrorOccurred(0, "Disconnected from Icecast");
+                    if (!ErrorSent)
+                    {
+                        ErrorHandling.AddMessage(MessageType.Error, "Could not connect to Icecast Server");
+                        ErrorSent = true;
+                    }
+                    else
+                    {
+                        ErrorHandling.AddMessage(MessageType.Debug, "Could not connect to Icecast Server");
+                    }
+                }
+                else if (e.EventType == Un4seen.Bass.Misc.BroadCastEventType.ConnectionLost)
+                {
+                    if (!ErrorSent)
+                    {
+                        ErrorHandling.AddMessage(MessageType.Info, "Connection to Icecast Server lost");
+                    }
+                    else
+                    {
+                        ErrorHandling.AddMessage(MessageType.Debug, "Connection to Icecast Server lost");
+                        ErrorSent = true;
+                    }
+                }
+                else if (e.EventType == Un4seen.Bass.Misc.BroadCastEventType.Disconnected)
+                {
+                    ErrorHandling.AddMessage(MessageType.Info, "Disconnected from Icecast Server");
                 }
             }
         }
@@ -147,9 +174,12 @@ namespace Ares.Playing
                 Un4seen.Bass.Bass.BASS_StreamFree(m_MixerChannel);
             m_MixerChannel = 0;
             IsStreaming = false;
+            ErrorSent = false;
         }
 
         public bool IsStreaming { get; set; }
+
+        private bool ErrorSent { get; set; }
         
         public bool AddChannel(int channel)
         {

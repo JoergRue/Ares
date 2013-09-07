@@ -1528,5 +1528,11 @@ namespace Ares.Players
                 DoDisconnect(true);
             }
         }
+
+        public void AddMessage(Ares.Playing.MessageType messageType, String message)
+        {
+            if (messageType == Ares.Playing.MessageType.Error)
+                ErrorOccurred(-1, message);
+        }
     }
 }
