@@ -1,3 +1,16 @@
+Version 2.3.0
+----------------------------------------------------------------------------------
+- General: Option to play music on all speakers (instead of stereo)
+- General: Option to select 'all speakers' in speaker effect
+- General: Added support for m4a files
+- Editor: Button in Music Explorer toolbar to set tags
+- Editor: Buttons in Project Explorer to move modes or elements up and down
+- Editor: Button to cleanup tags database
+- Player: Streaming to icecast keeps stream alive even if no sound and music are
+  currently being played
+- Player / MediaPortal: Updated to MediaPortal 1.2-1.4. Changed architecture; 
+  locally installed Player is now necessary
+
 Version 2.2.0
 ----------------------------------------------------------------------------------
 - General: Added 'Music by Tags' element to quickly set a tags selection

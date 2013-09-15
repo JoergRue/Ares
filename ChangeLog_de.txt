@@ -1,3 +1,16 @@
+Version 2.3.0
+----------------------------------------------------------------------------------
+- General: Option, Musik auf allen Lautsprechern zu spielen (statt Stereo)
+- General: 'Alle Lautsprecher' kann beim Lautsprecher-Effekt gewählt werden
+- General: Unterstützung für m4a-Dateien hinzugefügt
+- Editor: Button im Musik-Explorer, um Tags zu setzen
+- Editor: Buttons im Projekt-Explorer, um Modi oder Elemente umzusortieren
+- Editor: Button um die Tags-Datenbasis aufzuräumen
+- Player: Beim Streaming über Icecast wird der Stream am Leben gehalten, auch wenn
+  gerade keine Musik und keine Geräusche gespielt werden
+- Player / MediaPortal: Für MediaPortal 1.2-1.4 aktualisiert. Architektur 
+  geändert; ein lokal installierter Player ist jetzt erforderlich.
+
 Version 2.2.0
 ----------------------------------------------------------------------------------
 - Allgemein: "Musikauswahl über Tags"-Element hinzugefügt, um schnell eine 

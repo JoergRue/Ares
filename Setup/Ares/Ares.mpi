@@ -299,6 +299,8 @@ File ::1DB14E5B-5166-460F-842A-36A35672A350 -name msvcp100.dll -active 0 -parent
 File ::67A73DDD-7F0A-481E-B930-DC49A8B23267 -name msvcr100.dll -active 0 -parent 85519505-B2E6-4155-96D6-3C0D6C533801
 File ::35ADFB73-0A5E-4253-91DB-2527769ABEC3 -name RestSharpLicence.txt -parent 85519505-B2E6-4155-96D6-3C0D6C533801
 File ::98D189EA-BBEE-4FE2-B99D-4C60EFE7C832 -name ServiceStackLicence.txt -parent 85519505-B2E6-4155-96D6-3C0D6C533801
+File ::EE0E8D31-D850-4894-BADB-1235B7231184 -name bassflac.dll -parent 85519505-B2E6-4155-96D6-3C0D6C533801
+File ::DE2D3499-FCCF-479F-8095-7D0C408A1C9C -name bass_aac.dll -parent 85519505-B2E6-4155-96D6-3C0D6C533801
 File ::95542296-8E72-4D8D-8ACE-B7B6AB1080E3 -name D:/Projekte/Ares/trunk/build/Ares/ServiceStackLicence.txt -parent 36904AC1-ABF2-4646-9ECF-2C0CBC0BB8C5
 File ::CCC6C317-4CCE-44B9-9FE1-9C12E10D1373 -name D:/Projekte/Ares/trunk/build/Ares/HtmlRendererLicence.txt -parent 36904AC1-ABF2-4646-9ECF-2C0CBC0BB8C5
 FileGroup ::68676E85-DEAC-451E-9016-59D1A2300E9B -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows TarArchive ZipArchive} -name Player -parent FileGroups
@@ -407,6 +409,8 @@ File ::EE732BCF-8162-4A6D-8811-1FD9AD314CC6 -name HtmlRenderer.dll -parent C17D4
 File ::4209CED8-AC21-47AA-8884-90A1DCD251EB -name ServiceStack.Text.dll -parent C17D4904-E0C0-4389-B37A-799FD29270B1
 File ::7CAF979B-3F34-4CFC-B3DD-E2CD09D46701 -name System.Data.SQLite.dll -parent C17D4904-E0C0-4389-B37A-799FD29270B1
 File ::5EA75B8C-E8DA-496F-ADFD-23099CC9DF14 -name Ares.CommonGUI.dll -parent C17D4904-E0C0-4389-B37A-799FD29270B1
+File ::4B6440FE-2E4C-423F-BA7D-D8F35A3247CA -name libbassflac.so -parent C17D4904-E0C0-4389-B37A-799FD29270B1
+File ::35CBC3FE-D113-462E-A88F-D26079AA1CFC -name libbass_aac.so -parent C17D4904-E0C0-4389-B37A-799FD29270B1
 File ::0E8DB0B9-DFBE-4DEC-8A9E-1847C37B9DE5 -name D:/Projekte/Ares/trunk/build/Ares/HtmlRendererLicence.txt -parent 1B81444E-DFA2-4A82-92CB-E6F0771F06DA
 File ::4CFC768F-2DEA-4336-8EF7-48370D3D043D -name D:/Projekte/Ares/trunk/build/Ares/ServiceStackLicence.txt -parent 1B81444E-DFA2-4A82-92CB-E6F0771F06DA
 Component ::9007BFE7-966A-4832-9DD3-CC572BE38EC3 -setup Install -active Yes -platforms Windows -name Editor -parent Components
