@@ -33,7 +33,7 @@
       <posY>50</posY>
       <label>Ares Player</label>
       <align>left</align>
-      <textcolor>ffffffff</textcolor>
+      <textcolor>00000000</textcolor>
     </control>
 
     <control>
@@ -84,7 +84,7 @@
       <posY>220</posY>
       <label>Overall Volume:</label>
       <align>left</align>
-      <textcolor>ffffffff</textcolor>
+      <textcolor>00000000</textcolor>
     </control>
 
     <control>
@@ -112,7 +112,7 @@
       <posY>310</posY>
       <label>Music Volume:</label>
       <align>left</align>
-      <textcolor>ffffffff</textcolor>
+      <textcolor>00000000</textcolor>
     </control>
 
     <control>
@@ -140,7 +140,7 @@
       <posY>400</posY>
       <label>Sounds Volume:</label>
       <align>left</align>
-      <textcolor>ffffffff</textcolor>
+      <textcolor>00000000</textcolor>
     </control>
 
     <control>
@@ -168,7 +168,7 @@
       <posY>530</posY>
       <label>Mode:</label>
       <align>left</align>
-      <textcolor>ffffffff</textcolor>
+      <textcolor>00000000</textcolor>
     </control>
 
     <control>
@@ -179,7 +179,7 @@
       <posY>530</posY>
       <label></label>
       <align>left</align>
-      <textcolor>ffffffff</textcolor>
+      <textcolor>00000000</textcolor>
     </control>
 
     <control>
@@ -190,7 +190,7 @@
       <posY>600</posY>
       <label>Elements:</label>
       <align>left</align>
-      <textcolor>ffffffff</textcolor>
+      <textcolor>00000000</textcolor>
     </control>
 
     <control>
@@ -201,7 +201,7 @@
       <posY>600</posY>
       <label></label>
       <align>left</align>
-      <textcolor>ffffffff</textcolor>
+      <textcolor>00000000</textcolor>
     </control>
 
     <control>
@@ -212,7 +212,7 @@
       <posY>670</posY>
       <label>Music:</label>
       <align>left</align>
-      <textcolor>ffffffff</textcolor>
+      <textcolor>00000000</textcolor>
     </control>
 
     <control>
@@ -223,29 +223,29 @@
       <posY>670</posY>
       <width>800</width>
       <align>left</align>
-      <textcolor>ffffffff</textcolor>
+      <textcolor>00000000</textcolor>
     </control>
 
     <control>
-      <description>Sounds Desc Label</description>
+      <description>Player Connection Desc Label</description>
       <type>label</type>
       <id>17</id>
       <posX>60</posX>
       <posY>740</posY>
       <label>Sounds:</label>
       <align>left</align>
-      <textcolor>ffffffff</textcolor>
+      <textcolor>00000000</textcolor>
     </control>
 
     <control>
-      <description>Sounds Label</description>
+      <description>Player Connection Label</description>
       <type>fadelabel</type>
       <id>18</id>
       <posX>360</posX>
       <posY>740</posY>
       <width>800</width>
       <align>left</align>
-      <textcolor>ffffffff</textcolor>
+      <textcolor>00000000</textcolor>
     </control>
 
     <control>
@@ -256,7 +256,7 @@
       <posY>940</posY>
       <label>Network State:</label>
       <align>left</align>
-      <textcolor>ffffffff</textcolor>
+      <textcolor>00000000</textcolor>
     </control>
 
     <control>
@@ -267,7 +267,7 @@
       <posY>940</posY>
       <label>Not Connected</label>
       <align>left</align>
-      <textcolor>ffffffff</textcolor>
+      <textcolor>00000000</textcolor>
     </control>
 
     <control>

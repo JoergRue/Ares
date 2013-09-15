@@ -81,6 +81,8 @@ namespace Ares.Settings
         public int TagMusicFadeTime { get; set; }
         public bool TagMusicFadeOnlyOnChange { get; set; }
         public bool PlayMusicOnAllSpeakers { get; set; }
+
+        public String LocalPlayerPath { get; set; } // for controllers
     }
 
     public class Settings
@@ -142,6 +144,8 @@ namespace Ares.Settings
         public int TagMusicFadeTime { get { return Data.TagMusicFadeTime; } set { Data.TagMusicFadeTime = value; } }
         public bool TagMusicFadeOnlyOnChange { get { return Data.TagMusicFadeOnlyOnChange; } set { Data.TagMusicFadeOnlyOnChange = value; } }
         public bool PlayMusicOnAllSpeakers { get { return Data.PlayMusicOnAllSpeakers; } set { Data.PlayMusicOnAllSpeakers = value; } }
+
+        public String LocalPlayerPath { get { return Data.LocalPlayerPath; } set { Data.LocalPlayerPath = value; } }
 
         public static Settings Instance
         {
@@ -339,6 +343,7 @@ namespace Ares.Settings
             TagMusicFadeTime = 0;
             TagMusicFadeOnlyOnChange = false;
             PlayMusicOnAllSpeakers = false;
+            LocalPlayerPath = String.Empty;
         }
 
         private void WriteSettings(XmlWriter writer)
@@ -393,6 +398,9 @@ namespace Ares.Settings
             writer.WriteEndElement();
             writer.WriteStartElement("Music");
             writer.WriteAttributeString("PlayOnAllSpeakers", PlayMusicOnAllSpeakers ? "true" : "false");
+            writer.WriteEndElement();
+            writer.WriteStartElement("Controllers");
+            writer.WriteAttributeString("LocalPlayerPath", LocalPlayerPath);
             writer.WriteEndElement();
             writer.WriteEndElement();
         }
@@ -555,6 +563,19 @@ namespace Ares.Settings
                 else if (reader.IsStartElement("Music"))
                 {
                     PlayMusicOnAllSpeakers = reader.GetBooleanAttributeOrDefault("PlayOnAllSpeakers", false);
+                    if (reader.IsEmptyElement)
+                        reader.Read();
+                    else
+                    {
+                        reader.Read();
+                        reader.ReadInnerXml();
+                        reader.ReadEndElement();
+                    }
+                }
+                else if (reader.IsStartElement("Controllers"))
+                {
+                    LocalPlayerPath = reader.GetAttribute("LocalPlayerPath");
+                    if (LocalPlayerPath == null) LocalPlayerPath = String.Empty;
                     if (reader.IsEmptyElement)
                         reader.Read();
                     else

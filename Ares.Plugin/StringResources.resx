@@ -126,11 +126,47 @@
   <data name="BassInitFail" xml:space="preserve">
     <value>Fatal: Couldn't initialize BASS engine!</value>
   </data>
+  <data name="ClientConnected" xml:space="preserve">
+    <value>Connected with client {0}</value>
+  </data>
+  <data name="ClientDisconnected" xml:space="preserve">
+    <value>Closed connection with client.</value>
+  </data>
+  <data name="ClientLengthReceived" xml:space="preserve">
+    <value>Got length from client: </value>
+  </data>
+  <data name="ClientListenError" xml:space="preserve">
+    <value>Error listening for client: </value>
+  </data>
+  <data name="CommandReceived" xml:space="preserve">
+    <value>Received command '{0}'</value>
+  </data>
   <data name="ConnectedWith" xml:space="preserve">
     <value>Connected with </value>
   </data>
+  <data name="CouldNotFindPlayer" xml:space="preserve">
+    <value>Could not find Player.</value>
+  </data>
+  <data name="CouldNotStartPlayer" xml:space="preserve">
+    <value>Could not start Player: {0}</value>
+  </data>
+  <data name="DisconnectingClient" xml:space="preserve">
+    <value>Disconnecting on client request.</value>
+  </data>
   <data name="Elements" xml:space="preserve">
     <value>Elements:</value>
+  </data>
+  <data name="InvalidKeyCode" xml:space="preserve">
+    <value>Invalid key code: {0}</value>
+  </data>
+  <data name="KeyListenError" xml:space="preserve">
+    <value>Error while listening for keys: </value>
+  </data>
+  <data name="KeyReceived" xml:space="preserve">
+    <value>Received key ids: {0} {1}</value>
+  </data>
+  <data name="LengthTooHigh" xml:space="preserve">
+    <value>Length is too high.</value>
   </data>
   <data name="LoadError" xml:space="preserve">
     <value>Error opening the project: {0}</value>
@@ -147,6 +183,9 @@
   <data name="NetworkState" xml:space="preserve">
     <value>Network State:</value>
   </data>
+  <data name="NoClientID" xml:space="preserve">
+    <value>Client didn't send ID</value>
+  </data>
   <data name="NoStatusInfoError" xml:space="preserve">
     <value>Couldn't send status info. Check network connection.</value>
   </data>
@@ -156,13 +195,55 @@
   <data name="OverallVolume" xml:space="preserve">
     <value>Overall Volume:</value>
   </data>
+  <data name="PingReceived" xml:space="preserve">
+    <value>Received ping.</value>
+  </data>
+  <data name="PingTimeout" xml:space="preserve">
+    <value>No Ping received, assuming connection failure.</value>
+  </data>
+  <data name="PlayerConnection" xml:space="preserve">
+    <value>Player Connection:</value>
+  </data>
+  <data name="PlayerConnectionDown" xml:space="preserve">
+    <value>Down</value>
+  </data>
+  <data name="PlayerConnectionEstablished" xml:space="preserve">
+    <value>Established</value>
+  </data>
+  <data name="PlayError" xml:space="preserve">
+    <value>At element {0}: {1}</value>
+  </data>
+  <data name="ServerFound" xml:space="preserve">
+    <value>Server {0} found.</value>
+  </data>
   <data name="SettingsStoreError" xml:space="preserve">
     <value>Error saving the settings: {0}</value>
   </data>
-  <data name="Sounds" xml:space="preserve">
-    <value>Sounds:</value>
-  </data>
   <data name="SoundsVolume" xml:space="preserve">
     <value>Sounds Volume:</value>
+  </data>
+  <data name="StartBroadcast" xml:space="preserve">
+    <value>Starting UDP broadcast</value>
+  </data>
+  <data name="StopBroadcast" xml:space="preserve">
+    <value>Stopping UDP broadcast</value>
+  </data>
+  <data name="TagsDbError" xml:space="preserve">
+    <value>Error accessing tags database: {0}</value>
+  </data>
+  <data name="UDPError" xml:space="preserve">
+    <value>Error sending UDP packet: </value>
+  </data>
+  <data name="UDPSending" xml:space="preserve">
+    <value>Sending UDP packet '{0}'</value>
+  </data>
+  <data name="VolumeCommandReceived" xml:space="preserve">
+    <value>Received volume command: type {0}, volume {1}</value>
+  </data>
+  <data name="VolumeOutOfRange" xml:space="preserve">
+    <value>Received out-of-range volume command</value>
+  </data>
+  <data name="WrongClientLength" xml:space="preserve">
+    <value>Length is wrong.</value>
   </data>
 </root>

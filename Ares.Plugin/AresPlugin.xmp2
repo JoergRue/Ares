@@ -13,34 +13,6 @@
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
               <Param1 />
               <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>..\bin\Release_MediaPortal\Ares.Data.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{7062dd25-918e-4ab6-8182-29b920f158eb}-Ares.Data.dll</ZipFileName>
-              <DestinationFilename>%Base%\plugins\Windows\Ares.Data.dll</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
-              <Param1 />
-              <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>..\bin\Release_MediaPortal\Ares.ModelInfo.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{74c001ef-f6e0-43c1-bd75-294244d4f267}-Ares.ModelInfo.dll</ZipFileName>
-              <DestinationFilename>%Base%\plugins\Windows\Ares.ModelInfo.dll</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
-              <Param1 />
-              <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>..\bin\Release_MediaPortal\Ares.Players.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{fd439b75-f3c6-4372-8110-49af04bb2056}-Ares.Players.dll</ZipFileName>
-              <DestinationFilename>%Base%\plugins\Windows\Ares.Players.dll</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
-              <Param1 />
-              <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>..\bin\Release_MediaPortal\Ares.Playing.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{b1eef208-a6cd-42b3-a340-3babbe1e146f}-Ares.Playing.dll</ZipFileName>
-              <DestinationFilename>%Base%\plugins\Windows\Ares.Playing.dll</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
-              <Param1 />
-              <UpdateOption>OverwriteIfOlder</UpdateOption>
               <LocalFileName>..\bin\Release_MediaPortal\Ares.Plugin.dll</LocalFileName>
               <ZipFileName>Installer{CopyFile}\{4030f46f-f48e-45bb-9e85-22c606ef4d39}-Ares.Plugin.dll</ZipFileName>
               <DestinationFilename>%Base%\plugins\Windows\Ares.Plugin.dll</DestinationFilename>
@@ -55,58 +27,16 @@
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
               <Param1 />
               <UpdateOption>OverwriteIfOlder</UpdateOption>
+              <LocalFileName>..\bin\Release_MediaPortal\Ares.Controllers.dll</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{8304952a-aad7-42b6-8f84-deb855a1b8a3}-Ares.Controllers.dll</ZipFileName>
+              <DestinationFilename>%Base%\plugins\Windows\Ares.Controllers.dll</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
+              <Param1 />
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
               <LocalFileName>..\bin\Release_MediaPortal\Ares.Ipc.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{b0e8e0f0-2f4b-44a3-aaae-d4b653583b76}-Ares.Ipc.dll</ZipFileName>
+              <ZipFileName>Installer{CopyFile}\{a05f1ef6-f08b-4298-828a-bf5df814f5f2}-Ares.Ipc.dll</ZipFileName>
               <DestinationFilename>%Base%\plugins\Windows\Ares.Ipc.dll</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
-              <Param1 />
-              <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>..\bin\Release_MediaPortal\ICSharpCode.SharpZipLib.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{eaabd5a1-2ec6-4a50-b678-7679b816cca6}-ICSharpCode.SharpZipLib.dll</ZipFileName>
-              <DestinationFilename>%Base%\plugins\Windows\ICSharpCode.SharpZipLib.dll</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
-              <Param1 />
-              <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>..\bin\Release_MediaPortal\oggenc2.exe</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{a9e4591b-f68f-41a0-b2c5-f519bd13a111}-oggenc2.exe</ZipFileName>
-              <DestinationFilename>%Base%\plugins\Windows\oggenc2.exe</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
-              <Param1 />
-              <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>..\bin\Release_MediaPortal\Ares.Tags.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{2063616a-434e-4942-8177-797d8b7ba474}-Ares.Tags.dll</ZipFileName>
-              <DestinationFilename>%Base%\plugins\Windows\Ares.Tags.dll</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
-              <Param1 />
-              <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>..\bin\Release_MediaPortal\System.Data.SQLite.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{847caf6b-7267-49cb-8020-dfcd00f70c4a}-System.Data.SQLite.dll</ZipFileName>
-              <DestinationFilename>%Base%\plugins\Windows\System.Data.SQLite.dll</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
-              <Param1 />
-              <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>..\bin\Release_MediaPortal\SQLite.Interop.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{7eb37207-e8fc-4a49-8eb6-3f51209b7601}-SQLite.Interop.dll</ZipFileName>
-              <DestinationFilename>%Base%\plugins\Windows\SQLite.Interop.dll</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
-              <Param1 />
-              <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>..\bin\Release_MediaPortal\sqlite3.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{d93d6b64-1c38-4c9e-b848-4e79a523ccdf}-sqlite3.dll</ZipFileName>
-              <DestinationFilename>%Base%\sqlite3.dll</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
-              <Param1 />
-              <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>..\bin\Release_MediaPortal\ServiceStack.Text.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{7e70f0c2-5e60-480e-a81d-5b022427cf35}-ServiceStack.Text.dll</ZipFileName>
-              <DestinationFilename>%Base%\plugins\Windows\ServiceStack.Text.dll</DestinationFilename>
             </FileItem>
           </Items>
         </Files>
@@ -137,7 +67,7 @@
               <UpdateOption>OverwriteIfOlder</UpdateOption>
               <LocalFileName>Ares_hd.xml</LocalFileName>
               <ZipFileName>Installer{GenericSkinFile}\{8d53e585-17fa-4594-bdc4-e165777d3518}-Ares_hd.xml</ZipFileName>
-              <DestinationFilename>%Skin%\Avalon\Ares.xml</DestinationFilename>
+              <DestinationFilename>%Skin%\Avallanche\Ares.xml</DestinationFilename>
             </FileItem>
           </Items>
         </Files>
@@ -265,8 +195,8 @@ Click Next to continue or Cancel to exit Setup.</Value>
           <Build>6</Build>
           <Revision>27644</Revision>
         </MaxVersion>
-        <WarnOnly>false</WarnOnly>
-        <Message>requires MediaPortal version 1.1.6.27644 or higher</Message>
+        <WarnOnly>true</WarnOnly>
+        <Message>This version of Ares Plugin requires MediaPortal 1.2.0 Beta or higher!</Message>
         <Name>MediaPortal</Name>
       </DependencyItem>
     </Items>
@@ -333,34 +263,6 @@ Makes sense only in conjunction with the Ares Controller.</ExtensionDescription>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
         <Param1 />
         <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>..\bin\Release_MediaPortal\Ares.Data.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{7062dd25-918e-4ab6-8182-29b920f158eb}-Ares.Data.dll</ZipFileName>
-        <DestinationFilename>%Base%\plugins\Windows\Ares.Data.dll</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
-        <Param1 />
-        <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>..\bin\Release_MediaPortal\Ares.ModelInfo.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{74c001ef-f6e0-43c1-bd75-294244d4f267}-Ares.ModelInfo.dll</ZipFileName>
-        <DestinationFilename>%Base%\plugins\Windows\Ares.ModelInfo.dll</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
-        <Param1 />
-        <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>..\bin\Release_MediaPortal\Ares.Players.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{fd439b75-f3c6-4372-8110-49af04bb2056}-Ares.Players.dll</ZipFileName>
-        <DestinationFilename>%Base%\plugins\Windows\Ares.Players.dll</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
-        <Param1 />
-        <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>..\bin\Release_MediaPortal\Ares.Playing.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{b1eef208-a6cd-42b3-a340-3babbe1e146f}-Ares.Playing.dll</ZipFileName>
-        <DestinationFilename>%Base%\plugins\Windows\Ares.Playing.dll</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
-        <Param1 />
-        <UpdateOption>OverwriteIfOlder</UpdateOption>
         <LocalFileName>..\bin\Release_MediaPortal\Ares.Plugin.dll</LocalFileName>
         <ZipFileName>Installer{CopyFile}\{4030f46f-f48e-45bb-9e85-22c606ef4d39}-Ares.Plugin.dll</ZipFileName>
         <DestinationFilename>%Base%\plugins\Windows\Ares.Plugin.dll</DestinationFilename>
@@ -375,58 +277,16 @@ Makes sense only in conjunction with the Ares Controller.</ExtensionDescription>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
         <Param1 />
         <UpdateOption>OverwriteIfOlder</UpdateOption>
+        <LocalFileName>..\bin\Release_MediaPortal\Ares.Controllers.dll</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{8304952a-aad7-42b6-8f84-deb855a1b8a3}-Ares.Controllers.dll</ZipFileName>
+        <DestinationFilename>%Base%\plugins\Windows\Ares.Controllers.dll</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
+        <Param1 />
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
         <LocalFileName>..\bin\Release_MediaPortal\Ares.Ipc.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{b0e8e0f0-2f4b-44a3-aaae-d4b653583b76}-Ares.Ipc.dll</ZipFileName>
+        <ZipFileName>Installer{CopyFile}\{a05f1ef6-f08b-4298-828a-bf5df814f5f2}-Ares.Ipc.dll</ZipFileName>
         <DestinationFilename>%Base%\plugins\Windows\Ares.Ipc.dll</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
-        <Param1 />
-        <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>..\bin\Release_MediaPortal\ICSharpCode.SharpZipLib.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{eaabd5a1-2ec6-4a50-b678-7679b816cca6}-ICSharpCode.SharpZipLib.dll</ZipFileName>
-        <DestinationFilename>%Base%\plugins\Windows\ICSharpCode.SharpZipLib.dll</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
-        <Param1 />
-        <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>..\bin\Release_MediaPortal\oggenc2.exe</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{a9e4591b-f68f-41a0-b2c5-f519bd13a111}-oggenc2.exe</ZipFileName>
-        <DestinationFilename>%Base%\plugins\Windows\oggenc2.exe</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
-        <Param1 />
-        <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>..\bin\Release_MediaPortal\Ares.Tags.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{2063616a-434e-4942-8177-797d8b7ba474}-Ares.Tags.dll</ZipFileName>
-        <DestinationFilename>%Base%\plugins\Windows\Ares.Tags.dll</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
-        <Param1 />
-        <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>..\bin\Release_MediaPortal\System.Data.SQLite.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{847caf6b-7267-49cb-8020-dfcd00f70c4a}-System.Data.SQLite.dll</ZipFileName>
-        <DestinationFilename>%Base%\plugins\Windows\System.Data.SQLite.dll</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
-        <Param1 />
-        <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>..\bin\Release_MediaPortal\SQLite.Interop.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{7eb37207-e8fc-4a49-8eb6-3f51209b7601}-SQLite.Interop.dll</ZipFileName>
-        <DestinationFilename>%Base%\plugins\Windows\SQLite.Interop.dll</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
-        <Param1 />
-        <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>..\bin\Release_MediaPortal\sqlite3.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{d93d6b64-1c38-4c9e-b848-4e79a523ccdf}-sqlite3.dll</ZipFileName>
-        <DestinationFilename>%Base%\sqlite3.dll</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
-        <Param1 />
-        <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>..\bin\Release_MediaPortal\ServiceStack.Text.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{7e70f0c2-5e60-480e-a81d-5b022427cf35}-ServiceStack.Text.dll</ZipFileName>
-        <DestinationFilename>%Base%\plugins\Windows\ServiceStack.Text.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="true">
         <Param1 />
@@ -447,7 +307,7 @@ Makes sense only in conjunction with the Ares Controller.</ExtensionDescription>
         <UpdateOption>OverwriteIfOlder</UpdateOption>
         <LocalFileName>Ares_hd.xml</LocalFileName>
         <ZipFileName>Installer{GenericSkinFile}\{8d53e585-17fa-4594-bdc4-e165777d3518}-Ares_hd.xml</ZipFileName>
-        <DestinationFilename>%Skin%\Avalon\Ares.xml</DestinationFilename>
+        <DestinationFilename>%Skin%\Avallanche\Ares.xml</DestinationFilename>
       </FileItem>
     </Items>
   </UniqueFileList>

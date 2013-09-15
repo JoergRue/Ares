@@ -3,33 +3,36 @@ using System.Collections.Generic;
 using System.Text;
 using System.Reflection;
 
-using Ares.Players;
-using Ares.Playing;
+using Ares.Controllers;
 
 using System.Windows.Forms;
 using MediaPortal.GUI.Library;
 using MediaPortal.Dialogs;
 
-[assembly: MediaPortal.Common.Utils.CompatibleVersion("1.1.6.27644")]
+//[assembly: MediaPortal.Common.Utils.CompatibleVersion("1.1.6.27644")]
+[assembly: MediaPortal.Common.Utils.CompatibleVersion("1.4.0.0")]
 [assembly: MediaPortal.Common.Utils.UsesSubsystem("MP.Config")]
 [assembly: MediaPortal.Common.Utils.UsesSubsystem("MP.Players.Music")]
 [assembly: MediaPortal.Common.Utils.UsesSubsystem("MP.SkinEngine")]
 
 
-namespace Ares.Plugin
+namespace Ares.MediaPortalPlugin
 {
-    public class AresPlugin : GUIWindow, ISetupForm, INetworkClient
+    public class AresPlugin : GUIWindow, ISetupForm, INetworkClient, IFromControllerNetworkClient, IUIThreadDispatcher
     {
         public AresPlugin()
         {
         }
+
+        private Ares.Controllers.ServerSearch m_ServerSearch;
+        private Controllers.ServerInfo m_Server;
 
         public override bool Init()
         {
             return Load(GUIGraphicsContext.Skin + @"\Ares.xml");
         }
 
-#region Controls
+        #region Controls
 
         [SkinControl(1)]
         protected GUILabelControl aresTitle = null;
@@ -62,7 +65,7 @@ namespace Ares.Plugin
         [SkinControl(15)]
         protected GUILabelControl musicDescLabel = null;
         [SkinControl(17)]
-        protected GUILabelControl soundsDescLabel = null;
+        protected GUILabelControl playerConnectionDescLabel = null;
 
         [SkinControl(12)]
         protected GUILabelControl modeLabel = null;
@@ -71,7 +74,7 @@ namespace Ares.Plugin
         [SkinControl(16)]
         protected GUIFadeLabel musicLabel = null;
         [SkinControl(18)]
-        protected GUIFadeLabel soundsLabel = null;
+        protected GUIFadeLabel playerConnectionLabel = null;
 
         [SkinControl(19)]
         protected GUILabelControl networkDescLabel = null;
@@ -93,7 +96,7 @@ namespace Ares.Plugin
             modeDescLabel.Label = StringResources.Mode;
             elementsDescLabel.Label = StringResources.Elements;
             musicDescLabel.Label = StringResources.Music;
-            soundsDescLabel.Label = StringResources.Sounds;
+            playerConnectionDescLabel.Label = StringResources.PlayerConnection;
             networkDescLabel.Label = StringResources.NetworkState;
 
             disconnectButton.IsEnabled = false;
@@ -112,16 +115,6 @@ namespace Ares.Plugin
         public override void Process()
         {
             base.Process();
-            String projectTest = String.Empty;
-            lock (syncObject)
-            {
-                projectTest = controllerFileName;
-                controllerFileName = String.Empty;
-            }
-            if (!String.IsNullOrEmpty(projectTest))
-            {
-                OpenProjectFromController(projectTest);
-            }
             UpdateStatus();
             if (m_NeedsClientDataUpdate)
             {
@@ -164,35 +157,35 @@ namespace Ares.Plugin
 
         private void OverallVolumeChanged()
         {
-            m_PlayingControl.GlobalVolume = overallVolumeBar.IntValue;
-            m_Network.InformClientOfVolume(VolumeTarget.Both, overallVolumeBar.IntValue);
+            Controllers.Control.Instance.SetVolume(2, overallVolumeBar.IntValue);
+            // m_Network.InformClientOfVolume(2, overallVolumeBar.IntValue);
         }
 
         private void SoundsVolumeChanged()
         {
-            m_PlayingControl.SoundVolume = soundsVolumeBar.IntValue;
-            m_Network.InformClientOfVolume(VolumeTarget.Sounds, soundsVolumeBar.IntValue);
+            Controllers.Control.Instance.SetVolume(0, overallVolumeBar.IntValue);
+            // m_Network.InformClientOfVolume(0, soundsVolumeBar.IntValue);
         }
 
         private void MusicVolumeChanged()
         {
-            m_PlayingControl.MusicVolume = musicVolumeBar.IntValue;
-            m_Network.InformClientOfVolume(VolumeTarget.Music, musicVolumeBar.IntValue);
+            Controllers.Control.Instance.SetVolume(1, overallVolumeBar.IntValue);
+            // m_Network.InformClientOfVolume(1, musicVolumeBar.IntValue);
         }
 
         private void StopClicked()
         {
-            m_PlayingControl.KeyReceived((int)Ares.Data.Keys.Escape);
+            Controllers.Control.Instance.SendKey(Keys.Escape);
         }
 
         private void PrevClicked()
         {
-            m_PlayingControl.KeyReceived((int)Ares.Data.Keys.Left); 
+            Controllers.Control.Instance.SendKey(Keys.Left);
         }
 
         private void NextClicked()
         {
-            m_PlayingControl.KeyReceived((int)Ares.Data.Keys.Right);
+            Controllers.Control.Instance.SendKey(Keys.Right);
         }
 
         private void DisconnectClicked()
@@ -229,226 +222,48 @@ namespace Ares.Plugin
             }
         }
         
-        private Ares.Data.IProject m_Project;
-        private Network m_Network;
-        private PlayingControl m_PlayingControl;
-
-        private String controllerFileName = String.Empty;
+        private FromControllerNetwork m_Network;
+        
 
         private Object syncObject = new Object();
 
-        private void OpenProjectFromController(String fileName)
-        {
-            String path = fileName;
-            if (!System.IO.Path.IsPathRooted(path))
-            {
-                String oldPath = m_Project != null ? m_Project.FileName : System.Environment.CurrentDirectory;
-                if (m_Project != null)
-                {
-                    oldPath = System.IO.Directory.GetParent(oldPath).FullName;
-                }
-                path = oldPath + System.IO.Path.DirectorySeparatorChar + fileName;
-            }
-            if (System.IO.File.Exists(path))
-            {
-                if (path.EndsWith(".apkg", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    ImportProject(path);
-                }
-                else
-                {
-                    OpenProject(path, true);
-                }
-            }
-        }
+        private String lastMusic = String.Empty;
 
-        private class DummyProgressMonitor : Ares.ModelInfo.IProgressMonitor
-        {
-            public bool Canceled
-            {
-                get { return false; }
-            }
-
-            public void IncreaseProgress(double percent)
-            {
-            }
-
-            public void IncreaseProgress(double percent, string text)
-            {
-            }
-
-            public void SetProgress(int percent, string text)
-            {
-            }
-
-            public void SetIndeterminate(string text)
-            {
-            }
-        }
-
-        private void ImportProject(String fileName)
-        {
-            String defaultProjectName = fileName;
-            if (defaultProjectName.EndsWith(".apkg"))
-            {
-                defaultProjectName = defaultProjectName.Substring(0, defaultProjectName.Length - 5);
-            }
-            defaultProjectName = defaultProjectName + ".ares";
-            String projectFileName = defaultProjectName;
-
-            
-            Ares.ModelInfo.Importer.Import(new DummyProgressMonitor(), fileName, projectFileName, true, (error, cancelled) =>
-            {
-                if (error != null)
-                {
-                    m_Network.ErrorOccurred(-1, String.Format(StringResources.LoadError, error.Message));
-                }
-                else if (!cancelled)
-                {
-                    OpenProject(projectFileName, true);
-                }
-            });
-        }
-
-        public void PlayOtherMusic(int musicId)
-        {
-            m_PlayingControl.SelectMusicElement(musicId);
-        }
-
-        public Ares.Data.IProject GetCurrentProject()
-        {
-            return m_Project;
-        }
-
-        public String GetProjectsDirectory()
-        {
-            String oldPath = m_Project != null ? m_Project.FileName : System.Environment.CurrentDirectory;
-            if (m_Project != null)
-            {
-                oldPath = System.IO.Directory.GetParent(oldPath).FullName;
-            }
-            return oldPath;
-        }
-
-        private void OpenProject(String filePath, bool fromController)
-        {
-            if (m_Project != null)
-            {
-                if (fromController && m_Project.FileName.Equals(filePath, StringComparison.InvariantCultureIgnoreCase))
-                {
-                    if (m_Network != null)
-                    {
-                        m_Network.InformClientOfProject(m_Project);
-                    }
-                    return;
-                }
-                Ares.Data.DataModule.ProjectManager.UnloadProject(m_Project);
-                m_Project = null;
-            }
-            try
-            {
-                m_Project = Ares.Data.DataModule.ProjectManager.LoadProject(filePath);
-                if (m_Project.TagLanguageId != -1)
-                {
-                    m_TagLanguageId = m_Project.TagLanguageId;
-                }
-                else
-                    m_TagLanguageId = Ares.Tags.TagsModule.GetTagsDB().TranslationsInterface.GetIdOfCurrentUILanguage();
-            }
-            catch (Exception e)
-            {
-                if (fromController)
-                {
-                    m_Network.ErrorOccurred(-1, String.Format(StringResources.LoadError, e.Message));
-                }
-                else
-                {
-                    ShowErrorDialog(String.Format(StringResources.LoadError, e.Message), true);
-                }
-                m_Project = null;
-            }
-            PlayingModule.ProjectPlayer.SetProject(m_Project);
-            DoModelChecks();
-            if (m_Network != null)
-            {
-                m_Network.InformClientOfProject(m_Project);
-                if (m_Project != null)
-                {
-                    m_Network.InformClientOfPossibleTags(m_TagLanguageId, m_Project);
-                }
-            }
-        }
-
-        private void DoModelChecks()
-        {
-            Ares.ModelInfo.ModelChecks.Instance.CheckAll(m_Project);
-            String modelErrors = String.Empty;
-            foreach (Ares.ModelInfo.ModelError error in Ares.ModelInfo.ModelChecks.Instance.GetAllErrors())
-            {
-                Messages.AddMessage(error.Severity == ModelInfo.ModelError.ErrorSeverity.Error ? MessageType.Error : MessageType.Warning,
-                    error.Message);
-                if (error.Severity == ModelInfo.ModelError.ErrorSeverity.Error)
-                {
-                    if (modelErrors.Length > 0)
-                        modelErrors += "\n";
-                    modelErrors += error.Message;
-                }
-            }
-            if (modelErrors.Length > 0)
-            {
-                ShowErrorDialog(modelErrors, false);
-            }
-        }
-
-        private int lastMusicElementId = -1;
+        PlayingControl m_PlayingControl = new PlayingControl();
 
         private void UpdateStatus()
         {
             PlayingControl control = m_PlayingControl;
-            Ares.Data.IMode mode = control.CurrentMode;
-            modeLabel.Label = mode != null ? mode.Title : String.Empty;
+            String mode = control.CurrentMode;
+            modeLabel.Label = mode != null ? mode : String.Empty;
             StringBuilder modeElementsText = new StringBuilder();
-            foreach (Ares.Data.IModeElement modeElement in control.CurrentModeElements)
+            foreach (String modeElement in control.CurrentModeElements)
             {
                 if (modeElementsText.Length > 0)
                     modeElementsText.Append(", ");
-                modeElementsText.Append(modeElement.Title);
+                modeElementsText.Append(modeElement);
             }
             elementsLabel.Label = modeElementsText.ToString();
-            StringBuilder soundElementsText = new StringBuilder();
-            foreach (int element in control.CurrentSoundElements)
+            String music = control.CurrentMusicElementLong;
+            if (music != lastMusic)
             {
-                if (soundElementsText.Length > 0)
-                    soundElementsText.Append(", ");
-                soundElementsText.Append(Ares.Data.DataModule.ElementRepository.GetElement(element).Title);
-            }
-            String sounds = soundElementsText.ToString();
-            if (sounds.Length == 0)
-                sounds = "  ";
-            soundsLabel.Label = sounds;
-            int musicElementId = control.CurrentMusicElement;
-            if (musicElementId != lastMusicElementId)
-            {
-                String test = MusicInfo.GetInfo(musicElementId).LongTitle;
-                if (test.Length == 0)
-                    test = "  ";
-                musicLabel.Label = test;
-                lastMusicElementId = musicElementId;
+                musicLabel.Label = music;
+                lastMusic = music;
             }
             if (overallVolumeBar.IntValue != control.GlobalVolume)
             {
                 overallVolumeBar.IntValue = control.GlobalVolume;
-                m_Network.InformClientOfVolume(VolumeTarget.Both, control.GlobalVolume);
+                m_Network.InformClientOfVolume(2, control.GlobalVolume);
             }
             if (musicVolumeBar.IntValue != control.MusicVolume)
             {
                 musicVolumeBar.IntValue = control.MusicVolume;
-                m_Network.InformClientOfVolume(VolumeTarget.Music, control.MusicVolume);
+                m_Network.InformClientOfVolume(1, control.MusicVolume);
             }
             if (soundsVolumeBar.IntValue != control.SoundVolume)
             {
                 soundsVolumeBar.IntValue = control.SoundVolume;
-                m_Network.InformClientOfVolume(VolumeTarget.Sounds, control.SoundVolume);
+                m_Network.InformClientOfVolume(0, control.SoundVolume);
             }
             int oldTagFadeTime = Settings.Settings.Instance.TagMusicFadeTime;
             bool oldTagOnChange = Settings.Settings.Instance.TagMusicFadeOnlyOnChange;
@@ -476,17 +291,15 @@ namespace Ares.Plugin
             }
         }
 
-        private int m_TagLanguageId = -1;
-
         private void UpdateClientData()
         {
             if (m_Network.ClientConnected)
             {
                 networkLabel.Label = StringResources.ConnectedWith + m_Network.ClientName;
                 m_Network.InformClientOfEverything(m_PlayingControl.GlobalVolume, m_PlayingControl.MusicVolume,
-                    m_PlayingControl.SoundVolume, m_PlayingControl.CurrentMode, MusicInfo.GetInfo(m_PlayingControl.CurrentMusicElement),
-                    m_PlayingControl.CurrentModeElements, m_Project,
-                    m_PlayingControl.CurrentMusicList, m_PlayingControl.MusicRepeat, m_TagLanguageId, 
+                    m_PlayingControl.SoundVolume, m_PlayingControl.CurrentMode, m_PlayingControl.CurrentMusicElementShort, m_PlayingControl.CurrentMusicElementLong,
+                    m_PlayingControl.CurrentModeElementIds, m_PlayingControl.CurrentProject, m_PlayingControl.GetCurrentMusicList(),
+                    m_PlayingControl.MusicRepeat, m_PlayingControl.TagCategories, m_PlayingControl.TagsPerCategory,
                     new List<int>(m_PlayingControl.GetCurrentMusicTags()), m_PlayingControl.IsMusicTagCategoriesOperatorAnd(), 
                     Settings.Settings.Instance.TagMusicFadeTime, Settings.Settings.Instance.TagMusicFadeOnlyOnChange,
                     Settings.Settings.Instance.PlayMusicOnAllSpeakers);
@@ -502,64 +315,43 @@ namespace Ares.Plugin
 
         System.Timers.Timer broadCastTimer;
 
-        private void MessageReceived(Ares.Players.Message m)
+        void MessageAdded(object sender, Controllers.MessageEventArgs e)
         {
-            switch (m.Type)
+            switch (e.Message.Type)
             {
                 case MessageType.Debug:
-                    Log.Debug(m.Text);
+                    Log.Debug(e.Message.Text);
                     break;
                 case MessageType.Error:
-                    Log.Error(m.Text);
-                    ShowErrorDialog(m.Text, false);
+                    Log.Error(e.Message.Text);
+                    ShowErrorDialog(e.Message.Text, false);
                     break;
                 case MessageType.Info:
-                    Log.Info(m.Text);
+                    Log.Info(e.Message.Text);
                     break;
                 case MessageType.Warning:
-                    Log.Warn(m.Text);
+                    Log.Warn(e.Message.Text);
                     break;
                 default:
                     break;
             }
         }
 
-        private bool hasInitedBass = false;
+        #endregion
+
+        #region Startup / Shutdown
 
         private void Startup()
         {
-            Messages.Instance.MessageReceived += new MessageReceivedHandler(MessageReceived);
+            Ares.Controllers.UIThreadDispatcher.Dispatcher = this;
+            Ares.Controllers.Messages.Instance.MessageAdded += new EventHandler<Controllers.MessageEventArgs>(MessageAdded);
             AresSettings.ReadFromConfigFile();
-            
-            hasInitedBass = Un4seen.Bass.Bass.BASS_Init(-1, 44100, Un4seen.Bass.BASSInit.BASS_DEVICE_DEFAULT, IntPtr.Zero);
-            Un4seen.Bass.AddOn.Fx.BassFx.LoadMe();
 
-            try
-            {
-                var tagsDBFiles = Ares.Tags.TagsModule.GetTagsDB().FilesInterface;
-                String path = System.IO.Path.Combine(Ares.Settings.Settings.Instance.MusicDirectory, tagsDBFiles.DefaultFileName);
-                tagsDBFiles.OpenOrCreateDatabase(path);
-                m_TagLanguageId = Ares.Tags.TagsModule.GetTagsDB().TranslationsInterface.GetIdOfCurrentUILanguage();
-            }
-            catch (Ares.Tags.TagsDbException ex)
-            {
-                ShowErrorDialog(ex.Message, false);
-            }
-            
-            m_PlayingControl = new PlayingControl();
-            m_PlayingControl.UpdateDirectories();
+            m_ServerSearch = new Controllers.ServerSearch(Settings.Settings.Instance.UdpPort + 1);
+            m_ServerSearch.ServerFound += new EventHandler<Controllers.ServerEventArgs>(m_ServerSearch_ServerFound);
+            m_ServerSearch.StartSearch();
 
-            overallVolumeBar.IntValue = Settings.Settings.Instance.GlobalVolume;
-            musicVolumeBar.IntValue = Settings.Settings.Instance.MusicVolume;
-            soundsVolumeBar.IntValue = Settings.Settings.Instance.SoundVolume;
-            m_PlayingControl.GlobalVolume = Settings.Settings.Instance.GlobalVolume;
-            m_PlayingControl.MusicVolume = Settings.Settings.Instance.MusicVolume;
-            m_PlayingControl.SoundVolume = Settings.Settings.Instance.SoundVolume;
-
-            m_PlayingControl.SetMusicTagFading(Settings.Settings.Instance.TagMusicFadeTime, Settings.Settings.Instance.TagMusicFadeOnlyOnChange);
-            m_PlayingControl.SetPlayMusicOnAllSpeakers(Settings.Settings.Instance.PlayMusicOnAllSpeakers);
-
-            m_Network = new Network(this);
+            m_Network = new FromControllerNetwork(this);
             if (Settings.Settings.Instance.IPAddress.Length == 0)
             {
                 System.Net.IPAddress[] addresses = System.Net.Dns.GetHostAddresses(String.Empty);
@@ -570,15 +362,128 @@ namespace Ares.Plugin
             }
             m_Network.InitConnectionData();
             m_Network.StartUdpBroadcast();
-            
+
             broadCastTimer = new System.Timers.Timer(500);
             broadCastTimer.Elapsed += new System.Timers.ElapsedEventHandler(broadCastTimer_Tick);
             broadCastTimer.Enabled = true;
-            if (Settings.Settings.Instance.RecentFiles.GetFiles().Count > 0)
-            {
-                OpenProject(Settings.Settings.Instance.RecentFiles.GetFiles()[0].FilePath, false);
-            }
             m_Network.ListenForClient();
+
+            MaybeStartPlayer();
+        }
+
+        void m_ServerSearch_ServerFound(object sender, Controllers.ServerEventArgs e)
+        {
+            if (e.Server.Name.EndsWith(FromControllerNetwork.MEDIA_PORTAL))
+                // this is the mediaportal plugin itself
+                return;
+            MediaPortal.GUI.Library.Log.Info(String.Format(StringResources.ServerFound, e.Server.Name));
+            m_Server = e.Server;
+            ConnectOrDisconnectToPlayer();
+        }
+
+        private String FindLocalPlayer()
+        {
+            String path = Settings.Settings.Instance.LocalPlayerPath;
+            if (String.IsNullOrEmpty(path))
+            {
+                // try to find via registry
+                try
+                {
+                    path = (String)Microsoft.Win32.Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Ares", "PlayerPath", null);
+                }
+                catch (System.Security.SecurityException)
+                {
+                    path = null;
+                }
+                catch (System.IO.IOException)
+                {
+                    path = null;
+                }
+                if (String.IsNullOrEmpty(path))
+                {
+                    // try default location
+                    path = System.IO.Path.Combine(System.Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), @"Ares\Player_Editor\Ares.Player.exe");
+                    if (System.IO.File.Exists(path))
+                    {
+                        Settings.Settings.Instance.LocalPlayerPath = path;
+                        return path;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                else
+                {
+                    Settings.Settings.Instance.LocalPlayerPath = path;
+                }
+            }
+            return System.IO.File.Exists(path) ? path : null;
+        }
+
+        private void StartLocalPlayer()
+        {
+            String playerFile = FindLocalPlayer();
+            if (playerFile == null)
+                return;
+            String arguments = "--minimized --udpPort=" + (Settings.Settings.Instance.UdpPort + 1) + " --tcpPort=" + (Settings.Settings.Instance.TcpPort + 1);
+            try
+            {
+                System.Diagnostics.Process.Start(playerFile, arguments);
+            }
+            catch (Exception e)
+            {
+                String error = String.Format(StringResources.CouldNotStartPlayer, e.Message);
+                Log.Error(error);
+                ShowErrorDialog(error, true);
+            }
+        }
+
+        private void MaybeStartPlayer()
+        {
+            if (Controllers.Control.Instance.IsConnected)
+                return;
+            String playerFile = FindLocalPlayer();
+            if (playerFile == null)
+            {
+                Log.Error(StringResources.CouldNotFindPlayer);
+                ShowErrorDialog(StringResources.CouldNotFindPlayer, true);
+                return;
+            }
+            StartLocalPlayer();
+        }
+
+        private void ConnectOrDisconnectToPlayer()
+        {
+            if (Controllers.Control.Instance.IsConnected)
+            {
+                Controllers.Control.Instance.Disconnect(true);
+            }
+            else if (m_Server == null)
+            {
+                StartLocalPlayer();
+            }
+            else
+            {
+                if (m_Server != null)
+                    Controllers.Control.Instance.Connect(m_Server, this, true);
+            }
+            UpdateNetworkState();
+        }
+
+        private void UpdateNetworkState()
+        {
+            if (Controllers.Control.Instance.IsConnected)
+            {
+                m_ServerSearch.StopSearch();
+                playerConnectionLabel.Label = StringResources.PlayerConnectionEstablished;
+            }
+            else
+            {
+                m_Server = null;
+                m_ServerSearch.StartSearch();
+                playerConnectionLabel.Label = StringResources.PlayerConnectionDown;
+            }
         }
 
         private void Shutdown()
@@ -599,20 +504,11 @@ namespace Ares.Plugin
             broadCastTimer.Enabled = false;
             m_Network.StopUdpBroadcast();
 
-            Settings.Settings settings = Settings.Settings.Instance;
-            settings.GlobalVolume = m_PlayingControl.GlobalVolume;
-            settings.MusicVolume = m_PlayingControl.MusicVolume;
-            settings.SoundVolume = m_PlayingControl.SoundVolume;
+            Controllers.Control.Instance.Disconnect(true);
+            Controllers.Messages.Instance.MessageAdded -= new EventHandler<Controllers.MessageEventArgs>(MessageAdded);
+            m_ServerSearch.Dispose();
+
             AresSettings.SaveToConfigFile();
-
-            m_PlayingControl.Dispose();
-
-            Ares.Tags.TagsModule.GetTagsDB().FilesInterface.CloseDatabase();
-
-            if (hasInitedBass)
-            {
-                Un4seen.Bass.Bass.BASS_Free();
-            }
         }
 
         private bool warnOnNetworkFail = true;
@@ -724,86 +620,228 @@ namespace Ares.Plugin
 
         #endregion
 
+        #region Notifications from Controller
 
-
-        public void KeyReceived(int key)
+        public Ares.Controllers.Configuration FromControllerGetCurrentProject()
         {
-            m_PlayingControl.KeyReceived(key);
+            return m_PlayingControl.CurrentProject;
         }
 
-        public void SwitchElement(Int32 id)
+        public String FromControllerGetProjectsDirectory()
         {
-            m_PlayingControl.SwitchElement(id);
-        }
-
-        public void VolumeReceived(VolumeTarget target, int value)
-        {
-            switch (target)
+            String oldPath = !String.IsNullOrEmpty(Controllers.Control.Instance.FilePath) ? Controllers.Control.Instance.FilePath : System.Environment.CurrentDirectory;
+            if (!String.IsNullOrEmpty(Controllers.Control.Instance.FilePath))
             {
-                case VolumeTarget.Both:
-                    m_PlayingControl.GlobalVolume = value;
-                    break;
-                case VolumeTarget.Music:
-                    m_PlayingControl.MusicVolume = value;
-                    break;
-                case VolumeTarget.Sounds:
-                    m_PlayingControl.SoundVolume = value;
-                    break;
-                default:
-                    break;
+                oldPath = System.IO.Directory.GetParent(oldPath).FullName;
             }
+            return oldPath;
+        }
+
+        public void FromControllerPlayOtherMusic(int musicId)
+        {
+            Controllers.Control.Instance.SetMusicTitle(musicId);
+        }
+
+        public void FromControllerKeyReceived(byte[] key)
+        {
+            Ares.Controllers.Control.Instance.SendKey(key);
+        }
+
+        public void FromControllerSwitchElement(Int32 id)
+        {
+            Ares.Controllers.Control.Instance.SwitchElement(id);
+        }
+
+        public void FromControllerVolumeReceived(int target, int value)
+        {
+            Ares.Controllers.Control.Instance.SetVolume(target, value);
         }
 
         private bool m_NeedsClientDataUpdate = false;
 
-        public void ClientDataChanged()
+        public void FromControllerClientDataChanged()
         {
             m_NeedsClientDataUpdate = true;
         }
 
-        public void ProjectShallChange(string newProjectFile)
+        public void FromControllerProjectShallChange(string newProjectFile)
         {
-            lock (syncObject)
-            {
-                controllerFileName = newProjectFile;
-            }
+            Ares.Controllers.Control.Instance.OpenFile(newProjectFile);
         }
 
-        public void SetMusicRepeat(bool repeat)
+        public void FromControllerSetMusicRepeat(bool repeat)
         {
-            m_PlayingControl.SetRepeatCurrentMusic(repeat);
+            Ares.Controllers.Control.Instance.SetMusicRepeat(repeat);
         }
 
-        public void SetTagCategoryOperator(bool isAndOperator)
+        public void FromControllerSetTagCategoryOperator(bool isAndOperator)
         {
-            m_PlayingControl.SetMusicTagCategoriesOperator(isAndOperator);
+            Ares.Controllers.Control.Instance.SetTagCategoriesOperator(isAndOperator);
         }
 
-        public void SwitchTag(int categoryId, int tagId, bool isActive)
+        public void FromControllerSwitchTag(int categoryId, int tagId, bool isActive)
+        {
+            Ares.Controllers.Control.Instance.SwitchTag(categoryId, tagId, isActive);
+        }
+
+        public void FromControllerDeactivateAllTags()
+        {
+            Ares.Controllers.Control.Instance.RemoveAllTags();
+        }
+
+        public void FromControllerSetMusicTagsFading(int fadeTime, bool fadeOnlyOnChange)
+        {
+            Ares.Controllers.Control.Instance.SetTagFading(fadeTime, fadeOnlyOnChange);
+        }
+
+        public void FromControllerSetPlayMusicOnAllSpeakers(bool onAllSpeakers)
+        {
+            Ares.Controllers.Control.Instance.SetMusicOnAllSpeakers(onAllSpeakers);
+        }
+
+        #endregion
+
+        #region Dispatch to UI thread
+
+        public void DispatchToUIThread(System.Action action)
+        {
+            MediaPortal.GUI.Library.GUIWindowManager.SendThreadCallback(new GUIWindowManager.Callback(ProcessAction), 0, 0, action);
+        }
+
+        private int ProcessAction(int x, int y, object action)
+        {
+            ((System.Action)action)();
+            return 0;
+        }
+
+        #endregion
+
+        #region Notifications from Player
+
+        public void ModeChanged(string newMode)
+        {
+            m_PlayingControl.ModeChanged(newMode);
+            DispatchToUIThread(() => m_Network.ModeChanged(newMode));
+        }
+
+        public void ModeElementStarted(int element)
+        {
+            m_PlayingControl.ModeElementStarted(element);
+            DispatchToUIThread(() => m_Network.ModeElementStarted(element));
+        }
+
+        public void ModeElementStopped(int element)
+        {
+            m_PlayingControl.ModeElementFinished(element);
+            DispatchToUIThread(() => m_Network.ModeElementFinished(element));
+        }
+
+        public void AllModeElementsStopped()
+        {
+            m_PlayingControl.AllModeElementsStopped();
+        }
+
+        public void VolumeChanged(int index, int volume)
+        {
+            m_PlayingControl.VolumeChanged(index, volume);
+            DispatchToUIThread(() => m_Network.VolumeChanged(index, volume));
+        }
+
+        public void MusicChanged(string newMusic, string shortTitle)
+        {
+            m_PlayingControl.MusicStarted(shortTitle, newMusic);
+            DispatchToUIThread(() => m_Network.MusicChanged(shortTitle, newMusic));
+        }
+
+        public void MusicListChanged(List<MusicListItem> newList)
+        {
+            m_PlayingControl.MusicListChanged(newList);
+            DispatchToUIThread(() => m_Network.MusicPlaylistChanged(newList));
+        }
+
+        public void MusicRepeatChanged(bool repeat)
+        {
+            m_PlayingControl.MusicRepeatChanged(repeat);
+            DispatchToUIThread(() => m_Network.MusicRepeatChanged(repeat));
+        }
+
+        public void MusicOnAllSpeakersChanged(bool onAllSpeakers)
+        {
+            m_PlayingControl.MusicOnAllSpeakersChanged(onAllSpeakers);
+            DispatchToUIThread(() => m_Network.MusicOnAllSpeakersChanged(onAllSpeakers));
+        }
+
+        public void TagsChanged(List<MusicTagCategory> categories, Dictionary<int, List<MusicTag>> tagsPerCategory)
+        {
+            m_PlayingControl.TagsChanged(categories, tagsPerCategory);
+            DispatchToUIThread(() => m_Network.InformClientOfPossibleTags(categories, tagsPerCategory));
+        }
+
+        public void ActiveTagsChanged(List<int> activeTags)
+        {
+            m_PlayingControl.ActiveTagsChanged(activeTags);
+            DispatchToUIThread(() => m_Network.InformClientOfActiveTags(activeTags));
+        }
+
+        public void TagStateChanged(int tagId, bool isActive)
         {
             if (isActive)
             {
-                m_PlayingControl.AddMusicTag(categoryId, tagId);
+                m_PlayingControl.MusicTagAdded(tagId);
+                DispatchToUIThread(() => m_Network.MusicTagAdded(tagId));
             }
             else
             {
-                m_PlayingControl.RemoveMusicTag(categoryId, tagId);
+                m_PlayingControl.MusicTagRemoved(tagId);
+                DispatchToUIThread(() => m_Network.MusicTagRemoved(tagId));
             }
         }
 
-        public void DeactivateAllTags()
+        public void TagCategoryOperatorChanged(bool operatorIsAnd)
         {
-            m_PlayingControl.RemoveAllMusicTags();
+            m_PlayingControl.MusicTagCategoriesOperatorChanged(operatorIsAnd);
+            DispatchToUIThread(() => m_Network.MusicTagCategoriesOperatorChanged(operatorIsAnd));
         }
 
-        public void SetMusicTagsFading(int fadeTime, bool fadeOnlyOnChange)
+        public void TagFadingChanged(int fadeTime, bool onlyOnChange)
         {
-            m_PlayingControl.SetMusicTagFading(fadeTime, fadeOnlyOnChange);
+            m_PlayingControl.MusicTagsFadingChanged(fadeTime, onlyOnChange);
+            DispatchToUIThread(() => m_Network.MusicTagsFadingChanged(fadeTime, onlyOnChange));
         }
 
-        public void SetPlayMusicOnAllSpeakers(bool onAllSpeakers)
+        public void ProjectFilesRetrieved(List<string> files)
         {
-            m_PlayingControl.SetPlayMusicOnAllSpeakers(onAllSpeakers);
+            // not needed here; project file retrieval request is short-circuited since 
+            // media-portal plugin and player are on the same computer
         }
+
+        public void ConfigurationChanged(Configuration newConfiguration, string fileName)
+        {
+            m_PlayingControl.CurrentProject = newConfiguration;
+            DispatchToUIThread(() => m_Network.InformClientOfProject(newConfiguration));
+        }
+
+        public void Disconnect()
+        {
+            DispatchToUIThread(() =>
+            {
+                Controllers.Control.Instance.Disconnect(false);
+                UpdateNetworkState();
+            }
+            );
+        }
+
+        public void ConnectionFailed()
+        {
+            DispatchToUIThread(() =>
+            {
+                Controllers.Control.Instance.Disconnect(false);
+                UpdateNetworkState();
+            }
+            );
+        }
+
+        #endregion
+
     }
 }

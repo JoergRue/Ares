@@ -3,7 +3,7 @@
 using MediaPortal.Profile;
 using MediaPortal.Configuration;
 
-namespace Ares.Plugin
+namespace Ares.MediaPortalPlugin
 {
     class AresSettings
     {
@@ -23,6 +23,7 @@ namespace Ares.Plugin
                     settings.GlobalVolume = reader.GetValueAsInt("Volume", "Global", 100);
                     settings.MusicVolume = reader.GetValueAsInt("Volume", "Music", 100);
                     settings.SoundVolume = reader.GetValueAsInt("Volume", "Sounds", 100);
+                    settings.LocalPlayerPath = reader.GetValue("Files", "LocalPlayerPath");
                 }
             }
             catch (Exception)
@@ -45,6 +46,7 @@ namespace Ares.Plugin
                 writer.SetValue("Volume", "Global", settings.GlobalVolume);
                 writer.SetValue("Volume", "Music", settings.MusicVolume);
                 writer.SetValue("Volume", "Sounds", settings.SoundVolume);
+                writer.SetValue("Files", "LocalPlayerPath", settings.LocalPlayerPath);
             }
         }
     }

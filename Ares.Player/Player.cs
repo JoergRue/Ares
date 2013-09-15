@@ -1338,15 +1338,38 @@ namespace Ares.Player
             globalKeyHookItem.Enabled = false;
 #endif
             Messages.Instance.MessageReceived += new MessageReceivedHandler(MessageReceived);
-            String projectName = Environment.GetCommandLineArgs().Length > 1 ? Environment.GetCommandLineArgs()[1] : String.Empty;
+            int argIndex = 1;
+            String projectName = Environment.GetCommandLineArgs().Length > argIndex ? Environment.GetCommandLineArgs()[argIndex] : String.Empty;
             if (projectName.StartsWith("Language="))
             {
-                projectName = Environment.GetCommandLineArgs().Length > 2 ? Environment.GetCommandLineArgs()[2] : String.Empty;
+                argIndex++;
+                projectName = Environment.GetCommandLineArgs().Length > argIndex ? Environment.GetCommandLineArgs()[argIndex] : String.Empty;
             }
             if (projectName.StartsWith("--minimized"))
             {
                 m_HideToTray = true;
-                projectName = Environment.GetCommandLineArgs().Length > 3 ? Environment.GetCommandLineArgs()[3] : String.Empty;
+                argIndex++;
+                projectName = Environment.GetCommandLineArgs().Length > argIndex ? Environment.GetCommandLineArgs()[argIndex] : String.Empty;
+            }
+            if (projectName.StartsWith("--udpPort="))
+            {
+                int udpPort = 0;
+                if (Int32.TryParse(projectName.Substring("--udpPort=".Length), out udpPort))
+                {
+                    Settings.Settings.Instance.UdpPort = udpPort;
+                }
+                argIndex++;
+                projectName = Environment.GetCommandLineArgs().Length > argIndex ? Environment.GetCommandLineArgs()[argIndex] : String.Empty;
+            }
+            if (projectName.StartsWith("--tcpPort="))
+            {
+                int tcpPort = 0;
+                if (Int32.TryParse(projectName.Substring("--tcpPort=".Length), out tcpPort))
+                {
+                    Settings.Settings.Instance.TcpPort = tcpPort;
+                }
+                argIndex++;
+                projectName = Environment.GetCommandLineArgs().Length > argIndex ? Environment.GetCommandLineArgs()[argIndex] : String.Empty;
             }
             if (!String.IsNullOrEmpty(projectName))
             {

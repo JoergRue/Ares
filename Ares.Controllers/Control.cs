@@ -159,6 +159,18 @@ namespace Ares.Controllers
             }
         }
 
+        public void SendKey(byte[] keyCode)
+        {
+            if (m_Connection == null || !m_Connection.Connected)
+            {
+                Messages.AddMessage(MessageType.Warning, StringResources.NoConnection);
+            }
+            else
+            {
+                m_Connection.SendKey(keyCode);
+            }
+        }
+
         public void SetVolume(int index, int value)
         {
             if (m_Connection == null || !m_Connection.Connected)

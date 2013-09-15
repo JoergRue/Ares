@@ -45,6 +45,7 @@ namespace Ares.Controllers
 
     public class ModeElement : ItemWithId
     {
+        public byte[] KeyCode { get; set; }
     }
 
     public class Mode : ItemWithId
@@ -54,6 +55,8 @@ namespace Ares.Controllers
         public List<ModeElement> Elements { get { return m_Elements; } }
 
         public void AddElement(ModeElement element) { m_Elements.Add(element); }
+
+        public byte[] KeyCode { get; set; }
     }
 
     public class Configuration
@@ -627,7 +630,8 @@ namespace Ares.Controllers
                                         if (count < 2)
                                             break;
                                         m_CurrentMode.Title = ReadString(buffer);
-                                        m_Socket.Receive(buffer, 1, 2); // keycode
+                                        m_CurrentMode.KeyCode = new byte[2];
+                                        m_Socket.Receive(m_CurrentMode.KeyCode, 0, 2);
                                         m_CurrentConfiguration.AddMode(m_CurrentMode);
                                     }
                                     else if (subcommand == 2)
@@ -642,7 +646,8 @@ namespace Ares.Controllers
                                         if (!success)
                                             break;
                                         element.Id = id;
-                                        m_Socket.Receive(buffer, 1, 2); // keycode
+                                        element.KeyCode = new byte[2];
+                                        m_Socket.Receive(element.KeyCode, 0, 2);
                                         m_CurrentMode.AddElement(element);
                                     }
                                     else if (subcommand == 3)
@@ -726,6 +731,41 @@ namespace Ares.Controllers
             else
             {
                 Messages.AddMessage(MessageType.Warning, String.Format(StringResources.UnsupportedKey, key));
+            }
+        }
+
+        public void SendKey(byte[] keyCode)
+        {
+            if (!Connected)
+            {
+                Messages.AddMessage(MessageType.Warning, StringResources.NoConnection);
+                return;
+            }
+            if (m_State == State.ConnectionFailure)
+            {
+                if (!TryReconnect())
+                {
+                    Messages.AddMessage(MessageType.Warning, StringResources.NoConnection);
+                    return;
+                }
+            }
+            if (keyCode == null || keyCode.Length != 2)
+            {
+                Messages.AddMessage(MessageType.Error, "Invalid key code to send: " + keyCode);
+            }
+            byte[] bytes = new byte[3];
+            bytes[0] = 0;
+            bytes[1] = keyCode[0];
+            bytes[2] = keyCode[1];
+            Messages.AddMessage(MessageType.Debug, String.Format(StringResources.SendingBytes, bytes[0], bytes[1], bytes[2]));
+            try
+            {
+                m_Socket.Send(bytes);
+            }
+            catch (SocketException e)
+            {
+                Messages.AddMessage(MessageType.Warning, e.Message);
+                HandleConnectionFailure(true);
             }
         }
 

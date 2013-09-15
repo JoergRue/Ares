@@ -7,10 +7,50 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Ares.Plugin
+namespace Ares.MediaPortalPlugin
 {
     public partial class SettingsDialog : Form
     {
+        private String FindLocalPlayer()
+        {
+            String path = Settings.Settings.Instance.LocalPlayerPath;
+            if (String.IsNullOrEmpty(path))
+            {
+                // try to find via registry
+                try
+                {
+                    path = (String)Microsoft.Win32.Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Ares", "PlayerPath", null);
+                }
+                catch (System.Security.SecurityException)
+                {
+                    path = null;
+                }
+                catch (System.IO.IOException)
+                {
+                    path = null;
+                }
+                if (String.IsNullOrEmpty(path))
+                {
+                    // try default location
+                    path = System.IO.Path.Combine(System.Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), @"Ares\Player_Editor\Ares.Player.exe");
+                    if (System.IO.File.Exists(path))
+                    {
+                        Settings.Settings.Instance.LocalPlayerPath = path;
+                        return path;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                else
+                {
+                    Settings.Settings.Instance.LocalPlayerPath = path;
+                }
+            }
+            return System.IO.File.Exists(path) ? path : null;
+        }
+
 
         public SettingsDialog()
         {
@@ -18,6 +58,7 @@ namespace Ares.Plugin
             AresSettings.ReadFromConfigFile();
             Settings.Settings settings = Settings.Settings.Instance;
             projectFileBox.Text = settings.RecentFiles.GetFiles().Count > 0 ? settings.RecentFiles.GetFiles()[0].FilePath : "";
+            playerPathBox.Text = FindLocalPlayer();
             musicFilesBox.Text = settings.MusicDirectory;
             soundFilesBox.Text = settings.SoundDirectory;
             tcpPortUpDown.Value = settings.TcpPort;
@@ -102,6 +143,7 @@ namespace Ares.Plugin
             settings.IPAddress = ipAddressBox.SelectedItem.ToString();
             settings.UdpPort = (int)udpPortUpDown.Value;
             settings.TcpPort = (int)tcpPortUpDown.Value;
+            settings.LocalPlayerPath = playerPathBox.Text;
             try
             {
                 AresSettings.SaveToConfigFile();
@@ -110,6 +152,18 @@ namespace Ares.Plugin
             catch (Exception e2)
             {
                 MessageBox.Show(this, String.Format(StringResources.SettingsStoreError, e2.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void playerPathButton_Click(object sender, EventArgs e)
+        {
+            if (!String.IsNullOrEmpty(playerPathBox.Text))
+            {
+                playerPathDialog.FileName = playerPathBox.Text;
+            }
+            if (playerPathDialog.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
+            {
+                playerPathBox.Text = playerPathDialog.FileName;
             }
         }
 

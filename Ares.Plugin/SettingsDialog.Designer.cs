@@ -1,4 +1,4 @@
-﻿namespace Ares.Plugin
+﻿namespace Ares.MediaPortalPlugin
 {
     partial class SettingsDialog
     {
@@ -30,6 +30,9 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsDialog));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.playerPathButton = new System.Windows.Forms.Button();
+            this.playerPathBox = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.musicFilesButton = new System.Windows.Forms.Button();
             this.soundFilesButton = new System.Windows.Forms.Button();
             this.projectFileButton = new System.Windows.Forms.Button();
@@ -50,6 +53,7 @@
             this.tcpPortUpDown = new System.Windows.Forms.NumericUpDown();
             this.udpPortUpDown = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
+            this.playerPathDialog = new System.Windows.Forms.OpenFileDialog();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tcpPortUpDown)).BeginInit();
@@ -59,6 +63,9 @@
             // groupBox1
             // 
             resources.ApplyResources(this.groupBox1, "groupBox1");
+            this.groupBox1.Controls.Add(this.playerPathButton);
+            this.groupBox1.Controls.Add(this.playerPathBox);
+            this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.musicFilesButton);
             this.groupBox1.Controls.Add(this.soundFilesButton);
             this.groupBox1.Controls.Add(this.projectFileButton);
@@ -71,6 +78,26 @@
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
             this.groupBox1.UseCompatibleTextRendering = true;
+            // 
+            // playerPathButton
+            // 
+            resources.ApplyResources(this.playerPathButton, "playerPathButton");
+            this.playerPathButton.Name = "playerPathButton";
+            this.playerPathButton.UseCompatibleTextRendering = true;
+            this.playerPathButton.UseVisualStyleBackColor = true;
+            this.playerPathButton.Click += new System.EventHandler(this.playerPathButton_Click);
+            // 
+            // playerPathBox
+            // 
+            resources.ApplyResources(this.playerPathBox, "playerPathBox");
+            this.playerPathBox.Name = "playerPathBox";
+            this.playerPathBox.ReadOnly = true;
+            // 
+            // label7
+            // 
+            resources.ApplyResources(this.label7, "label7");
+            this.label7.Name = "label7";
+            this.label7.UseCompatibleTextRendering = true;
             // 
             // musicFilesButton
             // 
@@ -239,6 +266,11 @@
             this.label4.Name = "label4";
             this.label4.UseCompatibleTextRendering = true;
             // 
+            // playerPathDialog
+            // 
+            this.playerPathDialog.FileName = "Ares.Player.exe";
+            resources.ApplyResources(this.playerPathDialog, "playerPathDialog");
+            // 
             // SettingsDialog
             // 
             resources.ApplyResources(this, "$this");
@@ -281,5 +313,9 @@
         private System.Windows.Forms.NumericUpDown tcpPortUpDown;
         private System.Windows.Forms.ComboBox ipAddressBox;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button playerPathButton;
+        private System.Windows.Forms.TextBox playerPathBox;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.OpenFileDialog playerPathDialog;
     }
 }

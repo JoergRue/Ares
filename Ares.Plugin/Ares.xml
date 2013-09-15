@@ -227,7 +227,7 @@
     </control>
 
     <control>
-      <description>Sounds Desc Label</description>
+      <description>Player Connection Desc Label</description>
       <type>label</type>
       <id>17</id>
       <posX>60</posX>
@@ -238,7 +238,7 @@
     </control>
 
     <control>
-      <description>Sounds Label</description>
+      <description>Player Connection Label</description>
       <type>fadelabel</type>
       <id>18</id>
       <posX>360</posX>
