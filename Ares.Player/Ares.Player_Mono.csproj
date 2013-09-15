@@ -133,6 +133,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="MusicPage.cs" />
+    <Compile Include="MusicPage.Designer.cs" />
+    <EmbeddedResource Include="MusicPage.de.resx" />
+    <EmbeddedResource Include="MusicPage.resx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\gear.png" />

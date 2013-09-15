@@ -17,7 +17,9 @@
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
-          <Node name="Ares.Data_Mono" expanded="True" selected="True" />
+          <Node name="Ares.Player_Mono" expanded="True" selected="True">
+            <Node name="MessagesForm.cs" expanded="True" />
+          </Node>
         </State>
       </Pad>
       <Pad Id="ClassPad">
