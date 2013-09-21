@@ -115,19 +115,21 @@ namespace Ares.Player
                     return;
                 }
 #endif
-                String flacPlugin = IsLinux ? "libbassflag.so" : "bassflac.dll";
-                bassPlugin1 = Un4seen.Bass.Bass.BASS_PluginLoad(flacPlugin);
+				string exepath=System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+                String flacPlugin = IsLinux ? exepath + "/libbassflac.so" : "bassflac.dll";
+				bassPlugin1 = Un4seen.Bass.Bass.BASS_PluginLoad(flacPlugin);
                 if (bassPlugin1 == 0 && Un4seen.Bass.Bass.BASS_ErrorGetCode() != Un4seen.Bass.BASSError.BASS_ERROR_ALREADY)
                 {
                     MessageBox.Show(StringResources.BassFlacLoadFail1, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 }
-                String aacPlugin = IsLinux ? "libbass_aac.so" : "bass_aac.dll";
-                bassPlugin2 = Un4seen.Bass.Bass.BASS_PluginLoad("bass_aac.dll");
+
+				String aacPlugin = IsLinux ? exepath + "/libbass_aac.so" : "bass_aac.dll";
+                bassPlugin2 = Un4seen.Bass.Bass.BASS_PluginLoad(aacPlugin);
                 if (bassPlugin2 == 0 && Un4seen.Bass.Bass.BASS_ErrorGetCode() != Un4seen.Bass.BASSError.BASS_ERROR_ALREADY)
                 {
                     MessageBox.Show(StringResources.BassAacLoadFail1, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 }
-            }
+			}
             catch (Exception ex)
             {
                 MessageBox.Show(String.Format(StringResources.BassInitFail, 
