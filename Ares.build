@@ -12,7 +12,7 @@
 	<property name="output.dir" value="${build.dir}/Ares/Player_Editor" />
 	<property name="monooutput.dir" value="${build.dir}/Ares/Player" />
 	<property name="libraries.dir" value="Libraries" />
-	<property name="mgoutput.dir" value="MGPlugin" />
+	<property name="mgoutput.dir" value="${build.dir}/MGPlugin" />
 	
     <target name="clean" description="Delete all previously compiled binaries.">
         <delete>

@@ -17,12 +17,13 @@ cd ..\..\..
 
 %installjammer% -DProductVersion %1 --build-dir build\temp --build-log-file build\setup.log --output-dir build\output --build-for-release --build Setup\Ares\Ares.mpi
 
-copy Ares.MGPlugin\*.config MGPlugin
-cd MGPlugin
+copy Ares.MGPlugin\*.config build\MGPlugin
+cd build\MGPlugin
 del app.config
-%zip% a ..\build\output\Ares-%1-MGPlugin.zip Ares.MeisterGeisterPlugin.dll *.config de
+%zip% a ..\output\Ares-%1-MGPlugin.zip Ares.MeisterGeisterPlugin.dll *.config de
 cd ..
 rmdir /S/Q MGPlugin
+cd ..
 
 %svn% export file:///D:/Repositories/Ares/trunk build\Ares_%1_Source
 cd build
