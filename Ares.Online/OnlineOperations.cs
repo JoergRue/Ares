@@ -344,8 +344,16 @@ namespace Ares.Online
                     }
                     System.Threading.ThreadPool.QueueUserWorkItem(new System.Threading.WaitCallback((object o) =>
                         {
-                            mWebClient.Proxy = System.Net.WebRequest.GetSystemWebProxy();
-                            mWebClient.DownloadStringAsync((Uri)o);
+                            try
+                            {
+                                mWebClient.Proxy = System.Net.WebRequest.GetSystemWebProxy();
+                                mWebClient.DownloadStringAsync((Uri)o);
+                            }
+                            catch (Exception) // On some computers, .NET throws a NullReferenceException in GetSystemWebProxy()
+                            {
+                                if (mMonitor != null)
+                                    mMonitor.Close(new Action(() => { }));
+                            }
                         }), uri);
                 }
             }
