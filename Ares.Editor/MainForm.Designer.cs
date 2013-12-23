@@ -105,6 +105,7 @@ namespace Ares.Editor
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.checkForUpdateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.showTipsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dockPanel = new WeifenLuo.WinFormsUI.Docking.DockPanel();
@@ -364,6 +365,7 @@ namespace Ares.Editor
             this.toolStripMenuItem2,
             this.checkForUpdateToolStripMenuItem,
             this.toolStripMenuItem1,
+            this.showTipsMenuItem,
             this.toolStripSeparator8,
             this.aboutToolStripMenuItem});
             this.hilfeToolStripMenuItem.Name = "hilfeToolStripMenuItem";
@@ -391,6 +393,12 @@ namespace Ares.Editor
             resources.ApplyResources(this.toolStripMenuItem1, "toolStripMenuItem1");
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click_1);
+            // 
+            // showTipsMenuItem
+            // 
+            resources.ApplyResources(this.showTipsMenuItem, "showTipsMenuItem");
+            this.showTipsMenuItem.Name = "showTipsMenuItem";
+            this.showTipsMenuItem.Click += new System.EventHandler(this.showTipsMenuItem_Click);
             // 
             // toolStripSeparator8
             // 
@@ -634,6 +642,7 @@ namespace Ares.Editor
         private System.Windows.Forms.ToolStripMenuItem tagsMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem showTipsMenuItem;
     }
 }
 

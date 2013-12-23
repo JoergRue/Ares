@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TipsOfTheDay>
+  <Tip><p>
+    ... you can download tags for music from an online databasis? Just select "Edit Tags" from the context menu
+	of a folder or file in the Music Explorer and then click on Download on the right side.
+  </p></Tip>
+  <Tip><p>
+    ... to play a single sound on the press of a key or button, it's best to use a sequential list with just a 
+	single element?
+  </p></Tip>
+  <Tip><p>
+    ... there are now some <a href="http://sourceforge.net/p/aresrpg/discussion/English/">discussion forums</a>
+	to Ares online?
+  </p></Tip>
+  <Tip><p>
+    ... you can upload tags into the online databasis after you have selected them for music files? Then, other
+	users can download them in turn. To upload, use the "Share" button in the Tags window.
+  </p></Tip>
+  <Tip><p>
+    ... you can set effects and volume for files by making a double-click on the file in the list or by 
+	selecting the effect from the context menu of the file in the list?
+  </p></Tip>
+  <Tip><p>
+    ... you can get an overview of the used keys in the project through the menu View - Used Keys?
+  </p></Tip>
+  <Tip><p>
+    ... you can export modes or elements from the context menu of the Project Explorer and then import them
+	into other projects?
+  </p></Tip>
+  <Tip><p>
+    ... you can select an editor for audio files (e.g. Audacity) in the settings (tools)? Then you can edit
+	the files from the File or Music Explorer.
+  </p></Tip>
+  <Tip><p>
+    ... you can filter in the Music Explorer using tags with the right-most button in the toolbar of the
+	Music Explorer?
+  </p></Tip>
+  <Tip><p>
+    ... you can export the whole project with all audio files in packed form through the Project menu? Then
+	you can easily take it with you to the game. You can also take the Ares Player / Controller with you, there's
+	a portable version to download.
+  </p></Tip>
+  <Tip><p>
+    ... you can reorder elements and modes in the Project Explorer with the buttons to the right in the toolbar?
+  </p></Tip>
+  <Tip><p>
+    ... the Ares Player has an option to play music on all speakers?
+  </p></Tip>
+  <Tip><p>
+    ... you can undo all changes on a project through the Edit menu or the toolbar?
+  </p></Tip>
+  <Tip><p>
+    ... the Ares Controller is also available as an Android app?
+  </p></Tip>
+  <Tip><p>
+    ... you can 'script' komplex music and sound situations easily with macros? You insert a macro in the 
+	context menu of a mode in the Project Explorer.
+  </p></Tip>
+  <Tip><p>
+    ... you can select an external music player in the settings (tools)? It will then be used to "pre-listen" 
+	to music in the Music Explorer.
+  </p></Tip>
+  <Tip><p>
+    ... lists in the project can be nested? E.g. you can put several sequential lists into a parallel list and
+	thus let them run in parallel.
+  </p></Tip>
+  <Tip><p>
+    ... you can search for files in the Music and Sound Explorers through their toolbar?
+  </p></Tip>
+  <Tip><p>
+    ... Ares Player and Controller have an option to react on key presses even if another program is active?
+  </p></Tip>
+  <Tip><p>
+    ... elements can be reused in several modes or lists? To do that, copy the element into the clipboard and
+	then select "Paste as Link" from the context menu of the target.
+  </p></Tip>
+  <Tip><p>
+    ... the online database at <a href="http://rpgmusictags.org">rpgmusictags.org</a> already contains tags for
+	more than 1300 music files ready for download?
+  </p></Tip>
+  <Tip><p>
+    ... there are online <a href="http://aresrpg.sourceforge.net/en/hilfe/Start.html">help pages</a> with descriptions
+	of Ares?
+  </p></Tip>
+  <Tip><p>
+    ... Ares is open source published under the GPL?
+  </p></Tip>
+</TipsOfTheDay>

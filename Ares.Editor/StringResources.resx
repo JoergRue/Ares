@@ -544,4 +544,7 @@ You should adapt some settings first.</value>
   <data name="ForumPage" xml:space="preserve">
     <value>http://sourceforge.net/p/aresrpg/discussion/English/</value>
   </data>
+  <data name="TipsFile" xml:space="preserve">
+    <value>TipsOfTheDay.xml</value>
+  </data>
 </root>

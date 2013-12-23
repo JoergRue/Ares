@@ -521,8 +521,8 @@
   <data name="&gt;&gt;openFileDialog.Type" xml:space="preserve">
     <value>System.Windows.Forms.OpenFileDialog, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="exportFileDialog.Filter" xml:space="preserve">
-    <value>Ares packed projects|*.apkg|All files|*.*</value>
+  <data name="&gt;&gt;showTipsMenuItem.Name" xml:space="preserve">
+    <value>showTipsMenuItem</value>
   </data>
   <data name="&gt;&gt;fileToolStripMenuItem.Name" xml:space="preserve">
     <value>fileToolStripMenuItem</value>
@@ -532,6 +532,9 @@
   </data>
   <data name="&gt;&gt;stopButton.Name" xml:space="preserve">
     <value>stopButton</value>
+  </data>
+  <data name="exportFileDialog.Filter" xml:space="preserve">
+    <value>Ares packed projects|*.apkg|All files|*.*</value>
   </data>
   <data name="&gt;&gt;dummyToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -736,14 +739,14 @@
   <data name="newButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsIAAA7CARUoSoAAAAGkSURBVDhPjZFNLwNRFIZvJFZiZSvxA6ws2Ah7dGNtyZ9o
-        IvED2CAkPiNFoiRNtERIfAWJEhEpMqVMmiqhU4pWa2Y6r3Nn7kwrYtI3OTk359znvXPOMFuK0lPQtG4J
-        UwyIMGhal5xMelTRdldRqgmqXgIxBqxRvrbOZi3btiyu/S9dqjlzgDmKVWadqZaJtiKwcwn/5jkWQmHM
-        h8KDAitJHaLLYxTDHOJasr5kkmLJrgHTK3to6ez7ayJfM+1svc7ACF2m+XFfDexSLjQBiXqB0xsLm9g6
-        ujRNfMHjIYHTCLrn1BmBv0ivOzvBgAlzjfo2TNgOgZNBtn3fAWYox6rMs1Wb4KwpTS+aJraRwC0ZSmN/
-        8bZ2HAGCHhqAtJf+wJRAAcMwkMureE7nTIPmjt7fBrZmAwcC+a1vVcfrex7xp3d3g0n/jkBK0osGPnLf
-        eExlcRN/dTcYX9wSWEn5gobU2xfkZAaR25S7AW+Wiy8u81lA4vkDkpzG6dVT5Qbli4sl3nARfcHh+UPl
-        BuWLu7pTEI48YvskXpkBz27hasCblQRjjP0A3QQ3K4f71T0AAAAASUVORK5CYII=
+        YQUAAAAJcEhZcwAADsIAAA7CARUoSoAAAAGkSURBVDhPjZFLSwJRFMcvQato1TboA7RqUZuofY9N65b1
+        JYSgD1CbCoPsQZhBDxDKIAqyooJMIkIT7SXiC/ORlabNjPPv3Jk7PogG/3A4l3Pu73/nnGGGMpnxsiyP
+        BbHMAB+DLI+E4/FRSbTNVQm27UsWAmEFDigH9LNWKwzsiGv/Swm23VaBdYo9pp+plg/1w+n2Y/voDg6X
+        Bxsuz4zAapJm6bKVYo5DXFv6l9gotowasLJ7hr7hyb8m4QCTva4OFfN0mebHaytwSrncA0Q7BU5vOI5w
+        fOXXTOz717MCpxGUUW91BP4ivV7dCaY1mGvBfqjBRgicDAqD51VglfJzi3bWa0uc1SQrFc3EMBK4LjXT
+        PVV5al+Ek6BYF5C10B9YFiigqiqKJQmpbFEz6B2aaDQwtOa8EEijfiQFuY8SIskPcwPbtlsgNSkVFZ/F
+        HyTSBTxGcuYGi5vHAqupVJaRfv9GOJ6H7yltbsCb9eKLy3+VEU19IhjOwvuQbN6gfnHP0Xfch95weRdr
+        3qB+cQ8vGXh8CZzcRJoz4NksTA14s5lgjLFf0Po3J6rW3XQAAAAASUVORK5CYII=
 </value>
   </data>
   <data name="newButton.Size" type="System.Drawing.Size, System.Drawing">
@@ -772,6 +775,9 @@
   </data>
   <data name="&gt;&gt;toolStripSeparator4.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="showTipsMenuItem.Text" xml:space="preserve">
+    <value>Show Tips</value>
   </data>
   <data name="&gt;&gt;aboutToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -820,6 +826,9 @@
   </data>
   <data name="usedKeysToolStripMenuItem.Text" xml:space="preserve">
     <value>Used Keys ...</value>
+  </data>
+  <data name="&gt;&gt;showTipsMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="toolStripSeparator7.Size" type="System.Drawing.Size, System.Drawing">
     <value>6, 25</value>
@@ -934,6 +943,9 @@
   </data>
   <data name="toolStripSeparator9.Size" type="System.Drawing.Size, System.Drawing">
     <value>190, 6</value>
+  </data>
+  <data name="showTipsMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>176, 22</value>
   </data>
   <data name="saveToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
     <value>Strg+S</value>

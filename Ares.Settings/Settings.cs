@@ -83,6 +83,9 @@ namespace Ares.Settings
         public bool PlayMusicOnAllSpeakers { get; set; }
 
         public String LocalPlayerPath { get; set; } // for controllers
+
+        public bool ShowTipOfTheDay { get; set; }
+        public int LastTipOfTheDay { get; set; }
     }
 
     public class Settings
@@ -146,6 +149,9 @@ namespace Ares.Settings
         public bool PlayMusicOnAllSpeakers { get { return Data.PlayMusicOnAllSpeakers; } set { Data.PlayMusicOnAllSpeakers = value; } }
 
         public String LocalPlayerPath { get { return Data.LocalPlayerPath; } set { Data.LocalPlayerPath = value; } }
+
+        public bool ShowTipOfTheDay { get { return Data.ShowTipOfTheDay; } set { Data.ShowTipOfTheDay = value; } }
+        public int LastTipOfTheDay { get { return Data.LastTipOfTheDay; } set { Data.LastTipOfTheDay = value; } }
 
         public static Settings Instance
         {
@@ -344,6 +350,8 @@ namespace Ares.Settings
             TagMusicFadeOnlyOnChange = false;
             PlayMusicOnAllSpeakers = false;
             LocalPlayerPath = String.Empty;
+            ShowTipOfTheDay = true;
+            LastTipOfTheDay = -1;
         }
 
         private void WriteSettings(XmlWriter writer)
@@ -401,6 +409,10 @@ namespace Ares.Settings
             writer.WriteEndElement();
             writer.WriteStartElement("Controllers");
             writer.WriteAttributeString("LocalPlayerPath", LocalPlayerPath);
+            writer.WriteEndElement();
+            writer.WriteStartElement("TipOfTheDay");
+            writer.WriteAttributeString("ShowTip", ShowTipOfTheDay ? "true" : "false");
+            writer.WriteAttributeString("LastTip", LastTipOfTheDay.ToString(System.Globalization.CultureInfo.InvariantCulture));
             writer.WriteEndElement();
             writer.WriteEndElement();
         }
@@ -576,6 +588,19 @@ namespace Ares.Settings
                 {
                     LocalPlayerPath = reader.GetAttribute("LocalPlayerPath");
                     if (LocalPlayerPath == null) LocalPlayerPath = String.Empty;
+                    if (reader.IsEmptyElement)
+                        reader.Read();
+                    else
+                    {
+                        reader.Read();
+                        reader.ReadInnerXml();
+                        reader.ReadEndElement();
+                    }
+                }
+                else if (reader.IsStartElement("TipOfTheDay"))
+                {
+                    ShowTipOfTheDay = reader.GetBooleanAttributeOrDefault("ShowTip", true);
+                    LastTipOfTheDay = reader.GetIntegerAttributeOrDefault("LastTip", 0);
                     if (reader.IsEmptyElement)
                         reader.Read();
                     else

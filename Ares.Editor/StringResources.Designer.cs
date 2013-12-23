@@ -1202,6 +1202,15 @@ namespace Ares.Editor {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die TipsOfTheDay.xml ähnelt.
+        /// </summary>
+        internal static string TipsFile {
+            get {
+                return ResourceManager.GetString("TipsFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Tools ähnelt.
         /// </summary>
         internal static string Tools {

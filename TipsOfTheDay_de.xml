@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TipsOfTheDay>
+  <Tip><p>
+    Man kann Tags für Musik aus einer Online-Datenbasis herunterladen. Dazu im Musik-Explorer aus dem Kontextmenü 
+	eines Ordners oder einer Datei "Tags festlegen" wählen und dann rechts auf Herunterladen klicken.
+  </p></Tip>
+  <Tip><p>
+    Um ein einzelnes Geräusch auf Tastendruck abzuspielen, verwendet man am besten eine sequentielle Liste mit einem 
+	einzigen Element.
+  </p></Tip>
+  <Tip><p>
+    Es gibt inzwischen online einige <a href="http://sourceforge.net/p/aresrpg/discussion/allgemein/">Diskussionsforen</a>
+	zu Ares.
+  </p></Tip>
+  <Tip><p>
+    Wenn man Tags für Musik festgelegt hat, kann man diese auch in die Online-Datenbasis hochladen, damit sie anderen
+	zur Verfügung stehen. Das geht mit dem Button "Teilen" im Tags-Fenster.
+  </p></Tip>
+  <Tip><p>
+    Für Dateien legt man Effekte und Lautstärke fest, indem man einen Doppelklick auf die Datei in der Liste
+	macht oder den Effekt aus dem Kontextmenü der Datei in der Liste auswählt.
+  </p></Tip>
+  <Tip><p>
+    Mit Ansicht - Benutzte Tasten aus dem Hauptmenü kann man eine Übersicht der im Projekt benutzten Tastatur-Kommandos
+	ausgeben lassen.
+  </p></Tip>
+  <Tip><p>
+    Man kann über das Kontextmenü im Projekt-Explorer Modi oder einzelne Elemente exportieren und dann wieder in 
+	anderen Projekten importieren.
+  </p></Tip>
+  <Tip><p>
+    In den Einstellungen unter "Werkzeuge" kann man einen Editor für Audiodateien festlegen (z.B. Audacity). Dann 
+	kann man die Dateien aus dem Geräusche- oder Musik-Explorer heraus editieren.
+  </p></Tip>
+  <Tip><p>
+    Man kann im Musik-Explorer nach Tags filtern mit dem Button ganz rechts in der Toolbar des Musik-Explorers.
+  </p></Tip>
+  <Tip><p>
+    Im Menü "Projekt" kann man das gesamte Projekt mit allen Audiodateien in gepackter Form exportieren und so
+	zum Spiel mitnehmen. Den Ares Player / Controller kann man auch mitnehmen, es gibt ihn zum Download in 
+	einer portablen Variante.
+  </p></Tip>
+  <Tip><p>
+    Im Projekt-Explorer kann man Modi und Elemente umsortieren mit den Buttons rechts in der Toolbar.
+  </p></Tip>
+  <Tip><p>
+    Der Ares Player hat eine Option, Musik auf allen Lautsprechern abzuspielen.
+  </p></Tip>
+  <Tip><p>
+    Alle Änderungen an einem Projekt lassen sich im Bearbeiten-Menü oder in der Toolbar rückgängig machen.
+  </p></Tip>
+  <Tip><p>
+    Der Ares Controller ist auch als Android-App verfügbar.
+  </p></Tip>
+  <Tip><p>
+    Mit Makros kann man komplexe Musik- und Geräuschabläufe komfortabel "skripten". Ein Makro fügt man
+	im Projekt-Explorer aus dem Kontextmenü eines Modus hinzu.
+  </p></Tip>
+  <Tip><p>
+    In den Einstellungen unter "Werkzeuge" kann man einen externen Musikplayer einstellen, der dann zum 
+	"Vorhören" von Musik im Musik-Explorer verwendet wird.
+  </p></Tip>
+  <Tip><p>
+    Spiellisten im Projekt lassen sich beliebig verschachteln, z.B. kann man mehrere sequentielle Listen in eine
+	parallele Liste stecken und parallel ablaufen lassen.
+  </p></Tip>
+  <Tip><p>
+    Im Geräusche- und Musik-Explorer kann man über die Toolbar nach Dateien suchen.
+  </p></Tip>
+  <Tip><p>
+    Ares Player und Controller haben eine Option, mit der sie auch auf Tastendrücke außerhalb des Programms
+	reagieren.
+  </p></Tip>
+  <Tip><p>
+    Elemente lassen sich in mehreren Modi oder übergeordneten Listen wiederverwenden. Dazu kopiert man das Element 
+    in die Zwischenablage und wählt aus dem Kontextmenü des Ziels "Als Link einfügen".	
+  </p></Tip>
+  <Tip><p>
+    In der Online-Datenbasis unter <a href="http://rpgmusictags.org">rpgmusictags.org</a> sind bereits Tags für
+	über 1300 Musikstücke zum Download vorhanden.
+  </p></Tip>
+  <Tip><p>
+    Es gibt online <a href="http://aresrpg.sourceforge.net/hilfe/Start.html">Hilfeseiten</a> mit Beschreibungen zu Ares.
+  </p></Tip>
+  <Tip><p>
+    Ares ist Open Source und wird unter der GPL veröffentlicht.
+  </p></Tip>
+</TipsOfTheDay>

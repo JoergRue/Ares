@@ -995,6 +995,25 @@ namespace Ares.Editor
                 Ares.Online.OnlineOperations.CheckForUpdate(this, false);
                 Ares.Online.OnlineOperations.CheckForNews(this, false);
             }
+            if (Settings.Settings.Instance.ShowTipOfTheDay)
+            {
+                ShowTipsOfTheDay();
+            }
+        }
+
+        private void ShowTipsOfTheDay()
+        {
+            List<String> tips = TipsOfTheDay.GetTipsOfTheDay();
+            int lastTip = Settings.Settings.Instance.LastTipOfTheDay;
+            if (tips != null && tips.Count > 0)
+            {
+                ++lastTip;
+                if (lastTip < 0 || lastTip >= tips.Count)
+                    lastTip = 0;
+                Dialogs.TipOfDayDialog dialog = new Dialogs.TipOfDayDialog();
+                dialog.SetTips(tips, lastTip);
+                dialog.ShowDialog();
+            }
         }
 
         private void MainForm_KeyDown(object sender, KeyEventArgs e)
@@ -1254,6 +1273,11 @@ namespace Ares.Editor
         private void toolStripMenuItem2_Click(object sender, EventArgs e)
         {
             Ares.Online.OnlineOperations.ShowHelppage(StringResources.ForumPage, this);
+        }
+
+        private void showTipsMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowTipsOfTheDay();
         }
     }
 
