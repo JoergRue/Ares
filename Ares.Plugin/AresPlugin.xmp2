@@ -213,7 +213,7 @@ Click Next to continue or Cancel to exit Setup.</Value>
     <UpdateUrl />
     <Version>
       <Major>2</Major>
-      <Minor>3</Minor>
+      <Minor>4</Minor>
       <Build>0</Build>
       <Revision>0</Revision>
     </Version>
@@ -223,7 +223,7 @@ Makes sense only in conjunction with the Ares Controller.</ExtensionDescription>
     <VersionDescription />
     <DevelopmentStatus>Stable</DevelopmentStatus>
     <OnlineLocation />
-    <ReleaseDate>2013-09-02T16:32:29</ReleaseDate>
+    <ReleaseDate>2013-12-23T16:32:29</ReleaseDate>
     <Tags />
     <Location>D:\Projekte\Ares\trunk\build\Output\Ares.mpe1</Location>
     <Params>

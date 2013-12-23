@@ -20,7 +20,7 @@ namespace Ares.Editor
                 settings.IgnoreProcessingInstructions = true;
                 settings.IgnoreWhitespace = true;
                 settings.ValidationType = ValidationType.None;
-                using (System.IO.FileStream stream = new System.IO.FileStream(tipsFilePath, System.IO.FileMode.Open))
+                using (System.IO.FileStream stream = new System.IO.FileStream(tipsFilePath, System.IO.FileMode.Open, System.IO.FileAccess.Read))
                 {
                     using (System.IO.StreamReader streamReader = new System.IO.StreamReader(stream, System.Text.Encoding.UTF8))
                     {
