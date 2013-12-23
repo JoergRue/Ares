@@ -30,7 +30,7 @@ public class Version implements Comparable<Version> {
 
   private static Version createCurrentVersion() {
     try {
-      return Version.parse("2.3.0"); //$NON-NLS-1$
+      return Version.parse("2.4.0"); //$NON-NLS-1$
     }
     catch (ParseException e) {
       return createVersion(1, 0, 0);

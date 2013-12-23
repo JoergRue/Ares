@@ -1,5 +1,6 @@
 Version 2.4.0
 ----------------------------------------------------------------------------------
+- General: Support for IPv6
 - Editor: Tip of the Day dialog
 - Editor: Link to forums in Help menu
 - Editor: fix for rare crash in .NET framework when checking online for new version

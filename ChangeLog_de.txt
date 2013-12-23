@@ -1,3 +1,12 @@
+Version 2.4.0
+----------------------------------------------------------------------------------
+- Allgemein: Unterstützung von IPv6
+- Editor: "Tipp des Tages" beim Programmstart
+- Editor: Link zu den Foren im Hilfe-Menü
+- Editor: Bugfix für seltenen Crash im .NET-Framework wenn online eine neue 
+  Version gesucht wird
+- Player/Linux: Variante für reine x64-Systeme hinzugefügt
+
 Version 2.3.0
 ----------------------------------------------------------------------------------
 - General: Option, Musik auf allen Lautsprechern zu spielen (statt Stereo)
