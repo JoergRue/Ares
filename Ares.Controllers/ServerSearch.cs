@@ -134,9 +134,20 @@ namespace Ares.Controllers
             Socket socket = null;
             try
             {
-                socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-                IPEndPoint endPoint = new IPEndPoint(IPAddress.Any, m_Port);
-                socket.Bind(endPoint);
+                try
+                {
+                    socket = new Socket(AddressFamily.InterNetworkV6, SocketType.Dgram, ProtocolType.Udp);
+                    socket.SetSocketOption(SocketOptionLevel.IPv6, (SocketOptionName)27, 0);
+                    IPEndPoint endPoint = new IPEndPoint(IPAddress.Any, m_Port);
+                    socket.Bind(endPoint);
+                }
+                catch (SocketException)
+                {
+                    // IPV6 compatibility doesn't work, use fallback IPV4
+                    socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+                    IPEndPoint endPoint = new IPEndPoint(IPAddress.Any, m_Port);
+                    socket.Bind(endPoint);
+                }
                 socket.ReceiveTimeout = 50;
                 bool goOn = true;
                 lock (m_SyncObject)

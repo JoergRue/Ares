@@ -147,7 +147,14 @@ namespace Ares.Controllers
         {
             String hostName = System.Environment.MachineName;
             String textToSend = String.Format("{0:0000}{1}", hostName.Length, hostName);
-            m_Socket = new LockedSocket(new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp));
+            if (m_EndPoint.AddressFamily == AddressFamily.InterNetworkV6)
+            {
+                m_Socket = new LockedSocket(new Socket(AddressFamily.InterNetworkV6, SocketType.Stream, ProtocolType.Tcp));
+            }
+            else
+            {
+                m_Socket = new LockedSocket(new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp));
+            }
             bool result = m_Socket.Connect(m_EndPoint, timeout);
             if (!result)
             {

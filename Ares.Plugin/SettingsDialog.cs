@@ -64,10 +64,15 @@ namespace Ares.MediaPortalPlugin
             tcpPortUpDown.Value = settings.TcpPort;
             udpPortUpDown.Value = settings.UdpPort;
             bool foundAddress = false;
+            bool foundV4Address = false;
+            int v4AddressIndex = 0;
             foreach (System.Net.IPAddress address in System.Net.Dns.GetHostAddresses(String.Empty))
             {
-                if (address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6)
-                    continue;
+                if (address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+                {
+                    foundV4Address = true;
+                    v4AddressIndex = ipAddressBox.Items.Count;
+                }
                 String s = address.ToString();
                 ipAddressBox.Items.Add(s);
                 if (s.Equals(settings.IPAddress))
@@ -81,7 +86,7 @@ namespace Ares.MediaPortalPlugin
             }
             else if (ipAddressBox.Items.Count > 0)
             {
-                ipAddressBox.SelectedIndex = 0;
+                ipAddressBox.SelectedIndex = foundV4Address ? v4AddressIndex : 0;
                 settings.IPAddress = ipAddressBox.SelectedItem.ToString();
             }
             else

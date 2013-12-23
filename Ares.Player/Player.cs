@@ -1391,10 +1391,17 @@ namespace Ares.Player
             udpPortUpDown.Value = Settings.Settings.Instance.UdpPort;
             tcpPortUpDown.Value = Settings.Settings.Instance.TcpPort;
             bool foundAddress = false;
+            bool foundIPv4Address = false;
+            int ipv4AddressIndex = 0;
             foreach (System.Net.IPAddress address in System.Net.Dns.GetHostAddresses(String.Empty))
             {
-                if (address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6)
-                    continue;
+                //if (address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6)
+                //    continue;
+                if (address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+                {
+                    foundIPv4Address = true;
+                    ipv4AddressIndex = ipAddressBox.Items.Count;
+                }
                 String s = address.ToString();
                 ipAddressBox.Items.Add(s);
                 if (s == Settings.Settings.Instance.IPAddress)
@@ -1406,7 +1413,7 @@ namespace Ares.Player
             }
             else if (ipAddressBox.Items.Count > 0)
             {
-                ipAddressBox.SelectedIndex = 0;
+                ipAddressBox.SelectedIndex = foundIPv4Address ? ipv4AddressIndex : 0;
                 Settings.Settings.Instance.IPAddress = ipAddressBox.SelectedItem.ToString();
             }
             else

@@ -72,7 +72,7 @@ namespace Ares.MediaPortalPlugin
                 {
                     if (udpClient == null)
                         return true;
-                    udpClient.Send(udpPacket, udpPacket.Length, new IPEndPoint(IPAddress.Parse("255.255.255.255"), port));
+                    udpClient.Send(udpPacket, udpPacket.Length, new IPEndPoint(IPAddress.Broadcast, port));
                 }
                 return true;
             }
