@@ -1,3 +1,10 @@
+Version 2.4.0
+----------------------------------------------------------------------------------
+- Editor: Tip of the Day dialog
+- Editor: Link to forums in Help menu
+- Editor: fix for rare crash in .NET framework when checking online for new version
+- Player/Linux: variant for pure x64 OS added
+
 Version 2.3.0
 ----------------------------------------------------------------------------------
 - General: Option to play music on all speakers (instead of stereo)

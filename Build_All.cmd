@@ -32,11 +32,20 @@ cd build
 xcopy /S /E /I Ares Ares_Portable
 xcopy /S /E ..\Ares_Portable Ares_Portable
 rmdir /S /Q Ares_Portable\Player
+rmdir /S /Q Ares_Portable\Player64
 %zip% a output\Ares_Portable_%1.zip Ares_Portable
 
 xcopy /S /E /I Ares Ares_Portable_Linux
 xcopy /S /E ..\Ares_Portable Ares_Portable_Linux
 rmdir /S /Q Ares_Portable_Linux\Player_Editor
-%zip% a output\Ares_Portable_Linux_%1.zip Ares_Portable_Linux
+rmdir /S /Q Ares_Portable_Linux\Player64
+%zip% a output\Ares_Portable_Linux_x86_%1.zip Ares_Portable_Linux
+
+xcopy /S /E /I Ares Ares_Portable_Linux_x64
+xcopy /S /E ..\Ares_Portable Ares_Portable_Linux_x64
+rmdir /S /Q Ares_Portable_Linux_x64\Player_Editor
+rmdir /S /Q Ares_Portable_Linux_x64\Player
+move /Y Ares_Portable_Linux_x64\Player64 Ares_Portable_Linux_x64\Player
+%zip% a output\Ares_Portable_Linux_x64_%1.zip Ares_Portable_Linux_x64
 
 cd ..

@@ -301,6 +301,8 @@ File ::35ADFB73-0A5E-4253-91DB-2527769ABEC3 -name RestSharpLicence.txt -parent 8
 File ::98D189EA-BBEE-4FE2-B99D-4C60EFE7C832 -name ServiceStackLicence.txt -parent 85519505-B2E6-4155-96D6-3C0D6C533801
 File ::EE0E8D31-D850-4894-BADB-1235B7231184 -name bassflac.dll -parent 85519505-B2E6-4155-96D6-3C0D6C533801
 File ::DE2D3499-FCCF-479F-8095-7D0C408A1C9C -name bass_aac.dll -parent 85519505-B2E6-4155-96D6-3C0D6C533801
+File ::B9D0AA67-3594-45D6-A1B1-8D07E9212B76 -name TipsOfTheDay.xml -parent 85519505-B2E6-4155-96D6-3C0D6C533801
+File ::DC8C4FE0-13AF-4EE5-ADD0-A03718CBFEC6 -name TipsOfTheDay_de.xml -parent 85519505-B2E6-4155-96D6-3C0D6C533801
 File ::95542296-8E72-4D8D-8ACE-B7B6AB1080E3 -name D:/Projekte/Ares/trunk/build/Ares/ServiceStackLicence.txt -parent 36904AC1-ABF2-4646-9ECF-2C0CBC0BB8C5
 File ::CCC6C317-4CCE-44B9-9FE1-9C12E10D1373 -name D:/Projekte/Ares/trunk/build/Ares/HtmlRendererLicence.txt -parent 36904AC1-ABF2-4646-9ECF-2C0CBC0BB8C5
 FileGroup ::68676E85-DEAC-451E-9016-59D1A2300E9B -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows TarArchive ZipArchive} -name Player -parent FileGroups
@@ -413,11 +415,50 @@ File ::4B6440FE-2E4C-423F-BA7D-D8F35A3247CA -name libbassflac.so -parent C17D490
 File ::35CBC3FE-D113-462E-A88F-D26079AA1CFC -name libbass_aac.so -parent C17D4904-E0C0-4389-B37A-799FD29270B1
 File ::0E8DB0B9-DFBE-4DEC-8A9E-1847C37B9DE5 -name D:/Projekte/Ares/trunk/build/Ares/HtmlRendererLicence.txt -parent 1B81444E-DFA2-4A82-92CB-E6F0771F06DA
 File ::4CFC768F-2DEA-4336-8EF7-48370D3D043D -name D:/Projekte/Ares/trunk/build/Ares/ServiceStackLicence.txt -parent 1B81444E-DFA2-4A82-92CB-E6F0771F06DA
+FileGroup ::6F323641-5378-46CA-9FDB-691D055EF20A -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows TarArchive ZipArchive} -name {Player Linux x64} -parent FileGroups
+File ::986B21DE-AFAC-4755-8781-09C66B8FADB6 -type dir -directory <%InstallDir%>/Player -name D:/Projekte/Ares/trunk/build/Ares/Player64 -parent 6F323641-5378-46CA-9FDB-691D055EF20A
+File ::7757D72C-2E1D-4757-882A-62ACD6BFE35D -name Ares.CommonGUI.dll -parent 986B21DE-AFAC-4755-8781-09C66B8FADB6
+File ::E13735F2-C69D-40BC-86C0-8FDBBE06F7B2 -name Ares.Data.dll -parent 986B21DE-AFAC-4755-8781-09C66B8FADB6
+File ::657D291A-0E0F-4CE6-A436-0CAAA0E4E551 -name Ares.ModelInfo.dll -parent 986B21DE-AFAC-4755-8781-09C66B8FADB6
+File ::3555F528-4A36-4F4F-9B91-B12711286CE6 -name Ares.Online.dll -parent 986B21DE-AFAC-4755-8781-09C66B8FADB6
+File ::0BE18D33-6EA6-43FC-8A2B-1530D353F6F5 -name Ares.Player.exe -parent 986B21DE-AFAC-4755-8781-09C66B8FADB6
+File ::2C46F4AF-C0C1-44F2-8113-B26B11E3935B -name Ares.Player.exe.config -parent 986B21DE-AFAC-4755-8781-09C66B8FADB6
+File ::1669DA5A-BC6A-4373-B85D-82BCCDF3360F -name Ares.Player.sh -parent 986B21DE-AFAC-4755-8781-09C66B8FADB6
+File ::5AA4E7EA-008D-4304-BE0B-A5DDE280D058 -name Ares.Players.dll -parent 986B21DE-AFAC-4755-8781-09C66B8FADB6
+File ::BCFDC982-0D8D-4F7A-8B42-2CDEA8605930 -name Ares.Playing.dll -parent 986B21DE-AFAC-4755-8781-09C66B8FADB6
+File ::8384B356-A597-49E4-8D84-075423AA1E59 -name Ares.png -parent 986B21DE-AFAC-4755-8781-09C66B8FADB6
+File ::DC4EA359-66B6-457F-93F0-F21CD9F0E93F -name Ares.Settings.dll -parent 986B21DE-AFAC-4755-8781-09C66B8FADB6
+File ::6B1982C9-E9C6-4A74-8A2B-07FB93E1271F -name Ares.Tags.dll -parent 986B21DE-AFAC-4755-8781-09C66B8FADB6
+File ::854AD608-48A9-43FE-86AB-714BA78EEE69 -name Bass.Net.dll -parent 986B21DE-AFAC-4755-8781-09C66B8FADB6
+File ::B1D3A86C-9484-49D9-804D-547643C9A401 -name Bass.Net.dll.config -parent 986B21DE-AFAC-4755-8781-09C66B8FADB6
+File ::60C49970-5C9A-409B-8B74-F0E10B1ED10E -name BassRegistration.dll -parent 986B21DE-AFAC-4755-8781-09C66B8FADB6
+File ::6AFF7E5C-7CE5-4DC0-9DCB-8C7E1ACC8344 -name HtmlRenderer.dll -parent 986B21DE-AFAC-4755-8781-09C66B8FADB6
+File ::DD8AC22D-6DF5-4C2E-980E-0CE018F49121 -name ICSharpCode.SharpZipLib.dll -parent 986B21DE-AFAC-4755-8781-09C66B8FADB6
+File ::6B2B6754-C6CD-4F0D-8008-7B167C6048E6 -name libbass.so -parent 986B21DE-AFAC-4755-8781-09C66B8FADB6
+File ::29C9FB07-D0C1-4784-A746-C60348AC3CD4 -name libbass_aac.so -parent 986B21DE-AFAC-4755-8781-09C66B8FADB6
+File ::CF72679F-5A90-4A9D-A30A-9EF9E3324533 -name libbass_fx.so -parent 986B21DE-AFAC-4755-8781-09C66B8FADB6
+File ::5282C15C-67C7-4129-88EB-55D5296061B9 -name libbassenc.so -parent 986B21DE-AFAC-4755-8781-09C66B8FADB6
+File ::55B4FAC6-BD72-4EBC-832D-2AE252459876 -name libbassflac.so -parent 986B21DE-AFAC-4755-8781-09C66B8FADB6
+File ::5D8934C2-4185-41E2-B95B-7CFB13BCBB23 -name libbassmix.so -parent 986B21DE-AFAC-4755-8781-09C66B8FADB6
+File ::F724E1B0-4636-49F9-84A7-F71B6A05BC8A -name ServiceStack.Text.dll -parent 986B21DE-AFAC-4755-8781-09C66B8FADB6
+File ::B45ABBE2-7ABD-4809-8F49-DBAD7B6B0D44 -name System.Data.SQLite.dll -parent 986B21DE-AFAC-4755-8781-09C66B8FADB6
+File ::366BEBCE-FBF4-457C-903A-38728457AF2A -type dir -name de -parent 986B21DE-AFAC-4755-8781-09C66B8FADB6
+File ::2BB5D37F-E3B2-4911-AB08-70AA6988A358 -name Ares.CommonGUI.resources.dll -parent 366BEBCE-FBF4-457C-903A-38728457AF2A
+File ::490D7582-3732-46BC-954F-B69353669193 -name Ares.Data.resources.dll -parent 366BEBCE-FBF4-457C-903A-38728457AF2A
+File ::F30A811D-C44B-4A2A-96D0-F1B20D3CAC9E -name Ares.ModelInfo.resources.dll -parent 366BEBCE-FBF4-457C-903A-38728457AF2A
+File ::AD60E60C-C81F-4AA9-AD12-61728D40D4E8 -name Ares.Online.resources.dll -parent 366BEBCE-FBF4-457C-903A-38728457AF2A
+File ::68D57AEC-4507-48F8-BC39-FFABCC0796DB -name Ares.Player.resources.dll -parent 366BEBCE-FBF4-457C-903A-38728457AF2A
+File ::DFB43E02-A83E-42F1-817F-DC116BA64675 -name Ares.Players.resources.dll -parent 366BEBCE-FBF4-457C-903A-38728457AF2A
+File ::272913B3-2CD0-44AF-B406-B3C56FFB1BF8 -name Ares.Playing.resources.dll -parent 366BEBCE-FBF4-457C-903A-38728457AF2A
+File ::FA9BD7D2-1850-4AEA-8F17-B9CC6F438DCC -name Ares.Settings.resources.dll -parent 366BEBCE-FBF4-457C-903A-38728457AF2A
+File ::9571ACA5-B0E4-4DCF-ADD2-EBA6E2487096 -name D:/Projekte/Ares/trunk/build/Ares/HtmlRendererLicence.txt -parent 6F323641-5378-46CA-9FDB-691D055EF20A
+File ::79C72F23-7844-4DB3-B7CD-90F21C6F41A5 -name D:/Projekte/Ares/trunk/build/Ares/ServiceStackLicence.txt -parent 6F323641-5378-46CA-9FDB-691D055EF20A
 Component ::9007BFE7-966A-4832-9DD3-CC572BE38EC3 -setup Install -active Yes -platforms Windows -name Editor -parent Components
 Component ::1067F309-D8C3-41F5-A545-08D4EE16F22C -setup Install -active Yes -platforms Windows -name Player -parent Components
 Component ::1D3073BA-AA49-466B-AF04-52B9B8B314C8 -setup Install -active Yes -platforms {Solaris-x86 Windows} -name {Controller Windows} -parent Components
 Component ::AB9A6919-96BA-4794-9C53-5F070AAF63D9 -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86} -name {Controller Linux} -parent Components
-Component ::204D14BE-4ED2-4086-B32D-610CDFB04478 -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86} -name {Player Linux} -parent Components
+Component ::204D14BE-4ED2-4086-B32D-610CDFB04478 -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Linux-x86 Solaris-sparc Solaris-x86} -name {Player Linux} -parent Components
+Component ::5A05E4E9-0DAF-48DB-B0B9-E0395404BF61 -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Linux-x86_64 Solaris-sparc Solaris-x86} -name {Player Linux x64} -parent Components
 SetupType ::9C75F9C1-73C1-420A-B295-CF2C12C2C0DD -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows} -name All -parent SetupTypes
 SetupType ::D8F1FC75-10B8-48A8-8D8A-5D779D6E4FFA -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Solaris-sparc Solaris-x86 Windows} -name {Player and Editor} -parent SetupTypes
 SetupType ::158A4D90-EE27-4556-9602-3CCC20CD084D -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows} -name Controller -parent SetupTypes
@@ -797,7 +838,7 @@ array set Properties {
 {<%InstallDir%>}
 
 1B81444E-DFA2-4A82-92CB-E6F0771F06DA,FileSize
-{1797019}
+{2953479}
 
 1B81444E-DFA2-4A82-92CB-E6F0771F06DA,FileUpdateMethod
 {Always overwrite files}
@@ -815,7 +856,7 @@ array set Properties {
 {<%InstallDir%>/Controller}
 
 1BEEB448-5AB6-4944-BCB9-691EC0289441,FileSize
-{167907}
+{197327}
 
 1BEEB448-5AB6-4944-BCB9-691EC0289441,FileUpdateMethod
 {Always overwrite files}
@@ -1028,7 +1069,7 @@ array set Properties {
 {<%InstallDir%>}
 
 36904AC1-ABF2-4646-9ECF-2C0CBC0BB8C5,FileSize
-{4696078}
+{7041096}
 
 36904AC1-ABF2-4646-9ECF-2C0CBC0BB8C5,FileUpdateMethod
 {Always overwrite files}
@@ -1211,7 +1252,7 @@ array set Properties {
 {<%InstallDir%>/Player_Editor}
 
 5600FFDB-0F3C-4E9F-B311-0FACC5462967,FileSize
-{1464843}
+{19606421}
 
 5600FFDB-0F3C-4E9F-B311-0FACC5462967,FileUpdateMethod
 {Always overwrite files}
@@ -1278,6 +1319,18 @@ array set Properties {
 
 57F373DE-9445-4616-BAB7-59EAB93BB6C5,Filename
 {<%InstallDir%>/Controller/Ares.ico}
+
+5A05E4E9-0DAF-48DB-B0B9-E0395404BF61,Description,subst
+{1}
+
+5A05E4E9-0DAF-48DB-B0B9-E0395404BF61,DisplayName,subst
+{1}
+
+5A05E4E9-0DAF-48DB-B0B9-E0395404BF61,FileGroups
+{7083DB58-DCBB-45E7-84F3-372716EE81BB 6F323641-5378-46CA-9FDB-691D055EF20A}
+
+5A05E4E9-0DAF-48DB-B0B9-E0395404BF61,Name
+{Player Linux x64}
 
 5A2E7D85-0E32-44A9-ADEE-E3875124818E,Conditions
 {3 conditions}
@@ -1373,13 +1426,22 @@ array set Properties {
 {<%InstallDir%>/Player_Editor}
 
 68676E85-DEAC-451E-9016-59D1A2300E9B,FileSize
-{204418}
+{314544}
 
 68676E85-DEAC-451E-9016-59D1A2300E9B,FileUpdateMethod
 {Always overwrite files}
 
 68676E85-DEAC-451E-9016-59D1A2300E9B,Name
 {Player}
+
+6F323641-5378-46CA-9FDB-691D055EF20A,Destination
+{<%InstallDir%>}
+
+6F323641-5378-46CA-9FDB-691D055EF20A,FileSize
+{3035431}
+
+6F323641-5378-46CA-9FDB-691D055EF20A,Name
+{Player Linux x64}
 
 6FA14EDB-8361-45C3-A0D3-7C618B4FD3E4,CheckCondition
 {Before Action is Executed}
@@ -1397,7 +1459,7 @@ array set Properties {
 {<%InstallDir%>}
 
 7083DB58-DCBB-45E7-84F3-372716EE81BB,FileSize
-{42552}
+{56792}
 
 7083DB58-DCBB-45E7-84F3-372716EE81BB,FileUpdateMethod
 {Always overwrite files}
@@ -1664,7 +1726,7 @@ array set Properties {
 {<%InstallDir%>}
 
 953890EA-7233-446E-AF22-E9084BF13BF4,FileSize
-{2645348}
+{2988615}
 
 953890EA-7233-446E-AF22-E9084BF13BF4,FileUpdateMethod
 {Always overwrite files}
@@ -1679,7 +1741,7 @@ array set Properties {
 {!<%UpgradeInstall%> || <%PreviousInstallCount%> != 1}
 
 9C75F9C1-73C1-420A-B295-CF2C12C2C0DD,Components
-{9007BFE7-966A-4832-9DD3-CC572BE38EC3 1067F309-D8C3-41F5-A545-08D4EE16F22C 1D3073BA-AA49-466B-AF04-52B9B8B314C8 AB9A6919-96BA-4794-9C53-5F070AAF63D9 204D14BE-4ED2-4086-B32D-610CDFB04478}
+{9007BFE7-966A-4832-9DD3-CC572BE38EC3 1067F309-D8C3-41F5-A545-08D4EE16F22C 1D3073BA-AA49-466B-AF04-52B9B8B314C8 AB9A6919-96BA-4794-9C53-5F070AAF63D9 204D14BE-4ED2-4086-B32D-610CDFB04478 5A05E4E9-0DAF-48DB-B0B9-E0395404BF61}
 
 9C75F9C1-73C1-420A-B295-CF2C12C2C0DD,Description,subst
 {1}
@@ -2186,7 +2248,7 @@ D409A82C-7D91-4A5C-9E13-0C7DC10B2CE3,Filename
 {<%InstallDir%>/Player_Editor/Ares.Player.exe}
 
 D70046D8-2EB2-4153-9D6B-04C1B805CF29,Components
-{1067F309-D8C3-41F5-A545-08D4EE16F22C 204D14BE-4ED2-4086-B32D-610CDFB04478}
+{1067F309-D8C3-41F5-A545-08D4EE16F22C 204D14BE-4ED2-4086-B32D-610CDFB04478 5A05E4E9-0DAF-48DB-B0B9-E0395404BF61}
 
 D70046D8-2EB2-4153-9D6B-04C1B805CF29,Description,subst
 {1}
@@ -2234,7 +2296,7 @@ D91AD8BD-CA86-4DC6-A135-FD29436F1798,Filename
 {<%InstallDir%>/Player_Editor/Ares.Editor.exe}
 
 DA9512D1-8510-4BE4-9468-87A3E3CEC679,Components
-{9007BFE7-966A-4832-9DD3-CC572BE38EC3 1067F309-D8C3-41F5-A545-08D4EE16F22C 1D3073BA-AA49-466B-AF04-52B9B8B314C8 AB9A6919-96BA-4794-9C53-5F070AAF63D9 204D14BE-4ED2-4086-B32D-610CDFB04478}
+{9007BFE7-966A-4832-9DD3-CC572BE38EC3 1067F309-D8C3-41F5-A545-08D4EE16F22C 1D3073BA-AA49-466B-AF04-52B9B8B314C8 AB9A6919-96BA-4794-9C53-5F070AAF63D9 204D14BE-4ED2-4086-B32D-610CDFB04478 5A05E4E9-0DAF-48DB-B0B9-E0395404BF61}
 
 DA9512D1-8510-4BE4-9468-87A3E3CEC679,Description,subst
 {1}
@@ -2399,7 +2461,7 @@ F15BCB0E-1F11-4A72-9067-9D94B8381202,Destination
 {<%InstallDir%>/Controller}
 
 F15BCB0E-1F11-4A72-9067-9D94B8381202,FileSize
-{197728}
+{227148}
 
 F15BCB0E-1F11-4A72-9067-9D94B8381202,FileUpdateMethod
 {Always overwrite files}
@@ -2831,7 +2893,7 @@ Linux-x86,RootInstallDir
 {/usr/local/<%ShortAppName%>}
 
 Linux-x86_64,Active
-{No}
+{Yes}
 
 Linux-x86_64,BuildSeparateArchives
 {No}
@@ -2855,10 +2917,10 @@ Linux-x86_64,InstallMode
 {Standard}
 
 Linux-x86_64,InstallType
-{Typical}
+{Controller}
 
 Linux-x86_64,ProgramExecutable
-{<%InstallDir%>/Ares.Controller.sh}
+{<%InstallDir%>/Controller/Ares.Controller.sh}
 
 Linux-x86_64,ProgramFolderAllUsers
 {No}
@@ -2867,7 +2929,7 @@ Linux-x86_64,ProgramFolderName
 {<%AppName%>}
 
 Linux-x86_64,ProgramLicense
-{<%InstallDir%>/LICENSE.txt}
+{<%InstallDir%>/Controller/LICENSE.txt}
 
 Linux-x86_64,ProgramName
 {}

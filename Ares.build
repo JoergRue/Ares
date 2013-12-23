@@ -11,6 +11,7 @@
 	<property name="temp.dir" value="${build.dir}/temp" />
 	<property name="output.dir" value="${build.dir}/Ares/Player_Editor" />
 	<property name="monooutput.dir" value="${build.dir}/Ares/Player" />
+	<property name="monooutput64.dir" value="${build.dir}/Ares/Player64" />
 	<property name="libraries.dir" value="Libraries" />
 	<property name="mgoutput.dir" value="${build.dir}/MGPlugin" />
 	
@@ -101,6 +102,21 @@
 			  <include name="**/*.png" />
    		  </fileset>
 		</copy>
+		<copy todir="${monooutput64.dir}">
+		  <fileset basedir="bin/Mono_Release">
+			  <include name="**/*.dll" />
+			  <include name="**/*.exe" />
+			  <include name="**/*.config" />
+   		  </fileset>
+		</copy>
+		<copy todir="${monooutput64.dir}">
+		  <fileset basedir="Libraries_Linux_x64">
+			  <include name="**/*.so" />
+			  <include name="**/*.config" />
+			  <include name="**/*.sh" />
+			  <include name="**/*.png" />
+   		  </fileset>
+		</copy>
 	    <copy todir="${output.dir}">
 		    <fileset basedir=".">
 			  <include name="*.ico" />
@@ -119,6 +135,12 @@
 			  <include name="*.exe" />
 			</fileset>
 	    </copy>		
+		<copy todir="${output.dir}">
+		    <fileset basedir=".">
+			  <include name="TipsOfTheDay.xml" />
+			  <include name="TipsOfTheDay_de.xml" />
+			</fileset>
+		</copy>
 	    <copy todir="${build.dir}/Ares">
 		    <fileset basedir=".">
 			  <include name="*.txt" />
