@@ -542,4 +542,7 @@ Soll es jetzt gespeichert werden?</value>
   <data name="BassFlacLoadFail1" xml:space="preserve">
     <value>Konnte BASS Flac AddOn-Library nicht laden. Installationsproblem?</value>
   </data>
+  <data name="ForumPage" xml:space="preserve">
+    <value>http://sourceforge.net/p/aresrpg/discussion/allgemein/</value>
+  </data>
 </root>

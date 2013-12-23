@@ -414,6 +414,15 @@ namespace Ares.Editor {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die http://sourceforge.net/p/aresrpg/discussion/English/ ähnelt.
+        /// </summary>
+        internal static string ForumPage {
+            get {
+                return ResourceManager.GetString("ForumPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die General
         ///=======
         ///Esc       - Stop all sounds and music

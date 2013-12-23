@@ -1250,6 +1250,11 @@ namespace Ares.Editor
         {
             Ares.Online.OnlineOperations.CheckForNews(this, true);
         }
+
+        private void toolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            Ares.Online.OnlineOperations.ShowHelppage(StringResources.ForumPage, this);
+        }
     }
 
     public static class ControlHelpers

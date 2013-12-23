@@ -541,4 +541,7 @@ You should adapt some settings first.</value>
   <data name="BassFlacLoadFail1" xml:space="preserve">
     <value>Could not load BASS Flac add-on library. Installation problem?</value>
   </data>
+  <data name="ForumPage" xml:space="preserve">
+    <value>http://sourceforge.net/p/aresrpg/discussion/English/</value>
+  </data>
 </root>
