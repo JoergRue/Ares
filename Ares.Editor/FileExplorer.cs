@@ -982,18 +982,32 @@ namespace Ares.Editor
                     languageId = Ares.Tags.TagsModule.GetTagsDB().TranslationsInterface.GetIdOfCurrentUILanguage();
                 var dbRead = Ares.Tags.TagsModule.GetTagsDB().ReadInterface;
                 IList<String> files;
-                if (m_TagsFilter.CombineCategoriesWithAnd)
+                switch (m_TagsFilter.TagCategoryCombination)
                 {
-                    files = dbRead.GetAllFilesWithAnyTagInEachCategory(m_TagsFilter.TagsByCategories);
-                }
-                else
-                {
-                    HashSet<int> allTags = new HashSet<int>();
-                    foreach (var entry in m_TagsFilter.TagsByCategories)
-                    {
-                        allTags.UnionWith(entry.Value);
-                    }
-                    files = dbRead.GetAllFilesWithAnyTag(allTags);
+                    case Data.TagCategoryCombination.UseOneTagOfEachCategory:
+                        files = dbRead.GetAllFilesWithAnyTagInEachCategory(m_TagsFilter.TagsByCategories);
+                        break;
+                    case Data.TagCategoryCombination.UseAnyTag:
+                        {
+                            HashSet<int> allTags = new HashSet<int>();
+                            foreach (var entry in m_TagsFilter.TagsByCategories)
+                            {
+                                allTags.UnionWith(entry.Value);
+                            }
+                            files = dbRead.GetAllFilesWithAnyTag(allTags);
+                        }
+                        break;
+                    case Data.TagCategoryCombination.UseAllTags:
+                    default:
+                        {
+                            HashSet<int> allTags = new HashSet<int>();
+                            foreach (var entry in m_TagsFilter.TagsByCategories)
+                            {
+                                allTags.UnionWith(entry.Value);
+                            }
+                            files = dbRead.GetAllFilesWithAllTags(allTags);
+                        }
+                        break;
                 }
                 m_FilteredFiles.Clear();
                 if (files != null)
@@ -1024,12 +1038,12 @@ namespace Ares.Editor
                 }
             }
             dialog.LanguageId = languageId;
-            dialog.CombineCategoriesWithAnd = m_TagsFilter.CombineCategoriesWithAnd;
+            dialog.TagCategoryCombination = m_TagsFilter.TagCategoryCombination;
             dialog.TagsByCategory = m_TagsFilter.TagsByCategories;
             if (dialog.ShowDialog(this) == DialogResult.OK)
             {
                 m_Project.TagLanguageId = dialog.LanguageId;
-                m_TagsFilter.CombineCategoriesWithAnd = dialog.CombineCategoriesWithAnd;
+                m_TagsFilter.TagCategoryCombination = dialog.TagCategoryCombination;
                 m_TagsFilter.TagsByCategories = dialog.TagsByCategory;
                 tagFilterButton.Checked = m_TagsFilter.TagsByCategories.Count > 0;
                 m_IsTagFilterActive = m_TagsFilter.TagsByCategories.Count > 0;
@@ -1067,7 +1081,7 @@ namespace Ares.Editor
 
     public class TagsFilter
     {
-        public bool CombineCategoriesWithAnd { get; set; }
+        public Ares.Data.TagCategoryCombination TagCategoryCombination { get; set; }
         public Dictionary<int, HashSet<int>> TagsByCategories { get { return mTagsByCategories; } set { mTagsByCategories = value; } }
 
         private Dictionary<int, HashSet<int>> mTagsByCategories = new Dictionary<int, HashSet<int>>();

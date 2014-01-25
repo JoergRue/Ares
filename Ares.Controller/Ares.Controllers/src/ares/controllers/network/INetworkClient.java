@@ -27,6 +27,13 @@ import ares.controllers.data.TitledElement;
 
 public interface INetworkClient {
 	
+	enum CategoryCombination
+	{
+		Or,
+		CategoryAnd,
+		And
+	}
+	
 	void modeChanged(String newMode);
 	void modeElementStarted(int element);
 	void modeElementStopped(int element);
@@ -38,7 +45,7 @@ public interface INetworkClient {
 	void tagsChanged(List<TitledElement> newCategories, Map<Integer, List<TitledElement>> newTagsPerCategory);
 	void activeTagsChanged(List<Integer> newActiveTags);
 	void tagSwitched(int tagId, boolean isActive);
-	void tagCategoryOperatorChanged(boolean operatorIsAnd);
+	void tagCategoryCombinationChanged(CategoryCombination combination);
 	void musicTagFadingChanged(int fadeTime, boolean fadeOnlyOnChange);
 	
 	void projectFilesRetrieved(List<String> files);

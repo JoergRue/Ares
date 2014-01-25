@@ -38,7 +38,7 @@ namespace Ares.MediaPortalPlugin
         void FromControllerSetMusicRepeat(bool repeat);
         void FromControllerSwitchTag(Int32 categoryId, Int32 tagId, bool tagIsActive);
         void FromControllerDeactivateAllTags();
-        void FromControllerSetTagCategoryOperator(bool operatorIsAnd);
+        void FromControllerSetTagCategoryCombination(int combination);
         void FromControllerSetMusicTagsFading(Int32 fadeTime, bool onlyOnChange);
         void FromControllerSetPlayMusicOnAllSpeakers(bool onAllSpeakers);
     }
@@ -162,9 +162,9 @@ namespace Ares.MediaPortalPlugin
             InformActiveTags(activeTags);
         }
 
-        public void InformClientOfTagCategoryOperator(bool operatorIsAnd)
+        public void InformClientOfTagCategoryCombination(int categoryCombination)
         {
-            InformCategoryOperatorChanged(operatorIsAnd);
+            InformCategoryCombinationChanged(categoryCombination);
         }
 
         public void InformClientOfFading(int fadeTime, bool fadeOnlyOnChange)
@@ -175,7 +175,7 @@ namespace Ares.MediaPortalPlugin
         public void InformClientOfEverything(int overallVolume, int musicVolume, int soundVolume, String mode, String shortMusic, String longMusic,
             System.Collections.Generic.List<int> elements, Ares.Controllers.Configuration configuration, List<Ares.Controllers.MusicListItem> musicList, bool musicRepeat,
             List<Ares.Controllers.MusicTagCategory> categories, Dictionary<int, List<Ares.Controllers.MusicTag>> tagsPerCategory, 
-            System.Collections.Generic.IList<int> activeTags, bool tagCategoryOperatorIsAnd, int fadeTime, bool fadeOnlyOnChange,
+            System.Collections.Generic.IList<int> activeTags, int tagCategoryCombination, int fadeTime, bool fadeOnlyOnChange,
             bool musicOnAllChannels)
         {
             InformProjectModel(configuration);
@@ -193,7 +193,7 @@ namespace Ares.MediaPortalPlugin
             InformRepeatChanged(musicRepeat);
             InformMusicOnAllChannelsChanged(musicOnAllChannels);
             InformActiveTags(activeTags);
-            InformCategoryOperatorChanged(tagCategoryOperatorIsAnd);
+            InformCategoryCombinationChanged(tagCategoryCombination);
             m_MusicTagsFadeOnlyOnChange = fadeOnlyOnChange;
             InformFading(fadeTime, fadeOnlyOnChange);
         }
@@ -550,11 +550,11 @@ namespace Ares.MediaPortalPlugin
                     }
                     else if (command == 12)
                     {
-                        Int32 isAnd = -1;
-                        bool success = ReadInt32(out isAnd);
+                        Int32 combination = -1;
+                        bool success = ReadInt32(out combination);
                         if (success)
                         {
-                            networkClient.FromControllerSetTagCategoryOperator(isAnd == 1);
+                            networkClient.FromControllerSetTagCategoryCombination(combination);
                         }
                     }
                     else if (command == 13)
@@ -602,7 +602,7 @@ namespace Ares.MediaPortalPlugin
             }
         }
 
-        private static readonly int PLAYER_VERSION = 2;
+        private static readonly int PLAYER_VERSION = 3;
 
         public static readonly String MEDIA_PORTAL = " (MediaPortal)";
 
@@ -823,13 +823,13 @@ namespace Ares.MediaPortalPlugin
             }
         }
 
-        private void InformCategoryOperatorChanged(bool isAndOperator)
+        private void InformCategoryCombinationChanged(int categoryCombination)
         {
             if (ClientConnected)
             {
                 byte[] package = new byte[3];
                 package[0] = 14;
-                package[1] = (byte)(isAndOperator ? 1 : 0);
+                package[1] = (byte)categoryCombination;
                 package[2] = 0;
                 lock (syncObject)
                 {
@@ -1271,12 +1271,12 @@ namespace Ares.MediaPortalPlugin
             }
         }
 
-        public void MusicTagsChanged(ICollection<int> newTags, bool operatorIsAnd, int fadeTime)
+        public void MusicTagsChanged(ICollection<int> newTags, int categoryCombination, int fadeTime)
         {
             try
             {
                 InformActiveTags(new List<int>(newTags));
-                InformCategoryOperatorChanged(operatorIsAnd);
+                InformCategoryCombinationChanged(categoryCombination);
                 InformFading(fadeTime, m_MusicTagsFadeOnlyOnChange);
             }
             catch (System.IO.IOException e)
@@ -1286,11 +1286,11 @@ namespace Ares.MediaPortalPlugin
             }
         }
 
-        public void MusicTagCategoriesOperatorChanged(bool isAndOperator)
+        public void MusicTagCategoriesCombinationChanged(int categoryCombination)
         {
             try
             {
-                InformCategoryOperatorChanged(isAndOperator);
+                InformCategoryCombinationChanged(categoryCombination);
             }
             catch (System.IO.IOException e)
             {

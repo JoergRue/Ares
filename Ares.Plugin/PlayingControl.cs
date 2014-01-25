@@ -366,13 +366,13 @@ namespace Ares.MediaPortalPlugin
             }
         }
 
-        public void MusicTagsChanged(ICollection<int> newTags, bool operatorIsAnd, int fadeTime)
+        public void MusicTagsChanged(ICollection<int> newTags, int categoryCombination, int fadeTime)
         {
             lock (syncObject)
             {
                 m_CurrentMusicTags.Clear();
                 m_CurrentMusicTags.UnionWith(newTags);
-                m_MusicTagCategoriesOperatorIsAnd = operatorIsAnd;
+                m_MusicTagCategoriesCombination = categoryCombination;
             }
         }
 
@@ -397,21 +397,21 @@ namespace Ares.MediaPortalPlugin
             }
         }
 
-        private bool m_MusicTagCategoriesOperatorIsAnd = false;
+        private int m_MusicTagCategoriesCombination = 0;
 
-        public bool IsMusicTagCategoriesOperatorAnd()
+        public int GetMusicTagCategoriesCombination()
         {
             lock (syncObject)
             {
-                return m_MusicTagCategoriesOperatorIsAnd;
+                return m_MusicTagCategoriesCombination;
             }
         }
 
-        public void MusicTagCategoriesOperatorChanged(bool isAndOperator)
+        public void MusicTagCategoriesCombinationChanged(int categoryCombination)
         {
             lock (syncObject)
             {
-                m_MusicTagCategoriesOperatorIsAnd = isAndOperator;
+                m_MusicTagCategoriesCombination = categoryCombination;
             }
         }
 

@@ -40,7 +40,6 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JToggleButton;
@@ -52,6 +51,7 @@ import ares.controller.control.ComponentKeys;
 import ares.controller.util.Localization;
 import ares.controllers.control.Control;
 import ares.controllers.data.TitledElement;
+import ares.controllers.network.INetworkClient;
 
 public class TagsFrame extends SubFrame {
 
@@ -125,10 +125,9 @@ public class TagsFrame extends SubFrame {
 		listenForSelection = true;
 	}
 	
-	public void setCategoryOperator(boolean isAndOperator) {
+	public void setCategoryCombination(INetworkClient.CategoryCombination combination) {
 		listenForSelection = false;
-		categoryOrButton.setSelected(!isAndOperator);
-		categoryAndButton.setSelected(isAndOperator);
+		categoryCombinationBox.setSelectedIndex(combination.ordinal());
 		listenForSelection = true;
 	}
 	
@@ -246,27 +245,24 @@ public class TagsFrame extends SubFrame {
 		label.setAlignmentX(LEFT_ALIGNMENT);
 		categoriesPanel.add(label);
 		categoriesPanel.add(Box.createRigidArea(new Dimension(0, 5)));
-		categoryOrButton = new JRadioButton(Localization.getString("TagsFrame.CategoryOrOperator")); //$NON-NLS-1$
-		categoryOrButton.setAlignmentX(LEFT_ALIGNMENT);
-		categoryOrButton.addActionListener(new ActionListener() {
+		categoryCombinationSelectionPanel = new JPanel();
+		categoryCombinationSelectionPanel.setLayout(new BoxLayout(categoryCombinationSelectionPanel, BoxLayout.LINE_AXIS));
+		categoryCombinationSelectionPanel.setAlignmentX(LEFT_ALIGNMENT);
+		categoryCombinationBox = new JComboBox();
+		categoryCombinationBox.setMinimumSize(new Dimension(350, 15));
+		categoryCombinationBox.addItem(Localization.getString("TagsFrame.CategoryOrOperator")); //$NON-NLS-1$
+		categoryCombinationBox.addItem(Localization.getString("TagsFrame.CategoryAndOperator")); //$NON-NLS-1$
+		categoryCombinationBox.addItem(Localization.getString("TagsFrame.CategoryGlobalAndOperator")); //$NON-NLS-1$
+		categoryCombinationBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (!listenForSelection)
 					return;
-				Control.getInstance().setTagCategoryOperator(!categoryOrButton.isSelected());
+				Control.getInstance().setTagCategoryCombination(INetworkClient.CategoryCombination.values()[categoryCombinationBox.getSelectedIndex()]);
 			}
 		});
-		categoriesPanel.add(categoryOrButton);
-		categoriesPanel.add(Box.createRigidArea(new Dimension(0, 5)));
-		categoryAndButton = new JRadioButton(Localization.getString("TagsFrame.CategoryAndOperator")); //$NON-NLS-1$
-		categoryAndButton.setAlignmentX(LEFT_ALIGNMENT);
-		categoryAndButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (!listenForSelection)
-					return;
-				Control.getInstance().setTagCategoryOperator(categoryAndButton.isSelected());
-			}
-		});
-		categoriesPanel.add(categoryAndButton);
+		categoryCombinationSelectionPanel.add(categoryCombinationBox);
+		categoryCombinationSelectionPanel.add(Box.createHorizontalGlue());
+		categoriesPanel.add(categoryCombinationSelectionPanel);
 
 		JPanel fadingPanel = new JPanel();
 		fadingPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), Localization.getString("TagsFrame.Fading"))); //$NON-NLS-1$
@@ -345,12 +341,12 @@ public class TagsFrame extends SubFrame {
 	private JPanel tagSelectionPanel;
 	private JPanel categoriesPanel;
 	private JPanel categorySelectionPanel;
+	private JPanel categoryCombinationSelectionPanel;
 	private JPanel activeTagsPanel;
 	private JPanel activeTagsPanel1;
 	
 	private JComboBox categorySelectionBox;
-	private JRadioButton categoryAndButton;
-	private JRadioButton categoryOrButton;
+	private JComboBox categoryCombinationBox;
 	private JButton clearTagsButton;
 	private JLabel activeTagsLabel;
 	

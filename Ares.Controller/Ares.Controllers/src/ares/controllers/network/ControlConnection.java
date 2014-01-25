@@ -450,9 +450,12 @@ public final class ControlConnection {
 				  }
 				  case 14:
 				  {
-					  boolean isAndOperator = stream.read() == 1;
+					  int newCombination = stream.read();
+					  if (newCombination < 0 || newCombination > 2)
+						  newCombination = 0;
+					  INetworkClient.CategoryCombination categoryCombination = INetworkClient.CategoryCombination.values()[newCombination];
 					  stream.read();
-					  networkClient.tagCategoryOperatorChanged(isAndOperator);
+					  networkClient.tagCategoryCombinationChanged(categoryCombination);
 					  break;
 				  }
 				  case 15:
@@ -800,7 +803,7 @@ public final class ControlConnection {
 	  }	  
   }
   
-  public void setTagCategoryOperator(boolean operatorIsAnd) {
+  public void setTagCategoryCombination(INetworkClient.CategoryCombination categoryCombination) {
 	    if (!isConnected()) {
 	        Messages.addMessage(MessageType.Warning, Localization.getString("ControlConnection.NoConnection")); //$NON-NLS-1$
 	        return;
@@ -815,7 +818,7 @@ public final class ControlConnection {
 		  byte[] bytes = new byte[1 + 4];
 		  bytes[0] = 12;
 		  java.nio.ByteBuffer buffer = java.nio.ByteBuffer.wrap(bytes);
-		  buffer.putInt(1, operatorIsAnd ? 1 : 0);
+		  buffer.putInt(1, categoryCombination.ordinal());
 		  socket.getOutputStream().write(bytes);
 	  }
 	  catch (IOException e) {

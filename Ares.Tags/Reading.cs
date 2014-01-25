@@ -101,6 +101,26 @@ namespace Ares.Tags
             }
         }
 
+        public IList<string> GetAllFilesWithAllTags(HashSet<int> tagIds)
+        {
+            if (m_Connection == null)
+            {
+                throw new TagsDbException("No Connection to DB file!");
+            }
+            try
+            {
+                return new List<String>(DoGetAllFilesWithAllTags(tagIds));
+            }
+            catch (System.Data.DataException ex)
+            {
+                throw new TagsDbException(ex.Message, ex);
+            }
+            catch (DbException ex)
+            {
+                throw new TagsDbException(ex.Message, ex);
+            }
+        }
+
         public IList<FileIdentification> GetIdentificationForFiles(IList<String> filePaths)
         {
             if (m_Connection == null)
@@ -178,6 +198,45 @@ namespace Ares.Tags
                 ++i;
             }
             queryString += ")";
+            using (DbCommand command = DbUtils.CreateDbCommand(queryString, m_Connection))
+            {
+                using (DbDataReader reader = command.ExecuteReader())
+                {
+                    HashSet<String> result = new HashSet<string>();
+                    while (reader.Read())
+                    {
+                        result.Add(reader.GetString(0));
+                    }
+                    return result;
+                }
+            }
+        }
+
+        private HashSet<String> DoGetAllFilesWithAllTags(HashSet<int> tagIds)
+        {
+            if (tagIds.Count == 0)
+            {
+                return new HashSet<String>();
+            }
+            // inner query "CountedTags":
+            // - select all records which match any of the given tags
+            // - group them by file ID and count the number of records by file ID
+            // - select (having) those where the number of records is the number of the given tags
+            // --> those are the files which match all tags
+            String queryString = String.Format("SELECT DISTINCT {0}.{1} FROM {0}, " +
+                "(SELECT {2} AS File, COUNT({2}) AS NrOfTags FROM {4} WHERE {3} IN (", 
+                Schema.FILES_TABLE, Schema.PATH_COLUMN, Schema.FILE_COLUMN, Schema.TAG_COLUMN, Schema.FILETAGS_TABLE);
+            int i = 0;
+            foreach (int tagId in tagIds)
+            {
+                queryString += tagId;
+                if (i != tagIds.Count - 1)
+                    queryString += ",";
+                ++i;
+            }
+            queryString += String.Format(") GROUP BY {0} HAVING COUNT({0})={1}) AS CountedTags " +
+                "WHERE {2}.{3}=CountedTags.File",
+                Schema.FILE_COLUMN, tagIds.Count, Schema.FILES_TABLE, Schema.ID_COLUMN);
             using (DbCommand command = DbUtils.CreateDbCommand(queryString, m_Connection))
             {
                 using (DbDataReader reader = command.ExecuteReader())

@@ -120,27 +120,27 @@ namespace Ares.Editor.Actions
 
     public class SetOperatorInMusicByTagsAction : Action
     {
-        public SetOperatorInMusicByTagsAction(IMusicByTags element, bool isAnd)
+        public SetOperatorInMusicByTagsAction(IMusicByTags element, Ares.Data.TagCategoryCombination categoryCombination)
         {
             m_Element = element;
-            m_OldValue = element.IsOperatorAnd;
-            m_NewValue = isAnd;
+            m_OldValue = element.TagCategoryCombination;
+            m_NewValue = categoryCombination;
         }
 
         public override void Do(IProject project)
         {
-            m_Element.IsOperatorAnd = m_NewValue;
+            m_Element.TagCategoryCombination = m_NewValue;
             ElementChanges.Instance.ElementChanged(m_Element.Id);
         }
 
         public override void Undo(IProject project)
         {
-            m_Element.IsOperatorAnd = m_OldValue;
+            m_Element.TagCategoryCombination = m_OldValue;
             ElementChanges.Instance.ElementChanged(m_Element.Id);
         }
 
-        private bool m_OldValue;
-        private bool m_NewValue;
+        private Ares.Data.TagCategoryCombination m_OldValue;
+        private Ares.Data.TagCategoryCombination m_NewValue;
         private IMusicByTags m_Element;
     }
 

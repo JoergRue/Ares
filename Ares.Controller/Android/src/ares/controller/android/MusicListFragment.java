@@ -212,7 +212,7 @@ public class MusicListFragment extends ModeLikeFragment implements INetworkClien
 	}
 
 	@Override
-	public void tagCategoryOperatorChanged(boolean operatorIsAnd) {
+	public void tagCategoryCombinationChanged(INetworkClient.CategoryCombination combination) {
 	}
 
 	@Override

@@ -32,6 +32,7 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.widget.Toast;
 import ares.controllers.control.Control;
+import ares.controllers.network.INetworkClient;
 import ares.controllers.network.IServerListener;
 import ares.controllers.network.ServerInfo;
 import ares.controllers.network.ServerSearch;
@@ -157,8 +158,19 @@ public abstract class ConnectedFragment extends Fragment implements IServerListe
 		catch (NumberFormatException ex) {
 		}
 		Control.getInstance().setMusicTagsFading(fadeTime, onlyOnChange);
-		boolean isOperatorAnd = prefs.getString("tag_categories_op", "and").equals("and");
-		Control.getInstance().setTagCategoryOperator(isOperatorAnd);	
+		String combination = prefs.getString("tag_categories_op", "and");
+		if (combination.equals("and"))
+		{
+			Control.getInstance().setTagCategoryCombination(INetworkClient.CategoryCombination.CategoryAnd);	
+		}
+		else if (combination.equals("globalAnd"))
+		{
+			Control.getInstance().setTagCategoryCombination(INetworkClient.CategoryCombination.And);
+		}
+		else 
+		{
+			Control.getInstance().setTagCategoryCombination(INetworkClient.CategoryCombination.Or);
+		}
 		Control.getInstance().setMusicOnAllSpeakers(musicOnAllSpeakers);
 	}
 	

@@ -86,10 +86,8 @@ namespace Ares.Editor.ElementEditors
         {
             m_Listen = false;
 
-            tagCategoriesAndButton.Enabled = m_Element != null;
-            tagCategoriesOrButton.Enabled = m_Element != null;
-            tagCategoriesAndButton.Checked = m_Element != null && m_Element.IsOperatorAnd;
-            tagCategoriesOrButton.Checked = m_Element != null && !m_Element.IsOperatorAnd;
+            tagCategoryCombinationBox.Enabled = m_Element != null;
+            tagCategoryCombinationBox.SelectedIndex = (m_Element != null) ? (int)m_Element.TagCategoryCombination : 0;
 
             fadeUpDown.Enabled = m_Element != null;
             fadeUpDown.Value = m_Element != null ? m_Element.FadeTime : 0;
@@ -269,26 +267,6 @@ namespace Ares.Editor.ElementEditors
             m_Listen = true;
         }
 
-        private void tagCategoriesOrButton_CheckedChanged(object sender, EventArgs e)
-        {
-            if (!m_Listen)
-                return;
-            m_Listen = false;
-            Ares.Editor.Actions.Actions.Instance.AddNew(new Ares.Editor.Actions.SetOperatorInMusicByTagsAction(m_Element, !tagCategoriesOrButton.Checked), m_Project);
-            tagCategoriesAndButton.Checked = !tagCategoriesOrButton.Checked;
-            m_Listen = true;
-        }
-
-        private void tagCategoriesAndButton_CheckedChanged(object sender, EventArgs e)
-        {
-            if (!m_Listen)
-                return;
-            m_Listen = false;
-            Ares.Editor.Actions.Actions.Instance.AddNew(new Ares.Editor.Actions.SetOperatorInMusicByTagsAction(m_Element, tagCategoriesAndButton.Checked), m_Project);
-            tagCategoriesOrButton.Checked = !tagCategoriesAndButton.Checked;
-            m_Listen = true;
-        }
-
         private void languageBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (!m_Listen)
@@ -312,6 +290,16 @@ namespace Ares.Editor.ElementEditors
             m_Listen = false;
             int fadeTime = (int)fadeUpDown.Value;
             Ares.Editor.Actions.Actions.Instance.AddNew(new Ares.Editor.Actions.SetFadeTimeInMusicByTagsAction(m_Element, fadeTime), m_Project);
+            m_Listen = true;
+        }
+
+        private void tagCategoryCombinationBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!m_Listen)
+                return;
+            m_Listen = false;
+            Ares.Editor.Actions.Actions.Instance.AddNew(new Ares.Editor.Actions.SetOperatorInMusicByTagsAction(m_Element, 
+                (TagCategoryCombination)tagCategoryCombinationBox.SelectedIndex), m_Project);
             m_Listen = true;
         }
 

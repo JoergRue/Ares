@@ -255,7 +255,7 @@ namespace Ares.Controllers
             }
         }
 
-        public void SetTagCategoriesOperator(bool operatorIsAnd)
+        public void SetTagCategoriesCombination(int categoryCombination)
         {
             if (m_Connection == null || !m_Connection.Connected)
             {
@@ -263,7 +263,7 @@ namespace Ares.Controllers
             }
             else
             {
-                m_Connection.SetMusicTagCategoryOperator(operatorIsAnd);
+                m_Connection.SetMusicTagCategoryCombination(categoryCombination);
             }
         }
 

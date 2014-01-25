@@ -282,7 +282,7 @@ namespace Ares.Playing
             }
         }
 
-        public void MusicTagCategoriesOperatorChanged(bool isAndOperator)
+        public void MusicTagCategoriesCombinationChanged(Data.TagCategoryCombination categoryCombination)
         {
             List<IProjectPlayingCallbacks> copy = null;
             lock (syncObject)
@@ -291,11 +291,11 @@ namespace Ares.Playing
             }
             foreach (IProjectPlayingCallbacks callback in copy)
             {
-                callback.MusicTagCategoriesOperatorChanged(isAndOperator);
+                callback.MusicTagCategoriesCombinationChanged(categoryCombination);
             }
         }
 
-        public void MusicTagsChanged(ICollection<int> newTags, bool isAndOperator, int fadeTime)
+        public void MusicTagsChanged(ICollection<int> newTags, Data.TagCategoryCombination categoryCombination, int fadeTime)
         {
             List<IProjectPlayingCallbacks> copy = null;
             lock (syncObject)
@@ -304,7 +304,7 @@ namespace Ares.Playing
             }
             foreach (IProjectPlayingCallbacks callback in copy)
             {
-                callback.MusicTagsChanged(newTags, isAndOperator, fadeTime);
+                callback.MusicTagsChanged(newTags, categoryCombination, fadeTime);
             }
         }
 

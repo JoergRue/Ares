@@ -29,7 +29,7 @@ namespace Ares.Data
         {
             Title = title;
             m_Tags = new Dictionary<int, HashSet<int>>();
-            IsOperatorAnd = true;
+            TagCategoryCombination = Data.TagCategoryCombination.UseOneTagOfEachCategory;
             FadeTime = 0;
         }
 
@@ -69,7 +69,7 @@ namespace Ares.Data
             }
         }
 
-        public bool IsOperatorAnd { get; set; }
+        public TagCategoryCombination TagCategoryCombination { get; set; }
 
         public int FadeTime { get; set; }
 
@@ -77,7 +77,8 @@ namespace Ares.Data
         {
             writer.WriteStartElement("MusicByTags");
             DoWriteToXml(writer);
-            writer.WriteAttributeString("IsOperatorAnd", IsOperatorAnd ? "true" : "false");
+            writer.WriteAttributeString("IsOperatorAnd",  TagCategoryCombination == Data.TagCategoryCombination.UseOneTagOfEachCategory ? "true" : "false");
+            writer.WriteAttributeString("TagCategoryCombination", ((int)TagCategoryCombination).ToString(System.Globalization.CultureInfo.InvariantCulture));
             writer.WriteAttributeString("FadeTime", FadeTime.ToString(System.Globalization.CultureInfo.InvariantCulture));
             writer.WriteStartElement("Tags");
             foreach (int category in m_Tags.Keys)
@@ -103,7 +104,16 @@ namespace Ares.Data
             : base(reader)
         {
             m_Tags = new Dictionary<int, HashSet<int>>();
-            IsOperatorAnd = reader.GetBooleanAttributeOrDefault("IsOperatorAnd", true);
+            bool isOperatorAnd = reader.GetBooleanAttributeOrDefault("IsOperatorAnd", true);
+            int tagCategoryCombination = reader.GetIntegerAttributeOrDefault("TagCategoryCombination", -1);
+            if (tagCategoryCombination >= (int)Data.TagCategoryCombination.UseAnyTag && tagCategoryCombination <= (int)Data.TagCategoryCombination.UseAllTags)
+            {
+                TagCategoryCombination = (Data.TagCategoryCombination)tagCategoryCombination;
+            }
+            else
+            {
+                TagCategoryCombination = isOperatorAnd ? Data.TagCategoryCombination.UseOneTagOfEachCategory : Data.TagCategoryCombination.UseAnyTag;
+            }
             FadeTime = reader.GetIntegerAttributeOrDefault("FadeTime", 0);
             if (reader.IsEmptyElement)
             {

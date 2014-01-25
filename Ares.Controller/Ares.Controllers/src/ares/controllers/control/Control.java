@@ -193,12 +193,12 @@ public final class Control {
 	  }	  	  	  
   }
   
-  public void setTagCategoryOperator(boolean operatorIsAnd) {
+  public void setTagCategoryCombination(INetworkClient.CategoryCombination combination) {
 	  if (connection == null || !connection.isConnected()) {
 		  Messages.addMessage(MessageType.Warning, Localization.getString("Control.noConnection")); //$NON-NLS-1$
 	  }
 	  else {
-		  connection.setTagCategoryOperator(operatorIsAnd);
+		  connection.setTagCategoryCombination(combination);
 	  }	  	  
   }
   

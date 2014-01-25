@@ -55,9 +55,8 @@ namespace Ares.Editor.Dialogs
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.categoriesBox = new System.Windows.Forms.ListBox();
             this.label13 = new System.Windows.Forms.Label();
-            this.tagCategoriesAndButton = new System.Windows.Forms.RadioButton();
-            this.tagCategoriesOrButton = new System.Windows.Forms.RadioButton();
             this.button1 = new System.Windows.Forms.Button();
+            this.tagCategoryCombinationBox = new System.Windows.Forms.ComboBox();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -85,8 +84,8 @@ namespace Ares.Editor.Dialogs
             // 
             // tagsBox
             // 
-            this.tagsBox.CheckOnClick = true;
             resources.ApplyResources(this.tagsBox, "tagsBox");
+            this.tagsBox.CheckOnClick = true;
             this.tagsBox.FormattingEnabled = true;
             this.tagsBox.MultiColumn = true;
             this.tagsBox.Name = "tagsBox";
@@ -111,20 +110,6 @@ namespace Ares.Editor.Dialogs
             resources.ApplyResources(this.label13, "label13");
             this.label13.Name = "label13";
             // 
-            // tagCategoriesAndButton
-            // 
-            resources.ApplyResources(this.tagCategoriesAndButton, "tagCategoriesAndButton");
-            this.tagCategoriesAndButton.Name = "tagCategoriesAndButton";
-            this.tagCategoriesAndButton.TabStop = true;
-            this.tagCategoriesAndButton.UseVisualStyleBackColor = true;
-            // 
-            // tagCategoriesOrButton
-            // 
-            resources.ApplyResources(this.tagCategoriesOrButton, "tagCategoriesOrButton");
-            this.tagCategoriesOrButton.Name = "tagCategoriesOrButton";
-            this.tagCategoriesOrButton.TabStop = true;
-            this.tagCategoriesOrButton.UseVisualStyleBackColor = true;
-            // 
             // button1
             // 
             resources.ApplyResources(this.button1, "button1");
@@ -132,16 +117,26 @@ namespace Ares.Editor.Dialogs
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // tagCategoryCombinationBox
+            // 
+            resources.ApplyResources(this.tagCategoryCombinationBox, "tagCategoryCombinationBox");
+            this.tagCategoryCombinationBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.tagCategoryCombinationBox.FormattingEnabled = true;
+            this.tagCategoryCombinationBox.Items.AddRange(new object[] {
+            resources.GetString("tagCategoryCombinationBox.Items"),
+            resources.GetString("tagCategoryCombinationBox.Items1"),
+            resources.GetString("tagCategoryCombinationBox.Items2")});
+            this.tagCategoryCombinationBox.Name = "tagCategoryCombinationBox";
+            // 
             // TagFilterDialog
             // 
             this.AcceptButton = this.okButton;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
+            this.Controls.Add(this.tagCategoryCombinationBox);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label13);
-            this.Controls.Add(this.tagCategoriesAndButton);
-            this.Controls.Add(this.tagCategoriesOrButton);
             this.Controls.Add(this.okButton);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.groupBox2);
@@ -164,9 +159,8 @@ namespace Ares.Editor.Dialogs
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ListBox categoriesBox;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.RadioButton tagCategoriesAndButton;
-        private System.Windows.Forms.RadioButton tagCategoriesOrButton;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ComboBox tagCategoryCombinationBox;
 
     }
 }

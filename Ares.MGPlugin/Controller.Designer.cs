@@ -64,14 +64,13 @@
             this.currentTagsLabel = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.tagCategoryCombo = new System.Windows.Forms.ComboBox();
             this.tagFadeOnlyOnChangeBox = new System.Windows.Forms.CheckBox();
             this.label10 = new System.Windows.Forms.Label();
             this.tagFadeUpDown = new System.Windows.Forms.NumericUpDown();
             this.label9 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
-            this.tagCategoriesAndButton = new System.Windows.Forms.RadioButton();
-            this.tagCategoriesOrButton = new System.Windows.Forms.RadioButton();
             this.musicTagCategoryBox = new System.Windows.Forms.ComboBox();
             this.elementsPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.musicList = new System.Windows.Forms.ListBox();
@@ -445,14 +444,13 @@
             // 
             this.groupBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox6.Controls.Add(this.tagCategoryCombo);
             this.groupBox6.Controls.Add(this.tagFadeOnlyOnChangeBox);
             this.groupBox6.Controls.Add(this.label10);
             this.groupBox6.Controls.Add(this.tagFadeUpDown);
             this.groupBox6.Controls.Add(this.label9);
             this.groupBox6.Controls.Add(this.label14);
             this.groupBox6.Controls.Add(this.label13);
-            this.groupBox6.Controls.Add(this.tagCategoriesAndButton);
-            this.groupBox6.Controls.Add(this.tagCategoriesOrButton);
             this.groupBox6.Controls.Add(this.musicTagCategoryBox);
             this.groupBox6.Location = new System.Drawing.Point(-1, 0);
             this.groupBox6.Name = "groupBox6";
@@ -460,6 +458,22 @@
             this.groupBox6.TabIndex = 1;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Kategorien";
+            // 
+            // tagCategoryCombo
+            // 
+            this.tagCategoryCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.tagCategoryCombo.FormattingEnabled = true;
+            this.tagCategoryCombo.Items.AddRange(new object[] {
+            "ODER: Musik muss irgendeinen Tag in irgendeiner Kategorie haben",
+            "Kategorie-UND: Musik muss einen Tag in jeder Kategorie haben",
+            "UND: Musik muss alle Tags in allen Kategorien haben"});
+            this.tagCategoryCombo.Location = new System.Drawing.Point(9, 64);
+            this.tagCategoryCombo.Name = "tagCategoryCombo";
+            this.tagCategoryCombo.Size = new System.Drawing.Size(325, 21);
+            this.tagCategoryCombo.TabIndex = 9;
+            this.tagCategoryCombo.DropDown += new System.EventHandler(this.tagCategoryCombo_DropDown);
+            this.tagCategoryCombo.SelectedIndexChanged += new System.EventHandler(this.tagCategoryCombo_SelectedIndexChanged);
+            this.tagCategoryCombo.DropDownClosed += new System.EventHandler(this.tagCategoryCombo_DropDownClosed);
             // 
             // tagFadeOnlyOnChangeBox
             // 
@@ -527,32 +541,6 @@
             this.label13.Size = new System.Drawing.Size(260, 13);
             this.label13.TabIndex = 3;
             this.label13.Text = "Tags verschiedener Kategorien werden verknüpft mit:";
-            // 
-            // tagCategoriesAndButton
-            // 
-            this.tagCategoriesAndButton.AutoSize = true;
-            this.tagCategoriesAndButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.tagCategoriesAndButton.Location = new System.Drawing.Point(6, 85);
-            this.tagCategoriesAndButton.Name = "tagCategoriesAndButton";
-            this.tagCategoriesAndButton.Size = new System.Drawing.Size(279, 17);
-            this.tagCategoriesAndButton.TabIndex = 2;
-            this.tagCategoriesAndButton.TabStop = true;
-            this.tagCategoriesAndButton.Text = "UND: Musik muss einen Tag in jeder Kategorie haben";
-            this.tagCategoriesAndButton.UseVisualStyleBackColor = true;
-            this.tagCategoriesAndButton.CheckedChanged += new System.EventHandler(this.tagCategoriesAndButton_CheckedChanged);
-            // 
-            // tagCategoriesOrButton
-            // 
-            this.tagCategoriesOrButton.AutoSize = true;
-            this.tagCategoriesOrButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.tagCategoriesOrButton.Location = new System.Drawing.Point(6, 64);
-            this.tagCategoriesOrButton.Name = "tagCategoriesOrButton";
-            this.tagCategoriesOrButton.Size = new System.Drawing.Size(333, 17);
-            this.tagCategoriesOrButton.TabIndex = 1;
-            this.tagCategoriesOrButton.TabStop = true;
-            this.tagCategoriesOrButton.Text = "ODER: Musik muss irgendeinen Tag irgendeiner Kategorie haben";
-            this.tagCategoriesOrButton.UseVisualStyleBackColor = true;
-            this.tagCategoriesOrButton.CheckedChanged += new System.EventHandler(this.tagCategoriesOrButton_CheckedChanged);
             // 
             // musicTagCategoryBox
             // 
@@ -1043,8 +1031,6 @@
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.RadioButton tagCategoriesAndButton;
-        private System.Windows.Forms.RadioButton tagCategoriesOrButton;
         private System.Windows.Forms.ComboBox musicTagCategoryBox;
         private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.Button clearTagsButton;
@@ -1057,6 +1043,7 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.GroupBox groupBox8;
         private System.Windows.Forms.CheckBox musicOnAllSpeakersBox;
+        private System.Windows.Forms.ComboBox tagCategoryCombo;
 
     }
 }

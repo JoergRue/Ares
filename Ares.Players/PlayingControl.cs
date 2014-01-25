@@ -172,9 +172,9 @@ namespace Ares.Players
             PlayingModule.ProjectPlayer.RemoveAllMusicTags();
         }
 
-        public void SetMusicTagCategoriesOperator(bool isAndOperator)
+        public void SetMusicTagCategoriesCombination(Data.TagCategoryCombination categoryCombination)
         {
-            PlayingModule.ProjectPlayer.SetMusicTagCategoriesOperator(isAndOperator);
+            PlayingModule.ProjectPlayer.SetMusicTagCategoriesCombination(categoryCombination);
         }
 
         public void SetMusicTagFading(int fadeTime, bool fadeOnlyChange)
@@ -494,13 +494,13 @@ namespace Ares.Players
             }
         }
 
-        public void MusicTagsChanged(ICollection<int> newTags, bool operatorIsAnd, int fadeTime)
+        public void MusicTagsChanged(ICollection<int> newTags, Data.TagCategoryCombination categoryCombination, int fadeTime)
         {
             lock (syncObject)
             {
                 m_CurrentMusicTags.Clear();
                 m_CurrentMusicTags.UnionWith(newTags);
-                m_MusicTagCategoriesOperatorIsAnd = operatorIsAnd;
+                m_MusicTagCategoriesCombination = categoryCombination;
             }
         }
 
@@ -525,21 +525,21 @@ namespace Ares.Players
             }
         }
 
-        private bool m_MusicTagCategoriesOperatorIsAnd = false;
+        private Data.TagCategoryCombination m_MusicTagCategoriesCombination = Data.TagCategoryCombination.UseAnyTag;
 
-        public bool IsMusicTagCategoriesOperatorAnd()
+        public Data.TagCategoryCombination GetMusicTagCategoriesCombination()
         {
             lock (syncObject)
             {
-                return m_MusicTagCategoriesOperatorIsAnd;
+                return m_MusicTagCategoriesCombination;
             }
         }
 
-        public void MusicTagCategoriesOperatorChanged(bool isAndOperator)
+        public void MusicTagCategoriesCombinationChanged(Data.TagCategoryCombination categoryCombination)
         {
             lock (syncObject)
             {
-                m_MusicTagCategoriesOperatorIsAnd = isAndOperator;
+                m_MusicTagCategoriesCombination = categoryCombination;
             }
         }
 

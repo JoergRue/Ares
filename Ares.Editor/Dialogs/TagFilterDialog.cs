@@ -64,16 +64,15 @@ namespace Ares.Editor.Dialogs
             }
         }
 
-        public bool CombineCategoriesWithAnd
+        public Data.TagCategoryCombination TagCategoryCombination
         {
             get
             {
-                return tagCategoriesAndButton.Checked;
+                return (Data.TagCategoryCombination)tagCategoryCombinationBox.SelectedIndex;
             }
             set
             {
-                tagCategoriesAndButton.Checked = value;
-                tagCategoriesOrButton.Checked = !value;
+                tagCategoryCombinationBox.SelectedIndex = (int)value;
             }
         }
 
@@ -263,5 +262,6 @@ namespace Ares.Editor.Dialogs
             }
             m_Listen = true;
         }
+
     }
 }

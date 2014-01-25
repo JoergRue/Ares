@@ -538,18 +538,18 @@ namespace Ares.Playing
             }
         }
 
-        private bool m_CategoriesOperatorIsAnd = false;
+        private Ares.Data.TagCategoryCombination m_TagCategoryCombination = Ares.Data.TagCategoryCombination.UseAnyTag;
 
-        public bool SetCategoriesOperator(bool isAnd, out bool hadFiles)
+        public bool SetCategoriesCombination(Ares.Data.TagCategoryCombination combinationOperator, out bool hadFiles)
         {
             hadFiles = m_CurrentChoices.Count > 0;
 
-            if (m_CategoriesOperatorIsAnd == isAnd)
+            if (m_TagCategoryCombination == combinationOperator)
             {
                 return false;
             }
 
-            m_CategoriesOperatorIsAnd = isAnd;
+            m_TagCategoryCombination = combinationOperator;
             return RetrieveCurrentChoices();
         }
 
@@ -607,7 +607,7 @@ namespace Ares.Playing
                 tags.UnionWith(tagsByCategories[category]);
                 m_TagsSetByCategory[category] = tags;
             }
-            m_CategoriesOperatorIsAnd = musicByTags.IsOperatorAnd;
+            m_TagCategoryCombination = musicByTags.TagCategoryCombination;
             m_FadeTime = musicByTags.FadeTime;
             m_MusicByTagsElementPlayed = true;
         }
@@ -618,13 +618,18 @@ namespace Ares.Playing
             try
             {
                 Ares.Tags.ITagsDBRead dbRead = Ares.Tags.TagsModule.GetTagsDB().ReadInterface;
-                if (!m_CategoriesOperatorIsAnd)
+                switch (m_TagCategoryCombination)
                 {
-                    choices = dbRead.GetAllFilesWithAnyTag(m_TagsSet);
-                }
-                else
-                {
-                    choices = dbRead.GetAllFilesWithAnyTagInEachCategory(m_TagsSetByCategory);
+                    case TagCategoryCombination.UseAnyTag:
+                        choices = dbRead.GetAllFilesWithAnyTag(m_TagsSet);
+                        break;
+                    case TagCategoryCombination.UseOneTagOfEachCategory:
+                        choices = dbRead.GetAllFilesWithAnyTagInEachCategory(m_TagsSetByCategory);
+                        break;
+                    case TagCategoryCombination.UseAllTags:
+                    default:
+                        choices = dbRead.GetAllFilesWithAllTags(m_TagsSet);
+                        break;
                 }
             }
             catch (Ares.Tags.TagsDbException ex)
@@ -792,11 +797,11 @@ namespace Ares.Playing
         {
         }
 
-        public void MusicTagCategoriesOperatorChanged(bool isAndOperator)
+        public void MusicTagCategoriesCombinationChanged(Data.TagCategoryCombination categoryCombination)
         {
         }
 
-        public void MusicTagsChanged(ICollection<int> newTags, bool isAndOperator, int fadeTime)
+        public void MusicTagsChanged(ICollection<int> newTags, Data.TagCategoryCombination categoryCombination, int fadeTime)
         {
         }
 

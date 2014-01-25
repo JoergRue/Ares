@@ -113,6 +113,29 @@ namespace Ares.Data
     }
 
     /// <summary>
+    /// Tag retrieval modes.
+    /// </summary>
+    public enum TagCategoryCombination
+    {
+        /// <summary>
+        /// Or: music must have at least one of the given tag.
+        /// Use GetAllFilesWithAnyTag for retrieval.
+        /// </summary>
+        UseAnyTag = 0,
+        /// <summary>
+        /// Category-And: music must have at least one of the given 
+        /// tags in each given category. Use GetAllFilesWithAnyTagInEachCategory
+        /// for retrieval.
+        /// </summary>
+        UseOneTagOfEachCategory = 1,
+        /// <summary>
+        /// And: music must have all given tags.
+        /// Use GetAllFilesWithAllTags for retrieval.
+        /// </summary>
+        UseAllTags = 2
+    }
+
+    /// <summary>
     /// Set to play music with a specific selection of tags.
     /// </summary>
     public interface IMusicByTags : IElement
@@ -141,7 +164,7 @@ namespace Ares.Data
         /// Whether the categories are put together 
         /// using 'and' or 'or'
         /// </summary>
-        bool IsOperatorAnd { get; set; }
+        TagCategoryCombination TagCategoryCombination { get; set; }
 
         /// <summary>
         /// Fade time for each music file

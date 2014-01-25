@@ -300,7 +300,7 @@ namespace Ares.MediaPortalPlugin
                     m_PlayingControl.SoundVolume, m_PlayingControl.CurrentMode, m_PlayingControl.CurrentMusicElementShort, m_PlayingControl.CurrentMusicElementLong,
                     m_PlayingControl.CurrentModeElementIds, m_PlayingControl.CurrentProject, m_PlayingControl.GetCurrentMusicList(),
                     m_PlayingControl.MusicRepeat, m_PlayingControl.TagCategories, m_PlayingControl.TagsPerCategory,
-                    new List<int>(m_PlayingControl.GetCurrentMusicTags()), m_PlayingControl.IsMusicTagCategoriesOperatorAnd(), 
+                    new List<int>(m_PlayingControl.GetCurrentMusicTags()), m_PlayingControl.GetMusicTagCategoriesCombination(), 
                     Settings.Settings.Instance.TagMusicFadeTime, Settings.Settings.Instance.TagMusicFadeOnlyOnChange,
                     Settings.Settings.Instance.PlayMusicOnAllSpeakers);
                 disconnectButton.IsEnabled = true;
@@ -674,9 +674,9 @@ namespace Ares.MediaPortalPlugin
             Ares.Controllers.Control.Instance.SetMusicRepeat(repeat);
         }
 
-        public void FromControllerSetTagCategoryOperator(bool isAndOperator)
+        public void FromControllerSetTagCategoryCombination(int categoryCombination)
         {
-            Ares.Controllers.Control.Instance.SetTagCategoriesOperator(isAndOperator);
+            Ares.Controllers.Control.Instance.SetTagCategoriesCombination(categoryCombination);
         }
 
         public void FromControllerSwitchTag(int categoryId, int tagId, bool isActive)
@@ -797,10 +797,10 @@ namespace Ares.MediaPortalPlugin
             }
         }
 
-        public void TagCategoryOperatorChanged(bool operatorIsAnd)
+        public void TagCategoryCombinationChanged(int categoryCombination)
         {
-            m_PlayingControl.MusicTagCategoriesOperatorChanged(operatorIsAnd);
-            DispatchToUIThread(() => m_Network.MusicTagCategoriesOperatorChanged(operatorIsAnd));
+            m_PlayingControl.MusicTagCategoriesCombinationChanged(categoryCombination);
+            DispatchToUIThread(() => m_Network.MusicTagCategoriesCombinationChanged(categoryCombination));
         }
 
         public void TagFadingChanged(int fadeTime, bool onlyOnChange)

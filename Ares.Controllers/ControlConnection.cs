@@ -87,7 +87,7 @@ namespace Ares.Controllers
         void TagsChanged(List<MusicTagCategory> categories, Dictionary<int, List<MusicTag>> tagsPerCategory);
         void ActiveTagsChanged(List<int> activeTags);
         void TagStateChanged(int tagId, bool isActive);
-        void TagCategoryOperatorChanged(bool operatorIsAnd);
+        void TagCategoryCombinationChanged(int combination);
         void TagFadingChanged(int fadeTime, bool onlyOnChange);
 
         void ProjectFilesRetrieved(List<String> files);
@@ -584,8 +584,7 @@ namespace Ares.Controllers
                                 }
                             case 14:
                                 {
-                                    bool isAnd = buffer[1] == 1;
-                                    m_NetworkClient.TagCategoryOperatorChanged(isAnd);
+                                    m_NetworkClient.TagCategoryCombinationChanged(buffer[1]);
                                     break;
                                 }
                             case 15:
@@ -1034,7 +1033,7 @@ namespace Ares.Controllers
             Array.Copy(ibytes, 0, bytes, offset, ibytes.Length);
         }
 
-        public void SetMusicTagCategoryOperator(bool operatorIsAnd)
+        public void SetMusicTagCategoryCombination(int combination)
         {
             if (!Connected)
             {
@@ -1051,10 +1050,9 @@ namespace Ares.Controllers
             }
             try
             {
-                Int32 val = operatorIsAnd ? 1 : 0;
                 byte[] bytes = new byte[1 + 4];
                 bytes[0] = 12;
-                AddInt32ToByteArray(bytes, 1, val);
+                AddInt32ToByteArray(bytes, 1, combination);
                 m_Socket.Send(bytes);
             }
             catch (SocketException ex)

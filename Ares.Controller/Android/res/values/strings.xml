@@ -78,10 +78,12 @@
     <string-array name="tag_categories_values">
         <item >or</item>
         <item >and</item>
+        <item >globalAnd</item>
     </string-array>
     <string-array name="tag_categories_entries">
         <item >OR: needs at least one tag in ANY category</item>
-        <item >AND: needs a tag in ALL categories</item>
+        <item >Category-AND: needs at least one tag in ALL categories</item>
+        <item >AND: needs ALL tags in ALL categories</item>
     </string-array>
         <string name="tag_categories_op_title">Connection of categories</string>
         <string name="tag_categories_op_desc">Connect categories with OR or with AND</string>

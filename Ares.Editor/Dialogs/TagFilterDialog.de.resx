@@ -130,26 +130,20 @@
   <data name="label13.Text" xml:space="preserve">
     <value>Tags verschiedener Kategorien werden verknüpft mit:</value>
   </data>
-  <data name="tagCategoriesAndButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>279, 17</value>
-  </data>
-  <data name="tagCategoriesAndButton.Text" xml:space="preserve">
-    <value>UND: Musik muss einen Tag in jeder Kategorie haben</value>
-  </data>
-  <data name="tagCategoriesOrButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>344, 17</value>
-  </data>
-  <data name="tagCategoriesOrButton.Text" xml:space="preserve">
-    <value>ODER: Musik muss irgendeinen Tag in irgendeiner Kategorie haben</value>
-  </data>
-  <data name="button1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>15, 311</value>
-  </data>
   <data name="button1.Size" type="System.Drawing.Size, System.Drawing">
     <value>108, 23</value>
   </data>
   <data name="button1.Text" xml:space="preserve">
     <value>Alle Tags entfernen</value>
+  </data>
+  <data name="tagCategoryCombinationBox.Items" xml:space="preserve">
+    <value>ODER: Musik muss irgendeinen Tag in irgendeiner Kategorie haben</value>
+  </data>
+  <data name="tagCategoryCombinationBox.Items1" xml:space="preserve">
+    <value>Kategorie-UND: Musik muss einen Tag in jeder Kategorie haben</value>
+  </data>
+  <data name="tagCategoryCombinationBox.Items2" xml:space="preserve">
+    <value>UND: Musik muss alle Tags in allen Kategorien haben</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

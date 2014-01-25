@@ -559,7 +559,7 @@ public final class MainFrame extends FrameController implements IMessageListener
 		              });
 					tagsFrame.setTags(currentCategories, currentTags);
 					tagsFrame.setActiveTags(currentActiveTags);
-					tagsFrame.setCategoryOperator(tagCategoryOperatorIsAnd);
+					tagsFrame.setCategoryCombination(tagCategoryCombination);
 					tagsFrame.setFading(musicTagsFadeTime, musicTagsFadeOnlyOnChange);
 					tagsFrame.setVisible(true);
 				}
@@ -1453,15 +1453,15 @@ public final class MainFrame extends FrameController implements IMessageListener
 		});
 	}
 	
-	private boolean tagCategoryOperatorIsAnd = false;
+	private INetworkClient.CategoryCombination tagCategoryCombination = INetworkClient.CategoryCombination.Or;
 	
 	@Override
-	public void tagCategoryOperatorChanged(final boolean isAndOperator) {
+	public void tagCategoryCombinationChanged(final INetworkClient.CategoryCombination combination) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				tagCategoryOperatorIsAnd = isAndOperator;
+				tagCategoryCombination = combination;
 				if (tagsFrame != null) {
-					tagsFrame.setCategoryOperator(isAndOperator);
+					tagsFrame.setCategoryCombination(combination);
 				}
 			}
 		});

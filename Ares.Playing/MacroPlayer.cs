@@ -212,11 +212,11 @@ namespace Ares.Playing
         {
         }
 
-        public void MusicTagCategoriesOperatorChanged(bool isAndOperator)
+        public void MusicTagCategoriesCombinationChanged(Data.TagCategoryCombination categoryCombination)
         {
         }
 
-        public void MusicTagsChanged(System.Collections.Generic.ICollection<int> newTags, bool isAndOperator, int fadeTime)
+        public void MusicTagsChanged(System.Collections.Generic.ICollection<int> newTags, Data.TagCategoryCombination categoryCombination, int fadeTime)
         {
         }
 

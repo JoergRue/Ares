@@ -777,13 +777,13 @@ namespace Ares.MGPlugin
             );
         }
 
-        bool m_TagCategoryOperatorIsAnd = false;
+        int m_TagCategoryCombination = 0;
 
-        public void TagCategoryOperatorChanged(bool operatorIsAnd)
+        public void TagCategoryCombinationChanged(int combination)
         {
             DispatchToUIThread(() =>
                 {
-                    m_TagCategoryOperatorIsAnd = operatorIsAnd;
+                    m_TagCategoryCombination = combination;
                     if (modesList.SelectedIndex == 1)
                         UpdateElementsPanel();
                 }
@@ -861,6 +861,7 @@ namespace Ares.MGPlugin
 
         private int m_CurrentTagCategory = -1;
         private bool m_ListenToTagControls = true;
+        private bool m_UpdateTagCategoryBox = true;
 
         private void UpdateElementsPanel()
         {
@@ -909,8 +910,8 @@ namespace Ares.MGPlugin
                 if (selIndex != -1)
                     musicTagCategoryBox.SelectedIndex = selIndex;
 
-                tagCategoriesAndButton.Checked = m_TagCategoryOperatorIsAnd;
-                tagCategoriesOrButton.Checked = !m_TagCategoryOperatorIsAnd;
+                if (m_UpdateTagCategoryBox)
+                    tagCategoryCombo.SelectedIndex = m_TagCategoryCombination;
 
                 if (m_CurrentTagCategory != -1 && m_CurrentMusicTags.ContainsKey(m_CurrentTagCategory))
                 {
@@ -1201,20 +1202,6 @@ namespace Ares.MGPlugin
             UpdateElementsPanel();
         }
 
-        private void tagCategoriesOrButton_CheckedChanged(object sender, EventArgs e)
-        {
-            if (!m_ListenToTagControls)
-                return;
-            Controllers.Control.Instance.SetTagCategoriesOperator(!tagCategoriesOrButton.Checked);
-        }
-
-        private void tagCategoriesAndButton_CheckedChanged(object sender, EventArgs e)
-        {
-            if (!m_ListenToTagControls)
-                return;
-            Controllers.Control.Instance.SetTagCategoriesOperator(tagCategoriesAndButton.Checked);
-        }
-
         private void clearTagsButton_Click(object sender, EventArgs e)
         {
             if (!m_ListenToTagControls)
@@ -1241,6 +1228,23 @@ namespace Ares.MGPlugin
             if (!m_ListenToMusicControls)
                 return;
             Controllers.Control.Instance.SetMusicOnAllSpeakers(musicOnAllSpeakersBox.Checked);
+        }
+
+        private void tagCategoryCombo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!m_ListenToTagControls)
+                return;
+            Controllers.Control.Instance.SetTagCategoriesCombination(tagCategoryCombo.SelectedIndex);
+        }
+
+        private void tagCategoryCombo_DropDown(object sender, EventArgs e)
+        {
+            m_UpdateTagCategoryBox = false;
+        }
+
+        private void tagCategoryCombo_DropDownClosed(object sender, EventArgs e)
+        {
+            m_UpdateTagCategoryBox = true;
         }
 
     }

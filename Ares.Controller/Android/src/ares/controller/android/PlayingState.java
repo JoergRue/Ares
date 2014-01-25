@@ -51,7 +51,7 @@ public class PlayingState implements INetworkClient {
 	private Map<Integer, List<TitledElement>> tags = new HashMap<Integer, List<TitledElement>>();
 	private HashSet<Integer> activeTags = new HashSet<Integer>();
 	
-	private boolean tagCategoryOperatorIsAnd = false;
+	private INetworkClient.CategoryCombination tagCategoryCombination = INetworkClient.CategoryCombination.Or;
 	private int tagFadingTime = 0;
 	private boolean tagFadeOnlyOnChange = false;
 	
@@ -104,8 +104,8 @@ public class PlayingState implements INetworkClient {
 		return activeTags;
 	}
 	
-	public boolean isTagCategoryOperatorAnd() {
-		return tagCategoryOperatorIsAnd;
+	public INetworkClient.CategoryCombination getTagCategoryCombination() {
+		return tagCategoryCombination;
 	}
 	
 	public int getTagFadingTime() {
@@ -392,14 +392,14 @@ public class PlayingState implements INetworkClient {
 	}
 	
 	@Override
-	public void tagCategoryOperatorChanged(final boolean operatorIsAnd) {
+	public void tagCategoryCombinationChanged(final INetworkClient.CategoryCombination combination) {
 		handler.post(new Runnable() {
 			public void run() {
-				tagCategoryOperatorIsAnd = operatorIsAnd;
+				tagCategoryCombination = combination;
 				if (!hasClient())
 					return;
 				for (INetworkClient client : clients)
-					client.tagCategoryOperatorChanged(operatorIsAnd);
+					client.tagCategoryCombinationChanged(combination);
 			}
 		});
 	}

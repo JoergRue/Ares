@@ -77,7 +77,19 @@ public class TagsFragment extends ModeLikeFragment implements INetworkClient {
 		if (Control.getInstance().isConnected())
 		{
 			SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext()).edit();
-			prefs.putString("tag_categories_op", PlayingState.getInstance().isTagCategoryOperatorAnd() ? "and" : "or");
+			switch (PlayingState.getInstance().getTagCategoryCombination())
+			{
+			case And:
+				prefs.putString("tag_categories_op", "globalAnd");
+				break;
+			case CategoryAnd:
+				prefs.putString("tag_categories_op", "and");
+				break;
+			case Or:
+			default:
+				prefs.putString("tag_categories_op", "or");
+				break;
+			}
 			prefs.putString("tag_fading_time", "" + PlayingState.getInstance().getTagFadingTime());
 			prefs.putBoolean("tag_fading_only_on_change", PlayingState.getInstance().getTagFadeOnlyOnChange());
 			prefs.commit();
@@ -244,7 +256,7 @@ public class TagsFragment extends ModeLikeFragment implements INetworkClient {
 	}
 
 	@Override
-	public void tagCategoryOperatorChanged(boolean operatorIsAnd) {
+	public void tagCategoryCombinationChanged(INetworkClient.CategoryCombination combination) {
 		// not handled directly
 	}
 

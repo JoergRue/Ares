@@ -70,18 +70,32 @@ namespace Ares.Editor
                 try
                 {
                     var dbRead = Ares.Tags.TagsModule.GetTagsDB().ReadInterface;
-                    if (dragInfo.TagsFilter.CombineCategoriesWithAnd)
+                    switch (dragInfo.TagsFilter.TagCategoryCombination)
                     {
-                        files = dbRead.GetAllFilesWithAnyTagInEachCategory(dragInfo.TagsFilter.TagsByCategories);
-                    }
-                    else
-                    {
-                        HashSet<int> allTags = new HashSet<int>();
-                        foreach (var entry in dragInfo.TagsFilter.TagsByCategories)
-                        {
-                            allTags.UnionWith(entry.Value);
-                        }
-                        files = dbRead.GetAllFilesWithAnyTag(allTags);
+                        case TagCategoryCombination.UseOneTagOfEachCategory:
+                            files = dbRead.GetAllFilesWithAnyTagInEachCategory(dragInfo.TagsFilter.TagsByCategories);
+                            break;
+                        case TagCategoryCombination.UseAnyTag:
+                            {
+                                HashSet<int> allTags = new HashSet<int>();
+                                foreach (var entry in dragInfo.TagsFilter.TagsByCategories)
+                                {
+                                    allTags.UnionWith(entry.Value);
+                                }
+                                files = dbRead.GetAllFilesWithAnyTag(allTags);
+                            }
+                            break;
+                        case TagCategoryCombination.UseAllTags:
+                        default:
+                            {
+                                HashSet<int> allTags = new HashSet<int>();
+                                foreach (var entry in dragInfo.TagsFilter.TagsByCategories)
+                                {
+                                    allTags.UnionWith(entry.Value);
+                                }
+                                files = dbRead.GetAllFilesWithAllTags(allTags);
+                            }
+                            break;
                     }
                 }
                 catch (Ares.Tags.TagsDbException)

@@ -63,11 +63,10 @@ namespace Ares.Editor.ElementEditors
             this.label1 = new System.Windows.Forms.Label();
             this.clearButton = new System.Windows.Forms.Button();
             this.label13 = new System.Windows.Forms.Label();
-            this.tagCategoriesAndButton = new System.Windows.Forms.RadioButton();
-            this.tagCategoriesOrButton = new System.Windows.Forms.RadioButton();
             this.label2 = new System.Windows.Forms.Label();
             this.fadeUpDown = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
+            this.tagCategoryCombinationBox = new System.Windows.Forms.ComboBox();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fadeUpDown)).BeginInit();
@@ -127,22 +126,6 @@ namespace Ares.Editor.ElementEditors
             resources.ApplyResources(this.label13, "label13");
             this.label13.Name = "label13";
             // 
-            // tagCategoriesAndButton
-            // 
-            resources.ApplyResources(this.tagCategoriesAndButton, "tagCategoriesAndButton");
-            this.tagCategoriesAndButton.Name = "tagCategoriesAndButton";
-            this.tagCategoriesAndButton.TabStop = true;
-            this.tagCategoriesAndButton.UseVisualStyleBackColor = true;
-            this.tagCategoriesAndButton.CheckedChanged += new System.EventHandler(this.tagCategoriesAndButton_CheckedChanged);
-            // 
-            // tagCategoriesOrButton
-            // 
-            resources.ApplyResources(this.tagCategoriesOrButton, "tagCategoriesOrButton");
-            this.tagCategoriesOrButton.Name = "tagCategoriesOrButton";
-            this.tagCategoriesOrButton.TabStop = true;
-            this.tagCategoriesOrButton.UseVisualStyleBackColor = true;
-            this.tagCategoriesOrButton.CheckedChanged += new System.EventHandler(this.tagCategoriesOrButton_CheckedChanged);
-            // 
             // label2
             // 
             resources.ApplyResources(this.label2, "label2");
@@ -169,17 +152,28 @@ namespace Ares.Editor.ElementEditors
             resources.ApplyResources(this.label3, "label3");
             this.label3.Name = "label3";
             // 
+            // tagCategoryCombinationBox
+            // 
+            resources.ApplyResources(this.tagCategoryCombinationBox, "tagCategoryCombinationBox");
+            this.tagCategoryCombinationBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.tagCategoryCombinationBox.FormattingEnabled = true;
+            this.tagCategoryCombinationBox.Items.AddRange(new object[] {
+            resources.GetString("tagCategoryCombinationBox.Items"),
+            resources.GetString("tagCategoryCombinationBox.Items1"),
+            resources.GetString("tagCategoryCombinationBox.Items2")});
+            this.tagCategoryCombinationBox.Name = "tagCategoryCombinationBox";
+            this.tagCategoryCombinationBox.SelectedIndexChanged += new System.EventHandler(this.tagCategoryCombinationBox_SelectedIndexChanged);
+            // 
             // MusicByTagsEditor
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.tagCategoryCombinationBox);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.fadeUpDown);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.clearButton);
             this.Controls.Add(this.label13);
-            this.Controls.Add(this.tagCategoriesAndButton);
-            this.Controls.Add(this.tagCategoriesOrButton);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.languageBox);
@@ -203,10 +197,9 @@ namespace Ares.Editor.ElementEditors
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button clearButton;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.RadioButton tagCategoriesAndButton;
-        private System.Windows.Forms.RadioButton tagCategoriesOrButton;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.NumericUpDown fadeUpDown;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ComboBox tagCategoryCombinationBox;
     }
 }

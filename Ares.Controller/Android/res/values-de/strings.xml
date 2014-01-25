@@ -80,10 +80,12 @@
     <string-array name="tag_categories_values">
         <item >or</item>
         <item >and</item>
+        <item >globalAnd</item>
     </string-array>
     <string-array name="tag_categories_entries">
-        <item >ODER: Tag in irgendeiner Kategorie</item>
-        <item >UND: Tag in jeder Kategorie</item>
+        <item >ODER: irgendein Tag in irgendeiner Kategorie</item>
+        <item >Kategorie-UND: irgendein Tag in jeder Kategorie</item>
+        <item >UND: jedes Tag in jeder Kategorie</item>
     </string-array>
     <string name="tag_categories_op_title">Kategorien</string>
     <string name="tag_categories_op_desc">Verknüpfen von Kategorien mit UND oder ODER</string>

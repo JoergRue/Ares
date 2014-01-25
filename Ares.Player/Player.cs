@@ -562,8 +562,10 @@ namespace Ares.Player
                     }
                 }
 
-                tagCategoriesAndButton.Checked = m_PlayingControl.IsMusicTagCategoriesOperatorAnd();
-                tagCategoriesOrButton.Checked = !tagCategoriesAndButton.Checked;
+                if (m_UpdateCategoryCombinationBox)
+                {
+                    tagCategoryCombinationBox.SelectedIndex = (int)m_PlayingControl.GetMusicTagCategoriesCombination();
+                }
 
                 StringBuilder currentTagsBuilder = new StringBuilder();
                 IList<Ares.Tags.TagInfoForLanguage> currentTagInfos;
@@ -827,8 +829,10 @@ namespace Ares.Player
                 else
                 {
                     m_TagsControlsActive = false;
-                    tagCategoriesAndButton.Checked = m_PlayingControl.IsMusicTagCategoriesOperatorAnd();
-                    tagCategoriesOrButton.Checked = !tagCategoriesAndButton.Checked;
+                    if (m_UpdateCategoryCombinationBox)
+                    {
+                        tagCategoryCombinationBox.SelectedIndex = (int)m_PlayingControl.GetMusicTagCategoriesCombination();
+                    }
                     m_TagsControlsActive = true;
                 }
             }
@@ -1193,9 +1197,9 @@ namespace Ares.Player
             m_PlayingControl.RemoveAllMusicTags();
         }
 
-        public void SetTagCategoryOperator(bool operatorIsAnd)
+        public void SetTagCategoryCombination(Data.TagCategoryCombination categoryCombination)
         {
-            m_PlayingControl.SetMusicTagCategoriesOperator(operatorIsAnd);
+            m_PlayingControl.SetMusicTagCategoriesCombination(categoryCombination);
         }
 
         public void SetMusicTagsFading(Int32 fadeTime, bool onlyOnChange)
@@ -1220,7 +1224,7 @@ namespace Ares.Player
                     m_PlayingControl.SoundVolume, m_PlayingControl.CurrentMode, MusicInfo.GetInfo(m_PlayingControl.CurrentMusicElement),
                     m_PlayingControl.CurrentModeElements, m_Project, 
                     m_PlayingControl.CurrentMusicList, m_PlayingControl.MusicRepeat,
-                    m_TagLanguageId, new List<int>(m_PlayingControl.GetCurrentMusicTags()), m_PlayingControl.IsMusicTagCategoriesOperatorAnd(),
+                    m_TagLanguageId, new List<int>(m_PlayingControl.GetCurrentMusicTags()), m_PlayingControl.GetMusicTagCategoriesCombination(),
                     Settings.Settings.Instance.TagMusicFadeTime, Settings.Settings.Instance.TagMusicFadeOnlyOnChange,
                     Settings.Settings.Instance.PlayMusicOnAllSpeakers);
                 disconnectButton.Text = StringResources.Disconnect;
@@ -1633,22 +1637,6 @@ namespace Ares.Player
             }
         }
 
-        private void tagCategoriesOrButton_CheckedChanged(object sender, EventArgs e)
-        {
-            if (m_TagsControlsActive)
-            {
-                m_PlayingControl.SetMusicTagCategoriesOperator(!tagCategoriesOrButton.Checked);
-            }
-        }
-
-        private void tagCategoriesAndButton_CheckedChanged(object sender, EventArgs e)
-        {
-            if (m_TagsControlsActive)
-            {
-                m_PlayingControl.SetMusicTagCategoriesOperator(tagCategoriesAndButton.Checked);
-            }
-        }
-
         private bool commitFading = true;
 
         private void tagFadeUpDown_ValueChanged(object sender, EventArgs e)
@@ -1677,6 +1665,26 @@ namespace Ares.Player
             {
                 m_PlayingControl.SetMusicTagFading(Settings.Settings.Instance.TagMusicFadeTime, value);
             }
+        }
+
+        private void tagCategoryCombinationBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (m_TagsControlsActive && m_PlayingControl != null)
+            {
+                m_PlayingControl.SetMusicTagCategoriesCombination((Data.TagCategoryCombination)tagCategoryCombinationBox.SelectedIndex);
+            }
+        }
+
+        private bool m_UpdateCategoryCombinationBox = true;
+
+        private void tagCategoryCombinationBox_DropDown(object sender, EventArgs e)
+        {
+            m_UpdateCategoryCombinationBox = false;
+        }
+
+        private void tagCategoryCombinationBox_DropDownClosed(object sender, EventArgs e)
+        {
+            m_UpdateCategoryCombinationBox = true;
         }
     }
 }

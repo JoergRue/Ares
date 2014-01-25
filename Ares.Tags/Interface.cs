@@ -269,6 +269,12 @@ namespace Ares.Tags
         IList<String> GetAllFilesWithAnyTagInEachCategory(IDictionary<int, HashSet<int>> tagsByCategory);
 
         /// <summary>
+        /// Returns all files which have all given tags.
+        /// Files are returned as relative paths.
+        /// </summary>
+        IList<String> GetAllFilesWithAllTags(HashSet<int> tagIds);
+
+        /// <summary>
         /// Returns the stored identification for the given files.
         /// </summary>
         IList<FileIdentification> GetIdentificationForFiles(IList<String> filePaths);

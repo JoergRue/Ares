@@ -179,13 +179,15 @@ namespace Ares.ModelInfo
             try
             {
                 var db = Ares.Tags.TagsModule.GetTagsDB().ReadInterface;
-                if (musicByTags.IsOperatorAnd)
+                switch (musicByTags.TagCategoryCombination)
                 {
-                    return db.GetAllFilesWithAnyTagInEachCategory(musicByTags.GetTags());
-                }
-                else
-                {
-                    return db.GetAllFilesWithAnyTag(musicByTags.GetAllTags());
+                    case TagCategoryCombination.UseOneTagOfEachCategory:
+                        return db.GetAllFilesWithAnyTagInEachCategory(musicByTags.GetTags());
+                    case TagCategoryCombination.UseAnyTag:
+                        return db.GetAllFilesWithAnyTag(musicByTags.GetAllTags());
+                    case TagCategoryCombination.UseAllTags:
+                    default:
+                        return db.GetAllFilesWithAllTags(musicByTags.GetAllTags());
                 }
             }
             catch (Ares.Tags.TagsDbException)

@@ -38,7 +38,7 @@ namespace Ares.Players
         void SetMusicRepeat(bool repeat);
         void SwitchTag(Int32 categoryId, Int32 tagId, bool tagIsActive);
         void DeactivateAllTags();
-        void SetTagCategoryOperator(bool operatorIsAnd);
+        void SetTagCategoryCombination(Data.TagCategoryCombination categoryCombination);
         void SetMusicTagsFading(Int32 fadeTime, bool onlyOnChange);
         void SetPlayMusicOnAllSpeakers(bool onAllSpeakers);
     }
@@ -162,9 +162,9 @@ namespace Ares.Players
             InformActiveTags(activeTags);
         }
 
-        public void InformClientOfTagCategoryOperator(bool operatorIsAnd)
+        public void InformClientOfTagCategoryCombination(Data.TagCategoryCombination categoryCombination)
         {
-            InformCategoryOperatorChanged(operatorIsAnd);
+            InformCategoryCombinationChanged(categoryCombination);
         }
 
         public void InformClientOfFading(int fadeTime, bool fadeOnlyOnChange)
@@ -174,7 +174,7 @@ namespace Ares.Players
 
         public void InformClientOfEverything(int overallVolume, int musicVolume, int soundVolume, Ares.Data.IMode mode, MusicInfo music,
             System.Collections.Generic.IList<Ares.Data.IModeElement> elements, Ares.Data.IProject project, Int32 musicListId, bool musicRepeat,
-            int tagLanguageId, System.Collections.Generic.IList<int> activeTags, bool tagCategoryOperatorIsAnd, int fadeTime, bool fadeOnlyOnChange,
+            int tagLanguageId, System.Collections.Generic.IList<int> activeTags, Data.TagCategoryCombination categoryCombination, int fadeTime, bool fadeOnlyOnChange,
             bool musicOnAllChannels)
         {
             InformProjectModel(project);
@@ -192,7 +192,7 @@ namespace Ares.Players
             InformRepeatChanged(musicRepeat);
             InformMusicOnAllChannelsChanged(musicOnAllChannels);
             InformActiveTags(activeTags);
-            InformCategoryOperatorChanged(tagCategoryOperatorIsAnd);
+            InformCategoryCombinationChanged(categoryCombination);
             m_MusicTagsFadeOnlyOnChange = fadeOnlyOnChange;
             InformFading(fadeTime, fadeOnlyOnChange);
         }
@@ -676,11 +676,13 @@ namespace Ares.Players
                     }
                     else if (command == 12)
                     {
-                        Int32 isAnd = -1;
-                        bool success = ReadInt32(out isAnd);
+                        int combination = -1;
+                        bool success = ReadInt32(out combination);
                         if (success)
                         {
-                            networkClient.SetTagCategoryOperator(isAnd == 1);
+                            if (combination < (int)Data.TagCategoryCombination.UseAnyTag || combination > (int)Data.TagCategoryCombination.UseAllTags)
+                                combination = 0;
+                            networkClient.SetTagCategoryCombination((Data.TagCategoryCombination)combination);
                         }
                     }
                     else if (command == 13)
@@ -728,7 +730,7 @@ namespace Ares.Players
             }
         }
 
-        private static readonly int PLAYER_VERSION = 2;
+        private static readonly int PLAYER_VERSION = 3;
 
         public void InitConnectionData()
         {
@@ -963,13 +965,13 @@ namespace Ares.Players
             }
         }
 
-        private void InformCategoryOperatorChanged(bool isAndOperator)
+        private void InformCategoryCombinationChanged(Data.TagCategoryCombination categoryCombination)
         {
             if (ClientConnected)
             {
                 byte[] package = new byte[3];
                 package[0] = 14;
-                package[1] = (byte)(isAndOperator ? 1 : 0);
+                package[1] = (byte)(categoryCombination);
                 package[2] = 0;
                 lock (syncObject)
                 {
@@ -1447,12 +1449,12 @@ namespace Ares.Players
             }
         }
 
-        public void MusicTagsChanged(ICollection<int> newTags, bool operatorIsAnd, int fadeTime)
+        public void MusicTagsChanged(ICollection<int> newTags, Data.TagCategoryCombination categoryCombination, int fadeTime)
         {
             try
             {
                 InformActiveTags(new List<int>(newTags));
-                InformCategoryOperatorChanged(operatorIsAnd);
+                InformCategoryCombinationChanged(categoryCombination);
                 InformFading(fadeTime, m_MusicTagsFadeOnlyOnChange);
             }
             catch (System.IO.IOException e)
@@ -1462,11 +1464,11 @@ namespace Ares.Players
             }
         }
 
-        public void MusicTagCategoriesOperatorChanged(bool isAndOperator)
+        public void MusicTagCategoriesCombinationChanged(Data.TagCategoryCombination categoryCombination)
         {
             try
             {
-                InformCategoryOperatorChanged(isAndOperator);
+                InformCategoryCombinationChanged(categoryCombination);
             }
             catch (System.IO.IOException e)
             {
