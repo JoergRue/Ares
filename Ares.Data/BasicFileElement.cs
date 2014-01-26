@@ -175,6 +175,8 @@ namespace Ares.Data
 
         public int FadeOutTime { get; set; }
 
+        public bool CrossFading { get; set; }
+
         public bool HasRandomVolume { get; set; }
 
         public int MinRandomVolume { get; set; }
@@ -206,6 +208,7 @@ namespace Ares.Data
             writer.WriteAttributeString("Volume", Volume.ToString(System.Globalization.CultureInfo.InvariantCulture));
             writer.WriteAttributeString("FadeIn", FadeInTime.ToString(System.Globalization.CultureInfo.InvariantCulture));
             writer.WriteAttributeString("FadeOut", FadeOutTime.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            writer.WriteAttributeString("CrossFading", CrossFading ? "true" : "false");
             writer.WriteAttributeString("HasRandomVolume", HasRandomVolume ? "true" : "false");
             writer.WriteAttributeString("MinRandomVolume", MinRandomVolume.ToString(System.Globalization.CultureInfo.InvariantCulture));
             writer.WriteAttributeString("MaxRandomVolume", MaxRandomVolume.ToString(System.Globalization.CultureInfo.InvariantCulture));
@@ -223,6 +226,7 @@ namespace Ares.Data
             Volume = 100;
             FadeInTime = 0;
             FadeOutTime = 0;
+            CrossFading = false;
             HasRandomVolume = false;
             MinRandomVolume = 50;
             MaxRandomVolume = 100;
@@ -239,6 +243,7 @@ namespace Ares.Data
             Volume = reader.GetIntegerAttribute("Volume");
             FadeInTime = reader.GetIntegerAttributeOrDefault("FadeIn", 0);
             FadeOutTime = reader.GetIntegerAttributeOrDefault("FadeOut", 0);
+            CrossFading = reader.GetBooleanAttributeOrDefault("CrossFading", false);
             HasRandomVolume = reader.GetBooleanAttributeOrDefault("HasRandomVolume", false);
             MinRandomVolume = reader.GetIntegerAttributeOrDefault("MinRandomVolume", 50);
             MaxRandomVolume = reader.GetIntegerAttributeOrDefault("MaxRandomVolume", 100);

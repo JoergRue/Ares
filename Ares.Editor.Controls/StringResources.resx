@@ -120,6 +120,9 @@
   <data name="AddTagCommand" xml:space="preserve">
     <value>Add music tag {0}</value>
   </data>
+  <data name="CrossfadingTooltip" xml:space="preserve">
+    <value>Starts the next element as soon as fading starts. Fade in for the next element must be set manually.</value>
+  </data>
   <data name="ElementNotRunningCondition" xml:space="preserve">
     <value>{0} is not running</value>
   </data>

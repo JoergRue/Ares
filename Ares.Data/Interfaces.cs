@@ -261,6 +261,12 @@ namespace Ares.Data
         int FadeOutTime { get; set; }
 
         /// <summary>
+        /// If there is a fade-out time: whether
+        /// crossfading shall be used.
+        /// </summary>
+        bool CrossFading { get; set; }
+
+        /// <summary>
         /// Whether the volume is determined randomly.
         /// </summary>
         bool HasRandomVolume { get; set; }

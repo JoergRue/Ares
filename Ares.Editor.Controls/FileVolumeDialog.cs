@@ -23,7 +23,7 @@ namespace Ares.Editor.Controls
             m_Project = project;
             Action = new ElementVolumeEffectsChangeAction(elements, Element.Effects.HasRandomVolume,
                 Element.Effects.Volume, Element.Effects.MinRandomVolume, Element.Effects.MaxRandomVolume,
-                Element.Effects.FadeInTime, Element.Effects.FadeOutTime);
+                Element.Effects.FadeInTime, Element.Effects.FadeOutTime, Element.Effects.CrossFading);
             randomButton.Checked = Element.Effects.HasRandomVolume;
             fixedVolumeButton.Checked = !Element.Effects.HasRandomVolume;
             volumeBar.Value = Element.Effects.Volume;
@@ -33,6 +33,8 @@ namespace Ares.Editor.Controls
             fadeOutUpDown.Value = Element.Effects.FadeOutTime;
             fadeInUnitBox.SelectedIndex = 0;
             fadeOutUnitBox.SelectedIndex = 0;
+            crossFadingBox.Checked = Element.Effects.CrossFading;
+            crossFadingBox.Enabled = Element.Effects.FadeOutTime > 0;
         }
 
         private IFileElement Element { get; set; }
@@ -77,7 +79,8 @@ namespace Ares.Editor.Controls
             int maxRandomValue = (int)maxRandomUpDown.Value;
             int fadeIn = TimeConversion.GetTimeInMillis(fadeInUpDown, fadeInUnitBox);
             int fadeOut = TimeConversion.GetTimeInMillis(fadeOutUpDown, fadeOutUnitBox);
-            Action.SetData(random, fixValue, minRandomValue, maxRandomValue, fadeIn, fadeOut);
+            bool crossFading = crossFadingBox.Checked;
+            Action.SetData(random, fixValue, minRandomValue, maxRandomValue, fadeIn, fadeOut, crossFading);
         }
 
         private bool m_InPlay = false;
@@ -136,6 +139,11 @@ namespace Ares.Editor.Controls
             int oldValue = TimeConversion.GetTimeInMillis((int)fadeOutUpDown.Value, m_FadeOutUnit);
             fadeOutUpDown.Value = TimeConversion.GetTimeInUnit(oldValue, fadeOutUnitBox);
             m_FadeOutUnit = (TimeUnit)fadeOutUnitBox.SelectedIndex;
+        }
+
+        private void fadeOutUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            crossFadingBox.Enabled = fadeOutUpDown.Value > 0;
         }
     }
 }

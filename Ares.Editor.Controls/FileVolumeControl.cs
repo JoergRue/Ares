@@ -37,8 +37,10 @@ namespace Ares.Editor.Controls
             tt.SetToolTip(allVolumeButton, StringResources.ForAllFileElements);
             tt.SetToolTip(allFadeInButton, StringResources.ForAllFileElements);
             tt.SetToolTip(allFadeOutButton, StringResources.ForAllFileElements);
+            tt.SetToolTip(allCrossFadeButton, StringResources.ForAllFileElements);
             fadeInUnitBox.SelectedIndex = 0;
             fadeOutUnitBox.SelectedIndex = 0;
+            tt.SetToolTip(crossFadingBox, StringResources.CrossfadingTooltip);
         }
 
         private Ares.Data.IProject m_Project;
@@ -81,6 +83,8 @@ namespace Ares.Editor.Controls
                 maxRandomUpDown.Value = m_Element.Effects.MaxRandomVolume;
                 fadeInUpDown.Value = TimeConversion.GetTimeInUnit(m_Element.Effects.FadeInTime, fadeInUnitBox);
                 fadeOutUpDown.Value = TimeConversion.GetTimeInUnit(m_Element.Effects.FadeOutTime, fadeOutUnitBox);
+                crossFadingBox.Enabled = m_Element.Effects.FadeOutTime > 0;
+                crossFadingBox.Checked = m_Element.Effects.CrossFading;
                 listen = true;
             }
         }
@@ -102,7 +106,8 @@ namespace Ares.Editor.Controls
                         (int)minRandomUpDown.Value,
                         (int)maxRandomUpDown.Value,
                         TimeConversion.GetTimeInMillis(fadeInUpDown, fadeInUnitBox), 
-                        TimeConversion.GetTimeInMillis(fadeOutUpDown, fadeOutUnitBox));
+                        TimeConversion.GetTimeInMillis(fadeOutUpDown, fadeOutUnitBox),
+                        crossFadingBox.Checked);
                     eeca.Do(m_Project);
                     listen = true;
                     return;
@@ -116,7 +121,8 @@ namespace Ares.Editor.Controls
                 (int)minRandomUpDown.Value,
                 (int)maxRandomUpDown.Value,
                 TimeConversion.GetTimeInMillis(fadeInUpDown, fadeInUnitBox),
-                TimeConversion.GetTimeInMillis(fadeOutUpDown, fadeOutUnitBox))
+                TimeConversion.GetTimeInMillis(fadeOutUpDown, fadeOutUnitBox),
+                crossFadingBox.Checked)
               , m_Project);
             listen = true;
         }
@@ -166,6 +172,16 @@ namespace Ares.Editor.Controls
             listen = true;
         }
 
+        private void allCrossFadeButton_Click(object sender, EventArgs e)
+        {
+            if (m_Element == null || m_Container == null)
+                return;
+            listen = false;
+            Actions.Actions.Instance.AddNew(new Actions.AllFileElementsCrossFadingChangeAction(m_Container,
+                crossFadingBox.Checked), m_Project);
+            listen = true;
+        }
+
         private void fadeInUpDown_ValueChanged(object sender, EventArgs e)
         {
             if (!listen)
@@ -177,6 +193,7 @@ namespace Ares.Editor.Controls
         {
             if (!listen)
                 return;
+            crossFadingBox.Enabled = fadeOutUpDown.Value > 0;
             Commit();
         }
 
@@ -237,5 +254,12 @@ namespace Ares.Editor.Controls
         {
             ChangeRandom();
         }
+
+        private void crossFadingBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (listen)
+                Commit();
+        }
+
     }
 }

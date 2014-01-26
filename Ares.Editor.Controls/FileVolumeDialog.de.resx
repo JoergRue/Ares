@@ -120,10 +120,17 @@
   <data name="cancelButton.Text" xml:space="preserve">
     <value>Abbrechen</value>
   </data>
-  <data name="groupBox1.Text" xml:space="preserve">
-    <value>Einstellungen</value>
+  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="crossFadingBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="crossFadingBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>87, 17</value>
+  </data>
+  <data name="crossFadingBox.Text" xml:space="preserve">
+    <value>Überblenden</value>
+  </data>
   <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
     <value>43, 17</value>
   </data>
@@ -150,6 +157,33 @@
   </data>
   <data name="fixedVolumeButton.Text" xml:space="preserve">
     <value>Fest</value>
+  </data>
+  <data name="fadeOutUnitBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>146, 166</value>
+  </data>
+  <data name="fadeInUnitBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>146, 140</value>
+  </data>
+  <data name="fadeOutUpDown.Location" type="System.Drawing.Point, System.Drawing">
+    <value>70, 166</value>
+  </data>
+  <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>67, 17</value>
+  </data>
+  <data name="label5.Text" xml:space="preserve">
+    <value>Ausblenden:</value>
+  </data>
+  <data name="fadeInUpDown.Location" type="System.Drawing.Point, System.Drawing">
+    <value>69, 140</value>
+  </data>
+  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>64, 17</value>
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>Einblenden:</value>
+  </data>
+  <data name="groupBox1.Text" xml:space="preserve">
+    <value>Einstellungen</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

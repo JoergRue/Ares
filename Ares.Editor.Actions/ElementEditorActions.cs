@@ -200,14 +200,51 @@ namespace Ares.Editor.Actions
         }
     }
 
+    public class AllFileElementsCrossFadingChangeAction : Action
+    {
+        private IList<IFileElement> m_FileElements;
+        private List<bool> m_OldValues;
+        private bool m_NewValue;
+
+        public AllFileElementsCrossFadingChangeAction(IGeneralElementContainer container, bool crossFade)
+        {
+            m_FileElements = container.GetFileElements();
+            m_OldValues = new List<bool>();
+            foreach (IFileElement element in m_FileElements)
+            {
+                m_OldValues.Add(element.Effects.CrossFading);
+            }
+            m_NewValue = crossFade;
+        }
+
+        public override void Do(Ares.Data.IProject project)
+        {
+            foreach (IFileElement element in m_FileElements)
+            {
+                element.Effects.CrossFading = m_NewValue;
+                ElementChanges.Instance.ElementChanged(element.Id);
+            }
+        }
+
+        public override void Undo(Ares.Data.IProject project)
+        {
+            for (int i = 0; i < m_FileElements.Count; ++i)
+            {
+                m_FileElements[i].Effects.CrossFading = m_OldValues[i];
+                ElementChanges.Instance.ElementChanged(m_FileElements[i].Id);
+            }
+        }
+    }
+
     public class ElementVolumeEffectsChangeAction : Action
     {
-        public ElementVolumeEffectsChangeAction(IList<IFileElement> elements, bool randomVolume, int volume, int minRandomVolume, int maxRandomVolume, int fadeIn, int fadeOut)
+        public ElementVolumeEffectsChangeAction(IList<IFileElement> elements, bool randomVolume, int volume, int minRandomVolume, int maxRandomVolume, int fadeIn, int fadeOut, bool crossFading)
         {
             m_Elements = elements;
             m_OldVolume = new List<int>();
             m_OldFadeIn = new List<int>();
             m_OldFadeOut = new List<int>();
+            m_OldCrossFading = new List<bool>();
             m_OldRandom = new List<bool>();
             m_OldMinRandom = new List<int>();
             m_OldMaxRandom = new List<int>();
@@ -216,6 +253,7 @@ namespace Ares.Editor.Actions
                 m_OldVolume.Add(m_Elements[i].Effects.Volume);
                 m_OldFadeIn.Add(m_Elements[i].Effects.FadeInTime);
                 m_OldFadeOut.Add(m_Elements[i].Effects.FadeOutTime);
+                m_OldCrossFading.Add(m_Elements[i].Effects.CrossFading);
                 m_OldRandom.Add(m_Elements[i].Effects.HasRandomVolume);
                 m_OldMinRandom.Add(m_Elements[i].Effects.MinRandomVolume);
                 m_OldMaxRandom.Add(m_Elements[i].Effects.MaxRandomVolume);
@@ -223,6 +261,7 @@ namespace Ares.Editor.Actions
             m_NewVolume = volume;
             m_NewFadeIn = fadeIn;
             m_NewFadeOut = fadeOut;
+            m_NewCrossFading = crossFading;
             m_NewRandom = randomVolume;
             m_NewMinRandom = minRandomVolume;
             m_NewMaxRandom = maxRandomVolume;
@@ -236,11 +275,12 @@ namespace Ares.Editor.Actions
             }
         }
 
-        public void SetData(bool randomVolume, int volume, int minRandomVolume, int maxRandomVolume, int fadeIn, int fadeOut)
+        public void SetData(bool randomVolume, int volume, int minRandomVolume, int maxRandomVolume, int fadeIn, int fadeOut, bool crossFading)
         {
             m_NewVolume = volume;
             m_NewFadeIn = fadeIn;
             m_NewFadeOut = fadeOut;
+            m_NewCrossFading = crossFading;
             m_NewRandom = randomVolume;
             m_NewMinRandom = minRandomVolume;
             m_NewMaxRandom = maxRandomVolume;
@@ -253,6 +293,7 @@ namespace Ares.Editor.Actions
                 m_Elements[i].Effects.Volume = m_NewVolume;
                 m_Elements[i].Effects.FadeInTime = m_NewFadeIn;
                 m_Elements[i].Effects.FadeOutTime = m_NewFadeOut;
+                m_Elements[i].Effects.CrossFading = m_NewCrossFading;
                 m_Elements[i].Effects.HasRandomVolume = m_NewRandom;
                 m_Elements[i].Effects.MinRandomVolume = m_NewMinRandom;
                 m_Elements[i].Effects.MaxRandomVolume = m_NewMaxRandom;
@@ -267,6 +308,7 @@ namespace Ares.Editor.Actions
                 m_Elements[i].Effects.Volume = m_OldVolume[i];
                 m_Elements[i].Effects.FadeInTime = m_OldFadeIn[i];
                 m_Elements[i].Effects.FadeOutTime = m_OldFadeOut[i];
+                m_Elements[i].Effects.CrossFading = m_OldCrossFading[i];
                 m_Elements[i].Effects.HasRandomVolume = m_OldRandom[i];
                 m_Elements[i].Effects.MinRandomVolume = m_OldMinRandom[i];
                 m_Elements[i].Effects.MaxRandomVolume = m_OldMaxRandom[i];
@@ -278,12 +320,14 @@ namespace Ares.Editor.Actions
         private List<int> m_OldVolume;
         private List<int> m_OldFadeIn;
         private List<int> m_OldFadeOut;
+        private List<bool> m_OldCrossFading;
         private List<bool> m_OldRandom;
         private List<int> m_OldMinRandom;
         private List<int> m_OldMaxRandom;
         private int m_NewVolume;
         private int m_NewFadeIn;
         private int m_NewFadeOut;
+        private bool m_NewCrossFading;
         private bool m_NewRandom;
         private int m_NewMinRandom;
         private int m_NewMaxRandom;

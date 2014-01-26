@@ -120,6 +120,9 @@
   <data name="AddTagCommand" xml:space="preserve">
     <value>Musik-Tag {0} hinzufügen</value>
   </data>
+  <data name="CrossfadingTooltip" xml:space="preserve">
+    <value>Startet das nächste Element, sobald das Blenden beginnt. Einblenden beim nächsten Element muss manuell gesetzt werden.</value>
+  </data>
   <data name="ElementNotRunningCondition" xml:space="preserve">
     <value>{0} läuft nicht</value>
   </data>

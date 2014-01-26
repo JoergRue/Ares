@@ -35,6 +35,7 @@
             this.stopButton = new System.Windows.Forms.Button();
             this.playButton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.crossFadingBox = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
             this.maxRandomUpDown = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
@@ -103,6 +104,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.crossFadingBox);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.maxRandomUpDown);
             this.groupBox1.Controls.Add(this.label3);
@@ -121,6 +123,12 @@
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
             this.groupBox1.UseCompatibleTextRendering = true;
+            // 
+            // crossFadingBox
+            // 
+            resources.ApplyResources(this.crossFadingBox, "crossFadingBox");
+            this.crossFadingBox.Name = "crossFadingBox";
+            this.crossFadingBox.UseVisualStyleBackColor = true;
             // 
             // label4
             // 
@@ -203,6 +211,7 @@
             0,
             0});
             this.fadeOutUpDown.Name = "fadeOutUpDown";
+            this.fadeOutUpDown.ValueChanged += new System.EventHandler(this.fadeOutUpDown_ValueChanged);
             // 
             // label5
             // 
@@ -280,5 +289,6 @@
         private System.Windows.Forms.NumericUpDown fadeInUpDown;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TrackBar volumeBar;
+        private System.Windows.Forms.CheckBox crossFadingBox;
     }
 }

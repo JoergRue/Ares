@@ -73,6 +73,8 @@ namespace Ares.Editor.Controls
             this.maxRandomUpDown = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.allCrossFadeButton = new System.Windows.Forms.Button();
+            this.crossFadingBox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.volumeBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fadeInUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fadeOutUpDown)).BeginInit();
@@ -225,6 +227,8 @@ namespace Ares.Editor.Controls
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.allCrossFadeButton);
+            this.groupBox1.Controls.Add(this.crossFadingBox);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.maxRandomUpDown);
             this.groupBox1.Controls.Add(this.label3);
@@ -246,6 +250,22 @@ namespace Ares.Editor.Controls
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
             this.groupBox1.UseCompatibleTextRendering = true;
+            // 
+            // allCrossFadeButton
+            // 
+            this.allCrossFadeButton.Image = global::Ares.Editor.Controls.Properties.Resources.Multiple_Selection;
+            resources.ApplyResources(this.allCrossFadeButton, "allCrossFadeButton");
+            this.allCrossFadeButton.Name = "allCrossFadeButton";
+            this.allCrossFadeButton.UseCompatibleTextRendering = true;
+            this.allCrossFadeButton.UseVisualStyleBackColor = true;
+            this.allCrossFadeButton.Click += new System.EventHandler(this.allCrossFadeButton_Click);
+            // 
+            // crossFadingBox
+            // 
+            resources.ApplyResources(this.crossFadingBox, "crossFadingBox");
+            this.crossFadingBox.Name = "crossFadingBox";
+            this.crossFadingBox.UseVisualStyleBackColor = true;
+            this.crossFadingBox.CheckedChanged += new System.EventHandler(this.crossFadingBox_CheckedChanged);
             // 
             // FileVolumeControl
             // 
@@ -284,6 +304,8 @@ namespace Ares.Editor.Controls
         private System.Windows.Forms.NumericUpDown maxRandomUpDown;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.CheckBox crossFadingBox;
+        private System.Windows.Forms.Button allCrossFadeButton;
 
     }
 }

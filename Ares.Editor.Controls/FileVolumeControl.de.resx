@@ -118,20 +118,38 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>43, 17</value>
+  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>64, 17</value>
   </data>
-  <data name="label4.Text" xml:space="preserve">
-    <value>Prozent</value>
+  <data name="label2.Text" xml:space="preserve">
+    <value>Einblenden:</value>
   </data>
-  <data name="label3.Text" xml:space="preserve">
-    <value>und</value>
+  <data name="fadeInUpDown.Location" type="System.Drawing.Point, System.Drawing">
+    <value>75, 140</value>
   </data>
-  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>52, 17</value>
+  <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>67, 17</value>
   </data>
-  <data name="label1.Text" xml:space="preserve">
-    <value>Zwischen</value>
+  <data name="label5.Text" xml:space="preserve">
+    <value>Ausblenden:</value>
+  </data>
+  <data name="fadeOutUpDown.Location" type="System.Drawing.Point, System.Drawing">
+    <value>75, 165</value>
+  </data>
+  <data name="allFadeOutButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>228, 162</value>
+  </data>
+  <data name="fadeInUnitBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>151, 138</value>
+  </data>
+  <data name="fadeOutUnitBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>151, 165</value>
+  </data>
+  <data name="fixedVolumeButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>44, 18</value>
+  </data>
+  <data name="fixedVolumeButton.Text" xml:space="preserve">
+    <value>Fest</value>
   </data>
   <data name="randomButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>59, 18</value>
@@ -139,11 +157,39 @@
   <data name="randomButton.Text" xml:space="preserve">
     <value>Zufällig</value>
   </data>
-  <data name="fixedVolumeButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>44, 18</value>
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>52, 17</value>
   </data>
-  <data name="fixedVolumeButton.Text" xml:space="preserve">
-    <value>Fest</value>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Zwischen</value>
+  </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>und</value>
+  </data>
+  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>43, 17</value>
+  </data>
+  <data name="label4.Text" xml:space="preserve">
+    <value>Prozent</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="allCrossFadeButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="allCrossFadeButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="allCrossFadeButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>36, 23</value>
+  </data>
+  <data name="crossFadingBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>75, 193</value>
+  </data>
+  <data name="crossFadingBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>87, 17</value>
+  </data>
+  <data name="crossFadingBox.Text" xml:space="preserve">
+    <value>Überblenden</value>
   </data>
   <data name="groupBox1.Text" xml:space="preserve">
     <value>Lautstärke</value>

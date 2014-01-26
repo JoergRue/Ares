@@ -142,7 +142,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;volumeBar.ZOrder" xml:space="preserve">
-    <value>16</value>
+    <value>18</value>
   </data>
   <data name="allVolumeButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -166,7 +166,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;allVolumeButton.ZOrder" xml:space="preserve">
-    <value>15</value>
+    <value>17</value>
   </data>
   <data name="label2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -196,7 +196,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>14</value>
+    <value>16</value>
   </data>
   <data name="fadeInUpDown.Location" type="System.Drawing.Point, System.Drawing">
     <value>58, 140</value>
@@ -220,7 +220,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;fadeInUpDown.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>15</value>
   </data>
   <data name="allFadeInButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -244,7 +244,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;allFadeInButton.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>14</value>
   </data>
   <data name="label5.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -274,7 +274,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;label5.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>13</value>
   </data>
   <data name="fadeOutUpDown.Location" type="System.Drawing.Point, System.Drawing">
     <value>58, 166</value>
@@ -298,7 +298,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;fadeOutUpDown.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>12</value>
   </data>
   <data name="allFadeOutButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -322,7 +322,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;allFadeOutButton.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>11</value>
   </data>
   <data name="fadeInUnitBox.Items" xml:space="preserve">
     <value>ms</value>
@@ -352,7 +352,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;fadeInUnitBox.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>10</value>
   </data>
   <data name="fadeOutUnitBox.Items" xml:space="preserve">
     <value>ms</value>
@@ -382,7 +382,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;fadeOutUnitBox.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>9</value>
   </data>
   <data name="fixedVolumeButton.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -412,7 +412,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;fixedVolumeButton.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>8</value>
   </data>
   <data name="randomButton.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -442,7 +442,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;randomButton.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>7</value>
   </data>
   <data name="label1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -472,7 +472,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>6</value>
   </data>
   <data name="minRandomUpDown.Location" type="System.Drawing.Point, System.Drawing">
     <value>87, 104</value>
@@ -493,7 +493,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;minRandomUpDown.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>5</value>
   </data>
   <data name="label3.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -523,7 +523,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>4</value>
   </data>
   <data name="maxRandomUpDown.Location" type="System.Drawing.Point, System.Drawing">
     <value>166, 105</value>
@@ -544,7 +544,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;maxRandomUpDown.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>3</value>
   </data>
   <data name="label4.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -574,7 +574,55 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="allCrossFadeButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>228, 189</value>
+  </data>
+  <data name="allCrossFadeButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>36, 23</value>
+  </data>
+  <data name="allCrossFadeButton.TabIndex" type="System.Int32, mscorlib">
+    <value>21</value>
+  </data>
+  <data name="&gt;&gt;allCrossFadeButton.Name" xml:space="preserve">
+    <value>allCrossFadeButton</value>
+  </data>
+  <data name="&gt;&gt;allCrossFadeButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;allCrossFadeButton.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;allCrossFadeButton.ZOrder" xml:space="preserve">
     <value>0</value>
+  </data>
+  <data name="crossFadingBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="crossFadingBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>58, 193</value>
+  </data>
+  <data name="crossFadingBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>81, 17</value>
+  </data>
+  <data name="crossFadingBox.TabIndex" type="System.Int32, mscorlib">
+    <value>20</value>
+  </data>
+  <data name="crossFadingBox.Text" xml:space="preserve">
+    <value>Crossfading</value>
+  </data>
+  <data name="&gt;&gt;crossFadingBox.Name" xml:space="preserve">
+    <value>crossFadingBox</value>
+  </data>
+  <data name="&gt;&gt;crossFadingBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;crossFadingBox.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;crossFadingBox.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <data name="groupBox1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -583,7 +631,7 @@
     <value>0, 0</value>
   </data>
   <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>277, 203</value>
+    <value>277, 220</value>
   </data>
   <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -610,7 +658,7 @@
     <value>6, 13</value>
   </data>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>277, 203</value>
+    <value>277, 220</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>FileVolumeControl</value>
