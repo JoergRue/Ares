@@ -231,6 +231,18 @@ namespace Ares.Controllers
             }
         }
 
+        public void SetMusicFading(int fadingOption, int fadingTime)
+        {
+            if (m_Connection == null || !m_Connection.Connected)
+            {
+                Messages.AddMessage(MessageType.Warning, StringResources.NoConnection);
+            }
+            else
+            {
+                m_Connection.SetMusicFading(fadingOption, fadingTime);
+            }
+        }
+
         public void SwitchTag(int categoryId, int tagId, bool active)
         {
             if (m_Connection == null || !m_Connection.Connected)

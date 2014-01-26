@@ -203,6 +203,7 @@ namespace Ares.Player
                 m_PlayingControl.UpdateDirectories();
                 LoadTagsDB();
                 m_PlayingControl.SetPlayMusicOnAllSpeakers(settings.PlayMusicOnAllSpeakers);
+                m_PlayingControl.SetFadingOnPreviousNext(settings.ButtonMusicFadeMode != 0, settings.ButtonMusicFadeMode == 2, settings.ButtonMusicFadeTime);
             }
 #if !MONO
             m_KeyboardHookManager.Enabled = true;
@@ -810,6 +811,18 @@ namespace Ares.Player
                 Ares.Settings.Settings.Instance.PlayMusicOnAllSpeakers = onAllSpeakers;
                 settingsChanged = true;
             }
+            int previousNextFadeMode = m_PlayingControl.FadingOnPreviousNext;
+            if (previousNextFadeMode != Ares.Settings.Settings.Instance.ButtonMusicFadeMode)
+            {
+                Ares.Settings.Settings.Instance.ButtonMusicFadeMode = previousNextFadeMode;
+                settingsChanged = true;
+            }
+            int previousNextFadeTime = m_PlayingControl.FadeOnPreviousNextTime;
+            if (previousNextFadeTime != Ares.Settings.Settings.Instance.ButtonMusicFadeTime)
+            {
+                Ares.Settings.Settings.Instance.ButtonMusicFadeTime = previousNextFadeTime;
+                settingsChanged = true;
+            }
             repeatCurrentMusicToolStripMenuItem.Checked = repeat;
             if (control.CurrentMusicList != lastMusicListId && modesList.SelectedIndex == 0)
             {
@@ -1041,6 +1054,7 @@ namespace Ares.Player
             fadeOnlyOnChangeBox.Checked = settings.TagMusicFadeOnlyOnChange;
             m_PlayingControl.SetMusicTagFading(settings.TagMusicFadeTime, settings.TagMusicFadeOnlyOnChange);
             m_PlayingControl.SetPlayMusicOnAllSpeakers(settings.PlayMusicOnAllSpeakers);
+            m_PlayingControl.SetFadingOnPreviousNext(settings.ButtonMusicFadeMode != 0, settings.ButtonMusicFadeMode == 2, settings.ButtonMusicFadeTime);
             commitFading = true;
             if (fundamentalChange)
             {
@@ -1212,6 +1226,11 @@ namespace Ares.Player
             m_PlayingControl.SetPlayMusicOnAllSpeakers(onAllSpeakers);
         }
 
+        public void SetFadingOnPreviousNext(int fadeMode, int fadeTime)
+        {
+            m_PlayingControl.SetFadingOnPreviousNext(fadeMode != 0, fadeMode == 2, fadeTime);
+        }
+
         private bool m_WasConnected = false;
 
         private void UpdateClientData()
@@ -1226,7 +1245,8 @@ namespace Ares.Player
                     m_PlayingControl.CurrentMusicList, m_PlayingControl.MusicRepeat,
                     m_TagLanguageId, new List<int>(m_PlayingControl.GetCurrentMusicTags()), m_PlayingControl.GetMusicTagCategoriesCombination(),
                     Settings.Settings.Instance.TagMusicFadeTime, Settings.Settings.Instance.TagMusicFadeOnlyOnChange,
-                    Settings.Settings.Instance.PlayMusicOnAllSpeakers);
+                    Settings.Settings.Instance.PlayMusicOnAllSpeakers, 
+                    Settings.Settings.Instance.ButtonMusicFadeMode, Settings.Settings.Instance.ButtonMusicFadeTime);
                 disconnectButton.Text = StringResources.Disconnect;
                 m_WasConnected = true;
             }

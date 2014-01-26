@@ -161,13 +161,13 @@ namespace Ares.Playing
             {
                 lock (m_Mutex)
                 {
-                    m_RunningStreams[channel] = new Action(() =>
+                    m_EndActions[channel] = new Action(() =>
                     {
-#if MONO
-						gcHandle.Free();
-#endif
                         callback(file.Id, channel);
                     });
+#if MONO
+                    m_GcHandles[channel] = gcHandle;
+#endif
                     m_RunningFilesVolumes[channel] = file.Volume;
                 }
                 if (!loop)
@@ -181,7 +181,10 @@ namespace Ares.Playing
                         ErrorHandling.BassErrorOccurred(file.Id, StringResources.FilePlayingError);
                         lock (m_Mutex)
                         {
-                            m_RunningStreams.Remove(channel);
+#if MONO
+                            m_GcHandles.Remove(channel);
+#endif
+                            m_EndActions.Remove(channel);
                             m_RunningFilesVolumes.Remove(channel);
                             if (m_LinkedChannels.ContainsKey(channel))
                             {
@@ -341,7 +344,10 @@ namespace Ares.Playing
                     lock (m_Mutex)
                     {
                         Bass.BASS_StreamFree(channel);
-                        m_RunningStreams.Remove(channel);
+#if MONO
+                        m_GcHandles.Remove(channel);
+#endif
+                        m_EndActions.Remove(channel);
                         m_RunningFilesVolumes.Remove(channel);
                     }
                     return 0;
@@ -357,10 +363,10 @@ namespace Ares.Playing
 
         public void StopFile(int handle)
         {
-            StopFile(handle, false, 0);
+            StopFile(handle, false, 0, false);
         }
 
-        public void StopFile(int handle, bool fadeOut, int fadeOutTime)
+        public void StopFile(int handle, bool fadeOut, int fadeOutTime, bool isCrossFade)
         {
             if (!fadeOut || fadeOutTime == 0)
             {
@@ -393,6 +399,11 @@ namespace Ares.Playing
                     return;
                 }
                 FadeOut(handle, fadeOutTime);
+                if (isCrossFade)
+                {
+                    // call finished immediately to start the next file
+                    FileFinished(handle);
+                }
             }
         }
 
@@ -659,7 +670,10 @@ namespace Ares.Playing
             m_FadeOutSync = new SYNCPROC(FadeOutSync);
             m_LoopSync = new SYNCPROC(LoopSync);
             m_StopSync = new SYNCPROC(StopSync);
-            m_RunningStreams = new Dictionary<int, Action>();
+            m_EndActions = new Dictionary<int, Action>();
+#if MONO
+            m_GcHandles = new Dictionary<int, System.Runtime.InteropServices.GCHandle>();
+#endif
             m_RunningFilesVolumes = new Dictionary<int, float>();
             m_LinkedChannels = new Dictionary<int, List<int>>();
         }
@@ -720,15 +734,40 @@ namespace Ares.Playing
             }
         }
 
+        private void CallEndAction(int channel)
+        {
+            Action endAction = null;
+            lock (m_Mutex)
+            {
+                if (m_EndActions.ContainsKey(channel))
+                {
+                    endAction = m_EndActions[channel];
+                    m_EndActions.Remove(channel);
+                }
+            }
+            if (endAction != null)
+            {
+                endAction();
+            }
+        }
+
         private void FileFinished(int channel)
         {
             Action endAction = null;
             lock (m_Mutex)
             {
-                if (m_RunningStreams.ContainsKey(channel))
+#if MONO
+                if (m_GcHandles.ContainsKey(channel))
                 {
-                    endAction = m_RunningStreams[channel];
-                    m_RunningStreams.Remove(channel);
+                    System.Runtime.InteropServices.GCHandle gcHandle = m_GcHandles[channel];
+                    gcHandle.Free();
+                    m_GcHandles.Remove(channel);
+                }
+#endif
+                if (m_EndActions.ContainsKey(channel))
+                {
+                    endAction = m_EndActions[channel];
+                    m_EndActions.Remove(channel);
                 }
                 if (m_RunningFilesVolumes.ContainsKey(channel))
                 {
@@ -755,7 +794,10 @@ namespace Ares.Playing
         private SYNCPROC m_LoopSync;
         private SYNCPROC m_StopSync;
 
-        private Dictionary<int, Action> m_RunningStreams;
+        private Dictionary<int, Action> m_EndActions;
+#if MONO
+        private Dictionary<int, System.Runtime.InteropServices.GCHandle> m_GcHandles;
+#endif
         private Dictionary<int, float> m_RunningFilesVolumes;
         private Dictionary<int, List<int>> m_LinkedChannels; // for volume changes
         private Object m_Mutex = new Int16();

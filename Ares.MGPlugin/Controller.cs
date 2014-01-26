@@ -113,7 +113,6 @@ namespace Ares.MGPlugin
             nextMusicButton.Enabled = enabled;
             prevMusicButton.Enabled = enabled;
             repeatButton.Enabled = enabled;
-            musicOnAllSpeakersBox.Enabled = enabled;
             modesList.Items.Clear();
             elementsPanel.Controls.Clear();
             m_CurrentMode = String.Empty;
@@ -508,7 +507,11 @@ namespace Ares.MGPlugin
 
         private void ShowSettings()
         {
-            SettingsDialog dialog = new SettingsDialog();
+            MusicSettings musicSettings = new MusicSettings();
+            musicSettings.MusicOnAllSpeakers = m_IsMusicOnAllSpeakers;
+            musicSettings.MusicFadeOption = m_MusicFadingOption;
+            musicSettings.MusicFadeTime = m_MusicFadingTime;
+            SettingsDialog dialog = new SettingsDialog(musicSettings);
             DialogResult result = dialog.ShowDialog(this);
             if (result == DialogResult.OK)
             {
@@ -529,6 +532,10 @@ namespace Ares.MGPlugin
                 m_HasLocalPlayer = FindLocalPlayer() != null;
                 connectButton.Enabled = m_HasLocalPlayer || Controllers.Control.Instance.IsConnected;
                 openButton.Enabled = Controllers.Control.Instance.IsConnected;
+                musicSettings = dialog.MusicSettings;
+                Controllers.Control.Instance.SetMusicOnAllSpeakers(musicSettings.MusicOnAllSpeakers);
+                Controllers.Control.Instance.SetMusicFading(musicSettings.MusicFadeOption, musicSettings.MusicFadeTime);
+
                 if (!Controllers.Control.Instance.IsConnected && m_HasLocalPlayer && Settings.Default.StartLocalPlayer)
                 {
                     m_FirstTimer = new Timer();
@@ -708,16 +715,25 @@ namespace Ares.MGPlugin
         }
 
         private bool m_IsMusicOnAllSpeakers = false;
-        private bool m_ListenToMusicControls = true;
 
         public void MusicOnAllSpeakersChanged(bool onAllSpeakers)
         {
             DispatchToUIThread(() =>
                 {
                     m_IsMusicOnAllSpeakers = onAllSpeakers;
-                    m_ListenToMusicControls = false;
-                    musicOnAllSpeakersBox.Checked = onAllSpeakers;
-                    m_ListenToMusicControls = true;
+                }
+            );
+        }
+
+        private int m_MusicFadingOption = 0;
+        private int m_MusicFadingTime = 0;
+
+        public void MusicFadingChanged(int fadingOption, int fadingTime)
+        {
+            DispatchToUIThread(() =>
+                {
+                    m_MusicFadingOption = fadingOption;
+                    m_MusicFadingTime = fadingTime;
                 }
             );
         }
@@ -1221,13 +1237,6 @@ namespace Ares.MGPlugin
             if (!m_ListenToTagControls)
                 return;
             Controllers.Control.Instance.SetTagFading((int)tagFadeUpDown.Value, tagFadeOnlyOnChangeBox.Checked);
-        }
-
-        private void musicOnAllSpeakersBox_CheckedChanged(object sender, EventArgs e)
-        {
-            if (!m_ListenToMusicControls)
-                return;
-            Controllers.Control.Instance.SetMusicOnAllSpeakers(musicOnAllSpeakersBox.Checked);
         }
 
         private void tagCategoryCombo_SelectedIndexChanged(object sender, EventArgs e)

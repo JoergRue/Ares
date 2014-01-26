@@ -74,7 +74,7 @@
     <string name="CategoryOperatorIsOr">OR: Music must have at least one tag in ANY category</string>
     <string name="SelectProject">Select Project:</string>
     <string name="NoProjects">There are currently no projects available for the Player.</string>
-    <string name="tagMusic">Playing music</string>
+    <string name="tagMusic">Select music through tags</string>
     <string-array name="tag_categories_values">
         <item >or</item>
         <item >and</item>
@@ -96,4 +96,19 @@
         <string name="invalid_fading_time">Please enter a positive number &lt; 50000</string>
         <string name="MusicAllSpeakers">Music on all speakers</string>
         <string name="MusicAllSpeakersDesc">Play music on all available speakers</string>
+        <string name="musicFadingOpTitle">Fading on manual change</string>
+        <string name="musicFadingOpDesc">How to fade when music is changed manually</string>
+        <string name="music_fading_time">Manual change fading time</string>
+        <string name="music_fading_time_desc">Fading time when music is changed manually</string>
+        <string-array name="music_fading_op_values">
+            <item >noFading</item>
+            <item >fading</item>
+            <item >crossFading</item>
+        </string-array>
+        <string-array name="music_fading_op_entries">
+            <item >No Fading</item>
+            <item >Fade out, then in</item>
+            <item >Crossfading</item>
+        </string-array>
+            <string name="playMusic">Playing Music</string>
 </resources>

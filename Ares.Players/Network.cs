@@ -41,6 +41,7 @@ namespace Ares.Players
         void SetTagCategoryCombination(Data.TagCategoryCombination categoryCombination);
         void SetMusicTagsFading(Int32 fadeTime, bool onlyOnChange);
         void SetPlayMusicOnAllSpeakers(bool onAllSpeakers);
+        void SetFadingOnPreviousNext(int option, int fadeTime);
     }
 
     public class Network : Ares.Playing.IProjectPlayingCallbacks
@@ -175,7 +176,7 @@ namespace Ares.Players
         public void InformClientOfEverything(int overallVolume, int musicVolume, int soundVolume, Ares.Data.IMode mode, MusicInfo music,
             System.Collections.Generic.IList<Ares.Data.IModeElement> elements, Ares.Data.IProject project, Int32 musicListId, bool musicRepeat,
             int tagLanguageId, System.Collections.Generic.IList<int> activeTags, Data.TagCategoryCombination categoryCombination, int fadeTime, bool fadeOnlyOnChange,
-            bool musicOnAllChannels)
+            bool musicOnAllChannels, int fadeOnPreviousNextOption, int fadeOnPreviousNextTime)
         {
             InformProjectModel(project);
             InformPossibleTags(tagLanguageId, project);
@@ -195,6 +196,7 @@ namespace Ares.Players
             InformCategoryCombinationChanged(categoryCombination);
             m_MusicTagsFadeOnlyOnChange = fadeOnlyOnChange;
             InformFading(fadeTime, fadeOnlyOnChange);
+            InformPreviousNextFading(fadeOnPreviousNextOption, fadeOnPreviousNextTime);
         }
 
         public void ListenInThread()
@@ -709,6 +711,22 @@ namespace Ares.Players
                             networkClient.SetPlayMusicOnAllSpeakers(onAllSpeakers == 1);
                         }
                     }
+                    else if (command == 16)
+                    {
+                        Int32 fadingOption = 0;
+                        bool success = ReadInt32(out fadingOption);
+                        Int32 fadingTime = 0;
+                        if (success)
+                            success = ReadInt32(out fadingTime);
+                        if (success)
+                        {
+                            if (fadingOption < 0 || fadingOption > 2)
+                                fadingOption = 0;
+                            if (fadingTime < 0 || fadingTime > 30000)
+                                fadingTime = 0;
+                            networkClient.SetFadingOnPreviousNext(fadingOption, fadingTime);
+                        }
+                    }
                     lock (syncObject)
                     {
                         goOn = continueListenForCommands;
@@ -1110,6 +1128,25 @@ namespace Ares.Players
             }
         }
 
+        private void InformPreviousNextFading(int fadingOption, int fadingTime)
+        {
+            if (ClientConnected)
+            {
+                byte[] ia = BitConverter.GetBytes(fadingTime);
+                if (BitConverter.IsLittleEndian)
+                    Array.Reverse(ia);
+                byte[] package = new byte[3 + ia.Length];
+                package[0] = 19;
+                package[1] = (byte)(fadingOption);
+                package[2] = 0;
+                Array.Copy(ia, 0, package, 3, ia.Length);
+                lock (syncObject)
+                {
+                    client.GetStream().Write(package, 0, package.Length);
+                }
+            }
+        }
+
         private void InformPossibleProjects()
         {
             if (ClientConnected)
@@ -1401,6 +1438,19 @@ namespace Ares.Players
             try
             {
                 InformMusicOnAllChannelsChanged(onAllSpeakers);
+            }
+            catch (System.IO.IOException e)
+            {
+                Messages.AddMessage(MessageType.Warning, e.Message);
+                DoDisconnect(true);
+            }
+        }
+
+        public void PreviousNextFadingChanged(bool fade, bool crossFade, int fadeTime)
+        {
+            try
+            {
+                InformPreviousNextFading(fade ? (crossFade ? 2 : 1) : 0, fadeTime);
             }
             catch (System.IO.IOException e)
             {

@@ -83,6 +83,7 @@ namespace Ares.Controllers
         void MusicListChanged(List<MusicListItem> newList);
         void MusicRepeatChanged(bool repeat);
         void MusicOnAllSpeakersChanged(bool onAllSpeakers);
+        void MusicFadingChanged(int fadingOption, int fadingTime);
 
         void TagsChanged(List<MusicTagCategory> categories, Dictionary<int, List<MusicTag>> tagsPerCategory);
         void ActiveTagsChanged(List<int> activeTags);
@@ -677,6 +678,19 @@ namespace Ares.Controllers
                                     m_NetworkClient.MusicOnAllSpeakersChanged(onAllSpeakers);
                                     break;
                                 }
+                            case 19:
+                                {
+                                    int fadingOption = buffer[1];
+                                    if (fadingOption < 0 || fadingOption > 2)
+                                        fadingOption = 0;
+                                    int fadingTime;
+                                    if (!ReadInt32(out fadingTime))
+                                        break;
+                                    if (fadingTime < 0 || fadingTime > 30000)
+                                        fadingTime = 0;
+                                    m_NetworkClient.MusicFadingChanged(fadingOption, fadingTime);
+                                    break;
+                                }
                             default:
                                 break;
                         }
@@ -957,6 +971,36 @@ namespace Ares.Controllers
                 byte[] bytes = new byte[1 + 4];
                 bytes[0] = 15;
                 AddInt32ToByteArray(bytes, 1, val);
+                m_Socket.Send(bytes);
+            }
+            catch (SocketException ex)
+            {
+                Messages.AddMessage(MessageType.Warning, ex.Message);
+                HandleConnectionFailure(true);
+            }
+        }
+
+        public void SetMusicFading(int fadingOption, int fadingTime)
+        {
+            if (!Connected)
+            {
+                Messages.AddMessage(MessageType.Warning, StringResources.NoConnection);
+                return;
+            }
+            if (m_State == State.ConnectionFailure)
+            {
+                if (!TryReconnect())
+                {
+                    Messages.AddMessage(MessageType.Warning, StringResources.NoConnection);
+                    return;
+                }
+            }
+            try
+            {
+                byte[] bytes = new byte[1 + 4 + 4];
+                bytes[0] = 16;
+                AddInt32ToByteArray(bytes, 1, fadingOption);
+                AddInt32ToByteArray(bytes, 1 + 4, fadingTime);
                 m_Socket.Send(bytes);
             }
             catch (SocketException ex)

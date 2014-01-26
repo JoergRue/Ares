@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Ares Controller</string>
+    <string name="musicFadingOpTitle">Blenden bei manueller Änderung</string>
+    <string name="musicFadingOpDesc">Wie geblendet wird, wenn Musik manuell geändert wird</string>
+    <string name="music_fading_time">Blendzeit bei manueller Änderung</string>
+    <string name="music_fading_time_desc">Blendzeit, wenn Musik manuell geändert wird</string>
+    <string-array name="music_fading_op_values">
+            <item >noFading</item>
+            <item >fading</item>
+            <item >crossFading</item>
+    </string-array>
+    <string-array name="music_fading_op_entries">
+            <item >Kein Blenden</item>
+            <item >Ausblenden, dann Einblenden</item>
+            <item >Überblenden</item>
+    </string-array>
     <string name="Volumes">Lautstärke</string>
     <string name="Overall">Gesamt: </string>
     <string name="Music">Musik:        </string>
@@ -76,7 +90,7 @@
     <string name="NoProjects">Derzeit sind im Player keine Projekte verfügbar.</string>
     <string name="general">Allgemein</string>
     <string name="playerConnection">Verbindung zum Player</string>
-    <string name="tagMusic">Musik abspielen</string>
+    <string name="tagMusic">Musikauswahl über Tags</string>
     <string-array name="tag_categories_values">
         <item >or</item>
         <item >and</item>
@@ -96,4 +110,5 @@
     <string name="invalid_fading_time">Bitte eine positive Zahl &lt; 50000 eingeben</string>
     <string name="MusicAllSpeakers">Musik auf allen Lautsprechern</string>
     <string name="MusicAllSpeakersDesc">Musik auf allen verfügbaren Lautsprechern abspielen</string>
+    <string name="playMusic">Musik abspielen</string>
 </resources>

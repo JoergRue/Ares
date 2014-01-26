@@ -49,6 +49,7 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Rectangle;
@@ -112,6 +113,16 @@ public final class OptionsDialog extends BGDialog {
   private JCheckBox updateCheckBox = null;
   
   private JCheckBox keysCheckBox = null;
+  
+  private JCheckBox musicOnAllSpeakersBox = null;
+  
+  private JRadioButton noFadeButton = null;
+  
+  private JRadioButton fadeButton = null;
+  
+  private JRadioButton crossFadeButton = null;
+  
+  private JSpinner fadeTimeSpinner = null;
 
   /**
    * This method initializes
@@ -120,6 +131,15 @@ public final class OptionsDialog extends BGDialog {
   public OptionsDialog(JFrame owner) {
     super(owner);
     initialize();
+  }
+  
+  public void setMusicOptions(boolean onAllSpeakers, int musicFadingOption, int musicFadingTime) {
+	  getMusicOnAllSpeakersBox().setSelected(onAllSpeakers);
+	  getNoFadeButton().setSelected(musicFadingOption == 0);
+	  getFadeButton().setSelected(musicFadingOption == 1);
+	  getCrossFadeButton().setSelected(musicFadingOption == 2);
+	  getFadeTimeSpinner().setEnabled(musicFadingOption != 0);
+	  ((SpinnerNumberModel)getFadeTimeSpinner().getModel()).setValue(musicFadingTime);
   }
   
   public final String getHelpPage() {
@@ -230,6 +250,27 @@ public final class OptionsDialog extends BGDialog {
     }
     return jButton;
   }
+  
+  private boolean musicOnAllSpeakers = false;
+  private int musicFadingOption = 0;
+  private int musicFadingTime = 0;
+  private boolean closedByOK = false;
+  
+  public boolean wasClosedByOK() {
+	  return closedByOK;
+  }
+  
+  public boolean getMusicOnAllSpeakers() {
+	  return musicOnAllSpeakers;
+  }
+  
+  public int getMusicFadingOption() {
+	  return musicFadingOption;
+  }
+  
+  public int getMusicFadingTime() {
+	  return musicFadingTime;
+  }
 
   protected boolean savePreferences() {
     String lf = lfBox.getSelectedItem().toString();
@@ -290,6 +331,11 @@ public final class OptionsDialog extends BGDialog {
     prefs.putBoolean("StartLocalPlayer", startPlayerBox.isSelected()); //$NON-NLS-1$
     prefs.putBoolean("AskForPlayerStart", askBeforePlayerStartBox.isSelected()); //$NON-NLS-1$
     prefs.putBoolean("ShowKeys", keysCheckBox.isSelected()); //$NON-NLS-1$
+    
+    musicOnAllSpeakers = getMusicOnAllSpeakersBox().isSelected();
+    musicFadingOption = getNoFadeButton().isSelected() ? 0 : (getFadeButton().isSelected() ? 1 : 2);
+    musicFadingTime = ((SpinnerNumberModel)getFadeTimeSpinner().getModel()).getNumber().intValue();
+    closedByOK = true;
 
     return true;
   }
@@ -354,6 +400,7 @@ public final class OptionsDialog extends BGDialog {
     if (jTabbedPane == null) {
       jTabbedPane = new JTabbedPane();
       jTabbedPane.addTab(Localization.getString("OptionsDialog.Connection"), null, getConnectionPanel(), null); //$NON-NLS-1$
+      jTabbedPane.addTab(Localization.getString("OptionsDialog.Music"), null, getMusicPanel(), null); //$NON-NLS-1$
       jTabbedPane.addTab(Localization.getString("OptionsDialog.Program"), null, getProgramPanel(), null); //$NON-NLS-1$
       jTabbedPane.addTab(Localization.getString("OptionsDialog.Display"), null, getJPanel1(), null); //$NON-NLS-1$
     }
@@ -399,6 +446,124 @@ public final class OptionsDialog extends BGDialog {
 	      connectionPanel.add(getAskBeforePlayerStartBox());
 	  }
 	  return connectionPanel;
+  }
+  
+  private JPanel musicPanel;
+  
+  private boolean listenToFadeButtons = true;
+  
+  private void updateFadeOptions() {
+	  if (!listenToFadeButtons)
+		  return;
+	  listenToFadeButtons = false;
+	  getFadeTimeSpinner().setEnabled(musicFadingOption != 0);
+	  getNoFadeButton().setSelected(musicFadingOption == 0);
+	  getFadeButton().setSelected(musicFadingOption == 1);
+	  getCrossFadeButton().setSelected(musicFadingOption == 2);
+	  listenToFadeButtons = true;
+  }
+  
+  private JCheckBox getMusicOnAllSpeakersBox() {
+	  if (musicOnAllSpeakersBox == null) {
+		  musicOnAllSpeakersBox = new JCheckBox(Localization.getString("OptionsDialog.OnAllSpeakers")); //$NON-NLS-1$
+	  }
+	  return musicOnAllSpeakersBox;
+  }
+  
+  private JRadioButton getNoFadeButton() {
+	  if (noFadeButton == null) {
+		  noFadeButton = new JRadioButton(Localization.getString("OptionsDialog.NoFading")); //$NON-NLS-1$
+		  noFadeButton.addActionListener(new ActionListener() {
+			  public void actionPerformed(ActionEvent e) {
+				  if (noFadeButton.isSelected()) {
+					  musicFadingOption = 0;
+				  }
+				  updateFadeOptions();
+			  }
+		  });
+	  }
+	  return noFadeButton;
+  }
+  
+  private JRadioButton getFadeButton() {
+	  if (fadeButton == null) {
+		  fadeButton = new JRadioButton(Localization.getString("OptionsDialog.FadeOutIn")); //$NON-NLS-1$
+		  fadeButton.addActionListener(new ActionListener() {
+			  public void actionPerformed(ActionEvent e) {
+				  if (fadeButton.isSelected())
+					  musicFadingOption = 1;
+				  updateFadeOptions();
+			  }
+		  });
+	  }
+	  return fadeButton;
+  }
+  
+  private JRadioButton getCrossFadeButton() {
+	  if (crossFadeButton == null) {
+		  crossFadeButton = new JRadioButton(Localization.getString("OptionsDialog.Crossfading")); //$NON-NLS-1$
+		  crossFadeButton.addActionListener(new ActionListener() {
+			  public void actionPerformed(ActionEvent e) {
+				  if (crossFadeButton.isSelected())
+					  musicFadingOption = 2;
+				  updateFadeOptions();
+			  }
+		  });
+	  }
+	  return crossFadeButton;
+  }
+  
+  private JSpinner getFadeTimeSpinner() {
+	  if (fadeTimeSpinner == null) {
+		  fadeTimeSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 30000, 100));
+		  fadeTimeSpinner.setPreferredSize(new Dimension(50, 10));
+	  }
+	  return fadeTimeSpinner;
+  }
+  
+  private JPanel getMusicPanel() {
+	  if (musicPanel == null) {
+		  musicPanel = new JPanel();
+		  musicPanel.setLayout(new BoxLayout(musicPanel, BoxLayout.PAGE_AXIS));
+		  musicPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+		  JCheckBox checkBox = getMusicOnAllSpeakersBox();
+		  checkBox.setAlignmentX(LEFT_ALIGNMENT);
+		  musicPanel.add(checkBox);
+		  JLabel l1 = new JLabel(Localization.getString("OptionsDialog.FadingIntro")); //$NON-NLS-1$
+		  l1.setAlignmentX(LEFT_ALIGNMENT);
+		  musicPanel.add(l1);
+		  JPanel p1 = new JPanel();
+		  p1.setLayout(new BoxLayout(p1, BoxLayout.LINE_AXIS));
+		  p1.add(Box.createHorizontalStrut(20));
+		  p1.add(getNoFadeButton());
+		  p1.setAlignmentX(LEFT_ALIGNMENT);
+		  musicPanel.add(p1);
+		  JPanel p2 = new JPanel();
+		  p2.setLayout(new BoxLayout(p2, BoxLayout.LINE_AXIS));
+		  p2.add(Box.createHorizontalStrut(20));
+		  p2.add(getFadeButton());
+		  p2.setAlignmentX(LEFT_ALIGNMENT);
+		  musicPanel.add(p2);
+		  JPanel p3 = new JPanel();
+		  p3.setLayout(new BoxLayout(p3, BoxLayout.LINE_AXIS));
+		  p3.add(Box.createHorizontalStrut(20));
+		  p3.add(getCrossFadeButton());
+		  p3.setAlignmentX(LEFT_ALIGNMENT);
+		  musicPanel.add(p3);
+		  JPanel p4 = new JPanel();
+		  p4.setLayout(new BoxLayout(p4, BoxLayout.LINE_AXIS));
+		  p4.add(Box.createHorizontalStrut(20));
+		  p4.add(new JLabel(Localization.getString("OptionsDialog.FadingTime"))); //$NON-NLS-1$
+		  p4.add(Box.createHorizontalStrut(5));
+		  p4.add(getFadeTimeSpinner());
+		  p4.add(Box.createHorizontalStrut(5));
+		  p4.add(new JLabel(Localization.getString("OptionsDialog.Ms"))); //$NON-NLS-1$
+		  p4.add(Box.createHorizontalGlue());
+		  p4.setAlignmentX(LEFT_ALIGNMENT);
+		  musicPanel.add(p4);
+		  musicPanel.add(Box.createVerticalGlue());
+	  }
+	  return musicPanel;
   }
 
   /**

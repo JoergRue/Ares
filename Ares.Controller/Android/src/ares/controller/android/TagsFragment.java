@@ -92,6 +92,21 @@ public class TagsFragment extends ModeLikeFragment implements INetworkClient {
 			}
 			prefs.putString("tag_fading_time", "" + PlayingState.getInstance().getTagFadingTime());
 			prefs.putBoolean("tag_fading_only_on_change", PlayingState.getInstance().getTagFadeOnlyOnChange());
+			prefs.putBoolean("music_on_all_speakers", PlayingState.getInstance().getMusicOnAllSpeakers());
+			switch (PlayingState.getInstance().getMusicFadingOption())
+			{
+			case 0:
+				prefs.putString("music_fading_op", "noFading");
+				break;
+			case 1:
+				prefs.putString("music_fading_op", "fading");
+				break;
+			case 2:
+			default:
+				prefs.putString("music_fading_op", "crossFading");
+				break;
+			}
+			prefs.putString("music_fading_time", "" + PlayingState.getInstance().getMusicFadingTime());
 			prefs.commit();
 		}
 		inPreferences = true;
@@ -392,5 +407,9 @@ public class TagsFragment extends ModeLikeFragment implements INetworkClient {
 
 	@Override
 	public void musicOnAllSpeakersChanged(boolean onAllSpeakers) {
+	}
+	
+	@Override
+	public void musicFadingChanged(int fadingOption, int fadingTime) {
 	}
 }

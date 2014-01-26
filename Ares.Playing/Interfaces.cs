@@ -62,7 +62,7 @@ namespace Ares.Playing
     {
         int PlayFile(ISoundFile file, int fadeInTime, PlayingFinished callback, bool loop);
         void StopFile(int handle);
-        void StopFile(int handle, bool fadeOut, int fadeOutTime);
+        void StopFile(int handle, bool fadeOut, int fadeOutTime, bool isCrossFade);
     }
 
     public enum MessageType
@@ -155,6 +155,11 @@ namespace Ares.Playing
         /// Playing music on all channels was changed
         /// </summary>
         void MusicOnAllSpeakersChanged(bool onAllSpeakers);
+
+        /// <summary>
+        /// Options for fading on previous / next were changed.
+        /// </summary>
+        void PreviousNextFadingChanged(bool fade, bool crossFade, int fadeTime);
 
         /// <summary>
         /// A new tag was added to the set of possible tags.
@@ -332,6 +337,10 @@ namespace Ares.Playing
         /// Sets whether music is played on all speakers.
         /// </summary>
         void SetPlayMusicOnAllSpeakers(bool onAllSpeakers);
+        /// <summary>
+        /// Sets options to fade when using previous / next buttons
+        /// </summary>
+        void SetFadingOnPreviousNext(bool fade, bool crossFade, int fadeTimeMs);
     }
 
     /// <summary>

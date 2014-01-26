@@ -82,6 +82,9 @@ namespace Ares.Settings
         public bool TagMusicFadeOnlyOnChange { get; set; }
         public bool PlayMusicOnAllSpeakers { get; set; }
 
+        public int ButtonMusicFadeMode { get; set; }
+        public int ButtonMusicFadeTime { get; set; }
+
         public String LocalPlayerPath { get; set; } // for controllers
 
         public bool ShowTipOfTheDay { get; set; }
@@ -147,6 +150,9 @@ namespace Ares.Settings
         public int TagMusicFadeTime { get { return Data.TagMusicFadeTime; } set { Data.TagMusicFadeTime = value; } }
         public bool TagMusicFadeOnlyOnChange { get { return Data.TagMusicFadeOnlyOnChange; } set { Data.TagMusicFadeOnlyOnChange = value; } }
         public bool PlayMusicOnAllSpeakers { get { return Data.PlayMusicOnAllSpeakers; } set { Data.PlayMusicOnAllSpeakers = value; } }
+
+        public int ButtonMusicFadeMode { get { return Data.ButtonMusicFadeMode; } set { Data.ButtonMusicFadeMode = value; } }
+        public int ButtonMusicFadeTime { get { return Data.ButtonMusicFadeTime; } set { Data.ButtonMusicFadeTime = value; } }
 
         public String LocalPlayerPath { get { return Data.LocalPlayerPath; } set { Data.LocalPlayerPath = value; } }
 
@@ -349,6 +355,8 @@ namespace Ares.Settings
             TagMusicFadeTime = 0;
             TagMusicFadeOnlyOnChange = false;
             PlayMusicOnAllSpeakers = false;
+            ButtonMusicFadeMode = 0;
+            ButtonMusicFadeTime = 0;
             LocalPlayerPath = String.Empty;
             ShowTipOfTheDay = true;
             LastTipOfTheDay = -1;
@@ -406,6 +414,8 @@ namespace Ares.Settings
             writer.WriteEndElement();
             writer.WriteStartElement("Music");
             writer.WriteAttributeString("PlayOnAllSpeakers", PlayMusicOnAllSpeakers ? "true" : "false");
+            writer.WriteAttributeString("ButtonFadeMode", ButtonMusicFadeMode.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            writer.WriteAttributeString("ButtonFadeTime", ButtonMusicFadeTime.ToString(System.Globalization.CultureInfo.InvariantCulture));
             writer.WriteEndElement();
             writer.WriteStartElement("Controllers");
             writer.WriteAttributeString("LocalPlayerPath", LocalPlayerPath);
@@ -575,6 +585,8 @@ namespace Ares.Settings
                 else if (reader.IsStartElement("Music"))
                 {
                     PlayMusicOnAllSpeakers = reader.GetBooleanAttributeOrDefault("PlayOnAllSpeakers", false);
+                    ButtonMusicFadeMode = reader.GetIntegerAttributeOrDefault("ButtonFadeMode", 0);
+                    ButtonMusicFadeTime = reader.GetIntegerAttributeOrDefault("ButtonFadeTime", 0);
                     if (reader.IsEmptyElement)
                         reader.Read();
                     else

@@ -9,12 +9,12 @@ using System.Windows.Forms;
 
 namespace Ares.MGPlugin
 {
-    public partial class SettingsDialog : Form
+    partial class SettingsDialog : Form
     {
-        public SettingsDialog()
+        public SettingsDialog(MusicSettings musicSettings)
         {
             InitializeComponent();
-            LoadSettings();
+            LoadSettings(musicSettings);
         }
 
         private void okButton_Click(object sender, EventArgs e)
@@ -22,7 +22,7 @@ namespace Ares.MGPlugin
             SaveSettings();
         }
 
-        private void LoadSettings()
+        private void LoadSettings(MusicSettings musicSettings)
         {
             udpPortUpDown.Value = Settings.Default.ServerSearchPort;
             startLocalPlayerBox.Checked = Settings.Default.StartLocalPlayer;
@@ -33,7 +33,15 @@ namespace Ares.MGPlugin
                 startLocalPlayerBox.Enabled = false;
                 askBeforePlayerStartBox.Enabled = false;
             }
+            allChannelsCheckBox.Checked = musicSettings.MusicOnAllSpeakers;
+            noFadeButton.Checked = musicSettings.MusicFadeOption == 0;
+            fadeButton.Checked = musicSettings.MusicFadeOption == 1;
+            crossFadeButton.Checked = musicSettings.MusicFadeOption == 2;
+            crossFadingUpDown.Value = musicSettings.MusicFadeTime;
+            crossFadingUpDown.Enabled = musicSettings.MusicFadeOption != 0;
         }
+
+        public MusicSettings MusicSettings { get; private set; }
 
         private void SaveSettings()
         {
@@ -43,6 +51,11 @@ namespace Ares.MGPlugin
             Settings.Default.HasCheckedSettings = true;
             Settings.Default.LocalPlayerPath = playerPathBox.Text;
             Settings.Default.Save();
+            MusicSettings musicSettings = new MusicSettings();
+            musicSettings.MusicFadeTime = (int)crossFadingUpDown.Value;
+            musicSettings.MusicFadeOption = (noFadeButton.Checked ? 0 : (fadeButton.Checked ? 1 : 2));
+            musicSettings.MusicOnAllSpeakers = allChannelsCheckBox.Checked;
+            this.MusicSettings = musicSettings;
         }
 
         private void selectPlayerButton_Click(object sender, EventArgs e)
@@ -63,5 +76,28 @@ namespace Ares.MGPlugin
                 }
             }
         }
+
+        private void noFadeButton_CheckedChanged(object sender, EventArgs e)
+        {
+            crossFadingUpDown.Enabled = !noFadeButton.Checked;
+        }
+
+        private void fadeButton_CheckedChanged(object sender, EventArgs e)
+        {
+            crossFadingUpDown.Enabled = !noFadeButton.Checked;
+        }
+
+        private void crossFadeButton_CheckedChanged(object sender, EventArgs e)
+        {
+            crossFadingUpDown.Enabled = !noFadeButton.Checked;
+        }
+
+    }
+
+    class MusicSettings
+    {
+        public bool MusicOnAllSpeakers { get; set; }
+        public int MusicFadeOption { get; set; }
+        public int MusicFadeTime { get; set; }
     }
 }

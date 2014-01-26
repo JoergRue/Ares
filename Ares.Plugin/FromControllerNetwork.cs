@@ -152,6 +152,11 @@ namespace Ares.MediaPortalPlugin
             InformMusicList(newList);
         }
 
+        public void InformClientOfMusicFading(int fadingMode, int fadingTime)
+        {
+            InformMusicFadingChanged(fadingMode, fadingTime);
+        }
+
         public void InformClientOfPossibleTags(List<Ares.Controllers.MusicTagCategory> categories, Dictionary<int, List<Ares.Controllers.MusicTag>> tagsPerCategory)
         {
             InformPossibleTags(categories, tagsPerCategory);
@@ -176,7 +181,7 @@ namespace Ares.MediaPortalPlugin
             System.Collections.Generic.List<int> elements, Ares.Controllers.Configuration configuration, List<Ares.Controllers.MusicListItem> musicList, bool musicRepeat,
             List<Ares.Controllers.MusicTagCategory> categories, Dictionary<int, List<Ares.Controllers.MusicTag>> tagsPerCategory, 
             System.Collections.Generic.IList<int> activeTags, int tagCategoryCombination, int fadeTime, bool fadeOnlyOnChange,
-            bool musicOnAllChannels)
+            bool musicOnAllChannels, int musicFadingOption, int musicFadingTime)
         {
             InformProjectModel(configuration);
             InformPossibleTags(categories, tagsPerCategory);
@@ -192,6 +197,7 @@ namespace Ares.MediaPortalPlugin
             InformMusicList(musicList);
             InformRepeatChanged(musicRepeat);
             InformMusicOnAllChannelsChanged(musicOnAllChannels);
+            InformMusicFadingChanged(musicFadingOption, musicFadingTime);
             InformActiveTags(activeTags);
             InformCategoryCombinationChanged(tagCategoryCombination);
             m_MusicTagsFadeOnlyOnChange = fadeOnlyOnChange;
@@ -968,6 +974,25 @@ namespace Ares.MediaPortalPlugin
             }
         }
 
+        private void InformMusicFadingChanged(int fadingOption, int fadingTime)
+        {
+            if (ClientConnected)
+            {
+                byte[] ia = BitConverter.GetBytes(fadingTime);
+                if (BitConverter.IsLittleEndian)
+                    Array.Reverse(ia);
+                byte[] package = new byte[3 + ia.Length];
+                package[0] = 19;
+                package[1] = (byte)fadingOption;
+                package[2] = 0;
+                Array.Copy(ia, 0, package, 3, ia.Length);
+                lock (syncObject)
+                {
+                    client.GetStream().Write(package, 0, package.Length);
+                }
+            }
+        }
+
         private void InformPossibleProjects()
         {
             if (ClientConnected)
@@ -1223,6 +1248,19 @@ namespace Ares.MediaPortalPlugin
             try
             {
                 InformMusicOnAllChannelsChanged(onAllSpeakers);
+            }
+            catch (System.IO.IOException e)
+            {
+                MediaPortal.GUI.Library.Log.Warn(e.Message);
+                DoDisconnect(true);
+            }
+        }
+
+        public void MusicFadingChanged(int fadingOption, int fadingTime)
+        {
+            try
+            {
+                InformMusicFadingChanged(fadingOption, fadingTime);
             }
             catch (System.IO.IOException e)
             {

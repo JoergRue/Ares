@@ -531,6 +531,18 @@ public final class ControlConnection {
 					  networkClient.musicOnAllSpeakersChanged(onAllSpeakers);
 					  break;
 				  }
+				  case 19:
+				  {
+					  int fadingOption = stream.read();
+					  if (fadingOption < 0 || fadingOption > 2)
+						  fadingOption = 0;
+					  stream.read();
+					  int fadingTime = readInt32(stream);
+					  if (fadingTime < 0 || fadingTime > 30000)
+						  fadingTime = 0;
+					  networkClient.musicFadingChanged(fadingOption, fadingTime);
+					  break;
+				  }
 				  default:
 					  break;
 				  }
@@ -753,6 +765,31 @@ public final class ControlConnection {
 		  Messages.addMessage(MessageType.Warning, e.getLocalizedMessage());
           handleConnectionFailure(true);
 	  }	  	  
+  }
+  
+  public void setMusicFading(int fadingOption, int fadingTime) {
+	    if (!isConnected()) {
+	        Messages.addMessage(MessageType.Warning, Localization.getString("ControlConnection.NoConnection")); //$NON-NLS-1$
+	        return;
+	      }
+	      if (state == State.ConnectionFailure) {
+	      	if (!tryReconnect()) {
+	      	      Messages.addMessage(MessageType.Warning, Localization.getString("ControlConnection.NoConnection")); //$NON-NLS-1$
+	      	      return;    		
+	      	}
+	      }
+	  try {
+		  byte[] bytes = new byte[1 + 4 + 4];
+		  bytes[0] = 16;
+		  java.nio.ByteBuffer buffer = java.nio.ByteBuffer.wrap(bytes);
+		  buffer.putInt(1, fadingOption);
+		  buffer.putInt(1 + 4, fadingTime);
+		  socket.getOutputStream().write(bytes);
+	  }
+	  catch (IOException e) {
+		  Messages.addMessage(MessageType.Warning, e.getLocalizedMessage());
+          handleConnectionFailure(true);
+	  }	  	  	  
   }
   
   public void switchTag(int categoryId, int tagId, boolean active) {

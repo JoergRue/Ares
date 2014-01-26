@@ -419,6 +419,20 @@ public class ControlFragment extends ConnectedFragment implements INetworkClient
 			prefs.putString("tag_fading_time", "" + PlayingState.getInstance().getTagFadingTime());
 			prefs.putBoolean("tag_fading_only_on_change", PlayingState.getInstance().getTagFadeOnlyOnChange());
 			prefs.putBoolean("music_on_all_speakers", PlayingState.getInstance().getMusicOnAllSpeakers());
+			switch (PlayingState.getInstance().getMusicFadingOption())
+			{
+			case 0:
+				prefs.putString("music_fading_op", "noFading");
+				break;
+			case 1:
+				prefs.putString("music_fading_op", "fading");
+				break;
+			case 2:
+			default:
+				prefs.putString("music_fading_op", "crossFading");
+				break;
+			}
+			prefs.putString("music_fading_time", "" + PlayingState.getInstance().getMusicFadingTime());
 			prefs.commit();
 		}
 		
@@ -652,4 +666,8 @@ public class ControlFragment extends ConnectedFragment implements INetworkClient
 		// nothing here
 	}
 	
+	@Override
+	public void musicFadingChanged(int fadingOption, int fadingTime) {
+		// nothing here
+	}
 }

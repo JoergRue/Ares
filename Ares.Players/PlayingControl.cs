@@ -187,6 +187,11 @@ namespace Ares.Players
             PlayingModule.ProjectPlayer.SetPlayMusicOnAllSpeakers(onAllSpeakers);
         }
 
+        public void SetFadingOnPreviousNext(bool fadeMusic, bool crossFadeMusic, int fadeTimeMs)
+        {
+            PlayingModule.ProjectPlayer.SetFadingOnPreviousNext(fadeMusic, crossFadeMusic, fadeTimeMs);
+        }
+
         private Playing.StreamingParameters CreateStreamingParameters()
         {
             Playing.StreamingParameters result = new StreamingParameters();
@@ -326,6 +331,8 @@ namespace Ares.Players
 
         private bool m_MusicRepeat = false;
         private bool m_MusicOnAllSpeakers = false;
+        private int m_FadeOnPreviousNextOption = 0;
+        private int m_FadeOnPreviousNextTime = 0;
 
         public bool MusicRepeat
         {
@@ -340,6 +347,22 @@ namespace Ares.Players
             get
             {
                 return m_MusicOnAllSpeakers;
+            }
+        }
+
+        public int FadingOnPreviousNext
+        {
+            get
+            {
+                return m_FadeOnPreviousNextOption;
+            }
+        }
+
+        public int FadeOnPreviousNextTime
+        {
+            get
+            {
+                return m_FadeOnPreviousNextTime;
             }
         }
 
@@ -457,6 +480,15 @@ namespace Ares.Players
             lock (syncObject)
             {
                 m_MusicOnAllSpeakers = onAllSpeakers;
+            }
+        }
+
+        public void PreviousNextFadingChanged(bool fade, bool crossFade, int fadeTime)
+        {
+            lock (syncObject)
+            {
+                m_FadeOnPreviousNextOption = fade ? (crossFade ? 2 : 1) : 0;
+                m_FadeOnPreviousNextTime = fadeTime;
             }
         }
 

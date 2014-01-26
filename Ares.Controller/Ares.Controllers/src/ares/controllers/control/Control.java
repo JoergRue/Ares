@@ -175,6 +175,15 @@ public final class Control {
 	  }	  	  	  
   }
   
+  public void setMusicFading(int fadingOption, int fadingTime) {
+	  if (connection == null || !connection.isConnected()) {
+		  Messages.addMessage(MessageType.Warning, Localization.getString("Control.noConnection")); //$NON-NLS-1$
+	  }
+	  else {
+		  connection.setMusicFading(fadingOption, fadingTime);
+	  }	
+  }
+  
   public void switchTag(int categoryId, int tagId, boolean isActive) {
 	  if (connection == null || !connection.isConnected()) {
 		  Messages.addMessage(MessageType.Warning, Localization.getString("Control.noConnection")); //$NON-NLS-1$

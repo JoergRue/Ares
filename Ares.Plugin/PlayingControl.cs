@@ -219,6 +219,9 @@ namespace Ares.MediaPortalPlugin
         private bool m_MusicRepeat = false;
         private bool m_MusicOnAllSpeakers = false;
 
+        private int m_MusicFadingOption = 0;
+        private int m_MusicFadingTime = 0;
+
         public bool MusicRepeat
         {
             get
@@ -232,6 +235,22 @@ namespace Ares.MediaPortalPlugin
             get
             {
                 return m_MusicOnAllSpeakers;
+            }
+        }
+
+        public int MusicFadingOption
+        {
+            get
+            {
+                return m_MusicFadingOption;
+            }
+        }
+
+        public int MusicFadingTime
+        {
+            get
+            {
+                return m_MusicFadingTime;
             }
         }
 
@@ -329,6 +348,15 @@ namespace Ares.MediaPortalPlugin
             lock (syncObject)
             {
                 m_MusicOnAllSpeakers = onAllSpeakers;
+            }
+        }
+
+        public void MusicFadingChanged(int fadingOption, int fadingTime)
+        {
+            lock (syncObject)
+            {
+                m_MusicFadingOption = fadingOption;
+                m_MusicFadingTime = fadingTime;
             }
         }
 

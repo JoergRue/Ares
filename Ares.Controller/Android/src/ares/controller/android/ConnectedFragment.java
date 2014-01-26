@@ -172,6 +172,22 @@ public abstract class ConnectedFragment extends Fragment implements IServerListe
 			Control.getInstance().setTagCategoryCombination(INetworkClient.CategoryCombination.Or);
 		}
 		Control.getInstance().setMusicOnAllSpeakers(musicOnAllSpeakers);
+		int musicFadeTime = 0;
+		try {
+			musicFadeTime = Integer.parseInt(prefs.getString("music_fading_time", "0"));
+		}
+		catch (NumberFormatException ex) {
+		}
+		String musicFadeOp = prefs.getString("music_fading_op", "noFading");
+		if (musicFadeOp.equals("crossFading")) {
+			Control.getInstance().setMusicFading(2, musicFadeTime);
+		}
+		else if (musicFadeOp.equals("fading")) {
+			Control.getInstance().setMusicFading(1, musicFadeTime);
+		}
+		else {
+			Control.getInstance().setMusicFading(0, musicFadeTime);
+		}
 	}
 	
 	protected void onConnect(ServerInfo info) {

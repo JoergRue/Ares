@@ -232,4 +232,8 @@ public class MusicListFragment extends ModeLikeFragment implements INetworkClien
 	@Override
 	public void musicOnAllSpeakersChanged(boolean onAllSpeakers) {
 	}
+
+	@Override
+	public void musicFadingChanged(int fadingOption, int fadingTime) {
+	}
 }

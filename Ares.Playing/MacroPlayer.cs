@@ -192,6 +192,10 @@ namespace Ares.Playing
         {
         }
 
+        public void PreviousNextFadingChanged(bool fade, bool crossFade, int fadeTime)
+        {
+        }
+
         public void ErrorOccurred(int elementId, string errorMessage)
         {
         }

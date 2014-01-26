@@ -40,28 +40,35 @@ public class PrefsActivity extends PreferenceActivity {
 
 		Preference fadingPreference = getPreferenceScreen().findPreference("tag_fading_time");
 		fadingPreference.setOnPreferenceChangeListener(fadingChangeListener);
+		
+		Preference fadingPreference2 = getPreferenceScreen().findPreference("music_fading_time");
+		fadingPreference2.setOnPreferenceChangeListener(fadingChangeListener);
 	}
 	
 	Preference.OnPreferenceChangeListener fadingChangeListener = new OnPreferenceChangeListener() {
 		public boolean onPreferenceChange(Preference preference, Object newValue) {
-			if (newValue == null || newValue.toString().equals("")) {
-				Toast.makeText(getApplicationContext(), getString(R.string.invalid_fading_time), Toast.LENGTH_LONG).show();
-				return false;
-			}
-			try {
-				int val = Integer.parseInt(newValue.toString());
-				if (val < 0 || val > 50000) {
-					Toast.makeText(getApplicationContext(), getString(R.string.invalid_fading_time), Toast.LENGTH_LONG).show();
-					return false;
-				}
-				return true;
-			}
-			catch (NumberFormatException e) {
-				Toast.makeText(getApplicationContext(), getString(R.string.invalid_fading_time), Toast.LENGTH_LONG).show();
-				return false;
-			}
+			return checkFadingTime(newValue);
 		}
 	};
+	
+	private boolean checkFadingTime(Object newValue) {
+		if (newValue == null || newValue.toString().equals("")) {
+			Toast.makeText(getApplicationContext(), getString(R.string.invalid_fading_time), Toast.LENGTH_LONG).show();
+			return false;
+		}
+		try {
+			int val = Integer.parseInt(newValue.toString());
+			if (val < 0 || val > 50000) {
+				Toast.makeText(getApplicationContext(), getString(R.string.invalid_fading_time), Toast.LENGTH_LONG).show();
+				return false;
+			}
+			return true;
+		}
+		catch (NumberFormatException e) {
+			Toast.makeText(getApplicationContext(), getString(R.string.invalid_fading_time), Toast.LENGTH_LONG).show();
+			return false;
+		}
+	}
 	
 	Preference.OnPreferenceChangeListener numberCheckListener = new OnPreferenceChangeListener() {
 

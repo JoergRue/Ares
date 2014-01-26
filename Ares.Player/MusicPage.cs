@@ -17,25 +17,55 @@ namespace Ares.Player
             SetData();
         }
 
-        //private bool listen = true;
+        private bool listen = true;
 
         private void SetData()
         {
-            //listen = false;
+            listen = false;
             Ares.Settings.Settings settings = Ares.Settings.Settings.Instance;
             allChannelsCheckBox.Checked = settings.PlayMusicOnAllSpeakers;
-            //listen = true;
+            noFadeButton.Checked = settings.ButtonMusicFadeMode == 0;
+            fadeButton.Checked = settings.ButtonMusicFadeMode == 1;
+            crossFadeButton.Checked = settings.ButtonMusicFadeMode == 2;
+            crossFadingUpDown.Value = settings.ButtonMusicFadeTime;
+            crossFadingUpDown.Enabled = settings.ButtonMusicFadeMode != 0;
+            listen = true;
         }
 
         private void SaveData()
         {
             Ares.Settings.Settings settings = Ares.Settings.Settings.Instance;
             settings.PlayMusicOnAllSpeakers = allChannelsCheckBox.Checked;
+            if (noFadeButton.Checked)
+                settings.ButtonMusicFadeMode = 0;
+            else if (fadeButton.Checked)
+                settings.ButtonMusicFadeMode = 1;
+            else
+                settings.ButtonMusicFadeMode = 2;
+            settings.ButtonMusicFadeTime = (int)crossFadingUpDown.Value;
         }
 
         public void OnConfirm()
         {
             SaveData();
+        }
+
+        private void noFadeButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!listen) return;
+            crossFadingUpDown.Enabled = !noFadeButton.Checked;
+        }
+
+        private void fadeButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!listen) return;
+            crossFadingUpDown.Enabled = !noFadeButton.Checked;
+        }
+
+        private void crossFadeButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!listen) return;
+            crossFadingUpDown.Enabled = !noFadeButton.Checked;
         }
     }
 

@@ -280,14 +280,31 @@ namespace Ares.MediaPortalPlugin
                 Settings.Settings.Instance.TagMusicFadeOnlyOnChange = newTagOnChange;
                 change = true;
             }
+            if (change)
+            {
+                m_Network.InformClientOfFading(newTagFadeTime, newTagOnChange);
+            }
             bool oldOnAllSpeakers = Settings.Settings.Instance.PlayMusicOnAllSpeakers;
             if (m_PlayingControl.MusicOnAllSpeakers != oldOnAllSpeakers)
             {
                 Settings.Settings.Instance.PlayMusicOnAllSpeakers = m_PlayingControl.MusicOnAllSpeakers;
             }
+            int oldMusicFadingOption = Settings.Settings.Instance.ButtonMusicFadeMode;
+            int oldMusicFadingTime = Settings.Settings.Instance.ButtonMusicFadeTime;
+            change = false;
+            if (oldMusicFadingOption != m_PlayingControl.MusicFadingOption)
+            {
+                Settings.Settings.Instance.ButtonMusicFadeMode = m_PlayingControl.MusicFadingOption;
+                change = true;
+            }
+            if (oldMusicFadingTime != m_PlayingControl.MusicFadingTime)
+            {
+                Settings.Settings.Instance.ButtonMusicFadeTime = m_PlayingControl.MusicFadingTime;
+                change = true;
+            }
             if (change)
             {
-                m_Network.InformClientOfFading(newTagFadeTime, newTagOnChange);
+                m_Network.InformClientOfMusicFading(m_PlayingControl.MusicFadingOption, m_PlayingControl.MusicFadingTime);
             }
         }
 
@@ -302,7 +319,8 @@ namespace Ares.MediaPortalPlugin
                     m_PlayingControl.MusicRepeat, m_PlayingControl.TagCategories, m_PlayingControl.TagsPerCategory,
                     new List<int>(m_PlayingControl.GetCurrentMusicTags()), m_PlayingControl.GetMusicTagCategoriesCombination(), 
                     Settings.Settings.Instance.TagMusicFadeTime, Settings.Settings.Instance.TagMusicFadeOnlyOnChange,
-                    Settings.Settings.Instance.PlayMusicOnAllSpeakers);
+                    Settings.Settings.Instance.PlayMusicOnAllSpeakers, Settings.Settings.Instance.ButtonMusicFadeMode, 
+                    Settings.Settings.Instance.ButtonMusicFadeTime);
                 disconnectButton.IsEnabled = true;
             }
             else
@@ -699,6 +717,11 @@ namespace Ares.MediaPortalPlugin
             Ares.Controllers.Control.Instance.SetMusicOnAllSpeakers(onAllSpeakers);
         }
 
+        public void FromControllerSetMusicFading(int fadingOption, int fadingTime)
+        {
+            Ares.Controllers.Control.Instance.SetMusicFading(fadingOption, fadingTime);
+        }
+
         #endregion
 
         #region Dispatch to UI thread
@@ -769,6 +792,12 @@ namespace Ares.MediaPortalPlugin
         {
             m_PlayingControl.MusicOnAllSpeakersChanged(onAllSpeakers);
             DispatchToUIThread(() => m_Network.MusicOnAllSpeakersChanged(onAllSpeakers));
+        }
+
+        public void MusicFadingChanged(int fadingOption, int fadingTime)
+        {
+            m_PlayingControl.MusicFadingChanged(fadingOption, fadingTime);
+            DispatchToUIThread(() => m_Network.MusicFadingChanged(fadingOption, fadingTime));
         }
 
         public void TagsChanged(List<MusicTagCategory> categories, Dictionary<int, List<MusicTag>> tagsPerCategory)

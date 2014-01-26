@@ -28,11 +28,11 @@ namespace Ares.Playing
 
     interface IMusicPlayer
     {
-        void Next();
-        void Previous();
+        void Next(bool fade, bool crossFade, int fadeTimeMs);
+        void Previous(bool fade, bool crossFade, int fadeTimeMs);
         void Stop();
         void SetMusicVolume(int volume);
-        void PlayMusicTitle(Int32 elementId);
+        void PlayMusicTitle(Int32 elementId, bool fade, bool crossFade, int fadeTimeMs);
         bool RepeatCurrentMusic { set; }
         void ChangeRandomList(IRandomBackgroundMusicList newList);
         void SetMusicOnAllSpeakers(bool onAllSpeakers);
@@ -117,7 +117,9 @@ namespace Ares.Playing
             {
                 shallStop = true;
             }
-            StopCurrentFile(crossFadeMusicTime > 0, crossFadeMusicTime / 2);
+            // set 'crossFade' parameter to false even though it /is/ crossfading
+            // because the next file is automatically started already
+            StopCurrentFile(crossFadeMusicTime > 0, false, crossFadeMusicTime / 2);
             Action action = StopDelayWait();
             if (action != null)
                 action();
@@ -149,14 +151,15 @@ namespace Ares.Playing
             }
         }
 
-        public abstract void PlayMusicTitle(Int32 elementId);
+        public abstract void PlayMusicTitle(Int32 elementId, bool fade, bool crossFade, int fadeTimeMs);
 
-        public void Next()
+        public void Next(bool fade, bool crossFade, int fadeTimeMs)
         {
-            StopCurrentFile(true, 0); // will automatically start the next file
+            m_MusicFadeInTime = fade ? (crossFade ? fadeTimeMs : fadeTimeMs / 2) : 0;
+            StopCurrentFile(fade, crossFade, crossFade ? fadeTimeMs : fadeTimeMs / 2); // will automatically start the next file
         }
 
-        public abstract void Previous();
+        public abstract void Previous(bool fade, bool crossFade, int fadeTimeMs);
 
         public bool RepeatCurrentMusic
         {
@@ -188,7 +191,7 @@ namespace Ares.Playing
 
     class SequentialMusicPlayer : MusicPlayer, IMusicPlayer
     {
-        public override void PlayMusicTitle(Int32 elementID)
+        public override void PlayMusicTitle(Int32 elementID, bool fade, bool crossFade, int fadeTimeMs)
         {
             IList<ISequentialElement> elements = m_Container.GetElements();
             for (int i = 0; i < elements.Count; ++i)
@@ -199,13 +202,14 @@ namespace Ares.Playing
                     {
                         m_Index = i - 1;
                     }
-                    StopCurrentFile(true, 0); // will automatically start the next file
+                    m_MusicFadeInTime = fade ? (crossFade ? fadeTimeMs : fadeTimeMs / 2) : 0;
+                    StopCurrentFile(fade, crossFade, crossFade ? fadeTimeMs : fadeTimeMs / 2); // will automatically start the next file
                     break;
                 }
             }
         }
 
-        public override void Previous()
+        public override void Previous(bool fade, bool crossFade, int fadeTimeMs)
         {
             lock (syncObject)
             {
@@ -213,7 +217,8 @@ namespace Ares.Playing
                 if (m_Index < -1)
                     m_Index = -1;
             }
-            StopCurrentFile(true, 0); // will automatically start the next file
+            m_MusicFadeInTime = fade ? (crossFade ? fadeTimeMs : fadeTimeMs / 2) : 0;
+            StopCurrentFile(fade, crossFade, crossFade ? fadeTimeMs : fadeTimeMs / 2); // will automatically start the next file
         }
 
         public override void PlayNext()
@@ -305,7 +310,7 @@ namespace Ares.Playing
 
     class RandomMusicPlayer : MusicPlayer, IMusicPlayer
     {
-        public override void PlayMusicTitle(Int32 elementId)
+        public override void PlayMusicTitle(Int32 elementId, bool fade, bool crossFade, int fadeTimeMs)
         {
             IList<IChoiceElement> elements = RandomMusicList.GetElements();
             for (int i = 0; i < elements.Count; ++i)
@@ -317,16 +322,16 @@ namespace Ares.Playing
                         m_FixedNext = i;
                         m_GoBack = false;
                     }
-                    Next();
+                    Next(fade, crossFade, fadeTimeMs);
                     break;
                 }
             }
         }
 
-        public override void Previous()
+        public override void Previous(bool fade, bool crossFade, int fadeTimeMs)
         {
             m_GoBack = true;
-            Next();
+            Next(fade, crossFade, fadeTimeMs);
         }
 
         protected IRandomBackgroundMusicList RandomMusicList 
@@ -777,6 +782,10 @@ namespace Ares.Playing
         {
         }
 
+        public void PreviousNextFadingChanged(bool fade, bool crossFade, int fadeTime)
+        {
+        }
+
         public void ErrorOccurred(int elementId, string errorMessage)
         {
         }
@@ -813,7 +822,7 @@ namespace Ares.Playing
 
     class SingleMusicPlayer : MusicPlayer, IMusicPlayer
     {
-        public override void Previous()
+        public override void Previous(bool fade, bool crossFade, int fadeTimeMs)
         {
         }
 
@@ -838,7 +847,7 @@ namespace Ares.Playing
             m_Element = musicFile;
         }
 
-        public override void PlayMusicTitle(int elementId)
+        public override void PlayMusicTitle(int elementId, bool fade, bool crossFade, int fadeTimeMs)
         {
         }
 

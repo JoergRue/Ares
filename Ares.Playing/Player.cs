@@ -223,7 +223,7 @@ namespace Ares.Playing
         protected int CurrentPlayedHandle { get; set; }
         protected int CurrentFadeOut { get; set; }
 
-        protected bool StopCurrentFile(bool allowFadeOut, int fadeOutTime)
+        protected bool StopCurrentFile(bool allowFadeOut, bool crossFade, int fadeOutTime)
         {
             lock (syncObject)
             {
@@ -236,7 +236,7 @@ namespace Ares.Playing
                         fadeOut = Math.Min(CurrentFadeOut, fadeOutTime);
                     else if (fadeOut == 0)
                         fadeOut = fadeOutTime;
-                    PlayingModule.FilePlayer.StopFile(handle, allowFadeOut, fadeOut);
+                    PlayingModule.FilePlayer.StopFile(handle, allowFadeOut, fadeOut, crossFade);
                     return true;
                 }
                 else
@@ -450,7 +450,7 @@ namespace Ares.Playing
             }
             bool mustStop = false;
             Action action = StopDelayWait();
-            if (StopCurrentFile(fadeTime > 0, fadeTime) || action != null)
+            if (StopCurrentFile(fadeTime > 0, false, fadeTime) || action != null)
             {
                 mustStop = true;
             }
@@ -882,7 +882,7 @@ namespace Ares.Playing
         {
             if (ActiveMusicPlayer != null)
             {
-                ActiveMusicPlayer.Next();
+                ActiveMusicPlayer.Next(m_FadeOnPreviousNext, m_CrossFadeOnPreviousNext, m_FadeTimeOnPreviousNext);
             }
         }
 
@@ -890,7 +890,7 @@ namespace Ares.Playing
         {
             if (ActiveMusicPlayer != null)
             {
-                ActiveMusicPlayer.Previous();
+                ActiveMusicPlayer.Previous(m_FadeOnPreviousNext, m_CrossFadeOnPreviousNext, m_FadeTimeOnPreviousNext);
             }
         }
 
@@ -898,7 +898,7 @@ namespace Ares.Playing
         {
             if (ActiveMusicPlayer != null)
             {
-                ActiveMusicPlayer.PlayMusicTitle(elementId);
+                ActiveMusicPlayer.PlayMusicTitle(elementId, m_FadeOnPreviousNext, m_CrossFadeOnPreviousNext, m_FadeTimeOnPreviousNext);
             }
         }
 
@@ -1002,6 +1002,21 @@ namespace Ares.Playing
             if (ProjectCallbacks != null)
             {
                 ProjectCallbacks.MusicOnAllSpeakersChanged(onAllSpeakers);
+            }
+        }
+
+        private bool m_FadeOnPreviousNext = false;
+        private bool m_CrossFadeOnPreviousNext = false;
+        private int m_FadeTimeOnPreviousNext = 0;
+
+        public void SetFadingOnPreviousNext(bool fade, bool crossFade, int fadeTime)
+        {
+            m_FadeOnPreviousNext = fade;
+            m_CrossFadeOnPreviousNext = crossFade;
+            m_FadeTimeOnPreviousNext = fadeTime;
+            if (ProjectCallbacks != null)
+            {
+                ProjectCallbacks.PreviousNextFadingChanged(fade, crossFade, fadeTime);
             }
         }
 

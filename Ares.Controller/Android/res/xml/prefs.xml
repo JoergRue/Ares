@@ -4,12 +4,15 @@
     
     <PreferenceCategory android:title="@string/general"><ListPreference android:summary="@string/volume_keys_summary" android:entries="@array/volume_keys_entries" android:key="volume_keys" android:entryValues="@array/volume_keys_values" android:title="@string/volume_keys" android:defaultValue="Overall"></ListPreference><ListPreference android:summary="@string/message_level_summary" android:entries="@array/message_level_entries" android:key="message_level" android:entryValues="@array/message_level_values" android:title="@string/message_level" android:defaultValue="Error"></ListPreference></PreferenceCategory>
     
-    <PreferenceCategory android:title="@string/tagMusic">
-        <CheckBoxPreference android:key="music_on_all_speakers" android:title="@string/MusicAllSpeakers" android:defaultValue="false" android:summary="@string/MusicAllSpeakersDesc"/><ListPreference android:entries="@array/tag_categories_entries" android:entryValues="@array/tag_categories_values" android:defaultValue="or" android:summary="@string/tag_categories_op_desc" android:key="tag_categories_op" android:title="@string/tag_categories_op_title" />
-        <EditTextPreference android:title="@string/tag_fading_time" android:defaultValue="0" android:key="tag_fading_time" android:summary="@string/tag_fading_time_desc" />
-        <CheckBoxPreference android:title="@string/tagFadingOnChange" android:key="tag_fading_only_on_change" android:defaultValue="false" android:summary="@string/tagFadingOnChangeDesc" />
+    <PreferenceCategory android:title="@string/playMusic">
+        <CheckBoxPreference android:key="music_on_all_speakers" android:title="@string/MusicAllSpeakers" android:defaultValue="false" android:summary="@string/MusicAllSpeakersDesc"/><ListPreference android:summary="@string/musicFadingOpDesc" android:title="@string/musicFadingOpTitle" android:key="music_fading_op" android:defaultValue="noFading" android:entryValues="@array/music_fading_op_values" android:entries="@array/music_fading_op_entries"/><EditTextPreference android:key="music_fading_time" android:title="@string/music_fading_time" android:summary="@string/music_fading_time_desc"/>
         
-    </PreferenceCategory><PreferenceCategory android:title="@string/playerConnection"><EditTextPreference android:title="@string/udp_port" android:key="udp_port" android:defaultValue="8009"></EditTextPreference><EditTextPreference android:key="player_connection" android:title="@string/player_connection" android:defaultValue="auto"></EditTextPreference></PreferenceCategory>
+        
+        
+        
+        
+    </PreferenceCategory><PreferenceCategory android:title="@string/tagMusic"><ListPreference android:entries="@array/tag_categories_entries" android:entryValues="@array/tag_categories_values" android:defaultValue="or" android:summary="@string/tag_categories_op_desc" android:key="tag_categories_op" android:title="@string/tag_categories_op_title" /><EditTextPreference android:title="@string/tag_fading_time" android:defaultValue="0" android:key="tag_fading_time" android:summary="@string/tag_fading_time_desc" /><CheckBoxPreference android:title="@string/tagFadingOnChange" android:key="tag_fading_only_on_change" android:defaultValue="false" android:summary="@string/tagFadingOnChangeDesc" /></PreferenceCategory><PreferenceCategory android:title="@string/playerConnection"><EditTextPreference android:title="@string/udp_port" android:key="udp_port" android:defaultValue="8009"></EditTextPreference><EditTextPreference android:key="player_connection" android:title="@string/player_connection" android:defaultValue="auto"></EditTextPreference></PreferenceCategory>
+    
     
     
     

@@ -41,6 +41,7 @@ public interface INetworkClient {
 	void volumeChanged(int index, int value);
 	void musicChanged(String newMusic, String shortTitle);
 	void musicListChanged(List<TitledElement> newList);
+	void musicFadingChanged(int fadingOption, int fadingTime);
 	
 	void tagsChanged(List<TitledElement> newCategories, Map<Integer, List<TitledElement>> newTagsPerCategory);
 	void activeTagsChanged(List<Integer> newActiveTags);

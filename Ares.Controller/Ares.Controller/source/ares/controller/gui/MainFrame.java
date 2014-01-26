@@ -33,7 +33,6 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
-import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -674,7 +673,6 @@ public final class MainFrame extends FrameController implements IMessageListener
     		  .addComponent(getVolumesPanel())
     	      .addComponent(getStatePanel())
     	      .addComponent(getNetworkPanel())
-    	      .addComponent(getMusicPanel())
     	      .addComponent(getModesPanel())
     	      );
       layout.setVerticalGroup(layout.createSequentialGroup()
@@ -682,7 +680,6 @@ public final class MainFrame extends FrameController implements IMessageListener
     		  .addComponent(getVolumesPanel())
     	      .addComponent(getStatePanel())
     	      .addComponent(getNetworkPanel())
-    	      .addComponent(getMusicPanel())
     	      .addComponent(getModesPanel())
     	      );
   }
@@ -889,33 +886,6 @@ public final class MainFrame extends FrameController implements IMessageListener
     return networkPanel;
   }
   
-  private JPanel musicPanel = null;
-  private JCheckBox musicOnAllSpeakersBox = null;
-  private boolean listenToMusicControls = true;
-  
-  private JCheckBox getMusicOnAllSpeakersBox() {
-	  if (musicOnAllSpeakersBox == null) {
-			 musicOnAllSpeakersBox = new JCheckBox(Localization.getString("MainFrame.MusicOnAllSpeakers")); //$NON-NLS-1$
-			 musicOnAllSpeakersBox.addActionListener(new ActionListener() {
-				 public void actionPerformed(ActionEvent e) {
-					 if (listenToMusicControls) {
-						 Control.getInstance().setMusicOnAllSpeakers(musicOnAllSpeakersBox.isSelected());
-					 }
-				 }
-			 });		  
-	  }
-	  return musicOnAllSpeakersBox;
-  }
-  
-  private JPanel getMusicPanel() {
-	  if (musicPanel == null) {
-		 musicPanel = new JPanel(new BorderLayout(5, 5));
-		 musicPanel.add(getMusicOnAllSpeakersBox(), BorderLayout.WEST);
-		 musicPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED), Localization.getString("MainFrame.Music2"))); //$NON-NLS-1$
-	  }
-	  return musicPanel;
-  }
-
   /**
    * This method initializes serverBox	
    * 	
@@ -1396,14 +1366,25 @@ public final class MainFrame extends FrameController implements IMessageListener
 		});
 	}
 	
+	private boolean musicOnAllSpeakers = false;
+	private int musicFadingOption = 0;
+	private int musicFadingTime = 0;
+	
 	public void musicOnAllSpeakersChanged(final boolean onAllSpeakers) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				listenToMusicControls = false;
-				getMusicOnAllSpeakersBox().setSelected(onAllSpeakers);
-				listenToMusicControls = true;
+				musicOnAllSpeakers = onAllSpeakers;
 			}
 		});
+	}
+	
+	public void musicFadingChanged(final int fadingOption, final int fadingTime) {
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				musicFadingOption = fadingOption;
+				musicFadingTime = fadingTime;
+			}
+		});		
 	}
 	
 	private List<TitledElement> currentCategories = new ArrayList<TitledElement>();
@@ -1569,6 +1550,7 @@ public final class MainFrame extends FrameController implements IMessageListener
 		int oldPort = Preferences.userNodeForPackage(MainFrame.class).getInt("UDPPort", 8009);  //$NON-NLS-1$
 		boolean oldKeys = Preferences.userNodeForPackage(OptionsDialog.class).getBoolean("ShowKeys", false); //$NON-NLS-1$
 		OptionsDialog dialog = new OptionsDialog(MainFrame.this);
+		dialog.setMusicOptions(musicOnAllSpeakers, musicFadingOption, musicFadingTime);
 		dialog.setLocationRelativeTo(this);
 		dialog.setModal(true);
 		dialog.setVisible(true);
@@ -1593,6 +1575,15 @@ public final class MainFrame extends FrameController implements IMessageListener
 					reopenFrames(openFrames);					
 				}
 			});
+		}
+		if (dialog.wasClosedByOK()) {
+			musicOnAllSpeakers = dialog.getMusicOnAllSpeakers();
+			musicFadingOption = dialog.getMusicFadingOption();
+			musicFadingTime = dialog.getMusicFadingTime();
+			if (Control.getInstance().isConnected()) {
+				Control.getInstance().setMusicOnAllSpeakers(musicOnAllSpeakers);
+				Control.getInstance().setMusicFading(musicFadingOption, musicFadingTime);
+			}
 		}
 	}
 	
