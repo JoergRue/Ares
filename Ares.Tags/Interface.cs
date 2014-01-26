@@ -259,6 +259,12 @@ namespace Ares.Tags
         IList<String> GetAllFilesWithAnyTag(HashSet<int> tagIds);
 
         /// <summary>
+        /// Returns all files which have at least one tag set.
+        /// Files are returned as relative paths.
+        /// </summary>
+        IList<String> GetAllFilesWithAnyTag();
+
+        /// <summary>
         /// Returns all files which have in each given category at least one of the given tags.
         /// Files are returned as relative paths.
         /// </summary>

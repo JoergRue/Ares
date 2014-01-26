@@ -84,7 +84,7 @@ namespace Ares.Editor
 
         void Instance_TagsDBChanged(object sender, EventArgs e)
         {
-            if (m_IsTagFilterActive)
+            if (m_TagsFilter.FilterMode != TagsFilterMode.NoFilter)
             {
                 RetrieveFilteredFiles();
                 ReFillTree();
@@ -170,7 +170,7 @@ namespace Ares.Editor
                     String relativeDir = subDir.Substring(rootLength);
                     subNode.Tag = new DraggedItem { NodeType = DraggedItemType.Directory, ItemType = dirType, RelativePath = relativeDir };
                     FillTreeNode(subNode, subDir, root, dirType, states);
-                    if (!m_IsTagFilterActive || subNode.Nodes.Count > 0)
+                    if (m_TagsFilter.FilterMode == TagsFilterMode.NoFilter || subNode.Nodes.Count > 0)
                     {
                         subNode.ContextMenuStrip = fileNodeContextMenu;
                         node.Nodes.Add(subNode);
@@ -186,8 +186,11 @@ namespace Ares.Editor
                 foreach (String file in files)
                 {
                     String relativeDir = file.Substring(rootLength);
-                    if (m_IsTagFilterActive && !m_FilteredFiles.Contains(relativeDir))
+                    if (m_TagsFilter.FilterMode == TagsFilterMode.NormalFilter && !m_FilteredFiles.Contains(relativeDir))
                         continue;
+                    else if (m_TagsFilter.FilterMode == TagsFilterMode.UntaggedFiles && m_FilteredFiles.Contains(relativeDir))
+                        continue;
+
                     TreeNode subNode = new TreeNode(file.Substring(subLength));
                     subNode.ImageIndex = subNode.SelectedImageIndex = (dirType == FileType.Sound ? 1 : 2);
                     subNode.Tag = new DraggedItem { NodeType = DraggedItemType.File, ItemType = dirType, RelativePath = relativeDir };
@@ -235,7 +238,7 @@ namespace Ares.Editor
                 treeView1.SelectedNodes.ForEach(node => items.Add((DraggedItem)node.Tag));
                 FileDragInfo info = new FileDragInfo();
                 info.DraggedItems = items;
-                info.TagsFilter = m_IsTagFilterActive ? m_TagsFilter : null;
+                info.TagsFilter = m_TagsFilter;
                 DoDragDrop(info, DragDropEffects.Copy | DragDropEffects.Move);
                 m_InDrag = false;
             }
@@ -969,7 +972,6 @@ namespace Ares.Editor
             m_Parent.ShowFileTagsEditor(files);
         }
 
-        private bool m_IsTagFilterActive = false;
         private HashSet<String> m_FilteredFiles = new HashSet<string>(StringComparer.CurrentCultureIgnoreCase);
         private TagsFilter m_TagsFilter = new TagsFilter();
 
@@ -982,31 +984,45 @@ namespace Ares.Editor
                     languageId = Ares.Tags.TagsModule.GetTagsDB().TranslationsInterface.GetIdOfCurrentUILanguage();
                 var dbRead = Ares.Tags.TagsModule.GetTagsDB().ReadInterface;
                 IList<String> files;
-                switch (m_TagsFilter.TagCategoryCombination)
+                switch (m_TagsFilter.FilterMode)
                 {
-                    case Data.TagCategoryCombination.UseOneTagOfEachCategory:
-                        files = dbRead.GetAllFilesWithAnyTagInEachCategory(m_TagsFilter.TagsByCategories);
-                        break;
-                    case Data.TagCategoryCombination.UseAnyTag:
+                    case TagsFilterMode.NormalFilter:
                         {
-                            HashSet<int> allTags = new HashSet<int>();
-                            foreach (var entry in m_TagsFilter.TagsByCategories)
+                            switch (m_TagsFilter.TagCategoryCombination)
                             {
-                                allTags.UnionWith(entry.Value);
+                                case Data.TagCategoryCombination.UseOneTagOfEachCategory:
+                                    files = dbRead.GetAllFilesWithAnyTagInEachCategory(m_TagsFilter.TagsByCategories);
+                                    break;
+                                case Data.TagCategoryCombination.UseAnyTag:
+                                    {
+                                        HashSet<int> allTags = new HashSet<int>();
+                                        foreach (var entry in m_TagsFilter.TagsByCategories)
+                                        {
+                                            allTags.UnionWith(entry.Value);
+                                        }
+                                        files = dbRead.GetAllFilesWithAnyTag(allTags);
+                                    }
+                                    break;
+                                case Data.TagCategoryCombination.UseAllTags:
+                                default:
+                                    {
+                                        HashSet<int> allTags = new HashSet<int>();
+                                        foreach (var entry in m_TagsFilter.TagsByCategories)
+                                        {
+                                            allTags.UnionWith(entry.Value);
+                                        }
+                                        files = dbRead.GetAllFilesWithAllTags(allTags);
+                                    }
+                                    break;
                             }
-                            files = dbRead.GetAllFilesWithAnyTag(allTags);
                         }
                         break;
-                    case Data.TagCategoryCombination.UseAllTags:
+                    case TagsFilterMode.UntaggedFiles:
+                        files = dbRead.GetAllFilesWithAnyTag();
+                        break;
+                    case TagsFilterMode.NoFilter:
                     default:
-                        {
-                            HashSet<int> allTags = new HashSet<int>();
-                            foreach (var entry in m_TagsFilter.TagsByCategories)
-                            {
-                                allTags.UnionWith(entry.Value);
-                            }
-                            files = dbRead.GetAllFilesWithAllTags(allTags);
-                        }
+                        files = null;
                         break;
                 }
                 m_FilteredFiles.Clear();
@@ -1040,14 +1056,17 @@ namespace Ares.Editor
             dialog.LanguageId = languageId;
             dialog.TagCategoryCombination = m_TagsFilter.TagCategoryCombination;
             dialog.TagsByCategory = m_TagsFilter.TagsByCategories;
+            dialog.FilterMode = m_TagsFilter.FilterMode != TagsFilterMode.NoFilter ? m_TagsFilter.FilterMode : TagsFilterMode.NormalFilter;
             if (dialog.ShowDialog(this) == DialogResult.OK)
             {
                 m_Project.TagLanguageId = dialog.LanguageId;
                 m_TagsFilter.TagCategoryCombination = dialog.TagCategoryCombination;
                 m_TagsFilter.TagsByCategories = dialog.TagsByCategory;
-                tagFilterButton.Checked = m_TagsFilter.TagsByCategories.Count > 0;
-                m_IsTagFilterActive = m_TagsFilter.TagsByCategories.Count > 0;
-                if (m_IsTagFilterActive)
+                m_TagsFilter.FilterMode = dialog.FilterMode;
+                if (m_TagsFilter.FilterMode == TagsFilterMode.NormalFilter && m_TagsFilter.TagsByCategories.Count == 0)
+                    m_TagsFilter.FilterMode = TagsFilterMode.NoFilter;
+                tagFilterButton.Checked = m_TagsFilter.FilterMode != TagsFilterMode.NoFilter;
+                if (m_TagsFilter.FilterMode != TagsFilterMode.NoFilter)
                 {
                     RetrieveFilteredFiles();
                 }
@@ -1079,12 +1098,26 @@ namespace Ares.Editor
         public String RelativePath { get; set; }
     }
 
+    public enum TagsFilterMode
+    {
+        NormalFilter,
+        UntaggedFiles,
+        NoFilter
+    }
+
     public class TagsFilter
     {
+        public TagsFilterMode FilterMode { get; set; }
         public Ares.Data.TagCategoryCombination TagCategoryCombination { get; set; }
         public Dictionary<int, HashSet<int>> TagsByCategories { get { return mTagsByCategories; } set { mTagsByCategories = value; } }
 
         private Dictionary<int, HashSet<int>> mTagsByCategories = new Dictionary<int, HashSet<int>>();
+
+        public TagsFilter()
+        {
+            FilterMode = TagsFilterMode.NoFilter;
+            TagCategoryCombination = Data.TagCategoryCombination.UseAnyTag;
+        }
     }
 
     public class FileDragInfo

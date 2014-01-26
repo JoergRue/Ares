@@ -93,6 +93,46 @@ namespace Ares.Editor.Dialogs
         private IList<CategoryForLanguage> m_Categories;
         private IList<TagForLanguage> m_Tags;
         private int m_SelectedCategoryId = -1;
+        private TagsFilterMode m_FilterMode = TagsFilterMode.NormalFilter;
+
+        public TagsFilterMode FilterMode
+        {
+            get { return m_FilterMode; }
+            set
+            {
+                m_Listen = false;
+                switch (value)
+                {
+                    case TagsFilterMode.NoFilter:
+                        allFilesButton.Checked = true;
+                        normalFilterButton.Checked = false;
+                        noTagsFilterButton.Checked = false;
+                        categoriesBox.Enabled = false;
+                        tagCategoryCombinationBox.Enabled = false;
+                        tagsBox.Enabled = false;
+                        break;
+                    case TagsFilterMode.UntaggedFiles:
+                        noTagsFilterButton.Checked = true;
+                        normalFilterButton.Checked = false;
+                        allFilesButton.Checked = false;
+                        categoriesBox.Enabled = false;
+                        tagCategoryCombinationBox.Enabled = false;
+                        tagsBox.Enabled = false;
+                        break;
+                    case TagsFilterMode.NormalFilter:
+                    default:
+                        normalFilterButton.Checked = true;
+                        allFilesButton.Checked = false;
+                        noTagsFilterButton.Checked = false;
+                        tagCategoryCombinationBox.Enabled = true;
+                        categoriesBox.Enabled = true;
+                        tagsBox.Enabled = true;
+                        break;
+                }
+                m_FilterMode = value;
+                m_Listen = true;
+            }
+        }
 
         private void UpdateControls()
         {
@@ -261,6 +301,27 @@ namespace Ares.Editor.Dialogs
                 MessageBox.Show(this, String.Format(StringResources.TagsDbError, ex.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             m_Listen = true;
+        }
+
+        private void normalFilterButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!m_Listen)
+                return;
+            FilterMode = TagsFilterMode.NormalFilter;
+        }
+
+        private void noTagsFilterButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!m_Listen)
+                return;
+            FilterMode = TagsFilterMode.UntaggedFiles;
+        }
+
+        private void allFilesButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!m_Listen)
+                return;
+            FilterMode = TagsFilterMode.NoFilter;
         }
 
     }

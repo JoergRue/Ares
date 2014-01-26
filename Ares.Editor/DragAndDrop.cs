@@ -64,55 +64,68 @@ namespace Ares.Editor
             }
 
             HashSet<String> allowedItems = null;
-            if (dragInfo.TagsFilter != null)
+            HashSet<String> unallowedItems = null;
+            if (dragInfo.TagsFilter != null && dragInfo.TagsFilter.FilterMode != TagsFilterMode.NoFilter)
             {
                 IList<String> files = null;
                 try
                 {
                     var dbRead = Ares.Tags.TagsModule.GetTagsDB().ReadInterface;
-                    switch (dragInfo.TagsFilter.TagCategoryCombination)
+                    if (dragInfo.TagsFilter.FilterMode == TagsFilterMode.NormalFilter)
                     {
-                        case TagCategoryCombination.UseOneTagOfEachCategory:
-                            files = dbRead.GetAllFilesWithAnyTagInEachCategory(dragInfo.TagsFilter.TagsByCategories);
-                            break;
-                        case TagCategoryCombination.UseAnyTag:
-                            {
-                                HashSet<int> allTags = new HashSet<int>();
-                                foreach (var entry in dragInfo.TagsFilter.TagsByCategories)
+                        switch (dragInfo.TagsFilter.TagCategoryCombination)
+                        {
+                            case TagCategoryCombination.UseOneTagOfEachCategory:
+                                files = dbRead.GetAllFilesWithAnyTagInEachCategory(dragInfo.TagsFilter.TagsByCategories);
+                                break;
+                            case TagCategoryCombination.UseAnyTag:
                                 {
-                                    allTags.UnionWith(entry.Value);
+                                    HashSet<int> allTags = new HashSet<int>();
+                                    foreach (var entry in dragInfo.TagsFilter.TagsByCategories)
+                                    {
+                                        allTags.UnionWith(entry.Value);
+                                    }
+                                    files = dbRead.GetAllFilesWithAnyTag(allTags);
                                 }
-                                files = dbRead.GetAllFilesWithAnyTag(allTags);
-                            }
-                            break;
-                        case TagCategoryCombination.UseAllTags:
-                        default:
-                            {
-                                HashSet<int> allTags = new HashSet<int>();
-                                foreach (var entry in dragInfo.TagsFilter.TagsByCategories)
+                                break;
+                            case TagCategoryCombination.UseAllTags:
+                            default:
                                 {
-                                    allTags.UnionWith(entry.Value);
+                                    HashSet<int> allTags = new HashSet<int>();
+                                    foreach (var entry in dragInfo.TagsFilter.TagsByCategories)
+                                    {
+                                        allTags.UnionWith(entry.Value);
+                                    }
+                                    files = dbRead.GetAllFilesWithAllTags(allTags);
                                 }
-                                files = dbRead.GetAllFilesWithAllTags(allTags);
-                            }
-                            break;
+                                break;
+                        }
+                        if (files != null)
+                        {
+                            allowedItems = new HashSet<string>();
+                            allowedItems.UnionWith(files);
+                        }
+                    }
+                    else
+                    {
+                        files = dbRead.GetAllFilesWithAnyTag();
+                        if (files != null)
+                        {
+                            unallowedItems = new HashSet<string>();
+                            unallowedItems.UnionWith(files);
+                        }
                     }
                 }
                 catch (Ares.Tags.TagsDbException)
                 {
                     files = null;
                 }
-                if (files != null)
-                {
-                    allowedItems = new HashSet<string>();
-                    allowedItems.UnionWith(files);
-                }
             }
 
             Dictionary<string, DraggedItem> uniqueItems = new Dictionary<string, DraggedItem>();
             foreach (DraggedItem item in dragInfo.DraggedItems)
             {
-                AddItemsToSet(uniqueItems, item, allowedItems, musicDirectory, soundDirectory, token);
+                AddItemsToSet(uniqueItems, item, allowedItems, unallowedItems, musicDirectory, soundDirectory, token);
                 token.ThrowIfCancellationRequested();
                 if (monitor1 != null)
                     monitor1.IncreaseProgress(100.0 / dragInfo.DraggedItems.Count);
@@ -146,7 +159,7 @@ namespace Ares.Editor
             return element;
         }
 
-        private static void AddItemsToSet(Dictionary<String, DraggedItem> uniqueItems, DraggedItem item, HashSet<String> allowedItems, 
+        private static void AddItemsToSet(Dictionary<String, DraggedItem> uniqueItems, DraggedItem item, HashSet<String> allowedItems, HashSet<String> unallowedItems,
             String musicDirectory, String soundDirectory, System.Threading.CancellationToken token)
         {
             String baseDir = item.ItemType == FileType.Music ? musicDirectory : soundDirectory;
@@ -158,7 +171,7 @@ namespace Ares.Editor
                     foreach (String file in FileSearch.GetFilesInDirectory(item.ItemType, path, true))
                     {
                         AddItemsToSet(uniqueItems, new DraggedItem { NodeType = DraggedItemType.File, ItemType = item.ItemType, RelativePath = file.Substring(baseDir.Length + 1) }, 
-                            allowedItems, musicDirectory, soundDirectory, token);
+                            allowedItems, unallowedItems, musicDirectory, soundDirectory, token);
                         token.ThrowIfCancellationRequested();
                     }
                 }
@@ -167,10 +180,13 @@ namespace Ares.Editor
             {
                 if (allowedItems == null || allowedItems.Contains(item.RelativePath, StringComparer.InvariantCultureIgnoreCase))
                 {
-                    String key = System.IO.Path.GetFullPath(path);
-                    if (!uniqueItems.ContainsKey(path))
+                    if (unallowedItems == null || !unallowedItems.Contains(item.RelativePath, StringComparer.InvariantCultureIgnoreCase))
                     {
-                        uniqueItems[key] = item;
+                        String key = System.IO.Path.GetFullPath(path);
+                        if (!uniqueItems.ContainsKey(path))
+                        {
+                            uniqueItems[key] = item;
+                        }
                     }
                 }
             }

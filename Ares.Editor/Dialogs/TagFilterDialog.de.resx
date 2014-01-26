@@ -130,12 +130,6 @@
   <data name="label13.Text" xml:space="preserve">
     <value>Tags verschiedener Kategorien werden verknüpft mit:</value>
   </data>
-  <data name="button1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>108, 23</value>
-  </data>
-  <data name="button1.Text" xml:space="preserve">
-    <value>Alle Tags entfernen</value>
-  </data>
   <data name="tagCategoryCombinationBox.Items" xml:space="preserve">
     <value>ODER: Musik muss irgendeinen Tag in irgendeiner Kategorie haben</value>
   </data>
@@ -144,6 +138,24 @@
   </data>
   <data name="tagCategoryCombinationBox.Items2" xml:space="preserve">
     <value>UND: Musik muss alle Tags in allen Kategorien haben</value>
+  </data>
+  <data name="normalFilterButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>225, 17</value>
+  </data>
+  <data name="normalFilterButton.Text" xml:space="preserve">
+    <value>Zeige nur Dateien mit ausgewählten Tags:</value>
+  </data>
+  <data name="noTagsFilterButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>203, 17</value>
+  </data>
+  <data name="noTagsFilterButton.Text" xml:space="preserve">
+    <value>Zeige nur Dateien ohne jegliche Tags</value>
+  </data>
+  <data name="allFilesButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>197, 17</value>
+  </data>
+  <data name="allFilesButton.Text" xml:space="preserve">
+    <value>Zeige alle Dateien (Filter abschalten)</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

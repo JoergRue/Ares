@@ -55,8 +55,10 @@ namespace Ares.Editor.Dialogs
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.categoriesBox = new System.Windows.Forms.ListBox();
             this.label13 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
             this.tagCategoryCombinationBox = new System.Windows.Forms.ComboBox();
+            this.normalFilterButton = new System.Windows.Forms.RadioButton();
+            this.noTagsFilterButton = new System.Windows.Forms.RadioButton();
+            this.allFilesButton = new System.Windows.Forms.RadioButton();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -110,13 +112,6 @@ namespace Ares.Editor.Dialogs
             resources.ApplyResources(this.label13, "label13");
             this.label13.Name = "label13";
             // 
-            // button1
-            // 
-            resources.ApplyResources(this.button1, "button1");
-            this.button1.Name = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // tagCategoryCombinationBox
             // 
             resources.ApplyResources(this.tagCategoryCombinationBox, "tagCategoryCombinationBox");
@@ -128,14 +123,40 @@ namespace Ares.Editor.Dialogs
             resources.GetString("tagCategoryCombinationBox.Items2")});
             this.tagCategoryCombinationBox.Name = "tagCategoryCombinationBox";
             // 
+            // normalFilterButton
+            // 
+            resources.ApplyResources(this.normalFilterButton, "normalFilterButton");
+            this.normalFilterButton.Name = "normalFilterButton";
+            this.normalFilterButton.TabStop = true;
+            this.normalFilterButton.UseVisualStyleBackColor = true;
+            this.normalFilterButton.CheckedChanged += new System.EventHandler(this.normalFilterButton_CheckedChanged);
+            // 
+            // noTagsFilterButton
+            // 
+            resources.ApplyResources(this.noTagsFilterButton, "noTagsFilterButton");
+            this.noTagsFilterButton.Name = "noTagsFilterButton";
+            this.noTagsFilterButton.TabStop = true;
+            this.noTagsFilterButton.UseVisualStyleBackColor = true;
+            this.noTagsFilterButton.CheckedChanged += new System.EventHandler(this.noTagsFilterButton_CheckedChanged);
+            // 
+            // allFilesButton
+            // 
+            resources.ApplyResources(this.allFilesButton, "allFilesButton");
+            this.allFilesButton.Name = "allFilesButton";
+            this.allFilesButton.TabStop = true;
+            this.allFilesButton.UseVisualStyleBackColor = true;
+            this.allFilesButton.CheckedChanged += new System.EventHandler(this.allFilesButton_CheckedChanged);
+            // 
             // TagFilterDialog
             // 
             this.AcceptButton = this.okButton;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
+            this.Controls.Add(this.allFilesButton);
+            this.Controls.Add(this.noTagsFilterButton);
+            this.Controls.Add(this.normalFilterButton);
             this.Controls.Add(this.tagCategoryCombinationBox);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.okButton);
             this.Controls.Add(this.cancelButton);
@@ -159,8 +180,10 @@ namespace Ares.Editor.Dialogs
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ListBox categoriesBox;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ComboBox tagCategoryCombinationBox;
+        private System.Windows.Forms.RadioButton normalFilterButton;
+        private System.Windows.Forms.RadioButton noTagsFilterButton;
+        private System.Windows.Forms.RadioButton allFilesButton;
 
     }
 }

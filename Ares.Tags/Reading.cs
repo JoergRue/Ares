@@ -61,6 +61,26 @@ namespace Ares.Tags
             }
         }
 
+        public IList<string> GetAllFilesWithAnyTag()
+        {
+            if (m_Connection == null)
+            {
+                throw new TagsDbException("No Connection to DB file!");
+            }
+            try
+            {
+                return DoGetAllFilesWithAnyTag();
+            }
+            catch (System.Data.DataException ex)
+            {
+                throw new TagsDbException(ex.Message, ex);
+            }
+            catch (DbException ex)
+            {
+                throw new TagsDbException(ex.Message, ex);
+            }
+        }
+
         public IList<String> GetAllFilesWithAnyTagInEachCategory(IDictionary<int, HashSet<int>> tagsByCategory)
         {
             if (m_Connection == null)
@@ -203,6 +223,24 @@ namespace Ares.Tags
                 using (DbDataReader reader = command.ExecuteReader())
                 {
                     HashSet<String> result = new HashSet<string>();
+                    while (reader.Read())
+                    {
+                        result.Add(reader.GetString(0));
+                    }
+                    return result;
+                }
+            }
+        }
+
+        private List<string> DoGetAllFilesWithAnyTag()
+        {
+            String queryString = String.Format("SELECT DISTINCT {0}.{1} FROM {0}, {2} WHERE {0}.{3}={2}.{4}",
+                Schema.FILES_TABLE, Schema.PATH_COLUMN, Schema.FILETAGS_TABLE, Schema.ID_COLUMN, Schema.FILE_COLUMN);
+            using (DbCommand command = DbUtils.CreateDbCommand(queryString, m_Connection))
+            {
+                using (DbDataReader reader = command.ExecuteReader())
+                {
+                    List<String> result = new List<string>();
                     while (reader.Read())
                     {
                         result.Add(reader.GetString(0));
