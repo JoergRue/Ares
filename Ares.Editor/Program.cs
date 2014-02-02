@@ -92,7 +92,7 @@ namespace Ares.Editor
             }
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            int bassPlugin1, bassPlugin2;
+            int bassPlugin1, bassPlugin2, bassPlugin3;
             try
             {
                 BassRegistration.Registration.RegisterBass();
@@ -124,11 +124,17 @@ namespace Ares.Editor
                     return;
                 }
                 String aacPlugin = IsLinux ? "libbass_aac.so"  : "bass_aac.dll";
-                bassPlugin2 = Un4seen.Bass.Bass.BASS_PluginLoad("bass_aac.dll");
+                bassPlugin2 = Un4seen.Bass.Bass.BASS_PluginLoad(aacPlugin);
                 if (bassPlugin2 == 0 && Un4seen.Bass.Bass.BASS_ErrorGetCode() != Un4seen.Bass.BASSError.BASS_ERROR_ALREADY)
                 {
-                    MessageBox.Show(StringResources.BassAacLoadFail1, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    MessageBox.Show(StringResources.BassAacLoadFail, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Stop);
                     return;
+                }
+                String opusPlugin = IsLinux ? "libbassopus.so" : "bassopus.dll";
+                bassPlugin3 = Un4seen.Bass.Bass.BASS_PluginLoad(opusPlugin);
+                if (bassPlugin3 == 0 && Un4seen.Bass.Bass.BASS_ErrorGetCode() != Un4seen.Bass.BASSError.BASS_ERROR_ALREADY)
+                {
+                    MessageBox.Show(StringResources.BassOpusLoadFail, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 }
             }
             catch (Exception)
@@ -148,6 +154,7 @@ namespace Ares.Editor
             }
             Un4seen.Bass.Bass.BASS_PluginFree(bassPlugin1);
             Un4seen.Bass.Bass.BASS_PluginFree(bassPlugin2);
+            Un4seen.Bass.Bass.BASS_PluginFree(bassPlugin3);
             Un4seen.Bass.Bass.BASS_Free();
         }
 

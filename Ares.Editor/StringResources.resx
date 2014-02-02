@@ -535,7 +535,7 @@ You should adapt some settings first.</value>
   <data name="TagsCleanedUp" xml:space="preserve">
     <value>Tags database has been cleaned up. Show log?</value>
   </data>
-  <data name="BassAacLoadFail1" xml:space="preserve">
+  <data name="BassAacLoadFail" xml:space="preserve">
     <value>Could not load BASS AAC add-on library. Installation problem?</value>
   </data>
   <data name="BassFlacLoadFail1" xml:space="preserve">
@@ -546,5 +546,8 @@ You should adapt some settings first.</value>
   </data>
   <data name="TipsFile" xml:space="preserve">
     <value>TipsOfTheDay.xml</value>
+  </data>
+  <data name="BassOpusLoadFail" xml:space="preserve">
+    <value>Could not load BASS Opus add-on library. Installation problem?</value>
   </data>
 </root>

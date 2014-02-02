@@ -296,6 +296,9 @@
   <data name="encodingBox.Items1" xml:space="preserve">
     <value>MP3 (Lame)</value>
   </data>
+  <data name="encodingBox.Items2" xml:space="preserve">
+    <value>Opus</value>
+  </data>
   <data name="encodingBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>123, 126</value>
   </data>

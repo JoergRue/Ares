@@ -92,7 +92,7 @@ namespace Ares.Player
             }
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            int bassPlugin1, bassPlugin2;
+            int bassPlugin1, bassPlugin2, bassPlugin3;
             try
             {
                 BassRegistration.Registration.RegisterBass();
@@ -120,15 +120,23 @@ namespace Ares.Player
 				bassPlugin1 = Un4seen.Bass.Bass.BASS_PluginLoad(flacPlugin);
                 if (bassPlugin1 == 0 && Un4seen.Bass.Bass.BASS_ErrorGetCode() != Un4seen.Bass.BASSError.BASS_ERROR_ALREADY)
                 {
-                    MessageBox.Show(StringResources.BassFlacLoadFail1, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    MessageBox.Show(StringResources.BassFlacLoadFail, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 }
 
 				String aacPlugin = IsLinux ? exepath + "/libbass_aac.so" : "bass_aac.dll";
                 bassPlugin2 = Un4seen.Bass.Bass.BASS_PluginLoad(aacPlugin);
                 if (bassPlugin2 == 0 && Un4seen.Bass.Bass.BASS_ErrorGetCode() != Un4seen.Bass.BASSError.BASS_ERROR_ALREADY)
                 {
-                    MessageBox.Show(StringResources.BassAacLoadFail1, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    MessageBox.Show(StringResources.BassAacLoadFail, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 }
+
+                String opusPlugin = IsLinux ? exepath + "/libbassopus.so" : "bassopus.dll";
+                bassPlugin3 = Un4seen.Bass.Bass.BASS_PluginLoad(opusPlugin);
+                if (bassPlugin3 == 0 && Un4seen.Bass.Bass.BASS_ErrorGetCode() != Un4seen.Bass.BASSError.BASS_ERROR_ALREADY)
+                {
+                    MessageBox.Show(StringResources.BassOpusLoadFail, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                }
+
 			}
             catch (Exception ex)
             {

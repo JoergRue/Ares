@@ -58,14 +58,14 @@ namespace Ares.Player
             this.encodingBox = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.userNameBox = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.streamNameBox = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.bitrateBox = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.urlLabel = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.userNameBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.serverPortUpDown)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -119,7 +119,8 @@ namespace Ares.Player
             this.encodingBox.FormattingEnabled = true;
             this.encodingBox.Items.AddRange(new object[] {
             resources.GetString("encodingBox.Items"),
-            resources.GetString("encodingBox.Items1")});
+            resources.GetString("encodingBox.Items1"),
+            resources.GetString("encodingBox.Items2")});
             resources.ApplyResources(this.encodingBox, "encodingBox");
             this.encodingBox.Name = "encodingBox";
             this.encodingBox.SelectedIndexChanged += new System.EventHandler(this.encodingBox_SelectedIndexChanged);
@@ -151,6 +152,16 @@ namespace Ares.Player
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
+            // 
+            // userNameBox
+            // 
+            resources.ApplyResources(this.userNameBox, "userNameBox");
+            this.userNameBox.Name = "userNameBox";
+            // 
+            // label8
+            // 
+            resources.ApplyResources(this.label8, "label8");
+            this.label8.Name = "label8";
             // 
             // streamNameBox
             // 
@@ -192,16 +203,6 @@ namespace Ares.Player
             // 
             resources.ApplyResources(this.urlLabel, "urlLabel");
             this.urlLabel.Name = "urlLabel";
-            // 
-            // label8
-            // 
-            resources.ApplyResources(this.label8, "label8");
-            this.label8.Name = "label8";
-            // 
-            // userNameBox
-            // 
-            resources.ApplyResources(this.userNameBox, "userNameBox");
-            this.userNameBox.Name = "userNameBox";
             // 
             // StreamingPage
             // 

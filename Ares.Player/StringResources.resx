@@ -123,7 +123,7 @@
   <data name="AresPlayer" xml:space="preserve">
     <value>Ares Player - {0}</value>
   </data>
-  <data name="BassAacLoadFail1" xml:space="preserve">
+  <data name="BassAacLoadFail" xml:space="preserve">
     <value>Could not load BASS AAC add-on library. Installation problem?</value>
   </data>
   <data name="BassDeviceAlready" xml:space="preserve">
@@ -141,7 +141,7 @@
   <data name="BassDeviceInvalid" xml:space="preserve">
     <value>Invalid device. Are soundcard and speakers installed properly?</value>
   </data>
-  <data name="BassFlacLoadFail1" xml:space="preserve">
+  <data name="BassFlacLoadFail" xml:space="preserve">
     <value>Could not load BASS Flac add-on library. Installation problem?</value>
   </data>
   <data name="BassFxLoadFail" xml:space="preserve">
@@ -160,6 +160,9 @@ Error message: {0}
   </data>
   <data name="BassNoMem" xml:space="preserve">
     <value>There is insufficient memory.</value>
+  </data>
+  <data name="BassOpusLoadFail" xml:space="preserve">
+    <value>Could not load BASS Opus add-on library. Installation problem?</value>
   </data>
   <data name="BassUnknown" xml:space="preserve">
     <value>Unknown error. Are soundcard and speakers installed properly?</value>

@@ -81,9 +81,9 @@ namespace Ares.Player {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Could not load BASS AAC add-on library. Installation problem? ähnelt.
         /// </summary>
-        internal static string BassAacLoadFail1 {
+        internal static string BassAacLoadFail {
             get {
-                return ResourceManager.GetString("BassAacLoadFail1", resourceCulture);
+                return ResourceManager.GetString("BassAacLoadFail", resourceCulture);
             }
         }
         
@@ -135,9 +135,9 @@ namespace Ares.Player {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Could not load BASS Flac add-on library. Installation problem? ähnelt.
         /// </summary>
-        internal static string BassFlacLoadFail1 {
+        internal static string BassFlacLoadFail {
             get {
-                return ResourceManager.GetString("BassFlacLoadFail1", resourceCulture);
+                return ResourceManager.GetString("BassFlacLoadFail", resourceCulture);
             }
         }
         
@@ -185,6 +185,15 @@ namespace Ares.Player {
         internal static string BassNoMem {
             get {
                 return ResourceManager.GetString("BassNoMem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Could not load BASS Opus add-on library. Installation problem? ähnelt.
+        /// </summary>
+        internal static string BassOpusLoadFail {
+            get {
+                return ResourceManager.GetString("BassOpusLoadFail", resourceCulture);
             }
         }
         

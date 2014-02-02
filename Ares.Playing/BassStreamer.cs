@@ -63,6 +63,11 @@ namespace Ares.Playing
                     lameEnc.LAME_Quality = Un4seen.Bass.Misc.EncoderLAME.LAMEQuality.Quality;
                     encoder = lameEnc;
                     break;
+                case StreamEncoding.Opus:
+                    Un4seen.Bass.Misc.EncoderOPUS opusEnc = new Un4seen.Bass.Misc.EncoderOPUS(m_MixerChannel);
+                    opusEnc.OPUS_Bitrate = (int)parameters.Bitrate;
+                    encoder = opusEnc;
+                    break;
                 default:
                     Un4seen.Bass.Bass.BASS_StreamFree(m_MixerChannel);
                     m_MixerChannel = 0;
@@ -82,7 +87,8 @@ namespace Ares.Playing
                         iceCast.ServerPort = parameters.ServerPort;
                         iceCast.StreamName = parameters.StreamName;
                         iceCast.PublicFlag = false;
-                        iceCast.MountPoint = parameters.Encoding == StreamEncoding.Ogg ? "/" + parameters.StreamName + ".ogg" : "/" + parameters.StreamName;
+                        iceCast.MountPoint = parameters.Encoding == StreamEncoding.Ogg ? "/" + parameters.StreamName + ".ogg" : 
+                            (parameters.Encoding == StreamEncoding.Opus ? "/" + parameters.StreamName + ".opus" : "/" + parameters.StreamName);
                         server = iceCast;
                         break;
                     }

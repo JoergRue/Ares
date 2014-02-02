@@ -26,7 +26,8 @@ namespace Ares.Playing
         Wma,
         Ogg,
         Lame,
-        Wav
+        Wav,
+        Opus
     }
 
     public enum StreamerType

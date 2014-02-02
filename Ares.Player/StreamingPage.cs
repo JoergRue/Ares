@@ -46,7 +46,8 @@ namespace Ares.Player
             serverAddressBox.Text = settings.StreamingServerAddress;
             serverPortUpDown.Value = settings.StreamingServerPort;
             passwordBox.Text = settings.StreamingPassword;
-            encodingBox.SelectedIndex = (settings.StreamingEncoder == (int)Playing.StreamEncoding.Ogg) ? 0 : 1;
+            encodingBox.SelectedIndex = (settings.StreamingEncoder == (int)Playing.StreamEncoding.Ogg) ? 0 : 
+                ((settings.StreamingEncoder == (int)Playing.StreamEncoding.Opus) ? 2 : 1);
             switch (settings.StreamingBitrate)
             {
                 case 32:
@@ -85,6 +86,8 @@ namespace Ares.Player
             String urlText = "Client URL: http://" + serverAddressBox.Text + ":" + serverPortUpDown.Value + "/" + streamNameBox.Text;
             if (encodingBox.SelectedIndex == 0)
                 urlText += ".ogg";
+            else if (encodingBox.SelectedIndex == 2)
+                urlText += ".opus";
             urlLabel.Text = urlText;
         }
 
@@ -97,6 +100,8 @@ namespace Ares.Player
             settings.StreamingPassword = passwordBox.Text;
             if (encodingBox.SelectedIndex == 1)
                 settings.StreamingEncoder = (int)Playing.StreamEncoding.Lame;
+            else if (encodingBox.SelectedIndex == 2)
+                settings.StreamingEncoder = (int)Playing.StreamEncoding.Opus;
             else
                 settings.StreamingEncoder = (int)Playing.StreamEncoding.Ogg;
             switch (bitrateBox.SelectedIndex)
