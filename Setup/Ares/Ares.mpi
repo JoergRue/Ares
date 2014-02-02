@@ -303,6 +303,8 @@ File ::EE0E8D31-D850-4894-BADB-1235B7231184 -name bassflac.dll -parent 85519505-
 File ::DE2D3499-FCCF-479F-8095-7D0C408A1C9C -name bass_aac.dll -parent 85519505-B2E6-4155-96D6-3C0D6C533801
 File ::B9D0AA67-3594-45D6-A1B1-8D07E9212B76 -name TipsOfTheDay.xml -parent 85519505-B2E6-4155-96D6-3C0D6C533801
 File ::DC8C4FE0-13AF-4EE5-ADD0-A03718CBFEC6 -name TipsOfTheDay_de.xml -parent 85519505-B2E6-4155-96D6-3C0D6C533801
+File ::F6726523-223C-4ECE-8B9A-56AF4A6594C5 -name bassopus.dll -parent 85519505-B2E6-4155-96D6-3C0D6C533801
+File ::B048EE09-B291-4DF2-9EEE-09EEC513A2C7 -name opusenc.exe -parent 85519505-B2E6-4155-96D6-3C0D6C533801
 File ::95542296-8E72-4D8D-8ACE-B7B6AB1080E3 -name D:/Projekte/Ares/trunk/build/Ares/ServiceStackLicence.txt -parent 36904AC1-ABF2-4646-9ECF-2C0CBC0BB8C5
 File ::CCC6C317-4CCE-44B9-9FE1-9C12E10D1373 -name D:/Projekte/Ares/trunk/build/Ares/HtmlRendererLicence.txt -parent 36904AC1-ABF2-4646-9ECF-2C0CBC0BB8C5
 FileGroup ::68676E85-DEAC-451E-9016-59D1A2300E9B -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows TarArchive ZipArchive} -name Player -parent FileGroups
@@ -413,6 +415,7 @@ File ::7CAF979B-3F34-4CFC-B3DD-E2CD09D46701 -name System.Data.SQLite.dll -parent
 File ::5EA75B8C-E8DA-496F-ADFD-23099CC9DF14 -name Ares.CommonGUI.dll -parent C17D4904-E0C0-4389-B37A-799FD29270B1
 File ::4B6440FE-2E4C-423F-BA7D-D8F35A3247CA -name libbassflac.so -parent C17D4904-E0C0-4389-B37A-799FD29270B1
 File ::35CBC3FE-D113-462E-A88F-D26079AA1CFC -name libbass_aac.so -parent C17D4904-E0C0-4389-B37A-799FD29270B1
+File ::1C9AAE8F-1DE9-4519-AFBD-145629B6FB51 -name libbassopus.so -parent C17D4904-E0C0-4389-B37A-799FD29270B1
 File ::0E8DB0B9-DFBE-4DEC-8A9E-1847C37B9DE5 -name D:/Projekte/Ares/trunk/build/Ares/HtmlRendererLicence.txt -parent 1B81444E-DFA2-4A82-92CB-E6F0771F06DA
 File ::4CFC768F-2DEA-4336-8EF7-48370D3D043D -name D:/Projekte/Ares/trunk/build/Ares/ServiceStackLicence.txt -parent 1B81444E-DFA2-4A82-92CB-E6F0771F06DA
 FileGroup ::6F323641-5378-46CA-9FDB-691D055EF20A -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows TarArchive ZipArchive} -name {Player Linux x64} -parent FileGroups
@@ -451,6 +454,7 @@ File ::68D57AEC-4507-48F8-BC39-FFABCC0796DB -name Ares.Player.resources.dll -par
 File ::DFB43E02-A83E-42F1-817F-DC116BA64675 -name Ares.Players.resources.dll -parent 366BEBCE-FBF4-457C-903A-38728457AF2A
 File ::272913B3-2CD0-44AF-B406-B3C56FFB1BF8 -name Ares.Playing.resources.dll -parent 366BEBCE-FBF4-457C-903A-38728457AF2A
 File ::FA9BD7D2-1850-4AEA-8F17-B9CC6F438DCC -name Ares.Settings.resources.dll -parent 366BEBCE-FBF4-457C-903A-38728457AF2A
+File ::DA864760-9278-405A-83AE-2A0E84939380 -name libbassopus.so -parent 986B21DE-AFAC-4755-8781-09C66B8FADB6
 File ::9571ACA5-B0E4-4DCF-ADD2-EBA6E2487096 -name D:/Projekte/Ares/trunk/build/Ares/HtmlRendererLicence.txt -parent 6F323641-5378-46CA-9FDB-691D055EF20A
 File ::79C72F23-7844-4DB3-B7CD-90F21C6F41A5 -name D:/Projekte/Ares/trunk/build/Ares/ServiceStackLicence.txt -parent 6F323641-5378-46CA-9FDB-691D055EF20A
 Component ::9007BFE7-966A-4832-9DD3-CC572BE38EC3 -setup Install -active Yes -platforms Windows -name Editor -parent Components
