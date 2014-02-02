@@ -234,7 +234,7 @@ namespace Ares.TagsImport
                 m_Monitor.SetIndeterminate(StringResources.AddingTags);
                 using (System.IO.StringWriter writer = new System.IO.StringWriter())
                 {
-                    Ares.Tags.TagsModule.GetTagsDB().FilesInterface.ImportDataFromGlobalDB(response.Data.TagsData, writer);
+                    Ares.Tags.TagsModule.GetTagsDB().FilesInterface.ImportDataFromGlobalDB(response.Data.TagsData, files, writer);
                     if (includeLog)
                     {
                         if (i > 0)

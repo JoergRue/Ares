@@ -333,7 +333,7 @@ namespace Ares.Tags
 
                         foreach (FileIdentification file in files)
                         {
-                            long id = finder.FindFileByIdentification(file);
+                            long id = finder.FindFileByIdentification(file, null, null);
                             // remember if found
                             if (id != -1)
                             {
@@ -431,9 +431,9 @@ namespace Ares.Tags
 
             public FileFinder(DbConnection connection, DbTransaction transaction)
             {
-                String queryByAcoustId = String.Format("SELECT {0} FROM {1} WHERE {2}=@AcoustId", Schema.ID_COLUMN, Schema.FILES_TABLE, Schema.ACOUST_ID_COLUMN);
-                String queryByArtistAndTitle = String.Format("SELECT {0} FROM {1} WHERE {2}=@Artist AND {3}=@Title",
-                    Schema.ID_COLUMN, Schema.FILES_TABLE, Schema.ARTIST_COLUMN, Schema.TITLE_COLUMN);
+                String queryByAcoustId = String.Format("SELECT {0}, {3} FROM {1} WHERE {2}=@AcoustId", Schema.ID_COLUMN, Schema.FILES_TABLE, Schema.ACOUST_ID_COLUMN, Schema.PATH_COLUMN);
+                String queryByArtistAndTitle = String.Format("SELECT {0}, {4} FROM {1} WHERE {2}=@Artist AND {3}=@Title",
+                    Schema.ID_COLUMN, Schema.FILES_TABLE, Schema.ARTIST_COLUMN, Schema.TITLE_COLUMN, Schema.PATH_COLUMN);
                 queryByAcoustIdCmd = DbUtils.CreateDbCommand(queryByAcoustId, connection, transaction);
                 queryByArtistAndTitleCmd = DbUtils.CreateDbCommand(queryByArtistAndTitle, connection, transaction);
                 acoustIdParam = queryByAcoustIdCmd.AddParameter("@AcoustId", System.Data.DbType.String);
@@ -448,7 +448,7 @@ namespace Ares.Tags
                 m_Disposed = true;
             }
 
-            public long FindFileByIdentification(FileIdentification file)
+            public long FindFileByIdentification(FileIdentification file, IList<String> filesToMatch, TextWriter logStream)
             {
                 if (m_Disposed)
                     throw new ObjectDisposedException("FileFinder");
@@ -457,10 +457,25 @@ namespace Ares.Tags
                 if (!String.IsNullOrEmpty(file.AcoustId))
                 {
                     acoustIdParam.Value = file.AcoustId;
-                    Object result = queryByAcoustIdCmd.ExecuteScalar();
-                    if (result != null)
+                    using (DbDataReader reader = queryByAcoustIdCmd.ExecuteReader())
                     {
-                        id = (Int64)result;
+                        while (reader.Read())
+                        {
+                            if (filesToMatch == null)
+                            {
+                                id = reader.GetInt64(0);
+                                break;
+                            }
+                            else if (filesToMatch.Contains(reader.GetString(1)))
+                            {
+                                id = reader.GetInt64(0);
+                                break;
+                            }
+                            else
+                            {
+                                logStream.WriteLine(String.Format("Info: found existing file {0} matching AcoustID - duplicate?", reader.GetString(1)));
+                            }
+                        }
                     }
                 }
                 // try to find by artist / title
@@ -468,10 +483,25 @@ namespace Ares.Tags
                 {
                     artistParam.Value = file.Artist;
                     titleParam.Value = file.Title;
-                    Object result = queryByArtistAndTitleCmd.ExecuteScalar();
-                    if (result != null)
+                    using (DbDataReader reader = queryByArtistAndTitleCmd.ExecuteReader())
                     {
-                        id = (Int64)result;
+                        while (reader.Read())
+                        {
+                            if (filesToMatch == null)
+                            {
+                                id = reader.GetInt64(0);
+                                break;
+                            }
+                            else if (filesToMatch.Contains(reader.GetString(1)))
+                            {
+                                id = reader.GetInt64(0);
+                                break;
+                            }
+                            else
+                            {
+                                logStream.WriteLine(String.Format("Info: found existing file {0} matching title and artist - duplicate?", reader.GetString(1)));
+                            }
+                        }
                     }
                 }
                 return id;
@@ -645,7 +675,7 @@ namespace Ares.Tags
             }
         }
 
-        public void ImportDataFromGlobalDB(TagsExportedData data, TextWriter logStream)
+        public void ImportDataFromGlobalDB(TagsExportedData data, IList<String> filesToMatch, TextWriter logStream)
         {
             if (data == null)
                 return;
@@ -656,7 +686,7 @@ namespace Ares.Tags
             }
             try
             {
-                ImportExportedData(data, logStream, Schema.GLOBAL_DB_USER);
+                ImportExportedData(data, filesToMatch, logStream, Schema.GLOBAL_DB_USER);
             }
             catch (System.Runtime.Serialization.SerializationException ex)
             {
@@ -705,7 +735,7 @@ namespace Ares.Tags
         private void DoImportDatabase(String filePath, TextWriter logStream)
         {
             TagsExportedData data = ReadTagsExportedData(filePath);
-            ImportExportedData(data, logStream, System.IO.Path.GetFileName(filePath));
+            ImportExportedData(data, null, logStream, System.IO.Path.GetFileName(filePath));
         }
 
         private TagsExportedData ReadTagsExportedData(String filePath)
@@ -717,7 +747,7 @@ namespace Ares.Tags
             }
         }
 
-        private void ImportExportedData(TagsExportedData data, TextWriter logStream, String user)
+        private void ImportExportedData(TagsExportedData data, IList<String> filesToMatch, TextWriter logStream, String user)
         {
             if (data == null)
                 return;
@@ -729,7 +759,7 @@ namespace Ares.Tags
                     return;
 
                 LocalDBImporter helper = new LocalDBImporter(this, m_Connection, transaction, logStream);
-                helper.ImportExportedData(data, user);
+                helper.ImportExportedData(data, filesToMatch, user);
 
                 transaction.Commit();
             }            
@@ -749,7 +779,7 @@ namespace Ares.Tags
                     return;
 
                 GlobalDBImporter helper = new GlobalDBImporter(this, m_Connection, transaction, logStream);
-                helper.ImportExportedData(data, user, out nrOfNewFiles, out nrOfNewTags);
+                helper.ImportExportedData(data, null, user, out nrOfNewFiles, out nrOfNewTags);
 
                 transaction.Commit();
             }
@@ -775,18 +805,18 @@ namespace Ares.Tags
                 m_Connection = connection;
             }
 
-            public void ImportExportedData(TagsExportedData data, String user)
+            public void ImportExportedData(TagsExportedData data, IList<String> filesToMatch, String user)
             {
                 int newFiles, newTags;
-                ImportExportedData(data, user, out newFiles, out newTags);
+                ImportExportedData(data, filesToMatch, user, out newFiles, out newTags);
             }
 
-            public void ImportExportedData(TagsExportedData data, String user, out int nrOfNewFiles, out int nrOfNewTags)
+            public void ImportExportedData(TagsExportedData data, IList<String> filesToMatch, String user, out int nrOfNewFiles, out int nrOfNewTags)
             {
                 ImportLanguages(data.Languages);
                 ImportCategories(data.Categories);
                 ImportTags(data.Tags, out nrOfNewTags);
-                ImportFiles(data.Files, user, out nrOfNewFiles);
+                ImportFiles(data.Files, filesToMatch, user, out nrOfNewFiles);
                 ImportFileTags(data.TagsForFiles, user);
                 ImportRemovedTags(data.RemovedTags, user);
             }
@@ -1111,7 +1141,7 @@ namespace Ares.Tags
                 ImportTranslations(te.Names, tagId, Schema.TAGNAMES_TABLE, Schema.TAG_COLUMN, Schema.LANGUAGE_COLUMN, "tag");
             }
 
-            private void ImportFiles(List<FileIdentification> files, String user, out int nrOfNewFiles)
+            private void ImportFiles(List<FileIdentification> files, IList<String> filesToMatch, String user, out int nrOfNewFiles)
             {
                 nrOfNewFiles = 0;
                 if (files == null)
@@ -1158,7 +1188,7 @@ namespace Ares.Tags
                             // not found? Try to find through acoustId or artist / title.
                             if (existingId == null)
                             {
-                                long foundId = finder.FindFileByIdentification(file);
+                                long foundId = finder.FindFileByIdentification(file, filesToMatch, m_LogStream);
                                 if (foundId != -1)
                                     existingId = foundId;
                             }

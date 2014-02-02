@@ -572,7 +572,7 @@ namespace Ares.Tags
         /// Adds entries retrieved from the global database to the currently
         /// opened database.
         /// </summary>
-        void ImportDataFromGlobalDB(TagsExportedData data, System.IO.TextWriter logStream);
+        void ImportDataFromGlobalDB(TagsExportedData data, IList<String> filesToMatch, System.IO.TextWriter logStream);
 
         /// <summary>
         /// Exports the part of the database relevant to the given files.
