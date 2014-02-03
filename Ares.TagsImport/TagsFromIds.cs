@@ -42,10 +42,27 @@ namespace Ares.TagsImport
                 });
         }
 
+        public static Task<int> FindTagsByIdsAsync(Ares.ModelInfo.IProgressMonitor progressMonitor, IList<FileIdentification> files, IList<String> filesToSearch, CancellationToken token)
+        {
+            return Task.Factory.StartNew(() =>
+                {
+                    TagsFromIds processor = new TagsFromIds(progressMonitor, token);
+                    return processor.DoFindTags(files, filesToSearch);
+                });
+        }
+
         private TagsFromIds(Ares.ModelInfo.IProgressMonitor progressMonitor, CancellationToken token)
         {
             m_Monitor = progressMonitor;
             m_Token = token;
+        }
+
+        private int DoFindTags(IList<FileIdentification> files, IList<String> filesToSearch)
+        {
+            m_Monitor.SetProgress(90, StringResources.AddingTags);
+            m_Token.ThrowIfCancellationRequested();
+            var dbWrite = Ares.Tags.TagsModule.GetTagsDB().WriteInterface;
+            return dbWrite.AssignTagsByIdentification(files, filesToSearch);
         }
 
         private int DoSetTags(IList<FileIdentification> files, int languageId, bool interpret, bool album)

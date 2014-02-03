@@ -64,24 +64,23 @@ namespace Ares.Editor.ElementEditors
             this.titleLabel = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.musicBrainzButton = new System.Windows.Forms.Button();
+            this.findInDBButton = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // languageBox
             // 
-            resources.ApplyResources(this.languageBox, "languageBox");
             this.languageBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.languageBox.FormattingEnabled = true;
+            resources.ApplyResources(this.languageBox, "languageBox");
             this.languageBox.Name = "languageBox";
-            this.toolTip1.SetToolTip(this.languageBox, resources.GetString("languageBox.ToolTip"));
             this.languageBox.SelectedIndexChanged += new System.EventHandler(this.languageBox_SelectedIndexChanged);
             // 
             // label1
             // 
             resources.ApplyResources(this.label1, "label1");
             this.label1.Name = "label1";
-            this.toolTip1.SetToolTip(this.label1, resources.GetString("label1.ToolTip"));
             // 
             // groupBox2
             // 
@@ -89,16 +88,14 @@ namespace Ares.Editor.ElementEditors
             this.groupBox2.Controls.Add(this.tagsBox);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.TabStop = false;
-            this.toolTip1.SetToolTip(this.groupBox2, resources.GetString("groupBox2.ToolTip"));
             // 
             // tagsBox
             // 
-            resources.ApplyResources(this.tagsBox, "tagsBox");
             this.tagsBox.CheckOnClick = true;
+            resources.ApplyResources(this.tagsBox, "tagsBox");
             this.tagsBox.FormattingEnabled = true;
             this.tagsBox.MultiColumn = true;
             this.tagsBox.Name = "tagsBox";
-            this.toolTip1.SetToolTip(this.tagsBox, resources.GetString("tagsBox.ToolTip"));
             this.tagsBox.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.tagsBox_ItemCheck);
             // 
             // groupBox1
@@ -107,21 +104,18 @@ namespace Ares.Editor.ElementEditors
             this.groupBox1.Controls.Add(this.categoriesBox);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
-            this.toolTip1.SetToolTip(this.groupBox1, resources.GetString("groupBox1.ToolTip"));
             // 
             // categoriesBox
             // 
             resources.ApplyResources(this.categoriesBox, "categoriesBox");
             this.categoriesBox.FormattingEnabled = true;
             this.categoriesBox.Name = "categoriesBox";
-            this.toolTip1.SetToolTip(this.categoriesBox, resources.GetString("categoriesBox.ToolTip"));
             this.categoriesBox.SelectedIndexChanged += new System.EventHandler(this.categoriesBox_SelectedIndexChanged);
             // 
             // addTagButton
             // 
             resources.ApplyResources(this.addTagButton, "addTagButton");
             this.addTagButton.Name = "addTagButton";
-            this.toolTip1.SetToolTip(this.addTagButton, resources.GetString("addTagButton.ToolTip"));
             this.addTagButton.UseVisualStyleBackColor = true;
             this.addTagButton.Click += new System.EventHandler(this.addTagButton_Click);
             // 
@@ -161,7 +155,6 @@ namespace Ares.Editor.ElementEditors
             // 
             resources.ApplyResources(this.titleLabel, "titleLabel");
             this.titleLabel.Name = "titleLabel";
-            this.toolTip1.SetToolTip(this.titleLabel, resources.GetString("titleLabel.ToolTip"));
             // 
             // musicBrainzButton
             // 
@@ -171,10 +164,19 @@ namespace Ares.Editor.ElementEditors
             this.musicBrainzButton.UseVisualStyleBackColor = true;
             this.musicBrainzButton.Click += new System.EventHandler(this.musicBrainzButton_Click);
             // 
+            // findInDBButton
+            // 
+            resources.ApplyResources(this.findInDBButton, "findInDBButton");
+            this.findInDBButton.Name = "findInDBButton";
+            this.toolTip1.SetToolTip(this.findInDBButton, resources.GetString("findInDBButton.ToolTip"));
+            this.findInDBButton.UseVisualStyleBackColor = true;
+            this.findInDBButton.Click += new System.EventHandler(this.findInDBButton_Click);
+            // 
             // FileTagsEditor
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.findInDBButton);
             this.Controls.Add(this.musicBrainzButton);
             this.Controls.Add(this.titleLabel);
             this.Controls.Add(this.id3Button);
@@ -187,7 +189,6 @@ namespace Ares.Editor.ElementEditors
             this.Controls.Add(this.languageBox);
             this.Controls.Add(this.label1);
             this.Name = "FileTagsEditor";
-            this.toolTip1.SetToolTip(this, resources.GetString("$this.ToolTip"));
             this.groupBox2.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -211,5 +212,6 @@ namespace Ares.Editor.ElementEditors
         private System.Windows.Forms.Label titleLabel;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Button musicBrainzButton;
+        private System.Windows.Forms.Button findInDBButton;
     }
 }

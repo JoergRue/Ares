@@ -550,4 +550,7 @@ You should adapt some settings first.</value>
   <data name="BassOpusLoadFail" xml:space="preserve">
     <value>Could not load BASS Opus add-on library. Installation problem?</value>
   </data>
+  <data name="FindingFilesInDB" xml:space="preserve">
+    <value>Searching files in DB ...</value>
+  </data>
 </root>

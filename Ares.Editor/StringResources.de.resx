@@ -551,4 +551,7 @@ Soll es jetzt gespeichert werden?</value>
   <data name="BassOpusLoadFail" xml:space="preserve">
     <value>Konnte BASS Opus AddOn-Library nicht laden. Installationsproblem?</value>
   </data>
+  <data name="FindingFilesInDB" xml:space="preserve">
+    <value>Suche Dateien in Datenbank ...</value>
+  </data>
 </root>

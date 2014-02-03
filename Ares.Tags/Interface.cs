@@ -427,6 +427,13 @@ namespace Ares.Tags
         /// Cleans the database, removing stale entries.
         /// </summary>
         void CleanupDB(System.IO.TextWriter logStream, String musicPath, int languageId);
+
+        /// <summary>
+        /// Assigns tags to files, finding the files by their identification instead of 
+        /// their paths. Thus usable for duplicates in the DB or moved files.
+        /// </summary>
+        /// <returns>the number of found files</returns>
+        int AssignTagsByIdentification(IList<FileIdentification> identifications, IList<String> files);
     }
 
     /// <summary>

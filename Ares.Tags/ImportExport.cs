@@ -419,95 +419,6 @@ namespace Ares.Tags
             return data;
         }
 
-        private class FileFinder : IDisposable
-        {
-            private DbCommand queryByAcoustIdCmd;
-            private DbCommand queryByArtistAndTitleCmd;
-            private DbParameter acoustIdParam;
-            private DbParameter artistParam;
-            private DbParameter titleParam;
-
-            private bool m_Disposed = false;
-
-            public FileFinder(DbConnection connection, DbTransaction transaction)
-            {
-                String queryByAcoustId = String.Format("SELECT {0}, {3} FROM {1} WHERE {2}=@AcoustId", Schema.ID_COLUMN, Schema.FILES_TABLE, Schema.ACOUST_ID_COLUMN, Schema.PATH_COLUMN);
-                String queryByArtistAndTitle = String.Format("SELECT {0}, {4} FROM {1} WHERE {2}=@Artist AND {3}=@Title",
-                    Schema.ID_COLUMN, Schema.FILES_TABLE, Schema.ARTIST_COLUMN, Schema.TITLE_COLUMN, Schema.PATH_COLUMN);
-                queryByAcoustIdCmd = DbUtils.CreateDbCommand(queryByAcoustId, connection, transaction);
-                queryByArtistAndTitleCmd = DbUtils.CreateDbCommand(queryByArtistAndTitle, connection, transaction);
-                acoustIdParam = queryByAcoustIdCmd.AddParameter("@AcoustId", System.Data.DbType.String);
-                artistParam = queryByArtistAndTitleCmd.AddParameter("@Artist", System.Data.DbType.String);
-                titleParam = queryByArtistAndTitleCmd.AddParameter("@Title", System.Data.DbType.String);
-            }
-
-            public void Dispose()
-            {
-                queryByAcoustIdCmd.Dispose();
-                queryByArtistAndTitleCmd.Dispose();
-                m_Disposed = true;
-            }
-
-            public long FindFileByIdentification(FileIdentification file, IList<String> filesToMatch, TextWriter logStream)
-            {
-                if (m_Disposed)
-                    throw new ObjectDisposedException("FileFinder");
-                long id = -1;
-                // try to find by acoust Id
-                if (!String.IsNullOrEmpty(file.AcoustId))
-                {
-                    acoustIdParam.Value = file.AcoustId;
-                    using (DbDataReader reader = queryByAcoustIdCmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            if (filesToMatch == null)
-                            {
-                                id = reader.GetInt64(0);
-                                break;
-                            }
-                            else if (filesToMatch.Contains(reader.GetString(1)))
-                            {
-                                id = reader.GetInt64(0);
-                                break;
-                            }
-                            else
-                            {
-                                logStream.WriteLine(String.Format("Info: found existing file {0} matching AcoustID - duplicate?", reader.GetString(1)));
-                            }
-                        }
-                    }
-                }
-                // try to find by artist / title
-                if (id == -1 && !String.IsNullOrEmpty(file.Artist) && !String.IsNullOrEmpty(file.Title))
-                {
-                    artistParam.Value = file.Artist;
-                    titleParam.Value = file.Title;
-                    using (DbDataReader reader = queryByArtistAndTitleCmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            if (filesToMatch == null)
-                            {
-                                id = reader.GetInt64(0);
-                                break;
-                            }
-                            else if (filesToMatch.Contains(reader.GetString(1)))
-                            {
-                                id = reader.GetInt64(0);
-                                break;
-                            }
-                            else
-                            {
-                                logStream.WriteLine(String.Format("Info: found existing file {0} matching title and artist - duplicate?", reader.GetString(1)));
-                            }
-                        }
-                    }
-                }
-                return id;
-            }
-        }
-
         private void FillExportedData(TagsExportedData data, DbTransaction transaction, Dictionary<long, long> fileIdMap, bool includePath)
         {
             // file information
@@ -1806,4 +1717,92 @@ namespace Ares.Tags
 
     }
 
+    class FileFinder : IDisposable
+    {
+        private DbCommand queryByAcoustIdCmd;
+        private DbCommand queryByArtistAndTitleCmd;
+        private DbParameter acoustIdParam;
+        private DbParameter artistParam;
+        private DbParameter titleParam;
+
+        private bool m_Disposed = false;
+
+        public FileFinder(DbConnection connection, DbTransaction transaction)
+        {
+            String queryByAcoustId = String.Format("SELECT {0}, {3} FROM {1} WHERE {2}=@AcoustId", Schema.ID_COLUMN, Schema.FILES_TABLE, Schema.ACOUST_ID_COLUMN, Schema.PATH_COLUMN);
+            String queryByArtistAndTitle = String.Format("SELECT {0}, {4} FROM {1} WHERE {2}=@Artist AND {3}=@Title",
+                Schema.ID_COLUMN, Schema.FILES_TABLE, Schema.ARTIST_COLUMN, Schema.TITLE_COLUMN, Schema.PATH_COLUMN);
+            queryByAcoustIdCmd = DbUtils.CreateDbCommand(queryByAcoustId, connection, transaction);
+            queryByArtistAndTitleCmd = DbUtils.CreateDbCommand(queryByArtistAndTitle, connection, transaction);
+            acoustIdParam = queryByAcoustIdCmd.AddParameter("@AcoustId", System.Data.DbType.String);
+            artistParam = queryByArtistAndTitleCmd.AddParameter("@Artist", System.Data.DbType.String);
+            titleParam = queryByArtistAndTitleCmd.AddParameter("@Title", System.Data.DbType.String);
+        }
+
+        public void Dispose()
+        {
+            queryByAcoustIdCmd.Dispose();
+            queryByArtistAndTitleCmd.Dispose();
+            m_Disposed = true;
+        }
+
+        public long FindFileByIdentification(FileIdentification file, IList<String> filesToMatch, TextWriter logStream)
+        {
+            if (m_Disposed)
+                throw new ObjectDisposedException("FileFinder");
+            long id = -1;
+            // try to find by acoust Id
+            if (!String.IsNullOrEmpty(file.AcoustId))
+            {
+                acoustIdParam.Value = file.AcoustId;
+                using (DbDataReader reader = queryByAcoustIdCmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        if (filesToMatch == null)
+                        {
+                            id = reader.GetInt64(0);
+                            break;
+                        }
+                        else if (filesToMatch.Contains(reader.GetString(1)))
+                        {
+                            id = reader.GetInt64(0);
+                            break;
+                        }
+                        else if (logStream != null)
+                        {
+                            logStream.WriteLine(String.Format("Info: found existing file {0} matching AcoustID - duplicate?", reader.GetString(1)));
+                        }
+                    }
+                }
+            }
+            // try to find by artist / title
+            if (id == -1 && !String.IsNullOrEmpty(file.Artist) && !String.IsNullOrEmpty(file.Title))
+            {
+                artistParam.Value = file.Artist;
+                titleParam.Value = file.Title;
+                using (DbDataReader reader = queryByArtistAndTitleCmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        if (filesToMatch == null)
+                        {
+                            id = reader.GetInt64(0);
+                            break;
+                        }
+                        else if (filesToMatch.Contains(reader.GetString(1)))
+                        {
+                            id = reader.GetInt64(0);
+                            break;
+                        }
+                        else if (logStream != null)
+                        {
+                            logStream.WriteLine(String.Format("Info: found existing file {0} matching title and artist - duplicate?", reader.GetString(1)));
+                        }
+                    }
+                }
+            }
+            return id;
+        }
+    }
 }

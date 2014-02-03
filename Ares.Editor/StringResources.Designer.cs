@@ -423,6 +423,15 @@ namespace Ares.Editor {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Searching files in DB ... ähnelt.
+        /// </summary>
+        internal static string FindingFilesInDB {
+            get {
+                return ResourceManager.GetString("FindingFilesInDB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die http://sourceforge.net/p/aresrpg/discussion/English/ ähnelt.
         /// </summary>
         internal static string ForumPage {

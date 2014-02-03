@@ -372,6 +372,26 @@ namespace Ares.Tags
             }
         }
 
+        public int AssignTagsByIdentification(IList<FileIdentification> identifications, IList<String> files)
+        {
+            if (m_Connection == null)
+            {
+                throw new TagsDbException("No Connection to DB file!");
+            }
+            try
+            {
+                return DoAssignTagsByIdentification(identifications, files);
+            }
+            catch (System.Data.DataException ex)
+            {
+                throw new TagsDbException(ex.Message, ex);
+            }
+            catch (DbException ex)
+            {
+                throw new TagsDbException(ex.Message, ex);
+            }
+        }
+
         private void DoAddFileTags(DbTransaction transaction, String path, IList<int> tagIds)
         {
             if (tagIds.Count == 0)
@@ -902,6 +922,54 @@ namespace Ares.Tags
                 // Done
                 transaction.Commit();
             }
+        }
+
+        private int DoAssignTagsByIdentification(IList<FileIdentification> identifications, IList<String> files)
+        {
+            if (identifications == null || files == null || identifications.Count == 0)
+                return 0;
+            if (identifications.Count != files.Count)
+                return 0;
+
+            int count = 0;
+            using (DbTransaction transaction = m_Connection.BeginTransaction())
+            {
+                using (FileFinder finder = new FileFinder(m_Connection, transaction))
+                {
+                    String stmtFmt = "INSERT INTO {0} ({1}, {2}, {3}) SELECT @NewId, {2}, {3} FROM {0} WHERE {1}=@OldId";
+                    String insertTagsCmdString = String.Format(stmtFmt, Schema.FILETAGS_TABLE, Schema.FILE_COLUMN, Schema.TAG_COLUMN, Schema.USER_COLUMN);
+                    String removeTagsCmdString = String.Format(stmtFmt, Schema.REMOVEDTAGS_TABLE, Schema.FILE_COLUMN, Schema.TAG_COLUMN, Schema.USER_COLUMN);
+                    using (DbCommand insertTagsCmd = DbUtils.CreateDbCommand(insertTagsCmdString, m_Connection, transaction),
+                           removeTagsCmd = DbUtils.CreateDbCommand(removeTagsCmdString, m_Connection, transaction))
+                    {
+                        DbParameter insertNewIdParam = insertTagsCmd.AddParameter("@NewId", System.Data.DbType.Int64);
+                        DbParameter removeNewIdParam = removeTagsCmd.AddParameter("@NewId", System.Data.DbType.Int64);
+                        DbParameter insertOldIdParam = insertTagsCmd.AddParameter("@OldId", System.Data.DbType.Int64);
+                        DbParameter removeOldIdParam = removeTagsCmd.AddParameter("@OldId", System.Data.DbType.Int64);
+                        for (int i = 0; i < identifications.Count; ++i)
+                        {
+                            if (identifications[i].Id == -1)
+                                continue; // no identification available
+                            long foundId = finder.FindFileByIdentification(identifications[i], null, null);
+                            if (foundId != -1)
+                            {
+                                long newId = InsertOrFindFile(transaction, files[i]);
+                                if (foundId == newId)
+                                    continue;
+                                insertNewIdParam.Value = newId;
+                                insertOldIdParam.Value = foundId;
+                                insertTagsCmd.ExecuteNonQuery();
+                                removeNewIdParam.Value = newId;
+                                removeOldIdParam.Value = foundId;
+                                removeTagsCmd.ExecuteNonQuery();
+                                ++count;
+                            }
+                        }
+                    }
+                }
+                transaction.Commit();
+            }
+            return count;
         }
 
         private static void AssignStringOrNull(DbParameter param, String value)
