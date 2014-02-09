@@ -1088,7 +1088,7 @@ namespace Ares.Tags
                             String filePath = String.Empty;
                             if (fileExchange != null)
                             {
-                                filePath = fileExchange.RelativePath;
+                                filePath = fileExchange.RelativePath.Replace('\\', System.IO.Path.DirectorySeparatorChar);
                             }
                             Object existingId = null;
                             if (user != Schema.GLOBAL_DB_USER && !String.IsNullOrEmpty(filePath))
