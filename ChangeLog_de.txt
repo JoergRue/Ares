@@ -1,3 +1,19 @@
+Version 2.5.0
+----------------------------------------------------------------------------------
+- Allgemein: Tags können auch mit Kategorie-übergreifendem UND verknüpft werden
+- Allgemein: Überblenden innerhalb von Musiklisten möglich
+- Allgemein: Optionen für Blenden, wenn man die Musik manuell ändert
+- Allgemein: Opus-Audioformat kann für Dateien und Streaming verwendet werden
+- Editor: Tag-Filter kann so eingestellt werden, dass nur Dateien ohne Tags
+  angezeigt werden
+- Editor: Tags für Dateien können in der lokalen Datenbasis gesucht werden
+  (z.B. nach Verschieben der Datei außerhalb des Editors)  
+- Editor: Bugfix: Wenn ein Musikstück in der Datenbasis mehrfach unter 
+  verschiedenen Pfaden vorhanden war, konnten nur für die erste Datei Tags 
+  heruntergeladen werden
+- Editor: Bugfix: Export von Projekten mit Tags funktionierte nicht richtig für 
+  Dateien ohne AcoustID
+
 Version 2.4.0
 ----------------------------------------------------------------------------------
 - Allgemein: Unterstützung von IPv6

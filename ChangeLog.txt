@@ -1,3 +1,17 @@
+Version 2.5.0
+----------------------------------------------------------------------------------
+- General: Tags can be combined with AND across categories
+- General: Crossfading possible within music lists
+- General: Options for fading when the music is changed manually
+- General: Opus format can be used for files and for streaming
+- Editor: Tag filter can be set so that only files without any tags are shown
+- Editor: Tags for files can be searched in local database (e.g. after moving
+  a file outside the editor)
+- Editor: Bugfix: if a music title was several times in the DB under different 
+  paths, tags could only be downloaded for the first file
+- Editor: Bugfix: export of projects with tags didn't work correctly for files
+  which had no AcoustIds
+  
 Version 2.4.0
 ----------------------------------------------------------------------------------
 - General: Support for IPv6
