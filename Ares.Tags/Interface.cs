@@ -186,7 +186,7 @@ namespace Ares.Tags
     /// <summary>
     /// Wrapper around exchanged data.
     /// </summary>
-    public class TagsExportedData
+    public class TagsExportedData<T> where T : FileIdentification
     {
         /// <summary>
         /// Languages in the data.
@@ -203,7 +203,7 @@ namespace Ares.Tags
         /// <summary>
         /// Files (music titles) in the data.
         /// </summary>
-        public List<FileIdentification> Files { get; set; }
+        public List<T> Files { get; set; }
         /// <summary>
         /// Tags which are assigned to the files.
         /// </summary>
@@ -212,36 +212,6 @@ namespace Ares.Tags
         /// Tags which have been removed from the files ("downvoting").
         /// </summary>
         public List<TagsForFileExchange> RemovedTags { get; set; }
-    }
-
-    public class FileExchange : FileIdentification
-    {
-        public String RelativePath { get; set; }
-    }
-
-    public class TagsImportedFileData
-    {
-        public List<LanguageExchange> Languages { get; set; }
-        public List<CategoryExchange> Categories { get; set; }
-        public List<TagExchange> Tags { get; set; }
-        public List<FileExchange> Files { get; set; }
-        public List<TagsForFileExchange> TagsForFiles { get; set; }
-        public List<TagsForFileExchange> RemovedTags { get; set; }
-
-        public TagsExportedData MakeTagsExportedData()
-        {
-            var converted = new TagsExportedData { Languages = this.Languages, Categories = this.Categories, Tags = this.Tags, TagsForFiles = this.TagsForFiles, RemovedTags = this.RemovedTags };
-            if (Files != null)
-            {
-                var files = new List<FileIdentification>();
-                foreach (FileExchange file in Files)
-                {
-                    files.Add(file);
-                }
-                converted.Files = files;
-            }
-            return converted;
-        }
     }
 
     #endregion
@@ -579,7 +549,7 @@ namespace Ares.Tags
         /// Adds entries retrieved from the global database to the currently
         /// opened database.
         /// </summary>
-        void ImportDataFromGlobalDB(TagsExportedData data, IList<String> filesToMatch, System.IO.TextWriter logStream);
+        void ImportDataFromGlobalDB(TagsExportedData<FileIdentification> data, IList<String> filesToMatch, System.IO.TextWriter logStream);
 
         /// <summary>
         /// Exports the part of the database relevant to the given files.
@@ -590,13 +560,13 @@ namespace Ares.Tags
         /// Exports the part of the database relevant to the given files. 
         /// Does not export parts which come from the global database.
         /// </summary>
-        TagsExportedData ExportDatabaseForGlobalDB(IList<String> filePaths);
+        TagsExportedData<FileIdentification> ExportDatabaseForGlobalDB(IList<String> filePaths);
 
         /// <summary>
         /// Exports the part of the database relevant to the given files. 
         /// Does not export parts which come from the global database.
         /// </summary>
-        TagsExportedData ExportDatabaseForGlobalDB(IList<int> fileIds);
+        TagsExportedData<FileIdentification> ExportDatabaseForGlobalDB(IList<int> fileIds);
 
         /// <summary>
         /// The default file name for the tags database.
@@ -612,12 +582,12 @@ namespace Ares.Tags
         /// <summary>
         /// Exports data for the given files.
         /// </summary>
-        TagsExportedData ExportDataForFiles(IList<FileIdentification> files, out int nrOfFoundFiles);
+        TagsExportedData<FileIdentification> ExportDataForFiles(IList<FileIdentification> files, out int nrOfFoundFiles);
 
         /// <summary>
         /// Import data from a client (upload).
         /// </summary>
-        void ImportDataFromClient(TagsExportedData data, String userId, System.IO.TextWriter logStream, out int nrOfNewFiles, out int nrOfNewTags);
+        void ImportDataFromClient(TagsExportedData<FileIdentification> data, String userId, System.IO.TextWriter logStream, out int nrOfNewFiles, out int nrOfNewTags);
     }
 
     public class Artist

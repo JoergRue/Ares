@@ -107,7 +107,7 @@ namespace Ares.TagsImport
 
                 var request = new RestSharp.RestRequest(GlobalDb.UploadPath, RestSharp.Method.POST);
                 request.RequestFormat = RestSharp.DataFormat.Json;
-                String serializedTagsData = ServiceStack.Text.TypeSerializer.SerializeToString<Ares.Tags.TagsExportedData>(exportedData);
+                String serializedTagsData = ServiceStack.Text.TypeSerializer.SerializeToString<Ares.Tags.TagsExportedData<Ares.Tags.FileIdentification>>(exportedData);
                 request.AddParameter("TagsData", serializedTagsData);
                 request.AddParameter("User", ObfuscateUser(user));
                 request.AddParameter("IncludeLog", includeLog);
@@ -260,7 +260,7 @@ namespace Ares.TagsImport
     {
         public int Status { get; set; }
         public String ErrorMessage { get; set; }
-        public Ares.Tags.TagsExportedData TagsData { get; set; }
+        public Ares.Tags.TagsExportedData<Ares.Tags.FileIdentification> TagsData { get; set; }
         public int NrOfFoundFiles { get; set; }
     }
 

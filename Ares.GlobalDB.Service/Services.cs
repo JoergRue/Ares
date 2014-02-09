@@ -28,7 +28,7 @@ namespace Ares.GlobalDB.Services
     [Route("/Upload")]
     public class Upload : ServiceStack.ServiceHost.IReturn<UploadResponse>
     {
-        public Ares.Tags.TagsExportedData TagsData { get; set; }
+        public Ares.Tags.TagsExportedData<Ares.Tags.FileIdentification> TagsData { get; set; }
         public String User { get; set; }
         public bool IncludeLog { get; set; }
         public bool Test { get; set; }
@@ -139,7 +139,7 @@ namespace Ares.GlobalDB.Services
     {
         public int Status { get; set; }
         public String ErrorMessage { get; set; }
-        public Ares.Tags.TagsExportedData TagsData { get; set; }
+        public Ares.Tags.TagsExportedData<Ares.Tags.FileIdentification> TagsData { get; set; }
         public int NrOfFoundFiles { get; set; }
     }
 
@@ -180,7 +180,7 @@ namespace Ares.GlobalDB.Services
             {
                 response.Status = 1;
                 response.ErrorMessage = ex.Message;
-                response.TagsData = new Ares.Tags.TagsExportedData();
+                response.TagsData = new Ares.Tags.TagsExportedData<Ares.Tags.FileIdentification>();
             }
             return response;
         }

@@ -28,6 +28,11 @@ using System.Data.Common;
 namespace Ares.Tags
 {
 
+    class FileExchange : FileIdentification
+    {
+        public String RelativePath { get; set; }
+    }
+
     partial class SQLiteTagsDB
     {
 
@@ -61,7 +66,7 @@ namespace Ares.Tags
             }
         }
 
-        public TagsExportedData ExportDatabaseForGlobalDB(IList<String> filePaths)
+        public TagsExportedData<FileIdentification> ExportDatabaseForGlobalDB(IList<String> filePaths)
         {
             if (filePaths == null)
             {
@@ -73,7 +78,7 @@ namespace Ares.Tags
             }
             try
             {
-                return CreateExportedData(filePaths, true);
+                return CreateExportedData<FileIdentification>(filePaths, true);
             }
             catch (System.Data.DataException ex)
             {
@@ -85,7 +90,7 @@ namespace Ares.Tags
             }
         }
 
-        public TagsExportedData ExportDatabaseForGlobalDB(IList<int> fileIds)
+        public TagsExportedData<FileIdentification> ExportDatabaseForGlobalDB(IList<int> fileIds)
         {
             if (fileIds == null)
             {
@@ -97,7 +102,7 @@ namespace Ares.Tags
             }
             try
             {
-                return CreateExportedData(fileIds, true);
+                return CreateExportedData<FileIdentification>(fileIds, true);
             }
             catch (System.Data.DataException ex)
             {
@@ -110,12 +115,12 @@ namespace Ares.Tags
         }
 
         // method from global database
-        public TagsExportedData ExportDataForFiles(IList<FileIdentification> files, out int foundFiles)
+        public TagsExportedData<FileIdentification> ExportDataForFiles(IList<FileIdentification> files, out int foundFiles)
         {
             if (files == null || files.Count == 0)
             {
                 foundFiles = 0;
-                return new TagsExportedData();
+                return new TagsExportedData<FileIdentification>();
             }
             if (m_Connection == null)
             {
@@ -137,11 +142,11 @@ namespace Ares.Tags
 
         private void DoExportDatabase(IList<String> filePaths, String targetFileName)
         {
-            TagsExportedData data = CreateExportedData(filePaths, false);
+            TagsExportedData<FileExchange> data = CreateExportedData<FileExchange>(filePaths, false);
             WriteDataToFile(data, targetFileName);
         }
 
-        private void WriteDataToFile(TagsExportedData data, String targetFileName)
+        private void WriteDataToFile(TagsExportedData<FileExchange> data, String targetFileName)
         {
             using (StreamWriter writer = new StreamWriter(targetFileName, false, Encoding.UTF8))
             {
@@ -160,9 +165,9 @@ namespace Ares.Tags
         }
 
 
-        private TagsExportedData CreateExportedData(IList<String> filePaths, bool excludeGlobalDBData)
+        private TagsExportedData<T> CreateExportedData<T>(IList<String> filePaths, bool excludeGlobalDBData) where T : FileIdentification
         {
-            TagsExportedData data = new TagsExportedData();
+            TagsExportedData<T> data = new TagsExportedData<T>();
             
             // Use temporary table with all file IDs. This is so we don't have to
             // use a "where File.Path in (........)" in each query or even manually
@@ -191,9 +196,9 @@ namespace Ares.Tags
             return data;
         }
 
-        private TagsExportedData CreateExportedData(IList<int> fileIds, bool excludeGlobalDBData)
+        private TagsExportedData<T> CreateExportedData<T>(IList<int> fileIds, bool excludeGlobalDBData) where T : FileIdentification
         {
-            TagsExportedData data = new TagsExportedData();
+            TagsExportedData<T> data = new TagsExportedData<T>();
 
             // Use temporary table with all file IDs. This is so we don't have to
             // use a "where File.Path in (........)" in each query or even manually
@@ -222,7 +227,7 @@ namespace Ares.Tags
             return data;
         }
 
-        private void DoCreateExportedData(TagsExportedData data, DbTransaction transaction, bool excludeGlobalDBData)
+        private void DoCreateExportedData<T>(TagsExportedData<T> data, DbTransaction transaction, bool excludeGlobalDBData) where T : FileIdentification
         {
             FindTagsForExport(transaction, excludeGlobalDBData);
 
@@ -282,7 +287,7 @@ namespace Ares.Tags
             }
             data.RemovedTags = removedTags;
 
-            FillExportedData(data, transaction, null, !excludeGlobalDBData);
+            FillExportedData(data, transaction, null);
         }
 
         private void FindTagsForExport(DbTransaction transaction, bool excludeGlobalDBData)
@@ -312,9 +317,9 @@ namespace Ares.Tags
             }
         }
 
-        TagsExportedData CreateExportedData(IList<FileIdentification> files, out int foundFiles)
+        TagsExportedData<FileIdentification> CreateExportedData(IList<FileIdentification> files, out int foundFiles)
         {
-            TagsExportedData data = new TagsExportedData();
+            TagsExportedData<FileIdentification> data = new TagsExportedData<FileIdentification>();
             foundFiles = 0;
 
             using (DbTransaction transaction = m_Connection.BeginTransaction())
@@ -412,20 +417,20 @@ namespace Ares.Tags
                 }
                 data.RemovedTags = removedTags;
 
-                FillExportedData(data, transaction, fileIdMap, false);
+                FillExportedData(data, transaction, fileIdMap);
                 transaction.Rollback();
             }
 
             return data;
         }
 
-        private void FillExportedData(TagsExportedData data, DbTransaction transaction, Dictionary<long, long> fileIdMap, bool includePath)
+        private void FillExportedData<T>(TagsExportedData<T> data, DbTransaction transaction, Dictionary<long, long> fileIdMap) where T : FileIdentification
         {
             // file information
             String fileInfo = String.Format("SELECT {6}.{0}, {6}.{1}, {6}.{2}, {6}.{3}, {6}.{4}, {6}.{5} FROM {6},{7} WHERE {6}.{0}={7}.{8}",
                 Schema.ID_COLUMN, Schema.PATH_COLUMN, Schema.ARTIST_COLUMN, Schema.ALBUM_COLUMN, Schema.TITLE_COLUMN, Schema.ACOUST_ID_COLUMN,
                 Schema.FILES_TABLE, Schema.FILEEXPORT_TABLE, Schema.FILE_COLUMN);
-            List<FileIdentification> fileExchange = new List<FileIdentification>();
+            List<T> fileExchange = new List<T>();
             using (DbCommand fileCommand = DbUtils.CreateDbCommand(fileInfo, m_Connection, transaction))
             {
                 using (DbDataReader reader = fileCommand.ExecuteReader())
@@ -437,9 +442,9 @@ namespace Ares.Tags
                         {
                             id = fileIdMap[id];
                         }
-                        if (includePath)
+                        if (fileExchange is List<FileExchange>)
                         {
-                            fileExchange.Add(new FileExchange()
+                            fileExchange.Add((T)(FileIdentification)(new FileExchange()
                             {
                                 Id = (int)id,
                                 RelativePath = reader.GetString(1),
@@ -447,18 +452,18 @@ namespace Ares.Tags
                                 Album = reader.GetStringOrEmpty(3),
                                 Title = reader.GetStringOrEmpty(4),
                                 AcoustId = reader.GetStringOrEmpty(5)
-                            });
+                            }));
                         }
                         else
                         {
-                            fileExchange.Add(new FileIdentification()
+                            fileExchange.Add((T)(new FileIdentification()
                             {
                                 Id = (int)id,
                                 Artist = reader.GetStringOrEmpty(2),
                                 Album = reader.GetStringOrEmpty(3),
                                 Title = reader.GetStringOrEmpty(4),
                                 AcoustId = reader.GetStringOrEmpty(5)
-                            });
+                            }));
                         }
                     }
                 }
@@ -586,7 +591,7 @@ namespace Ares.Tags
             }
         }
 
-        public void ImportDataFromGlobalDB(TagsExportedData data, IList<String> filesToMatch, TextWriter logStream)
+        public void ImportDataFromGlobalDB(TagsExportedData<FileIdentification> data, IList<String> filesToMatch, TextWriter logStream)
         {
             if (data == null)
                 return;
@@ -614,7 +619,7 @@ namespace Ares.Tags
         }
 
         // method for global DB
-        public void ImportDataFromClient(TagsExportedData data, String userId, System.IO.TextWriter logStream, out int nrOfNewFiles, out int nrOfNewTags)
+        public void ImportDataFromClient(TagsExportedData<FileIdentification> data, String userId, System.IO.TextWriter logStream, out int nrOfNewFiles, out int nrOfNewTags)
         {
             nrOfNewFiles = 0;
             nrOfNewTags = 0;
@@ -645,20 +650,20 @@ namespace Ares.Tags
 
         private void DoImportDatabase(String filePath, TextWriter logStream)
         {
-            TagsExportedData data = ReadTagsExportedData(filePath);
+            TagsExportedData<FileExchange> data = ReadTagsExportedData(filePath);
             ImportExportedData(data, null, logStream, System.IO.Path.GetFileName(filePath));
         }
 
-        private TagsExportedData ReadTagsExportedData(String filePath)
+        private TagsExportedData<FileExchange> ReadTagsExportedData(String filePath)
         {
             using (FileStream stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
-                var importedData = ServiceStack.Text.TypeSerializer.DeserializeFromStream<TagsImportedFileData>(stream);
-                return importedData != null ? importedData.MakeTagsExportedData() : null;
+                var importedData = ServiceStack.Text.TypeSerializer.DeserializeFromStream<TagsExportedData<FileExchange>>(stream);
+                return importedData;
             }
         }
 
-        private void ImportExportedData(TagsExportedData data, IList<String> filesToMatch, TextWriter logStream, String user)
+        private void ImportExportedData<T>(TagsExportedData<T> data, IList<String> filesToMatch, TextWriter logStream, String user) where T : FileIdentification
         {
             if (data == null)
                 return;
@@ -676,7 +681,7 @@ namespace Ares.Tags
             }            
         }
 
-        private void ImportDataIntoGlobalDB(TagsExportedData data, TextWriter logStream, String user, out int nrOfNewFiles, out int nrOfNewTags)
+        private void ImportDataIntoGlobalDB(TagsExportedData<FileIdentification> data, TextWriter logStream, String user, out int nrOfNewFiles, out int nrOfNewTags)
         {
             nrOfNewFiles = 0;
             nrOfNewTags = 0;
@@ -716,13 +721,13 @@ namespace Ares.Tags
                 m_Connection = connection;
             }
 
-            public void ImportExportedData(TagsExportedData data, IList<String> filesToMatch, String user)
+            public void ImportExportedData<T>(TagsExportedData<T> data, IList<String> filesToMatch, String user) where T : FileIdentification
             {
                 int newFiles, newTags;
                 ImportExportedData(data, filesToMatch, user, out newFiles, out newTags);
             }
 
-            public void ImportExportedData(TagsExportedData data, IList<String> filesToMatch, String user, out int nrOfNewFiles, out int nrOfNewTags)
+            public void ImportExportedData<T>(TagsExportedData<T> data, IList<String> filesToMatch, String user, out int nrOfNewFiles, out int nrOfNewTags) where T : FileIdentification
             {
                 ImportLanguages(data.Languages);
                 ImportCategories(data.Categories);
@@ -1052,7 +1057,7 @@ namespace Ares.Tags
                 ImportTranslations(te.Names, tagId, Schema.TAGNAMES_TABLE, Schema.TAG_COLUMN, Schema.LANGUAGE_COLUMN, "tag");
             }
 
-            private void ImportFiles(List<FileIdentification> files, IList<String> filesToMatch, String user, out int nrOfNewFiles)
+            private void ImportFiles<T>(List<T> files, IList<String> filesToMatch, String user, out int nrOfNewFiles) where T : FileIdentification
             {
                 nrOfNewFiles = 0;
                 if (files == null)
