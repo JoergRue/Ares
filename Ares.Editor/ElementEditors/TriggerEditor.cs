@@ -141,7 +141,7 @@ namespace Ares.Editor.ElementEditors
             }
             else
             {
-                errorProvider.SetError(selectKeyButton, ModelChecks.Instance.GetErrorForKey(m_Element, m_Project, keyCode));
+                errorProvider.SetError(selectKeyButton, KeyChecks.GetErrorForKey(m_Project, m_Element, keyCode));
             }
         }
 

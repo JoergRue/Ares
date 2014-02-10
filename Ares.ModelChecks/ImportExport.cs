@@ -29,6 +29,18 @@ namespace Ares.ModelInfo
 
     #region Import
 
+    public enum MessageBoxResult
+    {
+        Yes,
+        No,
+        Cancel
+    }
+
+    public interface IMessageBoxProvider
+    {
+        MessageBoxResult ShowYesNoCancelBox(String prompt);
+    }
+
     public class Importer
     {
         private IProgressMonitor m_Monitor;
@@ -37,11 +49,11 @@ namespace Ares.ModelInfo
 		
         public static void Import(IProgressMonitor monitor, 
 		                          String importFileName, String targetFileName,
-                                  bool silent,
+                                  bool silent, IMessageBoxProvider messageBoxProvider,
             					  System.Action<Exception, bool> dataLoaded)
         {
             Importer importer = new Importer();
-            importer.DoImport(monitor, importFileName, targetFileName, silent, dataLoaded);
+            importer.DoImport(monitor, importFileName, targetFileName, silent, messageBoxProvider, dataLoaded);
         }
 
         private Importer()
@@ -50,7 +62,7 @@ namespace Ares.ModelInfo
 
         private void DoImport(IProgressMonitor monitor, 
 		                      String importFileName, String targetFileName,
-                              bool silent,
+                              bool silent, IMessageBoxProvider messageBoxProvider,
             				  System.Action<Exception, bool> dataLoaded)
         {
             m_Monitor = monitor;
@@ -90,14 +102,13 @@ namespace Ares.ModelInfo
                         {
                             if (!hasAskedForOverwrite)
                             {
-                                switch (System.Windows.Forms.MessageBox.Show(StringResources.ImportOverwrite, StringResources.Ares,
-                                    System.Windows.Forms.MessageBoxButtons.YesNoCancel, System.Windows.Forms.MessageBoxIcon.Question))
+                                switch (messageBoxProvider.ShowYesNoCancelBox(StringResources.ImportOverwrite))
                                 {
-                                    case System.Windows.Forms.DialogResult.Yes:
+                                    case MessageBoxResult.Yes:
                                         overWrite = true;
                                         hasAskedForOverwrite = true;
                                         break;
-                                    case System.Windows.Forms.DialogResult.No:
+                                    case MessageBoxResult.No:
                                         overWrite = false;
                                         hasAskedForOverwrite = true;
                                         break;

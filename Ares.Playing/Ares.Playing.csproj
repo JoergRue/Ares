@@ -66,9 +66,6 @@
     <Reference Include="System.Core">
     </Reference>
     <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
     <Reference Include="Bass.Net, Version=2.4.7.4, Culture=neutral, PublicKeyToken=b7566c273e6ef480">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Libraries\Bass.Net.dll</HintPath>

@@ -94,6 +94,7 @@ namespace Ares.Player
             m_Instance.SetWindowHandle(Handle);
             m_Instance.ProjectOpenAction = (projectName2, projectPath) => OpenProjectFromRequest(projectName2, projectPath);
 #endif
+            PrepareModelChecks();
             m_PlayingControl = new PlayingControl();
         }
 
@@ -697,6 +698,11 @@ namespace Ares.Player
                 m_TagsControlsActive = false;
                 elementsPanel.Visible = true;
             }
+        }
+
+        private void PrepareModelChecks()
+        {
+            Ares.ModelInfo.ModelChecks.Instance.AddCheck(new Ares.CommonGUI.KeyChecks());
         }
 
         private void DoModelChecks()
@@ -1539,6 +1545,22 @@ namespace Ares.Player
             ImportProject(importFileDialog.FileName, false);
         }
 
+        private class MessageBoxProvider : Ares.ModelInfo.IMessageBoxProvider
+        {
+            public Ares.ModelInfo.MessageBoxResult ShowYesNoCancelBox(string prompt)
+            {
+                switch (MessageBox.Show(prompt, StringResources.Ares, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question))
+                {
+                    case DialogResult.Yes:
+                        return Ares.ModelInfo.MessageBoxResult.Yes;
+                    case DialogResult.No:
+                        return Ares.ModelInfo.MessageBoxResult.No;
+                    default:
+                        return Ares.ModelInfo.MessageBoxResult.Cancel;
+                }
+            }
+        }
+
         private void ImportProject(String fileName, bool controllerRequest)
         {
             String defaultProjectName = fileName;
@@ -1558,7 +1580,7 @@ namespace Ares.Player
             }
 
             Ares.CommonGUI.ProgressMonitor monitor = new Ares.CommonGUI.ProgressMonitor(this, StringResources.Importing);
-            Ares.ModelInfo.Importer.Import(monitor, fileName, projectFileName, controllerRequest, (error, cancelled) => 
+            Ares.ModelInfo.Importer.Import(monitor, fileName, projectFileName, controllerRequest, new MessageBoxProvider(), (error, cancelled) => 
             {
                 monitor.Close();
                 if (error != null)

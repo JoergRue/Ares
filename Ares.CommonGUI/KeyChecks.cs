@@ -23,12 +23,12 @@ using System.Linq;
 using System.Text;
 using Ares.Data;
 
-namespace Ares.ModelInfo
+namespace Ares.CommonGUI
 {
-    class KeyChecks : ModelCheck
+    public class KeyChecks : Ares.ModelInfo.ModelCheck
     {
         public KeyChecks()
-            : base(CheckType.Key)
+            : base(Ares.ModelInfo.CheckType.Key)
         {
         }
 
@@ -81,7 +81,7 @@ namespace Ares.ModelInfo
             return String.Empty;
         }
 
-        public override void DoChecks(Data.IProject project, IModelErrors errors)
+        public override void DoChecks(Data.IProject project, Ares.ModelInfo.IModelErrors errors)
         {
             System.Windows.Forms.KeysConverter converter = new System.Windows.Forms.KeysConverter();
             for (int i = 0; i < project.GetModes().Count; ++i)
@@ -100,7 +100,7 @@ namespace Ares.ModelInfo
                     // check: no globally reserved key
                     if (s_GlobalReservedKeys.ContainsKey(mode.KeyCode))
                     {
-                        AddError(errors, ModelError.ErrorSeverity.Error,
+                        AddError(errors, Ares.ModelInfo.ModelError.ErrorSeverity.Error,
                             String.Format(StringResources.ModeKeyGloballyReserved,
                             converter.ConvertToString((System.Windows.Forms.Keys)mode.KeyCode)), mode);
                     }
@@ -109,7 +109,7 @@ namespace Ares.ModelInfo
                     {
                         if (project.GetModes()[j].KeyCode == mode.KeyCode)
                         {
-                            AddError(errors, ModelError.ErrorSeverity.Error,
+                            AddError(errors, Ares.ModelInfo.ModelError.ErrorSeverity.Error,
                                 String.Format(StringResources.DuplicateModeKey,
                                 converter.ConvertToString((System.Windows.Forms.Keys)mode.KeyCode),
                                 mode.Title, project.GetModes()[j].Title), mode);
@@ -147,7 +147,7 @@ namespace Ares.ModelInfo
                         // check: no globally reserved key
                         if (s_GlobalReservedKeys.ContainsKey(keyCode))
                         {
-                            AddError(errors, ModelError.ErrorSeverity.Error,
+                            AddError(errors, Ares.ModelInfo.ModelError.ErrorSeverity.Error,
                                 String.Format(StringResources.ModeElementKeyGloballyReserved,
                                 converter.ConvertToString((System.Windows.Forms.Keys)keyCode)), modeElement);
                         }
@@ -156,7 +156,7 @@ namespace Ares.ModelInfo
                         {
                             if (project.GetModes()[k].KeyCode == keyCode)
                             {
-                                AddError(errors, ModelError.ErrorSeverity.Error,
+                                AddError(errors, Ares.ModelInfo.ModelError.ErrorSeverity.Error,
                                     String.Format(StringResources.ModeElementKeyUsedByMode,
                                     converter.ConvertToString((System.Windows.Forms.Keys)keyCode),
                                     modeElement.Title, project.GetModes()[k].Title), modeElement);
@@ -170,7 +170,7 @@ namespace Ares.ModelInfo
                             {
                                 if (((IKeyTrigger)other.Trigger).KeyCode == keyCode)
                                 {
-                                    AddError(errors, ModelError.ErrorSeverity.Error,
+                                    AddError(errors, Ares.ModelInfo.ModelError.ErrorSeverity.Error,
                                         String.Format(StringResources.DuplicateModeElementKey,
                                         converter.ConvertToString((System.Windows.Forms.Keys)keyCode),
                                         modeElement.Title, other.Title), modeElement);

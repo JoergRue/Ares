@@ -52,6 +52,7 @@
     <Compile Include="AboutDialog.designer.cs">
       <DependentUpon>AboutDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="KeyChecks.cs" />
     <Compile Include="PathLabel.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -76,6 +77,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Ares.Data\Ares.Data.csproj">
+      <Project>{F64D6AF3-3543-47F0-A7B8-0336750B09C3}</Project>
+      <Name>Ares.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Ares.ModelChecks\Ares.ModelInfo.csproj">
       <Project>{50EA19EE-5337-499C-8B7B-1B22EA9E24A6}</Project>
       <Name>Ares.ModelInfo</Name>

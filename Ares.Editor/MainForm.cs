@@ -52,6 +52,7 @@ namespace Ares.Editor
                 throw new Ares.Ipc.ApplicationAlreadyStartedException();
             }
 
+            PrepareModelChecks();
             InitializeComponent();
 #if MONO
             IsMdiContainer = true;
@@ -59,6 +60,11 @@ namespace Ares.Editor
             m_Instance.SetWindowHandle(Handle);
             m_Instance.ProjectOpenAction = (projectName2, projectPath) => OpenProjectFromRequest(projectName2, projectPath);
             m_ProjectName = projectName;
+        }
+
+        private void PrepareModelChecks()
+        {
+            Ares.ModelInfo.ModelChecks.Instance.AddCheck(new Ares.CommonGUI.KeyChecks());
         }
 
         private void SettingsChanged(object sender, Settings.Settings.SettingsEventArgs e)
@@ -1180,6 +1186,22 @@ namespace Ares.Editor
             ImportProject(importFileDialog.FileName);
         }
 
+        private class MessageBoxProvider : Ares.ModelInfo.IMessageBoxProvider
+        {
+            public Ares.ModelInfo.MessageBoxResult ShowYesNoCancelBox(string prompt)
+            {
+                switch (MessageBox.Show(prompt, StringResources.Ares, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question))
+                {
+                    case DialogResult.Yes:
+                        return Ares.ModelInfo.MessageBoxResult.Yes;
+                    case DialogResult.No:
+                        return Ares.ModelInfo.MessageBoxResult.No;
+                    default:
+                        return Ares.ModelInfo.MessageBoxResult.Cancel;
+                }
+            }
+        }
+
         private void ImportProject(String fileName)
         {
             String defaultProjectName = fileName;
@@ -1195,7 +1217,7 @@ namespace Ares.Editor
 
             Ares.Editor.Actions.FilesWatcher.Instance.Enabled = false;
             Ares.CommonGUI.ProgressMonitor monitor = new Ares.CommonGUI.ProgressMonitor(this, StringResources.Importing);
-            Ares.ModelInfo.Importer.Import(monitor, fileName, saveFileDialog.FileName, false, (error, cancelled) => 
+            Ares.ModelInfo.Importer.Import(monitor, fileName, saveFileDialog.FileName, false, new MessageBoxProvider(), (error, cancelled) => 
             {
                 monitor.Close();
                 if (error != null)

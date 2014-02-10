@@ -49,18 +49,18 @@ namespace Ares.ModelInfo
         }
     }
 
-    internal interface IModelErrors
+    public interface IModelErrors
     {
         void AddError(CheckType checkType, ModelError error);
     }
 
-    internal interface IModelCheck
+    public interface IModelCheck
     {
         CheckType CheckType { get; }
         void DoChecks(IProject project, IModelErrors errors);
     }
 
-    internal abstract class ModelCheck : IModelCheck
+    public abstract class ModelCheck : IModelCheck
     {
         public CheckType CheckType { get; private set; }
 
@@ -99,14 +99,8 @@ namespace Ares.ModelInfo
             m_ErrorsByElement = new Dictionary<Object, List<ModelError>>();
             m_ModelChecks = new Dictionary<CheckType, IModelCheck>();
 			
-            AddCheck(new KeyChecks());
             AddCheck(new FileChecks());
             AddCheck(new ReferenceChecks());
-        }
-
-        public String GetErrorForKey(IModeElement modeElement, IProject project, int key)
-        {
-            return KeyChecks.GetErrorForKey(project, modeElement, key);
         }
 
         public event EventHandler<EventArgs> ErrorsUpdated;
@@ -134,7 +128,7 @@ namespace Ares.ModelInfo
             }
         }
 
-        private void AddCheck(IModelCheck check)
+        public void AddCheck(IModelCheck check)
         {
             m_ModelChecks[check.CheckType] = check;
         }
