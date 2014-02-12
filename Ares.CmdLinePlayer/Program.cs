@@ -168,11 +168,33 @@ namespace Ares.CmdLinePlayer
 				Console.WriteLine("Unhandled Exception!");
                 Console.WriteLine(ex.GetType() + ": " + ex.Message);
                 Console.WriteLine(ex.StackTrace);
+                WriteExceptionTrace(ex);
             }
 			else
 			{
 				Console.WriteLine("Unhandled Exception!");
 			}
+        }
+
+        static void WriteExceptionTrace(Exception ex)
+        {
+            try
+            {
+                String folder = System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData);
+                String path = System.IO.Path.Combine(folder, "Ares_Errors.log");
+                using (System.IO.StreamWriter writer = new System.IO.StreamWriter(path, true))
+                {
+                    writer.WriteLine(System.DateTime.Now.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                    writer.WriteLine(ex.GetType().Name + ": " + ex.Message);
+                    writer.WriteLine("Stack Trace:");
+                    writer.WriteLine(ex.StackTrace);
+                    writer.WriteLine("--------------------------------------------------");
+                    writer.Flush();
+                }
+            }
+            catch (Exception)
+            {
+            }
         }
     }
 }

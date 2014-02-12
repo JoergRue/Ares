@@ -164,10 +164,10 @@ public final class MainFrame extends FrameController implements IMessageListener
 		  return null;
 	  String playerFileName = localPlayerDir;
 	  if (isWindows()) {
-		  playerFileName += "Ares.Player.exe"; //$NON-NLS-1$
+		  playerFileName += "Ares.CmdLinePlayer.exe"; //$NON-NLS-1$
 	  }
 	  else {
-		  playerFileName += "Ares.Player.sh"; //$NON-NLS-1$
+		  playerFileName += "Ares.CmdLinePlayer.sh"; //$NON-NLS-1$
 	  }
 	  File playerExe = new File(playerFileName); //$NON-NLS-1$ //$NON-NLS-2$
 	  return playerExe.exists() ? playerExe : null;
@@ -921,7 +921,7 @@ public final class MainFrame extends FrameController implements IMessageListener
   
   private void startLocalPlayer() {
 		String commandLine = findLocalPlayer().getAbsolutePath();
-		commandLine += " --minimized"; //$NON-NLS-1$
+		commandLine += " --NonInteractive"; //$NON-NLS-1$
 		try {
     		connectWithFirstServer = true;
     		isLocalPlayer = true;

@@ -72,9 +72,12 @@
 		<exec program="${xbuild}" commandline="build --target:build --configuration:${monoConfiguration} --project:Ares.Online_Mono ${monoSolutionFile}" workingdir="." />
 		<exec program="${xbuild}" commandline="build --target:build --configuration:${monoConfiguration} --project:Ares.Players_Mono ${monoSolutionFile}" workingdir="." />
 		<exec program="${xbuild}" commandline="build --target:build --configuration:${monoConfiguration} --project:Ares.Player_Mono ${monoSolutionFile}" workingdir="." />
+		<exec program="${xbuild}" commandline="build --target:build --configuration:${monoConfiguration} --project:Ares.CmdLinePlayer_Mono ${monoSolutionFile}" workingdir="." />
 		
 		<property name="Ares.MonoPlayer" value="bin/Mono_Release/Ares.Player.exe" />
+		<property name="Ares.MonoCmdLinePlayer" value="bin/Mono_Release/Ares.CmdLinePlayer.exe" />
 		<fail unless="${file::exists(Ares.MonoPlayer)}">Output file doesn't exist in bin/Mono_Release</fail>
+		<fail unless="${file::exists(Ares.MonoCmdLinePlayer)}">Output file doesn't exist in bin/Mono_Release</fail>
     </target>
     
     <target name="rebuild" depends="clean, build" />

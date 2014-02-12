@@ -176,6 +176,9 @@ Error message: {0}
   <data name="CmdLineOptionMsgLevel" xml:space="preserve">
     <value>Output message level: between 0 (Debug) and 3 (Error)</value>
   </data>
+  <data name="CmdLineOptionNonInteractive" xml:space="preserve">
+    <value>Non-Interactive: close on disconnect from Controller</value>
+  </data>
   <data name="CmdLineOptionTcpPort" xml:space="preserve">
     <value>Port to connect with Controller</value>
   </data>

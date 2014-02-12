@@ -176,6 +176,9 @@ Fehlermeldung: {0}
   <data name="CmdLineOptionMsgLevel" xml:space="preserve">
     <value>Meldungsfilter: zwischen 0 (Debug) und 3 (Fehler)</value>
   </data>
+  <data name="CmdLineOptionNonInteractive" xml:space="preserve">
+    <value>Nicht Interaktiv: Beenden, wenn Controller Verbindung trennt</value>
+  </data>
   <data name="CmdLineOptionTcpPort" xml:space="preserve">
     <value>Port für Kommunikation mit dem Controller</value>
   </data>

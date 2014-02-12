@@ -35,6 +35,7 @@ namespace Ares.CmdLinePlayer
         public int TcpPort { get; set; }
         public String InitialProject { get; set; }
         public int MessageFilterLevel { get; set; }
+        public bool NonInteractive { get; set; }
 
         public PlayerOptions()
         {
@@ -42,6 +43,7 @@ namespace Ares.CmdLinePlayer
             TcpPort = -1;
             InitialProject = String.Empty;
             Language = String.Empty;
+            NonInteractive = false;
             ShowHelp = false;
             MessageFilterLevel = -1;
         }
@@ -56,7 +58,8 @@ namespace Ares.CmdLinePlayer
                 { "m|MessageLevel=", StringResources.CmdLineOptionMsgLevel, (int var) => MessageFilterLevel = var },
                 { "UdpPort=", StringResources.CmdLineOptionUdpPort, (int var) => UdpPort = var },
                 { "TcpPort=", StringResources.CmdLineOptionTcpPort, (int var) => TcpPort = var },
-                { "Language=", StringResources.CmdLineOptionLanguage, var => Language = var }
+                { "Language=", StringResources.CmdLineOptionLanguage, var => Language = var },
+                { "NonInteractive", StringResources.CmdLineOptionNonInteractive, var => NonInteractive = var != null }
             };
             List<string> extra = null;
             try
@@ -117,14 +120,34 @@ namespace Ares.CmdLinePlayer
         private System.Timers.Timer m_BroadcastTimer;
         private bool warnOnNetworkFail = true;
 
+        private System.Threading.AutoResetEvent m_NonInteractiveWaitEvent = null;
+        private bool m_Shutdown = false;
+        private Object m_LockObject = new Object();
+
         public int Run(PlayerOptions options)
         {
             int res = Initialize(options);
             if (res != 0)
                 return res;
 
-            Console.WriteLine(StringResources.PressKeyToExit);
-            Console.ReadKey();
+            if (!options.NonInteractive)
+            {
+                Console.WriteLine(StringResources.PressKeyToExit);
+                Console.ReadKey();
+            }
+            else
+            {
+                m_NonInteractiveWaitEvent = new System.Threading.AutoResetEvent(false);
+                bool shutdown = false;
+                while (!shutdown)
+                {
+                    m_NonInteractiveWaitEvent.WaitOne(200);
+                    lock (m_LockObject)
+                    {
+                        shutdown = m_Shutdown;
+                    }
+                }
+            }
 
             Shutdown();
             return 0;
@@ -541,6 +564,14 @@ namespace Ares.CmdLinePlayer
             else
             {
                 Console.WriteLine(StringResources.NotConnected);
+                if (m_NonInteractiveWaitEvent != null)
+                {
+                    lock (m_LockObject)
+                    {
+                        m_Shutdown = true;
+                    }
+                    m_NonInteractiveWaitEvent.Set();
+                }
             }
         }
 

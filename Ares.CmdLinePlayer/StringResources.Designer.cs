@@ -234,6 +234,15 @@ namespace Ares.CmdLinePlayer {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Non-Interactive: close on disconnect from Controller ähnelt.
+        /// </summary>
+        internal static string CmdLineOptionNonInteractive {
+            get {
+                return ResourceManager.GetString("CmdLineOptionNonInteractive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Port to connect with Controller ähnelt.
         /// </summary>
         internal static string CmdLineOptionTcpPort {
