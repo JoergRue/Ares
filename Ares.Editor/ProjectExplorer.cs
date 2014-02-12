@@ -1831,6 +1831,22 @@ namespace Ares.Editor
             }
         }
 
+        private class MessageBoxProvider : Ares.ModelInfo.IMessageBoxProvider
+        {
+            public Ares.ModelInfo.MessageBoxResult ShowYesNoCancelBox(string prompt)
+            {
+                switch (MessageBox.Show(prompt, StringResources.Ares, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question))
+                {
+                    case DialogResult.Yes:
+                        return Ares.ModelInfo.MessageBoxResult.Yes;
+                    case DialogResult.No:
+                        return Ares.ModelInfo.MessageBoxResult.No;
+                    default:
+                        return Ares.ModelInfo.MessageBoxResult.Cancel;
+                }
+            }
+        }
+
         private void Import()
         {
             if (importDialog.ShowDialog(Parent) == System.Windows.Forms.DialogResult.OK)
@@ -1842,7 +1858,7 @@ namespace Ares.Editor
                     {
                         String tempFileName = System.IO.Path.GetTempFileName() + ".ares";
                         Ares.CommonGUI.ProgressMonitor monitor = new Ares.CommonGUI.ProgressMonitor(this, StringResources.Importing);
-                        Ares.ModelInfo.Importer.Import(monitor, fileName, tempFileName, false, (error, cancelled) =>
+                        Ares.ModelInfo.Importer.Import(monitor, fileName, tempFileName, false, new MessageBoxProvider(), (error, cancelled) =>
                         {
                             monitor.Close();
                             if (error != null)
