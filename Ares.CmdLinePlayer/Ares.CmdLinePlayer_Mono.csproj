@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Mono_Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{81CADB8C-BEDF-450B-9544-690DCA839B37}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Ares.CmdLinePlayer_Mono</RootNamespace>
+    <AssemblyName>Ares.CmdLinePlayer</AssemblyName>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>ares.snk</AssemblyOriginatorKeyFile>
+    <ApplicationIcon>Ares.ico</ApplicationIcon>
+    <StartupObject>Ares.CmdLinePlayer.Program</StartupObject>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Mono_Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\Mono Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;MONO</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Externalconsole>true</Externalconsole>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Mono_Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\Mono_Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Externalconsole>true</Externalconsole>
+    <DefineConstants>MONO</DefineConstants>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="Bass.Net">
+      <HintPath>..\Libraries\Bass.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="BassRegistration">
+      <HintPath>..\Libraries\BassRegistration.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\Ares.Data\Ares.Data_Mono.csproj">
+      <Project>{F64D6AF3-3543-47F0-A7B8-0336750B09C3}</Project>
+      <Name>Ares.Data_Mono</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ares.ModelChecks\Ares.ModelInfo_Mono.csproj">
+      <Project>{50EA19EE-5337-499C-8B7B-1B22EA9E24A6}</Project>
+      <Name>Ares.ModelInfo_Mono</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ares.Players\Ares.Players_Mono.csproj">
+      <Project>{87F61D82-5515-48C4-94F5-FC5EF8435DBF}</Project>
+      <Name>Ares.Players_Mono</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ares.Playing\Ares.Playing_Mono.csproj">
+      <Project>{6C55F933-0F49-489C-AFF4-E0E0A8581E42}</Project>
+      <Name>Ares.Playing_Mono</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ares.Settings\Ares.Settings_Mono.csproj">
+      <Project>{E99E229E-2D6A-4C49-8E6F-C06E3F346606}</Project>
+      <Name>Ares.Settings_Mono</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ares.Tags\Ares.Tags_Mono.csproj">
+      <Project>{42A8F91D-6E6B-4740-AC3F-99A34074E695}</Project>
+      <Name>Ares.Tags_Mono</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Player.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="StringResources.Designer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Options.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="StringResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LogicalName>Ares.CmdLinePlayer.StringResources.resources</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StringResources.de.resx">
+      <LogicalName>Ares.CmdLinePlayer.StringResources.de.resources</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>

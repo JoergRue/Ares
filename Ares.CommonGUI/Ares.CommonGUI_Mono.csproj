@@ -74,6 +74,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>StringResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="KeyChecks.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ares.snk" />
@@ -119,6 +120,10 @@
     <ProjectReference Include="..\Ares.Settings\Ares.Settings_Mono.csproj">
       <Project>{E99E229E-2D6A-4C49-8E6F-C06E3F346606}</Project>
       <Name>Ares.Settings_Mono</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ares.Data\Ares.Data_Mono.csproj">
+      <Project>{F64D6AF3-3543-47F0-A7B8-0336750B09C3}</Project>
+      <Name>Ares.Data_Mono</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

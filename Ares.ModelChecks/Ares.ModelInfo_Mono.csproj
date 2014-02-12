@@ -37,8 +37,6 @@
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\Libraries\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataExtensions.cs" />
@@ -52,7 +50,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>StringResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="KeyChecks.cs" />
     <Compile Include="FileSearch.cs" />
     <Compile Include="Playlists.cs" />
     <Compile Include="ReferenceChecks.cs" />

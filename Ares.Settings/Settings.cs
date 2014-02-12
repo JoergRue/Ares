@@ -329,7 +329,7 @@ namespace Ares.Settings
             WindowLayout = null;
             RecentFiles = new RecentFiles();
             MusicDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
-            SoundDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
+            SoundDirectory = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyMusic), "Sounds");
             GlobalVolume = MusicVolume = SoundVolume = 100;
             TcpPort = 11112;
             UdpPort = 8009;

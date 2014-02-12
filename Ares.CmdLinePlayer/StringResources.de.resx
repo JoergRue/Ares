@@ -1,0 +1,256 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Ares" xml:space="preserve">
+    <value>Ares</value>
+  </data>
+  <data name="AresPlayer" xml:space="preserve">
+    <value>Ares Kommandozeilen-Player Version {0}</value>
+  </data>
+  <data name="BassAacLoadFail" xml:space="preserve">
+    <value>Konnte BASS Aac AddOn-Library nicht laden. Installationsproblem?</value>
+  </data>
+  <data name="BassDeviceAlready" xml:space="preserve">
+    <value>Gerät ist bereits initialisiert. Wird es von einer anderen Anwendung verwendet?</value>
+  </data>
+  <data name="BassDeviceDriver" xml:space="preserve">
+    <value>Kein Gerätetreiber verfügbar. Sind Soundkarte und Lautsprecher korrekt installiert? Wird das Gerät von einer anderen Anwendung verwendet?</value>
+  </data>
+  <data name="BassDeviceFormat" xml:space="preserve">
+    <value>Gerät unterstützt 44kHz Sampling nicht.</value>
+  </data>
+  <data name="BassDeviceInfo" xml:space="preserve">
+    <value>Gerät: {0}, Treiber: {1}, Status: {2}</value>
+  </data>
+  <data name="BassDeviceInvalid" xml:space="preserve">
+    <value>Ungültiges Gerät. Sind Soundkarte und Lautsprecher korrekt installiert?</value>
+  </data>
+  <data name="BassFlacLoadFail" xml:space="preserve">
+    <value>Konnte BASS Flac AddOn-Library nicht laden. Installationsproblem?</value>
+  </data>
+  <data name="BassFxLoadFail" xml:space="preserve">
+    <value>Konnte BASS Fx AddOn-Library nicht laden. Installationsproblem?</value>
+  </data>
+  <data name="BassInitFail" xml:space="preserve">
+    <value>Fehler: Konnte BASS nicht initialisieren!
+Fehlermeldung: {0}
+{1}</value>
+  </data>
+  <data name="BassLoadFail" xml:space="preserve">
+    <value>Konnte BASS-Library nicht laden. Installationsproblem?</value>
+  </data>
+  <data name="BassNo3D" xml:space="preserve">
+    <value>Das Gerät unterstützt 3D-Ausgabe nicht.</value>
+  </data>
+  <data name="BassNoMem" xml:space="preserve">
+    <value>Es steht nicht genug Speicher zur Verfügung.</value>
+  </data>
+  <data name="BassOpusLoadFail" xml:space="preserve">
+    <value>Konnte BASS Opus AddOn-Library nicht laden. Installationsproblem?</value>
+  </data>
+  <data name="BassUnknown" xml:space="preserve">
+    <value>Unbekannter Fehler. Sind Soundkarte und Lautsprecher korrekt installiert?</value>
+  </data>
+  <data name="CmdLineOptionHelp" xml:space="preserve">
+    <value>Zeige nur diese Hilfe.</value>
+  </data>
+  <data name="CmdLineOptionLanguage" xml:space="preserve">
+    <value>Sprache für Meldungen (en: Englisch, de: Deutsch)</value>
+  </data>
+  <data name="CmdLineOptionMsgLevel" xml:space="preserve">
+    <value>Meldungsfilter: zwischen 0 (Debug) und 3 (Fehler)</value>
+  </data>
+  <data name="CmdLineOptionTcpPort" xml:space="preserve">
+    <value>Port für Kommunikation mit dem Controller</value>
+  </data>
+  <data name="CmdLineOptionUdpPort" xml:space="preserve">
+    <value>Port für Botschaften zur Player-Erkennung</value>
+  </data>
+  <data name="ConnectedWith" xml:space="preserve">
+    <value>Verbunden mit </value>
+  </data>
+  <data name="Debug" xml:space="preserve">
+    <value>Debug: </value>
+  </data>
+  <data name="DeviceDisabled" xml:space="preserve">
+    <value>abgeschaltet</value>
+  </data>
+  <data name="DeviceEnabled" xml:space="preserve">
+    <value>angeschaltet</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Fehler: </value>
+  </data>
+  <data name="ImportError" xml:space="preserve">
+    <value>Fehler beim Importieren des Projektes: {0}</value>
+  </data>
+  <data name="Info" xml:space="preserve">
+    <value>Info: </value>
+  </data>
+  <data name="InvalidMsgLevel" xml:space="preserve">
+    <value>Ungültiger Meldungsfilter!</value>
+  </data>
+  <data name="InvalidTcpPort" xml:space="preserve">
+    <value>Ungültiger TCP Port!</value>
+  </data>
+  <data name="InvalidUdpPort" xml:space="preserve">
+    <value>Ungültiger UDP Port!</value>
+  </data>
+  <data name="LoadError" xml:space="preserve">
+    <value>Fehler beim Laden des Projektes: {0}</value>
+  </data>
+  <data name="MoreThanOneProject" xml:space="preserve">
+    <value>Mehr als ein Projekt angegeben!</value>
+  </data>
+  <data name="NoDevice" xml:space="preserve">
+    <value>Keine Soundkarte gefunden.</value>
+  </data>
+  <data name="NoDeviceDriver" xml:space="preserve">
+    <value>Kein Sound-Treiber gefunden.</value>
+  </data>
+  <data name="NoIpAddress" xml:space="preserve">
+    <value>Keine nutzbare IP-Adresse gefunden. Ist das Netzwerk aktiv?</value>
+  </data>
+  <data name="NoOpenedProject" xml:space="preserve">
+    <value>Kein Projekt geladen</value>
+  </data>
+  <data name="NoSettings" xml:space="preserve">
+    <value>Keine Einstellungen gefunden. Voreinstellungen werden verwendet - du möchtest vielleicht {0} anpassen.</value>
+  </data>
+  <data name="NoStatusInfoError" xml:space="preserve">
+    <value>Konnte keine Statusinformationen senden. Bitte überprüfen Sie die Netzwerkverbindung.</value>
+  </data>
+  <data name="NotConnected" xml:space="preserve">
+    <value>Nicht verbunden</value>
+  </data>
+  <data name="PressKeyToExit" xml:space="preserve">
+    <value>Taste drücken zum Beenden</value>
+  </data>
+  <data name="TagsDbError" xml:space="preserve">
+    <value>Fehler beim Zugriff auf die Tags-Datenbasis:
+{0}</value>
+  </data>
+  <data name="Warning" xml:space="preserve">
+    <value>Warnung: </value>
+  </data>
+  <data name="WriteSettingsError" xml:space="preserve">
+    <value>Einstellungen konnten nicht gespeichert werden. Grund:
+{0}</value>
+  </data>
+</root>

@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ares.Tags_Mono", "Ares.Tags
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ares.CommonGUI_Mono", "Ares.CommonGUI\Ares.CommonGUI_Mono.csproj", "{ED16F93E-23F3-4075-B72D-F64E49D08E2D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ares.CmdLinePlayer_Mono", "Ares.CmdLinePlayer\Ares.CmdLinePlayer_Mono.csproj", "{81CADB8C-BEDF-450B-9544-690DCA839B37}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Mono_Debug|Any CPU = Mono_Debug|Any CPU
@@ -47,6 +49,14 @@ Global
 		{7550AD48-17A5-45BF-A632-B75EB82123DD}.Mono_Debug|Any CPU.Build.0 = Mono_Debug|Any CPU
 		{7550AD48-17A5-45BF-A632-B75EB82123DD}.Mono_Release|Any CPU.ActiveCfg = Mono_Release|Any CPU
 		{7550AD48-17A5-45BF-A632-B75EB82123DD}.Mono_Release|Any CPU.Build.0 = Mono_Release|Any CPU
+		{81CADB8C-BEDF-450B-9544-690DCA839B37}.Debug|Any CPU.ActiveCfg = Mono_Debug|Any CPU
+		{81CADB8C-BEDF-450B-9544-690DCA839B37}.Debug|Any CPU.Build.0 = Mono_Debug|Any CPU
+		{81CADB8C-BEDF-450B-9544-690DCA839B37}.Mono_Debug|Any CPU.ActiveCfg = Mono_Debug|Any CPU
+		{81CADB8C-BEDF-450B-9544-690DCA839B37}.Mono_Debug|Any CPU.Build.0 = Mono_Debug|Any CPU
+		{81CADB8C-BEDF-450B-9544-690DCA839B37}.Mono_Release|Any CPU.ActiveCfg = Mono_Debug|Any CPU
+		{81CADB8C-BEDF-450B-9544-690DCA839B37}.Mono_Release|Any CPU.Build.0 = Mono_Debug|Any CPU
+		{81CADB8C-BEDF-450B-9544-690DCA839B37}.Release|Any CPU.ActiveCfg = Mono_Release|Any CPU
+		{81CADB8C-BEDF-450B-9544-690DCA839B37}.Release|Any CPU.Build.0 = Mono_Release|Any CPU
 		{87F61D82-5515-48C4-94F5-FC5EF8435DBF}.Mono_Debug|Any CPU.ActiveCfg = Mono_Debug|Any CPU
 		{87F61D82-5515-48C4-94F5-FC5EF8435DBF}.Mono_Debug|Any CPU.Build.0 = Mono_Debug|Any CPU
 		{87F61D82-5515-48C4-94F5-FC5EF8435DBF}.Mono_Release|Any CPU.ActiveCfg = Mono_Release|Any CPU
@@ -73,7 +83,7 @@ Global
 		{FF45F69E-C808-46A5-9557-307D5F8A0A6D}.Mono_Release|Any CPU.Build.0 = Mono_Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = Ares.Player\Ares.Player_Mono.csproj
+		StartupItem = Ares.CmdLinePlayer\Ares.CmdLinePlayer_Mono.csproj
 		outputpath = ..\bin\Mono Debug
 	EndGlobalSection
 EndGlobal
