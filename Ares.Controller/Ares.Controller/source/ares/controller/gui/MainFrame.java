@@ -921,7 +921,9 @@ public final class MainFrame extends FrameController implements IMessageListener
   
   private void startLocalPlayer() {
 		String commandLine = findLocalPlayer().getAbsolutePath();
+		Preferences prefs = Preferences.userNodeForPackage(OptionsDialog.class);
 		commandLine += " --NonInteractive"; //$NON-NLS-1$
+		commandLine += " --UdpPort=" + prefs.getInt("UDPPort", 8009); //$NON-NLS-1$ //$NON-NLS-2$ 
 		try {
     		connectWithFirstServer = true;
     		isLocalPlayer = true;
