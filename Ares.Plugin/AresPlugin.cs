@@ -420,7 +420,7 @@ namespace Ares.MediaPortalPlugin
                 if (String.IsNullOrEmpty(path))
                 {
                     // try default location
-                    path = System.IO.Path.Combine(System.Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), @"Ares\Player_Editor\Ares.Player.exe");
+                    path = System.IO.Path.Combine(System.Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), @"Ares\Player_Editor\Ares.CmdLinePlayer.exe");
                     if (System.IO.File.Exists(path))
                     {
                         Settings.Settings.Instance.LocalPlayerPath = path;
@@ -436,6 +436,10 @@ namespace Ares.MediaPortalPlugin
                     Settings.Settings.Instance.LocalPlayerPath = path;
                 }
             }
+            if (path.EndsWith("Ares.Player.exe"))
+            {
+                path = path.Replace("Ares.Player.exe", "Ares.CmdLinePlayer.exe");
+            }
             return System.IO.File.Exists(path) ? path : null;
         }
 
@@ -444,10 +448,14 @@ namespace Ares.MediaPortalPlugin
             String playerFile = FindLocalPlayer();
             if (playerFile == null)
                 return;
-            String arguments = "--minimized --udpPort=" + (Settings.Settings.Instance.UdpPort + 1) + " --tcpPort=" + (Settings.Settings.Instance.TcpPort + 1);
+            String arguments = "--NonInteractive --UdpPort=" + (Settings.Settings.Instance.UdpPort + 1) + " --TcpPort=" + (Settings.Settings.Instance.TcpPort + 1);
             try
             {
-                System.Diagnostics.Process.Start(playerFile, arguments);
+                System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo(playerFile, arguments);
+                startInfo.CreateNoWindow = true;
+                startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+                startInfo.UseShellExecute = false;
+                System.Diagnostics.Process.Start(startInfo);
             }
             catch (Exception e)
             {

@@ -185,7 +185,6 @@
             // 
             // folderBrowserDialog
             // 
-            resources.ApplyResources(this.folderBrowserDialog, "folderBrowserDialog");
             this.folderBrowserDialog.RootFolder = System.Environment.SpecialFolder.MyComputer;
             // 
             // groupBox2
@@ -203,9 +202,9 @@
             // 
             // ipAddressBox
             // 
-            resources.ApplyResources(this.ipAddressBox, "ipAddressBox");
             this.ipAddressBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ipAddressBox.FormattingEnabled = true;
+            resources.ApplyResources(this.ipAddressBox, "ipAddressBox");
             this.ipAddressBox.Name = "ipAddressBox";
             // 
             // label6
@@ -268,8 +267,7 @@
             // 
             // playerPathDialog
             // 
-            this.playerPathDialog.FileName = "Ares.Player.exe";
-            resources.ApplyResources(this.playerPathDialog, "playerPathDialog");
+            this.playerPathDialog.FileName = "Ares.CmdLinePlayer.exe";
             // 
             // SettingsDialog
             // 
