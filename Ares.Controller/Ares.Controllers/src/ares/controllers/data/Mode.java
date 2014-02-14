@@ -27,14 +27,17 @@ import java.util.Map;
 public final class Mode extends Command {
   
   private Map<Integer, Command> commands;
+  private List<Command> orderedCommands;
 
   public Mode(String title, int id, KeyStroke keyStroke) {
     super(title, id, keyStroke);
     commands = new HashMap<Integer, Command>();
+    orderedCommands = new ArrayList<Command>();
   }
   
   public void addCommand(Command command) {
     commands.put(command.getId(), command);
+    orderedCommands.add(command);
   }
   
   public String getTitle(int id) {
@@ -47,7 +50,7 @@ public final class Mode extends Command {
   }
   
   public List<Command> getCommands() {
-	  return new ArrayList<Command>(commands.values());
+	  return new ArrayList<Command>(orderedCommands);
   }
   
   public boolean containsKeyStroke(KeyStroke keyStroke) {
