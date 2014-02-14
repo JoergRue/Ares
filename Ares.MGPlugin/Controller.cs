@@ -67,7 +67,7 @@ namespace Ares.MGPlugin
                 if (String.IsNullOrEmpty(path))
                 {
                     // try default location
-                    path = System.IO.Path.Combine(System.Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), @"Ares\Player_Editor\Ares.Player.exe");
+                    path = System.IO.Path.Combine(System.Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), @"Ares\Player_Editor\Ares.CmdLinePlayer.exe");
                     if (System.IO.File.Exists(path))
                     {
                         Settings.Default.LocalPlayerPath = path;
@@ -84,6 +84,10 @@ namespace Ares.MGPlugin
                     Settings.Default.LocalPlayerPath = path;
                     Settings.Default.Save();
                 }
+            }
+            if (path.EndsWith("Ares.Player.exe"))
+            {
+                path = path.Replace("Ares.Player.exe", "Ares.CmdLinePlayer.exe");
             }
             return System.IO.File.Exists(path) ? path : null;
         }
@@ -377,12 +381,16 @@ namespace Ares.MGPlugin
             String playerFile = FindLocalPlayer();
             if (playerFile == null)
                 return;
-            String arguments = "--minimized";
+            String arguments = "--NonInteractive --UdpPort=" + Settings.Default.ServerSearchPort;
             try
             {
                 m_ConnectWithFirstServer = true;
                 m_IsLocalPlayer = true;
-                System.Diagnostics.Process.Start(playerFile, arguments);
+                System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo(playerFile, arguments);
+                startInfo.CreateNoWindow = true;
+                startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+                startInfo.UseShellExecute = false;
+                System.Diagnostics.Process.Start(startInfo);
             }
             catch (Exception e)
             {

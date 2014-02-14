@@ -151,8 +151,8 @@
             // openFileDialog1
             // 
             this.openFileDialog1.DefaultExt = "exe";
-            this.openFileDialog1.FileName = "Ares.Player.exe";
-            this.openFileDialog1.Filter = "Ares Player|Ares.Player.exe";
+            this.openFileDialog1.FileName = "Ares.CmdLinePlayer.exe";
+            this.openFileDialog1.Filter = "Ares Player|Ares.CmdLinePlayer.exe";
             // 
             // tabControl1
             // 
