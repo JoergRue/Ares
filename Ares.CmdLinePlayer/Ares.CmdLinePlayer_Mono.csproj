@@ -88,4 +88,7 @@
       <LogicalName>Ares.CmdLinePlayer.StringResources.de.resources</LogicalName>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
 </Project>
