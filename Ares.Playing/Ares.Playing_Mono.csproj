@@ -13,7 +13,6 @@
     <AssemblyName>Ares.Playing</AssemblyName>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>ares.snk</AssemblyOriginatorKeyFile>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Mono_Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -34,8 +33,8 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
-    <Reference Include="Bass.Net">
-      <HintPath>..\Libraries\Bass.Net.dll</HintPath>
+    <Reference Include="Bass.Net.Linux">
+      <HintPath>..\Libraries_Linux\Bass.Net.Linux.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

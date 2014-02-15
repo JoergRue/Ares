@@ -97,12 +97,13 @@
 			  <include name="**/*.config" />
    		  </fileset>
 		</copy>
-		<copy todir="${monooutput.dir}">
+		<copy todir="${monooutput.dir}" overwrite="true">
 		  <fileset basedir="Libraries_Linux">
 			  <include name="**/*.so" />
 			  <include name="**/*.config" />
 			  <include name="**/*.sh" />
 			  <include name="**/*.png" />
+			  <include name="**/*.dll" />
    		  </fileset>
 		</copy>
 		<copy todir="${monooutput64.dir}">
@@ -112,12 +113,13 @@
 			  <include name="**/*.config" />
    		  </fileset>
 		</copy>
-		<copy todir="${monooutput64.dir}">
+		<copy todir="${monooutput64.dir}" overwrite="true">
 		  <fileset basedir="Libraries_Linux_x64">
 			  <include name="**/*.so" />
 			  <include name="**/*.config" />
 			  <include name="**/*.sh" />
 			  <include name="**/*.png" />
+			  <include name="**/*.dll" />
    		  </fileset>
 		</copy>
 	    <copy todir="${output.dir}">

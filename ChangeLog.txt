@@ -4,6 +4,7 @@ Version 2.5.0
 - General: Crossfading possible within music lists
 - General: Options for fading when the music is changed manually
 - General: Opus format can be used for files and for streaming
+- General: Added build for ARM Linux (Raspberry Pi)
 - Editor: Tag filter can be set so that only files without any tags are shown
 - Editor: Tags for files can be searched in local database (e.g. after moving
   a file outside the editor)
@@ -11,6 +12,8 @@ Version 2.5.0
   paths, tags could only be downloaded for the first file
 - Editor: Bugfix: export of projects with tags didn't work correctly for files
   which had no AcoustIds
+- Player: added command-line player
+- Controller: buttons for mode elements appear in the order of the project
   
 Version 2.4.0
 ----------------------------------------------------------------------------------

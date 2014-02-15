@@ -4,6 +4,7 @@ Version 2.5.0
 - Allgemein: Überblenden innerhalb von Musiklisten möglich
 - Allgemein: Optionen für Blenden, wenn man die Musik manuell ändert
 - Allgemein: Opus-Audioformat kann für Dateien und Streaming verwendet werden
+- Allgemein: Variante für ARM Linux (Raspberry Pi) hinzugefügt
 - Editor: Tag-Filter kann so eingestellt werden, dass nur Dateien ohne Tags
   angezeigt werden
 - Editor: Tags für Dateien können in der lokalen Datenbasis gesucht werden
@@ -13,6 +14,9 @@ Version 2.5.0
   heruntergeladen werden
 - Editor: Bugfix: Export von Projekten mit Tags funktionierte nicht richtig für 
   Dateien ohne AcoustID
+- Player: Kommandozeilen-Player hinzugefügt
+- Controller: Buttons für Modus-Elemente werden in der Reihenfolge aus dem Project
+  angezeigt
 
 Version 2.4.0
 ----------------------------------------------------------------------------------

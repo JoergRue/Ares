@@ -25,6 +25,7 @@ namespace Ares.Playing
     {
         public void BeginStreaming(StreamingParameters parameters)
         {
+#if !MONO
             ErrorSent = false;
             if (IsStreaming)
                 EndStreaming();
@@ -123,6 +124,7 @@ namespace Ares.Playing
             {
                 IsStreaming = true;
             }
+#endif
         }
 
         void m_BroadCast_Notification(object sender, Un4seen.Bass.Misc.BroadCastEventArgs e)

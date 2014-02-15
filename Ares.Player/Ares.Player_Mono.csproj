@@ -28,7 +28,6 @@
     <AssemblyName>Ares.Player</AssemblyName>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>ares.snk</AssemblyOriginatorKeyFile>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Resources\Ares.ico</ApplicationIcon>
@@ -58,13 +57,13 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="Bass.Net">
-      <HintPath>..\Libraries\Bass.Net.dll</HintPath>
-    </Reference>
-    <Reference Include="BassRegistration">
-      <HintPath>..\Libraries\BassRegistration.dll</HintPath>
-    </Reference>
     <Reference Include="System.Deployment" />
+    <Reference Include="BassRegistration">
+      <HintPath>..\Libraries_Linux\BassRegistration.dll</HintPath>
+    </Reference>
+    <Reference Include="Bass.Net.Linux">
+      <HintPath>..\Libraries_Linux\Bass.Net.Linux.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MessagesForm.cs">

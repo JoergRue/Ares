@@ -268,6 +268,7 @@ File ::8BCE735B-524B-41DA-836F-896B4DF6C4E7 -name Ares.Online.resources.dll -par
 File ::B754C52E-D4ED-49D5-B1EA-28B53877CE49 -name Ares.Players.resources.dll -parent 3505D192-1F90-4AC9-85F3-8FB79B003C40
 File ::18D6609E-C9EF-49A0-A6EE-A29D54D3523A -name Ares.CommonGUI.resources.dll -parent 3505D192-1F90-4AC9-85F3-8FB79B003C40
 File ::849283CB-1FF5-4F82-91F1-9601D0AE9FC4 -name Ares.TagsImport.resources.dll -active 0 -parent 3505D192-1F90-4AC9-85F3-8FB79B003C40
+File ::6A395ABD-48F5-4EDB-A8DD-28DCCDCA17CA -name Ares.CmdLinePlayer.resources.dll -active 0 -parent 3505D192-1F90-4AC9-85F3-8FB79B003C40
 File ::DD19DA72-FCDA-48BB-8153-39F0F80A6E43 -name Ares.ico -parent 85519505-B2E6-4155-96D6-3C0D6C533801
 File ::D6D0615E-A3C4-46AC-8369-6A5D5B117CD3 -name Ares.Online.dll -parent 85519505-B2E6-4155-96D6-3C0D6C533801
 File ::E4F6631B-95CA-4742-A864-435B4E519E5E -name Ares.Players.dll -parent 85519505-B2E6-4155-96D6-3C0D6C533801
@@ -305,6 +306,8 @@ File ::B9D0AA67-3594-45D6-A1B1-8D07E9212B76 -name TipsOfTheDay.xml -parent 85519
 File ::DC8C4FE0-13AF-4EE5-ADD0-A03718CBFEC6 -name TipsOfTheDay_de.xml -parent 85519505-B2E6-4155-96D6-3C0D6C533801
 File ::F6726523-223C-4ECE-8B9A-56AF4A6594C5 -name bassopus.dll -parent 85519505-B2E6-4155-96D6-3C0D6C533801
 File ::B048EE09-B291-4DF2-9EEE-09EEC513A2C7 -name opusenc.exe -parent 85519505-B2E6-4155-96D6-3C0D6C533801
+File ::06792FBA-D0D7-488A-9F90-C80469723190 -name Ares.CmdLinePlayer.exe -active 0 -parent 85519505-B2E6-4155-96D6-3C0D6C533801
+File ::04483282-9DB4-487D-92C6-8A53DDCBDD0A -name Ares.CmdLinePlayer.exe.config -active 0 -parent 85519505-B2E6-4155-96D6-3C0D6C533801
 File ::95542296-8E72-4D8D-8ACE-B7B6AB1080E3 -name D:/Projekte/Ares/trunk/build/Ares/ServiceStackLicence.txt -parent 36904AC1-ABF2-4646-9ECF-2C0CBC0BB8C5
 File ::CCC6C317-4CCE-44B9-9FE1-9C12E10D1373 -name D:/Projekte/Ares/trunk/build/Ares/HtmlRendererLicence.txt -parent 36904AC1-ABF2-4646-9ECF-2C0CBC0BB8C5
 FileGroup ::68676E85-DEAC-451E-9016-59D1A2300E9B -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows TarArchive ZipArchive} -name Player -parent FileGroups
@@ -313,6 +316,9 @@ File ::183D5336-C3DB-4D10-A1C9-893B83D8B44F -name D:/Projekte/Ares/trunk/build/A
 File ::0F8B9FC1-9BDE-49EC-9103-0CC62C7CA7DE -directory <%InstallDir%>/Player_Editor/de -name D:/Projekte/Ares/trunk/build/Ares/Player_Editor/de/Ares.Player.resources.dll -location <%BaseDir%>/Ares/Player_Editor/de -parent 68676E85-DEAC-451E-9016-59D1A2300E9B
 File ::CA1E9798-2A30-4C31-80BD-A586080F8934 -name D:/Projekte/Ares/trunk/build/Ares/MouseKeyboardHooksLicence.txt -parent 68676E85-DEAC-451E-9016-59D1A2300E9B
 File ::EF0E86AB-F73F-4E87-8FBD-D30D335D533C -name D:/Projekte/Ares/trunk/build/Ares/Player_Editor/MouseKeyboardActivityMonitor.dll -parent 68676E85-DEAC-451E-9016-59D1A2300E9B
+File ::6B675E38-93D8-40F5-A722-EFCF5DB45F39 -name D:/Projekte/Ares/trunk/build/Ares/Player_Editor/Ares.CmdLinePlayer.exe -location <%BaseDir%>/Ares/Player_Editor -parent 68676E85-DEAC-451E-9016-59D1A2300E9B
+File ::E41B6A68-B924-4716-832A-03804A285A0A -name D:/Projekte/Ares/trunk/build/Ares/Player_Editor/Ares.CmdLinePlayer.exe.config -location <%BaseDir%>/Ares/Player_Editor -parent 68676E85-DEAC-451E-9016-59D1A2300E9B
+File ::FC7BB92B-4275-4721-8DF5-E02E6665726E -directory <%InstallDir%>/Player_Editor/de -name D:/Projekte/Ares/trunk/build/Ares/Player_Editor/de/Ares.CmdLinePlayer.resources.dll -location <%BaseDir%>/Ares/Player_Editor/de -parent 68676E85-DEAC-451E-9016-59D1A2300E9B
 FileGroup ::5600FFDB-0F3C-4E9F-B311-0FACC5462967 -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows TarArchive ZipArchive} -name Editor -parent FileGroups
 File ::960E9C98-3E8C-479E-AE39-17842C3F4784 -name D:/Projekte/Ares/trunk/build/Ares/Player_Editor/Ares.Editor.Actions.dll -location <%BaseDir%>/Ares/Player_Editor -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
 File ::07A9F401-88DE-416E-9C01-274C8039279B -name D:/Projekte/Ares/trunk/build/Ares/Player_Editor/Ares.Editor.Controls.dll -location <%BaseDir%>/Ares/Player_Editor -parent 5600FFDB-0F3C-4E9F-B311-0FACC5462967
@@ -407,6 +413,7 @@ File ::75B96045-B0F0-4731-97FB-FB616F72F38D -name Ares.Players.resources.dll -pa
 File ::E5312511-A866-415B-B620-CB572C18D53F -name Ares.Playing.resources.dll -parent 17976991-8768-42AE-865F-000C80E99C50
 File ::8DAD3937-2F35-4F63-A610-A07B3E1100E6 -name Ares.Settings.resources.dll -parent 17976991-8768-42AE-865F-000C80E99C50
 File ::B1C25830-1AA0-41D1-9932-7C71D6792B80 -name Ares.CommonGUI.resources.dll -parent 17976991-8768-42AE-865F-000C80E99C50
+File ::73C3DAB9-4DEE-43C9-AA64-7F2F10F814E2 -name Ares.CmdLinePlayer.resources.dll -parent 17976991-8768-42AE-865F-000C80E99C50
 File ::C88054D0-001B-4C2A-9AFA-42847B258170 -name Ares.png -parent C17D4904-E0C0-4389-B37A-799FD29270B1
 File ::2E8C3517-62CB-4E95-AB0A-DEC2DE397268 -name Ares.Tags.dll -parent C17D4904-E0C0-4389-B37A-799FD29270B1
 File ::EE732BCF-8162-4A6D-8811-1FD9AD314CC6 -name HtmlRenderer.dll -parent C17D4904-E0C0-4389-B37A-799FD29270B1
@@ -416,6 +423,9 @@ File ::5EA75B8C-E8DA-496F-ADFD-23099CC9DF14 -name Ares.CommonGUI.dll -parent C17
 File ::4B6440FE-2E4C-423F-BA7D-D8F35A3247CA -name libbassflac.so -parent C17D4904-E0C0-4389-B37A-799FD29270B1
 File ::35CBC3FE-D113-462E-A88F-D26079AA1CFC -name libbass_aac.so -parent C17D4904-E0C0-4389-B37A-799FD29270B1
 File ::1C9AAE8F-1DE9-4519-AFBD-145629B6FB51 -name libbassopus.so -parent C17D4904-E0C0-4389-B37A-799FD29270B1
+File ::85A82021-D22F-444A-B32D-8701391E129C -name Ares.CmdLinePlayer.exe -parent C17D4904-E0C0-4389-B37A-799FD29270B1
+File ::8F02BDA5-3001-4689-A518-2235C2FADB7D -name Ares.CmdLinePlayer.exe.config -parent C17D4904-E0C0-4389-B37A-799FD29270B1
+File ::8305B669-5392-452C-A440-A52475A740E6 -name Ares.CmdLinePlayer.sh -parent C17D4904-E0C0-4389-B37A-799FD29270B1
 File ::0E8DB0B9-DFBE-4DEC-8A9E-1847C37B9DE5 -name D:/Projekte/Ares/trunk/build/Ares/HtmlRendererLicence.txt -parent 1B81444E-DFA2-4A82-92CB-E6F0771F06DA
 File ::4CFC768F-2DEA-4336-8EF7-48370D3D043D -name D:/Projekte/Ares/trunk/build/Ares/ServiceStackLicence.txt -parent 1B81444E-DFA2-4A82-92CB-E6F0771F06DA
 FileGroup ::6F323641-5378-46CA-9FDB-691D055EF20A -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows TarArchive ZipArchive} -name {Player Linux x64} -parent FileGroups
@@ -454,7 +464,11 @@ File ::68D57AEC-4507-48F8-BC39-FFABCC0796DB -name Ares.Player.resources.dll -par
 File ::DFB43E02-A83E-42F1-817F-DC116BA64675 -name Ares.Players.resources.dll -parent 366BEBCE-FBF4-457C-903A-38728457AF2A
 File ::272913B3-2CD0-44AF-B406-B3C56FFB1BF8 -name Ares.Playing.resources.dll -parent 366BEBCE-FBF4-457C-903A-38728457AF2A
 File ::FA9BD7D2-1850-4AEA-8F17-B9CC6F438DCC -name Ares.Settings.resources.dll -parent 366BEBCE-FBF4-457C-903A-38728457AF2A
+File ::D0F56AA3-8649-403B-9596-A9B9BC5E5684 -name Ares.CmdLinePlayer.resources.dll -parent 366BEBCE-FBF4-457C-903A-38728457AF2A
 File ::DA864760-9278-405A-83AE-2A0E84939380 -name libbassopus.so -parent 986B21DE-AFAC-4755-8781-09C66B8FADB6
+File ::2B5C2A6F-343B-4C0B-AB41-BF59FDC83361 -name Ares.CmdLinePlayer.exe -parent 986B21DE-AFAC-4755-8781-09C66B8FADB6
+File ::6D318B3A-7BA3-4258-9006-3CD34FEB169F -name Ares.CmdLinePlayer.exe.config -parent 986B21DE-AFAC-4755-8781-09C66B8FADB6
+File ::177A06A4-8243-47D2-AA3F-0D955B771F3C -name Ares.CmdLinePlayer.sh -parent 986B21DE-AFAC-4755-8781-09C66B8FADB6
 File ::9571ACA5-B0E4-4DCF-ADD2-EBA6E2487096 -name D:/Projekte/Ares/trunk/build/Ares/HtmlRendererLicence.txt -parent 6F323641-5378-46CA-9FDB-691D055EF20A
 File ::79C72F23-7844-4DB3-B7CD-90F21C6F41A5 -name D:/Projekte/Ares/trunk/build/Ares/ServiceStackLicence.txt -parent 6F323641-5378-46CA-9FDB-691D055EF20A
 Component ::9007BFE7-966A-4832-9DD3-CC572BE38EC3 -setup Install -active Yes -platforms Windows -name Editor -parent Components

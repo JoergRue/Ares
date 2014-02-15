@@ -48,4 +48,18 @@ rmdir /S /Q Ares_Portable_Linux_x64\Player
 move /Y Ares_Portable_Linux_x64\Player64 Ares_Portable_Linux_x64\Player
 %zip% a output\Ares_Portable_Linux_x64_%1.zip Ares_Portable_Linux_x64
 
+xcopy /S /E /I Ares Ares_Portable_Linux_arm_softfp
+xcopy /S /E ..\Ares_Portable Ares_Portable_Linux_arm_softfp
+rmdir /S /Q Ares_Portable_Linux_arm_softfp\Player_Editor
+rmdir /S /Q Ares_Portable_Linux_arm_softfp\Player64
+xcopy /S /E /I /Y ..\Libraries_Linux_arm_softfp Ares_Portable_Linux_arm_softfp\Player
+%zip% a output\Ares_Portable_Linux_arm_softfp_%1.zip Ares_Portable_Linux_arm_softfp
+
+xcopy /S /E /I Ares Ares_Portable_Linux_arm_hardfp
+xcopy /S /E ..\Ares_Portable Ares_Portable_Linux_arm_hardfp
+rmdir /S /Q Ares_Portable_Linux_arm_hardfp\Player_Editor
+rmdir /S /Q Ares_Portable_Linux_arm_hardfp\Player64
+xcopy /S /E /I /Y ..\Libraries_Linux_arm_hardfp Ares_Portable_Linux_arm_hardfp\Player
+%zip% a output\Ares_Portable_Linux_arm_hardfp_%1.zip Ares_Portable_Linux_arm_hardfp
+
 cd ..

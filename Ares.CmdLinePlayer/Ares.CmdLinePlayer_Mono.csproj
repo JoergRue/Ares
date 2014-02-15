@@ -13,7 +13,6 @@
     <AssemblyOriginatorKeyFile>ares.snk</AssemblyOriginatorKeyFile>
     <ApplicationIcon>Ares.ico</ApplicationIcon>
     <StartupObject>Ares.CmdLinePlayer.Program</StartupObject>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Mono_Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -38,11 +37,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="Bass.Net">
-      <HintPath>..\Libraries\Bass.Net.dll</HintPath>
-    </Reference>
     <Reference Include="BassRegistration">
-      <HintPath>..\Libraries\BassRegistration.dll</HintPath>
+      <HintPath>..\Libraries_Linux\BassRegistration.dll</HintPath>
+    </Reference>
+    <Reference Include="Bass.Net.Linux">
+      <HintPath>..\Libraries_Linux\Bass.Net.Linux.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
