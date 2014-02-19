@@ -58,6 +58,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -206,16 +207,33 @@ public final class MainFrame extends FrameController implements IMessageListener
   	ModeFrames.getInstance();
   	addButton(Localization.getString("MainFrame.Messages"), getMessagesButton()); //$NON-NLS-1$
   	enableProjectSpecificControls(false);
+  	final boolean hasManualPlayer = !Preferences.userNodeForPackage(ares.controller.gui.OptionsDialog.class).getBoolean("AutoDetectPlayer", true); //$NON-NLS-1$
   	serverSearch = new ServerSearch(this, Preferences.userNodeForPackage(MainFrame.class).getInt("UDPPort", 8009)); //$NON-NLS-1$
-  	serverSearch.startSearch();
+  	if (!hasManualPlayer) {
+  		serverSearch.startSearch();
+  	}
     ComponentKeys.addAlwaysAvailableKeys(getRootPane());
     hasLocalPlayer = findLocalPlayer() != null;
     final boolean checkForNewVersion = Preferences.userNodeForPackage(ares.controller.gui.OptionsDialog.class).getBoolean("CheckForUpdate", true); //$NON-NLS-1$
   	final boolean startLocalPlayer = hasLocalPlayer && Preferences.userNodeForPackage(ares.controller.gui.OptionsDialog.class).getBoolean("StartLocalPlayer", true); //$NON-NLS-1$
-  	if (checkForNewVersion || startLocalPlayer) {
+  	if (checkForNewVersion || startLocalPlayer || hasManualPlayer) {
   		firstTimer = new Timer(2000, new ActionListener() {
   			public void actionPerformed(ActionEvent e) {
-  				if (startLocalPlayer) {
+  				if (hasManualPlayer) {
+  					Preferences prefs = Preferences.userNodeForPackage(ares.controller.gui.OptionsDialog.class);
+  					String serverName = prefs.get("ServerName", "localhost"); //$NON-NLS-1$ //$NON-NLS-2$
+  					String ipAddress = prefs.get("IPAddress", "127.0.0.1"); //$NON-NLS-1$ //$NON-NLS-2$
+  					int tcpPort = prefs.getInt("TCPPort", 11112); //$NON-NLS-1$
+  					try {
+  						servers.clear();
+  						connectWithFirstServer = true;
+  						serverFound(new ServerInfo(InetAddress.getByName(ipAddress), tcpPort, serverName));
+  					}
+  					catch (java.net.UnknownHostException ex) {
+  						JOptionPane.showMessageDialog(MainFrame.this, Localization.getString("MainFrame.Server2") + ipAddress + Localization.getString("MainFrame.NotFound"), Localization.getString("MainFrame.Ares"), JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+  					}
+  				}
+  				else if (startLocalPlayer) {
   					maybeStartPlayer();
   				}
   				if (checkForNewVersion) {
@@ -1551,6 +1569,9 @@ public final class MainFrame extends FrameController implements IMessageListener
 	private void showSettingsDialog() {
 		int oldPort = Preferences.userNodeForPackage(MainFrame.class).getInt("UDPPort", 8009);  //$NON-NLS-1$
 		boolean oldKeys = Preferences.userNodeForPackage(OptionsDialog.class).getBoolean("ShowKeys", false); //$NON-NLS-1$
+		boolean oldManual = !Preferences.userNodeForPackage(OptionsDialog.class).getBoolean("AutoDetectPlayer", true); //$NON-NLS-1$
+		String oldAddress = Preferences.userNodeForPackage(OptionsDialog.class).get("IPAddress", "127.0.0.1"); //$NON-NLS-1$ //$NON-NLS-2$
+		int oldTcpPort = Preferences.userNodeForPackage(MainFrame.class).getInt("TCPPort", 11112);  //$NON-NLS-1$
 		OptionsDialog dialog = new OptionsDialog(MainFrame.this);
 		dialog.setMusicOptions(musicOnAllSpeakers, musicFadingOption, musicFadingTime);
 		dialog.setLocationRelativeTo(this);
@@ -1558,16 +1579,60 @@ public final class MainFrame extends FrameController implements IMessageListener
 		dialog.setVisible(true);
 		int newPort = Preferences.userNodeForPackage(MainFrame.class).getInt("UDPPort", 8009);  //$NON-NLS-1$
 		boolean newKeys = Preferences.userNodeForPackage(OptionsDialog.class).getBoolean("ShowKeys", false); //$NON-NLS-1$
-		if (serverSearch != null && oldPort != newPort) {
+		boolean newManual = !Preferences.userNodeForPackage(OptionsDialog.class).getBoolean("AutoDetectPlayer", true);  //$NON-NLS-1$
+		String newAddress = Preferences.userNodeForPackage(OptionsDialog.class).get("IPAddress", "127.0.0.1"); //$NON-NLS-1$ //$NON-NLS-2$
+		int newTcpPort = Preferences.userNodeForPackage(MainFrame.class).getInt("TCPPort", 11112);  //$NON-NLS-1$
+		
+		if (serverSearch != null && (oldPort != newPort) || oldManual != newManual) {
 			boolean wasSearching = serverSearch.isSearching();
 			if (wasSearching) {
 				serverSearch.stopSearch();
 			}
 			serverSearch.dispose();
 			serverSearch = new ServerSearch(MainFrame.this, newPort);
-			if (wasSearching) {
+			if (wasSearching && !newManual) {
 				serverSearch.startSearch();
 			}
+		}
+		boolean reconnect = false;
+		if (oldManual != newManual)
+			reconnect = true;
+		else if (newManual && (!oldAddress.equals(newAddress)) || oldTcpPort != newTcpPort)
+			reconnect = true;
+		if (reconnect) {
+			servers.clear();
+			serverBox.removeAllItems();
+			if (Control.getInstance().isConnected()) {
+				Control.getInstance().disconnect(true);
+			}
+			getConnectButton().setText(Localization.getString("MainFrame.Connect")); //$NON-NLS-1$
+			if (newManual) {
+				try {
+					connectWithFirstServer = true;
+					String serverName = Preferences.userNodeForPackage(OptionsDialog.class).get("ServerName", "localhost");  //$NON-NLS-1$ //$NON-NLS-2$
+					serverFound(new ServerInfo(InetAddress.getByName(newAddress), newTcpPort, serverName));
+				}
+				catch (java.net.UnknownHostException ex) {
+					JOptionPane.showMessageDialog(MainFrame.this, Localization.getString("MainFrame.Server2") + newAddress + Localization.getString("MainFrame.NotFound"), Localization.getString("MainFrame.Ares"), JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				}
+			}
+			else {
+			    hasLocalPlayer = findLocalPlayer() != null;
+			  	boolean startLocalPlayer = hasLocalPlayer && Preferences.userNodeForPackage(ares.controller.gui.OptionsDialog.class).getBoolean("StartLocalPlayer", true); //$NON-NLS-1$
+			  	if (startLocalPlayer) {
+			  		maybeStartPlayer();
+			  	}
+				serverSearch.dispose();
+				serverSearch = new ServerSearch(MainFrame.this, newPort);
+				serverSearch.startSearch();
+			}
+		}
+		else if (servers.isEmpty() && !newManual) {
+		    hasLocalPlayer = findLocalPlayer() != null;
+		  	boolean startLocalPlayer = hasLocalPlayer && Preferences.userNodeForPackage(ares.controller.gui.OptionsDialog.class).getBoolean("StartLocalPlayer", true); //$NON-NLS-1$
+		  	if (startLocalPlayer) {
+		  		maybeStartPlayer();
+		  	}			
 		}
 		if (oldKeys != newKeys && Control.getInstance().getConfiguration() != null) {
 			final ArrayList<String> openFrames = closeAllFrames();

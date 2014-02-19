@@ -31,6 +31,8 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.prefs.Preferences;
 
 import javax.swing.BorderFactory;
@@ -40,6 +42,7 @@ import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.JCheckBox;
@@ -123,6 +126,12 @@ public final class OptionsDialog extends BGDialog {
   private JRadioButton crossFadeButton = null;
   
   private JSpinner fadeTimeSpinner = null;
+  
+  private JRadioButton autoDetectButton = null;
+  private JRadioButton manualSelectButton = null;
+  private JTextField addressField = null;
+  private JSpinner tcpSpinner = null;
+  private JTextField serverNameField = null;
 
   /**
    * This method initializes
@@ -273,6 +282,26 @@ public final class OptionsDialog extends BGDialog {
   }
 
   protected boolean savePreferences() {
+	boolean autoDetectPlayer = getAutoDetectButton().isSelected();
+	if (!autoDetectPlayer) {
+		String ipAddressString = getIpAddressField().getText();
+		if (ipAddressString == null || ipAddressString.length() == 0) {
+			JOptionPane.showMessageDialog(this, Localization.getString("OptionsDialog.EnterValidIP"), Localization.getString("OptionsDialog.Ares"), JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$ //$NON-NLS-2$
+			return false;			
+		}
+		try {
+			InetAddress.getByName(ipAddressString);
+		}
+		catch (UnknownHostException ex) {
+			JOptionPane.showMessageDialog(this, Localization.getString("OptionsDialog.EnterValidIP"), Localization.getString("OptionsDialog.Ares"), JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$ //$NON-NLS-2$
+			return false;
+		}
+		String serverNameString = getServerNameField().getText();
+		if (serverNameString == null || serverNameString.length() == 0) {
+			JOptionPane.showMessageDialog(this, Localization.getString("OptionsDialog.EnterServerName"), Localization.getString("OptionsDialog.Ares"), JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$ //$NON-NLS-2$
+			return false;			
+		}
+	}
     String lf = lfBox.getSelectedItem().toString();
     Preferences prefs = Preferences.userNodeForPackage(OptionsDialog.class);
     
@@ -325,12 +354,21 @@ public final class OptionsDialog extends BGDialog {
     prefs.putInt("CustomDataDirOption", dataOption); //$NON-NLS-1$
     prefs.putBoolean("BringWindowsToTop", fgBox.isSelected()); //$NON-NLS-1$
     int udpPort = ((Number)udpSpinner.getValue()).intValue();
-    prefs.putInt("UDPPort", udpPort); //$NON-NLS-1$
     prefs.putInt("MessageLevel", messageLevelBox.getSelectedIndex()); //$NON-NLS-1$
     prefs.putBoolean("CheckForUpdate", updateCheckBox.isSelected()); //$NON-NLS-1$
     prefs.putBoolean("StartLocalPlayer", startPlayerBox.isSelected()); //$NON-NLS-1$
     prefs.putBoolean("AskForPlayerStart", askBeforePlayerStartBox.isSelected()); //$NON-NLS-1$
     prefs.putBoolean("ShowKeys", keysCheckBox.isSelected()); //$NON-NLS-1$
+    
+    prefs.putBoolean("AutoDetectPlayer", autoDetectPlayer); //$NON-NLS-1$
+    if (getAutoDetectButton().isSelected()) {
+        prefs.putInt("UDPPort", udpPort); //$NON-NLS-1$
+    }
+    else {
+    	prefs.put("IPAddress", getIpAddressField().getText()); //$NON-NLS-1$
+    	prefs.putInt("TCPPort", ((Number)getTcpSpinner().getValue()).intValue()); //$NON-NLS-1$
+    	prefs.put("ServerName", getServerNameField().getText()); //$NON-NLS-1$
+    }
     
     musicOnAllSpeakers = getMusicOnAllSpeakersBox().isSelected();
     musicFadingOption = getNoFadeButton().isSelected() ? 0 : (getFadeButton().isSelected() ? 1 : 2);
@@ -371,6 +409,12 @@ public final class OptionsDialog extends BGDialog {
     askBeforePlayerStartBox.setSelected(prefs.getBoolean("AskForPlayerStart", true)); //$NON-NLS-1$
     startPlayerBox.setSelected(prefs.getBoolean("StartLocalPlayer", true)); //$NON-NLS-1$
     keysCheckBox.setSelected(prefs.getBoolean("ShowKeys", false)); //$NON-NLS-1$
+    
+    boolean autoDetect = prefs.getBoolean("AutoDetectPlayer", true); //$NON-NLS-1$
+    getTcpSpinner().setValue(prefs.getInt("TCPPort", 11112)); //$NON-NLS-1$
+    getIpAddressField().setText(prefs.get("IPAddress", "")); //$NON-NLS-1$ //$NON-NLS-2$
+    getServerNameField().setText(prefs.get("ServerName", "")); //$NON-NLS-1$ //$NON-NLS-2$
+    autoManualSwitched(!autoDetect);
   }
 
   /**
@@ -415,6 +459,7 @@ public final class OptionsDialog extends BGDialog {
   private JCheckBox getAskBeforePlayerStartBox() {
 	  if (askBeforePlayerStartBox == null) {
 		  askBeforePlayerStartBox = new JCheckBox(Localization.getString("OptionsDialog.AskBeforePlayerStart")); //$NON-NLS-1$
+		  askBeforePlayerStartBox.setAlignmentX(LEFT_ALIGNMENT);
 	  }
 	  return askBeforePlayerStartBox;
   }
@@ -422,28 +467,142 @@ public final class OptionsDialog extends BGDialog {
   private JCheckBox getStartPlayerBox() {
 	  if (startPlayerBox == null) {
 		  startPlayerBox = new JCheckBox(Localization.getString("OptionsDialog.StartLocalPlayer")); //$NON-NLS-1$
+		  startPlayerBox.setAlignmentX(LEFT_ALIGNMENT);
 	  }
 	  return startPlayerBox;
+  }
+  
+  private JSpinner getTcpSpinner() {
+	    if (tcpSpinner == null) {
+	    	tcpSpinner = new JSpinner();
+	    	tcpSpinner.setModel(new SpinnerNumberModel(11112, 1000, 15000, 1));
+	    }
+	    return tcpSpinner;
+  }
+
+  private JTextField getServerNameField() {
+	  if (serverNameField == null) {
+		  serverNameField = new JTextField();
+		  serverNameField.setPreferredSize(new Dimension(80, 10));
+	  }
+	  return serverNameField;
+  }
+  
+  private JTextField getIpAddressField() {
+	  if (addressField == null) {
+	    addressField = new JTextField();
+	    addressField.setPreferredSize(new Dimension(80, 10));
+	  }
+	  return addressField;
+  }
+  
+  private boolean listen = true;
+  
+  private JRadioButton getManualSelectButton() {
+	  if (manualSelectButton == null) {
+		  manualSelectButton = new JRadioButton(Localization.getString("OptionsDialog.ManuallyEnterPlayer")); //$NON-NLS-1$
+		  manualSelectButton.addActionListener(new ActionListener() {
+			  public void actionPerformed(ActionEvent e) {
+				  if (!listen)
+					  return;
+				  autoManualSwitched(true);
+			  }
+		  });
+		  manualSelectButton.setAlignmentX(LEFT_ALIGNMENT);
+	  }
+	  return manualSelectButton;
+  }
+  
+  private JRadioButton getAutoDetectButton() {
+	  if (autoDetectButton == null) {
+		  autoDetectButton = new JRadioButton(Localization.getString("OptionsDialog.AutomaticallyFindPlayer")); //$NON-NLS-1$
+		  autoDetectButton.addActionListener(new ActionListener() {
+			  public void actionPerformed(ActionEvent e) {
+				  if (!listen)
+					  return;
+				  autoManualSwitched(false);
+			  }
+		  });
+		  autoDetectButton.setAlignmentX(LEFT_ALIGNMENT);
+	  }
+	  return autoDetectButton;
+  }
+  
+  private void autoManualSwitched(boolean manualSelect) {
+	  listen = false;
+	  getIpAddressField().setEnabled(manualSelect);
+	  getTcpSpinner().setEnabled(manualSelect);
+	  getServerNameField().setEnabled(manualSelect);
+	  getManualSelectButton().setSelected(manualSelect);
+	  getUdpSpinner().setEnabled(!manualSelect);
+	  getAutoDetectButton().setSelected(!manualSelect);
+	  getAskBeforePlayerStartBox().setEnabled(!manualSelect);
+	  getStartPlayerBox().setEnabled(!manualSelect);
+	  listen = true;
   }
   
   private JPanel getConnectionPanel() {
 	  if (connectionPanel == null) {
 		  connectionPanel = new JPanel();
+	      connectionPanel.setLayout(new BoxLayout(connectionPanel, BoxLayout.PAGE_AXIS));
 		  connectionPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-		  connectionPanel.setLayout(new GridLayout(6, 1, 5, 5));
 	      jLabel4 = new JLabel();
 	      jLabel4.setText(Localization.getString("OptionsDialog.UDPPort")); //$NON-NLS-1$
+	      connectionPanel.add(getAutoDetectButton());
+	      connectionPanel.add(Box.createVerticalStrut(5));
 	      JPanel udpPanel = new JPanel();
 	      udpPanel.setLayout(new BoxLayout(udpPanel, BoxLayout.LINE_AXIS));
+	      udpPanel.add(Box.createHorizontalStrut(25));
 	      udpPanel.add(jLabel4);
 	      udpPanel.add(Box.createHorizontalStrut(5));
 	      udpPanel.add(getUdpSpinner());
 	      udpPanel.add(Box.createHorizontalGlue());
-	      JPanel p1 = new JPanel(new BorderLayout());
-	      p1.add(udpPanel, BorderLayout.NORTH);
-	      connectionPanel.add(p1);
-	      connectionPanel.add(getStartPlayerBox());
-	      connectionPanel.add(getAskBeforePlayerStartBox());
+		  udpPanel.setAlignmentX(LEFT_ALIGNMENT);
+	      connectionPanel.add(udpPanel);
+	      connectionPanel.add(Box.createVerticalStrut(5));
+	      JPanel startPlayerPanel = new JPanel();
+	      startPlayerPanel.setLayout(new BoxLayout(startPlayerPanel, BoxLayout.LINE_AXIS));
+	      startPlayerPanel.add(Box.createHorizontalStrut(25));
+	      startPlayerPanel.add(getStartPlayerBox());
+	      startPlayerPanel.setAlignmentX(LEFT_ALIGNMENT);
+	      connectionPanel.add(startPlayerPanel);
+	      connectionPanel.add(Box.createVerticalStrut(5));
+	      JPanel startPlayerPanel2 = new JPanel();
+	      startPlayerPanel2.setLayout(new BoxLayout(startPlayerPanel2, BoxLayout.LINE_AXIS));
+	      startPlayerPanel2.add(Box.createHorizontalStrut(25));
+	      startPlayerPanel2.add(getAskBeforePlayerStartBox());
+	      startPlayerPanel2.setAlignmentX(LEFT_ALIGNMENT);
+	      connectionPanel.add(startPlayerPanel2);
+	      connectionPanel.add(Box.createVerticalStrut(5));
+	      connectionPanel.add(getManualSelectButton());
+	      connectionPanel.add(Box.createVerticalStrut(5));
+	      JPanel tcpPanel = new JPanel();
+	      tcpPanel.setLayout(new BoxLayout(tcpPanel, BoxLayout.LINE_AXIS));
+	      tcpPanel.add(Box.createHorizontalStrut(25));
+	      JLabel label5 = new JLabel();
+	      label5.setText(Localization.getString("OptionsDialog.Address")); //$NON-NLS-1$
+	      tcpPanel.add(label5);
+	      tcpPanel.add(Box.createHorizontalStrut(5));
+	      tcpPanel.add(getIpAddressField());
+	      tcpPanel.add(Box.createHorizontalStrut(5));
+	      JLabel label6 = new JLabel();
+	      label6.setText(Localization.getString("OptionsDialog.Port")); //$NON-NLS-1$
+	      tcpPanel.add(label6);
+	      tcpPanel.add(Box.createHorizontalStrut(5));
+	      tcpPanel.add(getTcpSpinner());
+		  tcpPanel.setAlignmentX(LEFT_ALIGNMENT);
+	      connectionPanel.add(tcpPanel);
+	      connectionPanel.add(Box.createVerticalStrut(5));
+	      JPanel serverNamePanel = new JPanel();
+	      serverNamePanel.setLayout(new BoxLayout(serverNamePanel, BoxLayout.LINE_AXIS));
+	      serverNamePanel.add(Box.createHorizontalStrut(25));
+	      JLabel label7 = new JLabel();
+	      label7.setText(Localization.getString("OptionsDialog.Name")); //$NON-NLS-1$
+	      serverNamePanel.add(label7);
+	      serverNamePanel.add(Box.createHorizontalStrut(5));
+	      serverNamePanel.add(getServerNameField());
+		  serverNamePanel.setAlignmentX(LEFT_ALIGNMENT);
+	      connectionPanel.add(serverNamePanel);
 	  }
 	  return connectionPanel;
   }
