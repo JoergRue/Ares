@@ -25,53 +25,6 @@ namespace Ares.CmdLinePlayer
 {
     class Program
     {
-        private static String GetBassInitErrorMessage()
-        {
-            switch (Un4seen.Bass.Bass.BASS_ErrorGetCode())
-            {
-                case Un4seen.Bass.BASSError.BASS_ERROR_DEVICE:
-                    return StringResources.BassDeviceInvalid;
-                case Un4seen.Bass.BASSError.BASS_ERROR_ALREADY:
-                    return StringResources.BassDeviceAlready;
-                case Un4seen.Bass.BASSError.BASS_ERROR_DRIVER:
-                    return StringResources.BassDeviceDriver;
-                case Un4seen.Bass.BASSError.BASS_ERROR_FORMAT:
-                    return StringResources.BassDeviceFormat;
-                case Un4seen.Bass.BASSError.BASS_ERROR_MEM:
-                    return StringResources.BassNoMem;
-                case Un4seen.Bass.BASSError.BASS_ERROR_NO3D:
-                    return StringResources.BassNo3D;
-                default:
-                    return StringResources.BassUnknown;
-            }
-        }
-
-        private static String MakeBassInitErrorMessage()
-        {
-            int device = Un4seen.Bass.Bass.BASS_GetDevice();
-            if (device != -1)
-            {
-                Un4seen.Bass.BASS_DEVICEINFO deviceInfo = Un4seen.Bass.Bass.BASS_GetDeviceInfo(device);
-                if (deviceInfo != null)
-                {
-                    String deviceStr = String.Format(StringResources.BassDeviceInfo, deviceInfo.name,
-                        deviceInfo.driver != null ? deviceInfo.driver : StringResources.NoDeviceDriver,
-                        deviceInfo.IsEnabled ? StringResources.DeviceEnabled : StringResources.DeviceDisabled);
-                    return String.Format(StringResources.BassInitFail, GetBassInitErrorMessage(), deviceStr);
-                }
-            }
-            return String.Format(StringResources.BassInitFail, GetBassInitErrorMessage(), StringResources.NoDevice);
-        }
-
-        private static bool IsLinux
-        {
-            get
-            {
-                int p = (int)Environment.OSVersion.Platform;
-                return (p == 4) || (p == 6) || (p == 128);
-            }
-        }
-
         static int Main(string[] args)
         {
             System.AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
@@ -90,73 +43,28 @@ namespace Ares.CmdLinePlayer
             Console.WriteLine(String.Format(StringResources.AresPlayer, (new System.Reflection.AssemblyName(System.Reflection.Assembly.GetExecutingAssembly().FullName)).Version.ToString()));
             Console.WriteLine();
 
-            int bassPlugin1, bassPlugin2, bassPlugin3;
+            int res = 0;
             try
             {
-                BassRegistration.Registration.RegisterBass();
-#if !MONO
-                if (!Un4seen.Bass.Bass.LoadMe())
+                using (Ares.Playing.BassInit bassInit = new Ares.Playing.BassInit(s => Console.WriteLine(s)))
                 {
-                    System.Console.Error.WriteLine(StringResources.BassLoadFail);
-                    return 1;
+                    PlayerOptions options = new PlayerOptions();
+                    if (options.Parse(args))
+                    {
+                        Player player = new Player();
+                        res = player.Run(options);
+                    }
+                    else
+                    {
+                        res = 2;
+                    }
                 }
-#endif
-                if (!Un4seen.Bass.Bass.BASS_Init(-1, 44100, Un4seen.Bass.BASSInit.BASS_DEVICE_DEFAULT, IntPtr.Zero))
-                {
-                    System.Console.Error.WriteLine(MakeBassInitErrorMessage());
-                    return 1;
-                }
-#if !MONO
-                if (!Un4seen.Bass.AddOn.Fx.BassFx.LoadMe())
-                {
-                    System.Console.Error.WriteLine(StringResources.BassFxLoadFail);
-                    return 1;
-                }
-#endif
-                string exepath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-                String flacPlugin = IsLinux ? exepath + "/libbassflac.so" : "bassflac.dll";
-                bassPlugin1 = Un4seen.Bass.Bass.BASS_PluginLoad(flacPlugin);
-                if (bassPlugin1 == 0 && Un4seen.Bass.Bass.BASS_ErrorGetCode() != Un4seen.Bass.BASSError.BASS_ERROR_ALREADY)
-                {
-                    System.Console.WriteLine(StringResources.BassFlacLoadFail);
-                }
-
-                String aacPlugin = IsLinux ? exepath + "/libbass_aac.so" : "bass_aac.dll";
-                bassPlugin2 = Un4seen.Bass.Bass.BASS_PluginLoad(aacPlugin);
-                if (bassPlugin2 == 0 && Un4seen.Bass.Bass.BASS_ErrorGetCode() != Un4seen.Bass.BASSError.BASS_ERROR_ALREADY)
-                {
-                    System.Console.WriteLine(StringResources.BassAacLoadFail);
-                }
-
-                String opusPlugin = IsLinux ? exepath + "/libbassopus.so" : "bassopus.dll";
-                bassPlugin3 = Un4seen.Bass.Bass.BASS_PluginLoad(opusPlugin);
-                if (bassPlugin3 == 0 && Un4seen.Bass.Bass.BASS_ErrorGetCode() != Un4seen.Bass.BASSError.BASS_ERROR_ALREADY)
-                {
-                    System.Console.WriteLine(StringResources.BassOpusLoadFail);
-                }
-
             }
-            catch (Exception ex)
+            catch (Ares.Playing.BassInitException ex)
             {
-                System.Console.Error.WriteLine(String.Format(StringResources.BassInitFail,
-                                              ex.Message + "(" + ex.GetType().FullName + ")",
-                                              ex.StackTrace));
-                return 1;
+                Console.WriteLine(ex.Message);
+                res = 1;                
             }
-
-            PlayerOptions options = new PlayerOptions();
-            int res = 0;
-            if (options.Parse(args))
-            {
-                Player player = new Player();
-                res = player.Run(options);
-            }
-            else
-            {
-                res = 2;
-            }
-
-            Un4seen.Bass.Bass.BASS_Free();
             return res;
         }
 

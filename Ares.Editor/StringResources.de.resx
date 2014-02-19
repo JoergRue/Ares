@@ -129,41 +129,6 @@
   <data name="AresEditorTitle" xml:space="preserve">
     <value>Ares Editor - {0}</value>
   </data>
-  <data name="BassDeviceAlready" xml:space="preserve">
-    <value>Gerät ist bereits initialisiert. Wird es von einer anderen Anwendung verwendet?</value>
-  </data>
-  <data name="BassDeviceDriver" xml:space="preserve">
-    <value>Kein Gerätetreiber verfügbar. Sind Soundkarte und Lautsprecher korrekt installiert? Wird das Gerät von einer anderen Anwendung verwendet?</value>
-  </data>
-  <data name="BassDeviceFormat" xml:space="preserve">
-    <value>Gerät unterstützt 44kHz Sampling nicht.</value>
-  </data>
-  <data name="BassDeviceInfo" xml:space="preserve">
-    <value>Gerät: {0}, Treiber: {1}, Status: {2}</value>
-  </data>
-  <data name="BassDeviceInvalid" xml:space="preserve">
-    <value>Ungültiges Gerät. Sind Soundkarte und Lautsprecher korrekt installiert?</value>
-  </data>
-  <data name="BassFxLoadFail" xml:space="preserve">
-    <value>Konnte BASS Fx AddOn-Library nicht laden. Installationsproblem?</value>
-  </data>
-  <data name="BassInitFail" xml:space="preserve">
-    <value>Fehler: Konnte BASS nicht initialisieren!
-Fehlermeldung: {0}
-{1}</value>
-  </data>
-  <data name="BassLoadFail" xml:space="preserve">
-    <value>Konnte BASS-Library nicht laden. Installationsproblem?</value>
-  </data>
-  <data name="BassNo3D" xml:space="preserve">
-    <value>Das Gerät unterstützt 3D-Ausgabe nicht.</value>
-  </data>
-  <data name="BassNoMem" xml:space="preserve">
-    <value>Es steht nicht genug Speicher zur Verfügung.</value>
-  </data>
-  <data name="BassUnknown" xml:space="preserve">
-    <value>Unbekannter Fehler. Sind Soundkarte und Lautsprecher korrekt installiert?</value>
-  </data>
   <data name="Category" xml:space="preserve">
     <value>der Kategorie</value>
   </data>
@@ -181,12 +146,6 @@ Fehlermeldung: {0}
   </data>
   <data name="DeleteError" xml:space="preserve">
     <value>Fehler beim Löschen der Dateien: {0}</value>
-  </data>
-  <data name="DeviceDisabled" xml:space="preserve">
-    <value>abgeschaltet</value>
-  </data>
-  <data name="DeviceEnabled" xml:space="preserve">
-    <value>angeschaltet</value>
   </data>
   <data name="ElementIsEndless" xml:space="preserve">
     <value>Ein erneuter Tastendruck stoppt das Element (es enthält unbegrenzte Wiederholungen).</value>
@@ -326,12 +285,6 @@ Pfeil nach links  - Vorheriges Musikstück</value>
   </data>
   <data name="NewTagName" xml:space="preserve">
     <value>Neuer Name des Tags:</value>
-  </data>
-  <data name="NoDevice" xml:space="preserve">
-    <value>Keine Soundkarte gefunden.</value>
-  </data>
-  <data name="NoDeviceDriver" xml:space="preserve">
-    <value>Kein Sound-Treiber gefunden.</value>
   </data>
   <data name="NoDroppableElements" xml:space="preserve">
     <value>Diese Elemente können hier nicht eingefügt werden.</value>
@@ -536,20 +489,11 @@ Soll es jetzt gespeichert werden?</value>
   <data name="TagsCleanedUp" xml:space="preserve">
     <value>Tag-Datenbasis wurde gesäubert. Log anzeigen?</value>
   </data>
-  <data name="BassAacLoadFail" xml:space="preserve">
-    <value>Konnte BASS AAC AddOn-Library nicht laden. Installationsproblem?</value>
-  </data>
-  <data name="BassFlacLoadFail1" xml:space="preserve">
-    <value>Konnte BASS Flac AddOn-Library nicht laden. Installationsproblem?</value>
-  </data>
   <data name="ForumPage" xml:space="preserve">
     <value>http://sourceforge.net/p/aresrpg/discussion/allgemein/</value>
   </data>
   <data name="TipsFile" xml:space="preserve">
     <value>TipsOfTheDay_de.xml</value>
-  </data>
-  <data name="BassOpusLoadFail" xml:space="preserve">
-    <value>Konnte BASS Opus AddOn-Library nicht laden. Installationsproblem?</value>
   </data>
   <data name="FindingFilesInDB" xml:space="preserve">
     <value>Suche Dateien in Datenbank ...</value>

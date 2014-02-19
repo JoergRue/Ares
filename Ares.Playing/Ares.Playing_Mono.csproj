@@ -36,6 +36,9 @@
     <Reference Include="Bass.Net.Linux">
       <HintPath>..\Libraries_Linux\Bass.Net.Linux.dll</HintPath>
     </Reference>
+    <Reference Include="BassRegistration">
+      <HintPath>..\Libraries_Linux\BassRegistration.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BassStreamer.cs" />
@@ -53,6 +56,7 @@
     <Compile Include="MacroPlayer.cs" />
     <Compile Include="MusicPlayer.cs" />
     <Compile Include="StartElementPlayer.cs" />
+    <Compile Include="BassInit.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ares.snk" />

@@ -27,53 +27,6 @@ namespace Ares.Editor
 {
     static class Program
     {
-        private static String GetBassInitErrorMessage()
-        {
-            switch (Un4seen.Bass.Bass.BASS_ErrorGetCode())
-            {
-                case Un4seen.Bass.BASSError.BASS_ERROR_DEVICE:
-                    return StringResources.BassDeviceInvalid;
-                case Un4seen.Bass.BASSError.BASS_ERROR_ALREADY:
-                    return StringResources.BassDeviceAlready;
-                case Un4seen.Bass.BASSError.BASS_ERROR_DRIVER:
-                    return StringResources.BassDeviceDriver;
-                case Un4seen.Bass.BASSError.BASS_ERROR_FORMAT:
-                    return StringResources.BassDeviceFormat;
-                case Un4seen.Bass.BASSError.BASS_ERROR_MEM:
-                    return StringResources.BassNoMem;
-                case Un4seen.Bass.BASSError.BASS_ERROR_NO3D:
-                    return StringResources.BassNo3D;
-                default:
-                    return StringResources.BassUnknown;
-            }
-        }
-
-        private static String MakeBassInitErrorMessage()
-        {
-            int device = Un4seen.Bass.Bass.BASS_GetDevice();
-            if (device != -1)
-            {
-                Un4seen.Bass.BASS_DEVICEINFO deviceInfo = Un4seen.Bass.Bass.BASS_GetDeviceInfo(device);
-                if (deviceInfo != null)
-                {
-                    String deviceStr = String.Format(StringResources.BassDeviceInfo, deviceInfo.name,
-                        deviceInfo.driver != null ? deviceInfo.driver : StringResources.NoDeviceDriver,
-                        deviceInfo.IsEnabled ? StringResources.DeviceEnabled : StringResources.DeviceDisabled);
-                    return String.Format(StringResources.BassInitFail, GetBassInitErrorMessage(), deviceStr);
-                }
-            }
-            return String.Format(StringResources.BassInitFail, GetBassInitErrorMessage(), StringResources.NoDevice);
-        }
-
-        private static bool IsLinux
-		{
-		    get
-		    {
-		        int p = (int) Environment.OSVersion.Platform;
-		        return (p == 4) || (p == 6) || (p == 128);
-		    }
-		}
-
         /// <summary>
         /// Der Haupteinstiegspunkt für die Anwendung.
         /// </summary>
@@ -92,70 +45,24 @@ namespace Ares.Editor
             }
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            int bassPlugin1, bassPlugin2, bassPlugin3;
-            try
-            {
-                BassRegistration.Registration.RegisterBass();
-
-#if !MONO
-                if (!Un4seen.Bass.Bass.LoadMe())
-                {
-                    MessageBox.Show(StringResources.BassLoadFail, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                    return;
-                }
-#endif
-                if (!Un4seen.Bass.Bass.BASS_Init(-1, 44100, Un4seen.Bass.BASSInit.BASS_DEVICE_DEFAULT, IntPtr.Zero))
-                {
-                    MessageBox.Show(MakeBassInitErrorMessage(), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                    return;
-                }
-#if !MONO
-                if (!Un4seen.Bass.AddOn.Fx.BassFx.LoadMe())
-                {
-                    MessageBox.Show(StringResources.BassFxLoadFail, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                    return;
-                }
-#endif
-                String flacPlugin = IsLinux ? "libbassflag.so" : "bassflac.dll";
-                bassPlugin1 = Un4seen.Bass.Bass.BASS_PluginLoad(flacPlugin);
-                if (bassPlugin1 == 0 && Un4seen.Bass.Bass.BASS_ErrorGetCode() != Un4seen.Bass.BASSError.BASS_ERROR_ALREADY)
-                {
-                    MessageBox.Show(StringResources.BassFlacLoadFail1, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                    return;
-                }
-                String aacPlugin = IsLinux ? "libbass_aac.so"  : "bass_aac.dll";
-                bassPlugin2 = Un4seen.Bass.Bass.BASS_PluginLoad(aacPlugin);
-                if (bassPlugin2 == 0 && Un4seen.Bass.Bass.BASS_ErrorGetCode() != Un4seen.Bass.BASSError.BASS_ERROR_ALREADY)
-                {
-                    MessageBox.Show(StringResources.BassAacLoadFail, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                    return;
-                }
-                String opusPlugin = IsLinux ? "libbassopus.so" : "bassopus.dll";
-                bassPlugin3 = Un4seen.Bass.Bass.BASS_PluginLoad(opusPlugin);
-                if (bassPlugin3 == 0 && Un4seen.Bass.Bass.BASS_ErrorGetCode() != Un4seen.Bass.BASSError.BASS_ERROR_ALREADY)
-                {
-                    MessageBox.Show(StringResources.BassOpusLoadFail, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                }
-            }
-            catch (Exception)
-            {
-                MessageBox.Show(StringResources.BassInitFail, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                return;
-            }
             Application.ThreadException += new System.Threading.ThreadExceptionEventHandler(Application_ThreadException);
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
             try
             {
-                Application.Run(new MainForm());
+                using (Ares.Playing.BassInit bassInit = new Ares.Playing.BassInit(s => MessageBox.Show(s, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Warning)))
+                {
+                    Application.Run(new MainForm());
+                }
             }
             catch (Ares.Ipc.ApplicationAlreadyStartedException)
             {
             }
-            Un4seen.Bass.Bass.BASS_PluginFree(bassPlugin1);
-            Un4seen.Bass.Bass.BASS_PluginFree(bassPlugin2);
-            Un4seen.Bass.Bass.BASS_PluginFree(bassPlugin3);
-            Un4seen.Bass.Bass.BASS_Free();
+            catch (Ares.Playing.BassInitException ex)
+            {
+                MessageBox.Show(ex.Message, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                return;
+            }
         }
 
         static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)

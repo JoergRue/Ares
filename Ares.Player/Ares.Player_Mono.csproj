@@ -58,12 +58,6 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Deployment" />
-    <Reference Include="BassRegistration">
-      <HintPath>..\Libraries_Linux\BassRegistration.dll</HintPath>
-    </Reference>
-    <Reference Include="Bass.Net.Linux">
-      <HintPath>..\Libraries_Linux\Bass.Net.Linux.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MessagesForm.cs">

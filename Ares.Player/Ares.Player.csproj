@@ -133,14 +133,6 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="Bass.Net, Version=2.4.7.4, Culture=neutral, PublicKeyToken=b7566c273e6ef480">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Libraries\Bass.Net.dll</HintPath>
-    </Reference>
-    <Reference Include="BassRegistration, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Libraries\BassRegistration.dll</HintPath>
-    </Reference>
     <Reference Include="System.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   </ItemGroup>
   <ItemGroup>

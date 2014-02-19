@@ -53,8 +53,8 @@ Global
 		{81CADB8C-BEDF-450B-9544-690DCA839B37}.Debug|Any CPU.Build.0 = Mono_Debug|Any CPU
 		{81CADB8C-BEDF-450B-9544-690DCA839B37}.Mono_Debug|Any CPU.ActiveCfg = Mono_Debug|Any CPU
 		{81CADB8C-BEDF-450B-9544-690DCA839B37}.Mono_Debug|Any CPU.Build.0 = Mono_Debug|Any CPU
-		{81CADB8C-BEDF-450B-9544-690DCA839B37}.Mono_Release|Any CPU.ActiveCfg = Mono_Debug|Any CPU
-		{81CADB8C-BEDF-450B-9544-690DCA839B37}.Mono_Release|Any CPU.Build.0 = Mono_Debug|Any CPU
+		{81CADB8C-BEDF-450B-9544-690DCA839B37}.Mono_Release|Any CPU.ActiveCfg = Mono_Release|Any CPU
+		{81CADB8C-BEDF-450B-9544-690DCA839B37}.Mono_Release|Any CPU.Build.0 = Mono_Release|Any CPU
 		{81CADB8C-BEDF-450B-9544-690DCA839B37}.Release|Any CPU.ActiveCfg = Mono_Release|Any CPU
 		{81CADB8C-BEDF-450B-9544-690DCA839B37}.Release|Any CPU.Build.0 = Mono_Release|Any CPU
 		{87F61D82-5515-48C4-94F5-FC5EF8435DBF}.Mono_Debug|Any CPU.ActiveCfg = Mono_Debug|Any CPU
