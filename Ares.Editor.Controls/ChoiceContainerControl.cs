@@ -48,6 +48,7 @@ namespace Ares.Editor.ElementEditorControls
 
         private void elementsGrid_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
+            bool oldListen = listen;
             listen = false;
             if (e.ColumnIndex == 1)
             {
@@ -55,7 +56,7 @@ namespace Ares.Editor.ElementEditorControls
                 Actions.Actions.Instance.AddNew(new Actions.ChoiceElementChangeAction(
                     m_Container.GetElements()[e.RowIndex], chance), m_Project);
             }
-            listen = true;
+            listen = oldListen;
         }
 
         protected override DataGridView Grid

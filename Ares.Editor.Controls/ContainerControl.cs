@@ -35,6 +35,7 @@ namespace Ares.Editor.Controls
 
         public void AddElements(IList<IElement> elements, int insertionRow)
         {
+            bool oldListen = listen;
             listen = false;
             int index = ElementsContainer.GetGeneralElements().Count;
             Actions.Actions.Instance.AddNew(new Actions.AddContainerElementsAction(ElementsContainer, elements, insertionRow), m_Project);
@@ -48,11 +49,12 @@ namespace Ares.Editor.Controls
                 else
                     Grid.FirstDisplayedScrollingRowIndex = Grid.Rows.Count - 1;
             }
-            listen = true;
+            listen = oldListen;
         }
 
         public void AddImportedElements(IList<IXmlWritable> elements, int insertionRow)
         {
+            bool oldListen = listen;
             listen = false;
             int index = insertionRow;
             Actions.Actions.Instance.AddNew(new Actions.AddImportedContainerElementsAction(ElementsContainer, elements, insertionRow), m_Project);
@@ -66,7 +68,7 @@ namespace Ares.Editor.Controls
                 else
                     Grid.FirstDisplayedScrollingRowIndex = Grid.Rows.Count - 1;
             }
-            listen = true;
+            listen = oldListen;
         }
 
         protected override void Dispose(bool disposing)
@@ -142,9 +144,10 @@ namespace Ares.Editor.Controls
 
         private void FillGrid()
         {
+            bool oldListen = listen;
             listen = false;
             RefillGrid();
-            listen = true;
+            listen = oldListen;
         }
 
         protected void FireElementDoubleClick(Ares.Data.IContainerElement element)
@@ -258,6 +261,7 @@ namespace Ares.Editor.Controls
         {
             if ((e.Button & MouseButtons.Left) == MouseButtons.Left && mouseDownRowIndex != -1 && dragStartRect != Rectangle.Empty && !dragStartRect.Contains(e.X, e.Y))
             {
+                Grid.EndEdit();
                 List<int> selectedRows = new List<int>();
                 foreach (DataGridViewRow row in Grid.SelectedRows) selectedRows.Add(row.Index);
                 GridDataExchangeData data = new GridDataExchangeData() { SelectedRows = selectedRows, SerializedData = SerializeSelectedRows() };
@@ -362,6 +366,7 @@ namespace Ares.Editor.Controls
         {
             if (Grid.SelectedRows.Count == 0)
                 return;
+            bool oldListen = listen;
             listen = false;
             List<DataGridViewRow> rows = new List<DataGridViewRow>();
             List<IElement> elements = new List<IElement>();
@@ -381,16 +386,17 @@ namespace Ares.Editor.Controls
             }
             Actions.Actions.Instance.AddNew(new Actions.RemoveContainerElementsAction(ElementsContainer, elements, minIndex), m_Project);
             RefillGrid();
-            listen = true;
+            listen = oldListen;
         }
 
         private void MoveRows(List<int> rows, int targetIndex)
         {
+            bool oldListen = listen;
             listen = false;
             rows.Sort();
             Actions.Actions.Instance.AddNew(new Actions.ReorderContainerElementsAction(ElementsContainer, rows, targetIndex), m_Project);
             RefillGrid();
-            listen = true;
+            listen = oldListen;
         }
 
         private void Update(int elementID, Actions.ElementChanges.ChangeType changeType)

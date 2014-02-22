@@ -9,6 +9,8 @@ Version 2.5.0
   angezeigt werden
 - Editor: Tags für Dateien können in der lokalen Datenbasis gesucht werden
   (z.B. nach Verschieben der Datei außerhalb des Editors)  
+- Editor: Bugfix: Wenn man in einer Liste Wahrscheinlichkeiten oder Verzögerungen
+  editierte und währenddessen eine Zeile verschob, wurde die Liste geleert
 - Editor: Bugfix: Wenn ein Musikstück in der Datenbasis mehrfach unter 
   verschiedenen Pfaden vorhanden war, konnten nur für die erste Datei Tags 
   heruntergeladen werden

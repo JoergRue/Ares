@@ -8,6 +8,8 @@ Version 2.5.0
 - Editor: Tag filter can be set so that only files without any tags are shown
 - Editor: Tags for files can be searched in local database (e.g. after moving
   a file outside the editor)
+- Eidtor: Bugfix: if probabilities or delays were edited in a list and an entry
+  was dragged during the edit, the list was cleared  
 - Editor: Bugfix: if a music title was several times in the DB under different 
   paths, tags could only be downloaded for the first file
 - Editor: Bugfix: export of projects with tags didn't work correctly for files

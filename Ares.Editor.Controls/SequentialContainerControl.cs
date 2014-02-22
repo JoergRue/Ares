@@ -81,6 +81,7 @@ namespace Ares.Editor.Controls
 
         private void elementsGrid_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
+            bool oldListen = listen;
             listen = false;
             if (e.ColumnIndex == 1 || e.ColumnIndex == 2)
             {
@@ -89,7 +90,7 @@ namespace Ares.Editor.Controls
                 Actions.Actions.Instance.AddNew(new Actions.SequentialElementChangeAction(
                     m_Container.GetElements()[e.RowIndex], fixedDelay, randomDelay), m_Project);
             }
-            listen = true;
+            listen = oldListen;
         }
 
         private void upButton_Click(object sender, EventArgs e)
