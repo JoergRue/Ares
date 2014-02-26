@@ -27,25 +27,13 @@ namespace Ares.Editor.ElementEditors
     static class Editors
     {
 
-#if !MONO
         private static void ShowEditor(EditorBase editor, WeifenLuo.WinFormsUI.Docking.DockPanel parent)
         {
             editor.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Document;
             editor.Show(parent);
         }
-#else
-        private static void ShowEditor(EditorBase editor, System.Windows.Forms.Form parent)
-        {
-            editor.MdiParent = parent;
-            editor.Show();
-        }
-#endif
 
-#if !MONO
         public static void ShowEditor(Ares.Data.IElement element, Ares.Data.IGeneralElementContainer container, Ares.Data.IProject project, WeifenLuo.WinFormsUI.Docking.DockPanel parent)
-#else
-        public static void ShowEditor(Ares.Data.IElement element, Ares.Data.IGeneralElementContainer container, Ares.Data.IProject project, System.Windows.Forms.Form parent)
-#endif
         {
             if (element == null)
                 return;
@@ -133,11 +121,7 @@ namespace Ares.Editor.ElementEditors
             }
         }
 
-#if !MONO
         public static void ShowTriggerEditor(Ares.Data.IModeElement element, Ares.Data.IProject project, WeifenLuo.WinFormsUI.Docking.DockPanel parent)
-#else
-        public static void ShowTriggerEditor(Ares.Data.IModeElement element, Ares.Data.IProject project, System.Windows.Forms.Form parent)
-#endif
         {
             EditorBase existing = EditorRegistry.Instance.GetEditor(element.Id);
             if (existing != null)

@@ -53,9 +53,14 @@ namespace Ares.Editor.ElementEditorControls
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.elementsGrid = new System.Windows.Forms.DataGridView();
             this.NameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			#if !MONO
             this.ChanceColumn = new DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn();
+			this.dataGridViewNumericUpDownColumn1 = new DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn();
+			#else
+			this.ChanceColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.dataGridViewNumericUpDownColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			#endif
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewNumericUpDownColumn1 = new DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.elementsGrid)).BeginInit();
             this.SuspendLayout();
@@ -113,11 +118,13 @@ namespace Ares.Editor.ElementEditorControls
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             this.ChanceColumn.DefaultCellStyle = dataGridViewCellStyle1;
             resources.ApplyResources(this.ChanceColumn, "ChanceColumn");
+			#if !MONO
             this.ChanceColumn.Maximum = new decimal(new int[] {
             1000,
             0,
             0,
             0});
+			#endif
             this.ChanceColumn.Name = "ChanceColumn";
             this.ChanceColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.ChanceColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
@@ -133,11 +140,13 @@ namespace Ares.Editor.ElementEditorControls
             // 
             this.dataGridViewNumericUpDownColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             resources.ApplyResources(this.dataGridViewNumericUpDownColumn1, "dataGridViewNumericUpDownColumn1");
+			#if !MONO
             this.dataGridViewNumericUpDownColumn1.Maximum = new decimal(new int[] {
             1000,
             0,
             0,
             0});
+			#endif
             this.dataGridViewNumericUpDownColumn1.Name = "dataGridViewNumericUpDownColumn1";
             this.dataGridViewNumericUpDownColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridViewNumericUpDownColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;

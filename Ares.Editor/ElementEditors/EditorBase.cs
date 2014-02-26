@@ -26,11 +26,7 @@ using System.Windows.Forms;
 
 namespace Ares.Editor.ElementEditors
 {
-#if !MONO
     class EditorBase : WeifenLuo.WinFormsUI.Docking.DockContent
-#else
-    class EditorBase : System.Windows.Forms.Form
-#endif
     {
         protected int ElementId 
         {
@@ -188,11 +184,7 @@ namespace Ares.Editor.ElementEditors
 
         private void ContainerControl_ElementDoubleClick(object sender, Controls.ElementDoubleClickEventArgs e)
         {
-#if !MONO
             Editors.ShowEditor(e.Element.InnerElement, m_Element as Ares.Data.IGeneralElementContainer, Project, this.DockPanel);
-#else
-            Editors.ShowEditor(e.Element.InnerElement, m_Element as Ares.Data.IGeneralElementContainer, m_Project, this.MdiParent);
-#endif
         }
 
         protected bool listen = true;

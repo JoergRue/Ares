@@ -89,12 +89,10 @@ namespace Ares.Editor
         private System.Action m_AfterEditAction;
         private bool listenForContainerChanges = true;
 
-#if !MONO
         protected override String GetPersistString()
         {
             return "ProjectExplorer";
         }
-#endif
 
         public void SetProject(IProject project)
         {
@@ -968,11 +966,7 @@ namespace Ares.Editor
         private void EditModeElementTrigger()
         {
             IModeElement element = SelectedNode.Tag as IModeElement;
-#if !MONO
             ElementEditors.Editors.ShowTriggerEditor(element, m_Project, DockPanel);
-#else
-            ElementEditors.Editors.ShowTriggerEditor(element, m_Project, MdiParent);
-#endif
         }
 
         private void containerContextMenu_Opening(object sender, CancelEventArgs e)
@@ -1019,11 +1013,7 @@ namespace Ares.Editor
 
         private void EditElement(IElement element)
         {
-#if !MONO
             ElementEditors.Editors.ShowEditor(element, null, m_Project, DockPanel);
-#else
-            ElementEditors.Editors.ShowEditor(element, null, m_Project, MdiParent);
-#endif
         }
 
         private void deleteToolStripMenuItem2_Click(object sender, EventArgs e)

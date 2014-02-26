@@ -21,18 +21,11 @@ using System;
 
 namespace Ares.Editor
 {
-#if !MONO
     class ToolWindow : WeifenLuo.WinFormsUI.Docking.DockContent
-#else
-    class ToolWindow : System.Windows.Forms.Form
-#endif
     {
-
-#if !MONO
         public ToolWindow()
         {
             HideOnClose = true;
         }
-#endif
     }
 }

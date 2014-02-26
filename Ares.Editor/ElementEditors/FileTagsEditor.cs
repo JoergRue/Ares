@@ -31,12 +31,7 @@ using Ares.Tags;
 
 namespace Ares.Editor.ElementEditors
 {
-    public partial class FileTagsEditor
-#if !MONO
- : WeifenLuo.WinFormsUI.Docking.DockContent
-#else
-        : Form
-#endif
+    public partial class FileTagsEditor : WeifenLuo.WinFormsUI.Docking.DockContent
     {
         public FileTagsEditor()
         {
@@ -45,12 +40,10 @@ namespace Ares.Editor.ElementEditors
             Ares.Editor.Actions.TagChanges.Instance.TagsDBChanged += new EventHandler<EventArgs>(TagsDBChanged);
         }
 
-#if !MONO
         protected override string GetPersistString()
         {
             return "FileTagsEditor";
         }
-#endif
 
         private void id3Button_Click(object sender, EventArgs e)
         {

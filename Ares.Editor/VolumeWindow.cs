@@ -35,17 +35,17 @@ namespace Ares.Editor
             InitializeComponent();
         }
 
-#if !MONO
         protected override string GetPersistString()
         {
             return "VolumeWindow";
         }
-#endif
 
         private void VolumeWindow_Load(object sender, EventArgs e)
         {
             UpdateVolumes();
+			#if !MONO
             Settings.Settings.Instance.SettingsChanged += new EventHandler<Settings.Settings.SettingsEventArgs>(SettingsChanged);
+			#endif
         }
 
         void SettingsChanged(object sender, Settings.Settings.SettingsEventArgs e)

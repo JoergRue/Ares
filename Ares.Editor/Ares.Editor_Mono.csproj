@@ -1,0 +1,697 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Mono_Debug</Configuration>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{499C1067-ECA5-4986-A985-8EAFD744BF80}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Ares.Editor</RootNamespace>
+    <AssemblyName>Ares.Editor</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Mono_Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\Mono_Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;MONO</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Mono_Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\bin\Mono_Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>ares.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\Ares.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WeifenLuo.WinFormsUI.Docking">
+      <HintPath>..\Libraries\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlRenderer">
+      <HintPath>..\Libraries\HtmlRenderer.dll</HintPath>
+    </Reference>
+    <Reference Include="Bass.Net.Linux">
+      <HintPath>..\Libraries_Linux\Bass.Net.Linux.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Dialogs\AddID3TagsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\AddID3TagsDialog.Designer.cs">
+      <DependentUpon>AddID3TagsDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\AddLanguageDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\AddLanguageDialog.Designer.cs">
+      <DependentUpon>AddLanguageDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\AddTagDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\AddTagDialog.Designer.cs">
+      <DependentUpon>AddTagDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\AddTranslationDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\AddTranslationDialog.Designer.cs">
+      <DependentUpon>AddTranslationDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\ExceptionDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\ExceptionDialog.Designer.cs">
+      <DependentUpon>ExceptionDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\FileTagsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\FileTagsDialog.Designer.cs">
+      <DependentUpon>FileTagsDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\ImportDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\ImportDialog.Designer.cs">
+      <DependentUpon>ImportDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\InputDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\InputDialog.Designer.cs">
+      <DependentUpon>InputDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\KeyDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\KeyDialog.Designer.cs">
+      <DependentUpon>KeyDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\MacroCommandDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\MacroCommandDialog.Designer.cs">
+      <DependentUpon>MacroCommandDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\OnlineDbPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Dialogs\OnlineDbPage.Designer.cs">
+      <DependentUpon>OnlineDbPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\OnlineDbResultDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\OnlineDbResultDialog.Designer.cs">
+      <DependentUpon>OnlineDbResultDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\TagFilterDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\TagFilterDialog.Designer.cs">
+      <DependentUpon>TagFilterDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\TipOfDayDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\TipOfDayDialog.Designer.cs">
+      <DependentUpon>TipOfDayDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\ToolsPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Dialogs\ToolsPage.Designer.cs">
+      <DependentUpon>ToolsPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DragAndDrop.cs" />
+    <Compile Include="ElementEditors\ChoiceContainerEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ElementEditors\ChoiceContainerEditor.Designer.cs">
+      <DependentUpon>ChoiceContainerEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ElementEditors\EditorBase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ElementEditors\EditorRegistry.cs" />
+    <Compile Include="ElementEditors\Editors.cs" />
+    <Compile Include="ElementEditors\FileElementEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ElementEditors\FileElementEditor.Designer.cs">
+      <DependentUpon>FileElementEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ElementEditors\FileTagsEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ElementEditors\FileTagsEditor.Designer.cs">
+      <DependentUpon>FileTagsEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ElementEditors\MacroEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ElementEditors\MacroEditor.Designer.cs">
+      <DependentUpon>MacroEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ElementEditors\MusicByTagsEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ElementEditors\MusicByTagsEditor.Designer.cs">
+      <DependentUpon>MusicByTagsEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ElementEditors\ParallelContainerEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ElementEditors\ParallelContainerEditor.Designer.cs">
+      <DependentUpon>ParallelContainerEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ElementEditors\RandomPlaylistEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ElementEditors\RandomPlaylistEditor.Designer.cs">
+      <DependentUpon>RandomPlaylistEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ElementEditors\SequentialContainerEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ElementEditors\SequentialContainerEditor.Designer.cs">
+      <DependentUpon>SequentialContainerEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ElementEditors\SequentialPlaylistEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ElementEditors\SequentialPlaylistEditor.Designer.cs">
+      <DependentUpon>SequentialPlaylistEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ElementEditors\TagsEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ElementEditors\TagsEditor.Designer.cs">
+      <DependentUpon>TagsEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ElementEditors\TriggerEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ElementEditors\TriggerEditor.Designer.cs">
+      <DependentUpon>TriggerEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ErrorWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ErrorWindow.Designer.cs">
+      <DependentUpon>ErrorWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FileExplorer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FileExplorer.Designer.cs">
+      <DependentUpon>FileExplorer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ImageResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ImageResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="ProjectExplorer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProjectExplorer.Designer.cs">
+      <DependentUpon>ProjectExplorer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StringResources.de.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StringResources.de.resx</DependentUpon>
+    </Compile>
+    <Compile Include="StringResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StringResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="TaskHelpers.cs" />
+    <Compile Include="TipsOfTheDay.cs" />
+    <Compile Include="ToolWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VolumeWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VolumeWindow.Designer.cs">
+      <DependentUpon>VolumeWindow.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Dialogs\AddID3TagsDialog.de.resx">
+      <DependentUpon>AddID3TagsDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\AddID3TagsDialog.resx">
+      <DependentUpon>AddID3TagsDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\AddLanguageDialog.de.resx">
+      <DependentUpon>AddLanguageDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\AddLanguageDialog.resx">
+      <DependentUpon>AddLanguageDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\AddTagDialog.de.resx">
+      <DependentUpon>AddTagDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\AddTagDialog.resx">
+      <DependentUpon>AddTagDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\AddTranslationDialog.de.resx">
+      <DependentUpon>AddTranslationDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\AddTranslationDialog.resx">
+      <DependentUpon>AddTranslationDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\ExceptionDialog.de.resx">
+      <DependentUpon>ExceptionDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\ExceptionDialog.resx">
+      <DependentUpon>ExceptionDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\FileTagsDialog.de.resx">
+      <DependentUpon>FileTagsDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\FileTagsDialog.resx">
+      <DependentUpon>FileTagsDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\ImportDialog.de.resx">
+      <DependentUpon>ImportDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\ImportDialog.resx">
+      <DependentUpon>ImportDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\InputDialog.de.resx">
+      <DependentUpon>InputDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\InputDialog.resx">
+      <DependentUpon>InputDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\KeyDialog.de.resx">
+      <DependentUpon>KeyDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\KeyDialog.resx">
+      <DependentUpon>KeyDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\MacroCommandDialog.de.resx">
+      <DependentUpon>MacroCommandDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\MacroCommandDialog.resx">
+      <DependentUpon>MacroCommandDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\OnlineDbPage.de.resx">
+      <DependentUpon>OnlineDbPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\OnlineDbPage.resx">
+      <DependentUpon>OnlineDbPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\OnlineDbResultDialog.de.resx">
+      <DependentUpon>OnlineDbResultDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\OnlineDbResultDialog.resx">
+      <DependentUpon>OnlineDbResultDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\TagFilterDialog.de.resx">
+      <DependentUpon>TagFilterDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\TagFilterDialog.resx">
+      <DependentUpon>TagFilterDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\TipOfDayDialog.de.resx">
+      <DependentUpon>TipOfDayDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\TipOfDayDialog.resx">
+      <DependentUpon>TipOfDayDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\ToolsPage.de.resx">
+      <DependentUpon>ToolsPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\ToolsPage.resx">
+      <DependentUpon>ToolsPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ElementEditors\ChoiceContainerEditor.de.resx">
+      <DependentUpon>ChoiceContainerEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ElementEditors\ChoiceContainerEditor.resx">
+      <DependentUpon>ChoiceContainerEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ElementEditors\FileElementEditor.de.resx">
+      <DependentUpon>FileElementEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ElementEditors\FileElementEditor.resx">
+      <DependentUpon>FileElementEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ElementEditors\FileTagsEditor.de.resx">
+      <DependentUpon>FileTagsEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ElementEditors\FileTagsEditor.resx">
+      <DependentUpon>FileTagsEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ElementEditors\MacroEditor.resx">
+      <DependentUpon>MacroEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ElementEditors\MusicByTagsEditor.de.resx">
+      <DependentUpon>MusicByTagsEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ElementEditors\MusicByTagsEditor.resx">
+      <DependentUpon>MusicByTagsEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ElementEditors\ParallelContainerEditor.de.resx">
+      <DependentUpon>ParallelContainerEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ElementEditors\ParallelContainerEditor.resx">
+      <DependentUpon>ParallelContainerEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ElementEditors\RandomPlaylistEditor.de.resx">
+      <DependentUpon>RandomPlaylistEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ElementEditors\RandomPlaylistEditor.resx">
+      <DependentUpon>RandomPlaylistEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ElementEditors\SequentialContainerEditor.de.resx">
+      <DependentUpon>SequentialContainerEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ElementEditors\SequentialContainerEditor.resx">
+      <DependentUpon>SequentialContainerEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ElementEditors\SequentialPlaylistEditor.de.resx">
+      <DependentUpon>SequentialPlaylistEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ElementEditors\SequentialPlaylistEditor.resx">
+      <DependentUpon>SequentialPlaylistEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ElementEditors\TagsEditor.de.resx">
+      <DependentUpon>TagsEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ElementEditors\TagsEditor.resx">
+      <DependentUpon>TagsEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ElementEditors\TriggerEditor.de.resx">
+      <DependentUpon>TriggerEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ElementEditors\TriggerEditor.resx">
+      <DependentUpon>TriggerEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ErrorWindow.de.resx">
+      <DependentUpon>ErrorWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ErrorWindow.resx">
+      <DependentUpon>ErrorWindow.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FileExplorer.de.resx">
+      <DependentUpon>FileExplorer.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FileExplorer.resx">
+      <DependentUpon>FileExplorer.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ImageResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ImageResources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.de.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProjectExplorer.de.resx">
+      <DependentUpon>ProjectExplorer.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProjectExplorer.resx">
+      <DependentUpon>ProjectExplorer.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="StringResources.de.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>StringResources.de.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StringResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>StringResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VolumeWindow.de.resx">
+      <DependentUpon>VolumeWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VolumeWindow.resx">
+      <DependentUpon>VolumeWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="ares.snk" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Ares.CommonGUI\Ares.CommonGUI_Mono.csproj">
+      <Project>{ED16F93E-23F3-4075-B72D-F64E49D08E2D}</Project>
+      <Name>Ares.CommonGUI_Mono</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Ares.Data\Ares.Data_Mono.csproj">
+      <Project>{F64D6AF3-3543-47F0-A7B8-0336750B09C3}</Project>
+      <Name>Ares.Data_Mono</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Ares.Editor.Actions\Ares.Editor.Actions_Mono.csproj">
+      <Project>{7799985C-64E9-4414-ACA8-01184B704032}</Project>
+      <Name>Ares.Editor.Actions_Mono</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Ares.Editor.Controls\Ares.Editor.Controls_Mono.csproj">
+      <Project>{E9189223-5024-4284-B02A-9F22C83DAE88}</Project>
+      <Name>Ares.Editor.Controls_Mono</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Ares.ModelChecks\Ares.ModelInfo_Mono.csproj">
+      <Project>{50EA19EE-5337-499C-8B7B-1B22EA9E24A6}</Project>
+      <Name>Ares.ModelInfo_Mono</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Ares.Online\Ares.Online_Mono.csproj">
+      <Project>{7550AD48-17A5-45BF-A632-B75EB82123DD}</Project>
+      <Name>Ares.Online_Mono</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Ares.Playing\Ares.Playing_Mono.csproj">
+      <Project>{6C55F933-0F49-489C-AFF4-E0E0A8581E42}</Project>
+      <Name>Ares.Playing_Mono</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Ares.Settings\Ares.Settings_Mono.csproj">
+      <Project>{E99E229E-2D6A-4C49-8E6F-C06E3F346606}</Project>
+      <Name>Ares.Settings_Mono</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Ares.TagsImport\Ares.TagsImport_Mono.csproj">
+      <Project>{5F09CB94-0FC1-4F91-90AD-C6F08A89C146}</Project>
+      <Name>Ares.TagsImport_Mono</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Ares.Tags\Ares.Tags_Mono.csproj">
+      <Project>{42A8F91D-6E6B-4740-AC3F-99A34074E695}</Project>
+      <Name>Ares.Tags_Mono</Name>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Play.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RunSmall.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\StopSmall.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\NewDocumentHS.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\openHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\redo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\saveHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Spartan-Helm-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Ares.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\interrogation.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\eventlogError.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\eventlogWarn.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\musicIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\random_music_list.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sequential_music_list.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sounds.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\randomsounds.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\parallelsounds.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\aressmall.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\volumes.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dice.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rightarrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\parallel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\random.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\vierge.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Folder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sounds1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\music1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\undo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Multiple_Selection.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\base_cog_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SeriousWarning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\parallel_ref.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\parallelsounds_ref.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\random_music_list_ref.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\randomsounds_ref.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sequential_music_list_ref.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sequential_ref.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SeriousWarning_ref.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\random_ref.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\base_cog_32_ref.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Information.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\musicbytags.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\musicbytags_ref.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\error.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

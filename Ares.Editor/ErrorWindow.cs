@@ -54,12 +54,10 @@ namespace Ares.Editor
             }
         }
 
-#if !MONO
         protected override string GetPersistString()
         {
             return "ErrorWindow";
         }
-#endif
 
         public IErrorWindowClient Client { get; set; }
 

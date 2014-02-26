@@ -55,9 +55,11 @@ namespace Ares.Editor
                     Application.Run(new MainForm());
                 }
             }
+			#if !MONO
             catch (Ares.Ipc.ApplicationAlreadyStartedException)
             {
             }
+			#endif
             catch (Ares.Playing.BassInitException ex)
             {
                 MessageBox.Show(ex.Message, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Stop);

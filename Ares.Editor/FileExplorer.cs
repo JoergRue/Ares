@@ -111,12 +111,10 @@ namespace Ares.Editor
         
         FileType m_FileType;
 
-#if !MONO
         protected override string GetPersistString()
         {
             return "FileExplorer_" + (int) m_FileType;
         }
-#endif
 
         private bool m_TreeLocked = false;
 

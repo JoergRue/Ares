@@ -282,7 +282,7 @@ namespace Ares.ModelInfo
 
     #region Export
 	
-#if !MONO
+// #if !MONO
 	
     public class Exporter
     {
@@ -475,6 +475,7 @@ namespace Ares.ModelInfo
         }
     }
 	
+    /*
 #else
 	
 	public class Exporter
@@ -484,6 +485,7 @@ namespace Ares.ModelInfo
 	}
 	
 #endif
+     */
 
     #endregion
 	
