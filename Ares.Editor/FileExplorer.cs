@@ -159,6 +159,7 @@ namespace Ares.Editor
             try
             {
                 String[] subDirs = System.IO.Directory.GetDirectories(directory);
+                Array.Sort(subDirs);
                 int subLength = directory.EndsWith(new String(System.IO.Path.DirectorySeparatorChar, 1)) ? directory.Length : directory.Length + 1;
                 int rootLength = root.EndsWith(new String(System.IO.Path.DirectorySeparatorChar, 1)) ? root.Length : root.Length + 1;
                 foreach (String subDir in subDirs)
