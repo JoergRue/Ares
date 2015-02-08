@@ -94,8 +94,13 @@
 		  <fileset basedir="bin/Mono_Release">
 			  <include name="**/*.dll" />
 			  <include name="**/*.exe" />
-			  <include name="**/*.config" />
    		  </fileset>
+	    </copy>
+		<copy todir="${monooutput.dir}">
+         <fileset basedir="bin/${configuration}">
+			  <include name="Ares.Player.exe.config" />
+			  <include name="Ares.CmdLinePlayer.exe.config" />
+   	     </fileset>
 		</copy>
 		<copy todir="${monooutput.dir}" overwrite="true">
 		  <fileset basedir="Libraries_Linux">
@@ -110,8 +115,13 @@
 		  <fileset basedir="bin/Mono_Release">
 			  <include name="**/*.dll" />
 			  <include name="**/*.exe" />
-			  <include name="**/*.config" />
    		  </fileset>
+		</copy>
+		<copy todir="${monooutput64.dir}">
+         <fileset basedir="bin/${configuration}">
+			  <include name="Ares.Player.exe.config" />
+			  <include name="Ares.CmdLinePlayer.exe.config" />
+   	     </fileset>
 		</copy>
 		<copy todir="${monooutput64.dir}" overwrite="true">
 		  <fileset basedir="Libraries_Linux_x64">
