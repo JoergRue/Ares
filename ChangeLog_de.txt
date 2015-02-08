@@ -1,3 +1,14 @@
+Version 2.5.1
+----------------------------------------------------------------------------------
+- Editor: Dateien und Verzeichnisse im Musik- / Geräusche-Explorer werden 
+  sortiert, auch wenn sie von nicht-NTFS-Dateisystemen kommen
+- Editor: Bugfix: möglicher Crash wenn das Fehler-Fenster offen ist während ein 
+  Projekt importiert wird, welches Dateien hinzufügt
+- Player: Audio-Ausgabegerät kann ausgewählt werden
+  (z.B. zur Verwendung mit Virtual Audio Cable)
+- Player: Bugfix: unter manchen Linux-Versionen funktionierte das "Musikauswahl
+  über Tags"-Element nicht wegen falscher Verzeichnis-Separatoren
+  
 Version 2.5.0
 ----------------------------------------------------------------------------------
 - Allgemein: Tags können auch mit Kategorie-übergreifendem UND verknüpft werden
@@ -18,7 +29,7 @@ Version 2.5.0
   Dateien ohne AcoustID
 - Player: Kommandozeilen-Player hinzugefügt
 - Player/Linux: der Linux-Player benötigt jetzt das .NET-Framework (Mono) 4
-- Controller: Buttons für Modus-Elemente werden in der Reihenfolge aus dem Project
+- Controller: Buttons für Modus-Elemente werden in der Reihenfolge aus dem Projekt
   angezeigt
 - Controller: Verbindungsdaten zum Player können manuell eingegeben werden
 
@@ -33,9 +44,9 @@ Version 2.4.0
 
 Version 2.3.0
 ----------------------------------------------------------------------------------
-- General: Option, Musik auf allen Lautsprechern zu spielen (statt Stereo)
-- General: 'Alle Lautsprecher' kann beim Lautsprecher-Effekt gewählt werden
-- General: Unterstützung für m4a-Dateien hinzugefügt
+- Allgemein: Option, Musik auf allen Lautsprechern zu spielen (statt Stereo)
+- Allgemein: 'Alle Lautsprecher' kann beim Lautsprecher-Effekt gewählt werden
+- Allgemein: Unterstützung für m4a-Dateien hinzugefügt
 - Editor: Button im Musik-Explorer, um Tags zu setzen
 - Editor: Buttons im Projekt-Explorer, um Modi oder Elemente umzusortieren
 - Editor: Button um die Tags-Datenbasis aufzuräumen
