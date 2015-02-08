@@ -36,6 +36,7 @@ namespace Ares.CmdLinePlayer
         public String InitialProject { get; set; }
         public int MessageFilterLevel { get; set; }
         public bool NonInteractive { get; set; }
+        public int OutputDevice { get; set; }
 
         public PlayerOptions()
         {
@@ -46,6 +47,7 @@ namespace Ares.CmdLinePlayer
             NonInteractive = false;
             ShowHelp = false;
             MessageFilterLevel = -1;
+            OutputDevice = -1;
         }
 
         private bool ShowHelp { get; set; }
@@ -58,6 +60,7 @@ namespace Ares.CmdLinePlayer
                 { "m|MessageLevel=", StringResources.CmdLineOptionMsgLevel, (int var) => MessageFilterLevel = var },
                 { "UdpPort=", StringResources.CmdLineOptionUdpPort, (int var) => UdpPort = var },
                 { "TcpPort=", StringResources.CmdLineOptionTcpPort, (int var) => TcpPort = var },
+                { "OutputDevice=", StringResources.CmdLineOutputDevice, (int var) => OutputDevice = var },
                 { "Language=", StringResources.CmdLineOptionLanguage, var => Language = var },
                 { "NonInteractive", StringResources.CmdLineOptionNonInteractive, var => NonInteractive = var != null }
             };
@@ -78,6 +81,11 @@ namespace Ares.CmdLinePlayer
             if (TcpPort != -1 && TcpPort < 1)
             {
                 Console.Error.WriteLine(StringResources.InvalidTcpPort);
+                ShowHelp = true;
+            }
+            if (OutputDevice != -1 && (OutputDevice < 1 || OutputDevice > 10))
+            {
+                Console.Error.WriteLine(StringResources.InvalidOutputDevice);
                 ShowHelp = true;
             }
             if (MessageFilterLevel != -1 && (MessageFilterLevel < 0 || MessageFilterLevel > 3))

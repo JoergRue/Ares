@@ -89,6 +89,8 @@ namespace Ares.Settings
 
         public bool ShowTipOfTheDay { get; set; }
         public int LastTipOfTheDay { get; set; }
+
+        public int OutputDeviceIndex { get; set; }
     }
 
     public class Settings
@@ -158,6 +160,8 @@ namespace Ares.Settings
 
         public bool ShowTipOfTheDay { get { return Data.ShowTipOfTheDay; } set { Data.ShowTipOfTheDay = value; } }
         public int LastTipOfTheDay { get { return Data.LastTipOfTheDay; } set { Data.LastTipOfTheDay = value; } }
+
+        public int OutputDeviceIndex { get { return Data.OutputDeviceIndex; } set { Data.OutputDeviceIndex = value; } }
 
         public static Settings Instance
         {
@@ -360,6 +364,7 @@ namespace Ares.Settings
             LocalPlayerPath = String.Empty;
             ShowTipOfTheDay = true;
             LastTipOfTheDay = -1;
+            OutputDeviceIndex = -1;
         }
 
         private void WriteSettings(XmlWriter writer)
@@ -392,6 +397,7 @@ namespace Ares.Settings
             writer.WriteAttributeString("MessageFilterLevel", MessageFilterLevel.ToString(System.Globalization.CultureInfo.InvariantCulture));
             writer.WriteAttributeString("ShowKeys", ShowKeysInButtons ? "true" : "false");
             writer.WriteAttributeString("GlobalKeyHook", GlobalKeyHook ? "true" : "false");
+            writer.WriteAttributeString("OutputDevice", OutputDeviceIndex.ToString(System.Globalization.CultureInfo.InvariantCulture));
             writer.WriteEndElement();
             writer.WriteStartElement("Streaming");
             writer.WriteAttributeString("Active", UseStreaming ? "true" : "false");
@@ -523,6 +529,7 @@ namespace Ares.Settings
                     MessageFilterLevel = reader.GetIntegerAttribute("MessageFilterLevel");
                     ShowKeysInButtons = reader.GetBooleanAttributeOrDefault("ShowKeys", false);
                     GlobalKeyHook = reader.GetBooleanAttributeOrDefault("GlobalKeyHook", false);
+                    OutputDeviceIndex = reader.GetIntegerAttributeOrDefault("OutputDevice", -1);
                     if (reader.IsEmptyElement)
                         reader.Read();
                     else
@@ -637,6 +644,8 @@ namespace Ares.Settings
             if (other.MusicDirectory != this.MusicDirectory)
                 return true;
             if (other.TcpPort != this.TcpPort)
+                return true;
+            if (other.OutputDeviceIndex != this.OutputDeviceIndex)
                 return true;
             return false;
         }

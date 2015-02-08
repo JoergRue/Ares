@@ -129,6 +129,10 @@
     <Compile Include="MusicPage.Designer.cs" />
     <EmbeddedResource Include="MusicPage.de.resx" />
     <EmbeddedResource Include="MusicPage.resx" />
+    <Compile Include="StreamingPage.cs" />
+    <Compile Include="StreamingPage.Designer.cs" />
+    <EmbeddedResource Include="StreamingPage.de.resx" />
+    <EmbeddedResource Include="StreamingPage.resx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\gear.png" />

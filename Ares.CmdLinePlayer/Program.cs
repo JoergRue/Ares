@@ -46,18 +46,20 @@ namespace Ares.CmdLinePlayer
             int res = 0;
             try
             {
-                using (Ares.Playing.BassInit bassInit = new Ares.Playing.BassInit(s => Console.WriteLine(s)))
+                PlayerOptions options = new PlayerOptions();
+                if (options.Parse(args))
                 {
-                    PlayerOptions options = new PlayerOptions();
-                    if (options.Parse(args))
+                    using (Ares.Playing.BassInit bassInit = new Ares.Playing.BassInit(options.OutputDevice, s => Console.WriteLine(s)))
                     {
-                        Player player = new Player();
-                        res = player.Run(options);
+                        {
+                            Player player = new Player();
+                            res = player.Run(options);
+                        }
                     }
-                    else
-                    {
-                        res = 2;
-                    }
+                }
+                else
+                {
+                    res = 2;
                 }
             }
             catch (Ares.Playing.BassInitException ex)

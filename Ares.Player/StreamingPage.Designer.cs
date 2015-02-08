@@ -58,6 +58,8 @@ namespace Ares.Player
             this.encodingBox = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.outputDeviceCombo = new System.Windows.Forms.ComboBox();
+            this.label9 = new System.Windows.Forms.Label();
             this.userNameBox = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.streamNameBox = new System.Windows.Forms.TextBox();
@@ -115,13 +117,13 @@ namespace Ares.Player
             // 
             // encodingBox
             // 
+            resources.ApplyResources(this.encodingBox, "encodingBox");
             this.encodingBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.encodingBox.FormattingEnabled = true;
             this.encodingBox.Items.AddRange(new object[] {
             resources.GetString("encodingBox.Items"),
             resources.GetString("encodingBox.Items1"),
             resources.GetString("encodingBox.Items2")});
-            resources.ApplyResources(this.encodingBox, "encodingBox");
             this.encodingBox.Name = "encodingBox";
             this.encodingBox.SelectedIndexChanged += new System.EventHandler(this.encodingBox_SelectedIndexChanged);
             // 
@@ -133,6 +135,8 @@ namespace Ares.Player
             // groupBox1
             // 
             resources.ApplyResources(this.groupBox1, "groupBox1");
+            this.groupBox1.Controls.Add(this.outputDeviceCombo);
+            this.groupBox1.Controls.Add(this.label9);
             this.groupBox1.Controls.Add(this.userNameBox);
             this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.streamNameBox);
@@ -152,6 +156,18 @@ namespace Ares.Player
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
+            // 
+            // outputDeviceCombo
+            // 
+            resources.ApplyResources(this.outputDeviceCombo, "outputDeviceCombo");
+            this.outputDeviceCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.outputDeviceCombo.FormattingEnabled = true;
+            this.outputDeviceCombo.Name = "outputDeviceCombo";
+            // 
+            // label9
+            // 
+            resources.ApplyResources(this.label9, "label9");
+            this.label9.Name = "label9";
             // 
             // userNameBox
             // 
@@ -176,6 +192,7 @@ namespace Ares.Player
             // 
             // bitrateBox
             // 
+            resources.ApplyResources(this.bitrateBox, "bitrateBox");
             this.bitrateBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.bitrateBox.FormattingEnabled = true;
             this.bitrateBox.Items.AddRange(new object[] {
@@ -186,7 +203,6 @@ namespace Ares.Player
             resources.GetString("bitrateBox.Items4"),
             resources.GetString("bitrateBox.Items5"),
             resources.GetString("bitrateBox.Items6")});
-            resources.ApplyResources(this.bitrateBox, "bitrateBox");
             this.bitrateBox.Name = "bitrateBox";
             // 
             // label6
@@ -237,5 +253,7 @@ namespace Ares.Player
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox userNameBox;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.ComboBox outputDeviceCombo;
+        private System.Windows.Forms.Label label9;
     }
 }

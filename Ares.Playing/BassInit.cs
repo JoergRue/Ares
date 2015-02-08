@@ -77,7 +77,7 @@ namespace Ares.Playing
             }
         }
 
-        public BassInit(Action<String> warningHandler)
+        public BassInit(int deviceIndex, Action<String> warningHandler)
         {
             try 
             {
@@ -88,7 +88,7 @@ namespace Ares.Playing
                     throw new BassInitException(StringResources.BassLoadFail);
                 }
 #endif
-                if (!Un4seen.Bass.Bass.BASS_Init(-1, 44100, Un4seen.Bass.BASSInit.BASS_DEVICE_DEFAULT, IntPtr.Zero))
+                if (!Un4seen.Bass.Bass.BASS_Init(deviceIndex, 44100, Un4seen.Bass.BASSInit.BASS_DEVICE_DEFAULT, IntPtr.Zero))
                 {
                     throw new BassInitException(MakeBassInitErrorMessage());
                 }
@@ -126,6 +126,43 @@ namespace Ares.Playing
             }
             catch (Exception ex)
             {
+                throw new BassInitException(String.Format(StringResources.BassInitFail,
+                                              ex.Message + "(" + ex.GetType().FullName + ")",
+                                              ex.StackTrace));
+            }
+        }
+
+        public class OutputDevice
+        {
+            public int Index { get; set; }
+            public String Name { get; set; }
+        }
+
+        public static List<OutputDevice> GetDevices()
+        {
+            var result = new List<OutputDevice>();
+            result.Add(new OutputDevice() { Index = -1, Name = StringResources.Default });
+            var infos = Un4seen.Bass.Bass.BASS_GetDeviceInfos();
+            for (int i = 1; i < infos.Length; ++i)
+            {
+                result.Add(new OutputDevice() { Index = i, Name = infos[i].name });
+            }
+            return result;
+        }
+
+        public void SwitchDevice(int newDevice)
+        {
+            try
+            { 
+                Un4seen.Bass.Bass.BASS_Free();
+                if (!Un4seen.Bass.Bass.BASS_Init(newDevice, 44100, Un4seen.Bass.BASSInit.BASS_DEVICE_DEFAULT, IntPtr.Zero))
+                {
+                    throw new BassInitException(MakeBassInitErrorMessage());
+                }
+            }
+            catch (Exception ex)
+            {
+                Un4seen.Bass.Bass.BASS_Init(-1, 44100, Un4seen.Bass.BASSInit.BASS_DEVICE_DEFAULT, IntPtr.Zero);
                 throw new BassInitException(String.Format(StringResources.BassInitFail,
                                               ex.Message + "(" + ex.GetType().FullName + ")",
                                               ex.StackTrace));

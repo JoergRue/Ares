@@ -141,6 +141,9 @@
   <data name="CmdLineOptionUdpPort" xml:space="preserve">
     <value>Port für Botschaften zur Player-Erkennung</value>
   </data>
+  <data name="CmdLineOutputDevice" xml:space="preserve">
+    <value>Ausgabegerät (-1: Standard; 1: erstes Gerät; 2: zweites Gerät; usw.)</value>
+  </data>
   <data name="ConnectedWith" xml:space="preserve">
     <value>Verbunden mit </value>
   </data>
@@ -158,6 +161,9 @@
   </data>
   <data name="InvalidMsgLevel" xml:space="preserve">
     <value>Ungültiger Meldungsfilter!</value>
+  </data>
+  <data name="InvalidOutputDevice" xml:space="preserve">
+    <value>Ungültiges Ausgabegerät!</value>
   </data>
   <data name="InvalidTcpPort" xml:space="preserve">
     <value>Ungültiger TCP Port!</value>

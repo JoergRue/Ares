@@ -47,9 +47,9 @@ namespace Ares.Player
             Application.SetCompatibleTextRenderingDefault(false);
             try
             {
-                using (Ares.Playing.BassInit bassInit = new Ares.Playing.BassInit(s => MessageBox.Show(s, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Warning)))
+                using (Ares.Playing.BassInit bassInit = new Ares.Playing.BassInit(-1, s => MessageBox.Show(s, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Warning)))
                 {
-                    Application.Run(new Player());
+                    Application.Run(new Player(bassInit));
                 }
             }
 #if !MONO
