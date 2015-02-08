@@ -645,7 +645,7 @@ namespace Ares.Playing
             List<String> newChoices = new List<string>();
             foreach (String file in choices)
             {
-                newChoices.Add(file.Replace('\\', System.IO.Path.DirectorySeparatorChar));
+                newChoices.Add(file);
             }
             choices = newChoices;
             bool mustChange = false;
