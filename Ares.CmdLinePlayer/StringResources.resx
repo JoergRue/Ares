@@ -142,13 +142,16 @@
     <value>Port to send udp messages for Player detection</value>
   </data>
   <data name="CmdLineOutputDevice" xml:space="preserve">
-    <value>Output device (-1: default; 1: first device; 2: second device; etc.)</value>
+    <value>Output device (-1: default; 0: last used device; 1: first device; 2: second device; etc.)</value>
   </data>
   <data name="ConnectedWith" xml:space="preserve">
     <value>Connected with </value>
   </data>
   <data name="Debug" xml:space="preserve">
     <value>Debug: </value>
+  </data>
+  <data name="DeviceInitError" xml:space="preserve">
+    <value>Could not access selected sound device! Fallback to default.</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Error: </value>

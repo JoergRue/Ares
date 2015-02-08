@@ -49,10 +49,11 @@ namespace Ares.CmdLinePlayer
                 PlayerOptions options = new PlayerOptions();
                 if (options.Parse(args))
                 {
-                    using (Ares.Playing.BassInit bassInit = new Ares.Playing.BassInit(options.OutputDevice, s => Console.WriteLine(s)))
+                    int outputDevice = options.OutputDevice == 0 ? -1 : options.OutputDevice;
+                    using (Ares.Playing.BassInit bassInit = new Ares.Playing.BassInit(outputDevice, s => Console.WriteLine(s)))
                     {
                         {
-                            Player player = new Player();
+                            Player player = new Player(bassInit);
                             res = player.Run(options);
                         }
                     }

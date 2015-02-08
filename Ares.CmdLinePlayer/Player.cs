@@ -47,7 +47,7 @@ namespace Ares.CmdLinePlayer
             NonInteractive = false;
             ShowHelp = false;
             MessageFilterLevel = -1;
-            OutputDevice = -1;
+            OutputDevice = 0;
         }
 
         private bool ShowHelp { get; set; }
@@ -83,7 +83,7 @@ namespace Ares.CmdLinePlayer
                 Console.Error.WriteLine(StringResources.InvalidTcpPort);
                 ShowHelp = true;
             }
-            if (OutputDevice != -1 && (OutputDevice < 1 || OutputDevice > 10))
+            if (OutputDevice < -1 || OutputDevice > 10)
             {
                 Console.Error.WriteLine(StringResources.InvalidOutputDevice);
                 ShowHelp = true;
@@ -112,13 +112,15 @@ namespace Ares.CmdLinePlayer
 
     class Player : INetworkClient
     {
-        public Player()
+        public Player(Ares.Playing.BassInit init)
         {
             m_PlayingControl = new PlayingControl();
+            m_BassInit = init;
         }
 
         private Network m_Network;
         private PlayingControl m_PlayingControl;
+        private Ares.Playing.BassInit m_BassInit;
 
         private BasicSettings m_BasicSettings;
 
@@ -177,6 +179,25 @@ namespace Ares.CmdLinePlayer
             if (options.TcpPort != -1)
             {
                 Settings.Settings.Instance.TcpPort = options.TcpPort;
+            }
+            if (options.OutputDevice == 0)
+            {
+                int outputDevice = Settings.Settings.Instance.OutputDeviceIndex;
+                if (outputDevice != -1)
+                {
+                    try
+                    {
+                        m_BassInit.SwitchDevice(outputDevice);
+                    }
+                    catch (Ares.Playing.BassInitException)
+                    {
+                        Console.WriteLine(StringResources.DeviceInitError);
+                    }
+                }
+            }
+            else
+            {
+                Settings.Settings.Instance.OutputDeviceIndex = options.OutputDevice;
             }
             if (!String.IsNullOrEmpty(options.InitialProject))
             {

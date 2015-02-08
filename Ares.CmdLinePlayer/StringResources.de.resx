@@ -142,13 +142,16 @@
     <value>Port für Botschaften zur Player-Erkennung</value>
   </data>
   <data name="CmdLineOutputDevice" xml:space="preserve">
-    <value>Ausgabegerät (-1: Standard; 1: erstes Gerät; 2: zweites Gerät; usw.)</value>
+    <value>Ausgabegerät (-1: Standard; 0: zuletzt verwendetes Gerät; 1: erstes Gerät; 2: zweites Gerät; usw.)</value>
   </data>
   <data name="ConnectedWith" xml:space="preserve">
     <value>Verbunden mit </value>
   </data>
   <data name="Debug" xml:space="preserve">
     <value>Debug: </value>
+  </data>
+  <data name="DeviceInitError" xml:space="preserve">
+    <value>Konnte nicht auf gewähltes Ausgabegerät zugreifen! Verwende Standardgerät.</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Fehler: </value>

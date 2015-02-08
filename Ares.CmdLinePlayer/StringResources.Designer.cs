@@ -133,7 +133,7 @@ namespace Ares.CmdLinePlayer {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Output device (-1: default; 1: first device; 2: second device; etc.) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Output device (-1: default; 0: last used device; 1: first device; 2: second device; etc.) ähnelt.
         /// </summary>
         internal static string CmdLineOutputDevice {
             get {
@@ -156,6 +156,15 @@ namespace Ares.CmdLinePlayer {
         internal static string Debug {
             get {
                 return ResourceManager.GetString("Debug", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Could not access selected sound device! Fallback to default. ähnelt.
+        /// </summary>
+        internal static string DeviceInitError {
+            get {
+                return ResourceManager.GetString("DeviceInitError", resourceCulture);
             }
         }
         
