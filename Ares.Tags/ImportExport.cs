@@ -1086,7 +1086,7 @@ namespace Ares.Tags
                         {
                             FileExchange fileExchange = file as FileExchange;
                             String filePath = String.Empty;
-                            if (fileExchange != null)
+                            if (fileExchange != null && !String.IsNullOrEmpty(fileExchange.RelativePath))
                             {
                                 filePath = fileExchange.RelativePath.Replace('\\', System.IO.Path.DirectorySeparatorChar);
                             }

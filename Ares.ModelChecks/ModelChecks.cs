@@ -93,6 +93,8 @@ namespace Ares.ModelInfo
 
         private static ModelChecks sInstance;
 
+        private Object m_LockObject = new Object();
+
         private ModelChecks()
         {
             m_Errors = new Dictionary<CheckType, List<ModelError>>();
@@ -111,20 +113,26 @@ namespace Ares.ModelInfo
 
         public void AddError(CheckType checkType, ModelError error)
         {
-            m_Errors[checkType].Add(error);
-            if (!m_ErrorsByElement.ContainsKey(error.Element))
+            lock (m_LockObject)
             {
-                m_ErrorsByElement[error.Element] = new List<ModelError>();
+                m_Errors[checkType].Add(error);
+                if (!m_ErrorsByElement.ContainsKey(error.Element))
+                {
+                    m_ErrorsByElement[error.Element] = new List<ModelError>();
+                }
+                m_ErrorsByElement[error.Element].Add(error);
             }
-            m_ErrorsByElement[error.Element].Add(error);
         }
 
         private void RemoveError(ModelError error)
         {
-            m_ErrorsByElement[error.Element].Remove(error);
-            if (m_ErrorsByElement[error.Element].Count == 0)
+            lock (m_LockObject)
             {
-                m_ErrorsByElement.Remove(error.Element);
+                m_ErrorsByElement[error.Element].Remove(error);
+                if (m_ErrorsByElement[error.Element].Count == 0)
+                {
+                    m_ErrorsByElement.Remove(error.Element);
+                }
             }
         }
 
@@ -135,24 +143,34 @@ namespace Ares.ModelInfo
 
         public IList<ModelError> GetErrorsForElement(Object element)
         {
-            if (m_ErrorsByElement.ContainsKey(element))
-                return m_ErrorsByElement[element];
-            else
-                return new List<ModelError>();
+            List<ModelError> result = new List<ModelError>();
+            lock (m_LockObject)
+            {
+                if (m_ErrorsByElement.ContainsKey(element))
+                    result.AddRange(m_ErrorsByElement[element]);
+            }
+            return result;
         }
 
-        public IEnumerable<ModelError> GetAllErrors()
+        public IList<ModelError> GetAllErrors()
         {
-            foreach (List<ModelError> errors in m_Errors.Values)
-                foreach (ModelError error in errors)
-                    yield return error;
+            List<ModelError> result = new List<ModelError>();
+            lock (m_LockObject)
+            {
+                foreach (List<ModelError> errors in m_Errors.Values)
+                    result.AddRange(errors);
+            }
+            return result;
         }
 
         public int GetErrorCount()
         {
             int result = 0;
-            foreach (List<ModelError> errors in m_Errors.Values)
-                result += errors.Count;
+            lock (m_LockObject)
+            {
+                foreach (List<ModelError> errors in m_Errors.Values)
+                    result += errors.Count;
+            }
             return result;
         }
 
@@ -177,13 +195,19 @@ namespace Ares.ModelInfo
         {
             if (!m_ModelChecks.ContainsKey(checkType))
                 return;
-            if (!m_Errors.ContainsKey(checkType))
-                m_Errors[checkType] = new List<ModelError>();
+            lock (m_LockObject)
+            {
+                if (!m_Errors.ContainsKey(checkType))
+                    m_Errors[checkType] = new List<ModelError>();
+            }
             foreach (ModelError error in m_Errors[checkType])
             {
                 RemoveError(error);
             }
-            m_Errors[checkType].Clear();
+            lock (m_LockObject)
+            {
+                m_Errors[checkType].Clear();
+            }
             if (project != null)
             {
                 m_ModelChecks[checkType].DoChecks(project, this);
