@@ -180,7 +180,7 @@
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="cutMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Strg+X</value>
+    <value>Ctrl+X</value>
   </data>
   <data name="cutMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>152, 22</value>
@@ -189,7 +189,7 @@
     <value>Cut</value>
   </data>
   <data name="copyMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Strg+C</value>
+    <value>Ctrl+C</value>
   </data>
   <data name="copyMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>152, 22</value>
@@ -198,7 +198,7 @@
     <value>Copy</value>
   </data>
   <data name="pasteMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Strg+V</value>
+    <value>Ctrl+V</value>
   </data>
   <data name="pasteMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>152, 22</value>
@@ -210,7 +210,7 @@
     <value>149, 6</value>
   </data>
   <data name="deleteMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Entf</value>
+    <value>Del</value>
   </data>
   <data name="deleteMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>152, 22</value>

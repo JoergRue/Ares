@@ -386,7 +386,7 @@
     <value>176, 22</value>
   </data>
   <data name="undoToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Strg+Z</value>
+    <value>Ctrl+Z</value>
   </data>
   <data name="&gt;&gt;stopAllToolStipMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -420,7 +420,7 @@
     <value>extrasToolStripMenuItem</value>
   </data>
   <data name="newToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Strg+N</value>
+    <value>Ctrl+N</value>
   </data>
   <data name="&gt;&gt;toolStrip1.Parent" xml:space="preserve">
     <value>$this</value>
@@ -450,7 +450,7 @@
     <value>Recent</value>
   </data>
   <data name="openToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Strg+O</value>
+    <value>Ctrl+O</value>
   </data>
   <data name="&gt;&gt;dockPanel.Parent" xml:space="preserve">
     <value>$this</value>
@@ -855,7 +855,7 @@
     <value>Save As ...</value>
   </data>
   <data name="redoToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Strg+Y</value>
+    <value>Ctrl+Y</value>
   </data>
   <data name="stopButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>23, 22</value>
@@ -948,7 +948,7 @@
     <value>176, 22</value>
   </data>
   <data name="saveToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Strg+S</value>
+    <value>Ctrl+S</value>
   </data>
   <data name="toolStripSeparator5.Size" type="System.Drawing.Size, System.Drawing">
     <value>157, 6</value>

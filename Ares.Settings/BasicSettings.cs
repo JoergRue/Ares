@@ -160,7 +160,7 @@ namespace Ares.Settings
             {
                 XmlReaderSettings settings = new XmlReaderSettings();
                 settings.IgnoreComments = true;
-                settings.ProhibitDtd = false;
+                settings.DtdProcessing = DtdProcessing.Ignore;
                 using (System.IO.FileStream stream = new System.IO.FileStream(fileName, System.IO.FileMode.Open))
                 {
                     using (XmlReader reader = XmlReader.Create(stream, settings))

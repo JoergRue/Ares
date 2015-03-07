@@ -210,7 +210,7 @@ namespace Ares.Data
             List<IXmlWritable> elements = new List<IXmlWritable>();
             XmlReaderSettings settings = new XmlReaderSettings();
             settings.IgnoreComments = true;
-            settings.ProhibitDtd = false;
+            settings.DtdProcessing = DtdProcessing.Ignore;
             using (System.IO.FileStream stream = new System.IO.FileStream(fileName, System.IO.FileMode.Open))
             {
 				using (System.IO.StreamReader streamReader = new System.IO.StreamReader(stream, System.Text.Encoding.UTF8)) {
@@ -229,7 +229,7 @@ namespace Ares.Data
             List<IXmlWritable> elements = new List<IXmlWritable>();
             XmlReaderSettings settings = new XmlReaderSettings();
             settings.IgnoreComments = true;
-            settings.ProhibitDtd = false;
+            settings.DtdProcessing = DtdProcessing.Ignore;
             using (System.IO.StringReader reader = new System.IO.StringReader(serializedData))
             {
                 using (XmlReader xmlReader = XmlReader.Create(reader, settings))

@@ -214,7 +214,7 @@ Click Next to continue or Cancel to exit Setup.</Value>
     <Version>
       <Major>2</Major>
       <Minor>5</Minor>
-      <Build>0</Build>
+      <Build>1</Build>
       <Revision>0</Revision>
     </Version>
     <ExtensionDescription>Plugin for the Ares (Aureal RPG Experience System) program.
