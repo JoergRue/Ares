@@ -1,0 +1,13 @@
+﻿@inherits ViewPage<ProjectsResponse>
+
+<h4>Projekt Öffnen</h4>
+<p>Aktuelles Projekt: @Model.ActiveProject</p>
+<ul class="projectsList">
+    @foreach (var projectFile in Model.Projects)
+    {
+    <li class="projectsList"><a class="projectsList" onclick="openProject_Projects('@projectFile.FilePath')">@projectFile.ProjectName</a></li>}
+</ul>
+
+<p>
+    <a href="/Control">Steuerung</a> <a href="/Modes">Modi</a> <a onclick="toPlaylist()" class="musicListLink">Spielliste</a> <a href="/Tags">Tags</a>
+</p>

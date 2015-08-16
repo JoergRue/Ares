@@ -1,0 +1,68 @@
+﻿@inherits ViewPage<ControlResponse>
+
+<div class="control">
+
+    <h4>Steuerung</h4>
+
+    <p>
+        <img src="/Images/stop.png" onmousedown="switchImg(this, '/Images/stop_pressed.png')" onmouseup="switchImg(this, '/Images/stop.png')" class="stopButton" onclick="stopAll()" alt="Stopp" />
+        <img src="/Images/back.png" onmousedown="switchImg(this, '/Images/back_pressed.png')" onmouseup="switchImg(this, '/Images/back.png')" class="backButton" onclick="back()" alt="Zurück" />
+        <img src="/Images/forward.png" onmousedown="switchImg(this, '/Images/forward_pressed.png')" onmouseup="switchImg(this, '/Images/forward.png')" class="forwardButton" onclick="forward()" alt="Vorwärts" />
+        <img src="/Images/repeat_off.png" onmousedown="switchImg(this, '/Images/repeat_pressed.png')" onmouseup="switchImg(this, '/Images/repeat_off.png')" class="repeatButtonUnchecked" onclick="repeatOn()" alt="Wiederholen (aus)" id="repeatButton" />
+    </p>
+
+    <h4>Lautstärke</h4>
+
+    <table class="volumeTable">
+        <tr><td>Gesamt:</td><td><input type="range" min="0" max="100" onChange="changeVolume(2, this.value)" id="overallValueSlider" data-role="none" /></td></tr>
+        <tr><td>Musik:  </td><td><input type="range" min="0" max="100" onchange="changeVolume(1, this.value)" id="musicValueSlider" data-role="none" />  </td></tr>
+        <tr><td>Geräusche: </td><td><input type="range" min="0" max="100" onchange="changeVolume(0, this.value)" id="soundsValueSlider" data-role="none" /> </td></tr>
+    </table>
+
+    <h4>State</h4>
+
+    <table class="stateTable">
+        <tr><td class="row-header">Geladenes Projekt:</td> <td id="loadedProject"></td><td><img src="/Images/open.png" onmousedown="switchImg(this, '/Images/open_pressed.png')" onmouseup="switchImg(this, '/Images/open.png')" class="openProjectButton" onclick="getProjects()" alt="Project öffnen" /></td></tr>
+        <tr><td class="row-header">Aktiver Modus:</td> <td id="activeMode2"></td><td><a href="/Modes" class="modesLink">Modi</a></td></tr>
+        <tr><td class="row-header">Aktive Elemente:</td> <td class="elementsTitle" id="elementsParent"><span class="elements" id="activeElements2"></span></td><td><a href="/Elements" class="elementsLink">Elemente</a></td></tr>
+        <tr><td class="row-header">Aktuelle Musik:</td> <td class="musicTitle" id="musicParent"><span class="musicTitle" id="currentMusic"></span></td><td><a href="/Playlist" class="playListLink">Spielliste</a></td></tr>
+    </table>
+
+</div>
+
+<hr class="controlModes" />
+
+<div class="modes">
+
+    <h4>Modi</h4>
+
+    <ul id="modeSelection2" class="modeTriggers"></ul>
+
+    <hr />
+
+    <ul class="modeTriggers" id="specialModeTriggers">
+        <li class="modeTrigger"><input type="button" onclick="switchToPlaylist()" class="modeButton" value="Spielliste" data-role="none" /></li>
+        <li class="modeTrigger"><input type="button" onclick="switchToTags()" class="modeButton" value="Tags" data-role="none" /></li>
+    </ul>
+
+</div>
+
+<hr class="modesElements" />
+
+<div class="elements" id="elements">
+
+    <h4>Elemente</h4>
+
+    <ul id="elementsSelection2" class="triggers"></ul>
+
+</div>
+
+<div class="inlinePlaylist" id="inlinePlaylist">
+
+    <h4>Aktuelle Spiellliste</h4>
+
+    <ul class="playlist">
+        <span id="playlistList"></span>
+    </ul>
+
+</div>

@@ -1,0 +1,31 @@
+﻿@inherits ViewPage<TagsResponse>
+
+<h3>Tags</h3>
+<h4>Kategorien</h4>
+<p>
+    Aktuelle Kategorie: <select class="categorySelect" id="categorySelect" onchange="SelectCategory()" data-role="none"></select><br /><br />
+    Tags verschiedener Kategorien werden verknüpft mit: <select class="combineSelect" id="combineSelect" onchange="ChangeTagCombine()" data-role="none">
+        <option>ODER: Musik muss irgendeinen Tag in irgendeiner Kategorie haben</option>
+        <option>Kategorie-UND: Musik muss einen Tag in jeder Kategorie haben</option>
+        <option>UND: Musik muss alle Tags in allen Kategorien haben</option>
+    </select><br /><br />
+    Blendzeit: <input type="number" min="0" max="10000" step="100" id="fadeTimeInput" onchange="SetFading()" data-role="none" /> ms <input type="checkbox" id="fadeOnChangeBox" onchange="SetFading()" name="fadeOnChange" value="fadeOnChange" data-role="none" />Nur bei Tagänderung
+</p>
+<hr />
+<h4>Tags</h4>
+
+<ul id="elementsSelection" class="triggers"></ul>
+
+<hr />
+
+<p>
+    Aktuell aktive Tags:<br />
+    <span id="activeTags"></span><br />
+    <input type="button" onclick="RemoveAllTags()" value="Alle Tags abwählen" class="removeAllTagsButton" data-role="none" />
+</p>
+
+<hr />
+
+<p>
+    <a href="/Control">Steuerung</a>  <a href="/Modes">Modi</a>  <a href="/Elements">Elemente</a>   <a onclick="toPlaylist()" class="musicListLink">Spielliste</a>
+</p>

@@ -118,7 +118,7 @@ namespace Ares.CmdLinePlayer
             m_BassInit = init;
         }
 
-        private Network m_Network;
+        private INetwork m_Network;
         private PlayingControl m_PlayingControl;
         private Ares.Playing.BassInit m_BassInit;
 
@@ -251,7 +251,7 @@ namespace Ares.CmdLinePlayer
                 Console.WriteLine(StringResources.NoIpAddress);
                 return 2;
             }
-            m_Network = new Network(this);
+            m_Network = new CustomIpNetwork(this);
             m_Network.InitConnectionData();
             m_Network.StartUdpBroadcast();
             m_BroadcastTimer = new System.Timers.Timer(50);
@@ -441,6 +441,7 @@ namespace Ares.CmdLinePlayer
                     m_Network.ErrorOccurred(-1, String.Format(StringResources.LoadError, e.Message));
                 }
                 m_Project = null;
+                m_CurrentProjectPath = String.Empty;
             }
             Ares.Playing.PlayingModule.ProjectPlayer.SetProject(m_Project);
             DoModelChecks();
@@ -554,6 +555,11 @@ namespace Ares.CmdLinePlayer
             m_PlayingControl.KeyReceived(key);
         }
 
+        public void ChangeMode(String title)
+        {
+            m_PlayingControl.SetMode(title);
+        }
+
         public void VolumeReceived(Playing.VolumeTarget target, int value)
         {
             switch (target)
@@ -612,6 +618,11 @@ namespace Ares.CmdLinePlayer
                 oldPath = System.IO.Directory.GetParent(oldPath).FullName;
             }
             return oldPath;
+        }
+
+        public Ares.Settings.RecentFiles GetLastUsedProjects()
+        {
+            return Ares.Settings.Settings.Instance.RecentFiles;
         }
 
         public void ProjectShallChange(string newProjectFile)

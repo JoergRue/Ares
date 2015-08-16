@@ -31,6 +31,7 @@ namespace Ares.Players
         void VolumeReceived(Ares.Playing.VolumeTarget target, int value);
         void ClientDataChanged();
         String GetProjectsDirectory();
+        Ares.Settings.RecentFiles GetLastUsedProjects();
         void ProjectShallChange(String newProjectFile);
         Ares.Data.IProject GetCurrentProject();
         void PlayOtherMusic(Int32 elementId);
@@ -42,11 +43,39 @@ namespace Ares.Players
         void SetMusicTagsFading(Int32 fadeTime, bool onlyOnChange);
         void SetPlayMusicOnAllSpeakers(bool onAllSpeakers);
         void SetFadingOnPreviousNext(int option, int fadeTime);
+        void ChangeMode(String title);
     }
 
-    public class Network : Ares.Playing.IProjectPlayingCallbacks
+    public interface INetwork
     {
-        public Network(INetworkClient client)
+        void InitConnectionData();
+
+        void StartUdpBroadcast();
+        bool SendUdpPacket();
+        void StopUdpBroadcast();
+        void ListenForClient();
+        void StopListenForClient();
+
+        bool ClientConnected { get; }
+        String ClientName { get; }
+        void DisconnectClient(bool listenAgain);
+        void Shutdown();
+
+
+        void ErrorOccurred(int elementId, string errorMessage);
+        void InformClientOfPossibleTags(int languageId, Ares.Data.IProject project);
+        void InformClientOfProject(Ares.Data.IProject newProject);
+        void InformClientOfEverything(int overallVolume, int musicVolume, int soundVolume, Ares.Data.IMode mode, MusicInfo music,
+            System.Collections.Generic.IList<Ares.Data.IModeElement> elements, Ares.Data.IProject project, Int32 musicListId, bool musicRepeat,
+            int tagLanguageId, System.Collections.Generic.IList<int> activeTags, Data.TagCategoryCombination categoryCombination, int fadeTime, bool fadeOnlyOnChange,
+            bool musicOnAllChannels, int fadeOnPreviousNextOption, int fadeOnPreviousNextTime);
+        void InformClientOfVolume(Ares.Playing.VolumeTarget target, int value);
+        void InformClientOfFading(int fadeTime, bool fadeOnlyOnChange);
+    }
+
+    public class CustomIpNetwork : INetwork, Ares.Playing.IProjectPlayingCallbacks
+    {
+        public CustomIpNetwork(INetworkClient client)
         {
             networkClient = client;
             ClientConnected = false;
@@ -1415,7 +1444,7 @@ namespace Ares.Players
             InformMusicList(elementId);
         }
 
-        public void MusicPlaylistFinished()
+        public void MusicPlaylistFinished(int elementId)
         {
             InformMusicList(-1);
         }

@@ -178,7 +178,7 @@ namespace Ares.Playing
             }
         }
 
-        public void MusicPlaylistFinished()
+        public void MusicPlaylistFinished(int elementId)
         {
             List<IProjectPlayingCallbacks> copy = null;
             lock (syncObject)
@@ -187,7 +187,7 @@ namespace Ares.Playing
             }
             foreach (IProjectPlayingCallbacks callback in copy)
             {
-                callback.MusicPlaylistFinished();
+                callback.MusicPlaylistFinished(elementId);
             }
         }
 

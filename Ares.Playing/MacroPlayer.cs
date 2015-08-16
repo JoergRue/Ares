@@ -180,7 +180,7 @@ namespace Ares.Playing
         {
         }
 
-        public void MusicPlaylistFinished()
+        public void MusicPlaylistFinished(int elementId)
         {
         }
 

@@ -1,0 +1,31 @@
+﻿@inherits ViewPage<TagsResponse>
+
+<h3>Tags</h3>
+<h4>Categories</h4>
+<p>
+    Currently active category: <select class="categorySelect" id="categorySelect" onchange="SelectCategory()" data-role="none"></select><br /><br />
+    Combine tags of different categories by: <select class="combineSelect" id="combineSelect" onchange="ChangeTagCombine()" data-role="none">
+      <option>OR: Music must have at least one tag in ANY category</option>
+      <option>Category-AND: Music must have at least one tag in ALL categories</option>
+      <option>AND: Music must have all tags in all categories</option>
+    </select><br /><br />
+    Fading time: <input type="number" min="0" max="10000" step="100" id="fadeTimeInput" onchange="SetFading()" data-role="none" /> ms <input type="checkbox" id="fadeOnChangeBox" onchange="SetFading()" name="fadeOnChange" value="fadeOnChange" data-role="none"/>Fade only on tag change
+</p>
+<hr />
+<h4>Tags</h4>
+
+<ul id="elementsSelection" class="triggers"></ul>
+
+<hr />
+
+<p>
+    Currently active tags:<br />
+    <span id="activeTags"></span><br />
+    <input type="button" onclick="RemoveAllTags()" value="Remove all tags" class="removeAllTagsButton" data-role="none"/>
+</p>
+
+<hr />
+
+<p>
+    <a href="/Control">Control</a>  <a href="/Modes">Modi</a>   <a href="/Elements">Elements</a>   <a onclick="toPlaylist()" class="musicListLink">Playlist</a>
+</p>

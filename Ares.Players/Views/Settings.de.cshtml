@@ -1,0 +1,52 @@
+﻿@inherits ViewPage<SettingsResponse>
+
+<h3>Einstellungen</h3>
+
+<h4>Musik</h4>
+<p>
+    <input type="checkbox" id="allSpeakers" onchange="SetOnAllSpeakers()" name="onAllSpeakers" value="onAllSpeakers" data-role="none"
+           @if (Model.Settings.PlayMusicOnAllSpeakers) { @Html.Raw("checked=\"checked\"")  } />Musik auf allen Lautsprechern abspielen<br />
+    <br />
+    Blenden, wenn die Musik manuell geändert wird:<br />
+    <br />
+    <span class="manualFading">
+        <input type="radio" name="ManualFading" value="NoFading" id="manualFadingNo" data-role="none"
+               @if (Model.Settings.FadingOption == 0) { @Html.Raw("checked=\"checked\"")  } />Kein Blenden<br />
+    </span>
+    <span class="manualFading">
+        <input type="radio" name="ManualFading" value="FadeOutIn" id="manualFadingOutIn" data-role="none"
+               @if (Model.Settings.FadingOption == 1) { @Html.Raw("checked=\"checked\"")  } />Ausblenden, dann Einblenden<br />
+    </span>
+    <span class="manualFading">
+        <input type="radio" name="ManualFading" value="CrossFading" id="manualFadingCross" data-role="none"
+               @if (Model.Settings.FadingOption == 2) { @Html.Raw("checked=\"checked\"")  } />Überblenden<br />
+    </span>
+    <span class="manualFading">Blendzeit: <input type="number" min="0" max="10000" step="100" id="fadeTimeInput" data-role="none" value="@Model.Settings.FadingTime" /> ms </span>
+</p>
+
+<h4>Sprache</h4>
+<p>
+    <span>
+        <input type="radio" name="Language" value="English" class="language" id="languageEn" data-role="none"
+               @if (Model.Settings.Language != "de") { @Html.Raw("checked=\"checked\"")  } />Englisch<br />
+    </span>
+    <span>
+        <input type="radio" name="Language" value="German" class="language" id="languageDe" data-role="none"
+               @if (Model.Settings.Language == "de") { @Html.Raw("checked=\"checked\"")  } />Deutsch<br />
+    </span>
+</p>
+
+<p>
+    <div class="submitRow">
+        <span class="submitRow2">
+            <input type="button" id="okButton" onclick="submitData_Settings('@Model.SourcePage')" class="submitRowButton" data-role="none" value="OK" />
+            <input type="button" id="cancelButton" onclick="cancel_Settings()" class="submitRowButton" data-role="none" value="Cancel" />
+        </span>
+    </div>
+</p>
+
+<hr />
+
+<h4>Über Ares</h4>
+
+<p>Version: @Model.Version</p>

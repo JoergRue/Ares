@@ -1,0 +1,38 @@
+﻿<!doctype html>
+<html>
+<head>
+    <title>Ares Controller</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/Views/jquery.mobile-1.4.5.min.css" />
+    <script src="/Views/jquery-2.1.1.min.js"></script>
+    <script src="/Views/jquery.mobile-1.4.5.min.js"></script>
+    <script src="js/ss-utils.js"></script>
+    <script src="Views/EventSource.js"></script>
+    <meta charset="utf-8" />
+
+    <script src="Views/Common.js"></script>
+    <script src="Views/Control.js"></script>
+    <script src="Views/Elements.js"></script>
+    <script src="Views/Tags.js"></script>
+    <script src="Views/Modes.js"></script>
+    <script src="Views/Playlist.js"></script>
+    <script src="Views/Projects.js"></script>
+    <script src="Views/Settings.js"></script>
+
+    <link rel="StyleSheet" href="Views/Controller.css" type="text/css">
+    <link rel="StyleSheet" href="Views/Slider.css" type="text/css">
+</head>
+<body>
+    <div data-role="page" id="@Model.PageId">
+        <div data-role="none" class="aresheader">
+            <div class="aresheader2"><h2>Ares Controller</h2></div><div class="aresheader3"><img src="/Images/gear.png" alt="Settings" onclick="showSettings('@Model.PageLink')" /></div>
+        </div>
+        <div role="main" class="ui-content">
+            <div class="container">
+                @RenderBody()
+            </div>
+        </div>
+        
+    </div>
+</body>
+</html>

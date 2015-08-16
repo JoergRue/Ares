@@ -152,6 +152,11 @@ namespace Ares.Players
             return PlayingModule.ProjectPlayer.SetMode(mode.Title);
         }
 
+        public bool SetMode(String title)
+        {
+            return PlayingModule.ProjectPlayer.SetMode(title);
+        }
+
         public void SetRepeatCurrentMusic(bool repeat)
         {
             PlayingModule.ProjectPlayer.RepeatCurrentMusic = repeat;
@@ -459,11 +464,12 @@ namespace Ares.Players
             }
         }
 
-        public void MusicPlaylistFinished()
+        public void MusicPlaylistFinished(int elementId)
         {
             lock (syncObject)
             {
-                m_CurrentMusicList = -1;
+                if (m_CurrentMusicList == elementId)
+                    m_CurrentMusicList = -1;
             }
         }
 

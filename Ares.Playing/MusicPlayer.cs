@@ -59,7 +59,7 @@ namespace Ares.Playing
                 {
                     if (PlayingModule.ThePlayer.ProjectCallbacks != null)
                     {
-                        PlayingModule.ThePlayer.ProjectCallbacks.MusicPlaylistFinished();
+                        PlayingModule.ThePlayer.ProjectCallbacks.MusicPlaylistFinished(GetSingleFileListId());
                     }
                     Client.SubPlayerFinished(this, stop, false);
                 }
@@ -105,6 +105,7 @@ namespace Ares.Playing
         public abstract void PlayNext();
 
         protected abstract bool IsSingleFileList();
+        protected abstract int GetSingleFileListId();
 
         public void Stop()
         {
@@ -229,7 +230,7 @@ namespace Ares.Playing
                 Monitor.Exit(syncObject);
                 if (PlayingModule.ThePlayer.ProjectCallbacks != null)
                 {
-                    PlayingModule.ThePlayer.ProjectCallbacks.MusicPlaylistFinished();
+                    PlayingModule.ThePlayer.ProjectCallbacks.MusicPlaylistFinished(m_Container.Id);
                 }
                 Client.SubPlayerFinished(this, shallStop, false);
                 return;
@@ -248,7 +249,7 @@ namespace Ares.Playing
                     Monitor.Exit(syncObject);
                     if (PlayingModule.ThePlayer.ProjectCallbacks != null)
                     {
-                        PlayingModule.ThePlayer.ProjectCallbacks.MusicPlaylistFinished();
+                        PlayingModule.ThePlayer.ProjectCallbacks.MusicPlaylistFinished(m_Container.Id);
                     }
                     Client.SubPlayerFinished(this, false, false);
                 }
@@ -264,6 +265,11 @@ namespace Ares.Playing
         protected override bool IsSingleFileList()
         {
             return ((IMusicList)m_Container).GetFileElements().Count < 2;
+        }
+
+        protected override int GetSingleFileListId()
+        {
+            return m_Container.Id;
         }
 
         public override void VisitSequentialMusicList(ISequentialBackgroundMusicList musicList)
@@ -349,12 +355,12 @@ namespace Ares.Playing
         {
             Monitor.Enter(syncObject);
             bool stop = shallStop;
-            if (Client.Stopped || shallStop || (m_Container.RepeatCount != -1 && m_Container.RepeatCount <= ++m_RepeatCount))
+            if (Client.Stopped || shallStop)
             {
                 Monitor.Exit(syncObject);
                 if (PlayingModule.ThePlayer.ProjectCallbacks != null)
                 {
-                    PlayingModule.ThePlayer.ProjectCallbacks.MusicPlaylistFinished();
+                    PlayingModule.ThePlayer.ProjectCallbacks.MusicPlaylistFinished(m_Container.Id);
                 }
                 Client.SubPlayerFinished(this, stop, false);
             }
@@ -376,6 +382,15 @@ namespace Ares.Playing
                 Monitor.Exit(syncObject);
                 Repeat(RandomMusicList, element);
             }
+            else if (m_Container.RepeatCount != -1 && m_Container.RepeatCount <= ++m_RepeatCount)
+            {
+                Monitor.Exit(syncObject);
+                if (PlayingModule.ThePlayer.ProjectCallbacks != null)
+                {
+                    PlayingModule.ThePlayer.ProjectCallbacks.MusicPlaylistFinished(m_Container.Id);
+                }
+                Client.SubPlayerFinished(this, stop, false);
+            }
             else
             {
                 IChoiceElement element = SelectRandomElement(m_Container);
@@ -392,7 +407,7 @@ namespace Ares.Playing
                     Monitor.Exit(syncObject);
                     if (PlayingModule.ThePlayer.ProjectCallbacks != null)
                     {
-                        PlayingModule.ThePlayer.ProjectCallbacks.MusicPlaylistFinished();
+                        PlayingModule.ThePlayer.ProjectCallbacks.MusicPlaylistFinished(m_Container.Id);
                     }
                     Client.SubPlayerFinished(this, stop, false);
                 }
@@ -402,6 +417,11 @@ namespace Ares.Playing
         protected override bool IsSingleFileList()
         {
             return ((IMusicList)RandomMusicList).GetFileElements().Count < 2;
+        }
+
+        protected override int GetSingleFileListId()
+        {
+            return RandomMusicList.Id;
         }
 
         public override void VisitRandomMusicList(IRandomBackgroundMusicList musicList)
@@ -438,9 +458,15 @@ namespace Ares.Playing
                 {
                     ErrorHandling.ErrorOccurred(newList.Id, error);
                 });
+            int oldId = -1;
+            lock (syncObject)
+            {
+                if (m_Container != null)
+                  oldId = m_Container.Id;
+            }
             if (PlayingModule.ThePlayer.ProjectCallbacks != null)
             {
-                PlayingModule.ThePlayer.ProjectCallbacks.MusicPlaylistFinished();
+                PlayingModule.ThePlayer.ProjectCallbacks.MusicPlaylistFinished(oldId);
             }
             lock (syncObject)
             {
@@ -766,7 +792,7 @@ namespace Ares.Playing
         {
         }
 
-        public void MusicPlaylistFinished()
+        public void MusicPlaylistFinished(int elementId)
         {
         }
 
@@ -834,6 +860,11 @@ namespace Ares.Playing
         protected override bool IsSingleFileList()
         {
             return true;
+        }
+
+        protected override int GetSingleFileListId()
+        {
+            return m_Element.Id;
         }
 
         public void Start(int musicFadeInTime)

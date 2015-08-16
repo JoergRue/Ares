@@ -142,9 +142,9 @@ namespace Ares.Playing
         void MusicPlaylistStarted(Int32 elementId);
 
         /// <summary>
-        /// The current music playlist was stopped.
+        /// The music playlist was stopped.
         /// </summary>
-        void MusicPlaylistFinished();
+        void MusicPlaylistFinished(Int32 elementId);
 
         /// <summary>
         /// Repeat mode for music was changed.

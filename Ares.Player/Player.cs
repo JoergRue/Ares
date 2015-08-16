@@ -38,7 +38,7 @@ namespace Ares.Player
         private Ares.Ipc.ApplicationInstance m_Instance;
 #endif
 
-        private Network m_Network;
+        private INetwork m_Network;
 
         private Ares.Playing.BassInit m_BassInit;
 
@@ -332,6 +332,7 @@ namespace Ares.Player
                     m_Network.ErrorOccurred(-1, String.Format(StringResources.LoadError, e.Message));
                 }
                 m_Project = null;
+                m_CurrentProjectPath = String.Empty;
             }
             projectNameLabel.Text = m_Project != null ? m_Project.Title : StringResources.NoOpenedProject;
             this.Text = String.Format(StringResources.AresPlayer, projectNameLabel.Text);
@@ -1161,6 +1162,11 @@ namespace Ares.Player
             m_PlayingControl.KeyReceived(key);
         }
 
+        public void ChangeMode(String title)
+        {
+            m_PlayingControl.SetMode(title);
+        }
+
         public void VolumeReceived(Ares.Playing.VolumeTarget target, int value)
         {
             switch (target)
@@ -1192,6 +1198,11 @@ namespace Ares.Player
                 oldPath = System.IO.Directory.GetParent(oldPath).FullName;
             }
             return oldPath;
+        }
+
+        public Ares.Settings.RecentFiles GetLastUsedProjects()
+        {
+            return Ares.Settings.Settings.Instance.RecentFiles;
         }
 
         public void ProjectShallChange(String newProjectPath)
@@ -1490,7 +1501,7 @@ namespace Ares.Player
 			startEditorToolStripMenuItem.Enabled = false;
 #endif
             listenForPorts = true;
-            m_Network = new Network(this);
+            m_Network = new Ares.Players.Web.WebNetwork(this); //  new CustomIpNetwork(this);
             m_Network.InitConnectionData();
             if (Settings.Settings.Instance.NetworkEnabled)
             {

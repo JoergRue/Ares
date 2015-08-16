@@ -1,0 +1,489 @@
+﻿
+body {
+    background-color:#FFFFEC !important;
+    background-image:url(../Images/backarea.png) !important;
+    margin:0px;
+    margin-left:0.83em;
+    color:#000000 !important;
+  }
+
+div {
+    background-color:#FFFFEC !important;
+    background-image:url(../Images/backarea.png) !important;
+}
+
+hr {
+    color:#A3551A;
+    background-color:#A3551A;
+    border:#A3551A;
+    height:1px;
+}
+
+.manualFading {
+    margin-left: 1.7em;
+}
+
+a:link {
+    color:#0000FF !important;
+  }
+
+
+a:visited {
+    color:#0000FF !important;
+  }
+
+
+a:active {
+    color:#00FFFF !important;
+  }
+
+ul.ohne {
+    list-style-type:none;
+  }
+
+p,h4,td,ul,li,div,b,i {
+    font-family:sans-serif,Arial !important;
+    font-size:12pt !important;
+  }
+
+
+h1,h2,h3,h4 {
+    font-family:sans-serif,Arial !important;
+    color:#005C16 !important;
+  }
+
+
+h1 {
+    font-size:18pt;
+    font-weight:bold;
+    text-align:center;
+  }
+
+div.aresheader {
+    display: table;
+    margin-right: 0.83em;
+}
+
+input[type=range].volumeRange {
+    width: 10em;
+}
+
+div.aresheader2 {
+    display: table-cell !important;
+    vertical-align: bottom !important;
+    white-space: nowrap;
+}
+
+div.aresheader3 {
+    display: table-cell !important;
+    vertical-align: bottom !important;
+    width: 100%;
+    text-align:right;
+    white-space: nowrap;
+}
+
+h2 {
+    font-size:16pt;
+    font-weight:bold;
+    text-align:left;
+    margin-left: 1em;
+    float: left;
+    margin-bottom: 0em;
+  }
+
+
+h3 {
+    font-size:14pt;
+    text-align:left;
+  }
+
+h4.version {
+    font-size:8pt !important;
+    margin-right: 0.87em;
+    color:#000000 !important;
+}
+
+img.elementTriggerIndicator {
+    margin-right:0.25em;
+    margin-left:0.83em;
+    position:relative;
+    top:0.58em;
+}
+
+.elementTriggerButton, .modeButton, .removeAllTagsButton, .submitRowButton {
+  -webkit-box-shadow: 1px 1px 0px #706e70;
+  -moz-box-shadow: 1px 1px 0px #706e70;
+  box-shadow: 1px 1px 0px #706e70;
+  font-family: Arial;
+  color: #000000;
+  font-size: 12px;
+  background: #db995e;
+  padding: 0.42em 0.42em 0.42em 0.42em;
+  border: solid #ffffff 1px;
+  text-decoration: none;
+  background-image: url(../Images/hout.png)
+}
+
+.elementTriggerButton:hover, .modeButton:hover, .removeAllTagsButton:hover, .submitRowButton:hover {
+  background: #db995e;
+  text-decoration: none;
+  background-image: url(../Images/hout-hover.png)
+}
+
+.elementTriggerButton:focus, .modeButton:focus, .removeAllTagsButton:focus, .submitRowButton:focus {
+    outline:0;
+}
+
+.elementTriggerButton:active, .modeButton:active, .removeAllTagsButton:active, .submitRowButton:active {
+  background: #db995e;
+  border-top: solid #000000 1px;
+  border-right: solid #ffffff 2px;
+  border-bottom: solid #ffffff 2px;
+  border-left: solid #000000 1px;
+  background-image: url(../Images/hout-active.png)
+}
+
+div.submitRow {
+    display: table;
+}
+
+span.submitRow2 {
+    display: table-row;
+    white-space:nowrap;
+}
+
+.submitRowButton {
+    display: table-cell;
+    margin-right: 0.83em;
+    width: 50%;
+}
+
+select {
+  -webkit-box-shadow: 1px 1px 0px #706e70;
+  -moz-box-shadow: 1px 1px 0px #706e70;
+  box-shadow: 1px 1px 0px #706e70;
+  -webkit-border-radius:4px;
+  -moz-border-radius:4px;
+  border-radius:4px;
+  background-image: url(../Images/hout.png);
+  font-family: Arial;
+  color: #000000;
+  font-size: 12px;
+  background-color: transparent;
+}
+
+input[type="number"] {
+}
+
+.modeButton {
+    margin-right: 0.42em;
+}
+
+h4 {
+    margin-bottom: 0.42em;
+}
+
+table {
+    margin-top: 0.42em;
+}
+
+td { 
+    padding: 0.42em;
+}
+
+p {
+    margin-left: 0.42em;
+}
+
+ul.projectsList {
+    -webkit-column-count: 3; /* Chrome, Safari, Opera */
+    -moz-column-count: 3; /* Firefox */
+    column-count: 3;
+    -webkit-column-gap: 1.25em; /* Chrome, Safari, Opera */
+    -moz-column-gap: 1.25em; /* Firefox */
+    column-gap: 1.25em;
+    -webkit-column-width: 12.5em; /* Chrome, Safari, Opera */
+    -moz-column-width: 12.5em; /* Firefox */
+    column-width: 12.5em;
+}
+
+li.projectsList {
+    margin-bottom: 0.42em;
+}
+
+a.projectsList, a.musicListLink {
+    color:#0000FF;
+    text-decoration:underline;
+}
+
+ul.triggers {
+    -webkit-column-count: auto; /* Chrome, Safari, Opera */
+    -moz-column-count: auto; /* Firefox */
+    column-count: auto;
+    -webkit-column-gap: 0.83em; /* Chrome, Safari, Opera */
+    -moz-column-gap: 0.83em; /* Firefox */
+    column-gap: 0.83em;
+    margin-left: 5px;
+    margin-right: 0.83em;
+    padding-left: 0;
+}
+
+ul.modeTriggers {
+    -webkit-column-count: auto; /* Chrome, Safari, Opera */
+    -moz-column-count: auto; /* Firefox */
+    column-count: auto;
+    -webkit-column-gap: 0.12em; /* Chrome, Safari, Opera */
+    -moz-column-gap: 0.12em; /* Firefox */
+    column-gap: 0.12em;
+    margin-left: 5px;
+    margin-right: 0.83em;
+    padding-left: 0;
+}
+
+li.trigger, li.modeTrigger {
+    white-space: nowrap;
+    margin-bottom: 1.25em;
+    text-align: left;
+    list-style: none;
+    overflow: hidden; /* Fix for firefox and IE 10-11  */
+    -webkit-column-break-inside: avoid; /* Chrome, Safari, Opera */
+    page-break-inside: avoid; /* Deprecated Firefox */
+    -moz-column-break-inside:avoid; /* Current Firefox */
+    column-break-inside:avoid;
+    break-inside: avoid; /* IE 10+ */
+    break-inside: avoid-column;
+}
+
+ul.playlist {
+    -webkit-column-count: 2; /* Chrome, Safari, Opera */
+    -moz-column-count: 2; /* Firefox */
+    column-count: 2;
+    -webkit-column-gap: 0.83em; /* Chrome, Safari, Opera */
+    -moz-column-gap: 0.83em; /* Firefox */
+    column-gap: 0.83em;
+    margin-left: 5px;
+    margin-right: 0.83em;
+    padding-left: 0;
+}
+
+li.playlist {
+    list-style: none;
+    text-align: left;
+    margin-bottom: 0.83em;
+}
+
+div.control, div.modes, div.elements, div.inlinePlaylist {
+    margin-left: 0em;
+    padding: 0.83em;
+}
+
+div.ui-content {
+    clear: both;
+    margin-top: 0em;
+}
+
+div.inlinePlaylist {
+    display:none;
+}
+
+a.playListLink3 {
+    display:none;
+    color:#0000FF !important;
+    text-decoration: underline !important;
+}
+
+a.playListLink2 {
+    color:#0000FF !important;
+    text-decoration: underline !important;
+}
+
+div.control {
+    width: 22em;
+}
+
+td.musicTitle, td.elementsTitle {
+ overflow: hidden;
+ z-index:10;
+ height: 1.5em;
+ width: 8em;
+ max-width:8em;
+}
+
+td.row-header {
+    white-space: nowrap;
+}
+
+span.musicTitle, span.elements {
+ display: inline-block;
+ white-space: nowrap;
+}
+
+span.noanimation {
+    text-align: left;
+    -moz-animation: none;
+    -webkit-animation: none;
+    animation: none;
+}
+
+span.animation {
+    text-align: center;
+    /* Starting position */
+    -moz-transform: translateX(0%);
+    -webkit-transform: translateX(0%);
+    transform: translateX(0%);
+}
+
+span.animation1 {
+ /* Apply animation to this element */	
+ -moz-animation: bouncing-text1-moz 8s linear infinite alternate;
+ -webkit-animation: bouncing-text1-webkit 8s linear infinite alternate;
+ animation: bouncing-text1 8s linear infinite alternate;
+}
+
+span.animation2 {
+ /* Apply animation to this element */	
+ -moz-animation: bouncing-text2-moz 8s linear infinite alternate;
+ -webkit-animation: bouncing-text2-webkit 8s linear infinite alternate;
+ animation: bouncing-text2 8s linear infinite alternate;
+}
+
+/* Move it (define the animation) */
+@-moz-keyframes bouncing-text1-moz {
+ 0%   { -moz-transform: translateX(0%); }
+ 100% { -moz-transform: translateX(-100%); }
+}
+@-webkit-keyframes bouncing-text1-webkit {
+ 0%   { -webkit-transform: translateX(0%); }
+ 100% { -webkit-transform: translateX(-100%); }
+}
+@keyframes bouncing-text1 {
+ 0%   { 
+ -moz-transform: translateX(0%); /* Browser bug fix */
+ -webkit-transform: translateX(0%); /* Browser bug fix */
+ transform: translateX(0%); 		
+ }
+ 100% { 
+ -moz-transform: translateX(-100%); /* Browser bug fix */
+ -webkit-transform: translateX(-100%); /* Browser bug fix */
+ transform: translateX(-100%); 
+ }
+}
+
+/* Move it (define the animation) */
+@-moz-keyframes bouncing-text2-moz {
+ 0%   { -moz-transform: translateX(0%); }
+ 100% { -moz-transform: translateX(-100%); }
+}
+@-webkit-keyframes bouncing-text2-webkit {
+ 0%   { -webkit-transform: translateX(0%); }
+ 100% { -webkit-transform: translateX(-100%); }
+}
+@keyframes bouncing-text2 {
+ 0%   { 
+ -moz-transform: translateX(0%); /* Browser bug fix */
+ -webkit-transform: translateX(0%); /* Browser bug fix */
+ transform: translateX(0%); 		
+ }
+ 100% { 
+ -moz-transform: translateX(-100%); /* Browser bug fix */
+ -webkit-transform: translateX(-100%); /* Browser bug fix */
+ transform: translateX(-100%); 
+ }
+}
+
+/* small height and portrait: only control */
+@media screen and (max-height: 50.9em) and (max-aspect-ratio: 99/100) {
+    div.control { display: block; float:none; }
+    div.modes { display: none; }
+    hr.controlModes { display: none; }
+    div.elements { display: none; }
+    hr.modesElements { display: none; }
+    a.elementsLink { display: inline; }
+    a.modesLink { display: inline; }
+    a.playListLink { display: inline;}
+}
+
+/* medium height and portrait and small width: control, modes below */
+@media screen and (min-height: 51em) and (max-height: 99.9em) and (max-width: 36.9em) and (max-aspect-ratio: 99/100) {
+    div.control { display: block; float:none; }
+    div.modes { float: none; display: block; }
+    hr.controlModes { float:none; display: block; }
+    div.elements { display: none; }
+    hr.modesElements { display: none; }
+    a.elementsLink { display: inline; }
+    a.modesLink { display: none; }
+    a.playListLink { display: none;}
+}
+
+/* small to medium height and portrait and wide enough: control, modes to the right */
+@media screen and (max-height: 56.5em) and (min-width: 37em) and (max-aspect-ratio: 99/100) {
+    div.control { float: left; }
+    div.modes { display: block; }
+    hr.controlModes { float:none; display: none; }
+    div.elements { display: none; }
+    hr.modesElements { display: none; }
+    a.elementsLink { display: inline; }
+    a.modesLink { display: none; }
+    a.playListLink { display: none;}
+}
+
+/* large enough height and portrait and wide enough: control, modes to the right, elements below */
+@media screen and (min-height: 56.6em) and (min-width: 37em) and (max-aspect-ratio: 99/100) {
+    div.control { float: left; }
+    div.modes { display: block; }
+    hr.controlModes { float:none; display: none; }
+    div.elements { display: block; float: none; }
+    hr.modesElements { display: block; float:none;  clear: both; }
+    a.elementsLink { display: none; }
+    a.modesLink { display: none; }
+    a.playListLink { display: none;}
+}
+
+/* large height and portrait and small width: control, modes below, elements below */
+/* note: needs a very large screen in portrait mode */
+@media screen and (min-height: 60em) and (max-width: 36.9em) and (max-aspect-ratio: 99/100) {
+    div.control { display: block; float:none; }
+    div.modes { display: block; }
+    div.elements { float: none; display: block; }
+    hr.modesElements { float:none; display: block; }
+    hr.controlModes { float: none; display: block; }
+    a.elementsLink { display: none; }
+    a.modesLink { display: none; }
+    a.playListLink { display: none;}
+}
+
+/* landscape and small width: only control */
+@media screen and (max-width: 36.9em) and (min-aspect-ratio: 1/1) {
+    div.control { display: block; float:none; }
+    div.modes { display: none; }
+    hr.controlModes { display: none; }
+    div.elements { display: none; }
+    hr.modesElements { display: none; }
+    a.elementsLink { display: inline; }
+    a.modesLink { display: inline; }
+    a.playListLink { display: inline;}
+}
+
+/* landscape and medium width: control and modes to the right */
+@media screen and (min-width: 37em) and (max-width: 54.9em) and (min-aspect-ratio: 1/1) {
+    div.control { float: left; }
+    div.modes { display: block; }
+    hr.controlModes { display: none; }
+    div.elements { display: none; }
+    hr.modesElements { display: none; }
+    a.elementsLink { display: inline; }
+    a.modesLink { display: none; }
+    a.playListLink { display: none;}
+}
+
+/* landscape and wide enough: control, modes to the right, elements to the right */
+@media screen and (min-width: 55em) and (min-aspect-ratio: 1/1) {
+    div.control { float: left; }
+    div.modes { float: left; display: block; width: 13em; padding-right: 1.7em; }
+    hr.controlModes { display: none; }
+    div.elements { display: block; width: 100%; }
+    hr.modesElements { display: none; }
+    a.elementsLink { display: none; }
+    a.modesLink { display: none; }
+    a.playListLink { display: none;}
+}

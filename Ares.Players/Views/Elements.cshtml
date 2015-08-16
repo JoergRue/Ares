@@ -1,0 +1,18 @@
+﻿@inherits ViewPage<ElementsResponse>
+
+<h4>Elements</h4>
+<table class="stateTable">
+    <tr><td>Loaded Project:</td> <td id="loadedProject_Elements"></td><td><img src="/Images/open.png" onmousedown="switchImg(this, '/Images/open_pressed.png')" onmouseup="switchImg(this, '/Images/open.png')" class="openProjectButton" onclick="getProjects()" alt="Select Project" /></td></tr>
+    <tr><td>Active Mode:</td> <td id="activeMode_Elements"></td><td><a href="/Modes">Modes</a></td></tr>
+    <tr><td>Active Elements:</td> <td id="activeModeElements"></td><td></td></tr>
+</table>
+
+<hr />
+
+<ul id="modeElementsSelection" class="triggers"></ul>
+
+<hr />
+
+<p>
+    <a href="/Control">Control</a>   <a href="/Modes">Modes</a>   <a onclick="toPlaylist()" class="musicListLink">Playlist</a>   <a href="/Tags">Tags</a>
+</p>

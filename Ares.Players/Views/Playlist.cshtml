@@ -1,0 +1,26 @@
+﻿@inherits ViewPage<PlaylistResponse>
+
+<h4>Music</h4>
+
+<table class="stateTable">
+    <tr><td>Loaded Project:</td> <td id="loadedProject_PL"></td><td><img src="/Images/open.png" onmousedown="switchImg(this, '/Images/open_pressed.png')" onmouseup="switchImg(this, '/Images/open.png')" class="openProjectButton" onclick="getProjects() alt="Select Project" /></td></td>
+    <tr><td>Current Music:</td> <td id="currentMusic_PL"></td><td><a href="/Tags">Tags</a></td></tr>
+</table>
+
+<p>
+    <img src="/Images/stop.png" onmousedown="switchImg(this, '/Images/stop_pressed.png')" onmouseup="switchImg(this, '/Images/stop.png')" class="stopButton" onclick="stopAll_PL()" alt="Stop" />
+    <img src="/Images/back.png" onmousedown="switchImg(this, '/Images/back_pressed.png')" onmouseup="switchImg(this, '/Images/back.png')" class="backButton" onclick="back_PL()" alt="Back" />
+    <img src="/Images/forward.png" onmousedown="switchImg(this, '/Images/forward_pressed.png')" onmouseup="switchImg(this, '/Images/forward.png')" class="forwardButton" onclick="forward_PL()" alt="Forward" />
+    <img src="/Images/repeat_off.png" onmousedown="switchImg(this, '/Images/repeat_pressed.png')" onmouseup="switchImg(this, '/Images/repeat_off.png')" class="repeatButtonUnchecked" onclick="repeatOn_PL()" alt="Repeat (off)" id="repeatButton_PL" />
+</p>
+
+<hr />
+
+<ul class="playlist">
+    <span id="playlistList_PL"></span>
+</ul>
+
+<hr />
+<p>
+    <a href="/Control">Control</a> <a href="/Modes">Modes</a> <a href="/Elements">Elements</a> <a href="/Tags">Tags</a>
+</p>

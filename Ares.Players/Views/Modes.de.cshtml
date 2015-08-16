@@ -1,0 +1,16 @@
+﻿@inherits ViewPage<ModesResponse>
+
+    <h4>Modi</h4>
+    <table class="stateTable">
+        <tr><td>Geladenes Projekt:</td> <td id="loadedProject_Modes"></td><td><img src="/Images/open.png" onmousedown="switchImg(this, '/Images/open_pressed.png')" onmouseup="switchImg(this, '/Images/open.png')" class="openProjectButton" onclick="getProjects()" alt="Projekt öffnen" /></td></tr>
+        <tr><td>Aktueller Modus:</td> <td id="activeMode_Modes"></td><td></td></tr>
+    </table>
+    <p>
+        <ul id="modeSelection_Modes" class="modeTriggers"></ul>
+    </p>
+
+    <hr />
+
+    <p>
+        <a href="/Control">Steuerung</a>   <a href="/Elements">Elemente</a>   <a onclick="toPlaylist()" class="musicListLink">Spielliste</a>   <a href="/Tags">Tags</a>
+    </p>
