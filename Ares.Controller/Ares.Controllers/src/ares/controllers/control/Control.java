@@ -75,7 +75,7 @@ public final class Control {
 	  }
   }
   
-  private String serverName = ""; //$NON-NLS-1$
+  private ServerInfo currentServer = null;
   private boolean isLocalPlayer = false;
  
   
@@ -85,7 +85,7 @@ public final class Control {
     }
     connection = new ControlConnection(server, client);
     connection.connect();
-    serverName = server.getName();
+    currentServer = server;
     this.isLocalPlayer = isLocalPlayer;
     if (getConfiguration() != null) {
     	String path = getFilePath();
@@ -103,13 +103,17 @@ public final class Control {
       }
       connection.dispose();
       connection = null;
-      serverName = ""; //$NON-NLS-1$
+      currentServer = null;
       isLocalPlayer = false;
     }
   }
   
   public String getServerName() {
-	  return serverName;
+	  return currentServer != null ? currentServer.getName() : ""; //$NON-NLS-1$
+  }
+
+  public ServerInfo getCurrentServer() {
+    return currentServer;
   }
   
   public void sendPing() {

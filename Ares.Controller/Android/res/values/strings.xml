@@ -75,6 +75,7 @@
     <string name="SelectProject">Select Project:</string>
     <string name="NoProjects">There are currently no projects available for the Player.</string>
     <string name="tagMusic">Select music through tags</string>
+    <string name="WebController">Web Controller</string>
     <string-array name="tag_categories_values">
         <item >or</item>
         <item >and</item>
@@ -92,6 +93,7 @@
         <string name="tagFadingOnChange">Fade only on tag changes</string>
         <string name="tagFadingOnChangeDesc">Fade only if music changes due to different tags</string>
         <string name="playerConnection">Connection to Player</string>
+        <string name="playerConnectionDesc">Either \'auto\' or in format \'name,port,ipaddress\'</string>
         <string name="general">General</string>
         <string name="invalid_fading_time">Please enter a positive number &lt; 50000</string>
         <string name="MusicAllSpeakers">Music on all speakers</string>

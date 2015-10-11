@@ -6,6 +6,7 @@
 	<classpathentry kind="lib" path="D:/dropbox-android-sdk-1.2.2/lib/httpmime-4.0.3.jar"/>
 	<classpathentry kind="lib" path="D:/dropbox-android-sdk-1.2.2/lib/json_simple-1.1.jar"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Ares Controllers"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

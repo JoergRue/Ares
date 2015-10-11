@@ -638,7 +638,8 @@ public final class ControlConnection {
     }
     try {
       Messages.addMessage(MessageType.Debug, Localization.getString("ControlConnection.SendingPing")); //$NON-NLS-1$
-      socket.getOutputStream().write(5);
+		if (socket != null)
+      		socket.getOutputStream().write(5);
     }
     catch (IOException e) {
       Messages.addMessage(MessageType.Warning, e.getLocalizedMessage());

@@ -90,7 +90,9 @@
     <string name="NoProjects">Derzeit sind im Player keine Projekte verfügbar.</string>
     <string name="general">Allgemein</string>
     <string name="playerConnection">Verbindung zum Player</string>
+    <string name="playerConnectionDesc">Entweder \'auto\' oder im Format \'Name,Port,IP-Addresse\'</string>
     <string name="tagMusic">Musikauswahl über Tags</string>
+    <string name="WebController">Web Controller</string>
     <string-array name="tag_categories_values">
         <item >or</item>
         <item >and</item>

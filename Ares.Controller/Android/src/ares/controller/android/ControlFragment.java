@@ -39,6 +39,7 @@ import android.gesture.GestureOverlayView.OnGesturePerformedListener;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -273,12 +274,16 @@ public class ControlFragment extends ConnectedFragment implements INetworkClient
     		menu.getItem(0).setEnabled(false);
     		menu.getItem(1).setVisible(true);
     		menu.getItem(1).setEnabled(true);
+			menu.getItem(2).setVisible(true);
+			menu.getItem(2).setEnabled(Control.getInstance().getCurrentServer().hasWebServer());
     	}
     	else {
     		menu.getItem(0).setVisible(true);
     		menu.getItem(0).setEnabled(true);
     		menu.getItem(1).setVisible(false);
-    		menu.getItem(1).setEnabled(false);    		
+    		menu.getItem(1).setEnabled(false);
+			menu.getItem(2).setVisible(false);
+			menu.getItem(2).setEnabled(false);
     	}
     }
     
@@ -297,9 +302,26 @@ public class ControlFragment extends ConnectedFragment implements INetworkClient
     	case R.id.preferencesmenuitem:
     		showPreferences();
     		break;
+		case R.id.webcontrollermenuitem:
+			showWebController();
+			break;
     	}
     	return super.onOptionsItemSelected(menuItem);
     }
+
+	private void showWebController() {
+		ServerInfo info = Control.getInstance().getCurrentServer();
+		if (info != null) {
+			String url = "http://" + info.getAddress() + ":" + info.getWebPort() + "/";
+			try {
+				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+				startActivity(intent);
+			}
+			catch (Exception e) {
+				Toast.makeText(this.getActivity(), "Error opening browser: " + e.getMessage(), Toast.LENGTH_LONG).show();
+			}
+		}
+	}
     
     public void preferencesChanged() {
     	onPrefsChanged();

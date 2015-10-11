@@ -258,7 +258,7 @@ public abstract class ConnectedFragment extends Fragment implements IServerListe
 			Log.d("ConnectedFragment", "New server " + server.getName() + " found");
 			servers.put(server.getName(), server);
 			serverNames.add(server.getName());
-			if (connectWithFirstServer && servers.size() == 1) {
+			if (connectWithFirstServer && servers.size() == 1 && server.hasTcpServer()) {
 				connectWithFirstServer = false;
 				doConnect(server);
 			}

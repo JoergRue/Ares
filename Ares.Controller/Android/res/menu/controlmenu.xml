@@ -2,6 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     <item android:id="@+id/connectmenuitem" android:showAsAction="never" android:title="@string/Connect"></item>
     <item android:id="@+id/disconnectmenuitem" android:showAsAction="never" android:title="@string/Disconnect"></item>
+    <item android:id="@+id/webcontrollermenuitem" android:showAsAction="never" android:title="@string/WebController"></item>
     <item android:id="@+id/preferencesmenuitem" android:showAsAction="never" android:title="@string/preferences"></item>
     <item android:id="@+id/aboutMenuItem" android:showAsAction="never" android:title="@string/About"></item>
     
