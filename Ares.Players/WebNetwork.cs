@@ -1411,7 +1411,8 @@ namespace Ares.Players.Web
 
         public void Shutdown()
         {
-            mAppHost.Dispose();
+            if (mAppHost != null)
+                mAppHost.Dispose();
             EventsSender.Instance.StopSenderThread();
         }
 
