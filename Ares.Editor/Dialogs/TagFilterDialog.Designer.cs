@@ -59,6 +59,7 @@ namespace Ares.Editor.Dialogs
             this.normalFilterButton = new System.Windows.Forms.RadioButton();
             this.noTagsFilterButton = new System.Windows.Forms.RadioButton();
             this.allFilesButton = new System.Windows.Forms.RadioButton();
+            this.autoUpdateBox = new System.Windows.Forms.CheckBox();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -86,8 +87,8 @@ namespace Ares.Editor.Dialogs
             // 
             // tagsBox
             // 
-            resources.ApplyResources(this.tagsBox, "tagsBox");
             this.tagsBox.CheckOnClick = true;
+            resources.ApplyResources(this.tagsBox, "tagsBox");
             this.tagsBox.FormattingEnabled = true;
             this.tagsBox.MultiColumn = true;
             this.tagsBox.Name = "tagsBox";
@@ -147,12 +148,20 @@ namespace Ares.Editor.Dialogs
             this.allFilesButton.UseVisualStyleBackColor = true;
             this.allFilesButton.CheckedChanged += new System.EventHandler(this.allFilesButton_CheckedChanged);
             // 
+            // autoUpdateBox
+            // 
+            resources.ApplyResources(this.autoUpdateBox, "autoUpdateBox");
+            this.autoUpdateBox.Name = "autoUpdateBox";
+            this.autoUpdateBox.UseVisualStyleBackColor = true;
+            this.autoUpdateBox.CheckedChanged += new System.EventHandler(this.autoUpdateBox_CheckedChanged);
+            // 
             // TagFilterDialog
             // 
             this.AcceptButton = this.okButton;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
+            this.Controls.Add(this.autoUpdateBox);
             this.Controls.Add(this.allFilesButton);
             this.Controls.Add(this.noTagsFilterButton);
             this.Controls.Add(this.normalFilterButton);
@@ -184,6 +193,6 @@ namespace Ares.Editor.Dialogs
         private System.Windows.Forms.RadioButton normalFilterButton;
         private System.Windows.Forms.RadioButton noTagsFilterButton;
         private System.Windows.Forms.RadioButton allFilesButton;
-
+        private System.Windows.Forms.CheckBox autoUpdateBox;
     }
 }

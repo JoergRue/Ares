@@ -134,6 +134,24 @@ namespace Ares.Editor.Dialogs
             }
         }
 
+        private bool m_AutoUpdateTree = true;
+
+        public bool AutoUpdateTree
+        {
+            get
+            {
+                return m_AutoUpdateTree;
+            }
+            set
+            {
+                m_AutoUpdateTree = value;
+                m_Listen = false;
+                autoUpdateBox.Checked = value;
+                m_Listen = true;
+            }
+
+        }
+
         private void UpdateControls()
         {
             if (m_TagsByCategory == null)
@@ -324,5 +342,11 @@ namespace Ares.Editor.Dialogs
             FilterMode = TagsFilterMode.NoFilter;
         }
 
+        private void autoUpdateBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!m_Listen)
+                return;
+            m_AutoUpdateTree = autoUpdateBox.Checked;
+        }
     }
 }

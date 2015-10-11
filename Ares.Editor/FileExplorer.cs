@@ -84,7 +84,7 @@ namespace Ares.Editor
 
         void Instance_TagsDBChanged(object sender, EventArgs e)
         {
-            if (m_TagsFilter.FilterMode != TagsFilterMode.NoFilter)
+            if (m_TagsFilter.FilterMode != TagsFilterMode.NoFilter && mUpdateTreeOnTagChange)
             {
                 RetrieveFilteredFiles();
                 ReFillTree();
@@ -428,6 +428,7 @@ namespace Ares.Editor
 
         private void refreshButton_Click(object sender, EventArgs e)
         {
+            RetrieveFilteredFiles();
             ReFillTree();
         }
 
@@ -1036,6 +1037,8 @@ namespace Ares.Editor
             }
         }
 
+        private bool mUpdateTreeOnTagChange = true;
+
         private void tagFilterButton_Click(object sender, EventArgs e)
         {
             Dialogs.TagFilterDialog dialog = new Dialogs.TagFilterDialog();
@@ -1056,6 +1059,7 @@ namespace Ares.Editor
             dialog.TagCategoryCombination = m_TagsFilter.TagCategoryCombination;
             dialog.TagsByCategory = m_TagsFilter.TagsByCategories;
             dialog.FilterMode = m_TagsFilter.FilterMode != TagsFilterMode.NoFilter ? m_TagsFilter.FilterMode : TagsFilterMode.NormalFilter;
+            dialog.AutoUpdateTree = mUpdateTreeOnTagChange;
             if (dialog.ShowDialog(this) == DialogResult.OK)
             {
                 m_Project.TagLanguageId = dialog.LanguageId;
@@ -1065,6 +1069,7 @@ namespace Ares.Editor
                 if (m_TagsFilter.FilterMode == TagsFilterMode.NormalFilter && m_TagsFilter.TagsByCategories.Count == 0)
                     m_TagsFilter.FilterMode = TagsFilterMode.NoFilter;
                 tagFilterButton.Checked = m_TagsFilter.FilterMode != TagsFilterMode.NoFilter;
+                mUpdateTreeOnTagChange = dialog.AutoUpdateTree;
                 if (m_TagsFilter.FilterMode != TagsFilterMode.NoFilter)
                 {
                     RetrieveFilteredFiles();
