@@ -1,4 +1,23 @@
-﻿using ServiceStack;
+﻿/*
+ Copyright (c) 2015 [Joerg Ruedenauer]
+ 
+ This file is part of Ares.
+
+ Ares is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+ Ares is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Ares; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
+using ServiceStack;
 using ServiceStack.Auth;
 using ServiceStack.Caching;
 using ServiceStack.Host;
@@ -9,6 +28,9 @@ using ServiceStack.Razor.Managers;
 using ServiceStack.Web;
 using System;
 using System.Collections.Generic;
+using Ares.Data;
+using Ares.Playing;
+using Ares.Settings;
 
 namespace Ares.Players.Web
 {
@@ -1067,6 +1089,103 @@ namespace Ares.Players.Web
         }
     }
 
+    // needed because the Container in the AppHost disposes all its registered objects; 
+    // but we don't want to dispose the original network client
+    class NetworkClientProxy : INetworkClient
+    {
+        public INetworkClient Client { get; set; }
+
+        public void ChangeMode(string title)
+        {
+            Client.ChangeMode(title);
+        }
+
+        public void ClientConnected()
+        {
+            Client.ClientConnected();
+        }
+
+        public void ClientDataChanged(bool listenAgainAfterDisconnect)
+        {
+            Client.ClientDataChanged(listenAgainAfterDisconnect);
+        }
+
+        public void DeactivateAllTags()
+        {
+            Client.DeactivateAllTags();
+        }
+
+        public IProject GetCurrentProject()
+        {
+            return Client.GetCurrentProject();
+        }
+
+        public RecentFiles GetLastUsedProjects()
+        {
+            return Client.GetLastUsedProjects();
+        }
+
+        public string GetProjectsDirectory()
+        {
+            return Client.GetProjectsDirectory();
+        }
+
+        public void KeyReceived(int key)
+        {
+            Client.KeyReceived(key);
+        }
+
+        public void PlayOtherMusic(int elementId)
+        {
+            Client.PlayOtherMusic(elementId);
+        }
+
+        public void ProjectShallChange(string newProjectFile)
+        {
+            Client.ProjectShallChange(newProjectFile);
+        }
+
+        public void SetFadingOnPreviousNext(int option, int fadeTime)
+        {
+            Client.SetFadingOnPreviousNext(option, fadeTime);
+        }
+
+        public void SetMusicRepeat(bool repeat)
+        {
+            Client.SetMusicRepeat(repeat);
+        }
+
+        public void SetMusicTagsFading(int fadeTime, bool onlyOnChange)
+        {
+            Client.SetMusicTagsFading(fadeTime, onlyOnChange);
+        }
+
+        public void SetPlayMusicOnAllSpeakers(bool onAllSpeakers)
+        {
+            Client.SetPlayMusicOnAllSpeakers(onAllSpeakers);
+        }
+
+        public void SetTagCategoryCombination(TagCategoryCombination categoryCombination)
+        {
+            Client.SetTagCategoryCombination(categoryCombination);
+        }
+
+        public void SwitchElement(int elementId)
+        {
+            Client.SwitchElement(elementId);
+        }
+
+        public void SwitchTag(int categoryId, int tagId, bool tagIsActive)
+        {
+            Client.SwitchTag(categoryId, tagId, tagIsActive);
+        }
+
+        public void VolumeReceived(VolumeTarget target, int value)
+        {
+            Client.VolumeReceived(target, value);
+        }
+    }
+
     class AppHost : AppHostHttpListenerBase
     {
         public InfoSender InfoSender { get; set; }
@@ -1097,7 +1216,7 @@ namespace Ares.Players.Web
                 InfoSender = mContainer.Resolve<InfoSender>();
                 Ares.Playing.PlayingModule.AddCallbacks(InfoSender);
             }
-            mNetworkClient.ClientDataChanged();
+            mNetworkClient.ClientDataChanged(false);
         }
 
         private void Unsubscribed(IEventSubscription es)
@@ -1109,15 +1228,16 @@ namespace Ares.Players.Web
                 Ares.Playing.PlayingModule.RemoveCallbacks(InfoSender);
                 EventsSender.Instance.StopSenderThread();
                 InfoSender = null;
-                mNetworkClient.ClientDataChanged();
+                mNetworkClient.ClientDataChanged(false);
             }
         }
 
         private INetworkClient mNetworkClient;
 
-        public AppHost(INetworkClient client) : base("Ares Player HttpListener", typeof(ControlService).Assembly) { mNetworkClient = client; }
+        public AppHost(INetworkClient client) : base("Ares Player HttpListener", typeof(ControlService).Assembly) { mNetworkClient = new NetworkClientProxy() { Client = client }; }
 
         private Funq.Container mContainer;
+
 
         public override void Configure(Funq.Container container)
         {
@@ -1242,15 +1362,12 @@ namespace Ares.Players.Web
 
         private INetworkClient mNetworkClient;
 
-        public void InitConnectionData() 
-        {
-            int tcpPort = Settings.Settings.Instance.TcpPort;
-            String ipAddress = Settings.Settings.Instance.IPAddress;
-            mListenAddress = String.Format("http://{0}:{1}/", ipAddress, tcpPort);
-        }
-
         public void ListenForClient()
         {
+            int tcpPort = Settings.Settings.Instance.WebTcpPort;
+            String ipAddress = Settings.Settings.Instance.IPAddress;
+            mListenAddress = String.Format("http://{0}:{1}/", ipAddress, tcpPort);
+
             mAppHost = new AppHost(mNetworkClient);
 
             mAppHost.Init();

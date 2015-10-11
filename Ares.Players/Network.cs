@@ -22,6 +22,8 @@ using System.Text;
 using System.Net.Sockets;
 using System.Net;
 using System.Collections.Generic;
+using Ares.Data;
+using Ares.Playing;
 
 namespace Ares.Players
 {
@@ -29,7 +31,8 @@ namespace Ares.Players
     {
         void KeyReceived(int key);
         void VolumeReceived(Ares.Playing.VolumeTarget target, int value);
-        void ClientDataChanged();
+        void ClientDataChanged(bool listenAgainAfterDisconnect);
+        void ClientConnected();
         String GetProjectsDirectory();
         Ares.Settings.RecentFiles GetLastUsedProjects();
         void ProjectShallChange(String newProjectFile);
@@ -46,13 +49,16 @@ namespace Ares.Players
         void ChangeMode(String title);
     }
 
-    public interface INetwork
+    public interface IUDPBroadcast
     {
         void InitConnectionData();
-
         void StartUdpBroadcast();
         bool SendUdpPacket();
         void StopUdpBroadcast();
+    }
+
+    public interface INetwork
+    {
         void ListenForClient();
         void StopListenForClient();
 
@@ -60,8 +66,7 @@ namespace Ares.Players
         String ClientName { get; }
         void DisconnectClient(bool listenAgain);
         void Shutdown();
-
-
+        
         void ErrorOccurred(int elementId, string errorMessage);
         void InformClientOfPossibleTags(int languageId, Ares.Data.IProject project);
         void InformClientOfProject(Ares.Data.IProject newProject);
@@ -73,13 +78,156 @@ namespace Ares.Players
         void InformClientOfFading(int fadeTime, bool fadeOnlyOnChange);
     }
 
-    public class CustomIpNetwork : INetwork, Ares.Playing.IProjectPlayingCallbacks
+    public interface INetworks : INetwork, IUDPBroadcast
+    { }
+
+    public class Networks : INetworks
     {
-        public CustomIpNetwork(INetworkClient client)
+        private INetworkClient mClient;
+        private INetwork[] mNetworks = new INetwork[2];
+
+        public static readonly int PLAYER_VERSION = 3;
+
+        public bool ClientConnected
         {
-            networkClient = client;
-            ClientConnected = false;
-            ClientName = String.Empty;
+            get
+            {
+                foreach (INetwork network in mNetworks)
+                    if (network != null && network.ClientConnected) return true;
+                return false;
+            }
+        }
+
+        public string ClientName
+        {
+            get
+            {
+                String name = "";
+                foreach (INetwork network in mNetworks)
+                {
+                    if (network != null && network.ClientConnected)
+                    {
+                        String n = network.ClientName;
+                        if (!String.IsNullOrEmpty(n))
+                        {
+                            if (name.Length > 0) name += ", ";
+                            name += n;
+                        }
+                    }
+                }
+                return name;
+            }
+        }
+
+        private void SetUseCustomIpNetwork(bool useIt)
+        {
+            if (mNetworks[0] != null && !useIt)
+            {
+                if (mNetworks[0].ClientConnected) mNetworks[0].DisconnectClient(false);
+                mNetworks[0].Shutdown();
+                mNetworks[0] = null;
+            }
+            if (mNetworks[0] == null && useIt)
+            {
+                mNetworks[0] = new CustomIpNetwork(mClient);
+            }
+        }
+
+        private void SetUseWebNetwork(bool useIt)
+        {
+            if (mNetworks[1] != null && !useIt)
+            {
+                if (mNetworks[1].ClientConnected) mNetworks[1].DisconnectClient(false);
+                mNetworks[1].Shutdown();
+                mNetworks[1] = null;
+            }
+            if (mNetworks[1] == null && useIt)
+            {
+                mNetworks[1] = new Ares.Players.Web.WebNetwork(mClient);
+            }
+        }
+
+        public void ListenForClient()
+        {
+            foreach (INetwork network in mNetworks) if (network != null) network.ListenForClient();
+        }
+
+        public void StopListenForClient()
+        {
+            foreach (INetwork network in mNetworks) if (network != null) network.StopListenForClient();
+        }
+
+        public void DisconnectClient(bool listenAgain)
+        {
+            foreach (INetwork network in mNetworks) if (network != null) network.DisconnectClient(listenAgain);
+            if (listenAgain)
+                StartUdpBroadcast();
+        }
+
+        public void Shutdown()
+        {
+            foreach (INetwork network in mNetworks) if (network != null) network.Shutdown();
+        }
+
+        public void ErrorOccurred(int elementId, string errorMessage)
+        {
+            foreach (INetwork network in mNetworks) if (network != null) network.ErrorOccurred(elementId, errorMessage);
+        }
+
+        public void InformClientOfPossibleTags(int languageId, IProject project)
+        {
+            foreach (INetwork network in mNetworks) if (network != null) network.InformClientOfPossibleTags(languageId, project);
+        }
+
+        public void InformClientOfProject(IProject newProject)
+        {
+            foreach (INetwork network in mNetworks) if (network != null) network.InformClientOfProject(newProject);
+        }
+
+        public void InformClientOfEverything(int overallVolume, int musicVolume, int soundVolume, IMode mode, MusicInfo music, IList<IModeElement> elements, IProject project, int musicListId, bool musicRepeat, int tagLanguageId, IList<int> activeTags, TagCategoryCombination categoryCombination, int fadeTime, bool fadeOnlyOnChange, bool musicOnAllChannels, int fadeOnPreviousNextOption, int fadeOnPreviousNextTime)
+        {
+            foreach (INetwork network in mNetworks) if (network != null) network.InformClientOfEverything(overallVolume, musicVolume, soundVolume, mode, music, elements, project, musicListId, musicRepeat, tagLanguageId, activeTags, categoryCombination, fadeTime, fadeOnlyOnChange, musicOnAllChannels, fadeOnPreviousNextOption, fadeOnPreviousNextTime);
+        }
+
+        public void InformClientOfVolume(VolumeTarget target, int value)
+        {
+            foreach (INetwork network in mNetworks) if (network != null) network.InformClientOfVolume(target, value);
+        }
+
+        public void InformClientOfFading(int fadeTime, bool fadeOnlyOnChange)
+        {
+            foreach (INetwork network in mNetworks) if (network != null) network.InformClientOfFading(fadeTime, fadeOnlyOnChange);
+        }
+
+        public Networks(INetworkClient client, bool useLegacy, bool useWeb)
+        {
+            mClient = client;
+            SetUseCustomIpNetwork(useLegacy);
+            SetUseWebNetwork(useWeb);
+        }
+
+        private Byte[] udpPacket;
+
+        private String udpString;
+
+        public void InitConnectionData()
+        {
+            int tcpPort = Settings.Settings.Instance.TcpPort;
+            String ipAddress = Settings.Settings.Instance.IPAddress;
+            StringBuilder str = new StringBuilder();
+            String machineName = Dns.GetHostName();
+            str.Append(machineName);
+            str.Append("|");
+            str.Append(tcpPort);
+            if (!String.IsNullOrEmpty(ipAddress))
+            {
+                str.Append("|");
+                str.Append(ipAddress);
+            }
+            str.Append("|");
+            str.Append(PLAYER_VERSION);
+            udpString = str.ToString();
+            udpPacket = System.Text.Encoding.UTF8.GetBytes(udpString);
         }
 
         private static int udpPacketCount = 0;
@@ -138,6 +286,20 @@ namespace Ares.Players
             }
         }
 
+        private UdpClient udpClient = null;
+
+        private Object syncObject = new Int32();
+    }
+
+    public class CustomIpNetwork : INetwork, Ares.Playing.IProjectPlayingCallbacks
+    {
+        public CustomIpNetwork(INetworkClient client)
+        {
+            networkClient = client;
+            ClientConnected = false;
+            ClientName = String.Empty;
+        }
+
         public void ListenForClient()
         {
             lock (syncObject)
@@ -146,24 +308,40 @@ namespace Ares.Players
                     return;
                 continueListenForClients = true;
             }
+
+            String ipAddress = Settings.Settings.Instance.IPAddress;
+            tcpListenAddress = IPAddress.Parse(ipAddress);
+
             System.Threading.Thread listenThread = new System.Threading.Thread(new System.Threading.ThreadStart(ListenInThread));
             listenThread.Start();
         }
 
         public void StopListenForClient()
         {
+            bool listenerRunning = false;
             lock (syncObject)
             {
                 continueListenForClients = false;
+                listenerRunning = listenerThreadRunning;
+            }
+            if (listenerRunning)
+            {
+                listenerThreadStoppedEvent.WaitOne(500);
             }
         }
 
         public void Shutdown()
         {
+            bool listenerRunning = false;
             lock (syncObject)
             {
                 continueListenForClients = false;
                 forceShutdown = true;
+                listenerRunning = listenerThreadRunning;
+            }
+            if (listenerRunning)
+            {
+                listenerThreadStoppedEvent.WaitOne(500);
             }
         }
 
@@ -231,6 +409,10 @@ namespace Ares.Players
         public void ListenInThread()
         {
             bool goOn = true;
+            lock (syncObject)
+            {
+                listenerThreadRunning = true;
+            }
             TcpListener listener = new TcpListener(tcpListenAddress, Settings.Settings.Instance.TcpPort);
             try
             {
@@ -260,6 +442,11 @@ namespace Ares.Players
             finally
             {
                 listener.Stop();
+                lock (syncObject)
+                {
+                    listenerThreadRunning = false;
+                }
+                listenerThreadStoppedEvent.Set();
             }
         }
 
@@ -317,11 +504,10 @@ namespace Ares.Players
                 ClientConnected = true;
             }
             Messages.AddMessage(MessageType.Info, String.Format(StringResources.ClientConnected, ClientName));
-            networkClient.ClientDataChanged();
+            networkClient.ClientConnected();
             continueListenForCommands = true;
             System.Threading.Thread commandThread = new System.Threading.Thread(ListenForCommands);
             commandThread.Start();
-            StopUdpBroadcast();
             m_WatchdogTimer = new System.Timers.Timer(25000);
             m_WatchdogTimer.Elapsed += new System.Timers.ElapsedEventHandler(watchdogTimer_Elapsed);
             m_WatchdogTimer.Start();
@@ -357,7 +543,6 @@ namespace Ares.Players
                 ClientConnected = false;
                 if (listenAgain)
                 {
-                    StartUdpBroadcast();
                     ListenForClient();
                 }
             }
@@ -393,10 +578,9 @@ namespace Ares.Players
             }
             ClientConnected = false;
             Messages.AddMessage(MessageType.Info, StringResources.ClientDisconnected);
-            networkClient.ClientDataChanged();
+            networkClient.ClientDataChanged(listenAgain);
             if (listenAgain)
             {
-                StartUdpBroadcast();
                 ListenForClient();
             }
         }
@@ -775,29 +959,6 @@ namespace Ares.Players
                 Messages.AddMessage(MessageType.Warning, StringResources.KeyListenError + e.Message);
                 DoDisconnect(true);
             }
-        }
-
-        private static readonly int PLAYER_VERSION = 3;
-
-        public void InitConnectionData()
-        {
-            int tcpPort = Settings.Settings.Instance.TcpPort;
-            String ipAddress = Settings.Settings.Instance.IPAddress;
-            StringBuilder str = new StringBuilder();
-            String machineName = Dns.GetHostName();
-            str.Append(machineName);
-            str.Append("|");
-            str.Append(tcpPort);
-            if (!String.IsNullOrEmpty(ipAddress))
-            {
-                str.Append("|");
-                str.Append(ipAddress);
-                tcpListenAddress = IPAddress.Parse(ipAddress);
-            }
-            str.Append("|");
-            str.Append(PLAYER_VERSION);
-            udpString = str.ToString();
-            udpPacket = System.Text.Encoding.UTF8.GetBytes(udpString);
         }
 
         private void InformModeChange(Ares.Data.IMode mode)
@@ -1317,8 +1478,8 @@ namespace Ares.Players
             {
                 byte[] package = new byte[3];
                 package[0] = 9;
-                package[1] = (byte)(PLAYER_VERSION / (1 << 8));
-                package[2] = (byte)(PLAYER_VERSION % (1 << 8));
+                package[1] = (byte)(Networks.PLAYER_VERSION / (1 << 8));
+                package[2] = (byte)(Networks.PLAYER_VERSION % (1 << 8));
                 try
                 {
                     lock (syncObject)
@@ -1335,11 +1496,11 @@ namespace Ares.Players
             }
         }
 
-        private Byte[] udpPacket;
-
-        private String udpString;
-
         private IPAddress tcpListenAddress = null;
+
+        private bool listenerThreadRunning;
+
+        private System.Threading.AutoResetEvent listenerThreadStoppedEvent = new System.Threading.AutoResetEvent(false);
 
         private bool continueListenForClients = true;
 
@@ -1352,8 +1513,6 @@ namespace Ares.Players
         public String ClientName { get; set; }
 
         private TcpClient client = null;
-
-        private UdpClient udpClient = null;
 
         private INetworkClient networkClient;
 

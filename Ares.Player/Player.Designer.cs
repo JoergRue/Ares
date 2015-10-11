@@ -88,13 +88,11 @@ namespace Ares.Player
             this.repeatButton = new System.Windows.Forms.ToolStripButton();
             this.broadCastTimer = new System.Windows.Forms.Timer(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.ipAddressBox = new System.Windows.Forms.ComboBox();
+            this.controllerPortLabel = new System.Windows.Forms.Label();
+            this.webAddressLabel = new System.Windows.Forms.LinkLabel();
             this.label12 = new System.Windows.Forms.Label();
-            this.tcpPortUpDown = new System.Windows.Forms.NumericUpDown();
-            this.label11 = new System.Windows.Forms.Label();
-            this.udpPortUpDown = new System.Windows.Forms.NumericUpDown();
             this.label10 = new System.Windows.Forms.Label();
-            this.disconnectButton = new System.Windows.Forms.Button();
+            this.networkSettingsButton = new System.Windows.Forms.Button();
             this.clientStateLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -153,8 +151,6 @@ namespace Ares.Player
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tcpPortUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udpPortUpDown)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -405,26 +401,28 @@ namespace Ares.Player
             // groupBox1
             // 
             resources.ApplyResources(this.groupBox1, "groupBox1");
-            this.groupBox1.Controls.Add(this.ipAddressBox);
+            this.groupBox1.Controls.Add(this.controllerPortLabel);
+            this.groupBox1.Controls.Add(this.webAddressLabel);
             this.groupBox1.Controls.Add(this.label12);
-            this.groupBox1.Controls.Add(this.tcpPortUpDown);
-            this.groupBox1.Controls.Add(this.label11);
-            this.groupBox1.Controls.Add(this.udpPortUpDown);
             this.groupBox1.Controls.Add(this.label10);
-            this.groupBox1.Controls.Add(this.disconnectButton);
+            this.groupBox1.Controls.Add(this.networkSettingsButton);
             this.groupBox1.Controls.Add(this.clientStateLabel);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
             this.groupBox1.UseCompatibleTextRendering = true;
             // 
-            // ipAddressBox
+            // controllerPortLabel
             // 
-            resources.ApplyResources(this.ipAddressBox, "ipAddressBox");
-            this.ipAddressBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ipAddressBox.FormattingEnabled = true;
-            this.ipAddressBox.Name = "ipAddressBox";
-            this.ipAddressBox.SelectedIndexChanged += new System.EventHandler(this.ipAddressBox_SelectedIndexChanged);
+            resources.ApplyResources(this.controllerPortLabel, "controllerPortLabel");
+            this.controllerPortLabel.Name = "controllerPortLabel";
+            // 
+            // webAddressLabel
+            // 
+            resources.ApplyResources(this.webAddressLabel, "webAddressLabel");
+            this.webAddressLabel.Name = "webAddressLabel";
+            this.webAddressLabel.TabStop = true;
+            this.webAddressLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.webAddressLabel_LinkClicked);
             // 
             // label12
             // 
@@ -432,67 +430,19 @@ namespace Ares.Player
             this.label12.Name = "label12";
             this.label12.UseCompatibleTextRendering = true;
             // 
-            // tcpPortUpDown
-            // 
-            resources.ApplyResources(this.tcpPortUpDown, "tcpPortUpDown");
-            this.tcpPortUpDown.Maximum = new decimal(new int[] {
-            50000,
-            0,
-            0,
-            0});
-            this.tcpPortUpDown.Minimum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.tcpPortUpDown.Name = "tcpPortUpDown";
-            this.tcpPortUpDown.Value = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.tcpPortUpDown.ValueChanged += new System.EventHandler(this.tcpPortUpDown_ValueChanged);
-            // 
-            // label11
-            // 
-            resources.ApplyResources(this.label11, "label11");
-            this.label11.Name = "label11";
-            this.label11.UseCompatibleTextRendering = true;
-            // 
-            // udpPortUpDown
-            // 
-            resources.ApplyResources(this.udpPortUpDown, "udpPortUpDown");
-            this.udpPortUpDown.Maximum = new decimal(new int[] {
-            50000,
-            0,
-            0,
-            0});
-            this.udpPortUpDown.Minimum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.udpPortUpDown.Name = "udpPortUpDown";
-            this.udpPortUpDown.Value = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.udpPortUpDown.ValueChanged += new System.EventHandler(this.udpPortUpDown_ValueChanged);
-            // 
             // label10
             // 
             resources.ApplyResources(this.label10, "label10");
             this.label10.Name = "label10";
             this.label10.UseCompatibleTextRendering = true;
             // 
-            // disconnectButton
+            // networkSettingsButton
             // 
-            resources.ApplyResources(this.disconnectButton, "disconnectButton");
-            this.disconnectButton.Name = "disconnectButton";
-            this.disconnectButton.UseCompatibleTextRendering = true;
-            this.disconnectButton.UseVisualStyleBackColor = true;
-            this.disconnectButton.Click += new System.EventHandler(this.disconnectButton_Click);
+            resources.ApplyResources(this.networkSettingsButton, "networkSettingsButton");
+            this.networkSettingsButton.Name = "networkSettingsButton";
+            this.networkSettingsButton.UseCompatibleTextRendering = true;
+            this.networkSettingsButton.UseVisualStyleBackColor = true;
+            this.networkSettingsButton.Click += new System.EventHandler(this.networkSettingsButton_Click);
             // 
             // clientStateLabel
             // 
@@ -880,8 +830,6 @@ namespace Ares.Player
             this.toolStrip1.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tcpPortUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udpPortUpDown)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.groupBox4.ResumeLayout(false);
@@ -933,10 +881,7 @@ namespace Ares.Player
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label clientStateLabel;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button disconnectButton;
-        private System.Windows.Forms.NumericUpDown tcpPortUpDown;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.NumericUpDown udpPortUpDown;
+        private System.Windows.Forms.Button networkSettingsButton;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem projectToolStripMenuItem;
@@ -956,7 +901,6 @@ namespace Ares.Player
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem dummyToolStripMenuItem;
-        private System.Windows.Forms.ComboBox ipAddressBox;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.ToolStripMenuItem helpOnlineToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
@@ -989,6 +933,8 @@ namespace Ares.Player
         private System.Windows.Forms.NumericUpDown tagFadeUpDown;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.ComboBox tagCategoryCombinationBox;
+        private System.Windows.Forms.Label controllerPortLabel;
+        private System.Windows.Forms.LinkLabel webAddressLabel;
     }
 }
 

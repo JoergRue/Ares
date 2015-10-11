@@ -117,119 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Ares" xml:space="preserve">
-    <value>Ares</value>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="enableCustomIpBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>107, 17</value>
   </data>
-  <data name="AresPlayer" xml:space="preserve">
-    <value>Ares Player - {0}</value>
+  <data name="enableCustomIpBox.Text" xml:space="preserve">
+    <value>Spezial-Controller</value>
   </data>
-  <data name="Connected" xml:space="preserve">
-    <value>Connected</value>
+  <data name="enableWebBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>96, 17</value>
   </data>
-  <data name="ConnectedWith" xml:space="preserve">
-    <value>Connected with </value>
+  <data name="enableWebBox.Text" xml:space="preserve">
+    <value>Web Controller</value>
   </data>
-  <data name="DeviceInitError" xml:space="preserve">
-    <value>Could not access selected sound device! Fallback to default.</value>
-  </data>
-  <data name="Disable" xml:space="preserve">
-    <value>Disable</value>
-  </data>
-  <data name="Disabled" xml:space="preserve">
-    <value>Disabled</value>
-  </data>
-  <data name="Disconnect" xml:space="preserve">
-    <value>Disconnect</value>
-  </data>
-  <data name="EditorStartError" xml:space="preserve">
-    <value>Could not start editor. Reason:
-{0}</value>
-  </data>
-  <data name="Enable" xml:space="preserve">
-    <value>Enable</value>
-  </data>
-  <data name="GetLameYourself" xml:space="preserve">
-    <value>You have to obtain lame.exe yourself and copy it into the Ares Player installation directory.</value>
-  </data>
-  <data name="HelpPage" xml:space="preserve">
-    <value>http://aresrpg.sourceforge.net/en/hilfe/Player.html</value>
-  </data>
-  <data name="ImportError" xml:space="preserve">
-    <value>Error importing the project: {0}</value>
-  </data>
-  <data name="Importing" xml:space="preserve">
-    <value>Importing ...</value>
-  </data>
-  <data name="LoadError" xml:space="preserve">
-    <value>Error opening the project: {0}</value>
-  </data>
-  <data name="Music" xml:space="preserve">
-    <value>Music</value>
-  </data>
-  <data name="MusicList" xml:space="preserve">
-    <value>Music List</value>
-  </data>
-  <data name="MusicTags" xml:space="preserve">
-    <value>Music Tags</value>
-  </data>
-  <data name="Network" xml:space="preserve">
-    <value>Network</value>
-  </data>
-  <data name="NoElements" xml:space="preserve">
-    <value>There are no elements in this mode</value>
-  </data>
-  <data name="NoOpenedProject" xml:space="preserve">
-    <value>No Project Loaded</value>
-  </data>
-  <data name="NoSettings" xml:space="preserve">
-    <value>This seems to be the first start of the player.
-You should adapt some settings first.</value>
-  </data>
-  <data name="NoStatusInfoError" xml:space="preserve">
-    <value>Couldn't send status info. Check network connection.</value>
-  </data>
-  <data name="NoTags" xml:space="preserve">
-    <value>There are no tags in this category</value>
-  </data>
-  <data name="NotConnected" xml:space="preserve">
-    <value>Not connected</value>
-  </data>
-  <data name="OpenProject" xml:space="preserve">
-    <value>Open a project ...</value>
-  </data>
-  <data name="OpenProjectQuestion" xml:space="preserve">
-    <value>Open project {0}?</value>
-  </data>
-  <data name="OpenUrlError" xml:space="preserve">
-    <value>Error opening browser: {0}</value>
-  </data>
-  <data name="Output" xml:space="preserve">
-    <value>Output</value>
-  </data>
-  <data name="ReloadProject" xml:space="preserve">
-    <value>Project file has changed. Stop playing and reload?</value>
-  </data>
-  <data name="ShowInfo" xml:space="preserve">
-    <value>About Ares ...</value>
-  </data>
-  <data name="ShowMessages" xml:space="preserve">
-    <value>Messages ...</value>
-  </data>
-  <data name="ShowSettings" xml:space="preserve">
-    <value>Settings ...</value>
-  </data>
-  <data name="StartEditor" xml:space="preserve">
-    <value>Open Editor</value>
-  </data>
-  <data name="Streaming" xml:space="preserve">
-    <value>Streaming</value>
-  </data>
-  <data name="TagsDbError" xml:space="preserve">
-    <value>Error accessing tags database:
-{0}</value>
-  </data>
-  <data name="WriteSettingsError" xml:space="preserve">
-    <value>Settings could not be saved. Reason:
-{0}</value>
+  <data name="label1.Text" xml:space="preserve">
+    <value>IP Adresse:</value>
   </data>
 </root>

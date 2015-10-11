@@ -112,12 +112,12 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="projectNameLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>330, 17</value>
   </data>
@@ -250,11 +250,17 @@
   <data name="groupBox4.Text" xml:space="preserve">
     <value>Modi</value>
   </data>
-  <data name="label12.Text" xml:space="preserve">
-    <value>IP Adresse:</value>
+  <data name="label10.Size" type="System.Drawing.Size, System.Drawing">
+    <value>76, 17</value>
   </data>
-  <data name="disconnectButton.Text" xml:space="preserve">
-    <value>Trennen</value>
+  <data name="label10.Text" xml:space="preserve">
+    <value>Web-Adresse:</value>
+  </data>
+  <data name="networkSettingsButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>96, 23</value>
+  </data>
+  <data name="networkSettingsButton.Text" xml:space="preserve">
+    <value>Einstellungen ...</value>
   </data>
   <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
     <value>39, 17</value>
@@ -324,16 +330,16 @@
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAI6SURBVDhPrZBdSJNRHMZHEEHdGCQEFlE35Y3UvAti201E
-        r+6bqWilgTMLSiaCjmJCbiKtjEazYUbZWmbLIorQCJwZTvvQNjI03dzWopkrM5n7fnp3trcNnHRRD/w4
-        /3Px/M7hz/qvMRgM63s6ddP9fZo5TaP80JOLqujtjmbc1DfD0K6ETl0PVV15XK9tUkruc1vFZt5gqprO
-        095bppU5temUjDOLb6fBEHYrsPyxBjMvpLigEKHtei3Ub9RI1dK509laeKaE44L/BPqulZJyyKXAyuxJ
-        LI3L4B+hEB7YBVP3MUjMPLDOdTnB0DswDbOxHSGPCldbJEhIBPv3IvCpFr9spfC/5GL++T4s9GyG9rIQ
-        vBvspMD4Cugf9ZJywHUedVUU3G+VqKkUE4nwAA/Ox2xYDdsxrMvFpeNbIJJzwenITwqejf0kZa9dQ8pt
-        V+7S52E4LFUoKy4BJnagcHcuNm7IQcHOdaiWCVDeWAa2ditYFut7JOLzudHScBTez05yfzc2RCST9wqQ
-        l7MJlRVHoO8y/lnanuq8pnz5trQAsUiSVKLxOMwPHkFRwYN9ygOPHzjIl67e+uDIakGMLgcjcSwFYvi6
-        GCXM+NYQDI3aSan74TAhnjFnMuldQ2Cx2oiA+UGUNgTDMfxYjuDL9wgcvjBs7iAm3H8RMC+FaE/mywyv
-        HbHsAuv4FBEwPwjQI8NCCHAtAh/mARtNVkF9w1lQFB/FAmkakQxFQgkogRhFNImT4ouyC/4tLNZvZc8X
-        gwuMnLoAAAAASUVORK5CYII=
+        r+6bqWilgTMLSiaCjmJCbiKOjEazYUbZWmbLIorQCJwZTvvQNjI03dzWopkrM5n7fnp3trcNnHRRD/w4
+        /3Px/M7hz/qvMRgMG3u7dDMD/Zp5TaP8yJN2VfR2ZzNu6pth6FBCp66Hqq48rtc2KSX3ua1iM28oVU3n
+        ad8t0+q82nRGxpnDt7NgCLsVWPlYg9kXUrQrRGi7Xgv1GzVStXTudLUWnivhuOA/hf5rpaQccimwOnca
+        yxMy+EcphAf3wNRzAhIzD6wL3U4w9A3OwGzsQMijwtUWCRISwcH9CHyqxS9bKfwvuVh4fgCLvVuhvSwE
+        7wY7KTC+AgbGvKQccF1EXRUF91slairFRCI8xIPzMRtWw06M6HJx6eQ2iORccDrzk4Jn4z9J2WvXkHLb
+        lbv0eRQOSxXKikuAyV0o3JuLzZtyULB7A6plApQ3loGt3Q6Wxfoeifh8brQ0HIf3s5Pc340PE8nUvQLk
+        5WxBZcUx6LuNf5a2rzqvKV++Iy1ALJIklWg8DvODR1BU8GCf9sDjBw7zpWu3PjS6VhCjy8FIHMuBGL4u
+        RQmzvnUEw2N2Uup5OEKIZ8yZTHnXEVisNiJgfhClDcFwDD9WIvjyPQKHLwybO4hJ918EzEsh2pP5MsNr
+        Ryy7wDoxTQTMDwL0yLAYAlxLwIcFwEaTVVDfcB4UxUexQJpGJEORUAJKIEYRTeKk+KLsgn8Li/UbXm0X
+        gZ3Mq44AAAAASUVORK5CYII=
 </value>
   </data>
   <data name="settingsButton.Text" xml:space="preserve">
@@ -412,13 +418,13 @@
         YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAIISURBVDhPYxj8YPrOP/9BuH/Tt//Ny9/+L5v1+H9W/63/
         UGlUULvid3D5/I+r/eqvS0GFwAZ0bPj/v2zRr/+Jfc/+u5WdnQqVQgWVi37qtKz6cyq1/8l/s6RNd6DC
         DD3rv/wvmPftf0zfx/9uFbf/2+YeP2KefEATKo0AFUu+TahY/O2/c/7p/6pBc99BhRlqF774H9Z6779z
-        zs1PFtkX/hsn7fuvG72pByqNAFVLP17Imf7+v2ny/v+6kevnQoUZcifd+W+fdzrHqfTSNNu8c//1Yrb9
-        1w1beh4qjQCN8z99Tp/69r9xwt7/BjE7rEBiaWlnWJM6roADLKz1jnVw0z2wAYpesz+DxFBAGdCAtKnv
+        9s1PFtkX/hsn7fuvG72pByqNAFVLP17Imf7+v2ny/v+6kevnQoUZcifd+W+fdzrHqfTSNNu8c//1Yrb9
+        1w1beh4qjQCN8z99Tp/69r9xwt7/BjE7rEBiaWlnWJM6roADLKz1jnVw0z2wAfJesz+DxFBACdCAtKnv
         /pul7ocbgAyyZr6zSZvy5r9h3C7sBlQs+Hghdcrb//a5p/9bpR+ZCRWGg5plv+dlTPvwXz9mx3+dkCUX
         oMIIkD31ZV9879P/XlU3/vtW3HybOvHFnDygreULv9k0rP47v3z59/fBzff/64av+q8VtmIiVBsCRDTd
         1g6svXrUo+zKf9/aO//jep//z5z27n/ezI//c2Z9+g/SrBe9+b9m6JLTGmFrdaDaUIFr8QVfu+xjR43j
         d//XjdkKxqBA04vZAgz55UDNi07rhS0NhirHDgxjd2nqhK3p0wyYe1HJb8oXENYKnH1JN3TJJPWQlbpQ
-        ZYMGMDAAAFzIDh1JAY8rAAAAAElFTkSuQmCC
+        ZYMGMDAAAE5bDhZeNnGYAAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="repeatButton.Text" xml:space="preserve">

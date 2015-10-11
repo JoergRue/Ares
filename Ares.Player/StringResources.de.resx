@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Ares" xml:space="preserve">
     <value>Ares</value>
@@ -172,6 +172,9 @@
   <data name="MusicTags" xml:space="preserve">
     <value>Musik-Tags</value>
   </data>
+  <data name="Network" xml:space="preserve">
+    <value>Netzwerk</value>
+  </data>
   <data name="NoElements" xml:space="preserve">
     <value>Keine Elemente vorhanden</value>
   </data>
@@ -196,6 +199,9 @@ Sie sollten zuerst ein paar Einstellungen vornehmen.</value>
   </data>
   <data name="OpenProjectQuestion" xml:space="preserve">
     <value>Projekt {0} öffnen?</value>
+  </data>
+  <data name="OpenUrlError" xml:space="preserve">
+    <value>Fehler beim Öffnen des Browsers: {0}</value>
   </data>
   <data name="Output" xml:space="preserve">
     <value>Ausgabe</value>

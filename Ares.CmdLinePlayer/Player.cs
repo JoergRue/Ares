@@ -582,7 +582,7 @@ namespace Ares.CmdLinePlayer
 
         }
 
-        public void ClientDataChanged()
+        public void ClientDataChanged(bool listenAgainAfterDisconnect)
         {
             if (m_Network.ClientConnected)
             {

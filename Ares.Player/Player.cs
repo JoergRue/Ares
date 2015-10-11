@@ -38,7 +38,7 @@ namespace Ares.Player
         private Ares.Ipc.ApplicationInstance m_Instance;
 #endif
 
-        private INetwork m_Network;
+        private INetworks m_Network;
 
         private Ares.Playing.BassInit m_BassInit;
 
@@ -186,10 +186,10 @@ namespace Ares.Player
 
         private void settingsButton_Click(object sender, EventArgs e)
         {
-            ShowSettingsDialog();
+            ShowSettingsDialog(-1);
         }
 
-        private void ShowSettingsDialog()
+        private void ShowSettingsDialog(int pageIndex)
         {
             StopAllPlaying();
 #if !MONO
@@ -197,9 +197,10 @@ namespace Ares.Player
 #endif
             Ares.Settings.Settings settings = Ares.Settings.Settings.Instance;
             Ares.CommonGUI.SettingsDialog dialog = new Ares.CommonGUI.SettingsDialog(Ares.Settings.Settings.Instance, m_BasicSettings);
+            dialog.AddPage(new NetworkPageHost());
             dialog.AddPage(new StreamingPageHost());
             dialog.AddPage(new MusicPageHost());
-            dialog.SetVisiblePage(-1);
+            dialog.SetVisiblePage(pageIndex);
             if (dialog.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
             {
                 m_PlayingControl.UpdateDirectories();
@@ -207,6 +208,22 @@ namespace Ares.Player
                 SetOutputDevice();
                 m_PlayingControl.SetPlayMusicOnAllSpeakers(settings.PlayMusicOnAllSpeakers);
                 m_PlayingControl.SetFadingOnPreviousNext(settings.ButtonMusicFadeMode != 0, settings.ButtonMusicFadeMode == 2, settings.ButtonMusicFadeTime);
+                if (m_Network != null)
+                {
+                    if (m_Network.ClientConnected)
+                    {
+                        m_Network.DisconnectClient(false);
+                    }
+                    m_Network.Shutdown();
+                    m_Network = new Networks(this, settings.UseLegacyNetwork, settings.UseWebNetwork);
+                    m_Network.InitConnectionData();
+                    if (Settings.Settings.Instance.UseWebNetwork || Settings.Settings.Instance.UseLegacyNetwork)
+                    {
+                        m_Network.StartUdpBroadcast();
+                        m_Network.ListenForClient();
+                    }
+                    UpdateClientState();
+                }
             }
 #if !MONO
             m_KeyboardHookManager.Enabled = true;
@@ -998,12 +1015,15 @@ namespace Ares.Player
         
         void broadCastTimer_Tick(object sender, EventArgs e)
         {
-            if (!m_Network.SendUdpPacket())
+            if (m_Network != null)
             {
-                if (warnOnNetworkFail)
+                if (!m_Network.SendUdpPacket())
                 {
-                    warnOnNetworkFail = false;
-                    MessageBox.Show(this, StringResources.NoStatusInfoError, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    if (warnOnNetworkFail)
+                    {
+                        warnOnNetworkFail = false;
+                        MessageBox.Show(this, StringResources.NoStatusInfoError, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
         }
@@ -1029,7 +1049,7 @@ namespace Ares.Player
             if (!hasSettings)
             {
                 MessageBox.Show(this, StringResources.NoSettings, StringResources.Ares);
-                ShowSettingsDialog();
+                ShowSettingsDialog(-1);
                 SettingsChanged(true);
             }
             else
@@ -1048,6 +1068,45 @@ namespace Ares.Player
         }
 #endif
 
+        private void UpdateClientState()
+        {
+            Ares.Settings.Settings settings = Ares.Settings.Settings.Instance;
+            if (settings.UseWebNetwork)
+            {
+                webAddressLabel.Text = "http://" + settings.IPAddress + ":" + settings.WebTcpPort + "/";
+            }
+            else
+            {
+                webAddressLabel.Text = "";
+            }
+            if (settings.UseLegacyNetwork)
+            {
+                controllerPortLabel.Text = "" + settings.TcpPort;
+            }
+            else
+            {
+                controllerPortLabel.Text = "";
+            }
+            if (settings.UseLegacyNetwork || settings.UseWebNetwork)
+            {
+                if (m_Network.ClientConnected)
+                {
+                    clientStateLabel.Text = StringResources.ConnectedWith + m_Network.ClientName;
+                    clientStateLabel.ForeColor = System.Drawing.Color.DarkGreen;
+                }
+                else
+                {
+                    clientStateLabel.Text = StringResources.NotConnected;
+                    clientStateLabel.ForeColor = System.Drawing.Color.Red;
+                }
+            }
+            else
+            {
+                clientStateLabel.Text = StringResources.Disabled;
+                clientStateLabel.ForeColor = System.Drawing.Color.Red;
+            }
+        }
+
         private void SettingsChanged(bool fundamentalChange)
         {
             if (InvokeRequired)
@@ -1063,10 +1122,6 @@ namespace Ares.Player
                 LoadTagsDB();
                 SetOutputDevice();
             }
-            listenForPorts = false;
-            udpPortUpDown.Value = settings.UdpPort;
-            tcpPortUpDown.Value = settings.TcpPort;
-            listenForPorts = true;
             commitVolumes = false;
             overallVolumeBar.Value = settings.GlobalVolume;
             musicVolumeBar.Value = settings.MusicVolume;
@@ -1082,12 +1137,21 @@ namespace Ares.Player
             m_PlayingControl.SetPlayMusicOnAllSpeakers(settings.PlayMusicOnAllSpeakers);
             m_PlayingControl.SetFadingOnPreviousNext(settings.ButtonMusicFadeMode != 0, settings.ButtonMusicFadeMode == 2, settings.ButtonMusicFadeTime);
             commitFading = true;
-            if (fundamentalChange)
+            if (fundamentalChange && m_Network != null)
             {
-                if (m_Network != null && m_Network.ClientConnected)
+                if (m_Network.ClientConnected)
                 {
-                    m_Network.DisconnectClient(true);
+                    m_Network.DisconnectClient(false);
                 }
+                m_Network.Shutdown();
+                m_Network = new Networks(this, settings.UseLegacyNetwork, settings.UseWebNetwork);
+                m_Network.InitConnectionData();
+                if (Settings.Settings.Instance.UseWebNetwork || Settings.Settings.Instance.UseLegacyNetwork)
+                {
+                    m_Network.StartUdpBroadcast();
+                    m_Network.ListenForClient();
+                }
+                UpdateClientState();
             }
         }
 
@@ -1185,8 +1249,16 @@ namespace Ares.Player
             }
         }
 
-        public void ClientDataChanged()
+        public void ClientDataChanged(bool listenAgainAfterDisconnect)
         {
+            if (listenAgainAfterDisconnect)
+                m_Network.StartUdpBroadcast();
+            this.Invoke(new MethodInvoker(UpdateClientData));
+        }
+
+        public void ClientConnected()
+        {
+            m_Network.StopUdpBroadcast();
             this.Invoke(new MethodInvoker(UpdateClientData));
         }
 
@@ -1271,10 +1343,9 @@ namespace Ares.Player
 
         private void UpdateClientData()
         {
+            UpdateClientState();
             if (m_Network.ClientConnected)
             {
-                clientStateLabel.Text = StringResources.ConnectedWith + m_Network.ClientName;
-                clientStateLabel.ForeColor = System.Drawing.Color.DarkGreen;
                 m_Network.InformClientOfEverything(m_PlayingControl.GlobalVolume, m_PlayingControl.MusicVolume,
                     m_PlayingControl.SoundVolume, m_PlayingControl.CurrentMode, MusicInfo.GetInfo(m_PlayingControl.CurrentMusicElement),
                     m_PlayingControl.CurrentModeElements, m_Project, 
@@ -1283,14 +1354,10 @@ namespace Ares.Player
                     Settings.Settings.Instance.TagMusicFadeTime, Settings.Settings.Instance.TagMusicFadeOnlyOnChange,
                     Settings.Settings.Instance.PlayMusicOnAllSpeakers, 
                     Settings.Settings.Instance.ButtonMusicFadeMode, Settings.Settings.Instance.ButtonMusicFadeTime);
-                disconnectButton.Text = StringResources.Disconnect;
                 m_WasConnected = true;
             }
             else
             {
-                clientStateLabel.Text = StringResources.NotConnected;
-                clientStateLabel.ForeColor = System.Drawing.Color.Red;
-                disconnectButton.Text = Settings.Settings.Instance.NetworkEnabled ? StringResources.Disable : StringResources.Enable;
                 if (m_HideToTray && m_WasConnected)
                 {
                     Close();
@@ -1298,54 +1365,9 @@ namespace Ares.Player
             }
         }
 
-        private void disconnectButton_Click(object sender, EventArgs e)
+        private void networkSettingsButton_Click(object sender, EventArgs e)
         {
-            if (m_Network.ClientConnected)
-            {
-                m_Network.DisconnectClient(true);
-            }
-            else
-            {
-                bool isNowEnabled = !Settings.Settings.Instance.NetworkEnabled;
-                Settings.Settings.Instance.NetworkEnabled = isNowEnabled;
-                Settings.Settings.Instance.Commit();
-                disconnectButton.Text = isNowEnabled ? StringResources.Disable : StringResources.Enable;
-                if (isNowEnabled)
-                {
-                    clientStateLabel.Text = StringResources.NotConnected;
-                    m_Network.StartUdpBroadcast();
-                }
-                else
-                {
-                    m_Network.StopUdpBroadcast();
-                    clientStateLabel.Text = StringResources.Disabled;
-                }
-                clientStateLabel.ForeColor = System.Drawing.Color.Red;
-            }
-        }
-
-        private bool listenForPorts = false;
-
-        private void udpPortUpDown_ValueChanged(object sender, EventArgs e)
-        {
-            if (!listenForPorts) return;
-            Settings.Settings.Instance.UdpPort = (int)udpPortUpDown.Value;
-            Settings.Settings.Instance.Commit();
-            if (m_Network.ClientConnected)
-            {
-                m_Network.DisconnectClient(true);
-            }
-        }
-
-        private void tcpPortUpDown_ValueChanged(object sender, EventArgs e)
-        {
-            if (!listenForPorts) return;
-            Settings.Settings.Instance.TcpPort = (int)tcpPortUpDown.Value;
-            Settings.Settings.Instance.Commit();
-            if (m_Network.ClientConnected)
-            {
-                m_Network.DisconnectClient(true);
-            }
+            ShowSettingsDialog(1);
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1463,58 +1485,17 @@ namespace Ares.Player
                 projectNameLabel.Text = m_Project != null ? m_Project.Title : StringResources.NoOpenedProject;
                 this.Text = String.Format(StringResources.AresPlayer, projectNameLabel.Text);
             }
-            listenForPorts = false;
-            udpPortUpDown.Value = Settings.Settings.Instance.UdpPort;
-            tcpPortUpDown.Value = Settings.Settings.Instance.TcpPort;
-            bool foundAddress = false;
-            bool foundIPv4Address = false;
-            int ipv4AddressIndex = 0;
-            foreach (System.Net.IPAddress address in System.Net.Dns.GetHostAddresses(String.Empty))
-            {
-                //if (address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6)
-                //    continue;
-                if (address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
-                {
-                    foundIPv4Address = true;
-                    ipv4AddressIndex = ipAddressBox.Items.Count;
-                }
-                String s = address.ToString();
-                ipAddressBox.Items.Add(s);
-                if (s == Settings.Settings.Instance.IPAddress)
-                    foundAddress = true;
-            }
-            if (foundAddress)
-            {
-                ipAddressBox.SelectedItem = Settings.Settings.Instance.IPAddress;
-            }
-            else if (ipAddressBox.Items.Count > 0)
-            {
-                ipAddressBox.SelectedIndex = foundIPv4Address ? ipv4AddressIndex : 0;
-                Settings.Settings.Instance.IPAddress = ipAddressBox.SelectedItem.ToString();
-            }
-            else
-            {
-                ipAddressBox.Enabled = false;
-            }
 #if MONO
 			editorButton.Enabled = false;
 			startEditorToolStripMenuItem.Enabled = false;
 #endif
-            listenForPorts = true;
-            m_Network = new Ares.Players.Web.WebNetwork(this); //  new CustomIpNetwork(this);
+            m_Network = new Networks(this, Settings.Settings.Instance.UseLegacyNetwork, Settings.Settings.Instance.UseWebNetwork);
             m_Network.InitConnectionData();
-            if (Settings.Settings.Instance.NetworkEnabled)
+            if (Settings.Settings.Instance.UseWebNetwork || Settings.Settings.Instance.UseLegacyNetwork)
             {
                 m_Network.StartUdpBroadcast();
-                disconnectButton.Text = StringResources.Disable;
-                clientStateLabel.Text = StringResources.NotConnected;
             }
-            else
-            {
-                disconnectButton.Text = StringResources.Enable;
-                clientStateLabel.Text = StringResources.Disabled;
-            }
-            clientStateLabel.ForeColor = System.Drawing.Color.Red;
+            UpdateClientState();
             broadCastTimer.Tick += new EventHandler(broadCastTimer_Tick);
             broadCastTimer.Enabled = true;
             m_Network.ListenForClient();
@@ -1526,22 +1507,6 @@ namespace Ares.Player
             if (Settings.Settings.Instance.CheckForUpdate)
             {
                 Ares.Online.OnlineOperations.CheckForUpdate(this, false);
-            }
-        }
-
-        private void ipAddressBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (!listenForPorts) return;
-            Settings.Settings.Instance.IPAddress = ipAddressBox.SelectedItem.ToString();
-            if (m_Network.ClientConnected)
-            {
-                m_Network.DisconnectClient(true);
-            }
-            m_Network.StopUdpBroadcast();
-            m_Network.InitConnectionData();
-            if (Settings.Settings.Instance.NetworkEnabled)
-            {
-                m_Network.StartUdpBroadcast();
             }
         }
 
@@ -1773,6 +1738,19 @@ namespace Ares.Player
         private void tagCategoryCombinationBox_DropDownClosed(object sender, EventArgs e)
         {
             m_UpdateCategoryCombinationBox = true;
+        }
+
+        private void webAddressLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            try
+            {
+                System.Diagnostics.Process.Start(webAddressLabel.Text);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, String.Format(StringResources.OpenUrlError, ex.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
         }
     }
 }

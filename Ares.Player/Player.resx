@@ -112,21 +112,17 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="tagSelectionPanel.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 17</value>
   </data>
   <data name="&gt;&gt;toolStripSeparator3.Name" xml:space="preserve">
     <value>toolStripSeparator3</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="label12.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
   </data>
   <data name="modeLabel.Location" type="System.Drawing.Point, System.Drawing">
     <value>69, 52</value>
@@ -137,17 +133,18 @@
   <data name="label13.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 48</value>
   </data>
-  <data name="&gt;&gt;ipAddressBox.Parent" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
   <data name="&gt;&gt;label6.ZOrder" xml:space="preserve">
     <value>7</value>
   </data>
   <data name="&gt;&gt;groupBox1.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="notifyIcon.Visible" type="System.Boolean, mscorlib">
     <value>True</value>
+  </data>
+  <data name="editorButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 22</value>
   </data>
   <data name="label7.Text" xml:space="preserve">
     <value>Music:</value>
@@ -155,8 +152,11 @@
   <data name="&gt;&gt;label5.ZOrder" xml:space="preserve">
     <value>9</value>
   </data>
-  <data name="&gt;&gt;disconnectButton.ZOrder" xml:space="preserve">
-    <value>6</value>
+  <data name="importToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>134, 22</value>
+  </data>
+  <data name="clearTagsButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
   </data>
   <data name="&gt;&gt;label10.Name" xml:space="preserve">
     <value>label10</value>
@@ -164,47 +164,60 @@
   <data name="&gt;&gt;soundsLabel.Parent" xml:space="preserve">
     <value>groupBox3</value>
   </data>
-  <data name="&gt;&gt;openToolStripMenuItem.Name" xml:space="preserve">
-    <value>openToolStripMenuItem</value>
+  <data name="settingsButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsIAAA7CARUoSoAAAAI6SURBVDhPrZBdSJNRHMZHEEHdGCQEFlE35Y3UvAti201E
+        r+6bqWilgTMLSiaCjmJCbiKNjEazYUbZWmbLIorQCJwpTvvQNjI03dzWopkrM5n7fnp3trcNnHRRD/w4
+        /3Px/M7hz/qvMRgMG3s6dTP9fZp5TaP8yFOVKnqnoxm39M0wtCuhU9dDVVce12ublJIH3FaxmTeYqqbz
+        rPe2aXVebToj48zh21kwhN0KrHyswexLKS4pRGi7UQv1GzVStXTudrYWnivhuOA/hb7rpaQccimwOnca
+        yxMy+EcphAf2wNR9AhIzD6wLXU4w9A7MwGxsR8ijwrUWCRISwcH9CHyqxS9bKfyvuFh4cQCLPVuhvSIE
+        7yY7KTCOAP1jXlIOuC6iroqC+60SNZViIhEe4sH5hA2rYSeGdbm4fHIbRHIuOB35ScHz8Z+k7LVrSLnt
+        6j36PAqHpQplxSXA5C4U7s3F5k05KNi9AdUyAcoby8DWbgfLYn2PRHw+N1oajsP72Unu78aHiGTqfgHy
+        cragsuIY9F3GP0vbV53XlC/fkRYgFkmSSjQeh/nhYygqeLBPe+DxA4f50rVbHxxdK4jR5WAkjuVADF+X
+        ooRZ3zqCoTE7KXU/GibEM+ZMprzrCCxWGxEwP4jShmA4hh8rEXz5HoHDF4bNHcSk+y8C5qUQ7cl8meG1
+        I5ZdYJ2YJgLmBwF6ZFgMAa4l4MMCYKPJKqhvOA+K4qNYIE0jkqFIKAElEKOIJnFSfFF2wb+FxfoNMiEX
+        dezI6VcAAAAASUVORK5CYII=
+</value>
   </data>
   <data name="&gt;&gt;musicList.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
   <data name="&gt;&gt;toolStripSeparator4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;tagSelectionPanel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.FlowLayoutPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;label15.Name" xml:space="preserve">
+    <value>label15</value>
   </data>
   <data name="label4.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
   </data>
-  <data name="&gt;&gt;settingsToolStripMenuItem1.Name" xml:space="preserve">
-    <value>settingsToolStripMenuItem1</value>
+  <data name="previousMusicToolStripMenuItem.Text" xml:space="preserve">
+    <value>Previous Music Title</value>
   </data>
   <data name="&gt;&gt;groupBox7.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;projectToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="modeLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>328, 17</value>
   </data>
   <data name="soundVolumeBar.Size" type="System.Drawing.Size, System.Drawing">
     <value>338, 31</value>
   </data>
-  <data name="&gt;&gt;stopAllToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="exitToolStripMenuItem.Text" xml:space="preserve">
+    <value>Exit</value>
   </data>
-  <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 429</value>
+  <data name="label7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>37, 17</value>
   </data>
-  <data name="recentToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>134, 22</value>
+  <data name="musicList.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 22</value>
   </data>
-  <data name="toolStrip1.TabIndex" type="System.Int32, mscorlib">
+  <data name="&gt;&gt;tagFadeUpDown.Name" xml:space="preserve">
+    <value>tagFadeUpDown</value>
+  </data>
+  <data name="label10.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
-  </data>
-  <data name="editorButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 22</value>
   </data>
   <data name="startEditorToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -227,1438 +240,63 @@
   <data name="&gt;&gt;overallVolumeBar.Name" xml:space="preserve">
     <value>overallVolumeBar</value>
   </data>
-  <data name="disconnectButton.Text" xml:space="preserve">
-    <value>Disconnect</value>
-  </data>
   <data name="&gt;&gt;projectNameLabel.Parent" xml:space="preserve">
     <value>groupBox3</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;previousMusicToolStripMenuItem.Name" xml:space="preserve">
     <value>previousMusicToolStripMenuItem</value>
   </data>
+  <data name="&gt;&gt;saveFileDialog.Name" xml:space="preserve">
+    <value>saveFileDialog</value>
+  </data>
   <data name="label14.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="tcpPortUpDown.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
+  <data name="&gt;&gt;label14.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;label8.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="openToolStripMenuItem.Text" xml:space="preserve">
-    <value>Open ...</value>
+  <data name="controllerPortLabel.Text" xml:space="preserve">
+    <value>11114</value>
+  </data>
+  <data name="&gt;&gt;currentTagsLabel.Parent" xml:space="preserve">
+    <value>groupBox7</value>
   </data>
   <data name="&gt;&gt;repeatButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="musicVolumeBar.Location" type="System.Drawing.Point, System.Drawing">
-    <value>55, 47</value>
+  <data name="networkSettingsButton.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
   </data>
   <data name="&gt;&gt;clearTagsButton.Parent" xml:space="preserve">
     <value>groupBox7</value>
   </data>
   <data name="&gt;&gt;showKeysMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="overallVolumeBar.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
   <data name="stopAllToolStripMenuItem.Text" xml:space="preserve">
     <value>Stop All</value>
   </data>
-  <data name="openFileDialog1.Filter" xml:space="preserve">
-    <value>Ares projects|*.ares|All files|*.*</value>
-  </data>
-  <data name="modesList.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left</value>
-  </data>
-  <data name="musicTagCategoryBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>108, 19</value>
-  </data>
-  <data name="tcpPortUpDown.Location" type="System.Drawing.Point, System.Drawing">
-    <value>220, 52</value>
-  </data>
-  <data name="tagsPanel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
-  </data>
-  <data name="label16.Text" xml:space="preserve">
-    <value>Fade between Music:</value>
-  </data>
-  <data name="&gt;&gt;musicLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;soundVolumeBar.Name" xml:space="preserve">
-    <value>soundVolumeBar</value>
-  </data>
-  <data name="label11.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="showKeysMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>175, 22</value>
-  </data>
-  <data name="&gt;&gt;musicVolumeBar.Parent" xml:space="preserve">
-    <value>groupBox2</value>
-  </data>
-  <data name="helpOnlineToolStripMenuItem.Text" xml:space="preserve">
-    <value>Help (Online) ...</value>
-  </data>
-  <data name="&gt;&gt;overallVolumeBar.Parent" xml:space="preserve">
-    <value>groupBox2</value>
-  </data>
-  <data name="&gt;&gt;stopAllToolStripMenuItem.Name" xml:space="preserve">
-    <value>stopAllToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;groupBox5.Name" xml:space="preserve">
-    <value>groupBox5</value>
-  </data>
-  <data name="&gt;&gt;openFileDialog1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.OpenFileDialog, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>403, 113</value>
-  </data>
-  <data name="&gt;&gt;clientStateLabel.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 48</value>
-  </data>
-  <data name="label8.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="label10.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="helpToolStripMenuItem.Text" xml:space="preserve">
-    <value>Help</value>
-  </data>
-  <data name="toolStripSeparator4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>163, 6</value>
-  </data>
-  <data name="nextMusicTitleToolStripMenuItem.Text" xml:space="preserve">
-    <value>Next Music Title</value>
-  </data>
-  <data name="&gt;&gt;modesList.Parent" xml:space="preserve">
-    <value>groupBox4</value>
-  </data>
-  <data name="label15.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 237</value>
-  </data>
-  <data name="&gt;&gt;groupBox3.Name" xml:space="preserve">
-    <value>groupBox3</value>
-  </data>
-  <data name="label3.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;groupBox4.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="currentTagsLabel.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
-  </data>
-  <data name="&gt;&gt;exitToolStripMenuItem.Name" xml:space="preserve">
-    <value>exitToolStripMenuItem</value>
-  </data>
-  <data name="projectToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>56, 20</value>
-  </data>
-  <data name="&gt;&gt;tagsPanel.Parent" xml:space="preserve">
-    <value>groupBox5</value>
-  </data>
-  <data name="&gt;&gt;label4.Parent" xml:space="preserve">
-    <value>groupBox2</value>
-  </data>
-  <data name="stopButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
-    <value>Magenta</value>
-  </data>
-  <data name="elementsPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>383, 457</value>
-  </data>
-  <data name="label14.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 22</value>
-  </data>
-  <data name="label6.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 79</value>
-  </data>
-  <data name="label11.Text" xml:space="preserve">
-    <value>TCP Port:</value>
-  </data>
-  <data name="soundVolumeBar.AutoSize" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="groupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>403, 107</value>
-  </data>
-  <data name="groupBox3.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;label5.Parent" xml:space="preserve">
-    <value>groupBox3</value>
-  </data>
-  <data name="tagCategoryCombinationBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 64</value>
-  </data>
-  <data name="&gt;&gt;importFileDialog.Name" xml:space="preserve">
-    <value>importFileDialog</value>
-  </data>
-  <data name="nextButton.Text" xml:space="preserve">
-    <value>Next Music Title</value>
-  </data>
-  <data name="&gt;&gt;tagSelectionPanel.Name" xml:space="preserve">
-    <value>tagSelectionPanel</value>
-  </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>Ares Player</value>
-  </data>
-  <data name="toolStripSeparator3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>172, 6</value>
-  </data>
-  <data name="&gt;&gt;toolStripSeparator1.Name" xml:space="preserve">
-    <value>toolStripSeparator1</value>
-  </data>
-  <data name="&gt;&gt;checkForUpdateToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tcpPortUpDown.Type" xml:space="preserve">
-    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tcpPortUpDown.Name" xml:space="preserve">
-    <value>tcpPortUpDown</value>
-  </data>
-  <data name="&gt;&gt;stopButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;recentToolStripMenuItem.Name" xml:space="preserve">
-    <value>recentToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;label11.Name" xml:space="preserve">
-    <value>label11</value>
-  </data>
-  <data name="&gt;&gt;broadCastTimer.Name" xml:space="preserve">
-    <value>broadCastTimer</value>
-  </data>
-  <data name="previousButton.Text" xml:space="preserve">
-    <value>Previous Music Title</value>
-  </data>
-  <data name="&gt;&gt;projectNameLabel.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="nextButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABgAAAAUCAYAAACXtf2DAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsIAAA7CARUoSoAAAAGGSURBVEhLYxgFZIHQVf+ZoUzagJSOxzL19f+ZoFzqg8JZ
-        z/8nTvughMsSkHz9vKe/wjvuvoEKkQZyZz77n9B973/8pNca2IILJL/qyPv/4e0P/kOFSAMZU57+n7f/
-        9/+ghpuvEzqf2qJbApJfuO/D/+CGa+RZkNDz5P/sfb/+d279+9+t9PL/xN5H9siWgOSnbXn/37/6AnkW
-        RHY9+j9l26//JUv//k+Y/ve/Te5ZFEtA8r2rP/z3Kj1BngWBzQ//t659DzbcuOTLf+noa/+NI5f9dyg4
-        HQ+Tr5v/7r9L/gHyLPCouv+/ZO47uOGKLj3/ZbxXBkKlwfL50978t8/YTp4F9qV3/we2PIMbLu29wgsq
-        BQYg+ezJr/9bJKwnzwKLvDv/bQqugA2X9FllAxWGA5B8av9rcLBBhUgDhlm3IYZ7LnOFCqEAkHxYy8v/
-        usHzyLNAJ+3GfymfNb5QLgYAyftVP/yv4TuNPAukvNf6AUs8nAWeXdblXyoeE/6DMFRoFJALGBgAfJfk
-        R+0a1b8AAAAASUVORK5CYII=
-</value>
-  </data>
-  <data name="&gt;&gt;startEditorToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="musicList.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 22</value>
-  </data>
-  <data name="groupBox3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>403, 260</value>
-  </data>
-  <data name="openButton.Text" xml:space="preserve">
-    <value>Open Project ...</value>
-  </data>
-  <data name="&gt;&gt;groupBox3.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="label16.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="globalKeyHookItem.Text" xml:space="preserve">
-    <value>Global Key Capture</value>
-  </data>
-  <data name="&gt;&gt;label7.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;musicTagCategoryBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="repeatCurrentMusicToolStripMenuItem.Text" xml:space="preserve">
-    <value>Repeat Current Music</value>
-  </data>
-  <data name="startEditorToolStripMenuItem.Text" xml:space="preserve">
-    <value>Start Editor</value>
-  </data>
-  <data name="&gt;&gt;tagCategoryCombinationBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;groupBox2.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;label7.Parent" xml:space="preserve">
-    <value>groupBox3</value>
-  </data>
-  <data name="recentToolStripMenuItem.Text" xml:space="preserve">
-    <value>Recent</value>
-  </data>
-  <data name="label8.Size" type="System.Drawing.Size, System.Drawing">
-    <value>46, 17</value>
-  </data>
-  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;label10.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="groupBox4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>249, 490</value>
-  </data>
-  <data name="&gt;&gt;groupBox5.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="repeatButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsIAAA7CARUoSoAAAAIISURBVDhPYxj8YPrOP/9BuH/Tt//Ny9/+L5v1+H9W/63/
-        UGlUULvid3D5/I+r/eqvS0GFwAZ0bPj/v2zRr/+Jfc/+u5WdnQqVQgWVi37qtKz6cyq1/8l/s6RNd6DC
-        DD3rv/wvmPftf0zfx/9uFbf/2+YeP2KefEATKo0AFUu+TahY/O2/c/7p/6pBc99BhRlqF774H9Z6779z
-        9s1PFtkX/hsn7fuvG72pByqNAFVLP17Imf7+v2ny/v+6kevnQoUZcifd+W+fdzrHqfTSNNu8c//1Yrb9
-        1w1beh4qjQCN8z99Tp/69r9xwt7/BjE7rEBiaWlnWJM6roADLKz1jnVw0z2wAfJesz+DxFBACdCAtKnv
-        /pul7ocbgAyyZr6zSZvy5r9h3C7sBlQs+Hghdcrb//a5p/9bpR+ZCRWGg5plv+dlTPvwXz9mx3+dkCUX
-        oMIIkD31ZV9879P/XlU3/vtW3HybOvHFnDygreULv9k0rP47v3z59/fBzff/64av+q8VtmIiVBsCRDTd
-        1g6svXrUo+zKf9/aO//jep//z5z27n/ezI//c2Z9+g/SrBe9+b9m6JLTGmFrdaDaUIFr8QVfu+xjR43j
-        d//XjdkKxqBA04vZAgz55UDNi07rhS0NhirHDgxjd2nqhK3p0wyYe1HJb8oXENYKnH1JN3TJJPWQlbpQ
-        ZYMGMDAAAE5bDhZeNnGYAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="toolStrip1.Text" xml:space="preserve">
-    <value>toolStrip1</value>
-  </data>
-  <data name="groupBox5.Location" type="System.Drawing.Point, System.Drawing">
-    <value>676, 52</value>
-  </data>
-  <data name="settingsToolStripMenuItem1.Text" xml:space="preserve">
-    <value>Settings ...</value>
-  </data>
-  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>43, 17</value>
-  </data>
-  <data name="&gt;&gt;fadeOnlyOnChangeBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="overallVolumeBar.Location" type="System.Drawing.Point, System.Drawing">
-    <value>55, 19</value>
-  </data>
-  <data name="&gt;&gt;saveFileDialog.Name" xml:space="preserve">
-    <value>saveFileDialog</value>
-  </data>
-  <data name="musicVolumeBar.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;nextButton.Name" xml:space="preserve">
-    <value>nextButton</value>
-  </data>
-  <data name="&gt;&gt;soundsLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;globalKeyHookItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="ipAddressBox.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
-  </data>
-  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="label13.Text" xml:space="preserve">
-    <value>Tags of different categories are combined by:</value>
-  </data>
-  <data name="&gt;&gt;label6.Name" xml:space="preserve">
-    <value>label6</value>
-  </data>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 13</value>
-  </data>
-  <data name="openButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
-    <value>Magenta</value>
-  </data>
-  <data name="&gt;&gt;label11.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="label9.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
-  </data>
-  <data name="musicList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>361, 407</value>
-  </data>
-  <data name="settingsToolStripMenuItem1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1
-        MAAA6mAAADqYAAAXb5JfxUYAAAAJcEhZcwAACwwAAAsMAT9AIsgAAAJCSURBVDhPpZBtSFNRGMcvQQT1
-        xSAhqAj7En6Rmt+CyNuHCK/uxY2paKVBLgtKJoKNokFuIUpGo5mUEmutGsskAskKnBlOe9E2MjTd3Nai
-        mSszmXu7+3fuXdOtJhEd+HHOeQ7/33nOoQD8F2mbHrN+raVLN/m0WzujaVQcfHRbHbvVrsZNvRodbSro
-        NPVQ11XE9S0qldRCXyT0pwk4es0G09KM1nRSvn8aX04hScSjxOJ7BaaeydCilKD5Ri00rzTpYQ7jdW3+
-        6VLajcBxdF8r48NhtxJL0yewMCpHYIhBpG8HTIYjIB2AOtfpQhJz3yQsxjaEvedxtUkKTiLaswvBD7X4
-        YS9D4HkBZp/sxtzdjWi9LAbdJUgIjC+Ax8M+Phx0X0BdNQPPaxUUVSW8RLyXhuuhALaObRjUZePS0U2Q
-        1BRgX3tuQtA78p0P+xxaPtx85Q6ZC+G0VqO8uBQY2478ndlYvy4LeTlrcEwuQkVjOQStm0FZbW/J0wG/
-        34OmhsPwfXTx+zcjA7xk/F4etmRtQFXlIeg7jdwR/1e5NVvPEFYEYKMJfo1YPA7L/R4oK2k4JrzwBoAD
-        Qhl3lPbpVP/QnwKWhEPROBaCLD7Px3im/KsIBoYdXBGGB4M88ZR1KuO+VQRWm50rLncQI4ZQhMW3xSg+
-        fY3C6Y/A7glhzPMXQfKmMPGk3pzkpZPNLLCNTnDF5Q6CZJlkLgy454F3s4CdkFFQ33AWDCNEsUi2gkSO
-        IrEUjKgERQRuZoSSzILfC/8GqJ+iv/H+QwHX2gAAAABJRU5ErkJggg==
-</value>
-  </data>
-  <data name="groupBox5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>395, 490</value>
-  </data>
-  <data name="&gt;&gt;currentTagsLabel.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;openButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="messagesButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsIAAA7CARUoSoAAAAIWSURBVDhPpZLRT1JRHMf5Z3ys3JoPrce2tv6LWg9tPfXc
-        VqyaW8yVlnCBBBKvXAJC8F4FvKmBpBggc5CxTGxrbjhbs5BC4N777ZwDkme0tdbZfg/n7Hw/v9/nnmui
-        yx/Lg5Y0n8W0koUor8MbWYUnnIYrlMSzwDLs0iKEaRVWMdErFqZLms/hJ/DXOtIMVOs6tg80DF253g8I
-        BADzfWDc0R+uG8CXho7KVw3pfJkH+JS37NLdB8CbNDAwEGd7b1CFS0pAmIphzK1gxDGL4l4bS5n3PGBq
-        NsMCzglgcDCBm4/47t9aBva+69iqasjstBBLlXjAZHSVC5yuIx3E28AH4p3dbWHxXRPRV5s8wDOTZpch
-        CsC1y2R2K9v/IN4HDYN5Fz638brchLxxjFCiwANcwWQHcPUSoNgQvnCO7T3+BdiJ/xP3HEacMh4KUbxc
-        byBAnpwDOF8sdyewwXfxLDaE0Y53jXjva1gj3oliEzPZY0jpOsRohgc4yE9CASdVI++9T+an3rlP7Y53
-        vhOeXDqEK5DiAYJPZcHDSgxaxISdotzzTna9T8I2pYpxr8oDbOICA9Aw9BTMN86w93aKcTx9PofHEzEM
-        WyMwj4Zh8Vdgsct/BlQ2FQzfOo+Q393zDq797kzDd1wl3BsL9QNquoGtj7vIFbexkisjvlJCWC2wD0ad
-        6di0Mw3ftvj6AfTgX6sb/59lMv0C7dmbjUpdSoAAAAAASUVORK5CYII=
-</value>
-  </data>
-  <data name="&gt;&gt;modesList.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ListBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;toolStripSeparator4.Name" xml:space="preserve">
-    <value>toolStripSeparator4</value>
-  </data>
-  <data name="label12.Size" type="System.Drawing.Size, System.Drawing">
-    <value>63, 17</value>
-  </data>
-  <data name="label1.Text" xml:space="preserve">
-    <value>State:</value>
-  </data>
-  <data name="&gt;&gt;groupBox7.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;fadeOnlyOnChangeBox.Parent" xml:space="preserve">
-    <value>groupBox6</value>
-  </data>
-  <data name="&gt;&gt;label12.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="groupBox6.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
-  </data>
-  <data name="udpPortUpDown.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 20</value>
-  </data>
-  <data name="aboutButton.Text" xml:space="preserve">
-    <value>About Ares ...</value>
-  </data>
-  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 21</value>
-  </data>
-  <data name="menuStrip1.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="projectNameLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>69, 26</value>
-  </data>
-  <data name="dummyToolStripMenuItem.Text" xml:space="preserve">
-    <value>Dummy</value>
-  </data>
-  <data name="messagesToolStripMenuItem.Text" xml:space="preserve">
-    <value>Messages ...</value>
-  </data>
-  <data name="&gt;&gt;soundVolumeBar.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TrackBar, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="groupBox7.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 146</value>
-  </data>
-  <data name="menuStrip1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>46, 17</value>
-  </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;aboutToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tagSelectionPanel.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;label14.Parent" xml:space="preserve">
-    <value>groupBox6</value>
-  </data>
-  <data name="dummyToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>117, 22</value>
-  </data>
-  <data name="exitToolStripMenuItem.Text" xml:space="preserve">
-    <value>Exit</value>
-  </data>
-  <data name="tagFadeUpDown.Size" type="System.Drawing.Size, System.Drawing">
-    <value>63, 20</value>
-  </data>
-  <data name="messagesButton.Text" xml:space="preserve">
-    <value>Messages</value>
-  </data>
-  <data name="musicTagCategoryBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>177, 21</value>
-  </data>
-  <data name="saveFileDialog.Filter" xml:space="preserve">
-    <value>Ares projects|*.ares|All files|*.*</value>
-  </data>
-  <data name="&gt;&gt;tagCategoryCombinationBox.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;overallVolumeBar.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;editorButton.Name" xml:space="preserve">
-    <value>editorButton</value>
-  </data>
-  <data name="label11.Size" type="System.Drawing.Size, System.Drawing">
-    <value>54, 17</value>
-  </data>
-  <data name="checkForUpdateToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>166, 22</value>
-  </data>
-  <data name="tagSelectionPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>371, 203</value>
-  </data>
-  <data name="label9.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 26</value>
-  </data>
-  <data name="&gt;&gt;soundsLabel.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;label17.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="label10.Size" type="System.Drawing.Size, System.Drawing">
-    <value>55, 17</value>
-  </data>
-  <data name="aboutButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 22</value>
-  </data>
-  <data name="&gt;&gt;soundsLabel.Name" xml:space="preserve">
-    <value>soundsLabel</value>
-  </data>
-  <data name="clearTagsButton.Text" xml:space="preserve">
-    <value>Clear Tags</value>
-  </data>
-  <data name="repeatButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
-    <value>Magenta</value>
-  </data>
-  <data name="soundVolumeBar.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="musicVolumeBar.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
-  <data name="&gt;&gt;groupBox1.Name" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="tagsPanel.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;groupBox1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;elementsPanel.Name" xml:space="preserve">
-    <value>elementsPanel</value>
-  </data>
-  <data name="&gt;&gt;nextMusicTitleToolStripMenuItem.Name" xml:space="preserve">
-    <value>nextMusicTitleToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;musicLabel.Name" xml:space="preserve">
-    <value>musicLabel</value>
-  </data>
-  <data name="&gt;&gt;udpPortUpDown.Name" xml:space="preserve">
-    <value>udpPortUpDown</value>
-  </data>
-  <data name="repeatButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 22</value>
-  </data>
-  <data name="label14.Size" type="System.Drawing.Size, System.Drawing">
-    <value>96, 13</value>
-  </data>
-  <data name="&gt;&gt;clearTagsButton.Name" xml:space="preserve">
-    <value>clearTagsButton</value>
-  </data>
-  <data name="musicLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>328, 40</value>
-  </data>
-  <data name="&gt;&gt;toolStripSeparator2.Name" xml:space="preserve">
-    <value>toolStripSeparator2</value>
-  </data>
-  <data name="&gt;&gt;label12.Name" xml:space="preserve">
-    <value>label12</value>
-  </data>
-  <data name="label4.Text" xml:space="preserve">
-    <value>Sounds:</value>
-  </data>
-  <data name="label8.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;groupBox4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="nextButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 22</value>
-  </data>
-  <data name="&gt;&gt;clearTagsButton.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="label12.Text" xml:space="preserve">
-    <value>IP Address:</value>
-  </data>
-  <data name="settingsButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsIAAA7CARUoSoAAAAI6SURBVDhPrZBdSJNRHMZHEEHdGCQEFlE35Y3UvAti201E
-        r+6bqWilgTMLSiaCjmJCbiKNjEazYUbZWmbLIorQCJwpTvvQNjI03dzWopkrM5n7fnp3trcNnHRRD/w4
-        /3Px/M7hz/qvMRgMG3s6dTP9fZp5TaP8yFOVKnqnoxm39M0wtCuhU9dDVVce12ublJIH3FaxmTeYqqbz
-        rPe2aXVebToj48zh21kwhN0KrHyswexLKS4pRGi7UQv1GzVStXTudrYWnivhuOA/hb7rpaQccimwOnca
-        yxMy+EcphAf2wNR9AhIzD6wLXU4w9A7MwGxsR8ijwrUWCRISwcH9CHyqxS9bKfyvuFh4cQCLPVuhvSIE
-        7yY7KTCOAP1jXlIOuC6iroqC+60SNZViIhEe4sH5hA2rYSeGdbm4fHIbRHIuOB35ScHz8Z+k7LVrSLnt
-        6j36PAqHpQplxSXA5C4U7s3F5k05KNi9AdUyAcoby8DWbgfLYn2PRHw+N1oajsP72Unu78aHiGTqfgHy
-        cragsuIY9F3GP0vbV53XlC/fkRYgFkmSSjQeh/nhYygqeLBPe+DxA4f50rVbHxxdK4jR5WAkjuVADF+X
-        ooRZ3zqCoTE7KXU/GibEM+ZMprzrCCxWGxEwP4jShmA4hh8rEXz5HoHDF4bNHcSk+y8C5qUQ7cl8meG1
-        I5ZdYJ2YJgLmBwF6ZFgMAa4l4MMCYKPJKqhvOA+K4qNYIE0jkqFIKAElEKOIJnFSfFF2wb+FxfoNMiEX
-        dezI6VcAAAAASUVORK5CYII=
-</value>
-  </data>
-  <data name="&gt;&gt;disconnectButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;menuStrip1.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;messagesButton.Name" xml:space="preserve">
-    <value>messagesButton</value>
-  </data>
-  <data name="label11.Location" type="System.Drawing.Point, System.Drawing">
-    <value>160, 55</value>
-  </data>
-  <data name="&gt;&gt;fileSystemWatcher1.Type" xml:space="preserve">
-    <value>System.IO.FileSystemWatcher, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;elementsPanel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.FlowLayoutPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="toolStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1083, 25</value>
-  </data>
-  <data name="&gt;&gt;groupBox1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="openToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAACwwAAAsMAT9AIsgAAAAGYktHRAD/AP8A/6C9p5MAAAAHdElNRQfaBhMLFh3BVq7X
-        AAACc0lEQVQ4T72SWUiUURiG/4suurJIjUIwskQsGAwMqS5ClBY1pdwKJU0otxYMxVybcR11ZlynVMwZ
-        dRp1tLIUwwqhUCRCy4USU7OgqBRTQyW3p98ZkSwvgqAXXjicc56Hj8MR/kvSi3Qusnw917IqyFQbSFBo
-        E1eO/i7B0Wq8w5WBy+tLceWWKaIsJk3jGxRdhFCvy/UXy+9trpUrjfQ6iUgoPuETqcQrPM8oYKBHy+xE
-        nbE/xvXMj2owVChp0KWlrDBr4h2hwissH4/QQoS6ShUz49Vr4MXPxcz3RVFdnkVVSQaaohRK85K5qYin
-        UB7LiseUGm0OM1+1q/CSCDMQD32h6/YPwe0yOd8/la7CLfU5xj40ZNOol3OvKgODJhV9qYwK9XVu5SdS
-        oopHnRNnklWVZjD1vsA49nCblIZqFYvDMhhJW9t34t5QAvRHw+tIumv9uBLiWSlo1KlMDmbBBwX3a5R0
-        PFKYLv06+qsg6PRhod2d2cfOvK2UcPHs0UlRsFcoy5fy7Y2MkfYkGvQKloak0BtmArtDRPA0Cx2ezLYe
-        Yar5EGP1+5CF23LG1SLP+AbFqiTGeuK4o8uh65k4SX+UKDgPXYEsPT/J3NPjTLccZrzBkS819nSmbybA
-        3QZHOzM7o0CdHU9vazJ3ddkwmAwvxXFf+DLX5sH0E2cmGp0YNUj4qN1Nn8IcaeguHPZYNRnh5RRkxlJX
-        kUXfgwg6c4XVdig20CrfSFPKJmoTLdHEWnHj6g4C3HYuOTlYu63ggpCbFkOu9AKZccEkXPZfflnO+bly
-        6tgBXA5K2C+xxd7GCuvtFmzdYsY2c7O1/+DfIgg/AQzo5RmgZJp7AAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="&gt;&gt;importToolStripMenuItem.Name" xml:space="preserve">
-    <value>importToolStripMenuItem</value>
-  </data>
-  <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>640, 480</value>
-  </data>
-  <data name="tagCategoryCombinationBox.Items2" xml:space="preserve">
-    <value>AND: Music must have all tags in all categories</value>
-  </data>
-  <data name="currentTagsLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>365, 36</value>
-  </data>
-  <data name="&gt;&gt;dummyToolStripMenuItem.Name" xml:space="preserve">
-    <value>dummyToolStripMenuItem</value>
-  </data>
-  <data name="groupBox1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left</value>
-  </data>
-  <data name="modeLabel.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="overallVolumeBar.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;label8.Name" xml:space="preserve">
-    <value>label8</value>
-  </data>
-  <data name="clearTagsButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Right</value>
-  </data>
-  <data name="&gt;&gt;label13.Name" xml:space="preserve">
-    <value>label13</value>
-  </data>
-  <data name="&gt;&gt;extrasToolStripMenuItem.Name" xml:space="preserve">
-    <value>extrasToolStripMenuItem</value>
-  </data>
-  <data name="label17.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;label15.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="label15.Text" xml:space="preserve">
-    <value>Currently selected tags:</value>
-  </data>
-  <data name="tagSelectionPanel.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
-  </data>
-  <data name="importToolStripMenuItem.Text" xml:space="preserve">
-    <value>Import ...</value>
-  </data>
-  <data name="&gt;&gt;importFileDialog.Type" xml:space="preserve">
-    <value>System.Windows.Forms.OpenFileDialog, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="label10.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="groupBox4.Text" xml:space="preserve">
-    <value>Modes</value>
-  </data>
-  <data name="&gt;&gt;label9.Name" xml:space="preserve">
-    <value>label9</value>
-  </data>
-  <data name="&gt;&gt;groupBox5.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;clientStateLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;repeatCurrentMusicToolStripMenuItem.Name" xml:space="preserve">
-    <value>repeatCurrentMusicToolStripMenuItem</value>
-  </data>
-  <data name="settingsButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 22</value>
-  </data>
-  <data name="&gt;&gt;musicLabel.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        AAABAAEAICAAAAEACACoCAAAFgAAACgAAAAgAAAAQAAAAAEACAAAAAAAgAQAAAAAAAAAAAAAAAEAAAAA
-        AAAAAAAAkJCQAC0oJgDT8v4A////ADV8lADX19cAzc3NAFx2fgApYnQAR1RaANrr8gCQtb4AbpSiALvR
-        2AC/yM0An7i+AKPM3AAHDxEAJlhpADxkbgB1oKsAv9ffABc5RACMoqsAfKWvAF9tcwCLuskAhbbFAKi/
-        zACww8sANE1WAB4jJABUY2sAGB8hAE9hZQCttrkAMj9CAC9DSACMv9EArODzAK/l+AC+5fYAiHt4AMLb
-        5gCaxNIA7vb4AJ/I1QC+4e4AZWttAPj4+AA4X2kACwMBAKbT4gCv0+AAyM7SADhaYwCp1ucAy+fyACQv
-        MQCyvcQAQnWCADo5OACgqawANkpOAEhqcwCNjY0ACiw4AKnR2gArMDMAlKGkAI+dpQAVMzwAIklUACpW
-        YgAlU2EAdH1/AIOMjwCKkJIAaZunAC4zNgDq5OMAhJacABQXGACMnKAAhpSYAG1oZgATLTMAEBgbAEx/
-        jQBlnKoAp8vZABkxOQAyYnAAQEFAAOjn5gBnZ2cAUZiqAJGRkQAoXm4AXYWQAH28zQB7ucsAoK2yAEt3
-        gQCbq7MAna+0AAMCAwBglqQAL2R0AH57egA8c4QAQXF9AFNTVAAsZnYAYZ2uAGSWpwByqLkAh5qfALC5
-        wACJmKEAYYaSABhDUABlipYAq7rAAGKKkwDI3+sAWpqrADhsegBHREQAT2lvAHx+fwBOgpAAES44ADdq
-        dwADHCMAs9rmABUvNwC42ucASUxMAFZbWwDf4eQA6uzvAImEgwDGxsYA8vLyALW1tQD09PQAS2dvAFFR
-        UQDg4OAAPHuMAJ6engBUUE8ASUlJADs3NQCXy94AGEdXAJXK2wCby9wAZ6i5AHm0wgB6h44Al5OSAJOX
-        mQAJHCMAYWFhAJCWmgBxbWkAQkVFABITEwB8iJAADxMVALWysAACBQYAPXJ/ACBLWQA6cH8AOzs6AJua
-        mwBPTUwAb21sAKaioQBeXVwAWVhXAG9vbwBDQ0MAdHR0AFCUpgBiY2MAY11cAE5OTwBbW1wAdXZ2AFxZ
-        WABhX14ARIeXAGKouQBTlqYAGklZAHmxxABJg5MAHUpaADl5iQBKhZUAKFpqAJPAzACIi4wAioeHAIaK
-        iwBSgo4AXpqpAAIHCQBThI8AlJ2fADlHSgCFiYgAdnFvAHNxcAB3eXoABQcIAB1EUgDu7/AAHUNPAB0+
-        SABem6wAZ6GyAJTBzgDs7vEAoKGhALy8vACYmJgAQXmKAHh4eACioqIAuLi4AL+8uwBborUAenl5ADtI
-        SwBaobMAMWl5ADNoeABYj6AAbqW3AEF8jACTnJ0AnpqZAIB/fgAMICcACh4lALiztAALHyYAg39+ABk+
-        SwAxVF4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKmQAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAKAAAAAAAAAdz84zAAAAAAAAAAAAAAAAAAAAAAAAAAANZQAAAAAAHk6P
-        K3YUAAAAAAAAAAAAAAAAAAAAAAAAonf0AAAAAAAsQtDR0KEAAAAAAAAAAAAAAAAAAAAAAAB4D08AAAAA
-        ADrY0EKP9tIAAAAAAAAAAAAAAAAAAAAA91GjddQAAABQDgF5CQjY0wAAAAAAAAAAAAAAAAAAAAAJEKT0
-        1EMXelIW0BHzCaQVIB8AAAAAAAAAAAAAAAAAAPNm2C1T1zsAA3z4GBF7ptbVpQAAAAAAAAAAAAAAAAAA
-        fuw8f0VEDNSpA2eop6PZVGj5AAAAAAAAAAAAAAAAAABiBH8Aq/tqfaoKA2lW29pVaPoAAAAAAAAAAAAA
-        AAAAABp/ANx+recZIgCsIUf9u0Zo/AAAAAAAAAAAAAAAAAAASP80WISDu/NXEq5rM4KBI4AA/gAAAAAA
-        AAAAAAAAAADeBC4Lflsb9Fps81k9r4ZKSYXdAAAAAAAAAAAAAAAAAAUDBYgFNRP0E+Kw89/L/s2HXEsA
-        AAAAAAAAAAAAAAAAijA2L+McdeLhxvPM9bFdS+CJbQAAAAAAAAAAAAAAAACz5I6NNyQ/9k1MMYyLXrI+
-        PgDLAAAAAAAAAAAAAAAAAACQMl/r65L7rbb3j261o7QCAMsAAAAAAAAAAAAAAAAAAJgEkZCt7OytP+Vi
-        2Oo/twBdCQAAAAAAAAAAAAAAAAAAAD+TButio5Ln55jmB0K4AMlvAAAAAAAAAAAAAAAAAAAAAOuWlQAA
-        ALmtkAe2YACUE7EAAAAAAAAAAAAAAAAAAAAAAJgA661QALvq6boAApfoSwAAAAAAAAAAAAAAAAAAAAAA
-        AJo/2L1QAAAAAJlAybwAAAAAAAAAAAAAAAAAAAAAAAAArexiAsHAv3G+AnDMYQAAAAAAAAAAAAAAAAAA
-        AAAAAADi81nvm8PuwgJBzPPtAAAAAAAAAAAAAAAAAAAAAAAA88TJcrH/JgIlOMTJxMQAAAAAAAAAAAAA
-        AAAAAAAAAABzf/PoY/PEzMbMxsTFAAAAAAAAAAAAAAAAAAAAAAAAyPTz8sfx6PXo88Tz9fAAAAAAAAAA
-        AAAAAAAAAAAAAAAAnCfIdMrJyfXzxPPzzAAAAAAAAAAAAAAAAAAAAAAAAAAAKSiedZ3EzLzMf8sAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAADmfyM1dscv1AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAP//P///vg///x4H//4cA//8HAP//BwB//gAAP/4AAB/+AAAf/gAAH/4AAB/+AAAf/gA
-        AD/4AAA/+AAAP/gAAD/4AAA//AAAP/wAAD/+AAA//wAAP/+AAD//wAB//8AAf//AAH//gAB//4AA//8A
-        AP//gAD//8AB///gA///+Af/
-</value>
-  </data>
-  <data name="&gt;&gt;tcpPortUpDown.Parent" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="&gt;&gt;exitToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;groupBox3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label3.Parent" xml:space="preserve">
-    <value>groupBox2</value>
-  </data>
-  <data name="label14.Text" xml:space="preserve">
-    <value>Selected category:</value>
-  </data>
-  <data name="repeatCurrentMusicToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>188, 22</value>
-  </data>
-  <data name="label7.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;label7.Name" xml:space="preserve">
-    <value>label7</value>
-  </data>
-  <data name="&gt;&gt;fadeOnlyOnChangeBox.Name" xml:space="preserve">
-    <value>fadeOnlyOnChangeBox</value>
-  </data>
-  <data name="&gt;&gt;groupBox7.Parent" xml:space="preserve">
-    <value>tagsPanel</value>
-  </data>
-  <data name="label15.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;modesList.Name" xml:space="preserve">
-    <value>modesList</value>
-  </data>
-  <data name="&gt;&gt;musicList.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ListBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="previousMusicToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>188, 22</value>
-  </data>
-  <data name="previousButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
-    <value>Magenta</value>
-  </data>
-  <data name="&gt;&gt;musicList.Name" xml:space="preserve">
-    <value>musicList</value>
-  </data>
-  <data name="&gt;&gt;label10.Parent" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="label4.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;label12.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="groupBox3.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left</value>
-  </data>
-  <data name="clientStateLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>69, 27</value>
-  </data>
-  <data name="label6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>55, 17</value>
-  </data>
-  <data name="&gt;&gt;playToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label6.Parent" xml:space="preserve">
-    <value>groupBox3</value>
-  </data>
-  <data name="repeatButton.Text" xml:space="preserve">
-    <value>Repeat Current Music</value>
-  </data>
-  <data name="&gt;&gt;label8.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;recentToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;playToolStripMenuItem.Name" xml:space="preserve">
-    <value>playToolStripMenuItem</value>
-  </data>
-  <data name="menuStrip1.Text" xml:space="preserve">
-    <value>menuStrip1</value>
-  </data>
-  <data name="helpOnlineToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>166, 22</value>
-  </data>
-  <data name="&gt;&gt;broadCastTimer.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Timer, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="showKeysMenuItem.Text" xml:space="preserve">
-    <value>Show Keys</value>
-  </data>
-  <data name="&gt;&gt;modeLabel.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="&gt;&gt;menuStrip1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="disconnectButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>301, 21</value>
-  </data>
-  <data name="&gt;&gt;stopButton.Name" xml:space="preserve">
-    <value>stopButton</value>
-  </data>
-  <data name="stopAllToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>188, 22</value>
-  </data>
-  <data name="&gt;&gt;label11.Parent" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="label5.Text" xml:space="preserve">
-    <value>Mode:</value>
-  </data>
-  <data name="nextButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
-    <value>Magenta</value>
-  </data>
-  <data name="editorButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
-    <value>Magenta</value>
-  </data>
-  <data name="aboutButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsIAAA7CARUoSoAAAAJnSURBVDhPbZLtS1NxFMfvf9F/EARBEEFEQdCrXgRGvTMM
-        ClN8URBYkaDUC31RCCZFkj3YnGhmpuh0s+FS51Nr6iLnfMB0W27uSe/udrfr7vp0vdtQs8+Ly+X7Pef8
-        Ducc4V98YYXhHyJ9DoneaYnu8Qg2Z4DNaIJ8yGH+AGNuEeNoBPuKzFJAYS2kshqQ+er0Yuibo2NgFjm9
-        c7BIVss0O2N0TkZQtSIFtpMqW8mM/i8m0rQPOKlu7EeUUnsFHIvbNPZ59aACgajMmduTnCr7Qjgm5VV4
-        0zVGbZOZ1G4HybTKq/4Vrb2tvJ1jJ5Ol1jBPbYuLtJJ7PUeasmoDo45lhG/uEPWt3/PGHhshmbnlMP5w
-        PK9oBRVF+6aw2Bzce9qN0GNb4vkHR87dx+eRX5wosVBUadUmnWtbzaioaQmPe5HSqvcIQ1PrvPw4o5v7
-        cXiCnC4e5fzNQXzhmK5lsyqppIh/bZXymlYEu2uDeqNDM3aXtcfcSohz16xcLDcR3BJ1LaOqSGIEj2eB
-        Gw9bEJa9UeqaR/QB7ce9HuXsFQuXSk1IiqxrcUlCjm9ittq5VW1E2E1q6pzCYl/UAwpM/Axx5GQnRy+0
-        4YvmhhYNbyKLfipq3vG6azy36xXt9UcvLIjJlB60S9ugh2NFbRy/bOCTdUGbltZ6Kkh79xDXH7QQ207u
-        HcqUa50nzWb8waCWukNWkUgoMRKJCFI0iBL302sa5uqdJmbmvYfvfNbto6qhh5qGLqadLlLSb7Yja9hG
-        J7hfZ+RuXScz7v8kFghpO+0wOah43E5x5VtKtBarn/UyPOU5eNOCIPwFCBKiGq2sGKsAAAAASUVORK5C
-        YII=
-</value>
-  </data>
-  <data name="&gt;&gt;nextMusicTitleToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="groupBox4.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left</value>
-  </data>
-  <data name="label15.Size" type="System.Drawing.Size, System.Drawing">
-    <value>117, 13</value>
-  </data>
-  <data name="&gt;&gt;label17.Name" xml:space="preserve">
-    <value>label17</value>
-  </data>
-  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>37, 17</value>
-  </data>
-  <data name="label5.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 52</value>
-  </data>
-  <data name="&gt;&gt;label10.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="currentTagsLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="&gt;&gt;tcpPortUpDown.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;label14.Name" xml:space="preserve">
-    <value>label14</value>
-  </data>
-  <data name="&gt;&gt;label2.Name" xml:space="preserve">
-    <value>label2</value>
-  </data>
-  <data name="modeLabel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
-  <data name="&gt;&gt;notifyIcon.Type" xml:space="preserve">
-    <value>System.Windows.Forms.NotifyIcon, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="toolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>6, 25</value>
-  </data>
-  <data name="&gt;&gt;startEditorToolStripMenuItem.Name" xml:space="preserve">
-    <value>startEditorToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;label16.Parent" xml:space="preserve">
-    <value>groupBox6</value>
-  </data>
-  <data name="&gt;&gt;helpToolStripMenuItem.Name" xml:space="preserve">
-    <value>helpToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;groupBox4.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="elementsPanel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
-  </data>
-  <data name="&gt;&gt;helpOnlineToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="modeLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>328, 17</value>
-  </data>
-  <data name="previousButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABoAAAAUCAYAAACTQC2+AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsIAAA7CARUoSoAAAAGESURBVEhLYxgFAwpCV/1nhjJpB+rr/zOldDyWgXLJA4Wz
-        nv+vn/f0V3jH3TdQIRQAsiRx2gel8PYH/6FC5IHcmc/+rzry/j82g0DBFT/ptUZ894P/wQ3XKLMoY8rT
-        /wv3fcAwCGRJQudTW5/6B7+W7v//37/6AmUWJfQ8+T9ty3sUg0CWJPY+so9ov/8fZEnmrP//vUpPUGZR
-        ZNej/72rP8ANglkS2noPbEnrOqBvOv/+d8k/QJlFgc0P/9fNfwc3yLH4jFNwy93/i/b+/98BtCRjzs//
-        dnU//9tnbKfMIo+q+//zp71BMUjGe2WgXfHt/+lzfv/37/r2X6fw3X+LhPWUWWRfevd/9uTXGAZJe6/w
-        0k85/9+k6MV/laxP/40jl1FmkUXenf+p/a+xGiTps8rGIOnEf9m0r/91g+dRZpFh1u3/YS0vcRok6bnM
-        VT/18n8N32mUWaSTduO/X/VDvAZJ+azxVfGYQJlFdlmXf4EMwWtQ6CpmKe+1flDeKKA2YGAAAJmq5TA6
-        GwaUAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="&gt;&gt;groupBox4.Name" xml:space="preserve">
-    <value>groupBox4</value>
-  </data>
-  <data name="&gt;&gt;toolStrip1.Name" xml:space="preserve">
-    <value>toolStrip1</value>
-  </data>
-  <data name="groupBox5.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
-  </data>
-  <data name="checkForUpdateToolStripMenuItem.Text" xml:space="preserve">
-    <value>Check for Update</value>
-  </data>
-  <data name="&gt;&gt;tagFadeUpDown.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="musicVolumeBar.Size" type="System.Drawing.Size, System.Drawing">
-    <value>338, 31</value>
-  </data>
-  <data name="label13.Size" type="System.Drawing.Size, System.Drawing">
-    <value>220, 13</value>
-  </data>
-  <data name="&gt;&gt;tagSelectionPanel.Parent" xml:space="preserve">
-    <value>groupBox7</value>
-  </data>
-  <data name="label17.Size" type="System.Drawing.Size, System.Drawing">
-    <value>20, 13</value>
-  </data>
-  <data name="extrasToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>49, 20</value>
-  </data>
-  <data name="&gt;&gt;label11.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="label2.Text" xml:space="preserve">
-    <value>Overall:</value>
-  </data>
-  <data name="&gt;&gt;tagsPanel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="messagesToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGOfPtRkwAAACBjSFJNAAB6
-        JQAAgIMAAPn/AACA6QAAdTAAAOpgAAA6mAAAF2+SX8VGAAAACXBIWXMAAAsMAAALDAE/QCLIAAACGElE
-        QVQ4T52S0U9SURzH+Wd8rNyaD63Htrb+i1oPbj313FasmlvMpZZwgbyQeAUCQpCrcL2pgaQYIHOQsUxs
-        a244W7OQQuDe++2cg1In2lo9fLd7zu73c36fe64JgMkfz4PGN5/FtJyFFFuHJ7IKdzgNMZTEk8Ay7L5F
-        CNMqrJLSDe0ygG8+h+/k4W850gxU6zq2DzQMXLlOdn4DBAKA+R4w7ugt1w3gU0NH5bOGdL7MA7zya/bS
-        nfvAqzTQ15dga09QhehTIEzFMeaSMeyYRXGvjaXMWx4wNZthBecE0N+v4MZD/vQvLQN7X3VsVTVkdlqI
-        p0o8YDK6yhV+zZEO4m3gHfHO7raw+KaJ6ItNHuCeSbOXIQnAtctkditbfyPeBw2DeRc+tvGy3ERs4xgh
-        pcADxGCyA7h6CZBtCF84x9Zu/wLsxP+Raw7DzhgeCFE8X28gQK6cAzifLZ9MYIP34llsCKMd7xrx3tew
-        RryVYhMz2WP40nVI0QwPcJCfhAJOUyP3vU/mp965D+2Od75Tnlw6hBhI8QDBq7LiYSUOLWLCTjHW9U6e
-        eJ+WbXIV4x6VB9ikBQagZegpmAfPsPt2Sgk8fjqHkYk4hqwRmEfDsPgrsNhjfwZUNmUM3TyPkN/V9Q6u
-        /TyZlm+LJdwdC/UCarqBrfe7yBW3sZIrI7FSQlgtsA9GnenY9GRavmXx9gLoxr+mC/j/wPQDyvclEgJx
-        Ig4AAAAASUVORK5CYII=
-</value>
-  </data>
-  <data name="&gt;&gt;previousButton.Name" xml:space="preserve">
-    <value>previousButton</value>
-  </data>
-  <data name="musicTagCategoryBox.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="groupBox4.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;tagCategoryCombinationBox.Parent" xml:space="preserve">
-    <value>groupBox6</value>
-  </data>
-  <data name="&gt;&gt;groupBox2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="label3.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="groupBox3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 165</value>
-  </data>
-  <data name="openButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsIAAA7CARUoSoAAAAJ1SURBVDhPvZJZSNRRHEb/Dz30kkVmJEKSJWKBGBhSPYgY
-        Ua6UKyipYblRZijmuDTjrrPoqFMq2ow6jTpaWYphhVAoEqHlQompWVBUiqmhkttpHEWyfAiCPvjgcu89
-        hx+XK/yXZBZXu0iUOq7lVpKt0pMk1SSvHf1dQuJUeEfKg1bWlxIrzNIMsvgMtW9wXDFCgzbf31B+b0tt
-        ttxIb5JIUYmHT7Qcr8gCo4DBXg1zk/XG/pjQsTCmRl8pp1GbnrbGbIh3lAKvCCXu4UUI9VUKZidqNsBL
-        n0tY6I+l5lYu1aVZqIvTKCtI5aZMRFFOAmue1dRqpMx+1azDywaYQRH0h2/aPwS3y3P4/qlsHW5tkBr7
-        UJ9Hky6He9VZ6NXp6MokVKquU6FMplQhQiVNXJVVl2Ux/b7QOPZIu5jGGgVLIxIYzdjYd4a94SQYiIPX
-        0fTU+RET6lklqFXpTA3lwgcZ92vldD6SrV76dfRXwdDlw2KHG3OPnXlbZUfYOaepK2Eeh4RypZhvbySM
-        dqTQqJOxPCyGvohVsOe8AQxgsdOTubaTTLccZ7zhMJJIawJcTAuMb1CiSGG8N5E7WindzwyTDMQaBBeg
-        O4jl52eYf3qamVYnJhod+FJrS1fmDgLdrHCw2WZjFKjyRPS1pXJXmwdDqfDSMO4LX+bb3Zl54sxkkyNj
-        ejs+ag7QLzNFHL4f+4PmzUZ4JYXZCdRX5tL/IIqufGG9nbIttOVspTltO3XJZqgTLLhx1ZJA133LjvaW
-        rmu4IORnxJMvvkh2YghJl/2JOe9JqN8Jzp46issxO47YWWNrZcFe813s3mnCHlOTjf/g3yIIPwHVOuT9
-        xNmtFAAAAABJRU5ErkJggg==
-</value>
-  </data>
-  <data name="groupBox6.Text" xml:space="preserve">
-    <value>Categories</value>
-  </data>
-  <data name="groupBox6.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
-  <data name="elementsLabel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
-  <data name="tagSelectionPanel.AutoScroll" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="musicLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>69, 107</value>
-  </data>
-  <data name="&gt;&gt;toolStrip1.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="label11.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;label16.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;groupBox6.Name" xml:space="preserve">
-    <value>groupBox6</value>
-  </data>
-  <data name="label8.Text" xml:space="preserve">
-    <value>Sounds:</value>
-  </data>
-  <data name="projectNameLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>328, 17</value>
-  </data>
-  <data name="&gt;&gt;editorButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;musicList.Parent" xml:space="preserve">
-    <value>groupBox5</value>
-  </data>
-  <data name="&gt;&gt;previousButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="musicVolumeBar.AutoSize" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="elementsLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>69, 79</value>
-  </data>
-  <data name="&gt;&gt;disconnectButton.Parent" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="tagsPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>383, 457</value>
-  </data>
-  <data name="aboutToolStripMenuItem.Text" xml:space="preserve">
-    <value>About ...</value>
-  </data>
-  <data name="&gt;&gt;groupBox2.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="groupBox7.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
-  </data>
-  <data name="currentTagsLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 260</value>
-  </data>
-  <data name="label14.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;currentTagsLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="aboutButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
-    <value>Magenta</value>
-  </data>
-  <data name="&gt;&gt;ipAddressBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label1.Name" xml:space="preserve">
-    <value>label1</value>
-  </data>
-  <data name="&gt;&gt;label15.Parent" xml:space="preserve">
-    <value>groupBox7</value>
-  </data>
-  <data name="&gt;&gt;tagsPanel.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="repeatCurrentMusicToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGOfPtRkwAAACBjSFJNAAB6
-        JQAAgIMAAPn/AACA6QAAdTAAAOpgAAA6mAAAF2+SX8VGAAAACXBIWXMAAAsMAAALDAE/QCLIAAACHElE
-        QVQ4T2P4//8/RRirICkYqyAynr7zz38Q7t/07X/z8rf/y2Y9/p/VfwsoBZFHUVy38k9w+YKPq32brkrB
-        xECaOzb8/1+26Nf/xL5n/z3Kzk1F1gNnVCz+rdOy+u+p1P4n/61St9yBifes//K/YN63/zF9H/+7Vdz+
-        b5t7/Ih56iFNmDzcgMql3yZULP723zn/9H+doAXvYOK1C1/8D2u999+59OYni+wL/42T9v3Xi97cA5OH
-        G1Cz9POFnOnv/5sm7/+vG7l+Lkw8d9Kd/w4Fp3NcSi9Ps807918vZtt/3bCl52HycAMal3/6nD717X/j
-        hL3/9eN2WIHE8vJusyZ1XAEy/zOEtd6xDm66BzZAK2D2Z5g+uAH1Sz99Tpv67r9Z6n64Acg4Z9Z7m7Qp
-        b/4bxu3CbkDFwo8XUqe8/W+fe/q/debRmTBxGK5d/mdexrQP//VjdvzXCV1yASYOV5A99WVffO/T/15V
-        N/4H1t98mzbxxZz8me9syhd8s2lY/Xd+/Yrf74Ob7//XDV/1XydsxUQMA8KabmsH1l8/6lF25b9v7Z3/
-        cb3P/2dOe/c/b+bH/zmzPv0HaQaGPsj209pha3UwDABh1+LzvnY5x44ax+/+rxuzFYxBgaYXswUY8suB
-        mhed1gtdFoysB8UAEDaM36upG7GmTyd4wUUtvylfQFg7cO4l3bAlk7RCV+qiq0fhkIOxChKP/zMAAKH7
-        vWcksHU/AAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="label15.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="groupBox7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>380, 308</value>
-  </data>
-  <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>36, 17</value>
-  </data>
-  <data name="projectNameLabel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
-  <data name="&gt;&gt;label17.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="clearTagsButton.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
-  </data>
-  <data name="helpToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>44, 20</value>
-  </data>
-  <data name="projectToolStripMenuItem.Text" xml:space="preserve">
-    <value>Project</value>
-  </data>
-  <data name="exitToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>134, 22</value>
-  </data>
-  <data name="clientStateLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>226, 17</value>
-  </data>
-  <data name="label9.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;label2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="previousButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 22</value>
+  <data name="&gt;&gt;groupBox6.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="tagCategoryCombinationBox.Items1" xml:space="preserve">
     <value>Category-AND: Music must have at least one tag in ALL categories</value>
   </data>
-  <data name="label13.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="fadeOnlyOnChangeBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>216, 110</value>
-  </data>
-  <data name="fadeOnlyOnChangeBox.Text" xml:space="preserve">
-    <value>Only on tag changes</value>
-  </data>
-  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 27</value>
-  </data>
-  <data name="&gt;&gt;soundVolumeBar.Parent" xml:space="preserve">
-    <value>groupBox2</value>
-  </data>
-  <data name="menuStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1083, 24</value>
-  </data>
-  <data name="soundVolumeBar.Location" type="System.Drawing.Point, System.Drawing">
-    <value>55, 72</value>
-  </data>
-  <data name="stopButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 22</value>
-  </data>
-  <data name="fadeOnlyOnChangeBox.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="startEditorToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>175, 22</value>
-  </data>
-  <data name="stopButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABUAAAAUCAYAAABiS3YzAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsIAAA7CARUoSoAAAAFhSURBVDhP7ZLdK0NhHMe//4QLf4Daq5fWaOGGnW1nm2PO
-        lHJBuVlRlJKXtBM10mTZNDde7lbEhVJzodwtxAUjQoaDnW3nQpKyK+dZzz/wKEXtc/3p2+/lizL/nc7i
-        MMSPEYjqOITXINyZaTivZuE8C4M7jcB+vEhNBkigSzXAnzXCp9jgyjnQlveiXfVDeO5DbfycmgyQCT1y
-        FbwFaynMm++CWwlAkAfRuDsGU/SGmgyQlTuyJvAKB77QDf5pALw8Acd1CLbtGMzzj9RkgNyQUxvgy4na
-        tAG45VE47kKwp6OwrG5CF8pRkwHyFEGxw6P2gH8ZguthBtzFMlqOEqiJJ6GX3qjJwO+EatURCz4IWe2W
-        t1NwpmNoTSXQtLeD6oV96KRPajJAuui570Xz1iTqN6KwrmsTRpIwzx3AIB2iMlikJgOk3Ja1FCwrJ6hb
-        uoQxnCk9Ry+9o6L/62ehZf4QwDda843VHQGPpgAAAABJRU5ErkJggg==
-</value>
-  </data>
-  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>34, 17</value>
-  </data>
-  <data name="&gt;&gt;label4.Name" xml:space="preserve">
-    <value>label4</value>
-  </data>
-  <data name="fadeOnlyOnChangeBox.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
-  </data>
-  <data name="musicList.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;musicLabel.Parent" xml:space="preserve">
-    <value>groupBox3</value>
-  </data>
-  <data name="&gt;&gt;label12.Parent" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="udpPortUpDown.Location" type="System.Drawing.Point, System.Drawing">
-    <value>77, 53</value>
-  </data>
-  <data name="clearTagsButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
-  </data>
-  <data name="&gt;&gt;settingsButton.Name" xml:space="preserve">
-    <value>settingsButton</value>
-  </data>
-  <data name="&gt;&gt;importToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="modesList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>237, 446</value>
-  </data>
-  <data name="&gt;&gt;label15.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="ipAddressBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>77, 79</value>
-  </data>
-  <data name="&gt;&gt;label14.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
-    <value>groupBox2</value>
-  </data>
-  <data name="label3.Text" xml:space="preserve">
-    <value>Music:</value>
-  </data>
-  <data name="soundsLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>69, 157</value>
-  </data>
-  <data name="disconnectButton.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>Player</value>
-  </data>
-  <data name="clearTagsButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>299, 228</value>
-  </data>
-  <data name="&gt;&gt;menuStrip1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.MenuStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;clientStateLabel.Name" xml:space="preserve">
-    <value>clientStateLabel</value>
-  </data>
-  <data name="&gt;&gt;soundVolumeBar.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;label13.Parent" xml:space="preserve">
-    <value>groupBox6</value>
-  </data>
-  <data name="toolStrip1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 24</value>
+  <data name="label1.Text" xml:space="preserve">
+    <value>State:</value>
   </data>
   <data name="label16.Size" type="System.Drawing.Size, System.Drawing">
     <value>109, 13</value>
-  </data>
-  <data name="importToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>134, 22</value>
-  </data>
-  <data name="groupBox1.Text" xml:space="preserve">
-    <value>Network</value>
-  </data>
-  <data name="label16.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 111</value>
-  </data>
-  <data name="messagesButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
-    <value>Magenta</value>
-  </data>
-  <data name="exitToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Alt+F4</value>
-  </data>
-  <data name="label17.Text" xml:space="preserve">
-    <value>ms</value>
-  </data>
-  <data name="&gt;&gt;musicVolumeBar.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TrackBar, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;musicTagCategoryBox.Name" xml:space="preserve">
-    <value>musicTagCategoryBox</value>
-  </data>
-  <data name="label5.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="label13.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;elementsLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="modesList.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 19</value>
-  </data>
-  <data name="aboutToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        R0lGODlhDwAPAIeUABcyqiZCpSlPpSxQojtSuS9duTdawjxbvD9itzRmu0xktUhntTltx1NumE90vFp0
-        nl13oF53oGF5oGR6oWV9pGZ9omd+o2l+n2mBp3GGqnaGpHWLrnqQsH6QrH2RsX2StICVuYWYuIabwYqb
-        uIWg0YWi1Y2jzI2ky5Spy5iqyJerzpysxZ2sw6euupKz4pq03KKz0Ki1y6e2zbG1vqi2z6W32K2817i8
-        xLC/2rm/y6TC7K/B37/Cxq7F7LnE2arH7LrI4bHJ877I2LPL88LL27jN7sDN4r/N58nN0cTR5r7S8cjR
-        4cbU6sPW8c7V4srW6s7W4s/W48vY6NjW2cvZ8NjY18Tc9tDb69Dc6tbh7eTg3tvi7dzi7drn+d7n797n
-        9uTo6ODq/OPr7ubq9uTr8uPr+ePt8u3r6fDs4Oft9unt8+nt9Ort8+jv8evu8/Pt6O7w9fPx7Pbx5Pby
-        6fny5PLz8/fz5fHz9/T07PH0+O/1+/H19/D1/Pf18fT57vP59v/36PX4/Pb4+vf4+vz48/j5+/r5+f35
-        8/r7/fz7/Pv8/P/88f39/P39/v3+//z/////9///+P//+v7/////////////////////////////////
-        ////////////////////////////////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////////////////////////////
-        /yH+EUNyZWF0ZWQgd2l0aCBHSU1QACH/C05FVFNDQVBFMi4wAwEBAAAh+QQBCgD/ACwAAAAADwAPAAAI
-        1AD/CfxXRsmQID2OrBk4cFITHVa6hPliBAYNQQMdFfnxiBIlPnoo5ZHx4Y5AKi48UkrDIIEbjyxCDAr0
-        wotKRCVIFPIYqQKRJyZUUhpzhYxHQ5BybMCBQuiOAg7UUEpEaMoEICqESjGAQAwlRn20WEhyopFKLAcW
-        tKGkKE4VCVtEIFKZhYCCP5TqzLlBAVEKHyqZAAhghtIZORdW/OMCYo/HGgIG2FgEqEUEOAKXjAAj6ZAf
-        PG/ozGjghGEUDh2Q2EHDQ0MGKAwFsomB4QEED0JMCgwIADs=
-</value>
-  </data>
-  <data name="openButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 22</value>
-  </data>
-  <data name="projectNameLabel.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;tagFadeUpDown.Type" xml:space="preserve">
-    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="label5.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;label9.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="label7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>37, 17</value>
-  </data>
-  <data name="&gt;&gt;toolStripSeparator2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;musicVolumeBar.Name" xml:space="preserve">
-    <value>musicVolumeBar</value>
-  </data>
-  <data name="&gt;&gt;musicVolumeBar.ZOrder" xml:space="preserve">
-    <value>2</value>
   </data>
   <data name="notifyIcon.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1702,56 +340,1380 @@
         AP//gAD//8AB///gA///+Af/
 </value>
   </data>
-  <data name="groupBox2.Text" xml:space="preserve">
-    <value>Volume</value>
+  <data name="&gt;&gt;soundVolumeBar.Name" xml:space="preserve">
+    <value>soundVolumeBar</value>
   </data>
-  <data name="&gt;&gt;dummyToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="musicVolumeBar.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
   </data>
-  <data name="elementsPanel.AutoScroll" type="System.Boolean, mscorlib">
+  <data name="webAddressLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="menuStrip1.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="helpOnlineToolStripMenuItem.Text" xml:space="preserve">
+    <value>Help (Online) ...</value>
+  </data>
+  <data name="&gt;&gt;webAddressLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;overallVolumeBar.Parent" xml:space="preserve">
+    <value>groupBox2</value>
+  </data>
+  <data name="&gt;&gt;label15.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="networkSettingsButton.Text" xml:space="preserve">
+    <value>Settings ...</value>
+  </data>
+  <data name="&gt;&gt;groupBox5.Name" xml:space="preserve">
+    <value>groupBox5</value>
+  </data>
+  <data name="label17.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="openToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>134, 22</value>
+  <data name="tagCategoryCombinationBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>368, 21</value>
   </data>
-  <data name="label6.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="&gt;&gt;tagSelectionPanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.FlowLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="toolStripSeparator2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>131, 6</value>
+  <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 48</value>
   </data>
-  <data name="&gt;&gt;toolStrip1.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="label8.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
   </data>
-  <data name="previousMusicToolStripMenuItem.Text" xml:space="preserve">
-    <value>Previous Music Title</value>
+  <data name="helpToolStripMenuItem.Text" xml:space="preserve">
+    <value>Help</value>
   </data>
-  <data name="&gt;&gt;label13.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="tagCategoryCombinationBox.Items2" xml:space="preserve">
+    <value>AND: Music must have all tags in all categories</value>
   </data>
-  <data name="&gt;&gt;groupBox6.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;groupBox6.Parent" xml:space="preserve">
+    <value>tagsPanel</value>
+  </data>
+  <data name="&gt;&gt;tagFadeUpDown.Parent" xml:space="preserve">
+    <value>groupBox6</value>
+  </data>
+  <data name="&gt;&gt;groupBox3.Name" xml:space="preserve">
+    <value>groupBox3</value>
+  </data>
+  <data name="&gt;&gt;groupBox4.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="label12.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
+  <data name="openButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 22</value>
+  </data>
+  <data name="projectToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>56, 20</value>
+  </data>
+  <data name="&gt;&gt;tagsPanel.Parent" xml:space="preserve">
+    <value>groupBox5</value>
+  </data>
+  <data name="&gt;&gt;label4.Parent" xml:space="preserve">
+    <value>groupBox2</value>
+  </data>
+  <data name="stopButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="label6.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 79</value>
+  </data>
+  <data name="&gt;&gt;modesList.Name" xml:space="preserve">
+    <value>modesList</value>
+  </data>
+  <data name="soundVolumeBar.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="groupBox2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>403, 107</value>
+  </data>
+  <data name="groupBox3.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;label5.Parent" xml:space="preserve">
+    <value>groupBox3</value>
+  </data>
+  <data name="tagCategoryCombinationBox.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;musicTagCategoryBox.Parent" xml:space="preserve">
+    <value>groupBox6</value>
+  </data>
+  <data name="nextButton.Text" xml:space="preserve">
+    <value>Next Music Title</value>
+  </data>
+  <data name="&gt;&gt;fadeOnlyOnChangeBox.Name" xml:space="preserve">
+    <value>fadeOnlyOnChangeBox</value>
+  </data>
+  <data name="groupBox7.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 146</value>
+  </data>
+  <data name="toolStrip1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 24</value>
+  </data>
+  <data name="messagesToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGOfPtRkwAAACBjSFJNAAB6
+        JQAAgIMAAPn/AACA6QAAdTAAAOpgAAA6mAAAF2+SX8VGAAAACXBIWXMAAAsMAAALDAE/QCLIAAACGElE
+        QVQ4T52S0U9SURzH+Wd8rNyaD63Htrb+i1oPbj313FasmlvMpZZwgbyQeAUCQpCrcL2pgaQYIHOQsUxs
+        a244W7OQQuDe++2cg1In2lo9fLd7zu73c36fe64JgMkfz4PGN5/FtJyFFFuHJ7IKdzgNMZTEk8Ay7L5F
+        CNMqrJLSDe0ygG8+h+/k4W850gxU6zq2DzQMXLlOdn4DBAKA+R4w7ugt1w3gU0NH5bOGdL7MA7zya/bS
+        nfvAqzTQ15dga09QhehTIEzFMeaSMeyYRXGvjaXMWx4wNZthBecE0N+v4MZD/vQvLQN7X3VsVTVkdlqI
+        p0o8YDK6yhV+zZEO4m3gHfHO7raw+KaJ6ItNHuCeSbOXIQnAtctkditbfyPeBw2DeRc+tvGy3ERs4xgh
+        pcADxGCyA7h6CZBtCF84x9Zu/wLsxP+Raw7DzhgeCFE8X28gQK6cAzifLZ9MYIP34llsCKMd7xrx3tew
+        RryVYhMz2WP40nVI0QwPcJCfhAJOUyP3vU/mp965D+2Od75Tnlw6hBhI8QDBq7LiYSUOLWLCTjHW9U6e
+        eJ+WbXIV4x6VB9ikBQagZegpmAfPsPt2Sgk8fjqHkYk4hqwRmEfDsPgrsNhjfwZUNmUM3TyPkN/V9Q6u
+        /TyZlm+LJdwdC/UCarqBrfe7yBW3sZIrI7FSQlgtsA9GnenY9GRavmXx9gLoxr+mC/j/wPQDyvclEgJx
+        Ig4AAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="&gt;&gt;saveFileDialog.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SaveFileDialog, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkForUpdateToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="fadeOnlyOnChangeBox.Text" xml:space="preserve">
+    <value>Only on tag changes</value>
+  </data>
+  <data name="&gt;&gt;recentToolStripMenuItem.Name" xml:space="preserve">
+    <value>recentToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;webAddressLabel.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="aboutToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>166, 22</value>
+  </data>
+  <data name="&gt;&gt;broadCastTimer.Name" xml:space="preserve">
+    <value>broadCastTimer</value>
+  </data>
+  <data name="previousButton.Text" xml:space="preserve">
+    <value>Previous Music Title</value>
+  </data>
+  <data name="groupBox1.Text" xml:space="preserve">
+    <value>Network</value>
+  </data>
+  <data name="&gt;&gt;projectNameLabel.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="nextButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAUCAYAAACXtf2DAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsIAAA7CARUoSoAAAAGGSURBVEhLYxgFZIHQVf+ZoUzagJSOxzL19f+ZoFzqg8JZ
+        z/8nTvughMsSkHz9vKe/wjvuvoEKkQZyZz77n9B973/8pNca2IILJL/qyPv/4e0P/kOFSAMZU57+n7f/
+        9/+ghpuvEzqf2qJbApJfuO/D/+CGa+RZkNDz5P/sfb/+d279+9+t9PL/xN5H9siWgOSnbXn/37/6AnkW
+        RHY9+j9l26//JUv//k+Y/ve/Te5ZFEtA8r2rP/z3Kj1BngWBzQ//t659DzbcuOTLf+noa/+NI5f9dyg4
+        HQ+Tr5v/7r9L/gHyLPCouv+/ZO47uOGKLj3/ZbxXBkKlwfL50978t8/YTp4F9qV3/we2PIMbLu29wgsq
+        BQYg+ezJr/9bJKwnzwKLvDv/bQqugA2X9FllAxWGA5B8av9rcLBBhUgDhlm3IYZ7LnOFCqEAkHxYy8v/
+        usHzyLNAJ+3GfymfNb5QLgYAyftVP/yv4TuNPAukvNf6AUs8nAWeXdblXyoeE/6DMFRoFJALGBgAfJfk
+        R+0a1b8AAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="menuStrip1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="&gt;&gt;startEditorToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="toolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>6, 25</value>
+  </data>
+  <data name="groupBox3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>403, 266</value>
+  </data>
+  <data name="menuStrip1.Text" xml:space="preserve">
+    <value>menuStrip1</value>
+  </data>
+  <data name="&gt;&gt;modesList.Parent" xml:space="preserve">
+    <value>groupBox4</value>
+  </data>
+  <data name="openButton.Text" xml:space="preserve">
+    <value>Open Project ...</value>
+  </data>
+  <data name="currentTagsLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="globalKeyHookItem.Text" xml:space="preserve">
+    <value>Global Key Capture</value>
+  </data>
+  <data name="&gt;&gt;label7.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="repeatCurrentMusicToolStripMenuItem.Text" xml:space="preserve">
+    <value>Repeat Current Music</value>
+  </data>
+  <data name="startEditorToolStripMenuItem.Text" xml:space="preserve">
+    <value>Start Editor</value>
+  </data>
+  <data name="&gt;&gt;tagCategoryCombinationBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;groupBox2.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;label7.Parent" xml:space="preserve">
+    <value>groupBox3</value>
+  </data>
+  <data name="soundVolumeBar.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="recentToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>134, 22</value>
+  </data>
+  <data name="&gt;&gt;label16.Name" xml:space="preserve">
+    <value>label16</value>
+  </data>
+  <data name="stopButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 22</value>
+  </data>
+  <data name="&gt;&gt;label10.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;groupBox7.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="groupBox4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>249, 514</value>
+  </data>
+  <data name="&gt;&gt;label17.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="repeatButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsIAAA7CARUoSoAAAAIISURBVDhPYxj8YPrOP/9BuH/Tt//Ny9/+L5v1+H9W/63/
+        UGlUULvid3D5/I+r/eqvS0GFwAZ0bPj/v2zRr/+Jfc/+u5WdnQqVQgWVi37qtKz6cyq1/8l/s6RNd6DC
+        DD3rv/wvmPftf0zfx/9uFbf/2+YeP2KefEATKo0AFUu+TahY/O2/c/7p/6pBc99BhRlqF774H9Z6779z
+        9s1PFtkX/hsn7fuvG72pByqNAFVLP17Imf7+v2ny/v+6kevnQoUZcifd+W+fdzrHqfTSNNu8c//1Yrb9
+        1w1beh4qjQCN8z99Tp/69r9xwt7/BjE7rEBiaWlnWJM6roADLKz1jnVw0z2wAfJesz+DxFBACdCAtKnv
+        /pul7ocbgAyyZr6zSZvy5r9h3C7sBlQs+Hghdcrb//a5p/9bpR+ZCRWGg5plv+dlTPvwXz9mx3+dkCUX
+        oMIIkD31ZV9879P/XlU3/vtW3HybOvHFnDygreULv9k0rP47v3z59/fBzff/64av+q8VtmIiVBsCRDTd
+        1g6svXrUo+zKf9/aO//jep//z5z27n/ezI//c2Z9+g/SrBe9+b9m6JLTGmFrdaDaUIFr8QVfu+xjR43j
+        d//XjdkKxqBA04vZAgz55UDNi07rhS0NhirHDgxjd2nqhK3p0wyYe1HJb8oXENYKnH1JN3TJJPWQlbpQ
+        ZYMGMDAAAE5bDhZeNnGYAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="&gt;&gt;importFileDialog.Name" xml:space="preserve">
+    <value>importFileDialog</value>
+  </data>
+  <data name="toolStrip1.Text" xml:space="preserve">
+    <value>toolStrip1</value>
+  </data>
+  <data name="groupBox5.Location" type="System.Drawing.Point, System.Drawing">
+    <value>676, 52</value>
+  </data>
+  <data name="recentToolStripMenuItem.Text" xml:space="preserve">
+    <value>Recent</value>
+  </data>
+  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>43, 17</value>
+  </data>
+  <data name="&gt;&gt;fadeOnlyOnChangeBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="overallVolumeBar.Location" type="System.Drawing.Point, System.Drawing">
+    <value>55, 19</value>
+  </data>
+  <data name="previousMusicToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>188, 22</value>
+  </data>
+  <data name="&gt;&gt;musicTagCategoryBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;soundsLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStrip1.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="label10.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;checkForUpdateToolStripMenuItem.Name" xml:space="preserve">
+    <value>checkForUpdateToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 13</value>
+  </data>
+  <data name="openButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="&gt;&gt;projectToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="label9.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;label17.Name" xml:space="preserve">
+    <value>label17</value>
+  </data>
+  <data name="groupBox5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>395, 514</value>
+  </data>
+  <data name="&gt;&gt;currentTagsLabel.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;openButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="messagesButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsIAAA7CARUoSoAAAAIWSURBVDhPpZLRT1JRHMf5Z3ys3JoPrce2tv6LWg9tPfXc
+        VqyaW8yVlnCBBBKvXAJC8F4FvKmBpBggc5CxTGxrbjhbs5BC4N777ZwDkme0tdbZfg/n7Hw/v9/nnmui
+        yx/Lg5Y0n8W0koUor8MbWYUnnIYrlMSzwDLs0iKEaRVWMdErFqZLms/hJ/DXOtIMVOs6tg80DF253g8I
+        BADzfWDc0R+uG8CXho7KVw3pfJkH+JS37NLdB8CbNDAwEGd7b1CFS0pAmIphzK1gxDGL4l4bS5n3PGBq
+        NsMCzglgcDCBm4/47t9aBva+69iqasjstBBLlXjAZHSVC5yuIx3E28AH4p3dbWHxXRPRV5s8wDOTZpch
+        CsC1y2R2K9v/IN4HDYN5Fz638brchLxxjFCiwANcwWQHcPUSoNgQvnCO7T3+BdiJ/xP3HEacMh4KUbxc
+        byBAnpwDOF8sdyewwXfxLDaE0Y53jXjva1gj3oliEzPZY0jpOsRohgc4yE9CASdVI++9T+an3rlP7Y53
+        vhOeXDqEK5DiAYJPZcHDSgxaxISdotzzTna9T8I2pYpxr8oDbOICA9Aw9BTMN86w93aKcTx9PofHEzEM
+        WyMwj4Zh8Vdgsct/BlQ2FQzfOo+Q393zDq797kzDd1wl3BsL9QNquoGtj7vIFbexkisjvlJCWC2wD0ad
+        6di0Mw3ftvj6AfTgX6sb/59lMv0C7dmbjUpdSoAAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="&gt;&gt;modesList.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ListBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator4.Name" xml:space="preserve">
+    <value>toolStripSeparator4</value>
+  </data>
+  <data name="&gt;&gt;controllerPortLabel.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="label14.Size" type="System.Drawing.Size, System.Drawing">
+    <value>96, 13</value>
+  </data>
+  <data name="groupBox6.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="&gt;&gt;fadeOnlyOnChangeBox.Parent" xml:space="preserve">
+    <value>groupBox6</value>
+  </data>
+  <data name="&gt;&gt;label12.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="previousButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 22</value>
+  </data>
+  <data name="nextButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 22</value>
+  </data>
+  <data name="label10.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 17</value>
+  </data>
+  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 21</value>
+  </data>
+  <data name="networkSettingsButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="projectNameLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>69, 26</value>
+  </data>
+  <data name="&gt;&gt;label16.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="messagesToolStripMenuItem.Text" xml:space="preserve">
+    <value>Messages ...</value>
+  </data>
+  <data name="&gt;&gt;soundVolumeBar.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TrackBar, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="label5.Text" xml:space="preserve">
+    <value>Mode:</value>
+  </data>
+  <data name="toolStrip1.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>46, 17</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;aboutToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="groupBox6.Text" xml:space="preserve">
+    <value>Categories</value>
+  </data>
+  <data name="&gt;&gt;label14.Parent" xml:space="preserve">
+    <value>groupBox6</value>
+  </data>
+  <data name="dummyToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>117, 22</value>
+  </data>
+  <data name="tagFadeUpDown.Size" type="System.Drawing.Size, System.Drawing">
+    <value>63, 20</value>
+  </data>
+  <data name="messagesButton.Text" xml:space="preserve">
+    <value>Messages</value>
+  </data>
+  <data name="saveFileDialog.Filter" xml:space="preserve">
+    <value>Ares projects|*.ares|All files|*.*</value>
+  </data>
+  <data name="&gt;&gt;overallVolumeBar.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;editorButton.Name" xml:space="preserve">
+    <value>editorButton</value>
+  </data>
+  <data name="checkForUpdateToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>166, 22</value>
+  </data>
+  <data name="&gt;&gt;tagSelectionPanel.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="repeatButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="openFileDialog1.Filter" xml:space="preserve">
+    <value>Ares projects|*.ares|All files|*.*</value>
+  </data>
+  <data name="elementsPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>383, 481</value>
+  </data>
+  <data name="&gt;&gt;soundsLabel.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="label14.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 22</value>
+  </data>
+  <data name="tagFadeUpDown.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;soundsLabel.Name" xml:space="preserve">
+    <value>soundsLabel</value>
+  </data>
+  <data name="label15.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="networkSettingsButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>301, 22</value>
   </data>
   <data name="fadeOnlyOnChangeBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>124, 17</value>
   </data>
-  <data name="importFileDialog.Filter" xml:space="preserve">
-    <value>Ares packed projects|*.apkg|All files|*.*</value>
+  <data name="musicVolumeBar.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
   </data>
-  <data name="&gt;&gt;aboutButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;elementsPanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.FlowLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;previousMusicToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="label16.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="globalKeyHookItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>175, 22</value>
+  </data>
+  <data name="&gt;&gt;musicLabel.Name" xml:space="preserve">
+    <value>musicLabel</value>
+  </data>
+  <data name="&gt;&gt;nextMusicTitleToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;settingsButton.Name" xml:space="preserve">
+    <value>settingsButton</value>
+  </data>
+  <data name="&gt;&gt;clearTagsButton.Name" xml:space="preserve">
+    <value>clearTagsButton</value>
+  </data>
+  <data name="musicLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>328, 40</value>
+  </data>
+  <data name="&gt;&gt;repeatButton.Name" xml:space="preserve">
+    <value>repeatButton</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator2.Name" xml:space="preserve">
+    <value>toolStripSeparator2</value>
+  </data>
+  <data name="&gt;&gt;label12.Name" xml:space="preserve">
+    <value>label12</value>
+  </data>
+  <data name="&gt;&gt;label2.Name" xml:space="preserve">
+    <value>label2</value>
+  </data>
+  <data name="label4.Text" xml:space="preserve">
+    <value>Sounds:</value>
+  </data>
+  <data name="label8.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;groupBox4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label14.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;openFileDialog1.Name" xml:space="preserve">
+    <value>openFileDialog1</value>
+  </data>
+  <data name="label12.Text" xml:space="preserve">
+    <value>Controller Port:</value>
+  </data>
+  <data name="&gt;&gt;tagFadeUpDown.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="label17.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;messagesButton.Name" xml:space="preserve">
+    <value>messagesButton</value>
+  </data>
+  <data name="toolStripSeparator3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>172, 6</value>
+  </data>
+  <data name="controllerPortLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="label10.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="openToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAACwwAAAsMAT9AIsgAAAAGYktHRAD/AP8A/6C9p5MAAAAHdElNRQfaBhMLFh3BVq7X
+        AAACc0lEQVQ4T72SWUiUURiG/4suurJIjUIwskQsGAwMqS5ClBY1pdwKJU0otxYMxVybcR11ZlynVMwZ
+        dRp1tLIUwwqhUCRCy4USU7OgqBRTQyW3p98ZkSwvgqAXXjicc56Hj8MR/kvSi3Qusnw917IqyFQbSFBo
+        E1eO/i7B0Wq8w5WBy+tLceWWKaIsJk3jGxRdhFCvy/UXy+9trpUrjfQ6iUgoPuETqcQrPM8oYKBHy+xE
+        nbE/xvXMj2owVChp0KWlrDBr4h2hwissH4/QQoS6ShUz49Vr4MXPxcz3RVFdnkVVSQaaohRK85K5qYin
+        UB7LiseUGm0OM1+1q/CSCDMQD32h6/YPwe0yOd8/la7CLfU5xj40ZNOol3OvKgODJhV9qYwK9XVu5SdS
+        oopHnRNnklWVZjD1vsA49nCblIZqFYvDMhhJW9t34t5QAvRHw+tIumv9uBLiWSlo1KlMDmbBBwX3a5R0
+        PFKYLv06+qsg6PRhod2d2cfOvK2UcPHs0UlRsFcoy5fy7Y2MkfYkGvQKloak0BtmArtDRPA0Cx2ezLYe
+        Yar5EGP1+5CF23LG1SLP+AbFqiTGeuK4o8uh65k4SX+UKDgPXYEsPT/J3NPjTLccZrzBkS819nSmbybA
+        3QZHOzM7o0CdHU9vazJ3ddkwmAwvxXFf+DLX5sH0E2cmGp0YNUj4qN1Nn8IcaeguHPZYNRnh5RRkxlJX
+        kUXfgwg6c4XVdig20CrfSFPKJmoTLdHEWnHj6g4C3HYuOTlYu63ggpCbFkOu9AKZccEkXPZfflnO+bly
+        6tgBXA5K2C+xxd7GCuvtFmzdYsY2c7O1/+DfIgg/AQzo5RmgZJp7AAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="projectNameLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>328, 17</value>
+  </data>
+  <data name="&gt;&gt;menuStrip1.Name" xml:space="preserve">
+    <value>menuStrip1</value>
+  </data>
+  <data name="&gt;&gt;label12.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dummyToolStripMenuItem.Name" xml:space="preserve">
+    <value>dummyToolStripMenuItem</value>
+  </data>
+  <data name="groupBox1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="modeLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="overallVolumeBar.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;label8.Name" xml:space="preserve">
+    <value>label8</value>
+  </data>
+  <data name="label7.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 107</value>
+  </data>
+  <data name="&gt;&gt;extrasToolStripMenuItem.Name" xml:space="preserve">
+    <value>extrasToolStripMenuItem</value>
+  </data>
+  <data name="label9.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 26</value>
+  </data>
+  <data name="&gt;&gt;label15.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="tagSelectionPanel.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="importToolStripMenuItem.Text" xml:space="preserve">
+    <value>Import ...</value>
+  </data>
+  <data name="&gt;&gt;repeatCurrentMusicToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;importFileDialog.Type" xml:space="preserve">
+    <value>System.Windows.Forms.OpenFileDialog, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="groupBox7.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="tagSelectionPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>371, 227</value>
+  </data>
+  <data name="&gt;&gt;label9.Name" xml:space="preserve">
+    <value>label9</value>
+  </data>
+  <data name="&gt;&gt;groupBox5.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="menuStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1083, 24</value>
+  </data>
+  <data name="&gt;&gt;clientStateLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;repeatCurrentMusicToolStripMenuItem.Name" xml:space="preserve">
+    <value>repeatCurrentMusicToolStripMenuItem</value>
+  </data>
+  <data name="settingsButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 22</value>
+  </data>
+  <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAABAAEAICAAAAEACACoCAAAFgAAACgAAAAgAAAAQAAAAAEACAAAAAAAgAQAAAAAAAAAAAAAAAEAAAAA
+        AAAAAAAAkJCQAC0oJgDT8v4A////ADV8lADX19cAzc3NAFx2fgApYnQAR1RaANrr8gCQtb4AbpSiALvR
+        2AC/yM0An7i+AKPM3AAHDxEAJlhpADxkbgB1oKsAv9ffABc5RACMoqsAfKWvAF9tcwCLuskAhbbFAKi/
+        zACww8sANE1WAB4jJABUY2sAGB8hAE9hZQCttrkAMj9CAC9DSACMv9EArODzAK/l+AC+5fYAiHt4AMLb
+        5gCaxNIA7vb4AJ/I1QC+4e4AZWttAPj4+AA4X2kACwMBAKbT4gCv0+AAyM7SADhaYwCp1ucAy+fyACQv
+        MQCyvcQAQnWCADo5OACgqawANkpOAEhqcwCNjY0ACiw4AKnR2gArMDMAlKGkAI+dpQAVMzwAIklUACpW
+        YgAlU2EAdH1/AIOMjwCKkJIAaZunAC4zNgDq5OMAhJacABQXGACMnKAAhpSYAG1oZgATLTMAEBgbAEx/
+        jQBlnKoAp8vZABkxOQAyYnAAQEFAAOjn5gBnZ2cAUZiqAJGRkQAoXm4AXYWQAH28zQB7ucsAoK2yAEt3
+        gQCbq7MAna+0AAMCAwBglqQAL2R0AH57egA8c4QAQXF9AFNTVAAsZnYAYZ2uAGSWpwByqLkAh5qfALC5
+        wACJmKEAYYaSABhDUABlipYAq7rAAGKKkwDI3+sAWpqrADhsegBHREQAT2lvAHx+fwBOgpAAES44ADdq
+        dwADHCMAs9rmABUvNwC42ucASUxMAFZbWwDf4eQA6uzvAImEgwDGxsYA8vLyALW1tQD09PQAS2dvAFFR
+        UQDg4OAAPHuMAJ6engBUUE8ASUlJADs3NQCXy94AGEdXAJXK2wCby9wAZ6i5AHm0wgB6h44Al5OSAJOX
+        mQAJHCMAYWFhAJCWmgBxbWkAQkVFABITEwB8iJAADxMVALWysAACBQYAPXJ/ACBLWQA6cH8AOzs6AJua
+        mwBPTUwAb21sAKaioQBeXVwAWVhXAG9vbwBDQ0MAdHR0AFCUpgBiY2MAY11cAE5OTwBbW1wAdXZ2AFxZ
+        WABhX14ARIeXAGKouQBTlqYAGklZAHmxxABJg5MAHUpaADl5iQBKhZUAKFpqAJPAzACIi4wAioeHAIaK
+        iwBSgo4AXpqpAAIHCQBThI8AlJ2fADlHSgCFiYgAdnFvAHNxcAB3eXoABQcIAB1EUgDu7/AAHUNPAB0+
+        SABem6wAZ6GyAJTBzgDs7vEAoKGhALy8vACYmJgAQXmKAHh4eACioqIAuLi4AL+8uwBborUAenl5ADtI
+        SwBaobMAMWl5ADNoeABYj6AAbqW3AEF8jACTnJ0AnpqZAIB/fgAMICcACh4lALiztAALHyYAg39+ABk+
+        SwAxVF4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKmQAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAKAAAAAAAAAdz84zAAAAAAAAAAAAAAAAAAAAAAAAAAANZQAAAAAAHk6P
+        K3YUAAAAAAAAAAAAAAAAAAAAAAAAonf0AAAAAAAsQtDR0KEAAAAAAAAAAAAAAAAAAAAAAAB4D08AAAAA
+        ADrY0EKP9tIAAAAAAAAAAAAAAAAAAAAA91GjddQAAABQDgF5CQjY0wAAAAAAAAAAAAAAAAAAAAAJEKT0
+        1EMXelIW0BHzCaQVIB8AAAAAAAAAAAAAAAAAAPNm2C1T1zsAA3z4GBF7ptbVpQAAAAAAAAAAAAAAAAAA
+        fuw8f0VEDNSpA2eop6PZVGj5AAAAAAAAAAAAAAAAAABiBH8Aq/tqfaoKA2lW29pVaPoAAAAAAAAAAAAA
+        AAAAABp/ANx+recZIgCsIUf9u0Zo/AAAAAAAAAAAAAAAAAAASP80WISDu/NXEq5rM4KBI4AA/gAAAAAA
+        AAAAAAAAAADeBC4Lflsb9Fps81k9r4ZKSYXdAAAAAAAAAAAAAAAAAAUDBYgFNRP0E+Kw89/L/s2HXEsA
+        AAAAAAAAAAAAAAAAijA2L+McdeLhxvPM9bFdS+CJbQAAAAAAAAAAAAAAAACz5I6NNyQ/9k1MMYyLXrI+
+        PgDLAAAAAAAAAAAAAAAAAACQMl/r65L7rbb3j261o7QCAMsAAAAAAAAAAAAAAAAAAJgEkZCt7OytP+Vi
+        2Oo/twBdCQAAAAAAAAAAAAAAAAAAAD+TButio5Ln55jmB0K4AMlvAAAAAAAAAAAAAAAAAAAAAOuWlQAA
+        ALmtkAe2YACUE7EAAAAAAAAAAAAAAAAAAAAAAJgA661QALvq6boAApfoSwAAAAAAAAAAAAAAAAAAAAAA
+        AJo/2L1QAAAAAJlAybwAAAAAAAAAAAAAAAAAAAAAAAAArexiAsHAv3G+AnDMYQAAAAAAAAAAAAAAAAAA
+        AAAAAADi81nvm8PuwgJBzPPtAAAAAAAAAAAAAAAAAAAAAAAA88TJcrH/JgIlOMTJxMQAAAAAAAAAAAAA
+        AAAAAAAAAABzf/PoY/PEzMbMxsTFAAAAAAAAAAAAAAAAAAAAAAAAyPTz8sfx6PXo88Tz9fAAAAAAAAAA
+        AAAAAAAAAAAAAAAAnCfIdMrJyfXzxPPzzAAAAAAAAAAAAAAAAAAAAAAAAAAAKSiedZ3EzLzMf8sAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAADmfyM1dscv1AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAP//P///vg///x4H//4cA//8HAP//BwB//gAAP/4AAB/+AAAf/gAAH/4AAB/+AAAf/gA
+        AD/4AAA/+AAAP/gAAD/4AAA//AAAP/wAAD/+AAA//wAAP/+AAD//wAB//8AAf//AAH//gAB//4AA//8A
+        AP//gAD//8AB///gA///+Af/
+</value>
+  </data>
+  <data name="label15.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="&gt;&gt;projectNameLabel.Name" xml:space="preserve">
+    <value>projectNameLabel</value>
+  </data>
+  <data name="&gt;&gt;groupBox3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label3.Parent" xml:space="preserve">
+    <value>groupBox2</value>
+  </data>
+  <data name="controllerPortLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>37, 13</value>
+  </data>
+  <data name="label7.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;exitToolStripMenuItem.Name" xml:space="preserve">
+    <value>exitToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;label7.Name" xml:space="preserve">
+    <value>label7</value>
+  </data>
+  <data name="stopButton.Text" xml:space="preserve">
+    <value>Stop All</value>
+  </data>
+  <data name="&gt;&gt;groupBox7.Parent" xml:space="preserve">
+    <value>tagsPanel</value>
+  </data>
+  <data name="&gt;&gt;fadeOnlyOnChangeBox.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;musicList.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ListBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;musicList.Name" xml:space="preserve">
+    <value>musicList</value>
+  </data>
+  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;label10.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="label4.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;label12.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="groupBox3.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left</value>
+  </data>
+  <data name="toolStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1083, 25</value>
+  </data>
+  <data name="clientStateLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>98, 27</value>
+  </data>
+  <data name="&gt;&gt;globalKeyHookItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="label6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>55, 17</value>
+  </data>
+  <data name="&gt;&gt;playToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label6.Parent" xml:space="preserve">
+    <value>groupBox3</value>
+  </data>
+  <data name="repeatButton.Text" xml:space="preserve">
+    <value>Repeat Current Music</value>
+  </data>
+  <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 437</value>
+  </data>
+  <data name="&gt;&gt;label13.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;musicLabel.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="helpOnlineToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>166, 22</value>
+  </data>
+  <data name="&gt;&gt;broadCastTimer.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Timer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="showKeysMenuItem.Text" xml:space="preserve">
+    <value>Show Keys</value>
+  </data>
+  <data name="&gt;&gt;modeLabel.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;menuStrip1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="repeatButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 22</value>
+  </data>
+  <data name="stopAllToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>188, 22</value>
+  </data>
+  <data name="musicVolumeBar.Location" type="System.Drawing.Point, System.Drawing">
+    <value>55, 47</value>
+  </data>
+  <data name="currentTagsLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 284</value>
+  </data>
+  <data name="&gt;&gt;networkSettingsButton.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="messagesButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 22</value>
+  </data>
+  <data name="nextButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="repeatCurrentMusicToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>188, 22</value>
+  </data>
+  <data name="editorButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="aboutButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsIAAA7CARUoSoAAAAJnSURBVDhPbZLtS1NxFMfvf9F/EARBEEFEQdCrXgRGvTMM
+        ClN8URBYkaDUC31RCCZFkj3YnGhmpuh0s+FS51Nr6iLnfMB0W27uSe/udrfr7vp0vdtQs8+Ly+X7Pef8
+        Ducc4V98YYXhHyJ9DoneaYnu8Qg2Z4DNaIJ8yGH+AGNuEeNoBPuKzFJAYS2kshqQ+er0Yuibo2NgFjm9
+        c7BIVss0O2N0TkZQtSIFtpMqW8mM/i8m0rQPOKlu7EeUUnsFHIvbNPZ59aACgajMmduTnCr7Qjgm5VV4
+        0zVGbZOZ1G4HybTKq/4Vrb2tvJ1jJ5Ol1jBPbYuLtJJ7PUeasmoDo45lhG/uEPWt3/PGHhshmbnlMP5w
+        PK9oBRVF+6aw2Bzce9qN0GNb4vkHR87dx+eRX5wosVBUadUmnWtbzaioaQmPe5HSqvcIQ1PrvPw4o5v7
+        cXiCnC4e5fzNQXzhmK5lsyqppIh/bZXymlYEu2uDeqNDM3aXtcfcSohz16xcLDcR3BJ1LaOqSGIEj2eB
+        Gw9bEJa9UeqaR/QB7ce9HuXsFQuXSk1IiqxrcUlCjm9ittq5VW1E2E1q6pzCYl/UAwpM/Axx5GQnRy+0
+        4YvmhhYNbyKLfipq3vG6azy36xXt9UcvLIjJlB60S9ugh2NFbRy/bOCTdUGbltZ6Kkh79xDXH7QQ207u
+        HcqUa50nzWb8waCWukNWkUgoMRKJCFI0iBL302sa5uqdJmbmvYfvfNbto6qhh5qGLqadLlLSb7Yja9hG
+        J7hfZ+RuXScz7v8kFghpO+0wOah43E5x5VtKtBarn/UyPOU5eNOCIPwFCBKiGq2sGKsAAAAASUVORK5C
+        YII=
+</value>
+  </data>
+  <data name="musicTagCategoryBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>177, 21</value>
+  </data>
+  <data name="groupBox4.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left</value>
+  </data>
+  <data name="&gt;&gt;notifyIcon.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NotifyIcon, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;projectNameLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>37, 17</value>
+  </data>
+  <data name="label5.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 52</value>
+  </data>
+  <data name="&gt;&gt;label10.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="aboutButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 22</value>
+  </data>
+  <data name="groupBox2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 52</value>
+  </data>
+  <data name="clearTagsButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="messagesButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="&gt;&gt;groupBox5.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;startEditorToolStripMenuItem.Name" xml:space="preserve">
+    <value>startEditorToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;label16.Parent" xml:space="preserve">
+    <value>groupBox6</value>
+  </data>
+  <data name="&gt;&gt;helpToolStripMenuItem.Name" xml:space="preserve">
+    <value>helpToolStripMenuItem</value>
+  </data>
+  <data name="label8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>46, 17</value>
+  </data>
+  <data name="musicList.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;helpOnlineToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="label13.Size" type="System.Drawing.Size, System.Drawing">
+    <value>220, 13</value>
+  </data>
+  <data name="&gt;&gt;groupBox4.Name" xml:space="preserve">
+    <value>groupBox4</value>
+  </data>
+  <data name="&gt;&gt;toolStrip1.Name" xml:space="preserve">
+    <value>toolStrip1</value>
+  </data>
+  <data name="groupBox5.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="checkForUpdateToolStripMenuItem.Text" xml:space="preserve">
+    <value>Check for Update</value>
+  </data>
+  <data name="musicVolumeBar.Size" type="System.Drawing.Size, System.Drawing">
+    <value>338, 31</value>
+  </data>
+  <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>403, 129</value>
+  </data>
+  <data name="&gt;&gt;tagSelectionPanel.Parent" xml:space="preserve">
+    <value>groupBox7</value>
+  </data>
+  <data name="extrasToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>49, 20</value>
+  </data>
+  <data name="aboutButton.Text" xml:space="preserve">
+    <value>About Ares ...</value>
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>Overall:</value>
+  </data>
+  <data name="&gt;&gt;label17.Parent" xml:space="preserve">
+    <value>groupBox6</value>
+  </data>
+  <data name="notifyIcon.Text" xml:space="preserve">
+    <value>Ares Player</value>
+  </data>
+  <data name="&gt;&gt;previousButton.Name" xml:space="preserve">
+    <value>previousButton</value>
+  </data>
+  <data name="label12.Size" type="System.Drawing.Size, System.Drawing">
+    <value>80, 17</value>
+  </data>
+  <data name="musicTagCategoryBox.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;stopButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="groupBox4.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;tagCategoryCombinationBox.Parent" xml:space="preserve">
+    <value>groupBox6</value>
+  </data>
+  <data name="&gt;&gt;groupBox2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="label3.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="groupBox3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 165</value>
+  </data>
+  <data name="openButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsIAAA7CARUoSoAAAAJ1SURBVDhPvZJZSNRRHEb/Dz30kkVmJEKSJWKBGBhSPYgY
+        Ua6UKyipYblRZijmuDTjrrPoqFMq2ow6jTpaWYphhVAoEqHlQompWVBUiqmhkttpHEWyfAiCPvjgcu89
+        hx+XK/yXZBZXu0iUOq7lVpKt0pMk1SSvHf1dQuJUeEfKg1bWlxIrzNIMsvgMtW9wXDFCgzbf31B+b0tt
+        ttxIb5JIUYmHT7Qcr8gCo4DBXg1zk/XG/pjQsTCmRl8pp1GbnrbGbIh3lAKvCCXu4UUI9VUKZidqNsBL
+        n0tY6I+l5lYu1aVZqIvTKCtI5aZMRFFOAmue1dRqpMx+1azDywaYQRH0h2/aPwS3y3P4/qlsHW5tkBr7
+        UJ9Hky6He9VZ6NXp6MokVKquU6FMplQhQiVNXJVVl2Ux/b7QOPZIu5jGGgVLIxIYzdjYd4a94SQYiIPX
+        0fTU+RET6lklqFXpTA3lwgcZ92vldD6SrV76dfRXwdDlw2KHG3OPnXlbZUfYOaepK2Eeh4RypZhvbySM
+        dqTQqJOxPCyGvohVsOe8AQxgsdOTubaTTLccZ7zhMJJIawJcTAuMb1CiSGG8N5E7WindzwyTDMQaBBeg
+        O4jl52eYf3qamVYnJhod+FJrS1fmDgLdrHCw2WZjFKjyRPS1pXJXmwdDqfDSMO4LX+bb3Zl54sxkkyNj
+        ejs+ag7QLzNFHL4f+4PmzUZ4JYXZCdRX5tL/IIqufGG9nbIttOVspTltO3XJZqgTLLhx1ZJA133LjvaW
+        rmu4IORnxJMvvkh2YghJl/2JOe9JqN8Jzp46issxO47YWWNrZcFe813s3mnCHlOTjf/g3yIIPwHVOuT9
+        xNmtFAAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="&gt;&gt;stopButton.Name" xml:space="preserve">
+    <value>stopButton</value>
+  </data>
+  <data name="groupBox6.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="label3.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="musicLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>69, 107</value>
+  </data>
+  <data name="groupBox2.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;label16.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;groupBox6.Name" xml:space="preserve">
+    <value>groupBox6</value>
+  </data>
+  <data name="label8.Text" xml:space="preserve">
+    <value>Sounds:</value>
+  </data>
+  <data name="&gt;&gt;editorButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;musicList.Parent" xml:space="preserve">
+    <value>groupBox5</value>
+  </data>
+  <data name="&gt;&gt;previousButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="musicVolumeBar.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="elementsLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>69, 79</value>
+  </data>
+  <data name="clientStateLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;tagsPanel.Name" xml:space="preserve">
+    <value>tagsPanel</value>
+  </data>
+  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 27</value>
+  </data>
+  <data name="&gt;&gt;groupBox2.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="groupBox7.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="&gt;&gt;fileSystemWatcher1.Name" xml:space="preserve">
+    <value>fileSystemWatcher1</value>
+  </data>
+  <data name="label14.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="aboutButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="&gt;&gt;label17.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;label15.Parent" xml:space="preserve">
+    <value>groupBox7</value>
+  </data>
+  <data name="&gt;&gt;tagsPanel.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="repeatCurrentMusicToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGOfPtRkwAAACBjSFJNAAB6
+        JQAAgIMAAPn/AACA6QAAdTAAAOpgAAA6mAAAF2+SX8VGAAAACXBIWXMAAAsMAAALDAE/QCLIAAACHElE
+        QVQ4T2P4//8/RRirICkYqyAynr7zz38Q7t/07X/z8rf/y2Y9/p/VfwsoBZFHUVy38k9w+YKPq32brkrB
+        xECaOzb8/1+26Nf/xL5n/z3Kzk1F1gNnVCz+rdOy+u+p1P4n/61St9yBifes//K/YN63/zF9H/+7Vdz+
+        b5t7/Ih56iFNmDzcgMql3yZULP723zn/9H+doAXvYOK1C1/8D2u999+59OYni+wL/42T9v3Xi97cA5OH
+        G1Cz9POFnOnv/5sm7/+vG7l+Lkw8d9Kd/w4Fp3NcSi9Ps807918vZtt/3bCl52HycAMal3/6nD717X/j
+        hL3/9eN2WIHE8vJusyZ1XAEy/zOEtd6xDm66BzZAK2D2Z5g+uAH1Sz99Tpv67r9Z6n64Acg4Z9Z7m7Qp
+        b/4bxu3CbkDFwo8XUqe8/W+fe/q/debRmTBxGK5d/mdexrQP//VjdvzXCV1yASYOV5A99WVffO/T/15V
+        N/4H1t98mzbxxZz8me9syhd8s2lY/Xd+/Yrf74Ob7//XDV/1XydsxUQMA8KabmsH1l8/6lF25b9v7Z3/
+        cb3P/2dOe/c/b+bH/zmzPv0HaQaGPsj209pha3UwDABh1+LzvnY5x44ax+/+rxuzFYxBgaYXswUY8suB
+        mhed1gtdFoysB8UAEDaM36upG7GmTyd4wUUtvylfQFg7cO4l3bAlk7RCV+qiq0fhkIOxChKP/zMAAKH7
+        vWcksHU/AAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="label15.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>36, 17</value>
+  </data>
+  <data name="projectNameLabel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="&gt;&gt;controllerPortLabel.Name" xml:space="preserve">
+    <value>controllerPortLabel</value>
+  </data>
+  <data name="clearTagsButton.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="helpToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>44, 20</value>
+  </data>
+  <data name="projectToolStripMenuItem.Text" xml:space="preserve">
+    <value>Project</value>
+  </data>
+  <data name="exitToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>134, 22</value>
+  </data>
+  <data name="clientStateLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>197, 38</value>
+  </data>
+  <data name="label9.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;label2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;clearTagsButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="elementsPanel.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="label13.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="fadeOnlyOnChangeBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>216, 110</value>
+  </data>
+  <data name="elementsPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 19</value>
+  </data>
+  <data name="&gt;&gt;importToolStripMenuItem.Name" xml:space="preserve">
+    <value>importToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;soundVolumeBar.Parent" xml:space="preserve">
+    <value>groupBox2</value>
+  </data>
+  <data name="nextMusicTitleToolStripMenuItem.Text" xml:space="preserve">
+    <value>Next Music Title</value>
+  </data>
+  <data name="soundVolumeBar.Location" type="System.Drawing.Point, System.Drawing">
+    <value>55, 72</value>
+  </data>
+  <data name="groupBox6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>380, 134</value>
+  </data>
+  <data name="fadeOnlyOnChangeBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;menuStrip1.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="startEditorToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>175, 22</value>
+  </data>
+  <data name="stopButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABUAAAAUCAYAAABiS3YzAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsIAAA7CARUoSoAAAAFhSURBVDhP7ZLdK0NhHMe//4QLf4Daq5fWaOGGnW1nm2PO
+        lHJBuVlRlJKXtBM10mTZNDde7lbEhVJzodwtxAUjQoaDnW3nQpKyK+dZzz/wKEXtc/3p2+/lizL/nc7i
+        MMSPEYjqOITXINyZaTivZuE8C4M7jcB+vEhNBkigSzXAnzXCp9jgyjnQlveiXfVDeO5DbfycmgyQCT1y
+        FbwFaynMm++CWwlAkAfRuDsGU/SGmgyQlTuyJvAKB77QDf5pALw8Acd1CLbtGMzzj9RkgNyQUxvgy4na
+        tAG45VE47kKwp6OwrG5CF8pRkwHyFEGxw6P2gH8ZguthBtzFMlqOEqiJJ6GX3qjJwO+EatURCz4IWe2W
+        t1NwpmNoTSXQtLeD6oV96KRPajJAuui570Xz1iTqN6KwrmsTRpIwzx3AIB2iMlikJgOk3Ja1FCwrJ6hb
+        uoQxnCk9Ry+9o6L/62ehZf4QwDda843VHQGPpgAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>34, 17</value>
+  </data>
+  <data name="&gt;&gt;label4.Name" xml:space="preserve">
+    <value>label4</value>
+  </data>
+  <data name="fadeOnlyOnChangeBox.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="musicList.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;aboutButton.Name" xml:space="preserve">
+    <value>aboutButton</value>
+  </data>
+  <data name="&gt;&gt;musicLabel.Parent" xml:space="preserve">
+    <value>groupBox3</value>
+  </data>
+  <data name="&gt;&gt;musicVolumeBar.Parent" xml:space="preserve">
+    <value>groupBox2</value>
+  </data>
+  <data name="&gt;&gt;tagsPanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;groupBox3.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="showKeysMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>175, 22</value>
+  </data>
+  <data name="&gt;&gt;importToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="modesList.Size" type="System.Drawing.Size, System.Drawing">
+    <value>237, 459</value>
+  </data>
+  <data name="&gt;&gt;nextButton.Name" xml:space="preserve">
+    <value>nextButton</value>
+  </data>
+  <data name="&gt;&gt;fileSystemWatcher1.Type" xml:space="preserve">
+    <value>System.IO.FileSystemWatcher, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
+    <value>groupBox2</value>
+  </data>
+  <data name="&gt;&gt;controllerPortLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>Music:</value>
+  </data>
+  <data name="soundsLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>69, 157</value>
+  </data>
+  <data name="&gt;&gt;tagCategoryCombinationBox.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="clearTagsButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>299, 252</value>
+  </data>
+  <data name="&gt;&gt;menuStrip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.MenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;clientStateLabel.Name" xml:space="preserve">
+    <value>clientStateLabel</value>
+  </data>
+  <data name="&gt;&gt;soundVolumeBar.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;label13.Parent" xml:space="preserve">
+    <value>groupBox6</value>
+  </data>
+  <data name="soundsLabel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="editorButton.Text" xml:space="preserve">
+    <value>Start Editor</value>
+  </data>
+  <data name="&gt;&gt;playToolStripMenuItem.Name" xml:space="preserve">
+    <value>playToolStripMenuItem</value>
+  </data>
+  <data name="controllerPortLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label16.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 111</value>
+  </data>
+  <data name="webAddressLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>145, 13</value>
+  </data>
+  <data name="exitToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>Alt+F4</value>
+  </data>
+  <data name="label17.Text" xml:space="preserve">
+    <value>ms</value>
+  </data>
+  <data name="settingsToolStripMenuItem1.Text" xml:space="preserve">
+    <value>Settings ...</value>
+  </data>
+  <data name="&gt;&gt;musicVolumeBar.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TrackBar, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;openFileDialog1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.OpenFileDialog, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;musicTagCategoryBox.Name" xml:space="preserve">
+    <value>musicTagCategoryBox</value>
+  </data>
+  <data name="clearTagsButton.Text" xml:space="preserve">
+    <value>Clear Tags</value>
+  </data>
+  <data name="label13.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;elementsLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="modesList.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 19</value>
+  </data>
+  <data name="aboutToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        R0lGODlhDwAPAIeUABcyqiZCpSlPpSxQojtSuS9duTdawjxbvD9itzRmu0xktUhntTltx1NumE90vFp0
+        nl13oF53oGF5oGR6oWV9pGZ9omd+o2l+n2mBp3GGqnaGpHWLrnqQsH6QrH2RsX2StICVuYWYuIabwYqb
+        uIWg0YWi1Y2jzI2ky5Spy5iqyJerzpysxZ2sw6euupKz4pq03KKz0Ki1y6e2zbG1vqi2z6W32K2817i8
+        xLC/2rm/y6TC7K/B37/Cxq7F7LnE2arH7LrI4bHJ877I2LPL88LL27jN7sDN4r/N58nN0cTR5r7S8cjR
+        4cbU6sPW8c7V4srW6s7W4s/W48vY6NjW2cvZ8NjY18Tc9tDb69Dc6tbh7eTg3tvi7dzi7drn+d7n797n
+        9uTo6ODq/OPr7ubq9uTr8uPr+ePt8u3r6fDs4Oft9unt8+nt9Ort8+jv8evu8/Pt6O7w9fPx7Pbx5Pby
+        6fny5PLz8/fz5fHz9/T07PH0+O/1+/H19/D1/Pf18fT57vP59v/36PX4/Pb4+vf4+vz48/j5+/r5+f35
+        8/r7/fz7/Pv8/P/88f39/P39/v3+//z/////9///+P//+v7/////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+        /yH+EUNyZWF0ZWQgd2l0aCBHSU1QACH/C05FVFNDQVBFMi4wAwEBAAAh+QQBCgD/ACwAAAAADwAPAAAI
+        1AD/CfxXRsmQID2OrBk4cFITHVa6hPliBAYNQQMdFfnxiBIlPnoo5ZHx4Y5AKi48UkrDIIEbjyxCDAr0
+        wotKRCVIFPIYqQKRJyZUUhpzhYxHQ5BybMCBQuiOAg7UUEpEaMoEICqESjGAQAwlRn20WEhyopFKLAcW
+        tKGkKE4VCVtEIFKZhYCCP5TqzLlBAVEKHyqZAAhghtIZORdW/OMCYo/HGgIG2FgEqEUEOAKXjAAj6ZAf
+        PG/ozGjghGEUDh2Q2EHDQ0MGKAwFsomB4QEED0JMCgwIADs=
+</value>
+  </data>
+  <data name="projectNameLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;webAddressLabel.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;groupBox4.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="label5.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;messagesButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label9.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;recentToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="label12.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="currentTagsLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>365, 36</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;musicVolumeBar.Name" xml:space="preserve">
+    <value>musicVolumeBar</value>
+  </data>
+  <data name="&gt;&gt;musicVolumeBar.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="label10.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 76</value>
+  </data>
+  <data name="groupBox2.Text" xml:space="preserve">
+    <value>Volume</value>
+  </data>
+  <data name="&gt;&gt;dummyToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="elementsPanel.AutoScroll" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label13.Text" xml:space="preserve">
+    <value>Tags of different categories are combined by:</value>
+  </data>
+  <data name="aboutToolStripMenuItem.Text" xml:space="preserve">
+    <value>About ...</value>
+  </data>
+  <data name="label6.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="toolStripSeparator4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>163, 6</value>
+  </data>
+  <data name="&gt;&gt;toolStrip1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="groupBox7.Text" xml:space="preserve">
+    <value>Tags</value>
   </data>
   <data name="&gt;&gt;aboutToolStripMenuItem.Name" xml:space="preserve">
     <value>aboutToolStripMenuItem</value>
   </data>
-  <data name="&gt;&gt;toolStripSeparator3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;groupBox6.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="tagsPanel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="&gt;&gt;label13.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="webAddressLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;openToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="importFileDialog.Filter" xml:space="preserve">
+    <value>Ares packed projects|*.apkg|All files|*.*</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.Name" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;previousMusicToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;clientStateLabel.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="nextMusicTitleToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>188, 22</value>
   </data>
   <data name="stopAllToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1766,20 +1728,17 @@
         Xz+EbeVEHzcDazxLx4F57A2m6OeviorASlFYKQorRWGlGBp+AKZeaQ7DKbEhAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="tagCategoryCombinationBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>368, 21</value>
-  </data>
   <data name="tagSelectionPanel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
   </data>
-  <data name="&gt;&gt;tagsPanel.Name" xml:space="preserve">
-    <value>tagsPanel</value>
+  <data name="&gt;&gt;clearTagsButton.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="&gt;&gt;messagesToolStripMenuItem.Name" xml:space="preserve">
     <value>messagesToolStripMenuItem</value>
   </data>
-  <data name="&gt;&gt;tagFadeUpDown.Parent" xml:space="preserve">
-    <value>groupBox6</value>
+  <data name="label5.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
   <data name="label6.Text" xml:space="preserve">
     <value>Elements:</value>
@@ -1787,14 +1746,202 @@
   <data name="soundsLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>328, 36</value>
   </data>
-  <data name="&gt;&gt;musicTagCategoryBox.Parent" xml:space="preserve">
-    <value>groupBox6</value>
+  <data name="dummyToolStripMenuItem.Text" xml:space="preserve">
+    <value>Dummy</value>
   </data>
-  <data name="&gt;&gt;udpPortUpDown.Type" xml:space="preserve">
-    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;tagFadeUpDown.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="musicLabel.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
+  </data>
+  <data name="modesList.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left</value>
+  </data>
+  <data name="overallVolumeBar.Size" type="System.Drawing.Size, System.Drawing">
+    <value>338, 31</value>
+  </data>
+  <data name="&gt;&gt;notifyIcon.Name" xml:space="preserve">
+    <value>notifyIcon</value>
+  </data>
+  <data name="&gt;&gt;label7.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="groupBox3.Text" xml:space="preserve">
+    <value>State</value>
+  </data>
+  <data name="&gt;&gt;settingsToolStripMenuItem1.Name" xml:space="preserve">
+    <value>settingsToolStripMenuItem1</value>
+  </data>
+  <data name="openToolStripMenuItem.Text" xml:space="preserve">
+    <value>Open ...</value>
+  </data>
+  <data name="&gt;&gt;label1.Name" xml:space="preserve">
+    <value>label1</value>
+  </data>
+  <data name="&gt;&gt;nextMusicTitleToolStripMenuItem.Name" xml:space="preserve">
+    <value>nextMusicTitleToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;aboutButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="settingsButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="tagsPanel.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;groupBox2.Name" xml:space="preserve">
+    <value>groupBox2</value>
+  </data>
+  <data name="modesList.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;nextButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;elementsLabel.Name" xml:space="preserve">
+    <value>elementsLabel</value>
+  </data>
+  <data name="label15.Text" xml:space="preserve">
+    <value>Currently selected tags:</value>
+  </data>
+  <data name="groupBox4.Text" xml:space="preserve">
+    <value>Modes</value>
+  </data>
+  <data name="&gt;&gt;projectToolStripMenuItem.Name" xml:space="preserve">
+    <value>projectToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;label8.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="label8.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 157</value>
+  </data>
+  <data name="&gt;&gt;overallVolumeBar.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TrackBar, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label13.Name" xml:space="preserve">
+    <value>label13</value>
+  </data>
+  <data name="settingsToolStripMenuItem1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1
+        MAAA6mAAADqYAAAXb5JfxUYAAAAJcEhZcwAACwwAAAsMAT9AIsgAAAJCSURBVDhPpZBtSFNRGMcvQQT1
+        xSAhqAj7En6Rmt+CyNuHCK/uxY2paKVBLgtKJoKNokFuIUpGo5mUEmutGsskAskKnBlOe9E2MjTd3Nai
+        mSszmXu7+3fuXdOtJhEd+HHOeQ7/33nOoQD8F2mbHrN+raVLN/m0WzujaVQcfHRbHbvVrsZNvRodbSro
+        NPVQ11XE9S0qldRCXyT0pwk4es0G09KM1nRSvn8aX04hScSjxOJ7BaaeydCilKD5Ri00rzTpYQ7jdW3+
+        6VLajcBxdF8r48NhtxJL0yewMCpHYIhBpG8HTIYjIB2AOtfpQhJz3yQsxjaEvedxtUkKTiLaswvBD7X4
+        YS9D4HkBZp/sxtzdjWi9LAbdJUgIjC+Ax8M+Phx0X0BdNQPPaxUUVSW8RLyXhuuhALaObRjUZePS0U2Q
+        1BRgX3tuQtA78p0P+xxaPtx85Q6ZC+G0VqO8uBQY2478ndlYvy4LeTlrcEwuQkVjOQStm0FZbW/J0wG/
+        34OmhsPwfXTx+zcjA7xk/F4etmRtQFXlIeg7jdwR/1e5NVvPEFYEYKMJfo1YPA7L/R4oK2k4JrzwBoAD
+        Qhl3lPbpVP/QnwKWhEPROBaCLD7Px3im/KsIBoYdXBGGB4M88ZR1KuO+VQRWm50rLncQI4ZQhMW3xSg+
+        fY3C6Y/A7glhzPMXQfKmMPGk3pzkpZPNLLCNTnDF5Q6CZJlkLgy454F3s4CdkFFQ33AWDCNEsUi2gkSO
+        IrEUjKgERQRuZoSSzILfC/8GqJ+iv/H+QwHX2gAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="label7.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;label9.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="controllerPortLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>95, 103</value>
+  </data>
+  <data name="&gt;&gt;settingsButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="label2.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;webAddressLabel.Name" xml:space="preserve">
+    <value>webAddressLabel</value>
+  </data>
+  <data name="&gt;&gt;modeLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 74</value>
+  </data>
+  <data name="label1.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;modesList.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="label9.Size" type="System.Drawing.Size, System.Drawing">
+    <value>43, 17</value>
+  </data>
+  <data name="groupBox5.Text" xml:space="preserve">
+    <value>Elements</value>
+  </data>
+  <data name="&gt;&gt;label6.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;showKeysMenuItem.Name" xml:space="preserve">
+    <value>showKeysMenuItem</value>
+  </data>
+  <data name="tagsPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>383, 481</value>
+  </data>
+  <data name="webAddressLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>95, 76</value>
+  </data>
+  <data name="playToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>41, 20</value>
+  </data>
+  <data name="&gt;&gt;label4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="elementsPanel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="tagCategoryCombinationBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 64</value>
+  </data>
+  <data name="&gt;&gt;elementsLabel.Parent" xml:space="preserve">
+    <value>groupBox3</value>
+  </data>
+  <data name="&gt;&gt;musicTagCategoryBox.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;extrasToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="previousButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="overallVolumeBar.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;helpToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="previousButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABoAAAAUCAYAAACTQC2+AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsIAAA7CARUoSoAAAAGESURBVEhLYxgFAwpCV/1nhjJpB+rr/zOldDyWgXLJA4Wz
+        nv+vn/f0V3jH3TdQIRQAsiRx2gel8PYH/6FC5IHcmc/+rzry/j82g0DBFT/ptUZ894P/wQ3XKLMoY8rT
+        /wv3fcAwCGRJQudTW5/6B7+W7v//37/6AmUWJfQ8+T9ty3sUg0CWJPY+so9ov/8fZEnmrP//vUpPUGZR
+        ZNej/72rP8ANglkS2noPbEnrOqBvOv/+d8k/QJlFgc0P/9fNfwc3yLH4jFNwy93/i/b+/98BtCRjzs//
+        dnU//9tnbKfMIo+q+//zp71BMUjGe2WgXfHt/+lzfv/37/r2X6fw3X+LhPWUWWRfevd/9uTXGAZJe6/w
+        0k85/9+k6MV/laxP/40jl1FmkUXenf+p/a+xGiTps8rGIOnEf9m0r/91g+dRZpFh1u3/YS0vcRok6bnM
+        VT/18n8N32mUWaSTduO/X/VDvAZJ+azxVfGYQJlFdlmXf4EMwWtQ6CpmKe+1flDeKKA2YGAAAJmq5TA6
+        GwaUAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>Player</value>
+  </data>
+  <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>640, 480</value>
+  </data>
+  <data name="label2.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;currentTagsLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="previousMusicToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1811,182 +1958,8 @@
         ZBgKZBgKZPj3EPYFCaDgcezVMG4AAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="overallVolumeBar.Size" type="System.Drawing.Size, System.Drawing">
-    <value>338, 31</value>
-  </data>
-  <data name="&gt;&gt;currentTagsLabel.Parent" xml:space="preserve">
-    <value>groupBox7</value>
-  </data>
-  <data name="&gt;&gt;label7.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="groupBox3.Text" xml:space="preserve">
-    <value>State</value>
-  </data>
-  <data name="&gt;&gt;label16.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="settingsButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
-    <value>Magenta</value>
-  </data>
-  <data name="&gt;&gt;disconnectButton.Name" xml:space="preserve">
-    <value>disconnectButton</value>
-  </data>
-  <data name="&gt;&gt;groupBox2.Name" xml:space="preserve">
-    <value>groupBox2</value>
-  </data>
-  <data name="modesList.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;nextButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;elementsLabel.Name" xml:space="preserve">
-    <value>elementsLabel</value>
-  </data>
-  <data name="&gt;&gt;label5.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label13.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;repeatCurrentMusicToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="ipAddressBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>203, 21</value>
-  </data>
-  <data name="&gt;&gt;projectToolStripMenuItem.Name" xml:space="preserve">
-    <value>projectToolStripMenuItem</value>
-  </data>
-  <data name="groupBox5.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
-  </data>
-  <data name="label8.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 157</value>
-  </data>
-  <data name="&gt;&gt;tagFadeUpDown.Name" xml:space="preserve">
-    <value>tagFadeUpDown</value>
-  </data>
-  <data name="&gt;&gt;overallVolumeBar.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TrackBar, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="tagCategoryCombinationBox.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
-  </data>
-  <data name="&gt;&gt;menuStrip1.Name" xml:space="preserve">
-    <value>menuStrip1</value>
-  </data>
-  <data name="elementsPanel.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
   <data name="&gt;&gt;currentTagsLabel.Name" xml:space="preserve">
     <value>currentTagsLabel</value>
-  </data>
-  <data name="label7.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;tagCategoryCombinationBox.Name" xml:space="preserve">
-    <value>tagCategoryCombinationBox</value>
-  </data>
-  <data name="&gt;&gt;label9.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="groupBox2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 52</value>
-  </data>
-  <data name="&gt;&gt;projectNameLabel.Name" xml:space="preserve">
-    <value>projectNameLabel</value>
-  </data>
-  <data name="label2.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;clearTagsButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="globalKeyHookItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>175, 22</value>
-  </data>
-  <data name="&gt;&gt;modeLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="label10.Text" xml:space="preserve">
-    <value>UDP Port:</value>
-  </data>
-  <data name="label1.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;modesList.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="label9.Size" type="System.Drawing.Size, System.Drawing">
-    <value>43, 17</value>
-  </data>
-  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="groupBox5.Text" xml:space="preserve">
-    <value>Elements</value>
-  </data>
-  <data name="&gt;&gt;label6.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;showKeysMenuItem.Name" xml:space="preserve">
-    <value>showKeysMenuItem</value>
-  </data>
-  <data name="&gt;&gt;messagesButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="udpPortUpDown.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="playToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>41, 20</value>
-  </data>
-  <data name="&gt;&gt;label4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;projectNameLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;openFileDialog1.Name" xml:space="preserve">
-    <value>openFileDialog1</value>
-  </data>
-  <data name="&gt;&gt;elementsLabel.Parent" xml:space="preserve">
-    <value>groupBox3</value>
-  </data>
-  <data name="&gt;&gt;musicTagCategoryBox.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="&gt;&gt;extrasToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;ipAddressBox.Name" xml:space="preserve">
-    <value>ipAddressBox</value>
-  </data>
-  <data name="label17.Location" type="System.Drawing.Point, System.Drawing">
-    <value>190, 111</value>
-  </data>
-  <data name="overallVolumeBar.AutoSize" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;label14.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;helpToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="label2.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="label10.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 55</value>
-  </data>
-  <data name="groupBox2.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
   </data>
   <data name="&gt;&gt;groupBox5.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -1994,17 +1967,110 @@
   <data name="elementsLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>328, 17</value>
   </data>
-  <data name="&gt;&gt;repeatButton.Name" xml:space="preserve">
-    <value>repeatButton</value>
+  <data name="&gt;&gt;networkSettingsButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="groupBox7.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+  <data name="label17.Location" type="System.Drawing.Point, System.Drawing">
+    <value>190, 111</value>
   </data>
   <data name="&gt;&gt;label1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="label10.Text" xml:space="preserve">
+    <value>Web Address:</value>
   </data>
   <data name="tagCategoryCombinationBox.Items" xml:space="preserve">
     <value>OR: Music must have at least one tag in ANY category</value>
+  </data>
+  <data name="&gt;&gt;networkSettingsButton.Name" xml:space="preserve">
+    <value>networkSettingsButton</value>
+  </data>
+  <data name="&gt;&gt;networkSettingsButton.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="extrasToolStripMenuItem.Text" xml:space="preserve">
+    <value>Extras</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>1083, 578</value>
+  </data>
+  <data name="label9.Text" xml:space="preserve">
+    <value>Project:</value>
+  </data>
+  <data name="&gt;&gt;elementsLabel.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="toolStripSeparator2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>131, 6</value>
+  </data>
+  <data name="&gt;&gt;globalKeyHookItem.Name" xml:space="preserve">
+    <value>globalKeyHookItem</value>
+  </data>
+  <data name="label16.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label15.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 261</value>
+  </data>
+  <data name="groupBox4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>421, 52</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Ares Player</value>
+  </data>
+  <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;groupBox7.Name" xml:space="preserve">
+    <value>groupBox7</value>
+  </data>
+  <data name="&gt;&gt;label5.Name" xml:space="preserve">
+    <value>label5</value>
+  </data>
+  <data name="messagesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>175, 22</value>
+  </data>
+  <data name="groupBox6.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;helpOnlineToolStripMenuItem.Name" xml:space="preserve">
+    <value>helpOnlineToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;controllerPortLabel.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;label8.Parent" xml:space="preserve">
+    <value>groupBox3</value>
+  </data>
+  <data name="&gt;&gt;settingsToolStripMenuItem1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;clientStateLabel.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;exitToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="groupBox5.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="label16.Text" xml:space="preserve">
+    <value>Fade between Music:</value>
+  </data>
+  <data name="&gt;&gt;modeLabel.Name" xml:space="preserve">
+    <value>modeLabel</value>
+  </data>
+  <data name="&gt;&gt;label3.Name" xml:space="preserve">
+    <value>label3</value>
+  </data>
+  <data name="&gt;&gt;label9.Parent" xml:space="preserve">
+    <value>groupBox3</value>
+  </data>
+  <data name="&gt;&gt;stopAllToolStripMenuItem.Name" xml:space="preserve">
+    <value>stopAllToolStripMenuItem</value>
+  </data>
+  <data name="settingsButton.Text" xml:space="preserve">
+    <value>Settings ...</value>
   </data>
   <data name="editorButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -2020,119 +2086,14 @@
         x7K1qDW6Pbuj4D9HpdoEY/jIOvYHSLAAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="&gt;&gt;label17.Parent" xml:space="preserve">
-    <value>groupBox6</value>
-  </data>
-  <data name="extrasToolStripMenuItem.Text" xml:space="preserve">
-    <value>Extras</value>
-  </data>
-  <data name="&gt;&gt;udpPortUpDown.Parent" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>1083, 554</value>
-  </data>
-  <data name="label9.Text" xml:space="preserve">
-    <value>Project:</value>
-  </data>
-  <data name="&gt;&gt;elementsLabel.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;saveFileDialog.Type" xml:space="preserve">
-    <value>System.Windows.Forms.SaveFileDialog, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;globalKeyHookItem.Name" xml:space="preserve">
-    <value>globalKeyHookItem</value>
-  </data>
-  <data name="label16.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="groupBox7.Text" xml:space="preserve">
-    <value>Tags</value>
-  </data>
-  <data name="&gt;&gt;groupBox6.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="groupBox4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>421, 52</value>
-  </data>
-  <data name="&gt;&gt;udpPortUpDown.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;groupBox7.Name" xml:space="preserve">
-    <value>groupBox7</value>
-  </data>
-  <data name="musicList.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;label5.Name" xml:space="preserve">
-    <value>label5</value>
-  </data>
-  <data name="&gt;&gt;label15.Name" xml:space="preserve">
-    <value>label15</value>
-  </data>
-  <data name="messagesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>175, 22</value>
-  </data>
-  <data name="clientStateLabel.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="groupBox6.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;helpOnlineToolStripMenuItem.Name" xml:space="preserve">
-    <value>helpOnlineToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;label16.Name" xml:space="preserve">
-    <value>label16</value>
-  </data>
-  <data name="&gt;&gt;label8.Parent" xml:space="preserve">
-    <value>groupBox3</value>
-  </data>
-  <data name="&gt;&gt;settingsToolStripMenuItem1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;clientStateLabel.Parent" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="&gt;&gt;ipAddressBox.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;notifyIcon.Name" xml:space="preserve">
-    <value>notifyIcon</value>
-  </data>
-  <data name="&gt;&gt;toolStripSeparator1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;fadeOnlyOnChangeBox.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;modeLabel.Name" xml:space="preserve">
-    <value>modeLabel</value>
-  </data>
-  <data name="&gt;&gt;groupBox6.Parent" xml:space="preserve">
-    <value>tagsPanel</value>
-  </data>
-  <data name="&gt;&gt;label3.Name" xml:space="preserve">
-    <value>label3</value>
-  </data>
-  <data name="&gt;&gt;label9.Parent" xml:space="preserve">
-    <value>groupBox3</value>
-  </data>
-  <data name="aboutToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>166, 22</value>
-  </data>
-  <data name="settingsButton.Text" xml:space="preserve">
-    <value>Settings ...</value>
-  </data>
-  <data name="&gt;&gt;checkForUpdateToolStripMenuItem.Name" xml:space="preserve">
-    <value>checkForUpdateToolStripMenuItem</value>
+  <data name="&gt;&gt;tagSelectionPanel.Name" xml:space="preserve">
+    <value>tagSelectionPanel</value>
   </data>
   <data name="tagsPanel.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 19</value>
   </data>
-  <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 74</value>
+  <data name="currentTagsLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="&gt;&gt;elementsPanel.ZOrder" xml:space="preserve">
     <value>1</value>
@@ -2143,17 +2104,17 @@
   <data name="currentTagsLabel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left, Right</value>
   </data>
-  <data name="elementsPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 19</value>
+  <data name="elementsLabel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
   </data>
   <data name="settingsToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
     <value>175, 22</value>
   </data>
-  <data name="label17.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
+  <data name="&gt;&gt;stopAllToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="label12.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 82</value>
+    <value>8, 103</value>
   </data>
   <data name="soundVolumeBar.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -2161,50 +2122,53 @@
   <data name="soundsLabel.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
   </data>
-  <data name="&gt;&gt;fileSystemWatcher1.Name" xml:space="preserve">
-    <value>fileSystemWatcher1</value>
+  <data name="openToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>134, 22</value>
   </data>
-  <data name="soundsLabel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
+  <data name="label15.Size" type="System.Drawing.Size, System.Drawing">
+    <value>117, 13</value>
   </data>
-  <data name="notifyIcon.Text" xml:space="preserve">
-    <value>Ares Player</value>
+  <data name="groupBox7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>380, 332</value>
   </data>
-  <data name="&gt;&gt;settingsButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;musicLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;openButton.Name" xml:space="preserve">
     <value>openButton</value>
   </data>
   <data name="&gt;&gt;label3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="messagesButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 22</value>
+  <data name="&gt;&gt;label5.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="webAddressLabel.Text" xml:space="preserve">
+    <value>http://192.168.2.113:11113/</value>
+  </data>
+  <data name="musicTagCategoryBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>108, 19</value>
   </data>
   <data name="&gt;&gt;modeLabel.Parent" xml:space="preserve">
     <value>groupBox3</value>
   </data>
-  <data name="label7.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 107</value>
+  <data name="label14.Text" xml:space="preserve">
+    <value>Selected category:</value>
   </data>
-  <data name="tagFadeUpDown.Location" type="System.Drawing.Point, System.Drawing">
-    <value>121, 109</value>
+  <data name="modeLabel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
   </data>
-  <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
+  <data name="&gt;&gt;tagCategoryCombinationBox.Name" xml:space="preserve">
+    <value>tagCategoryCombinationBox</value>
   </data>
-  <data name="editorButton.Text" xml:space="preserve">
-    <value>Start Editor</value>
+  <data name="tagSelectionPanel.AutoScroll" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
-  <data name="label15.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left</value>
-  </data>
-  <data name="tcpPortUpDown.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 20</value>
+  <data name="label17.Size" type="System.Drawing.Size, System.Drawing">
+    <value>20, 13</value>
   </data>
   <data name="&gt;&gt;messagesToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
     <value>3</value>
@@ -2212,29 +2176,32 @@
   <data name="&gt;&gt;elementsPanel.Parent" xml:space="preserve">
     <value>groupBox5</value>
   </data>
-  <data name="disconnectButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
-  </data>
   <data name="&gt;&gt;toolStrip1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="groupBox6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>380, 134</value>
+  <data name="musicList.Size" type="System.Drawing.Size, System.Drawing">
+    <value>361, 407</value>
   </data>
-  <data name="&gt;&gt;aboutButton.Name" xml:space="preserve">
-    <value>aboutButton</value>
+  <data name="label12.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
-  <data name="&gt;&gt;openToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;label6.Name" xml:space="preserve">
+    <value>label6</value>
   </data>
-  <data name="stopButton.Text" xml:space="preserve">
-    <value>Stop All</value>
+  <data name="&gt;&gt;openToolStripMenuItem.Name" xml:space="preserve">
+    <value>openToolStripMenuItem</value>
+  </data>
+  <data name="tagFadeUpDown.Location" type="System.Drawing.Point, System.Drawing">
+    <value>121, 109</value>
   </data>
   <data name="label6.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <data name="tagFadeUpDown.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
+  <data name="&gt;&gt;elementsPanel.Name" xml:space="preserve">
+    <value>elementsPanel</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator1.Name" xml:space="preserve">
+    <value>toolStripSeparator1</value>
   </data>
   <data name="musicLabel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -2242,34 +2209,34 @@
   <data name="elementsLabel.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
-  <data name="nextMusicTitleToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>188, 22</value>
+  <data name="&gt;&gt;label14.Name" xml:space="preserve">
+    <value>label14</value>
   </data>
-  <metadata name="broadCastTimer.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="broadCastTimer.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>563, 17</value>
   </metadata>
-  <metadata name="notifyIcon.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="notifyIcon.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>816, 17</value>
   </metadata>
-  <metadata name="importFileDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="importFileDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>316, 17</value>
   </metadata>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="menuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="menuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>701, 17</value>
   </metadata>
-  <metadata name="saveFileDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="saveFileDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 56</value>
   </metadata>
-  <metadata name="openFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="openFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <metadata name="fileSystemWatcher1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="fileSystemWatcher1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>157, 17</value>
   </metadata>
-  <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>458, 17</value>
   </metadata>
 </root>

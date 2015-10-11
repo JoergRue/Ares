@@ -40,6 +40,9 @@ namespace Ares.Settings
 
         public int UdpPort { get; set; }
         public int TcpPort { get; set; }
+        public int WebTcpPort { get; set; }
+        public bool UseLegacyNetwork { get; set; }
+        public bool UseWebNetwork { get; set; }
 
         public String IPAddress { get; set; }
 
@@ -71,8 +74,6 @@ namespace Ares.Settings
 
         public bool ShowKeysInButtons { get; set; }
         public bool GlobalKeyHook { get; set; }
-
-        public bool NetworkEnabled { get; set; }
 
         public String OnlineDBUserId { get; set; }
         public bool ShowDialogAfterUpload { get; set; }
@@ -110,6 +111,9 @@ namespace Ares.Settings
 
         public int UdpPort { get { return Data.UdpPort; } set { Data.UdpPort = value; } }
         public int TcpPort { get { return Data.TcpPort; } set { Data.TcpPort = value; } }
+        public int WebTcpPort { get { return Data.WebTcpPort; } set { Data.WebTcpPort = value; } }
+        public bool UseLegacyNetwork { get { return Data.UseLegacyNetwork; } set { Data.UseLegacyNetwork = value; } }
+        public bool UseWebNetwork { get { return Data.UseWebNetwork; } set { Data.UseWebNetwork = value; } }
 
         public String IPAddress { get { return Data.IPAddress; } set { Data.IPAddress = value; } }
 
@@ -142,8 +146,6 @@ namespace Ares.Settings
         public bool ShowKeysInButtons { get { return Data.ShowKeysInButtons; } set { Data.ShowKeysInButtons = value; } }
 
         public bool GlobalKeyHook { get { return Data.GlobalKeyHook; } set { Data.GlobalKeyHook = value; } }
-
-        public bool NetworkEnabled { get { return Data.NetworkEnabled; } set { Data.NetworkEnabled = value; } }
 
         public String OnlineDBUserId { get { return Data.OnlineDBUserId; } set { Data.OnlineDBUserId = value; } }
         public bool ShowDialogAfterUpload { get { return Data.ShowDialogAfterUpload; }  set { Data.ShowDialogAfterUpload = value; } }
@@ -336,6 +338,9 @@ namespace Ares.Settings
             SoundDirectory = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyMusic), "Sounds");
             GlobalVolume = MusicVolume = SoundVolume = 100;
             TcpPort = 11112;
+            WebTcpPort = 11113;
+            UseLegacyNetwork = true;
+            UseWebNetwork = true;
             UdpPort = 8009;
             IPAddress = String.Empty;
             CheckForUpdate = true;
@@ -352,7 +357,6 @@ namespace Ares.Settings
             StreamingUserName = String.Empty;
             ShowKeysInButtons = false;
             GlobalKeyHook = false;
-            NetworkEnabled = true;
             OnlineDBUserId = String.Empty;
             ShowDialogAfterDownload = true;
             ShowDialogAfterUpload = true;
@@ -386,7 +390,9 @@ namespace Ares.Settings
             writer.WriteAttributeString("UdpPort", UdpPort.ToString(System.Globalization.CultureInfo.InvariantCulture));
             writer.WriteAttributeString("IPAddress", IPAddress);
             writer.WriteAttributeString("CheckForUpdate", CheckForUpdate ? "true" : "false");
-            writer.WriteAttributeString("Enabled", NetworkEnabled ? "true" : "false");
+            writer.WriteAttributeString("Enabled", UseLegacyNetwork ? "true" : "false");
+            writer.WriteAttributeString("WebTcpPort", WebTcpPort.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            writer.WriteAttributeString("UseWebNetwork", UseWebNetwork ? "true" : "false");
             writer.WriteEndElement();
             RecentFiles.WriteFiles(writer);
             writer.WriteStartElement("Tools");
@@ -491,9 +497,11 @@ namespace Ares.Settings
                 {
                     UdpPort = reader.GetIntegerAttribute("UdpPort");
                     TcpPort = reader.GetIntegerAttribute("TcpPort");
+                    WebTcpPort = reader.GetIntegerAttributeOrDefault("WebTcpPort", TcpPort + 1);
                     IPAddress = reader.GetAttribute("IPAddress");
                     CheckForUpdate = reader.GetBooleanAttributeOrDefault("CheckForUpdate", true);
-                    NetworkEnabled = reader.GetBooleanAttributeOrDefault("Enabled", true);
+                    UseLegacyNetwork = reader.GetBooleanAttributeOrDefault("Enabled", true);
+                    UseWebNetwork = reader.GetBooleanAttributeOrDefault("UseWebNetwork", true);
                     if (IPAddress == null) IPAddress = String.Empty;
                     if (reader.IsEmptyElement)
                         reader.Read();
@@ -644,6 +652,14 @@ namespace Ares.Settings
             if (other.MusicDirectory != this.MusicDirectory)
                 return true;
             if (other.TcpPort != this.TcpPort)
+                return true;
+            if (other.WebTcpPort != this.WebTcpPort)
+                return true;
+            if (other.UseLegacyNetwork != this.UseLegacyNetwork)
+                return true;
+            if (other.UseWebNetwork != this.UseWebNetwork)
+                return true;
+            if (other.UdpPort != this.UdpPort)
                 return true;
             if (other.OutputDeviceIndex != this.OutputDeviceIndex)
                 return true;
