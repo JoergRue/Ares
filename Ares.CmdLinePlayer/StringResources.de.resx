@@ -112,16 +112,19 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Ares" xml:space="preserve">
     <value>Ares</value>
   </data>
   <data name="AresPlayer" xml:space="preserve">
     <value>Ares Kommandozeilen-Player Version {0}</value>
+  </data>
+  <data name="CmdLineOptionDaemon" xml:space="preserve">
+    <value>Player niemals beenden.</value>
   </data>
   <data name="CmdLineOptionHelp" xml:space="preserve">
     <value>Zeige nur diese Hilfe.</value>
@@ -136,10 +139,13 @@
     <value>Nicht Interaktiv: Beenden, wenn Controller Verbindung trennt</value>
   </data>
   <data name="CmdLineOptionTcpPort" xml:space="preserve">
-    <value>Port für Kommunikation mit dem Controller</value>
+    <value>Port für Kommunikation mit den Spezial-Controllern (-1 zum Abschalten)</value>
   </data>
   <data name="CmdLineOptionUdpPort" xml:space="preserve">
     <value>Port für Botschaften zur Player-Erkennung</value>
+  </data>
+  <data name="CmdLineOptionWebTcpPort" xml:space="preserve">
+    <value>Port zur Kommunikation mit dem Web-Controller (-1 zum Abschalten)</value>
   </data>
   <data name="CmdLineOutputDevice" xml:space="preserve">
     <value>Ausgabegerät (-1: Standard; 0: zuletzt verwendetes Gerät; 1: erstes Gerät; 2: zweites Gerät; usw.)</value>

@@ -32,19 +32,23 @@ namespace Ares.CmdLinePlayer
     {
         public String Language { get; set; }
         public int UdpPort { get; set; }
-        public int TcpPort { get; set; }
+        public int LegacyTcpPort { get; set; }
+        public int WebTcpPort { get; set; }
         public String InitialProject { get; set; }
         public int MessageFilterLevel { get; set; }
         public bool NonInteractive { get; set; }
+        public bool Daemon { get; set; }
         public int OutputDevice { get; set; }
 
         public PlayerOptions()
         {
             UdpPort = -1;
-            TcpPort = -1;
+            LegacyTcpPort = -2;
+            WebTcpPort = -1;
             InitialProject = String.Empty;
             Language = String.Empty;
             NonInteractive = false;
+            Daemon = false;
             ShowHelp = false;
             MessageFilterLevel = -1;
             OutputDevice = 0;
@@ -59,10 +63,12 @@ namespace Ares.CmdLinePlayer
                 { "h|?|help", StringResources.CmdLineOptionHelp, var => ShowHelp = var != null },
                 { "m|MessageLevel=", StringResources.CmdLineOptionMsgLevel, (int var) => MessageFilterLevel = var },
                 { "UdpPort=", StringResources.CmdLineOptionUdpPort, (int var) => UdpPort = var },
-                { "TcpPort=", StringResources.CmdLineOptionTcpPort, (int var) => TcpPort = var },
+                { "TcpPort=", StringResources.CmdLineOptionTcpPort, (int var) => LegacyTcpPort = var },
+                { "WebTcpPort=", StringResources.CmdLineOptionWebTcpPort, (int var) => WebTcpPort = var },
                 { "OutputDevice=", StringResources.CmdLineOutputDevice, (int var) => OutputDevice = var },
                 { "Language=", StringResources.CmdLineOptionLanguage, var => Language = var },
-                { "NonInteractive", StringResources.CmdLineOptionNonInteractive, var => NonInteractive = var != null }
+                { "NonInteractive", StringResources.CmdLineOptionNonInteractive, var => NonInteractive = var != null },
+                { "Daemon", StringResources.CmdLineOptionDaemon, var => { Daemon = var != null; if (Daemon) NonInteractive = true; } }
             };
             List<string> extra = null;
             try
@@ -78,7 +84,12 @@ namespace Ares.CmdLinePlayer
                 Console.Error.WriteLine(StringResources.InvalidUdpPort);
                 ShowHelp = true;
             }
-            if (TcpPort != -1 && TcpPort < 1)
+            if (LegacyTcpPort != -1 && LegacyTcpPort < 1 && LegacyTcpPort != -2)
+            {
+                Console.Error.WriteLine(StringResources.InvalidTcpPort);
+                ShowHelp = true;
+            }
+            if (WebTcpPort != -1 && WebTcpPort < 1)
             {
                 Console.Error.WriteLine(StringResources.InvalidTcpPort);
                 ShowHelp = true;
@@ -118,7 +129,7 @@ namespace Ares.CmdLinePlayer
             m_BassInit = init;
         }
 
-        private INetwork m_Network;
+        private INetworks m_Network;
         private PlayingControl m_PlayingControl;
         private Ares.Playing.BassInit m_BassInit;
 
@@ -132,6 +143,7 @@ namespace Ares.CmdLinePlayer
 
         private System.Threading.AutoResetEvent m_NonInteractiveWaitEvent = null;
         private bool m_Shutdown = false;
+        private bool m_IsDaemon = false;
         private Object m_LockObject = new Object();
 
         public int Run(PlayerOptions options)
@@ -147,6 +159,7 @@ namespace Ares.CmdLinePlayer
             }
             else
             {
+                m_IsDaemon = options.Daemon;
                 m_NonInteractiveWaitEvent = new System.Threading.AutoResetEvent(false);
                 bool shutdown = false;
                 while (!shutdown)
@@ -176,9 +189,23 @@ namespace Ares.CmdLinePlayer
             {
                 Settings.Settings.Instance.UdpPort = options.UdpPort;
             }
-            if (options.TcpPort != -1)
+            if (options.LegacyTcpPort > 0)
             {
-                Settings.Settings.Instance.TcpPort = options.TcpPort;
+                Settings.Settings.Instance.TcpPort = options.LegacyTcpPort;
+                Settings.Settings.Instance.UseLegacyNetwork = true;
+            }
+            else
+            {
+                Settings.Settings.Instance.UseLegacyNetwork = (options.LegacyTcpPort != -1);
+            }
+            if (options.WebTcpPort != -1)
+            {
+                Settings.Settings.Instance.WebTcpPort = options.WebTcpPort;
+                Settings.Settings.Instance.UseWebNetwork = true;
+            }
+            else
+            {
+                Settings.Settings.Instance.UseWebNetwork = false;
             }
             if (options.OutputDevice == 0)
             {
@@ -251,7 +278,7 @@ namespace Ares.CmdLinePlayer
                 Console.WriteLine(StringResources.NoIpAddress);
                 return 2;
             }
-            m_Network = new CustomIpNetwork(this);
+            m_Network = new Networks(this, Settings.Settings.Instance.UseLegacyNetwork, Settings.Settings.Instance.UseWebNetwork);
             m_Network.InitConnectionData();
             m_Network.StartUdpBroadcast();
             m_BroadcastTimer = new System.Timers.Timer(50);
@@ -582,6 +609,13 @@ namespace Ares.CmdLinePlayer
 
         }
 
+        public void ClientConnected()
+        {
+            m_Network.StopUdpBroadcast();
+            ClientDataChanged(true);
+        }
+
+
         public void ClientDataChanged(bool listenAgainAfterDisconnect)
         {
             if (m_Network.ClientConnected)
@@ -601,11 +635,18 @@ namespace Ares.CmdLinePlayer
                 Console.WriteLine(StringResources.NotConnected);
                 if (m_NonInteractiveWaitEvent != null)
                 {
-                    lock (m_LockObject)
+                    if (!m_IsDaemon)
                     {
-                        m_Shutdown = true;
+                        lock (m_LockObject)
+                        {
+                            m_Shutdown = true;
+                        }
+                        m_NonInteractiveWaitEvent.Set();
                     }
-                    m_NonInteractiveWaitEvent.Set();
+                    else if (listenAgainAfterDisconnect)
+                    {
+                        m_Network.StartUdpBroadcast();
+                    }
                 }
             }
         }
