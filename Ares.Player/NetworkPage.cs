@@ -42,6 +42,7 @@ namespace Ares.Player
             webPortUpDown.Value = settings.WebTcpPort;
             webPortUpDown.Enabled = settings.UseWebNetwork;
             customIpPortUpDown.Enabled = settings.UseLegacyNetwork;
+            udpPortUpDown.Value = settings.UdpPort;
             bool foundAddress = false;
             bool foundIPv4Address = false;
             int ipv4AddressIndex = 0;
@@ -76,6 +77,7 @@ namespace Ares.Player
                 enableWebBox.Enabled = false;
                 customIpPortUpDown.Enabled = false;
                 webPortUpDown.Enabled = false;
+                udpPortUpDown.Enabled = false;
             }
 
             listen = true;
@@ -89,6 +91,7 @@ namespace Ares.Player
             settings.WebTcpPort = (int)webPortUpDown.Value;
             settings.TcpPort = (int)customIpPortUpDown.Value;
             settings.IPAddress = ipAddressBox.SelectedItem.ToString();
+            settings.UdpPort = (int)udpPortUpDown.Value;
         }
 
         public void OnConfirm()

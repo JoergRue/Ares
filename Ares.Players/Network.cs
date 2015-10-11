@@ -226,6 +226,12 @@ namespace Ares.Players
             }
             str.Append("|");
             str.Append(PLAYER_VERSION);
+            str.Append("|");
+            str.Append(Settings.Settings.Instance.UseLegacyNetwork ? "true" : "false");
+            str.Append("|");
+            str.Append(Settings.Settings.Instance.UseWebNetwork ? "true" : "false");
+            str.Append("|");
+            str.Append(Settings.Settings.Instance.WebTcpPort);
             udpString = str.ToString();
             udpPacket = System.Text.Encoding.UTF8.GetBytes(udpString);
         }

@@ -30,6 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NetworkPage));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.udpPortUpDown = new System.Windows.Forms.NumericUpDown();
+            this.label4 = new System.Windows.Forms.Label();
             this.customIpPortUpDown = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
             this.enableCustomIpBox = new System.Windows.Forms.CheckBox();
@@ -39,6 +41,7 @@
             this.ipAddressBox = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.udpPortUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.customIpPortUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.webPortUpDown)).BeginInit();
             this.SuspendLayout();
@@ -46,6 +49,8 @@
             // groupBox1
             // 
             resources.ApplyResources(this.groupBox1, "groupBox1");
+            this.groupBox1.Controls.Add(this.udpPortUpDown);
+            this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.customIpPortUpDown);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.enableCustomIpBox);
@@ -56,6 +61,31 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
+            // 
+            // udpPortUpDown
+            // 
+            resources.ApplyResources(this.udpPortUpDown, "udpPortUpDown");
+            this.udpPortUpDown.Maximum = new decimal(new int[] {
+            50000,
+            0,
+            0,
+            0});
+            this.udpPortUpDown.Minimum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.udpPortUpDown.Name = "udpPortUpDown";
+            this.udpPortUpDown.Value = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            // 
+            // label4
+            // 
+            resources.ApplyResources(this.label4, "label4");
+            this.label4.Name = "label4";
             // 
             // customIpPortUpDown
             // 
@@ -141,6 +171,7 @@
             this.Name = "NetworkPage";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.udpPortUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.customIpPortUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.webPortUpDown)).EndInit();
             this.ResumeLayout(false);
@@ -158,5 +189,7 @@
         private System.Windows.Forms.CheckBox enableWebBox;
         private System.Windows.Forms.ComboBox ipAddressBox;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.NumericUpDown udpPortUpDown;
+        private System.Windows.Forms.Label label4;
     }
 }

@@ -66,7 +66,7 @@ public final class ControlConnection {
   
   public ControlConnection(ServerInfo server, INetworkClient client) {
     address = server.getAddress();
-    port = server.getPort();
+    port = server.getTcpPort();
     networkClient = client;
     state = State.NotConnected;
   }

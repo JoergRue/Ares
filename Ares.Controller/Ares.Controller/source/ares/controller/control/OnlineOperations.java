@@ -38,7 +38,7 @@ public class OnlineOperations {
 	  showWebpage(parent, getUrlBase() + Localization.getString("MainFrame.HelpLink")); //$NON-NLS-1$
   }
   
-  private static void showWebpage(JFrame parent, String url) {
+  public static void showWebpage(JFrame parent, String url) {
 	  if (java.awt.Desktop.isDesktopSupported()) {
 		  try {
 			java.awt.Desktop.getDesktop().browse(java.net.URI.create(url));

@@ -227,7 +227,7 @@ public final class MainFrame extends FrameController implements IMessageListener
   					try {
   						servers.clear();
   						connectWithFirstServer = true;
-  						serverFound(new ServerInfo(InetAddress.getByName(ipAddress), tcpPort, serverName));
+  						serverFound(new ServerInfo(InetAddress.getByName(ipAddress), true, tcpPort, false, 0, serverName));
   					}
   					catch (java.net.UnknownHostException ex) {
   						JOptionPane.showMessageDialog(MainFrame.this, Localization.getString("MainFrame.Server2") + ipAddress + Localization.getString("MainFrame.NotFound"), Localization.getString("MainFrame.Ares"), JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -363,6 +363,7 @@ public final class MainFrame extends FrameController implements IMessageListener
   }
   
   private JMenuItem messagesMenuItem;
+  private JMenuItem webControllerItem;
   
   private JMenu getExtrasMenu() {
 	  JMenu extrasMenu = new JMenu(Localization.getString("MainFrame.Extras")); //$NON-NLS-1$
@@ -370,6 +371,12 @@ public final class MainFrame extends FrameController implements IMessageListener
 	  messagesMenuItem.addActionListener(new ActionListener() {
 		  public void actionPerformed(ActionEvent e) {
 			  getMessagesButton().doClick();
+		  }
+	  });
+	  webControllerItem = new JMenuItem(Localization.getString("MainFrame.WebController")); //$NON-NLS-1$
+	  webControllerItem.addActionListener(new ActionListener() {
+		  public void actionPerformed(ActionEvent e) {
+			  openWebController();
 		  }
 	  });
 	  JMenuItem settingsItem = new JMenuItem(Localization.getString("MainFrame.SettingsMenu")); //$NON-NLS-1$
@@ -395,6 +402,7 @@ public final class MainFrame extends FrameController implements IMessageListener
 		  globalKeyItem.setEnabled(false);
 	  }
 	  extrasMenu.add(messagesMenuItem);
+	  extrasMenu.add(webControllerItem);
 	  extrasMenu.addSeparator();
 	  extrasMenu.add(globalKeyItem);
 	  extrasMenu.add(settingsItem);
@@ -912,8 +920,23 @@ public final class MainFrame extends FrameController implements IMessageListener
   private JComboBox getServerBox() {
     if (serverBox == null) {
       serverBox = new JComboBox();
+      serverBox.addActionListener(new ActionListener() {
+    	  public void actionPerformed(ActionEvent e) {
+    		  updateWebControllerItem();
+    	  }
+      });
     }
     return serverBox;
+  }
+  
+  private void updateWebControllerItem() {
+	  if (getServerBox().getSelectedItem() == null) {
+		  webControllerItem.setEnabled(false);
+		  return;
+	  }
+      String server = getServerBox().getSelectedItem().toString();
+      ServerInfo serverInfo = servers.get(server);
+      webControllerItem.setEnabled(serverInfo != null && serverInfo.hasTcpServer());
   }
 
   /**
@@ -986,10 +1009,28 @@ public final class MainFrame extends FrameController implements IMessageListener
       String server = getServerBox().getSelectedItem().toString();
       ServerInfo serverInfo = servers.get(server);
       if (serverInfo != null) {
-        Control.getInstance().connect(serverInfo, this, isLocalPlayer);
+    	if (serverInfo.hasTcpServer()) {
+    		Control.getInstance().connect(serverInfo, this, isLocalPlayer);
+    	}
+    	else {
+    		// must have a web server
+    		OnlineOperations.showWebpage(this, makeWebserverUrl(serverInfo));
+    	}
       }
     }
     updateNetworkState();
+  }
+  
+  private void openWebController() {
+      String server = getServerBox().getSelectedItem().toString();
+      ServerInfo serverInfo = servers.get(server);
+      if (serverInfo != null && serverInfo.hasWebServer()) {
+    	  OnlineOperations.showWebpage(this, makeWebserverUrl(serverInfo));
+      }	  
+  }
+  
+  private String makeWebserverUrl(ServerInfo info) {
+	  return "http://" + info.getAddress() + ":" + info.getWebPort() + "/"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
   }
   
   private void updateNetworkState() {
@@ -1007,6 +1048,7 @@ public final class MainFrame extends FrameController implements IMessageListener
       getServerBox().removeAllItems();
       getConnectButton().setEnabled(hasLocalPlayer);
       getConnectButton().setText(Localization.getString("MainFrame.Connect")); //$NON-NLS-1$
+      updateWebControllerItem();
       serverSearch.startSearch();
       getFileButton().setEnabled(false);
       openItem.setEnabled(false);
@@ -1188,10 +1230,12 @@ public final class MainFrame extends FrameController implements IMessageListener
   @Override
   public void serverFound(ServerInfo server) {
     if (servers.containsKey(server.getName())) return;
+    if (!server.hasTcpServer() && !server.hasWebServer()) return;
     Messages.addMessage(MessageType.Info, Localization.getString("MainFrame.ServerFound") + server.getName() + Localization.getString("MainFrame.33")); //$NON-NLS-1$ //$NON-NLS-2$
     getServerBox().addItem(server.getName());
     getConnectButton().setEnabled(true);
     servers.put(server.getName(), server);
+    updateWebControllerItem();
     if (connectWithFirstServer) {
     	connectOrDisconnect();
     	connectWithFirstServer = false;
@@ -1610,7 +1654,7 @@ public final class MainFrame extends FrameController implements IMessageListener
 				try {
 					connectWithFirstServer = true;
 					String serverName = Preferences.userNodeForPackage(OptionsDialog.class).get("ServerName", "localhost");  //$NON-NLS-1$ //$NON-NLS-2$
-					serverFound(new ServerInfo(InetAddress.getByName(newAddress), newTcpPort, serverName));
+					serverFound(new ServerInfo(InetAddress.getByName(newAddress), true, newTcpPort, false, 0, serverName));
 				}
 				catch (java.net.UnknownHostException ex) {
 					JOptionPane.showMessageDialog(MainFrame.this, Localization.getString("MainFrame.Server2") + newAddress + Localization.getString("MainFrame.NotFound"), Localization.getString("MainFrame.Ares"), JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$

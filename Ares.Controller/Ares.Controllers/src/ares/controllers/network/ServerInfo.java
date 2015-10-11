@@ -25,12 +25,19 @@ import java.net.InetAddress;
 public final class ServerInfo implements Serializable {
 
   private InetAddress address;
-  private int port;
+  private int tcpPort;
+  private int webPort;
   private String name;
   
-  public ServerInfo(InetAddress address, int port, String name) {
+  private boolean hasWebServer;
+  private boolean hasTcpServer;
+  
+  public ServerInfo(InetAddress address, boolean hasTcp, int tcpPort, boolean hasWeb, int webPort, String name) {
     this.address = address;
-    this.port = port;
+    this.hasTcpServer = hasTcp;
+    this.tcpPort = tcpPort;
+    this.hasWebServer = hasWeb;
+    this.webPort = webPort;
     this.name = name;
   }
   
@@ -38,8 +45,20 @@ public final class ServerInfo implements Serializable {
     return address;
   }
   
-  public int getPort() {
-    return port;
+  public boolean hasTcpServer() {
+	  return hasTcpServer;
+  }
+  
+  public int getTcpPort() {
+    return tcpPort;
+  }
+  
+  public boolean hasWebServer() {
+	  return hasWebServer;
+  }
+  
+  public int getWebPort() {
+	  return webPort;
   }
   
   public String getName() { 

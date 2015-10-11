@@ -133,7 +133,8 @@ public final class ServerSearch {
   public static ServerInfo getServerInfo(String text, String token) throws UnknownHostException {
       StringTokenizer tokenizer = new StringTokenizer(text, token); //$NON-NLS-1$
       int neededTokens = (token == "|") ? 4 : 3; //$NON-NLS-1$
-      if (tokenizer.countTokens() < neededTokens) {
+      int tokenCount = tokenizer.countTokens();
+      if (tokenCount < neededTokens) {
     	  return null;
       }
       String name = tokenizer.nextToken();
@@ -145,7 +146,16 @@ public final class ServerSearch {
     	  if (version != NEEDED_SERVER_VERSION)
     		  return null;
       }
-      return new ServerInfo(address, port, name);
+      int neededExtendedTokens = 7;
+      if (tokenCount >= neededExtendedTokens) {
+    	 boolean hasTcp = Boolean.parseBoolean(tokenizer.nextToken());
+    	 boolean hasWeb = Boolean.parseBoolean(tokenizer.nextToken());
+    	 int webPort = Integer.parseInt(tokenizer.nextToken());
+    	 return new ServerInfo(address, hasTcp, port, hasWeb, webPort, name);
+      }
+      else {
+    	  return new ServerInfo(address, true, port, false, 0, name);
+      }
   }
   
   private void lookForDatagram(DatagramSocket socket) {
