@@ -1615,9 +1615,18 @@ namespace Ares.Editor
                 tempList.Add(musicList as IXmlWritable);
                 var files = fileLists.GetAllFiles(tempList);
                 var pathList = new List<String>();
+                var directories = new HashSet<String>();
                 foreach (IFileElement element in files)
                 {
                     pathList.Add(element.FilePath);
+                    directories.Add(System.IO.Path.GetDirectoryName(element.FilePath));
+                }
+
+                if (pathList.Count > 10 && directories.Count > 1)
+                {
+                    if (MessageBox.Show(this, String.Format(StringResources.MultiFileTagQuestion, pathList.Count, directories.Count), StringResources.Ares,
+                        MessageBoxButtons.OKCancel, MessageBoxIcon.None) == DialogResult.Cancel)
+                        return;
                 }
 
                 int languageId = m_Project.TagLanguageId;

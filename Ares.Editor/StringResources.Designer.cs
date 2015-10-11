@@ -476,6 +476,15 @@ namespace Ares.Editor {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You have selected {0} files from {1} directories. Set tags for all those files?.
+        /// </summary>
+        internal static string MultiFileTagQuestion {
+            get {
+                return ResourceManager.GetString("MultiFileTagQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Music.
         /// </summary>
         internal static string Music {

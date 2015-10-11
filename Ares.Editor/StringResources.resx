@@ -497,4 +497,7 @@ You should adapt some settings first.</value>
   <data name="FindingFilesInDB" xml:space="preserve">
     <value>Searching files in DB ...</value>
   </data>
+  <data name="MultiFileTagQuestion" xml:space="preserve">
+    <value>You have selected {0} files from {1} directories. Set tags for all those files?</value>
+  </data>
 </root>

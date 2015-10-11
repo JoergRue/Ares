@@ -489,13 +489,18 @@ namespace Ares.Editor.ElementEditors
             if (e.CurrentValue == e.NewValue)
                 return;
             int tagId = m_Tags[e.Index].Id;
+            bool committed = true;
             if (e.NewValue == CheckState.Checked)
             {
-                AddTagToFiles(tagId);
+                committed = AddTagToFiles(tagId);
             }
             else if (e.NewValue == CheckState.Unchecked)
             {
-                RemoveTagFromFiles(tagId);
+                committed = RemoveTagFromFiles(tagId);
+            }
+            if (!committed)
+            {
+                e.NewValue = e.CurrentValue;
             }
         }
 
@@ -536,8 +541,10 @@ namespace Ares.Editor.ElementEditors
             }
         }
 
-        private void AddTagToFiles(int tagId)
+        private bool AddTagToFiles(int tagId)
         {
+            if (!CheckForMultiFilesWarning())
+                return false;
             List<IList<int>> newTags = new List<IList<int>>();
             for (int i = 0; i < m_Files.Count; ++i)
             {
@@ -545,10 +552,13 @@ namespace Ares.Editor.ElementEditors
             }
             Ares.Tags.TagsModule.GetTagsDB().WriteInterface.AddFileTags(m_Files, newTags);
             Ares.Editor.Actions.TagChanges.Instance.FireTagsDBChanged(this);
+            return true;
         }
 
-        private void RemoveTagFromFiles(int tagId)
+        private bool RemoveTagFromFiles(int tagId)
         {
+            if (!CheckForMultiFilesWarning())
+                return false;
             List<IList<int>> removedTags = new List<IList<int>>();
             for (int i = 0; i < m_Files.Count; ++i)
             {
@@ -556,6 +566,28 @@ namespace Ares.Editor.ElementEditors
             }
             Ares.Tags.TagsModule.GetTagsDB().WriteInterface.RemoveFileTags(m_Files, removedTags);
             Ares.Editor.Actions.TagChanges.Instance.FireTagsDBChanged(this);
+            return true;
+        }
+
+        private bool CheckForMultiFilesWarning()
+        {
+            if (m_Files.Count > 10)
+            {
+                HashSet<String> directories = new HashSet<string>();
+                foreach (String file in m_Files)
+                {
+                    String path = System.IO.Path.Combine(Settings.Settings.Instance.MusicDirectory, file);
+                    String dir = System.IO.Path.GetDirectoryName(path);
+                    directories.Add(dir);
+                }
+                if (directories.Count > 1)
+                {
+                    if (MessageBox.Show(this, String.Format(StringResources.MultiFileTagQuestion, m_Files.Count, directories.Count), StringResources.Ares,
+                        MessageBoxButtons.OKCancel, MessageBoxIcon.None) == DialogResult.Cancel)
+                        return false;
+                }
+            }
+            return true;
         }
 
         private void musicBrainzButton_Click(object sender, EventArgs e)
