@@ -113,7 +113,7 @@ img.elementTriggerIndicator {
 .elementTriggerButton, .modeButton, .removeAllTagsButton, .submitRowButton {
   -webkit-box-shadow: 1px 1px 0px #706e70;
   -moz-box-shadow: 1px 1px 0px #706e70;
-  box-shadow: 1px 1px 0px #706e70;
+  box-shadow: 1px 0px 0px #706e70;
   font-family: Arial;
   color: #000000;
   font-size: 12px;
@@ -238,6 +238,7 @@ ul.modeTriggers {
     margin-left: 5px;
     margin-right: 0.83em;
     padding-left: 0;
+    column-fill:balance;
 }
 
 li.trigger, li.modeTrigger {
@@ -245,7 +246,6 @@ li.trigger, li.modeTrigger {
     margin-bottom: 1.25em;
     text-align: left;
     list-style: none;
-    overflow: hidden; /* Fix for firefox and IE 10-11  */
     -webkit-column-break-inside: avoid; /* Chrome, Safari, Opera */
     page-break-inside: avoid; /* Deprecated Firefox */
     -moz-column-break-inside:avoid; /* Current Firefox */
