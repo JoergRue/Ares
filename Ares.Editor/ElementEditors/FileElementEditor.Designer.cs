@@ -76,6 +76,7 @@ namespace Ares.Editor.ElementEditors
             this.stopButton = new System.Windows.Forms.Button();
             this.playButton = new System.Windows.Forms.Button();
             this.fileEffectsControl = new Ares.Editor.Controls.FileEffectsControl();
+            this.cutControl = new Ares.Editor.Controls.CutControl();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -218,8 +219,8 @@ namespace Ares.Editor.ElementEditors
             // 
             // playButton
             // 
-            resources.ApplyResources(this.playButton, "playButton");
             this.playButton.Image = global::Ares.Editor.ImageResources.RunSmall;
+            resources.ApplyResources(this.playButton, "playButton");
             this.playButton.Name = "playButton";
             this.playButton.UseCompatibleTextRendering = true;
             this.playButton.UseVisualStyleBackColor = true;
@@ -230,10 +231,16 @@ namespace Ares.Editor.ElementEditors
             resources.ApplyResources(this.fileEffectsControl, "fileEffectsControl");
             this.fileEffectsControl.Name = "fileEffectsControl";
             // 
+            // cutControl
+            // 
+            resources.ApplyResources(this.cutControl, "cutControl");
+            this.cutControl.Name = "cutControl";
+            // 
             // FileElementEditor
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.cutControl);
             this.Controls.Add(this.fileEffectsControl);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -272,5 +279,6 @@ namespace Ares.Editor.ElementEditors
         private System.Windows.Forms.Button stopButton;
         private System.Windows.Forms.Button playButton;
         private Controls.FileEffectsControl fileEffectsControl;
+        private Controls.CutControl cutControl;
     }
 }

@@ -167,6 +167,32 @@ namespace Ares.Data
         }
     }
 
+    #region tdmod
+    [Serializable]
+    class CueEffect: Effect, ICueEffect
+    {
+        public double Position { get; set; }
+
+        public CueEffect(String name)
+            : base(name)
+        {
+            Position = 0;
+        }
+
+        public CueEffect(String name, System.Xml.XmlReader reader)
+            : base(name, reader)
+        {
+            Position = ((double)reader.GetIntegerAttributeOrDefault(this.Name+"_Position", 0)) / 1000.0;
+        }
+
+        public override void WriteToXml(System.Xml.XmlWriter writer)
+        {
+            base.WriteToXml(writer);
+            writer.WriteAttributeString(this.Name + "_Position", (Position * 1000).ToString(System.Globalization.CultureInfo.InvariantCulture));
+        }
+    }
+    #endregion
+
     [Serializable]
     class Effects : IEffects
     {
@@ -196,12 +222,20 @@ namespace Ares.Data
 
         public IIntEffect Tempo { get { return m_Tempo; } }
 
+        #region tdmod
+        public ICueEffect CueIn { get { return m_CueIn; } }
+        public ICueEffect CueOut { get { return m_CueOut; } }
+        private CueEffect m_CueIn;
+        private CueEffect m_CueOut;
+        #endregion
+
         private IntEffect m_Pitch;
         private BalanceEffect m_Balance;
         private IntEffect m_Volume;
         private SpeakerAssignmentEffect m_Speakers;
         private ReverbEffect m_Reverb;
         private IntEffect m_Tempo;
+
 
         internal void WriteToXml(System.Xml.XmlWriter writer)
         {
@@ -219,6 +253,10 @@ namespace Ares.Data
             m_Speakers.WriteToXml(writer);
             m_Reverb.WriteToXml(writer);
             m_Tempo.WriteToXml(writer);
+            #region tdmod
+            m_CueIn.WriteToXml(writer);
+            m_CueOut.WriteToXml(writer);
+            #endregion
             writer.WriteEndElement();
         }
 
@@ -237,6 +275,10 @@ namespace Ares.Data
             m_Speakers = new SpeakerAssignmentEffect();
             m_Reverb = new ReverbEffect();
             m_Tempo = new IntEffect("Tempo", 0);
+            #region tdmod
+            m_CueIn = new CueEffect("CueIn");
+            m_CueOut = new CueEffect("CueOut");
+            #endregion
         }
 
         internal Effects(System.Xml.XmlReader reader)
@@ -254,6 +296,10 @@ namespace Ares.Data
             m_Speakers = new SpeakerAssignmentEffect(reader);
             m_Reverb = new ReverbEffect(reader);
             m_Tempo = new IntEffect("Tempo", reader, 0);
+            #region tdmod
+            m_CueIn = new CueEffect("CueIn", reader);
+            m_CueOut = new CueEffect("CueOut", reader);
+            #endregion
             if (reader.IsEmptyElement)
             {
                 reader.Read();

@@ -99,6 +99,7 @@ namespace Ares.Editor.Controls
                 fadeOutUpDown.Value = TimeConversion.GetTimeInUnit(m_Element.Effects.FadeOutTime, fadeOutUnitBox);
                 crossFadingBox.Enabled = m_Element.Effects.FadeOutTime > 0;
                 crossFadingBox.Checked = m_Element.Effects.CrossFading;
+
                 listen = true;
             }
         }

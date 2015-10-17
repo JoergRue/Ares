@@ -49,6 +49,7 @@ namespace Ares.Editor.ElementEditors
             fileVolumeControl.SetContainer(container, project);
             fileEffectsControl.SetEffects(element);
             fileEffectsControl.SetContainer(container, project);
+            cutControl.SetEffects(element, project);
             UpdateStaticInfo();
             Update(m_Element.Id, Actions.ElementChanges.ChangeType.Renamed);
             Actions.ElementChanges.Instance.AddListener(ElementId, Update);
@@ -112,6 +113,7 @@ namespace Ares.Editor.ElementEditors
             stopButton.Enabled = allowStop;
             fileVolumeControl.Enabled = false;
             fileEffectsControl.Enabled = false;
+            cutControl.Enabled = false;
             nameBox.Enabled = false;
         }
 
@@ -121,6 +123,7 @@ namespace Ares.Editor.ElementEditors
             stopButton.Enabled = false;
             fileVolumeControl.Enabled = true;
             fileEffectsControl.Enabled = true;
+            cutControl.Enabled = true;
             nameBox.Enabled = true;
         }
 
