@@ -35,7 +35,8 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>ares.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ServiceStack.Text, Version=3.9.37.0, Culture=neutral, processorArchitecture=MSIL">
@@ -63,9 +64,6 @@
     <Compile Include="Files.cs" />
     <Compile Include="Translations.cs" />
     <Compile Include="Writing.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ares.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

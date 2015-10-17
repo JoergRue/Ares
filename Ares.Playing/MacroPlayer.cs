@@ -373,6 +373,10 @@ namespace Ares.Playing
         {
         }
 
+        public override void VisitWebRadioElement(IWebRadioElement webRadio)
+        {
+        }
+
         public override bool StopMusic(int crossFadeMusicTime)
         {
             return false;

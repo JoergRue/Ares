@@ -238,7 +238,7 @@ namespace Ares.Editor.Actions
 
     public class ElementVolumeEffectsChangeAction : Action
     {
-        public ElementVolumeEffectsChangeAction(IList<IFileElement> elements, bool randomVolume, int volume, int minRandomVolume, int maxRandomVolume, int fadeIn, int fadeOut, bool crossFading)
+        public ElementVolumeEffectsChangeAction(IList<IEffectsElement> elements, bool randomVolume, int volume, int minRandomVolume, int maxRandomVolume, int fadeIn, int fadeOut, bool crossFading)
         {
             m_Elements = elements;
             m_OldVolume = new List<int>();
@@ -267,7 +267,7 @@ namespace Ares.Editor.Actions
             m_NewMaxRandom = maxRandomVolume;
         }
 
-        public IList<IFileElement> Elements
+        public IList<IEffectsElement> Elements
         {
             get
             {
@@ -316,7 +316,7 @@ namespace Ares.Editor.Actions
             }
         }
 
-        private IList<IFileElement> m_Elements;
+        private IList<IEffectsElement> m_Elements;
         private List<int> m_OldVolume;
         private List<int> m_OldFadeIn;
         private List<int> m_OldFadeOut;
@@ -338,9 +338,19 @@ namespace Ares.Editor.Actions
         public ElementRenamedAction(IElement element, String newName)
         {
             m_Element = element;
+            m_ModeElement = null;
             m_OldName = element.Title;
             m_NewName = newName;
         }
+
+        public ElementRenamedAction(IElement element, IModeElement modeElement, String newName)
+        {
+            m_Element = element;
+            m_ModeElement = modeElement;
+            m_OldName = element.Title;
+            m_NewName = newName;
+        }
+
 
         public IElement Element { get { return m_Element; } }
 
@@ -353,17 +363,67 @@ namespace Ares.Editor.Actions
         {
             m_Element.Title = m_NewName;
             ElementChanges.Instance.ElementRenamed(m_Element.Id);
+            if (m_ModeElement != null)
+            {
+                m_ModeElement.Title = m_NewName;
+                ElementChanges.Instance.ElementRenamed(m_ModeElement.Id);
+            }
         }
 
         public override void Undo(Ares.Data.IProject project)
         {
             m_Element.Title = m_OldName;
             ElementChanges.Instance.ElementRenamed(m_Element.Id);
+            if (m_ModeElement != null)
+            {
+                m_ModeElement.Title = m_OldName;
+                ElementChanges.Instance.ElementRenamed(m_ModeElement.Id);
+            }
         }
 
         private IElement m_Element;
+        private IModeElement m_ModeElement;
         private String m_OldName;
         private String m_NewName;
+    }
+
+    public class WebRadioElementUrlChangeAction : Action
+    {
+        public WebRadioElementUrlChangeAction(IWebRadioElement element, String url)
+        {
+            m_Element = element;
+            m_OldUrl = element.Url;
+            m_NewUrl = url;
+        }
+
+        public IWebRadioElement Element
+        {
+            get
+            {
+                return m_Element;
+            }
+        }
+
+        public void SetData(String newUrl)
+        {
+            m_NewUrl = newUrl;
+        }
+
+        public override void Do(IProject project)
+        {
+            m_Element.Url = m_NewUrl;
+            ElementChanges.Instance.ElementChanged(m_Element.Id);
+        }
+
+        public override void Undo(IProject project)
+        {
+            m_Element.Url = m_OldUrl;
+            ElementChanges.Instance.ElementChanged(m_Element.Id);
+        }
+
+        private IWebRadioElement m_Element;
+        private String m_OldUrl;
+        private String m_NewUrl;
     }
 
     public class DelayableElementChangeAction : Action

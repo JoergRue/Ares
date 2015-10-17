@@ -32,6 +32,11 @@ namespace Ares.Data
         /// </summary>
         void VisitFileElement(IFileElement fileElement);
         /// <summary>
+        /// Visit a web radio element.
+        /// </summary>
+        /// <param name="webRadioElement"></param>
+        void VisitWebRadioElement(IWebRadioElement webRadioElement);
+        /// <summary>
         /// Visit a sequential container.
         /// </summary>
         void VisitSequentialContainer(ISequentialContainer sequentialContainer);
@@ -313,9 +318,20 @@ namespace Ares.Data
     }
 
     /// <summary>
+    /// An element which supports effects.
+    /// </summary>
+    public interface IEffectsElement : IElement
+    {
+        /// <summary>
+        /// Effects during playing
+        /// </summary>
+        IEffects Effects { get; }
+    }
+
+    /// <summary>
     /// An element consisting of a physical file.
     /// </summary>
-    public interface IFileElement : IElement
+    public interface IFileElement : IEffectsElement
     {
         /// <summary>
         /// The name of the file.
@@ -329,10 +345,17 @@ namespace Ares.Data
         /// Type of the file
         /// </summary>
         SoundFileType SoundFileType { get; set; }
+    }
+
+    /// <summary>
+    /// An element consisting of a link to a web radio station.
+    /// </summary>
+    public interface IWebRadioElement : IEffectsElement
+    {
         /// <summary>
-        /// Effects during playing
+        /// Url to the web radio station.
         /// </summary>
-        IEffects Effects { get; }
+        String Url { get; set; }
     }
 
     /// <summary>

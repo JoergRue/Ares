@@ -85,6 +85,43 @@ namespace Ares.Playing
             PlayingModule.ThePlayer.ActiveMusicPlayer = this;
         }
 
+        public override void VisitWebRadioElement(IWebRadioElement webRadio)
+        {
+            CurrentPlayedHandle = Client.PlayWebRadio(webRadio, m_MusicFadeInTime, (success) =>
+            {
+                bool stop = false;
+                lock (syncObject)
+                {
+                    CurrentPlayedHandle = 0;
+                    CurrentFadeOut = 0;
+                    stop = shallStop;
+                }
+                if (stop || (!success && IsSingleFileList()))
+                {
+                    if (PlayingModule.ThePlayer.ProjectCallbacks != null)
+                    {
+                        PlayingModule.ThePlayer.ProjectCallbacks.MusicPlaylistFinished(GetSingleFileListId());
+                    }
+                    Client.SubPlayerFinished(this, stop, false);
+                }
+                else if (!success)
+                {
+                    // must get out of current call stack
+                    m_PlayAfterErrorTimer = new System.Timers.Timer(5);
+                    m_PlayAfterErrorTimer.AutoReset = false;
+                    m_PlayAfterErrorTimer.Elapsed += new System.Timers.ElapsedEventHandler(playAfterErrorTimer_Elapsed);
+                    m_PlayAfterErrorTimer.Start();
+                }
+                else
+                {
+                    PlayNext();
+                }
+            });
+
+            CurrentFadeOut = 0;
+            PlayingModule.ThePlayer.ActiveMusicPlayer = this;
+        }
+
         private System.Timers.Timer m_PlayAfterErrorTimer;
 
         private void playAfterErrorTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
@@ -773,6 +810,10 @@ namespace Ares.Playing
             {
                 m_CurrentFile = (element as IFileElement).FilePath;
             }
+            else if (element != null && element is IWebRadioElement)
+            {
+                m_CurrentFile = (element as IWebRadioElement).Url;
+            }
         }
 
         public void MusicFinished(int elementId)
@@ -878,10 +919,16 @@ namespace Ares.Playing
             m_Element = musicFile;
         }
 
+        public SingleMusicPlayer(IWebRadioElement webRadio, WaitHandle stoppedEvent, IElementPlayerClient client)
+            : base(stoppedEvent, client)
+        {
+            m_Element = webRadio;
+        }
+
         public override void PlayMusicTitle(int elementId, bool fade, bool crossFade, int fadeTimeMs)
         {
         }
 
-        private IFileElement m_Element;
+        private IElement m_Element;
     }
 }

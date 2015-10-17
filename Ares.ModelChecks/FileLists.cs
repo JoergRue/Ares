@@ -139,6 +139,11 @@ namespace Ares.ModelInfo
             }
         }
 
+        public void VisitWebRadioElement(IWebRadioElement webRadio)
+        {
+
+        }
+
         public void VisitSequentialContainer(ISequentialContainer sequentialContainer)
         {
             foreach (ISequentialElement element in sequentialContainer.GetElements())

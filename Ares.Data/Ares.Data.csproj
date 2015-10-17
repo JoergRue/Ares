@@ -13,7 +13,8 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>ares.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
     <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
     <NoStdLib>False</NoStdLib>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
@@ -135,9 +136,6 @@
     <Compile Include="Triggers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XmlHelpers.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ares.snk" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="StringResources.de.resx">

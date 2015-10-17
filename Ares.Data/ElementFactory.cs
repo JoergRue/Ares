@@ -33,6 +33,11 @@ namespace Ares.Data
         IFileElement CreateFileElement(String filePath, SoundFileType fileType);
 
         /// <summary>
+        /// Creates a web radio element.
+        /// </summary>
+        IWebRadioElement CreateWebRadioElement(String title);
+
+        /// <summary>
         /// Creates a choice container
         /// </summary>
         IElementContainer<IChoiceElement> CreateChoiceContainer(String title);
@@ -103,6 +108,11 @@ namespace Ares.Data
         public IFileElement CreateFileElement(String filePath, SoundFileType fileType)
         {
             return new BasicFileElement(GetNextID(), filePath, fileType);
+        }
+
+        public IWebRadioElement CreateWebRadioElement(String title)
+        {
+            return new WebRadioElement(GetNextID(), title);
         }
 
         public IElementContainer<IChoiceElement> CreateChoiceContainer(String title)
@@ -280,6 +290,10 @@ namespace Ares.Data
             else if (reader.IsStartElement("FileElement"))
             {
                 return new BasicFileElement(reader);
+            }
+            else if (reader.IsStartElement("WebRadio"))
+            {
+                return new WebRadioElement(reader);
             }
             else if (reader.IsStartElement("BackgroundSoundChoice"))
             {

@@ -35,6 +35,16 @@ namespace Ares.Editor.ElementEditors
 
         public static void ShowEditor(Ares.Data.IElement element, Ares.Data.IGeneralElementContainer container, Ares.Data.IProject project, WeifenLuo.WinFormsUI.Docking.DockPanel parent)
         {
+            ShowEditor(element, container, null, project, parent);
+        }
+
+        public static void ShowEditor(Ares.Data.IElement element, Ares.Data.IModeElement modeElement, Ares.Data.IProject project, WeifenLuo.WinFormsUI.Docking.DockPanel parent)
+        {
+            ShowEditor(element, null, modeElement, project, parent);
+        }
+
+        private static void ShowEditor(Ares.Data.IElement element, Ares.Data.IGeneralElementContainer container, Ares.Data.IModeElement modeElement, Ares.Data.IProject project, WeifenLuo.WinFormsUI.Docking.DockPanel parent)
+        {
             if (element == null)
                 return;
             EditorBase existing = EditorRegistry.Instance.GetEditor(element.Id);
@@ -99,6 +109,12 @@ namespace Ares.Editor.ElementEditors
                     {
                         ShowEditor(referencedElement, container, project, parent);
                     }
+                }
+                else if (element is Ares.Data.IWebRadioElement)
+                {
+                    WebRadioEditor editor = new WebRadioEditor();
+                    editor.SetElement(element as Ares.Data.IWebRadioElement, project, modeElement);
+                    ShowEditor(editor, parent);
                 }
                 else if (element is Ares.Data.IFileElement)
                 {

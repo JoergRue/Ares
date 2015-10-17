@@ -27,7 +27,8 @@ namespace Ares.Playing
     public enum SoundFileType
     {
         Music,
-        SoundEffect
+        SoundEffect,
+        WebRadio
     }
 
     /// <summary>

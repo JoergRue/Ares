@@ -58,6 +58,7 @@ namespace Ares.Editor
             sImageList.Images.Add(ImageResources.base_cog_32);
             sImageList.Images.Add(ImageResources.SeriousWarning);
             sImageList.Images.Add(ImageResources.musicbytags);
+            sImageList.Images.Add(ImageResources.WebRadio);
 
             sImageList.Images.Add(ImageResources.random_music_list_ref);
             sImageList.Images.Add(ImageResources.sequential_music_list_ref);
@@ -71,6 +72,7 @@ namespace Ares.Editor
             sImageList.Images.Add(ImageResources.base_cog_32_ref);
             sImageList.Images.Add(ImageResources.SeriousWarning_ref);
             sImageList.Images.Add(ImageResources.musicbytags_ref);
+            sImageList.Images.Add(ImageResources.WebRadio_Ref);
         }
 
         public ProjectExplorer()
@@ -321,6 +323,10 @@ namespace Ares.Editor
             {
                 return elementContextMenu;
             }
+            else if (element is IWebRadioElement)
+            {
+                return elementContextMenu;
+            }
             else
                 return null;
         }
@@ -366,11 +372,15 @@ namespace Ares.Editor
             {
                 return 11;
             }
+            else if (element is IWebRadioElement)
+            {
+                return 12;
+            }
             else if (element is IReferenceElement)
             {
                 IElement referencedElement = Data.DataModule.ElementRepository.GetElement((element as IReferenceElement).ReferencedId);
                 if (referencedElement != null)
-                    return GetNodeImageIndex(referencedElement) + 12;
+                    return GetNodeImageIndex(referencedElement) + 13;
                 else
                     return 10;
             }
@@ -561,9 +571,29 @@ namespace Ares.Editor
             m_AfterEditAction = () =>
             {
                 m_AfterEditAction = null;
-                EditElement(GetElement(SelectedNode));
+                EditElement(SelectedNode.Tag as IElement);
             };
             RenameElement();            
+        }
+
+        private void AddWebRadio()
+        {
+            String name = StringResources.NewWebRadio;
+            IWebRadioElement element = DataModule.ElementFactory.CreateWebRadioElement(name);
+            if (SelectedNode.Tag is IMode)
+            {
+                AddModeElement(element, name);
+            }
+            else
+            {
+                AddContainerElement(element);
+            }
+            m_AfterEditAction = () =>
+            {
+                m_AfterEditAction = null;
+                EditElement(SelectedNode.Tag as IElement);
+            };
+            RenameElement();
         }
 
         private void AddRandomPlaylist()
@@ -581,7 +611,7 @@ namespace Ares.Editor
             m_AfterEditAction = () =>
             {
                 m_AfterEditAction = null;
-                EditElement(GetElement(SelectedNode));
+                EditElement(SelectedNode.Tag as IElement);
             };
             RenameElement();
         }
@@ -601,7 +631,7 @@ namespace Ares.Editor
             m_AfterEditAction = () =>
             {
                 m_AfterEditAction = null;
-                EditElement(GetElement(SelectedNode));
+                EditElement(SelectedNode.Tag as IElement);
             };
             RenameElement();
         }
@@ -634,7 +664,7 @@ namespace Ares.Editor
             m_AfterEditAction = () =>
                 {
                     m_AfterEditAction = null;
-                    EditElement(GetElement(SelectedNode));
+                    EditElement(SelectedNode.Tag as IElement);
                 };
             RenameElement();
         }
@@ -655,7 +685,7 @@ namespace Ares.Editor
                 m_AfterEditAction = () =>
                 {
                     m_AfterEditAction = null;
-                    EditElement(GetElement(SelectedNode));
+                    EditElement(SelectedNode.Tag as IElement);
                 };
                 RenameElement();
             }
@@ -679,7 +709,7 @@ namespace Ares.Editor
             m_AfterEditAction = () =>
             {
                 m_AfterEditAction = null;
-                EditElement(GetElement(SelectedNode));
+                EditElement(SelectedNode.Tag as IElement);
             };
             RenameElement();
             listenForContainerChanges = oldListen;
@@ -702,7 +732,7 @@ namespace Ares.Editor
             m_AfterEditAction = () =>
             {
                 m_AfterEditAction = null;
-                EditElement(GetElement(SelectedNode));
+                EditElement(SelectedNode.Tag as IElement);
             };
             RenameElement();
             listenForContainerChanges = oldListen;
@@ -725,7 +755,7 @@ namespace Ares.Editor
             m_AfterEditAction = () =>
             {
                 m_AfterEditAction = null;
-                EditElement(GetElement(SelectedNode));
+                EditElement(SelectedNode.Tag as IElement);
             };
             RenameElement();
             listenForContainerChanges = oldListen;
@@ -944,6 +974,14 @@ namespace Ares.Editor
                     AddSubElements(node, (GetElement(node) as IBackgroundSounds).GetElements());
                 }
             }
+            else if (changeType == ElementChanges.ChangeType.Renamed)
+            {
+                TreeNode node = FindNodeForElement(elementId, projectTree.Nodes[0]);
+                if (node != null)
+                {
+                    node.Text = (node.Tag as IElement).Title;
+                }
+            }
         }
 
         private TreeNode FindNodeForElement(int elementId, TreeNode node)
@@ -1013,7 +1051,16 @@ namespace Ares.Editor
 
         private void EditElement(IElement element)
         {
-            ElementEditors.Editors.ShowEditor(element, null, m_Project, DockPanel);
+            if (element is IModeElement)
+            {
+                IElement inner = (element as IModeElement).StartElement;
+                IModeElement modeElement = (inner is IWebRadioElement) ? element as IModeElement : null;
+                ElementEditors.Editors.ShowEditor(inner, modeElement, m_Project, DockPanel);
+            }
+            else
+            {
+                ElementEditors.Editors.ShowEditor(element, (IModeElement)null, m_Project, DockPanel);
+            }
         }
 
         private void deleteToolStripMenuItem2_Click(object sender, EventArgs e)
@@ -1116,19 +1163,19 @@ namespace Ares.Editor
                 }
                 else if (SelectedNode.Tag is IElement)
                 {
-                    EditElement(GetElement(SelectedNode));
+                    EditElement(SelectedNode.Tag as IElement);
                 }
             }
         }
 
         private void editToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            EditElement(GetElement(SelectedNode));
+            EditElement(SelectedNode.Tag as IElement);
         }
 
         private void editToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            EditElement(GetElement(SelectedNode));
+            EditElement(SelectedNode.Tag as IElement);
         }
 
         private void projectTree_BeforeExpand(object sender, TreeViewCancelEventArgs e)
@@ -2401,5 +2448,14 @@ namespace Ares.Editor
             return false;
         }
 
+        private void webRadioItem2_Click(object sender, EventArgs e)
+        {
+            AddWebRadio();
+        }
+
+        private void webRadioMenuItem_Click(object sender, EventArgs e)
+        {
+            AddWebRadio();
+        }
     }
 }

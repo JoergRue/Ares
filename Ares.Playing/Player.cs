@@ -71,6 +71,20 @@ namespace Ares.Playing
                 element.Effects.SpeakerAssignment.Assignment = SpeakerAssignment.AllSpeakers;
             }
         }
+
+        public SoundFile(IWebRadioElement element, bool playMusicOnAllSpeakers)
+        {
+            Id = element.Id;
+            SoundFileType = SoundFileType.WebRadio;
+            Path = element.Url;
+            Volume = PlayingModule.ThePlayer.MusicVolume;
+            Effects = element.Effects;
+            if (playMusicOnAllSpeakers && !element.Effects.SpeakerAssignment.Active && !element.Effects.Balance.Active)
+            {
+                element.Effects.SpeakerAssignment.Active = true;
+                element.Effects.SpeakerAssignment.Assignment = SpeakerAssignment.AllSpeakers;
+            }
+        }
     }
 
     class ErrorHandling
@@ -179,6 +193,7 @@ namespace Ares.Playing
     interface IElementPlayerClient
     {
         int PlayFile(IFileElement fileElement, int fadeInTime, Action<bool> afterPlayed, bool loop);
+        int PlayWebRadio(IWebRadioElement webRadioElement, int fadeInTime, Action<bool> afterPlayed);
 
         bool Stopped { get; }
 
@@ -190,6 +205,8 @@ namespace Ares.Playing
     abstract class ElementPlayerBase : IElementVisitor
     {
         public abstract void VisitFileElement(IFileElement fileElement);
+
+        public abstract void VisitWebRadioElement(IWebRadioElement webRadio);
 
         public virtual void VisitSequentialContainer(ISequentialContainer sequentialContainer) { }
 
@@ -400,6 +417,11 @@ namespace Ares.Playing
             return Client.PlayFile(element, fadeInTime, afterPlayed, loop);
         }
 
+        public int PlayWebRadio(IWebRadioElement element, int fadeInTime, Action<bool> afterPlayed)
+        {
+            return Client.PlayWebRadio(element, fadeInTime, afterPlayed);
+        }
+
         public void SetMusicOnAllSpeakers(bool onAllSpeakers)
         {
             Client.SetMusicOnAllSpeakers(onAllSpeakers);
@@ -518,6 +540,30 @@ namespace Ares.Playing
             else
             {
                 Next();
+            }
+        }
+
+        public override void VisitWebRadioElement(IWebRadioElement webRadio)
+        {
+            bool stopMusic = false;
+            lock (syncObject)
+            {
+                stopMusic = m_StopMusic;
+            }
+            if (!stopMusic)
+            {
+                SingleMusicPlayer subPlayer = new SingleMusicPlayer(webRadio, StoppedEvent, this);
+                Client.SubPlayerStarted(subPlayer);
+                Interlocked.Increment(ref m_ActiveSubPlayers);
+                if (MusicFadeInTime != 0)
+                {
+                    subPlayer.Start(MusicFadeInTime);
+                    MusicFadeInTime = 0;
+                }
+                else
+                {
+                    subPlayer.Start(0);
+                }
             }
         }
 

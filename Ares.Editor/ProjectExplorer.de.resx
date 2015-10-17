@@ -112,12 +112,12 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="renameToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>186, 22</value>
   </data>
@@ -144,16 +144,15 @@
   </data>
   <data name="projectTree.SelectedNodes" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAKYBU3lzdGVtLldpbmRvd3MuRm9ybXMsIFZlcnNpb249Mi4wLjAu
+        AAEAAAD/////AQAAAAAAAAAMAgAAAKYBU3lzdGVtLldpbmRvd3MuRm9ybXMsIFZlcnNpb249NC4wLjAu
         MCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5XV0sIG1zY29y
-        bGliLCBWZXJzaW9uPTIuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjc3YTVj
+        bGliLCBWZXJzaW9uPTQuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjc3YTVj
         NTYxOTM0ZTA4OQwDAAAAV1N5c3RlbS5XaW5kb3dzLkZvcm1zLCBWZXJzaW9uPTQuMC4wLjAsIEN1bHR1
         cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjc3YTVjNTYxOTM0ZTA4OQUBAAAAQFN5c3RlbS5Db2xs
         ZWN0aW9ucy5HZW5lcmljLkxpc3RgMVtbU3lzdGVtLldpbmRvd3MuRm9ybXMuVHJlZU5vZGUDAAAABl9p
         dGVtcwVfc2l6ZQhfdmVyc2lvbgQAAB9TeXN0ZW0uV2luZG93cy5Gb3Jtcy5UcmVlTm9kZVtdAwAAAAgI
-        AgAAAAkEAAAAAAAAAAIAAAAMBQAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj0yLjAuMC4w
-        LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkHBAAAAAABAAAA
-        AAAAAAQdU3lzdGVtLldpbmRvd3MuRm9ybXMuVHJlZU5vZGUFAAAACw==
+        AgAAAAkEAAAAAAAAAAIAAAAHBAAAAAABAAAAAAAAAAQdU3lzdGVtLldpbmRvd3MuRm9ybXMuVHJlZU5v
+        ZGUDAAAACw==
 </value>
   </data>
   <data name="renameToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
@@ -234,6 +233,12 @@
   <data name="addBackgroundSoundsToolStripMenuItem.Text" xml:space="preserve">
     <value>Hintergrundgeräusche hinzufügen ...</value>
   </data>
+  <data name="webRadioMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>279, 22</value>
+  </data>
+  <data name="webRadioMenuItem.Text" xml:space="preserve">
+    <value>Web-Radio hinzufügen ...</value>
+  </data>
   <data name="toolStripMenuItem14.Size" type="System.Drawing.Size, System.Drawing">
     <value>279, 22</value>
   </data>
@@ -271,7 +276,7 @@
     <value>279, 22</value>
   </data>
   <data name="modeContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>280, 424</value>
+    <value>280, 446</value>
   </data>
   <data name="editToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>279, 22</value>
@@ -357,6 +362,12 @@
   <data name="addBackgroundSoundsToolStripMenuItem1.Text" xml:space="preserve">
     <value>Hintergrundgeräusche hinzufügen ...</value>
   </data>
+  <data name="webRadioItem2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>279, 22</value>
+  </data>
+  <data name="webRadioItem2.Text" xml:space="preserve">
+    <value>Web-Radio hinzufügen ...</value>
+  </data>
   <data name="toolStripSeparator4.Size" type="System.Drawing.Size, System.Drawing">
     <value>276, 6</value>
   </data>
@@ -388,64 +399,64 @@
     <value>279, 22</value>
   </data>
   <data name="containerContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>280, 424</value>
+    <value>280, 446</value>
   </data>
   <data name="editToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>191, 22</value>
+    <value>189, 22</value>
   </data>
   <data name="editToolStripMenuItem1.Text" xml:space="preserve">
     <value>Bearbeiten ...</value>
   </data>
   <data name="renameToolStripMenuItem3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>191, 22</value>
+    <value>189, 22</value>
   </data>
   <data name="renameToolStripMenuItem3.Text" xml:space="preserve">
     <value>Umbenennen</value>
   </data>
   <data name="selectElementKeyMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>191, 22</value>
+    <value>189, 22</value>
   </data>
   <data name="selectElementKeyMenuItem.Text" xml:space="preserve">
     <value>Taste wählen ...</value>
   </data>
   <data name="modeElementStartingToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>191, 22</value>
+    <value>189, 22</value>
   </data>
   <data name="modeElementStartingToolStripMenuItem1.Text" xml:space="preserve">
     <value>Start ...</value>
   </data>
   <data name="toolStripSeparator11.Size" type="System.Drawing.Size, System.Drawing">
-    <value>188, 6</value>
+    <value>186, 6</value>
   </data>
   <data name="toolStripMenuItem9.Size" type="System.Drawing.Size, System.Drawing">
-    <value>191, 22</value>
+    <value>189, 22</value>
   </data>
   <data name="toolStripMenuItem9.Text" xml:space="preserve">
     <value>Ausschneiden</value>
   </data>
   <data name="toolStripMenuItem10.Size" type="System.Drawing.Size, System.Drawing">
-    <value>191, 22</value>
+    <value>189, 22</value>
   </data>
   <data name="toolStripMenuItem10.Text" xml:space="preserve">
     <value>Kopieren</value>
   </data>
   <data name="deleteToolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>191, 22</value>
+    <value>189, 22</value>
   </data>
   <data name="deleteToolStripMenuItem2.Text" xml:space="preserve">
     <value>Löschen</value>
   </data>
   <data name="toolStripSeparator7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>188, 6</value>
+    <value>186, 6</value>
   </data>
   <data name="exportToolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>191, 22</value>
+    <value>189, 22</value>
   </data>
   <data name="tagsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>191, 22</value>
+    <value>189, 22</value>
   </data>
   <data name="elementContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>192, 214</value>
+    <value>190, 214</value>
   </data>
   <data name="renameToolStripMenuItem4.Size" type="System.Drawing.Size, System.Drawing">
     <value>229, 22</value>

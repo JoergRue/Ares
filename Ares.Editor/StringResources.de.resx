@@ -501,4 +501,7 @@ Soll es jetzt gespeichert werden?</value>
   <data name="MultiFileTagQuestion" xml:space="preserve">
     <value>Sie haben {0} Dateien in {1} Verzeichnissen ausgewählt. Tags für alle diese Dateien setzen?</value>
   </data>
+  <data name="NewWebRadio" xml:space="preserve">
+    <value>Neues Web-Radio</value>
+  </data>
 </root>

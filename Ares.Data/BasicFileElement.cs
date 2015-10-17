@@ -18,6 +18,7 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 using System;
+using System.Xml;
 
 namespace Ares.Data
 {
@@ -340,6 +341,68 @@ namespace Ares.Data
 
         private String m_FileName;
         private String m_FilePath;
+        private Effects m_Effects;
+    }
+
+    [Serializable]
+    class WebRadioElement : ElementBase, IElement, IWebRadioElement
+    {
+        public override void Visit(IElementVisitor visitor)
+        {
+            visitor.VisitWebRadioElement(this);
+        }
+
+        internal WebRadioElement(int id, String title)
+            : base(id)
+        {
+            Title = title;
+            Url = String.Empty;
+            m_Effects = new Effects();
+        }
+
+        public override void WriteToXml(XmlWriter writer)
+        {
+            writer.WriteStartElement("WebRadio");
+            DoWriteToXml(writer);
+            writer.WriteAttributeString("Url", Url);
+            m_Effects.WriteToXml(writer);
+            writer.WriteEndElement();
+        }
+
+        internal WebRadioElement(XmlReader reader)
+            : base(reader)
+        {
+            Url = reader.GetNonEmptyAttribute("Url");
+            if (reader.IsEmptyElement)
+            {
+                reader.Read();
+            }
+            else
+            {
+                reader.Read();
+                while (reader.IsStartElement())
+                {
+                    if (reader.IsStartElement("Effects"))
+                    {
+                        m_Effects = new Effects(reader);
+                    }
+                    else
+                    {
+                        reader.ReadOuterXml();
+                    }
+                }
+                reader.ReadEndElement();
+            }
+            if (m_Effects == null)
+            {
+                m_Effects = new Effects();
+            }
+        }
+
+        public String Url { get; set; }
+
+        public IEffects Effects { get { return m_Effects; } }
+
         private Effects m_Effects;
     }
 }

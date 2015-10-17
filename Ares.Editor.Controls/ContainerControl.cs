@@ -667,7 +667,9 @@ namespace Ares.Editor.Controls
         {
             var list = GetAllSelectedFileElements();
             if (list.Count == 0) return;
-            FileVolumeDialog dialog = new FileVolumeDialog(list, m_Project);
+            var convertedList = new List<IEffectsElement>();
+            convertedList.AddRange(list);
+            FileVolumeDialog dialog = new FileVolumeDialog(convertedList, m_Project);
             if (dialog.ShowDialog(Parent) == DialogResult.OK)
             {
                 dialog.UpdateAction();

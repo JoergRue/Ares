@@ -500,4 +500,7 @@ You should adapt some settings first.</value>
   <data name="MultiFileTagQuestion" xml:space="preserve">
     <value>You have selected {0} files from {1} directories. Set tags for all those files?</value>
   </data>
+  <data name="NewWebRadio" xml:space="preserve">
+    <value>New Web Radio</value>
+  </data>
 </root>

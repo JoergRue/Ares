@@ -36,7 +36,8 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>ares.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Mono Debug|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -113,9 +114,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>StringResources.resx</DependentUpon>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ares.snk" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ChangeLogDialog.de.resx">

@@ -48,10 +48,19 @@ namespace Ares.Editor.Controls
         public void SetContainer(Ares.Data.IGeneralElementContainer container, Ares.Data.IProject project)
         {
             m_Container = container;
+            bool hasContainer = (m_Container != null);
+            allFadeInButton.Enabled = hasContainer;
+            allFadeOutButton.Enabled = hasContainer;
+            allVolumeButton.Enabled = hasContainer;
+            allCrossFadeButton.Enabled = hasContainer;
+            allFadeInButton.Visible = hasContainer;
+            allFadeOutButton.Visible = hasContainer;
+            allVolumeButton.Visible = hasContainer;
+            allCrossFadeButton.Visible = hasContainer;
             m_Project = project;
         }
 
-        public void SetEffects(Ares.Data.IFileElement element)
+        public void SetEffects(Ares.Data.IEffectsElement element)
         {
             if (m_Element != null)
             {
@@ -62,6 +71,11 @@ namespace Ares.Editor.Controls
             {
                 Update(m_Element.Id, Actions.ElementChanges.ChangeType.Changed);
                 Actions.ElementChanges.Instance.AddListener(m_Element.Id, Update);
+                if (m_Element is Ares.Data.IWebRadioElement)
+                {
+                    fadeOutUnitBox.Enabled = false;
+                    fadeOutUpDown.Enabled = false;
+                }
             }
             else
             {
@@ -113,7 +127,7 @@ namespace Ares.Editor.Controls
                     return;
                 }
             }
-            List<Ares.Data.IFileElement> elements = new List<Ares.Data.IFileElement>();
+            List<Ares.Data.IEffectsElement> elements = new List<Ares.Data.IEffectsElement>();
             elements.Add(m_Element);
             Actions.Actions.Instance.AddNew(new Actions.ElementVolumeEffectsChangeAction(elements,
                 randomButton.Checked,
@@ -127,7 +141,7 @@ namespace Ares.Editor.Controls
             listen = true;
         }
 
-        private Ares.Data.IFileElement m_Element;
+        private Ares.Data.IEffectsElement m_Element;
         private bool listen = true;
 
         private void volumeBar_ValueChanged(object sender, EventArgs e)

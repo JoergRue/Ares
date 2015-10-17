@@ -37,7 +37,8 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>ares.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Resources\Ares.ico</ApplicationIcon>
@@ -293,6 +294,12 @@
     <Compile Include="ElementEditors\TriggerEditor.Designer.cs">
       <DependentUpon>TriggerEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="ElementEditors\WebRadioEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ElementEditors\WebRadioEditor.Designer.cs">
+      <DependentUpon>WebRadioEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="ErrorWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -499,6 +506,12 @@
     <EmbeddedResource Include="ElementEditors\TriggerEditor.resx">
       <DependentUpon>TriggerEditor.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ElementEditors\WebRadioEditor.de.resx">
+      <DependentUpon>WebRadioEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ElementEditors\WebRadioEditor.resx">
+      <DependentUpon>WebRadioEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ErrorWindow.de.resx">
       <DependentUpon>ErrorWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -560,7 +573,6 @@
       <DependentUpon>VolumeWindow.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
-    <None Include="ares.snk" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -762,6 +774,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\error.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\WebRadio.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\WebRadio_Ref.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

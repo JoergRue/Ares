@@ -46,27 +46,34 @@ namespace Ares.Playing
                         break;
                 }
             }
+            if (file.SoundFileType == SoundFileType.WebRadio)
+            {
+                channel = Bass.BASS_StreamCreateURL(file.Path, 0, decodeFlag | BASSFlag.BASS_STREAM_BLOCK, null, IntPtr.Zero);
+            }
+            else
+            {
 #if MONO
-			byte[] buffer = null;
-			long length = 0;
-			try 
-			{
-				System.IO.FileStream fs = System.IO.File.OpenRead(file.Path);
-				length = fs.Length;
-				buffer = new byte[length];
-				fs.Read (buffer, 0, (int)length);
-				fs.Close ();
-			}
-			catch (System.IO.IOException e)
-			{
-				ErrorHandling.ErrorOccurred(file.Id, e.Message);
-				return 0;
-			}
-			System.Runtime.InteropServices.GCHandle gcHandle = System.Runtime.InteropServices.GCHandle.Alloc(buffer, System.Runtime.InteropServices.GCHandleType.Pinned);
-			channel = Bass.BASS_StreamCreateFile(gcHandle.AddrOfPinnedObject(), 0L, length, decodeFlag);
+			    byte[] buffer = null;
+			    long length = 0;
+			    try 
+			    {
+				    System.IO.FileStream fs = System.IO.File.OpenRead(file.Path);
+				    length = fs.Length;
+				    buffer = new byte[length];
+				    fs.Read (buffer, 0, (int)length);
+				    fs.Close ();
+			    }
+			    catch (System.IO.IOException e)
+			    {
+				    ErrorHandling.ErrorOccurred(file.Id, e.Message);
+				    return 0;
+			    }
+			    System.Runtime.InteropServices.GCHandle gcHandle = System.Runtime.InteropServices.GCHandle.Alloc(buffer, System.Runtime.InteropServices.GCHandleType.Pinned);
+			    channel = Bass.BASS_StreamCreateFile(gcHandle.AddrOfPinnedObject(), 0L, length, decodeFlag);
 #else
-            channel = Bass.BASS_StreamCreateFile(file.Path, 0, 0, decodeFlag);
+                channel = Bass.BASS_StreamCreateFile(file.Path, 0, 0, decodeFlag);
 #endif
+            }
             if (channel == 0)
             {
 #if MONO
@@ -80,7 +87,7 @@ namespace Ares.Playing
             bool useMultiSpeakerChannels = false;
             int speakers = 2;
             int origChannel = channel;
-            if (!isStreaming 
+            if (!isStreaming && file.Effects != null 
                 && file.Effects.SpeakerAssignment.Active && file.Effects.SpeakerAssignment.Assignment == Data.SpeakerAssignment.AllSpeakers 
                 && !file.Effects.Balance.Active && !file.Effects.Pitch.Active && !file.Effects.Tempo.Active)
             {
@@ -369,12 +376,17 @@ namespace Ares.Playing
                 long length = Bass.BASS_ChannelGetLength(handle);
                 long remaining = length - pos;
                 long fadeOutLength = Bass.BASS_ChannelSeconds2Bytes(handle, 0.001 * fadeOutTime);
-                if (pos == -1 || length == -1 || fadeOutLength == -1 || remaining <= 0)
+                if (fadeOutLength == -1)
                 {
                     // on error, just stop the file
                     Bass.BASS_ChannelStop(handle);
                     FileFinished(handle, true);
                     return;
+                }
+                if (pos == -1 || length == -1 || remaining <= 0)
+                {
+                    // web radio doesn't have a length
+                    remaining = fadeOutLength;
                 }
                 if (fadeOutLength > remaining)
                 {

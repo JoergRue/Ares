@@ -35,7 +35,8 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>ares.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug English|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -108,9 +109,6 @@
       <Name>Ares.Tags</Name>
       <Private>False</Private>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ares.snk" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="StringResources.de.resx" />

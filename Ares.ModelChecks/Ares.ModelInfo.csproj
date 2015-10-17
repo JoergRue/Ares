@@ -35,7 +35,8 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>ares.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug English|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -82,9 +83,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>StringResources.resx</DependentUpon>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ares.snk" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ares.Data\Ares.Data.csproj">

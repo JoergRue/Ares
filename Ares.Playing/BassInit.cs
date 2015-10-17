@@ -92,6 +92,9 @@ namespace Ares.Playing
                 {
                     throw new BassInitException(MakeBassInitErrorMessage());
                 }
+
+                Un4seen.Bass.Bass.BASS_SetConfig(Un4seen.Bass.BASSConfig.BASS_CONFIG_NET_PLAYLIST, 1);
+
 #if !MONO
                 if (!Un4seen.Bass.AddOn.Fx.BassFx.LoadMe())
                 {

@@ -16,7 +16,7 @@ namespace Ares.Editor.Controls
     {
         public ElementVolumeEffectsChangeAction Action { get; set; }
 
-        public FileVolumeDialog(IList<IFileElement> elements, IProject project)
+        public FileVolumeDialog(IList<IEffectsElement> elements, IProject project)
         {
             InitializeComponent();
             Element = elements[0];
@@ -37,7 +37,7 @@ namespace Ares.Editor.Controls
             crossFadingBox.Enabled = Element.Effects.FadeOutTime > 0;
         }
 
-        private IFileElement Element { get; set; }
+        private IEffectsElement Element { get; set; }
         private IProject m_Project;
 
         private void fixedVolumeButton_CheckedChanged(object sender, EventArgs e)

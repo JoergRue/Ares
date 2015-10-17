@@ -57,6 +57,34 @@ namespace Ares.Playing
             return handle;
         }
 
+        public int PlayWebRadio(IWebRadioElement webRadioElement, int fadeInTime, Action<bool> afterPlayed)
+        {
+            SoundFile soundFile = new SoundFile(webRadioElement, m_PlayMusicOnAllSpeakers);
+            FileStarted(webRadioElement);
+            int handle = PlayingModule.FilePlayer.PlayFile(soundFile, fadeInTime, (id, handle2) =>
+            {
+                FileFinished(id, Data.SoundFileType.Music);
+                lock (syncObject)
+                {
+                    m_CurrentFiles.Remove(handle2);
+                }
+                afterPlayed(true);
+            }, false);
+            if (handle != 0)
+            {
+                lock (syncObject)
+                {
+                    m_CurrentFiles.Add(handle);
+                }
+            }
+            else
+            {
+                FileFinished(soundFile.Id, Data.SoundFileType.Music);
+                afterPlayed(false);
+            }
+            return handle;
+        }
+
         public bool Stopped
         {
             get
@@ -196,7 +224,7 @@ namespace Ares.Playing
             m_PlayMusicOnAllSpeakers = onAllSpeakers;
         }
 
-        protected abstract void FileStarted(IFileElement fileElement);
+        protected abstract void FileStarted(IElement fileElement);
         protected abstract void FileFinished(Int32 id, Data.SoundFileType soundFileType);
 
         protected abstract void PlayerStarted();
@@ -232,7 +260,7 @@ namespace Ares.Playing
 
     class SingleElementPlayer : StartElementPlayer
     {
-        protected override void FileStarted(IFileElement fileElement)
+        protected override void FileStarted(IElement fileElement)
         {
         }
 
@@ -271,11 +299,11 @@ namespace Ares.Playing
 
     class ModeElementPlayer : StartElementPlayer
     {
-        protected override void FileStarted(IFileElement fileElement)
+        protected override void FileStarted(IElement fileElement)
         {
             if (m_Callbacks != null)
             {
-                if (fileElement.SoundFileType == Data.SoundFileType.Music)
+                if (fileElement is IWebRadioElement || ((IFileElement)fileElement).SoundFileType == Data.SoundFileType.Music)
                 {
                     m_Callbacks.MusicStarted(fileElement.Id);
                 }

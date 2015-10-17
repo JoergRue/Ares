@@ -638,6 +638,15 @@ namespace Ares.Editor {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New Web Radio.
+        /// </summary>
+        internal static string NewWebRadio {
+            get {
+                return ResourceManager.GetString("NewWebRadio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to None of these elements can be dropped here..
         /// </summary>
         internal static string NoDroppableElements {

@@ -72,6 +72,8 @@ namespace Ares.ModelInfo
             }
             else if (element is IMusicByTags)
                 return true;
+            else if (element is IWebRadioElement)
+                return true;
             return false;
         }
 
@@ -114,7 +116,8 @@ namespace Ares.ModelInfo
             }
             else if (element is IMusicByTags)
                 return true;
-
+            else if (element is IWebRadioElement)
+                return true;
             return false;
         }
     }

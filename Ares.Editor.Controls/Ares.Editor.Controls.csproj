@@ -35,7 +35,8 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>ares.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug English|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -349,9 +350,6 @@
     <EmbeddedResource Include="VolumeControl.resx">
       <DependentUpon>VolumeControl.cs</DependentUpon>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ares.snk" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\MoveUp.png" />

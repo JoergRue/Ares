@@ -35,7 +35,8 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>ares.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Bass.Net, Version=2.4.7.4, Culture=neutral, PublicKeyToken=b7566c273e6ef480, processorArchitecture=MSIL">
@@ -78,7 +79,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="ares.snk" />
     <None Include="Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings1.Designer.cs</LastGenOutput>
