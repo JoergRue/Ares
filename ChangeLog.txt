@@ -1,3 +1,14 @@
+Version 2.5.1
+----------------------------------------------------------------------------------
+- Editor: Files and directories in Music / Sound Explorer are sorted even if they 
+  are stored in non-NTFS file systems
+- Editor: Bugfix for possible crash when the error window is open while a project
+  is imported which adds files
+- Player: Output sound device can be selected 
+  (e.g. for use with Virtual Audio Cable)
+- Player: Bugfix: with some Linux versions, the "Music by Tags" element didn't 
+  work because of wrong directory separators
+
 Version 2.5.0
 ----------------------------------------------------------------------------------
 - General: Tags can be combined with AND across categories

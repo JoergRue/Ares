@@ -38,7 +38,9 @@ namespace Ares.Editor
             }
             if (disposing)
             {
+				#if !MONO
                 Settings.Settings.Instance.SettingsChanged -= new System.EventHandler<Settings.Settings.SettingsEventArgs>(SettingsChanged);
+				#endif
             }
             base.Dispose(disposing);
         }

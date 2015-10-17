@@ -600,9 +600,7 @@ namespace Ares.Editor
         private System.Windows.Forms.ToolStripMenuItem extrasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem startPlayerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
-#if !MONO
         private WeifenLuo.WinFormsUI.Docking.DockPanel dockPanel;
-#endif
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.ToolStripMenuItem editMenu;

@@ -5,7 +5,7 @@
 
   <property name="nant.settings.currentframework" value="net-3.5" />
   <property name="framework4" value="net-4.0" />
-  <property name="xbuild" value="C:\Program Files (x86)\MonoDevelop\bin\mdtool.exe" />
+  <property name="xbuild" value="C:\Program Files (x86)\Xamarin Studio\bin\mdtool.exe" />
 	
 	<property name="build.dir" value="build" />
 	<property name="temp.dir" value="${build.dir}/temp" />
@@ -94,8 +94,13 @@
 		  <fileset basedir="bin/Mono_Release">
 			  <include name="**/*.dll" />
 			  <include name="**/*.exe" />
-			  <include name="**/*.config" />
    		  </fileset>
+	    </copy>
+		<copy todir="${monooutput.dir}">
+         <fileset basedir="bin/${configuration}">
+			  <include name="Ares.Player.exe.config" />
+			  <include name="Ares.CmdLinePlayer.exe.config" />
+   	     </fileset>
 		</copy>
 		<copy todir="${monooutput.dir}" overwrite="true">
 		  <fileset basedir="Libraries_Linux">
@@ -110,8 +115,13 @@
 		  <fileset basedir="bin/Mono_Release">
 			  <include name="**/*.dll" />
 			  <include name="**/*.exe" />
-			  <include name="**/*.config" />
    		  </fileset>
+		</copy>
+		<copy todir="${monooutput64.dir}">
+         <fileset basedir="bin/${configuration}">
+			  <include name="Ares.Player.exe.config" />
+			  <include name="Ares.CmdLinePlayer.exe.config" />
+   	     </fileset>
 		</copy>
 		<copy todir="${monooutput64.dir}" overwrite="true">
 		  <fileset basedir="Libraries_Linux_x64">

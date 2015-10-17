@@ -286,7 +286,7 @@ namespace Ares.Data
         public String FileName { get { return m_FileName; } }
         public String FilePath { get { return m_FilePath; } 
             set {
-                m_FilePath = value;
+                m_FilePath = value.Replace('\\', System.IO.Path.DirectorySeparatorChar);
                 int pos = m_FilePath.LastIndexOf(System.IO.Path.DirectorySeparatorChar);
                 m_FileName = (pos != -1) ? m_FilePath.Substring(pos + 1) : m_FilePath;
             }
@@ -310,7 +310,6 @@ namespace Ares.Data
             : base(reader)
         {
             FilePath = reader.GetNonEmptyAttribute("Path");
-            FilePath = FilePath.Replace('\\', System.IO.Path.DirectorySeparatorChar);
             String soundType = reader.GetNonEmptyAttribute("SoundType");
             SoundFileType = soundType == "Music" ? SoundFileType.Music : SoundFileType.SoundEffect;
             if (reader.IsEmptyElement)

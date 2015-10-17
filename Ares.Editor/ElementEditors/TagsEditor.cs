@@ -29,12 +29,7 @@ using System.Windows.Forms;
 namespace Ares.Editor.ElementEditors
 {
 
-    public partial class TagsEditor
-#if !MONO
-        : WeifenLuo.WinFormsUI.Docking.DockContent
-#else
-        : Form
-#endif
+    public partial class TagsEditor : WeifenLuo.WinFormsUI.Docking.DockContent
     {
         public TagsEditor()
         {
@@ -51,12 +46,11 @@ namespace Ares.Editor.ElementEditors
             }
         }
 
-#if !MONO
         protected override string GetPersistString()
         {
             return "TagsEditor";
         }
-#endif
+
         private Ares.Data.IProject m_Project;
 
         public void SetProject(Ares.Data.IProject project)

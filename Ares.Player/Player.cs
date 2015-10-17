@@ -40,6 +40,8 @@ namespace Ares.Player
 
         private Network m_Network;
 
+        private Ares.Playing.BassInit m_BassInit;
+
         private bool m_HideToTray = false;
         private bool m_FirstShow = true;
 
@@ -47,8 +49,9 @@ namespace Ares.Player
         private readonly MouseKeyboardActivityMonitor.KeyboardHookListener m_KeyboardHookManager;
 #endif
 
-        public Player()
+        public Player(Ares.Playing.BassInit init)
         {
+            m_BassInit = init;
             String projectName = Environment.GetCommandLineArgs().Length > 1 ? Environment.GetCommandLineArgs()[1] : String.Empty;
             if (projectName.StartsWith("Language="))
             {
@@ -194,21 +197,33 @@ namespace Ares.Player
 #endif
             Ares.Settings.Settings settings = Ares.Settings.Settings.Instance;
             Ares.CommonGUI.SettingsDialog dialog = new Ares.CommonGUI.SettingsDialog(Ares.Settings.Settings.Instance, m_BasicSettings);
-#if !MONO
             dialog.AddPage(new StreamingPageHost());
-#endif
             dialog.AddPage(new MusicPageHost());
             dialog.SetVisiblePage(-1);
             if (dialog.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
             {
                 m_PlayingControl.UpdateDirectories();
                 LoadTagsDB();
+                SetOutputDevice();
                 m_PlayingControl.SetPlayMusicOnAllSpeakers(settings.PlayMusicOnAllSpeakers);
                 m_PlayingControl.SetFadingOnPreviousNext(settings.ButtonMusicFadeMode != 0, settings.ButtonMusicFadeMode == 2, settings.ButtonMusicFadeTime);
             }
 #if !MONO
             m_KeyboardHookManager.Enabled = true;
 #endif
+        }
+
+        private void SetOutputDevice()
+        {
+            try
+            {
+                m_BassInit.SwitchDevice(Settings.Settings.Instance.OutputDeviceIndex);
+            }
+            catch (Ares.Playing.BassInitException)
+            {
+                MessageBox.Show(this, String.Format(StringResources.DeviceInitError), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Ares.Settings.Settings.Instance.OutputDeviceIndex = -1;
+            }
         }
 
         private void openButton_Click(object sender, EventArgs e)
@@ -951,22 +966,25 @@ namespace Ares.Player
 
         private void Shutdown()
         {
-            if (m_Network.ClientConnected)
+            if (m_Network != null)
             {
-                m_Network.DisconnectClient(false);
-            }
-            else
-            {
-                m_Network.StopListenForClient();
-                System.Threading.Thread.Sleep(400);
                 if (m_Network.ClientConnected)
                 {
                     m_Network.DisconnectClient(false);
                 }
+                else
+                {
+                    m_Network.StopListenForClient();
+                    System.Threading.Thread.Sleep(400);
+                    if (m_Network.ClientConnected)
+                    {
+                        m_Network.DisconnectClient(false);
+                    }
+                }
+                broadCastTimer.Enabled = false;
+                m_Network.StopUdpBroadcast();
+                m_Network.Shutdown();
             }
-            broadCastTimer.Enabled = false;
-            m_Network.StopUdpBroadcast();
-            m_Network.Shutdown();
             m_PlayingControl.Dispose();
 #if !MONO
             m_KeyboardHookManager.Dispose();
@@ -1042,6 +1060,7 @@ namespace Ares.Player
                 m_PlayingControl.KeyReceived((int)Ares.Data.Keys.Escape);
                 m_PlayingControl.UpdateDirectories();
                 LoadTagsDB();
+                SetOutputDevice();
             }
             listenForPorts = false;
             udpPortUpDown.Value = settings.UdpPort;
@@ -1401,6 +1420,22 @@ namespace Ares.Player
                 argIndex++;
                 projectName = Environment.GetCommandLineArgs().Length > argIndex ? Environment.GetCommandLineArgs()[argIndex] : String.Empty;
             }
+            if (projectName.StartsWith("--deviceIndex="))
+            {
+                int deviceIndex = -1;
+                if (Int32.TryParse(projectName.Substring("--deviceIndex=".Length), out deviceIndex))
+                {
+                    Settings.Settings.Instance.OutputDeviceIndex = deviceIndex;
+                }
+                argIndex++;
+                projectName = Environment.GetCommandLineArgs().Length > argIndex ? Environment.GetCommandLineArgs()[argIndex] : String.Empty;
+            }
+
+            if (Settings.Settings.Instance.OutputDeviceIndex != -1)
+            {
+                SetOutputDevice();
+            }
+
             if (!String.IsNullOrEmpty(projectName))
             {
                 if (projectName.EndsWith(".apkg", StringComparison.InvariantCultureIgnoreCase))

@@ -25,7 +25,7 @@ cd ..
 rmdir /S/Q MGPlugin
 cd ..
 
-%svn% export file:///D:/Repositories/Ares/trunk build\Ares_%1_Source
+%svn% export https://localhost/svn/Ares/trunk build\Ares_%1_Source
 cd build
 %zip% a output\Ares_%1_Source.7z Ares_%1_Source
 
@@ -65,3 +65,5 @@ del Ares_Portable_Linux_arm_hardfp\Player\libbass_aac.so
 %zip% a output\Ares_Portable_Linux_arm_hardfp_%1.zip Ares_Portable_Linux_arm_hardfp
 
 cd ..
+
+:end

@@ -1,0 +1,357 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Mono_Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E9189223-5024-4284-B02A-9F22C83DAE88}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Ares.Editor.Controls</RootNamespace>
+    <AssemblyName>Ares.Editor.Controls</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Mono_Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\Mono_Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;MONO</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Mono_Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>..\bin\Mono_Release\</OutputPath>
+    <DefineConstants>TRACE;MONO</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>ares.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ChoiceContainerControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ChoiceContainerControl.Designer.cs">
+      <DependentUpon>ChoiceContainerControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ContainerControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DelayableControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DelayableControl.Designer.cs">
+      <DependentUpon>DelayableControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FileEffectsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FileEffectsControl.Designer.cs">
+      <DependentUpon>FileEffectsControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FileVolumeControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FileVolumeControl.Designer.cs">
+      <DependentUpon>FileVolumeControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FileVolumeDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FileVolumeDialog.Designer.cs">
+      <DependentUpon>FileVolumeDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUIExtensions\DataGridViewNumericUpDownCell.cs" />
+    <Compile Include="GUIExtensions\DataGridViewNumericUpDownColumn.cs" />
+    <Compile Include="GUIExtensions\DataGridViewNumericUpDownEditingControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUIExtensions\MultiSelectTreeview.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="BalanceDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BalanceDialog.Designer.cs">
+      <DependentUpon>BalanceDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MacroControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MacroControl.designer.cs">
+      <DependentUpon>MacroControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TempoDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TempoDialog.Designer.cs">
+      <DependentUpon>TempoDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReverbDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ReverbDialog.Designer.cs">
+      <DependentUpon>ReverbDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SpeakersDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SpeakersDialog.Designer.cs">
+      <DependentUpon>SpeakersDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VolumeDBDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VolumeDBDialog.Designer.cs">
+      <DependentUpon>VolumeDBDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ParallelContainerControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ParallelContainerControl.Designer.cs">
+      <DependentUpon>ParallelContainerControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PathLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="PitchDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PitchDialog.Designer.cs">
+      <DependentUpon>PitchDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="RepeatableControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="RepeatableControl.Designer.cs">
+      <DependentUpon>RepeatableControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SequentialContainerControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SequentialContainerControl.Designer.cs">
+      <DependentUpon>SequentialContainerControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StringResources.de.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StringResources.de.resx</DependentUpon>
+    </Compile>
+    <Compile Include="StringResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StringResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="TimeConversion.cs" />
+    <Compile Include="VolumeControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="VolumeControl.Designer.cs">
+      <DependentUpon>VolumeControl.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Ares.Data\Ares.Data_Mono.csproj">
+      <Project>{F64D6AF3-3543-47F0-A7B8-0336750B09C3}</Project>
+      <Name>Ares.Data_Mono</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Ares.Editor.Actions\Ares.Editor.Actions_Mono.csproj">
+      <Project>{7799985C-64E9-4414-ACA8-01184B704032}</Project>
+      <Name>Ares.Editor.Actions_Mono</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Ares.ModelChecks\Ares.ModelInfo_Mono.csproj">
+      <Project>{50EA19EE-5337-499C-8B7B-1B22EA9E24A6}</Project>
+      <Name>Ares.ModelInfo_Mono</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Ares.Playing\Ares.Playing_Mono.csproj">
+      <Project>{6C55F933-0F49-489C-AFF4-E0E0A8581E42}</Project>
+      <Name>Ares.Playing_Mono</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Ares.Settings\Ares.Settings_Mono.csproj">
+      <Project>{E99E229E-2D6A-4C49-8E6F-C06E3F346606}</Project>
+      <Name>Ares.Settings_Mono</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Ares.Tags\Ares.Tags_Mono.csproj">
+      <Project>{42A8F91D-6E6B-4740-AC3F-99A34074E695}</Project>
+      <Name>Ares.Tags_Mono</Name>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ChoiceContainerControl.de.resx">
+      <DependentUpon>ChoiceContainerControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChoiceContainerControl.resx">
+      <DependentUpon>ChoiceContainerControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ContainerControl.de.resx">
+      <DependentUpon>ContainerControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ContainerControl.resx">
+      <DependentUpon>ContainerControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DelayableControl.de.resx">
+      <DependentUpon>DelayableControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DelayableControl.resx">
+      <DependentUpon>DelayableControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FileEffectsControl.de.resx">
+      <DependentUpon>FileEffectsControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FileEffectsControl.resx">
+      <DependentUpon>FileEffectsControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FileVolumeControl.de.resx">
+      <DependentUpon>FileVolumeControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FileVolumeControl.resx">
+      <DependentUpon>FileVolumeControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BalanceDialog.de.resx">
+      <DependentUpon>BalanceDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BalanceDialog.resx">
+      <DependentUpon>BalanceDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FileVolumeDialog.de.resx">
+      <DependentUpon>FileVolumeDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FileVolumeDialog.resx">
+      <DependentUpon>FileVolumeDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MacroControl.de.resx">
+      <DependentUpon>MacroControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MacroControl.resx">
+      <DependentUpon>MacroControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TempoDialog.de.resx">
+      <DependentUpon>TempoDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TempoDialog.resx">
+      <DependentUpon>TempoDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReverbDialog.de.resx">
+      <DependentUpon>ReverbDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReverbDialog.resx">
+      <DependentUpon>ReverbDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SpeakersDialog.de.resx">
+      <DependentUpon>SpeakersDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SpeakersDialog.resx">
+      <DependentUpon>SpeakersDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VolumeDBDialog.de.resx">
+      <DependentUpon>VolumeDBDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VolumeDBDialog.resx">
+      <DependentUpon>VolumeDBDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ParallelContainerControl.de.resx">
+      <DependentUpon>ParallelContainerControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ParallelContainerControl.resx">
+      <DependentUpon>ParallelContainerControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PitchDialog.de.resx">
+      <DependentUpon>PitchDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PitchDialog.resx">
+      <DependentUpon>PitchDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RepeatableControl.de.resx">
+      <DependentUpon>RepeatableControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RepeatableControl.resx">
+      <DependentUpon>RepeatableControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SequentialContainerControl.de.resx">
+      <DependentUpon>SequentialContainerControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SequentialContainerControl.resx">
+      <DependentUpon>SequentialContainerControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StringResources.de.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>StringResources.de.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StringResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>StringResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VolumeControl.de.resx">
+      <DependentUpon>VolumeControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VolumeControl.resx">
+      <DependentUpon>VolumeControl.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ares.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MoveUp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MoveDown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Multiple_Selection.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RunSmall.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\StopSmall.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\decrease_enabled.png" />
+    <None Include="Resources\edit.png" />
+    <Content Include="Resources\increase.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

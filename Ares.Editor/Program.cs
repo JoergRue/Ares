@@ -50,14 +50,16 @@ namespace Ares.Editor
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
             try
             {
-                using (Ares.Playing.BassInit bassInit = new Ares.Playing.BassInit(s => MessageBox.Show(s, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Warning)))
+                using (Ares.Playing.BassInit bassInit = new Ares.Playing.BassInit(-1, s => MessageBox.Show(s, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Warning)))
                 {
                     Application.Run(new MainForm());
                 }
             }
+			#if !MONO
             catch (Ares.Ipc.ApplicationAlreadyStartedException)
             {
             }
+			#endif
             catch (Ares.Playing.BassInitException ex)
             {
                 MessageBox.Show(ex.Message, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Stop);

@@ -22,8 +22,8 @@
     <DefineConstants>DEBUG;TRACE;MONO</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Externalconsole>true</Externalconsole>
     <PlatformTarget>x86</PlatformTarget>
+    <Externalconsole>true</Externalconsole>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Mono_Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -80,8 +80,5 @@
     <EmbeddedResource Include="StringResources.de.resx">
       <LogicalName>Ares.CmdLinePlayer.StringResources.de.resources</LogicalName>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
   </ItemGroup>
 </Project>

@@ -276,4 +276,7 @@ Error message: {0}
   <data name="NoDeviceDriver" xml:space="preserve">
     <value>No sound device driver found.</value>
   </data>
+  <data name="Default" xml:space="preserve">
+    <value>Default</value>
+  </data>
 </root>

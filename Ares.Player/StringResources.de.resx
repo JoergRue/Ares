@@ -129,6 +129,9 @@
   <data name="ConnectedWith" xml:space="preserve">
     <value>Verbunden mit </value>
   </data>
+  <data name="DeviceInitError" xml:space="preserve">
+    <value>Konnte nicht auf gewähltes Ausgabegerät zugreifen! Verwende Standardgerät.</value>
+  </data>
   <data name="Disable" xml:space="preserve">
     <value>Ausschalten</value>
   </data>
@@ -193,6 +196,9 @@ Sie sollten zuerst ein paar Einstellungen vornehmen.</value>
   </data>
   <data name="OpenProjectQuestion" xml:space="preserve">
     <value>Projekt {0} öffnen?</value>
+  </data>
+  <data name="Output" xml:space="preserve">
+    <value>Ausgabe</value>
   </data>
   <data name="ReloadProject" xml:space="preserve">
     <value>Projektdatei wurde geändert. Abspielen stoppen und Datei neu laden?</value>
