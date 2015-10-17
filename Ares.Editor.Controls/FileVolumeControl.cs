@@ -85,6 +85,14 @@ namespace Ares.Editor.Controls
                 fadeOutUpDown.Value = TimeConversion.GetTimeInUnit(m_Element.Effects.FadeOutTime, fadeOutUnitBox);
                 crossFadingBox.Enabled = m_Element.Effects.FadeOutTime > 0;
                 crossFadingBox.Checked = m_Element.Effects.CrossFading;
+
+                #region tdmod
+                cueOutActive.Checked = m_Element.Effects.CueOut.Active;
+                cueInActive.Checked = m_Element.Effects.CueIn.Active;
+                setCueTime(cueOutTime, m_Element.Effects.CueOut.Position);
+                setCueTime(cueInTime, m_Element.Effects.CueIn.Position);
+                #endregion
+
                 listen = true;
             }
         }
@@ -260,6 +268,114 @@ namespace Ares.Editor.Controls
             if (listen)
                 Commit();
         }
+
+        #region tdmod
+        private void commitCueIn() 
+        {
+            if (m_Element == null)
+                return;
+            listen = false;
+            Actions.Action action = Actions.Actions.Instance.LastAction;
+            if (action != null && action is Actions.CueInEffectChangeAction)
+            {
+                Actions.CueInEffectChangeAction eeca = action as Actions.CueInEffectChangeAction;
+                if (eeca.Elements[0] == m_Element)
+                {
+                    eeca.SetData(cueInActive.Checked, getCueTime(cueInTime, m_Element.Effects.CueIn.Position));
+                    eeca.Do(m_Project);
+                    listen = true;
+                    return;
+                }
+            }
+            List<Ares.Data.IFileElement> elements = new List<Ares.Data.IFileElement>();
+            elements.Add(m_Element);
+            Actions.Actions.Instance.AddNew(new Actions.CueInEffectChangeAction(elements, cueInActive.Checked, getCueTime(cueInTime, m_Element.Effects.CueIn.Position)), m_Project);
+            listen = true;
+        }
+
+        private void commitCueOut()
+        {
+            if (m_Element == null)
+                return;
+            listen = false;
+            Actions.Action action = Actions.Actions.Instance.LastAction;
+            if (action != null && action is Actions.CueOutEffectChangeAction)
+            {
+                Actions.CueOutEffectChangeAction eeca = action as Actions.CueOutEffectChangeAction;
+                if (eeca.Elements[0] == m_Element)
+                {
+                    eeca.SetData(cueOutActive.Checked, getCueTime(cueOutTime,m_Element.Effects.CueOut.Position));
+                    eeca.Do(m_Project);
+                    listen = true;
+                    return;
+                }
+            }
+            List<Ares.Data.IFileElement> elements = new List<Ares.Data.IFileElement>();
+            elements.Add(m_Element);
+            Actions.Actions.Instance.AddNew(new Actions.CueOutEffectChangeAction(elements, cueOutActive.Checked, getCueTime(cueOutTime, m_Element.Effects.CueOut.Position)), m_Project);
+            listen = true;
+        }
+
+
+        private double getCueTime(MaskedTextBox maskedInput, double original)
+        {
+            try
+            {
+                DateTime dt = DateTime.ParseExact(maskedInput.Text, "mm:ss:fff", System.Globalization.CultureInfo.InvariantCulture);
+                DateTime dt0 = DateTime.ParseExact("00:00:000", "mm:ss:fff", System.Globalization.CultureInfo.InvariantCulture);
+                return TimeSpan.FromTicks(
+                     dt.Ticks - dt0.Ticks
+                 ).TotalSeconds;
+            }
+            catch (FormatException e)
+            {
+                setCueTime(maskedInput, original);
+                return original;
+            }
+        }
+
+        private void setCueTime(MaskedTextBox maskedInput, double cueTime)
+        {
+            TimeSpan ts = TimeSpan.FromSeconds(cueTime);
+            maskedInput.Text = new DateTime(ts.Ticks).ToString("mm:ss:fff");
+        }
+
+        private void cueInActive_CheckedChanged(object sender, EventArgs e)
+        {
+            if (listen)
+                commitCueIn();
+        }
+
+        private void cueOutActive_CheckedChanged(object sender, EventArgs e)
+        {
+            if (listen)
+                commitCueOut();
+        }
+
+        private void cueInTime_TextChanged(object sender, EventArgs e)
+        {
+        }
+
+        private void cueOutTime_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cueInTime_Leave(object sender, EventArgs e)
+        {
+            if (listen)
+                commitCueIn();
+        }
+
+
+        private void cueOutTime_Leave(object sender, EventArgs e)
+        {
+            if (listen)
+                commitCueOut();
+        }
+
+        #endregion 
+
 
     }
 }

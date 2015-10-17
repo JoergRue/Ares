@@ -170,7 +170,23 @@ namespace Ares.Playing
                 }
                 if (!loop)
                 {
-                    int sync = Bass.BASS_ChannelSetSync(channel, BASSSync.BASS_SYNC_END, 0, m_EndSync, IntPtr.Zero);
+                    #region tdmod
+                    int sync = 0;
+                    // If CueOut is active ...
+                    if (file.Effects.CueOut.Active)
+                    {
+                        // Convert the CueOut position (seconds) into a byte offset
+                        long cueOutPos = Bass.BASS_ChannelSeconds2Bytes(channel, file.Effects.CueOut.Position);
+                        // Set the "end" sync to that position
+                        sync = Bass.BASS_ChannelSetSync(channel, BASSSync.BASS_SYNC_POS, cueOutPos, m_EndSync3, IntPtr.Zero);
+                    }
+                    else
+                    {
+                        // Default: set the "end" sync to the end of the stream
+                        sync = Bass.BASS_ChannelSetSync(channel, BASSSync.BASS_SYNC_END, 0, m_EndSync, IntPtr.Zero);
+                    }
+                    #endregion
+
                     if (sync == 0)
                     {
 #if MONO
@@ -207,11 +223,28 @@ namespace Ares.Playing
                     {
                         fadeOutLength = totalLength;
                     }
-                    if (Bass.BASS_ChannelSetSync(channel, BASSSync.BASS_SYNC_POS, totalLength - fadeOutLength, m_FadeOutSync, new IntPtr(file.Effects.FadeOutTime)) == 0)
+                    #region tdmod
+                    // If CueOut is active ...
+                    if (file.Effects.CueOut.Active)
                     {
-                        ErrorHandling.BassErrorOccurred(file.Id, StringResources.FilePlayingError);
-                        return 0;
+                        // Convert the CueOut position (seconds) into a byte offset
+                        long cueOutPos = Bass.BASS_ChannelSeconds2Bytes(channel, file.Effects.CueOut.Position);
+                        // Set the "end" sync to that position
+                        if (Bass.BASS_ChannelSetSync(channel, BASSSync.BASS_SYNC_POS, cueOutPos - fadeOutLength, m_FadeOutSync, new IntPtr(file.Effects.FadeOutTime)) == 0)
+                        {
+                            ErrorHandling.BassErrorOccurred(file.Id, StringResources.FilePlayingError);
+                            return 0;
+                        }
                     }
+                    else
+                    {
+                        if (Bass.BASS_ChannelSetSync(channel, BASSSync.BASS_SYNC_POS, totalLength - fadeOutLength, m_FadeOutSync, new IntPtr(file.Effects.FadeOutTime)) == 0)
+                        {
+                            ErrorHandling.BassErrorOccurred(file.Id, StringResources.FilePlayingError);
+                            return 0;
+                        }
+                    }
+                    #endregion
                     if (loop)
                     {
                         m_Loops[file.Id] = file;
@@ -220,11 +253,28 @@ namespace Ares.Playing
                             ErrorHandling.BassErrorOccurred(file.Id, StringResources.FilePlayingError);
                             return 0;
                         }
-                        if (Bass.BASS_ChannelSetSync(channel, BASSSync.BASS_SYNC_POS, totalLength, m_LoopSync, new IntPtr(file.Id)) == 0)
+                        #region tdmod
+                        // If CueOut is active ...
+                        if (file.Effects.CueOut.Active)
                         {
-                            ErrorHandling.BassErrorOccurred(file.Id, StringResources.FilePlayingError);
-                            return 0;
+                            // Convert the CueOut position (seconds) into a byte offset
+                            long cueOutPos = Bass.BASS_ChannelSeconds2Bytes(channel, file.Effects.CueOut.Position);
+                            // Set the "end" sync to that position
+                            if (Bass.BASS_ChannelSetSync(channel, BASSSync.BASS_SYNC_POS, cueOutPos, m_LoopSync, new IntPtr(file.Id)) == 0)
+                            {
+                                ErrorHandling.BassErrorOccurred(file.Id, StringResources.FilePlayingError);
+                                return 0;
+                            }
                         }
+                        else
+                        {
+                            if (Bass.BASS_ChannelSetSync(channel, BASSSync.BASS_SYNC_POS, totalLength, m_LoopSync, new IntPtr(file.Id)) == 0)
+                            {
+                                ErrorHandling.BassErrorOccurred(file.Id, StringResources.FilePlayingError);
+                                return 0;
+                            }
+                        }
+                        #endregion
                     }
                     else
                     {
@@ -318,6 +368,13 @@ namespace Ares.Playing
                 {
                     Bass.BASS_ChannelFlags(channel, BASSFlag.BASS_SAMPLE_LOOP, BASSFlag.BASS_SAMPLE_LOOP);
                 }
+                #region tdmod
+                if (file.Effects.CueIn.Active)
+                {
+                    Bass.BASS_ChannelSetPosition(channel, file.Effects.CueIn.Position);
+                }
+                #endregion
+
                 if (isStreaming)
                 {
                     result = BassStreamer.Instance.AddChannel(channel);
@@ -658,6 +715,9 @@ namespace Ares.Playing
         {
             m_EndSync = new SYNCPROC(EndSync);
             m_EndSync2 = new SYNCPROC(EndSync2);
+            #region tdmod
+            m_EndSync3 = new SYNCPROC(EndSync3);
+            #endregion
             m_FadeOutSync = new SYNCPROC(FadeOutSync);
             m_LoopSync = new SYNCPROC(LoopSync);
             m_StopSync = new SYNCPROC(StopSync);
@@ -682,6 +742,14 @@ namespace Ares.Playing
         {
             m_Loops.Remove(user.ToInt32());
         }
+
+        #region tdmod
+        private void EndSync3(int handle, int channel, int data, IntPtr user)
+        {
+            Bass.BASS_ChannelStop(channel);
+            EndSync(handle, channel, data, user);
+        }
+        #endregion
 
         private void StopSync(int handle, int channel, int data, IntPtr user)
         {
@@ -734,6 +802,12 @@ namespace Ares.Playing
             {
                 SetStartVolume(file, 0, channel, info);
             }
+            #region tdmod
+            if (file.Effects.CueIn.Active)
+            {
+                Bass.BASS_ChannelSetPosition(channel, file.Effects.CueIn.Position);
+            }
+            #endregion
         }
 
         private void FadeOut(int channel, int time)
@@ -814,6 +888,10 @@ namespace Ares.Playing
         private SYNCPROC m_FadeOutSync;
         private SYNCPROC m_LoopSync;
         private SYNCPROC m_StopSync;
+
+        #region tdmod
+        private SYNCPROC m_EndSync3;
+        #endregion
 
         private class RunningFileInfo
         {

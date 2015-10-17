@@ -23,6 +23,98 @@ using Ares.Data;
 
 namespace Ares.Editor.Actions
 {
+    #region tdmod
+    public abstract class CueEffectChangeAction : Action
+    {
+        public CueEffectChangeAction(IList<IFileElement> elements,
+            bool active, double position)
+        {
+            m_Elements = elements;
+            m_OldActive = new List<bool>();
+            m_OldPosition = new List<double>();
+            for (int i = 0; i < elements.Count; ++i)
+            {
+                m_OldActive.Add(getEffect(m_Elements[i]).Active);
+                m_OldPosition.Add(getEffect(m_Elements[i]).Position);
+            }
+            m_NewActive = active;
+            m_NewPosition = position;
+        }
+
+        protected abstract ICueEffect getEffect(IFileElement element);
+
+        public IList<IFileElement> Elements
+        {
+            get
+            {
+                return m_Elements;
+            }
+        }
+
+        public void SetData(bool active, double position)
+        {
+            m_NewActive = active;
+            m_NewPosition = position;
+        }
+
+        public override void Do(Ares.Data.IProject project)
+        {
+            for (int i = 0; i < m_Elements.Count; ++i)
+            {
+                getEffect(m_Elements[i]).Active = m_NewActive;
+                getEffect(m_Elements[i]).Position = m_NewPosition;
+                ElementChanges.Instance.ElementChanged(m_Elements[i].Id);
+            }
+        }
+
+        public override void Undo(Ares.Data.IProject project)
+        {
+            for (int i = 0; i < m_Elements.Count; ++i)
+            {
+                getEffect(m_Elements[i]).Active = m_OldActive[i];
+                getEffect(m_Elements[i]).Position = m_OldPosition[i];
+                ElementChanges.Instance.ElementChanged(m_Elements[i].Id);
+            }
+        }
+
+        protected IList<IFileElement> m_Elements;
+        private List<bool> m_OldActive;
+        private List<double> m_OldPosition;
+        protected bool m_NewActive;
+        private double m_NewPosition;
+    }
+
+    public class CueInEffectChangeAction : CueEffectChangeAction
+    {
+        public CueInEffectChangeAction(IList<IFileElement> elements,
+            bool active, double position)
+            : base(elements, active, position)
+        {
+        }
+
+        protected override ICueEffect getEffect(IFileElement element)
+        {
+            return element.Effects.CueIn;
+        }
+    }
+
+    public class CueOutEffectChangeAction : CueEffectChangeAction
+    {
+        public CueOutEffectChangeAction(IList<IFileElement> elements,
+            bool active, double position)
+            : base(elements, active, position)
+        {
+        }
+
+        protected override ICueEffect getEffect(IFileElement element)
+        {
+            return element.Effects.CueOut;
+        }
+    }
+
+    #endregion
+
+
     public class SpeakerChangeAction : Action
     {
         public SpeakerChangeAction(IList<IFileElement> elements, bool active, bool random, SpeakerAssignment assignment)

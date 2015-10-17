@@ -123,10 +123,13 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="volumeBar.Location" type="System.Drawing.Point, System.Drawing">
-    <value>33, 48</value>
+    <value>44, 59</value>
+  </data>
+  <data name="volumeBar.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="volumeBar.Size" type="System.Drawing.Size, System.Drawing">
-    <value>164, 45</value>
+    <value>219, 56</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="volumeBar.TabIndex" type="System.Int32, mscorlib">
@@ -142,16 +145,19 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;volumeBar.ZOrder" xml:space="preserve">
-    <value>18</value>
+    <value>24</value>
   </data>
   <data name="allVolumeButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="allVolumeButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>228, 19</value>
+    <value>304, 23</value>
+  </data>
+  <data name="allVolumeButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="allVolumeButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>36, 23</value>
+    <value>48, 28</value>
   </data>
   <data name="allVolumeButton.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -166,7 +172,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;allVolumeButton.ZOrder" xml:space="preserve">
-    <value>17</value>
+    <value>23</value>
   </data>
   <data name="label2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -175,10 +181,13 @@
     <value>NoControl</value>
   </data>
   <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 142</value>
+    <value>8, 175</value>
+  </data>
+  <data name="label2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
   </data>
   <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>45, 17</value>
+    <value>53, 20</value>
   </data>
   <data name="label2.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -196,13 +205,16 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>16</value>
+    <value>22</value>
   </data>
   <data name="fadeInUpDown.Location" type="System.Drawing.Point, System.Drawing">
-    <value>58, 140</value>
+    <value>77, 172</value>
+  </data>
+  <data name="fadeInUpDown.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="fadeInUpDown.Size" type="System.Drawing.Size, System.Drawing">
-    <value>70, 20</value>
+    <value>93, 22</value>
   </data>
   <data name="fadeInUpDown.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -220,16 +232,19 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;fadeInUpDown.ZOrder" xml:space="preserve">
-    <value>15</value>
+    <value>21</value>
   </data>
   <data name="allFadeInButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="allFadeInButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>228, 137</value>
+    <value>304, 169</value>
+  </data>
+  <data name="allFadeInButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="allFadeInButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>36, 23</value>
+    <value>48, 28</value>
   </data>
   <data name="allFadeInButton.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -244,7 +259,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;allFadeInButton.ZOrder" xml:space="preserve">
-    <value>14</value>
+    <value>20</value>
   </data>
   <data name="label5.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -253,10 +268,13 @@
     <value>NoControl</value>
   </data>
   <data name="label5.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 168</value>
+    <value>8, 207</value>
+  </data>
+  <data name="label5.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
   </data>
   <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>52, 17</value>
+    <value>61, 20</value>
   </data>
   <data name="label5.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -274,13 +292,16 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;label5.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>19</value>
   </data>
   <data name="fadeOutUpDown.Location" type="System.Drawing.Point, System.Drawing">
-    <value>58, 166</value>
+    <value>77, 204</value>
+  </data>
+  <data name="fadeOutUpDown.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="fadeOutUpDown.Size" type="System.Drawing.Size, System.Drawing">
-    <value>70, 20</value>
+    <value>93, 22</value>
   </data>
   <data name="fadeOutUpDown.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -298,16 +319,19 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;fadeOutUpDown.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>18</value>
   </data>
   <data name="allFadeOutButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="allFadeOutButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>228, 163</value>
+    <value>304, 201</value>
+  </data>
+  <data name="allFadeOutButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="allFadeOutButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>36, 23</value>
+    <value>48, 28</value>
   </data>
   <data name="allFadeOutButton.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -322,7 +346,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;allFadeOutButton.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>17</value>
   </data>
   <data name="fadeInUnitBox.Items" xml:space="preserve">
     <value>ms</value>
@@ -334,10 +358,13 @@
     <value>min</value>
   </data>
   <data name="fadeInUnitBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>134, 139</value>
+    <value>179, 171</value>
+  </data>
+  <data name="fadeInUnitBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="fadeInUnitBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>51, 21</value>
+    <value>67, 24</value>
   </data>
   <data name="fadeInUnitBox.TabIndex" type="System.Int32, mscorlib">
     <value>11</value>
@@ -352,7 +379,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;fadeInUnitBox.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>16</value>
   </data>
   <data name="fadeOutUnitBox.Items" xml:space="preserve">
     <value>ms</value>
@@ -364,10 +391,13 @@
     <value>min</value>
   </data>
   <data name="fadeOutUnitBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>134, 166</value>
+    <value>179, 204</value>
+  </data>
+  <data name="fadeOutUnitBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="fadeOutUnitBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>51, 21</value>
+    <value>67, 24</value>
   </data>
   <data name="fadeOutUnitBox.TabIndex" type="System.Int32, mscorlib">
     <value>12</value>
@@ -382,7 +412,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;fadeOutUnitBox.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>15</value>
   </data>
   <data name="fixedVolumeButton.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -391,10 +421,13 @@
     <value>NoControl</value>
   </data>
   <data name="fixedVolumeButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 24</value>
+    <value>8, 30</value>
+  </data>
+  <data name="fixedVolumeButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="fixedVolumeButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>50, 18</value>
+    <value>59, 21</value>
   </data>
   <data name="fixedVolumeButton.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
@@ -412,7 +445,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;fixedVolumeButton.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>14</value>
   </data>
   <data name="randomButton.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -421,10 +454,13 @@
     <value>NoControl</value>
   </data>
   <data name="randomButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 86</value>
+    <value>12, 106</value>
+  </data>
+  <data name="randomButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="randomButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>65, 18</value>
+    <value>76, 21</value>
   </data>
   <data name="randomButton.TabIndex" type="System.Int32, mscorlib">
     <value>14</value>
@@ -442,7 +478,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;randomButton.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>13</value>
   </data>
   <data name="label1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -451,10 +487,13 @@
     <value>NoControl</value>
   </data>
   <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>33, 107</value>
+    <value>44, 132</value>
+  </data>
+  <data name="label1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
   </data>
   <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>48, 17</value>
+    <value>57, 20</value>
   </data>
   <data name="label1.TabIndex" type="System.Int32, mscorlib">
     <value>15</value>
@@ -472,13 +511,16 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>12</value>
   </data>
   <data name="minRandomUpDown.Location" type="System.Drawing.Point, System.Drawing">
-    <value>87, 104</value>
+    <value>116, 128</value>
+  </data>
+  <data name="minRandomUpDown.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="minRandomUpDown.Size" type="System.Drawing.Size, System.Drawing">
-    <value>44, 20</value>
+    <value>59, 22</value>
   </data>
   <data name="minRandomUpDown.TabIndex" type="System.Int32, mscorlib">
     <value>16</value>
@@ -493,7 +535,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;minRandomUpDown.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>11</value>
   </data>
   <data name="label3.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -502,10 +544,13 @@
     <value>NoControl</value>
   </data>
   <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>137, 107</value>
+    <value>183, 132</value>
+  </data>
+  <data name="label3.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
   </data>
   <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 17</value>
+    <value>27, 20</value>
   </data>
   <data name="label3.TabIndex" type="System.Int32, mscorlib">
     <value>17</value>
@@ -523,13 +568,16 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>10</value>
   </data>
   <data name="maxRandomUpDown.Location" type="System.Drawing.Point, System.Drawing">
-    <value>166, 105</value>
+    <value>221, 129</value>
+  </data>
+  <data name="maxRandomUpDown.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="maxRandomUpDown.Size" type="System.Drawing.Size, System.Drawing">
-    <value>44, 20</value>
+    <value>59, 22</value>
   </data>
   <data name="maxRandomUpDown.TabIndex" type="System.Int32, mscorlib">
     <value>18</value>
@@ -544,7 +592,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;maxRandomUpDown.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>9</value>
   </data>
   <data name="label4.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -553,10 +601,13 @@
     <value>NoControl</value>
   </data>
   <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>216, 107</value>
+    <value>288, 132</value>
+  </data>
+  <data name="label4.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
   </data>
   <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>42, 17</value>
+    <value>49, 20</value>
   </data>
   <data name="label4.TabIndex" type="System.Int32, mscorlib">
     <value>19</value>
@@ -574,37 +625,22 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="allCrossFadeButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>228, 189</value>
-  </data>
-  <data name="allCrossFadeButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>36, 23</value>
-  </data>
-  <data name="allCrossFadeButton.TabIndex" type="System.Int32, mscorlib">
-    <value>21</value>
-  </data>
-  <data name="&gt;&gt;allCrossFadeButton.Name" xml:space="preserve">
-    <value>allCrossFadeButton</value>
-  </data>
-  <data name="&gt;&gt;allCrossFadeButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;allCrossFadeButton.Parent" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="&gt;&gt;allCrossFadeButton.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>8</value>
   </data>
   <data name="crossFadingBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="crossFadingBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="crossFadingBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>58, 193</value>
+    <value>77, 238</value>
+  </data>
+  <data name="crossFadingBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="crossFadingBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>81, 17</value>
+    <value>105, 21</value>
   </data>
   <data name="crossFadingBox.TabIndex" type="System.Int32, mscorlib">
     <value>20</value>
@@ -622,7 +658,199 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;crossFadingBox.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="allCrossFadeButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="allCrossFadeButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>304, 233</value>
+  </data>
+  <data name="allCrossFadeButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="allCrossFadeButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>48, 28</value>
+  </data>
+  <data name="allCrossFadeButton.TabIndex" type="System.Int32, mscorlib">
+    <value>21</value>
+  </data>
+  <data name="&gt;&gt;allCrossFadeButton.Name" xml:space="preserve">
+    <value>allCrossFadeButton</value>
+  </data>
+  <data name="&gt;&gt;allCrossFadeButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;allCrossFadeButton.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;allCrossFadeButton.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="label7.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label7.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label7.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 281</value>
+  </data>
+  <data name="label7.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
+  <data name="label7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>47, 20</value>
+  </data>
+  <data name="label7.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="label7.Text" xml:space="preserve">
+    <value>Cue in:</value>
+  </data>
+  <data name="&gt;&gt;label7.Name" xml:space="preserve">
+    <value>label7</value>
+  </data>
+  <data name="&gt;&gt;label7.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label7.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;label7.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="label6.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label6.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label6.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 313</value>
+  </data>
+  <data name="label6.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
+  <data name="label6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>55, 20</value>
+  </data>
+  <data name="label6.TabIndex" type="System.Int32, mscorlib">
+    <value>24</value>
+  </data>
+  <data name="label6.Text" xml:space="preserve">
+    <value>Cue out:</value>
+  </data>
+  <data name="&gt;&gt;label6.Name" xml:space="preserve">
+    <value>label6</value>
+  </data>
+  <data name="&gt;&gt;label6.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label6.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;label6.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="cueOutActive.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="cueOutActive.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cueOutActive.Location" type="System.Drawing.Point, System.Drawing">
+    <value>77, 314</value>
+  </data>
+  <data name="cueOutActive.Size" type="System.Drawing.Size, System.Drawing">
+    <value>18, 17</value>
+  </data>
+  <data name="cueOutActive.TabIndex" type="System.Int32, mscorlib">
+    <value>28</value>
+  </data>
+  <data name="&gt;&gt;cueOutActive.Name" xml:space="preserve">
+    <value>cueOutActive</value>
+  </data>
+  <data name="&gt;&gt;cueOutActive.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cueOutActive.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;cueOutActive.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="cueOutTime.Location" type="System.Drawing.Point, System.Drawing">
+    <value>104, 311</value>
+  </data>
+  <data name="cueOutTime.Mask" xml:space="preserve">
+    <value>90:00:000</value>
+  </data>
+  <data name="cueOutTime.Size" type="System.Drawing.Size, System.Drawing">
+    <value>66, 22</value>
+  </data>
+  <data name="cueOutTime.TabIndex" type="System.Int32, mscorlib">
+    <value>27</value>
+  </data>
+  <data name="&gt;&gt;cueOutTime.Name" xml:space="preserve">
+    <value>cueOutTime</value>
+  </data>
+  <data name="&gt;&gt;cueOutTime.Type" xml:space="preserve">
+    <value>System.Windows.Forms.MaskedTextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cueOutTime.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;cueOutTime.ZOrder" xml:space="preserve">
     <value>1</value>
+  </data>
+  <data name="cueInActive.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="cueInActive.Location" type="System.Drawing.Point, System.Drawing">
+    <value>77, 282</value>
+  </data>
+  <data name="cueInActive.Size" type="System.Drawing.Size, System.Drawing">
+    <value>18, 17</value>
+  </data>
+  <data name="cueInActive.TabIndex" type="System.Int32, mscorlib">
+    <value>26</value>
+  </data>
+  <data name="&gt;&gt;cueInActive.Name" xml:space="preserve">
+    <value>cueInActive</value>
+  </data>
+  <data name="&gt;&gt;cueInActive.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cueInActive.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;cueInActive.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="cueInTime.Location" type="System.Drawing.Point, System.Drawing">
+    <value>104, 279</value>
+  </data>
+  <data name="cueInTime.Mask" xml:space="preserve">
+    <value>90:00:000</value>
+  </data>
+  <data name="cueInTime.Size" type="System.Drawing.Size, System.Drawing">
+    <value>66, 22</value>
+  </data>
+  <data name="cueInTime.TabIndex" type="System.Int32, mscorlib">
+    <value>25</value>
+  </data>
+  <data name="&gt;&gt;cueInTime.Name" xml:space="preserve">
+    <value>cueInTime</value>
+  </data>
+  <data name="&gt;&gt;cueInTime.Type" xml:space="preserve">
+    <value>System.Windows.Forms.MaskedTextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cueInTime.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;cueInTime.ZOrder" xml:space="preserve">
+    <value>3</value>
   </data>
   <data name="groupBox1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -630,8 +858,14 @@
   <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
+  <data name="groupBox1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="groupBox1.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
   <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>277, 220</value>
+    <value>369, 354</value>
   </data>
   <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -655,10 +889,13 @@
     <value>True</value>
   </metadata>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 13</value>
+    <value>8, 16</value>
+  </data>
+  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>277, 220</value>
+    <value>369, 354</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>FileVolumeControl</value>

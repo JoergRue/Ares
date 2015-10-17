@@ -72,9 +72,15 @@ namespace Ares.Editor.Controls
             this.label3 = new System.Windows.Forms.Label();
             this.maxRandomUpDown = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.allCrossFadeButton = new System.Windows.Forms.Button();
             this.crossFadingBox = new System.Windows.Forms.CheckBox();
+            this.allCrossFadeButton = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cueOutActive = new System.Windows.Forms.CheckBox();
+            this.cueOutTime = new System.Windows.Forms.MaskedTextBox();
+            this.cueInActive = new System.Windows.Forms.CheckBox();
+            this.cueInTime = new System.Windows.Forms.MaskedTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.volumeBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fadeInUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fadeOutUpDown)).BeginInit();
@@ -225,8 +231,42 @@ namespace Ares.Editor.Controls
             this.label4.Name = "label4";
             this.label4.UseCompatibleTextRendering = true;
             // 
+            // crossFadingBox
+            // 
+            resources.ApplyResources(this.crossFadingBox, "crossFadingBox");
+            this.crossFadingBox.Name = "crossFadingBox";
+            this.crossFadingBox.UseVisualStyleBackColor = true;
+            this.crossFadingBox.CheckedChanged += new System.EventHandler(this.crossFadingBox_CheckedChanged);
+            // 
+            // allCrossFadeButton
+            // 
+            this.allCrossFadeButton.Image = global::Ares.Editor.Controls.Properties.Resources.Multiple_Selection;
+            resources.ApplyResources(this.allCrossFadeButton, "allCrossFadeButton");
+            this.allCrossFadeButton.Name = "allCrossFadeButton";
+            this.allCrossFadeButton.UseCompatibleTextRendering = true;
+            this.allCrossFadeButton.UseVisualStyleBackColor = true;
+            this.allCrossFadeButton.Click += new System.EventHandler(this.allCrossFadeButton_Click);
+            // 
+            // label7
+            // 
+            resources.ApplyResources(this.label7, "label7");
+            this.label7.Name = "label7";
+            this.label7.UseCompatibleTextRendering = true;
+            // 
+            // label6
+            // 
+            resources.ApplyResources(this.label6, "label6");
+            this.label6.Name = "label6";
+            this.label6.UseCompatibleTextRendering = true;
+            // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.cueOutActive);
+            this.groupBox1.Controls.Add(this.cueOutTime);
+            this.groupBox1.Controls.Add(this.cueInActive);
+            this.groupBox1.Controls.Add(this.cueInTime);
+            this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.allCrossFadeButton);
             this.groupBox1.Controls.Add(this.crossFadingBox);
             this.groupBox1.Controls.Add(this.label4);
@@ -251,21 +291,33 @@ namespace Ares.Editor.Controls
             this.groupBox1.TabStop = false;
             this.groupBox1.UseCompatibleTextRendering = true;
             // 
-            // allCrossFadeButton
+            // cueOutActive
             // 
-            this.allCrossFadeButton.Image = global::Ares.Editor.Controls.Properties.Resources.Multiple_Selection;
-            resources.ApplyResources(this.allCrossFadeButton, "allCrossFadeButton");
-            this.allCrossFadeButton.Name = "allCrossFadeButton";
-            this.allCrossFadeButton.UseCompatibleTextRendering = true;
-            this.allCrossFadeButton.UseVisualStyleBackColor = true;
-            this.allCrossFadeButton.Click += new System.EventHandler(this.allCrossFadeButton_Click);
+            resources.ApplyResources(this.cueOutActive, "cueOutActive");
+            this.cueOutActive.Name = "cueOutActive";
+            this.cueOutActive.UseVisualStyleBackColor = true;
+            this.cueOutActive.CheckedChanged += new System.EventHandler(this.cueOutActive_CheckedChanged);
             // 
-            // crossFadingBox
+            // cueOutTime
             // 
-            resources.ApplyResources(this.crossFadingBox, "crossFadingBox");
-            this.crossFadingBox.Name = "crossFadingBox";
-            this.crossFadingBox.UseVisualStyleBackColor = true;
-            this.crossFadingBox.CheckedChanged += new System.EventHandler(this.crossFadingBox_CheckedChanged);
+            resources.ApplyResources(this.cueOutTime, "cueOutTime");
+            this.cueOutTime.Name = "cueOutTime";
+            this.cueOutTime.TextChanged += new System.EventHandler(this.cueOutTime_TextChanged);
+            this.cueOutTime.Leave += new System.EventHandler(this.cueOutTime_Leave);
+            // 
+            // cueInActive
+            // 
+            resources.ApplyResources(this.cueInActive, "cueInActive");
+            this.cueInActive.Name = "cueInActive";
+            this.cueInActive.UseVisualStyleBackColor = true;
+            this.cueInActive.CheckedChanged += new System.EventHandler(this.cueInActive_CheckedChanged);
+            // 
+            // cueInTime
+            // 
+            resources.ApplyResources(this.cueInTime, "cueInTime");
+            this.cueInTime.Name = "cueInTime";
+            this.cueInTime.TextChanged += new System.EventHandler(this.cueInTime_TextChanged);
+            this.cueInTime.Leave += new System.EventHandler(this.cueInTime_Leave);
             // 
             // FileVolumeControl
             // 
@@ -303,9 +355,16 @@ namespace Ares.Editor.Controls
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.NumericUpDown maxRandomUpDown;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.CheckBox crossFadingBox;
         private System.Windows.Forms.Button allCrossFadeButton;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.CheckBox cueOutActive;
+        private System.Windows.Forms.MaskedTextBox cueOutTime;
+        private System.Windows.Forms.CheckBox cueInActive;
+        private System.Windows.Forms.MaskedTextBox cueInTime;
+
 
     }
 }

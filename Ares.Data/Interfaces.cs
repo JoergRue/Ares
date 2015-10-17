@@ -240,6 +240,16 @@ namespace Ares.Data
         int Level { get; set; }
     }
 
+    #region tdmod
+    public interface ICueEffect : IEffect
+    {
+        /// <summary>
+        /// Cue position
+        /// </summary>
+        double Position { get; set; }
+    }
+    #endregion
+
     /// <summary>
     /// Optional effects when playing.
     /// </summary>
@@ -310,6 +320,11 @@ namespace Ares.Data
         /// Tempo effect
         /// </summary>
         IIntEffect Tempo { get; }
+
+        #region tdmod
+        ICueEffect CueIn { get; }
+        ICueEffect CueOut { get; }
+        #endregion
     }
 
     /// <summary>
