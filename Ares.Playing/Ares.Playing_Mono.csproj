@@ -11,7 +11,7 @@
     <RootNamespace>Ares.Playing</RootNamespace>
     <FileAlignment>512</FileAlignment>
     <AssemblyName>Ares.Playing</AssemblyName>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>ares.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Mono_Debug|AnyCPU' ">
@@ -57,9 +57,6 @@
     <Compile Include="MusicPlayer.cs" />
     <Compile Include="StartElementPlayer.cs" />
     <Compile Include="BassInit.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ares.snk" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="StringResources.de.resx" />

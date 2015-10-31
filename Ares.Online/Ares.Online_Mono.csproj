@@ -11,7 +11,7 @@
     <RootNamespace>Ares.Online</RootNamespace>
     <FileAlignment>512</FileAlignment>
     <AssemblyName>Ares.Online</AssemblyName>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>ares.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Mono_Debug|AnyCPU' ">
@@ -70,7 +70,6 @@
     <Compile Include="NewsDialog.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ares.snk" />
     <None Include="NewsDialog.de.resx" />
     <None Include="NewsDialog.resx" />
   </ItemGroup>

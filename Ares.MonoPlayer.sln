@@ -93,7 +93,6 @@ Global
 		{FF45F69E-C808-46A5-9557-307D5F8A0A6D}.Mono_Release|Any CPU.Build.0 = Mono_Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = Ares.Player\Ares.Player_Mono.csproj
 		Policies = $0
 		$0.DotNetNamingPolicy = $1
 		$1.DirectoryNamespaceAssociation = None

@@ -46,6 +46,9 @@ namespace Ares.Playing
                         break;
                 }
             }
+#if MONO
+			System.Runtime.InteropServices.GCHandle gcHandle = new System.Runtime.InteropServices.GCHandle();
+#endif
             if (file.SoundFileType == SoundFileType.WebRadio)
             {
                 channel = Bass.BASS_StreamCreateURL(file.Path, 0, decodeFlag | BASSFlag.BASS_STREAM_BLOCK, null, IntPtr.Zero);
@@ -68,7 +71,7 @@ namespace Ares.Playing
 				    ErrorHandling.ErrorOccurred(file.Id, e.Message);
 				    return 0;
 			    }
-			    System.Runtime.InteropServices.GCHandle gcHandle = System.Runtime.InteropServices.GCHandle.Alloc(buffer, System.Runtime.InteropServices.GCHandleType.Pinned);
+			    gcHandle = System.Runtime.InteropServices.GCHandle.Alloc(buffer, System.Runtime.InteropServices.GCHandleType.Pinned);
 			    channel = Bass.BASS_StreamCreateFile(gcHandle.AddrOfPinnedObject(), 0L, length, decodeFlag);
 #else
                 channel = Bass.BASS_StreamCreateFile(file.Path, 0, 0, decodeFlag);
@@ -77,7 +80,8 @@ namespace Ares.Playing
             if (channel == 0)
             {
 #if MONO
-				gcHandle.Free();
+				if (gcHandle.IsAllocated)
+				  gcHandle.Free();
 #endif
                 ErrorHandling.BassErrorOccurred(file.Id, StringResources.FilePlayingError);
                 return 0;
@@ -109,7 +113,8 @@ namespace Ares.Playing
             if (channel == 0)
             {
 #if MONO
-				gcHandle.Free();
+				if (gcHandle.IsAllocated)
+				  gcHandle.Free();
 #endif
                 ErrorHandling.BassErrorOccurred(file.Id, StringResources.FilePlayingError);
                 return 0;
@@ -195,7 +200,8 @@ namespace Ares.Playing
                     if (sync == 0)
                     {
 #if MONO
-						gcHandle.Free();
+						if (gcHandle.IsAllocated)
+						  gcHandle.Free();
 #endif
                         ErrorHandling.BassErrorOccurred(file.Id, StringResources.FilePlayingError);
                         return 0;
@@ -387,7 +393,8 @@ namespace Ares.Playing
                     ErrorHandling.BassErrorOccurred(file.Id, StringResources.FilePlayingError);
                     Bass.BASS_StreamFree(channel);
 #if MONO
-                    gcHandle.Free();
+					if (gcHandle.IsAllocated)
+                      gcHandle.Free();
 #endif
                     return 0;
                 }
@@ -395,7 +402,8 @@ namespace Ares.Playing
                 {
                     m_RunningFiles[channel] = info;
 #if MONO
-                    m_GCHandles[channel] = gcHandle;
+					if (gcHandle.IsAllocated)
+                      m_GCHandles[channel] = gcHandle;
 #endif
                 }
                 return channel;
@@ -886,7 +894,7 @@ namespace Ares.Playing
 				{
 	                if (m_GCHandles.ContainsKey(channel))
 	                {
-	                    m_GCHandles[channel].Free();
+                        m_GCHandles[channel].Free();
 	                    m_GCHandles.Remove(channel);
 	                }
 				}

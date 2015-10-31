@@ -29,9 +29,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
     <AssemblyOriginatorKeyFile>ares.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
@@ -176,11 +173,6 @@
     <ProjectReference Include="..\Ares.Data\Ares.Data_Mono.csproj">
       <Project>{F64D6AF3-3543-47F0-A7B8-0336750B09C3}</Project>
       <Name>Ares.Data_Mono</Name>
-      <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\Ares.Editor.Actions\Ares.Editor.Actions_Mono.csproj">
-      <Project>{7799985C-64E9-4414-ACA8-01184B704032}</Project>
-      <Name>Ares.Editor.Actions_Mono</Name>
       <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\Ares.ModelChecks\Ares.ModelInfo_Mono.csproj">

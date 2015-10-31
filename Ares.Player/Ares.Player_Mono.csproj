@@ -26,7 +26,7 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <AssemblyName>Ares.Player</AssemblyName>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>ares.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
@@ -115,7 +115,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>StringResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="ares.snk" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -133,6 +132,10 @@
     <Compile Include="StreamingPage.Designer.cs" />
     <EmbeddedResource Include="StreamingPage.de.resx" />
     <EmbeddedResource Include="StreamingPage.resx" />
+    <Compile Include="NetworkPage.cs" />
+    <Compile Include="NetworkPage.Designer.cs" />
+    <EmbeddedResource Include="NetworkPage.resx" />
+    <EmbeddedResource Include="NetworkPage.de.resx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\gear.png" />

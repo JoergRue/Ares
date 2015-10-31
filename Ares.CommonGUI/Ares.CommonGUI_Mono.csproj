@@ -13,7 +13,7 @@
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>ares.snk</AssemblyOriginatorKeyFile>
@@ -73,9 +73,6 @@
       <DependentUpon>StringResources.resx</DependentUpon>
     </Compile>
     <Compile Include="KeyChecks.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ares.snk" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="AboutDialog.de.resx">
