@@ -112,6 +112,7 @@
          <fileset basedir="bin/${configuration}">
 			  <include name="Ares.Player.exe.config" />
 			  <include name="Ares.CmdLinePlayer.exe.config" />
+			  <include name="Ares.Players.dll.config" />
    	     </fileset>
 		</copy>
 		<copy todir="${monooutput.dir}" overwrite="true">
@@ -139,6 +140,7 @@
          <fileset basedir="bin/${configuration}">
 			  <include name="Ares.Player.exe.config" />
 			  <include name="Ares.CmdLinePlayer.exe.config" />
+			  <include name="Ares.Players.dll.config" />
    	     </fileset>
 		</copy>
 		<copy todir="${monooutput64.dir}" overwrite="true">
