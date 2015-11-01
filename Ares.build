@@ -3,7 +3,7 @@
   <property name="configuration" value="Release"/>
   <property name="monoConfiguration" value="Mono_Release"/>
 
-  <property name="nant.settings.currentframework" value="net-3.5" />
+  <property name="nant.settings.currentframework" value="net-4.0" />
   <property name="framework4" value="net-4.0" />
   <property name="xbuild" value="C:\Program Files (x86)\Xamarin Studio\bin\mdtool.exe" />
 	
@@ -90,12 +90,24 @@
 			  <include name="**/*.config" />
 			</fileset>
 	    </copy>
+		<copy todir="${output.dir}">
+		   <fileset basedir="Ares.Players">
+		     <include name="Images/" />
+			 <include name="Views/" />
+		   </fileset>
+		</copy>
 		<copy todir="${monooutput.dir}">
 		  <fileset basedir="bin/Mono_Release">
 			  <include name="**/*.dll" />
 			  <include name="**/*.exe" />
    		  </fileset>
 	    </copy>
+		<copy todir="${monooutput.dir}">
+		   <fileset basedir="Ares.Players">
+		     <include name="Images/" />
+			 <include name="Views/" />
+		   </fileset>
+		</copy>
 		<copy todir="${monooutput.dir}">
          <fileset basedir="bin/${configuration}">
 			  <include name="Ares.Player.exe.config" />
@@ -116,6 +128,12 @@
 			  <include name="**/*.dll" />
 			  <include name="**/*.exe" />
    		  </fileset>
+		</copy>
+		<copy todir="${monooutput64.dir}">
+		   <fileset basedir="Ares.Players">
+		     <include name="Images/" />
+			 <include name="Views/" />
+		   </fileset>
 		</copy>
 		<copy todir="${monooutput64.dir}">
          <fileset basedir="bin/${configuration}">

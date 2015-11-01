@@ -95,6 +95,7 @@
     <Reference Include="System.Core">
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.Razor.Unofficial">
       <HintPath>..\Libraries\System.Web.Razor.Unofficial.dll</HintPath>
     </Reference>
