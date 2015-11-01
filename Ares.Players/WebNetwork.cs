@@ -1366,14 +1366,21 @@ namespace Ares.Players.Web
         {
             int tcpPort = Settings.Settings.Instance.WebTcpPort;
             String ipAddress = Settings.Settings.Instance.IPAddress;
-            mListenAddress = String.Format("http://{0}:{1}/", ipAddress, tcpPort);
+            try
+            {
+                mListenAddress = String.Format("http://+:{1}/", ipAddress, tcpPort);
+                mAppHost = new AppHost(mNetworkClient);
 
-            mAppHost = new AppHost(mNetworkClient);
+                mAppHost.Init();
+                mAppHost.Start(mListenAddress);
 
-            mAppHost.Init();
-            mAppHost.Start(mListenAddress);
+                Messages.AddMessage(MessageType.Info, "WebServer listening on " + mListenAddress);
+            }
+            catch (Exception e)
+            {
+                Messages.AddMessage(MessageType.Error, "Error starting WebServer: " + e.Message);
+            }
 
-            Messages.AddMessage(MessageType.Info, "WebServer listening on " + mListenAddress);
         }
 
 
