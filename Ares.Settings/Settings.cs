@@ -213,6 +213,32 @@ namespace Ares.Settings
             {
                 InitDefaults();
             }
+            bool hasIP = !String.IsNullOrEmpty(IPAddress);
+            if (hasIP)
+            {
+                try
+                {
+                    System.Net.IPAddress addr = System.Net.IPAddress.Parse(IPAddress);
+                }
+                catch (Exception)
+                {
+                    hasIP = false;
+                }
+            }
+            if (!hasIP)
+            {
+                var addresses = System.Net.Dns.GetHostAddresses(String.Empty);
+                if (addresses.Length > 0)
+                {
+                    IPAddress = addresses[0].ToString();
+                    hasIP = true;
+                }
+            }
+            if (!hasIP)
+            {
+                UseLegacyNetwork = false;
+                UseWebNetwork = false;
+            }
 #if !MONO
             bool createdOwn;
             bool createdOther;
