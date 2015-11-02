@@ -30,8 +30,8 @@ namespace Ares.MGPlugin
         public AboutDialog()
         {
             InitializeComponent();
-            String assemblyVersion = (new System.Reflection.AssemblyName(System.Reflection.Assembly.GetExecutingAssembly().FullName)).Version.ToString();
-            versionLabel.Text = "Version " + assemblyVersion;
+            System.Diagnostics.FileVersionInfo info = System.Diagnostics.FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            versionLabel.Text = "Version " + info.FileVersion;
         }
 
         private void homePageLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

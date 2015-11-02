@@ -19,10 +19,8 @@ cd ..\..\..
 rem %installjammer% -DProductVersion %1 --build-dir build\temp --build-log-file build\setup.log --output-dir build\output --build-for-release --build Setup\Ares\Ares.mpi
 %innosetup% /Qp /DMyAppVersion=ProductVersion Setup\Ares_Setup.iss
 
-copy Ares.MGPlugin\*.config build\MGPlugin
 cd build\MGPlugin
-del app.config
-%zip% a ..\output\Ares-%1-MGPlugin.zip Ares.MeisterGeisterPlugin.dll *.config de
+%zip% a ..\output\Ares-%1-MGPlugin.zip Ares.MeisterGeisterPlugin.dll de
 cd ..
 rmdir /S/Q MGPlugin
 cd ..

@@ -1,5 +1,7 @@
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual C# Express 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ares.Data", "Ares.Data\Ares.Data.csproj", "{F64D6AF3-3543-47F0-A7B8-0336750B09C3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ares.Playing", "Ares.Playing\Ares.Playing.csproj", "{6C55F933-0F49-489C-AFF4-E0E0A8581E42}"
@@ -85,6 +87,7 @@ Global
 		{499C1067-ECA5-4986-A985-8EAFD744BF80}.Debug English|x86.ActiveCfg = Debug English|x86
 		{499C1067-ECA5-4986-A985-8EAFD744BF80}.Debug English|x86.Build.0 = Debug English|x86
 		{499C1067-ECA5-4986-A985-8EAFD744BF80}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{499C1067-ECA5-4986-A985-8EAFD744BF80}.Debug|Any CPU.Build.0 = Debug|x86
 		{499C1067-ECA5-4986-A985-8EAFD744BF80}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{499C1067-ECA5-4986-A985-8EAFD744BF80}.Debug|Mixed Platforms.Build.0 = Debug|x86
 		{499C1067-ECA5-4986-A985-8EAFD744BF80}.Debug|x86.ActiveCfg = Debug|x86
@@ -154,6 +157,7 @@ Global
 		{FF45F69E-C808-46A5-9557-307D5F8A0A6D}.Debug English|x86.ActiveCfg = Debug English|x86
 		{FF45F69E-C808-46A5-9557-307D5F8A0A6D}.Debug English|x86.Build.0 = Debug English|x86
 		{FF45F69E-C808-46A5-9557-307D5F8A0A6D}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{FF45F69E-C808-46A5-9557-307D5F8A0A6D}.Debug|Any CPU.Build.0 = Debug|x86
 		{FF45F69E-C808-46A5-9557-307D5F8A0A6D}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{FF45F69E-C808-46A5-9557-307D5F8A0A6D}.Debug|Mixed Platforms.Build.0 = Debug|x86
 		{FF45F69E-C808-46A5-9557-307D5F8A0A6D}.Debug|x86.ActiveCfg = Debug|x86
@@ -286,6 +290,7 @@ Global
 		{8F96265C-6608-4B98-9C56-C60F0D02751C}.Debug English|x86.ActiveCfg = Debug|x86
 		{8F96265C-6608-4B98-9C56-C60F0D02751C}.Debug English|x86.Build.0 = Debug|x86
 		{8F96265C-6608-4B98-9C56-C60F0D02751C}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{8F96265C-6608-4B98-9C56-C60F0D02751C}.Debug|Any CPU.Build.0 = Debug|x86
 		{8F96265C-6608-4B98-9C56-C60F0D02751C}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{8F96265C-6608-4B98-9C56-C60F0D02751C}.Debug|Mixed Platforms.Build.0 = Debug|x86
 		{8F96265C-6608-4B98-9C56-C60F0D02751C}.Debug|x86.ActiveCfg = Debug|x86

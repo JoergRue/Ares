@@ -8,6 +8,7 @@
 	   <replaceregexp match="AssemblyVersion\(&quot;.\..\..\..&quot;\)" replace="AssemblyVersion(&quot;${ProductVersion}.0&quot;)">
 	     <fileset dir=".">
 		   <include name="**/AssemblyInfo.cs"/>
+		   <exclude name="Ares.MGPlugin/Properties/AssemblyInfo.cs"/>
 		 </fileset>
 	   </replaceregexp>
 	   <replaceregexp match="AssemblyFileVersion\(&quot;.\..\..\..&quot;\)" replace="AssemblyFileVersion(&quot;${ProductVersion}.0&quot;)">

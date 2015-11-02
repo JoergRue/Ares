@@ -528,7 +528,7 @@
     <value>143, 6</value>
   </data>
   <data name="copyToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Strg+X</value>
+    <value>Control+X</value>
   </data>
   <data name="copyToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>146, 22</value>
@@ -537,7 +537,7 @@
     <value>Cut</value>
   </data>
   <data name="copyToolStripMenuItem1.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Strg+C</value>
+    <value>Control+C</value>
   </data>
   <data name="copyToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
     <value>146, 22</value>
@@ -546,7 +546,7 @@
     <value>Copy</value>
   </data>
   <data name="pasteToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Strg+V</value>
+    <value>Control+V</value>
   </data>
   <data name="pasteToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>146, 22</value>
