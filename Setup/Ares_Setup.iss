@@ -26,6 +26,7 @@ Compression=lzma2
 SolidCompression=yes
 UninstallDisplayIcon=..\build\Ares\Player_Editor\Ares.ico
 UninstallDisplayName={#MyAppName}
+ChangesAssociations=yes
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -178,6 +179,16 @@ german.openFirewall=Firewall konfigurieren für Web Controller Zugriff
 [Registry]
 Root: HKLM; Subkey: "Software\Ares"; Flags: uninsdeletekeyifempty
 Root: "HKLM"; Subkey: "Software\Ares"; ValueType: string; ValueName: "PlayerPath"; ValueData: "{app}\Player_Editor\Ares.Player.exe"; Components: Player
+Root: HKCR; Subkey: ".ares"; ValueType: string; ValueName: ""; ValueData: "AresProject"; Flags: uninsdeletevalue; Components: Player
+Root: HKCR; Subkey: "AresProject"; ValueType: string; ValueName: ""; ValueData: "Ares Project"; Flags: uninsdeletekey; Components: Player
+Root: HKCR; Subkey: "AresProject\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\Player_Editor\Ares.ico"; Components: Player
+Root: HKCR; Subkey: "AresProject\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\Player_Editor\Ares.Editor.exe"" ""%1"""; Check: ShallStartEditor
+Root: HKCR; Subkey: "AresProject\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\Player_Editor\Ares.Player.exe"" ""%1"""; Check: ShallStartPlayer
+Root: HKCR; Subkey: ".apkg"; ValueType: string; ValueName: ""; ValueData: "AresPackedProject"; Flags: uninsdeletevalue; Components: Player
+Root: HKCR; Subkey: "AresPackedProject"; ValueType: string; ValueName: ""; ValueData: "Ares Packed Project"; Flags: uninsdeletekey; Components: Player
+Root: HKCR; Subkey: "AresPackedProject\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\Player_Editor\Ares.ico"; Components: Player
+Root: HKCR; Subkey: "AresPackedProject\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\Player_Editor\Ares.Editor.exe"" ""%1"""; Check: ShallStartEditor
+Root: HKCR; Subkey: "AresPackedProject\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\Player_Editor\Ares.Player.exe"" ""%1"""; Check: ShallStartPlayer
 
 [UninstallRun]
 Filename: "{sys}\netsh.exe"; Parameters: "http delete urlacl url=http://+:11113/"; WorkingDir: "{sys}"; Flags: runascurrentuser; Components: Player
