@@ -1,3 +1,20 @@
+Version 3.0.0
+----------------------------------------------------------------------------------
+- Allgemein: Player kann auch mit (modernem) Browser gesteuert werden [BETA]
+- Allgemein: Element, um Webradio-Stationen abzuspielen
+- Allgemein: Anfang und Ende von Dateien kann ausgewählt und so ein Ausschnitt
+  der Datei abgespielt werden (vielen Dank für Idee und Patch an Martin Ried)
+- Allgemein: Player und Editor benötigen jetzt das .NET Framework 4.0 oder höher
+- Allgemein: neues Setup-Programm unter Windows; unter Linux kein Setup-Programm
+  mehr, sondern nur noch das Zip von Ares Portable
+- Editor: Option, um nach Tags gefilterten Dateibaum nicht automatisch zu 
+  aktualisieren, wenn sich Tagzuordnungen ändern
+- Editor: Sicherheitsabfrage, bevor Tags für mehr als 10 Dateien in mehr als 
+  einem Verzeichnis gleichzeitig geändert werden
+- Player: Bugfix für manuelle Auswahl einer Datei aus einer Zufallsliste
+- Player/Kommandozeile: Option --Daemon mit der sich der Player nie beendet
+- Controller/Android: Beschreibung für manuelle Einstellung der Verbindung
+
 Version 2.5.1
 ----------------------------------------------------------------------------------
 - Editor: Dateien und Verzeichnisse im Musik- / Geräusche-Explorer werden 

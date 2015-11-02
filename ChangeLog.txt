@@ -1,3 +1,20 @@
+Version 3.0.0
+----------------------------------------------------------------------------------
+- General: Player can also be controlled through a (modern) Browser [BETA]
+- General: Element to play web radio stations
+- General: Start and end of files can be selected and thus a part of the file
+  played (many thanks for idea and patch to Martin Ried)
+- General: Player and Editor now need the .NET framework 4.0 or higher
+- General: new setup program for Windows; no setup program for Linux any more,
+  just the Ares Portable zip
+- Editor: option not to immediately update a file tree which is filtered by tags 
+  whenever tag assignments change
+- Editor: safety question before setting tags for more than 10 files in more than
+  one directory at the same time
+- Player: bugfix for manual selection of a file from a random list
+- Player/command line: option --Daemon with which the Player never closes
+- Controller/Android: description for manual setting of the connection
+
 Version 2.5.1
 ----------------------------------------------------------------------------------
 - Editor: Files and directories in Music / Sound Explorer are sorted even if they 

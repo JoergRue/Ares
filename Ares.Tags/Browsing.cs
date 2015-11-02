@@ -1,5 +1,5 @@
 ﻿/*
- Copyright (c) 2013 [Joerg Ruedenauer]
+ Copyright (c) 2015  [Joerg Ruedenauer]
  
  This file is part of Ares.
 

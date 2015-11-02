@@ -1,5 +1,5 @@
 ﻿/*
-    Copyright (c) 2011 [Joerg Ruedenauer]
+    Copyright (c) 2015  [Joerg Ruedenauer]
   
     This file is part of Ares.
 
@@ -110,12 +110,20 @@ namespace Ares.Online
             String urlBase = "http://sourceforge.net/projects/aresrpg/files/";
             String urlAppendix = "/download";
             String windowsPart = "-Setup.exe";
-            String linuxPart = "-Linux-x86-Install";
             String pluginPart = "-MGPlugin.zip";
             bool isWindows = !IsLinux;
             String url = urlBase + version;
             if (main)
-                url += "/Ares-" + version + (isWindows ? windowsPart : linuxPart) + urlAppendix;
+            {
+                if (isWindows)
+                {
+                    url += "/Ares-" + version + windowsPart + urlAppendix;
+                }
+                else
+                {
+                    url += "/Ares_Portable_Linux_x" + (Environment.Is64BitOperatingSystem ? "64_" : "86_") + version + ".zip" + urlAppendix;
+                }
+            }
             else
                 url += "/Ares-" + version + pluginPart + urlAppendix;
             try
