@@ -212,9 +212,9 @@ Click Next to continue or Cancel to exit Setup.</Value>
     <ForumPage />
     <UpdateUrl />
     <Version>
-      <Major>2</Major>
-      <Minor>5</Minor>
-      <Build>1</Build>
+      <Major>3</Major>
+      <Minor>0</Minor>
+      <Build>0</Build>
       <Revision>0</Revision>
     </Version>
     <ExtensionDescription>Plugin for the Ares (Aureal RPG Experience System) program.
@@ -223,7 +223,7 @@ Makes sense only in conjunction with the Ares Controller.</ExtensionDescription>
     <VersionDescription />
     <DevelopmentStatus>Stable</DevelopmentStatus>
     <OnlineLocation />
-    <ReleaseDate>2014-02-14T16:32:29</ReleaseDate>
+    <ReleaseDate>2015-11-03T16:32:29</ReleaseDate>
     <Tags />
     <Location>D:\Projekte\Ares\trunk\build\Output\Ares.mpe1</Location>
     <Params>
