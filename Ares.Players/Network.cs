@@ -222,7 +222,18 @@ namespace Ares.Players
             if (!String.IsNullOrEmpty(ipAddress))
             {
                 str.Append("|");
-                str.Append(ipAddress);
+                System.Net.IPAddress address = null;
+                if (System.Net.IPAddress.TryParse(ipAddress, out address) && address != null && address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6)
+                {
+                    int index = ipAddress.IndexOf('%');
+                    if (index != -1)
+                        ipAddress = ipAddress.Substring(0, index);
+                    str.Append(ipAddress);
+                }
+                else
+                {
+                    str.Append(ipAddress);
+                }
             }
             str.Append("|");
             str.Append(PLAYER_VERSION);

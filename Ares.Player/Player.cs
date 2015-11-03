@@ -1073,7 +1073,19 @@ namespace Ares.Player
             Ares.Settings.Settings settings = Ares.Settings.Settings.Instance;
             if (settings.UseWebNetwork)
             {
-                webAddressLabel.Text = "http://" + settings.IPAddress + ":" + settings.WebTcpPort + "/";
+                System.Net.IPAddress address = null;
+                if (System.Net.IPAddress.TryParse(settings.IPAddress, out address) && address != null && address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6)
+                {
+                    String ipaddress = settings.IPAddress;
+                    int index = ipaddress.IndexOf('%');
+                    if (index != -1)
+                        ipaddress = ipaddress.Substring(0, index);
+                    webAddressLabel.Text = "http://[" + ipaddress + "]:" + settings.WebTcpPort + "/";
+                }
+                else
+                {
+                    webAddressLabel.Text = "http://" + settings.IPAddress + ":" + settings.WebTcpPort + "/";
+                }
             }
             else
             {
