@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Ares.MediaPortalPlugin</RootNamespace>
     <AssemblyName>Ares.Plugin</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -121,13 +121,17 @@
     <Content Include="Ares_hd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Ares.Controllers\Ares.Controllers.csproj">
-      <Project>{81481CB6-C6EE-4734-8D41-09202342E1B9}</Project>
-      <Name>Ares.Controllers</Name>
+    <ProjectReference Include="..\Ares.Controllers\Ares.Controllers_MP.csproj">
+      <Project>{81481cb6-c6ee-4734-8d41-09202342e1b9}</Project>
+      <Name>Ares.Controllers_MP</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Ares.Settings\Ares.Settings.csproj">
-      <Project>{E99E229E-2D6A-4C49-8E6F-C06E3F346606}</Project>
-      <Name>Ares.Settings</Name>
+    <ProjectReference Include="..\Ares.Ipc\Ares.Ipc_MP.csproj">
+      <Project>{07be1372-c1d2-4e2a-9678-dc27be0d9ff0}</Project>
+      <Name>Ares.Ipc_MP</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ares.Settings\Ares.Settings_MP.csproj">
+      <Project>{e99e229e-2d6a-4c49-8e6f-c06e3f346606}</Project>
+      <Name>Ares.Settings_MP</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
