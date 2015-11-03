@@ -56,13 +56,6 @@
         <property name="Ares.MGPlugin" value="bin/Release_MG/Ares.MeisterGeisterPlugin.dll" />
         <fail unless="${file::exists(Ares.MGPlugin)}">Output file doesn't exist in bin/Release_MG</fail>		
 
-        <exec program="${framework::get-framework-directory(framework::get-target-framework())}\msbuild.exe"         
-			        commandline="${mpSolutionFile} /t:Build /p:Configuration=${configuration} /v:q" workingdir="." 
-			        />
-					
-        <property name="Ares.MPPlugin" value="bin/Release_MediaPortal/Ares.Plugin.dll" />
-        <fail unless="${file::exists(Ares.MPPlugin)}">Output file doesn't exist in bin/Release_MediaPortal</fail>		
-
 		<exec program="${xbuild}" commandline="build --target:build --configuration:${monoConfiguration} --project:Ares.Data_Mono ${monoSolutionFile}" workingdir="." />
 		<exec program="${xbuild}" commandline="build --target:build --configuration:${monoConfiguration} --project:Ares.Settings_Mono ${monoSolutionFile}" workingdir="." />
 		<exec program="${xbuild}" commandline="build --target:build --configuration:${monoConfiguration} --project:Ares.Tags_Mono ${monoSolutionFile}" workingdir="." />
