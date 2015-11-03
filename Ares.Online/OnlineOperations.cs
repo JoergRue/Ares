@@ -193,6 +193,7 @@ namespace Ares.Online
             if (String.IsNullOrEmpty(result.Result))
                 return;
             bool hasNews = false;
+            bool showDialog = false;
             String fileName = System.IO.Path.Combine(System.Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Ares");
             fileName = System.IO.Path.Combine(fileName, "ares_news.html");
             if (!manual && System.IO.File.Exists(fileName))
@@ -204,16 +205,24 @@ namespace Ares.Online
                     {
                         fileContent = reader.ReadToEnd();
                         hasNews = fileContent != result.Result;
+                        showDialog = hasNews;
                     }
                 }
                 catch (System.IO.IOException /*ex*/)
                 {
                     hasNews = true;
+                    showDialog = true;
                 }
+            }
+            else if (!manual)
+            {
+                hasNews = true;
+                showDialog = false;
             }
             else
             {
                 hasNews = true;
+                showDialog = true;
             }
             if (hasNews)
             {
@@ -228,9 +237,12 @@ namespace Ares.Online
                 catch (System.IO.IOException /*ex*/)
                 {
                 }
-                NewsDialog dialog = new NewsDialog();
-                dialog.SetNews(result.Result);
-                dialog.ShowDialog(parent);
+                if (showDialog)
+                {
+                    NewsDialog dialog = new NewsDialog();
+                    dialog.SetNews(result.Result);
+                    dialog.ShowDialog(parent);
+                }
             }
         }
 
