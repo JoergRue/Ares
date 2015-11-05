@@ -296,7 +296,7 @@ begin
     result := success and (install = 1) and (serviceCount >= service);
 end;
 
-function HasJavaInstalled(): Boolean;
+function HasJavaInstalled(check32bit: Boolean): Boolean;
 var
  ErrorCode: Integer;
  JavaInstalled : Boolean;
@@ -308,7 +308,7 @@ begin
  // Check which view of registry should be taken:
  regRoot := HKLM
  begin
-  if IsWin64 then
+  if IsWin64 and not check32bit then
   begin
    regRoot := HKLM64
   end;
@@ -331,7 +331,13 @@ begin
    end;
  end else
  begin
-  JavaInstalled := false;
+  if IsWin64 and not check32bit then
+  begin
+    JavaInstalled := HasJavaInstalled(True)
+  end else
+  begin 
+    JavaInstalled := false;
+  end;
  end;
  Result := JavaInstalled;
 end;
@@ -353,7 +359,7 @@ begin
   end;  
   if (allOK and IsComponentSelected('Controller')) then
   begin
-    if not HasJavaInstalled() then
+    if not HasJavaInstalled(False) then
     begin
       Result := CustomMessage('needsJava')
     end;
