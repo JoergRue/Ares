@@ -290,7 +290,7 @@ namespace Ares.CmdLinePlayer
 
         private void m_BroadcastTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            if (!m_Network.SendUdpPacket())
+            if (m_Network != null && !m_Network.SendUdpPacket())
             {
                 if (warnOnNetworkFail)
                 {
@@ -647,6 +647,10 @@ namespace Ares.CmdLinePlayer
                     {
                         m_Network.StartUdpBroadcast();
                     }
+                }
+                else if (listenAgainAfterDisconnect)
+                {
+                    m_Network.StartUdpBroadcast();
                 }
             }
         }
