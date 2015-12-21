@@ -606,7 +606,11 @@ namespace Ares.Players.Web
             {
                 mWatchdogTimer = new System.Timers.Timer();
                 mWatchdogTimer.AutoReset = false;
-                mWatchdogTimer.Interval = 500;
+				#if MONO
+                mWatchdogTimer.Interval = 5000;
+				#else
+				mWatchdogTimer.Interval = 1000;
+				#endif
                 mWatchdogTimer.Elapsed += OnWatchdogTimer;
                 mSenderThread = new System.Threading.Thread(new System.Threading.ThreadStart(ThreadFunction));
                 mContinue = true;
@@ -671,24 +675,41 @@ namespace Ares.Players.Web
         {
         }
 
+		private static void DoWriteException(System.IO.TextWriter writer, Exception ex, String indent)
+		{
+			writer.WriteLine(indent + System.DateTime.Now.ToString(System.Globalization.CultureInfo.InvariantCulture));
+			writer.WriteLine(indent + ex.GetType().Name + ": " + ex.Message);
+			writer.WriteLine(indent + "Stack Trace:");
+			writer.WriteLine(indent + ex.StackTrace);
+			if (ex.InnerException != null)
+			{
+				writer.WriteLine("INNER exception:");
+				DoWriteException(writer, ex.InnerException, indent + "    ");
+			}
+			writer.WriteLine("--------------------------------------------------");
+		}
+
         private static void WriteExceptionTrace(Exception ex)
         {
             try
             {
+				#if !MONO
                 String folder = System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData);
                 String path = System.IO.Path.Combine(folder, "Ares_Errors.log");
                 using (System.IO.StreamWriter writer = new System.IO.StreamWriter(path, true))
                 {
-                    writer.WriteLine(System.DateTime.Now.ToString(System.Globalization.CultureInfo.InvariantCulture));
-                    writer.WriteLine(ex.GetType().Name + ": " + ex.Message);
-                    writer.WriteLine("Stack Trace:");
-                    writer.WriteLine(ex.StackTrace);
-                    writer.WriteLine("--------------------------------------------------");
-                    writer.Flush();
+				#else
+				System.IO.TextWriter writer = System.Console.Error;
+				#endif
+				    DoWriteException(writer, ex, String.Empty);
+				#if !MONO
+					writer.Flush();
                 }
+				#endif
             }
             catch (Exception)
             {
+				System.Console.WriteLine("Exception: " + ex.Message);
             }
         }
     }
