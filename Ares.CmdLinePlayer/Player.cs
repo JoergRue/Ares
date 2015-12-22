@@ -620,7 +620,7 @@ namespace Ares.CmdLinePlayer
         {
             if (m_Network.ClientConnected)
             {
-                Console.WriteLine(StringResources.ConnectedWith + m_Network.ClientName);
+                Messages.AddMessage(MessageType.Info, StringResources.ConnectedWith + m_Network.ClientName);
                 m_Network.InformClientOfEverything(m_PlayingControl.GlobalVolume, m_PlayingControl.MusicVolume,
                     m_PlayingControl.SoundVolume, m_PlayingControl.CurrentMode, MusicInfo.GetInfo(m_PlayingControl.CurrentMusicElement),
                     m_PlayingControl.CurrentModeElements, m_Project,
@@ -632,7 +632,7 @@ namespace Ares.CmdLinePlayer
             }
             else
             {
-                Console.WriteLine(StringResources.NotConnected);
+                Messages.AddMessage(MessageType.Info, StringResources.NotConnected);
                 if (m_NonInteractiveWaitEvent != null)
                 {
                     if (!m_IsDaemon)

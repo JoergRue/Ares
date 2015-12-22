@@ -1372,6 +1372,107 @@ namespace Ares.Players.Web
         }
     }
 
+    class ServiceStackLogger : ILog
+    {
+        public bool IsDebugEnabled
+        {
+            get
+            {
+                return true;
+            }
+        }
+
+        public void Debug(object message)
+        {
+            Messages.AddMessage(MessageType.Debug, message.ToString());
+        }
+
+        public void Debug(object message, Exception exception)
+        {
+            Messages.AddMessage(MessageType.Debug, message.ToString());
+        }
+
+        public void DebugFormat(string format, params object[] args)
+        {
+            Messages.AddMessage(MessageType.Debug, String.Format(format, args));
+        }
+
+        public void Error(object message)
+        {
+            Messages.AddMessage(MessageType.Error, message.ToString());
+        }
+
+        public void Error(object message, Exception exception)
+        {
+            Messages.AddMessage(MessageType.Error, message.ToString());
+        }
+
+        public void ErrorFormat(string format, params object[] args)
+        {
+            Messages.AddMessage(MessageType.Error, String.Format(format, args));
+        }
+
+        public void Fatal(object message)
+        {
+            Messages.AddMessage(MessageType.Error, message.ToString());
+        }
+
+        public void Fatal(object message, Exception exception)
+        {
+            Messages.AddMessage(MessageType.Error, message.ToString());
+        }
+
+        public void FatalFormat(string format, params object[] args)
+        {
+            Messages.AddMessage(MessageType.Error, String.Format(format, args));
+        }
+
+        public void Info(object message)
+        {
+            Messages.AddMessage(MessageType.Info, message.ToString());
+        }
+
+        public void Info(object message, Exception exception)
+        {
+            Messages.AddMessage(MessageType.Info, message.ToString());
+        }
+
+        public void InfoFormat(string format, params object[] args)
+        {
+            Messages.AddMessage(MessageType.Info, String.Format(format, args));
+        }
+
+        public void Warn(object message)
+        {
+            Messages.AddMessage(MessageType.Warning, message.ToString());
+        }
+
+        public void Warn(object message, Exception exception)
+        {
+            Messages.AddMessage(MessageType.Warning, message.ToString());
+        }
+
+        public void WarnFormat(string format, params object[] args)
+        {
+            Messages.AddMessage(MessageType.Warning, String.Format(format, args));
+        }
+    }
+
+    class ServiceStackLogFactory : ILogFactory
+    {
+        public ILog GetLogger(string typeName)
+        {
+            return mLogger;
+        }
+
+        public ILog GetLogger(Type type)
+        {
+            return mLogger;
+        }
+
+        private ILog mLogger = new ServiceStackLogger();
+    }
+
     public class WebNetwork : INetwork
     {
         public WebNetwork(INetworkClient networkClient)
@@ -1392,6 +1493,8 @@ namespace Ares.Players.Web
             String ipAddress = Settings.Settings.Instance.IPAddress;
             try
             {
+                LogManager.LogFactory = new ServiceStackLogFactory();
+
                 mListenAddress = String.Format("http://+:{1}/", ipAddress, tcpPort);
                 mAppHost = new AppHost(mNetworkClient);
 
