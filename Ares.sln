@@ -32,6 +32,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ares.CommonGUI", "Ares.Comm
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ares.CmdLinePlayer", "Ares.CmdLinePlayer\Ares.CmdLinePlayer.csproj", "{8F96265C-6608-4B98-9C56-C60F0D02751C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ares.WinSecurity", "Ares.WinSecurity\Ares.WinSecurity.csproj", "{4AA4230A-F538-4DB3-BDA3-E96A0B737275}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug English|Any CPU = Debug English|Any CPU
@@ -300,6 +302,24 @@ Global
 		{8F96265C-6608-4B98-9C56-C60F0D02751C}.Release|Mixed Platforms.Build.0 = Release|x86
 		{8F96265C-6608-4B98-9C56-C60F0D02751C}.Release|x86.ActiveCfg = Release|x86
 		{8F96265C-6608-4B98-9C56-C60F0D02751C}.Release|x86.Build.0 = Release|x86
+		{4AA4230A-F538-4DB3-BDA3-E96A0B737275}.Debug English|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AA4230A-F538-4DB3-BDA3-E96A0B737275}.Debug English|Any CPU.Build.0 = Debug|Any CPU
+		{4AA4230A-F538-4DB3-BDA3-E96A0B737275}.Debug English|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{4AA4230A-F538-4DB3-BDA3-E96A0B737275}.Debug English|Mixed Platforms.Build.0 = Debug|Any CPU
+		{4AA4230A-F538-4DB3-BDA3-E96A0B737275}.Debug English|x86.ActiveCfg = Debug|Any CPU
+		{4AA4230A-F538-4DB3-BDA3-E96A0B737275}.Debug English|x86.Build.0 = Debug|Any CPU
+		{4AA4230A-F538-4DB3-BDA3-E96A0B737275}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AA4230A-F538-4DB3-BDA3-E96A0B737275}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AA4230A-F538-4DB3-BDA3-E96A0B737275}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{4AA4230A-F538-4DB3-BDA3-E96A0B737275}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{4AA4230A-F538-4DB3-BDA3-E96A0B737275}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4AA4230A-F538-4DB3-BDA3-E96A0B737275}.Debug|x86.Build.0 = Debug|Any CPU
+		{4AA4230A-F538-4DB3-BDA3-E96A0B737275}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AA4230A-F538-4DB3-BDA3-E96A0B737275}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4AA4230A-F538-4DB3-BDA3-E96A0B737275}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{4AA4230A-F538-4DB3-BDA3-E96A0B737275}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{4AA4230A-F538-4DB3-BDA3-E96A0B737275}.Release|x86.ActiveCfg = Release|Any CPU
+		{4AA4230A-F538-4DB3-BDA3-E96A0B737275}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

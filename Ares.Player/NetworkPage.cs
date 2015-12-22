@@ -18,6 +18,8 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 using System;
+using System.Diagnostics;
+using System.IO;
 using System.Windows.Forms;
 
 namespace Ares.Player
@@ -27,6 +29,14 @@ namespace Ares.Player
         public NetworkPage()
         {
             InitializeComponent();
+            if (!IsLinux)
+            {
+                shieldBox.Image = System.Drawing.SystemIcons.Shield.ToBitmap();
+            }
+            else
+            {
+                shieldBox.Visible = false;
+            }
             SetData();
         }
 
@@ -83,12 +93,73 @@ namespace Ares.Player
             listen = true;
         }
 
+        private static bool IsLinux
+        {
+            get
+            {
+                int p = (int)Environment.OSVersion.Platform;
+                return (p == 4) || (p == 6) || (p == 128);
+            }
+        }
+
         private void SaveData()
         {
             Ares.Settings.Settings settings = Ares.Settings.Settings.Instance;
             settings.UseWebNetwork = enableWebBox.Checked;
             settings.UseLegacyNetwork = enableCustomIpBox.Checked;
-            settings.WebTcpPort = (int)webPortUpDown.Value;
+            if (settings.WebTcpPort != (int)webPortUpDown.Value)
+            {
+                int newPort = (int)webPortUpDown.Value;
+                if (!IsLinux)
+                {
+                    String tempFile = Path.GetTempFileName();
+                    try
+                    {
+                        String args = String.Format("ChangePort {0} {1} {2}", settings.WebTcpPort, newPort, tempFile);
+                        ProcessStartInfo psi = new ProcessStartInfo("Ares.WinSecurity.exe", args);
+                        psi.Verb = "runas";
+                        psi.CreateNoWindow = true;
+                        psi.WindowStyle = ProcessWindowStyle.Hidden;
+                        psi.UseShellExecute = true;
+
+                        var res = Process.Start(psi);
+                        res.WaitForExit();
+                        if (res.ExitCode != 0)
+                        {
+                            using (StreamReader reader = new StreamReader(tempFile))
+                            { 
+                                string errorMsg = reader.ReadLine();
+                                if (!String.IsNullOrEmpty(errorMsg))
+                                {
+                                    MessageBox.Show(this, String.Format(StringResources.WinSecurityError, errorMsg), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    while (!String.IsNullOrEmpty(errorMsg))
+                                    {
+                                        errorMsg = reader.ReadLine();
+                                    }
+                                }
+                                else
+                                {
+                                    MessageBox.Show(this, String.Format(StringResources.WinSecurityError, "Unknown"), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(this, String.Format(StringResources.WinSecurityError, ex.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    finally
+                    {
+                        try
+                        {
+                            File.Delete(tempFile);
+                        }
+                        catch (IOException)
+                        { }
+                    }
+                }
+                settings.WebTcpPort = newPort;
+            }
             settings.TcpPort = (int)customIpPortUpDown.Value;
             settings.IPAddress = ipAddressBox.SelectedItem.ToString();
             settings.UdpPort = (int)udpPortUpDown.Value;

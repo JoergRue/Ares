@@ -228,6 +228,10 @@ You should adapt some settings first.</value>
     <value>Error accessing tags database:
 {0}</value>
   </data>
+  <data name="WinSecurityError" xml:space="preserve">
+    <value>Windows security settings could not be adapted. Reason:
+{0}</value>
+  </data>
   <data name="WriteSettingsError" xml:space="preserve">
     <value>Settings could not be saved. Reason:
 {0}</value>

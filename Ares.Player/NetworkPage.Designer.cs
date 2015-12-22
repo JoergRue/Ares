@@ -49,6 +49,7 @@ namespace Ares.Player
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NetworkPage));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.shieldBox = new System.Windows.Forms.PictureBox();
             this.udpPortUpDown = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
             this.customIpPortUpDown = new System.Windows.Forms.NumericUpDown();
@@ -60,6 +61,7 @@ namespace Ares.Player
             this.ipAddressBox = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.shieldBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udpPortUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.customIpPortUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.webPortUpDown)).BeginInit();
@@ -68,6 +70,7 @@ namespace Ares.Player
             // groupBox1
             // 
             resources.ApplyResources(this.groupBox1, "groupBox1");
+            this.groupBox1.Controls.Add(this.shieldBox);
             this.groupBox1.Controls.Add(this.udpPortUpDown);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.customIpPortUpDown);
@@ -80,6 +83,12 @@ namespace Ares.Player
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
+            // 
+            // shieldBox
+            // 
+            resources.ApplyResources(this.shieldBox, "shieldBox");
+            this.shieldBox.Name = "shieldBox";
+            this.shieldBox.TabStop = false;
             // 
             // udpPortUpDown
             // 
@@ -172,9 +181,9 @@ namespace Ares.Player
             // 
             // ipAddressBox
             // 
-            resources.ApplyResources(this.ipAddressBox, "ipAddressBox");
             this.ipAddressBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ipAddressBox.FormattingEnabled = true;
+            resources.ApplyResources(this.ipAddressBox, "ipAddressBox");
             this.ipAddressBox.Name = "ipAddressBox";
             // 
             // label1
@@ -190,6 +199,7 @@ namespace Ares.Player
             this.Name = "NetworkPage";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.shieldBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udpPortUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.customIpPortUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.webPortUpDown)).EndInit();
@@ -210,5 +220,6 @@ namespace Ares.Player
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NumericUpDown udpPortUpDown;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.PictureBox shieldBox;
     }
 }

@@ -228,6 +228,10 @@ Sie sollten zuerst ein paar Einstellungen vornehmen.</value>
     <value>Fehler beim Zugriff auf die Tags-Datenbasis:
 {0}</value>
   </data>
+  <data name="WinSecurityError" xml:space="preserve">
+    <value>Windows-Sicherheitseinstellungen konnten nicht angepasst werden. Grund:
+{0}</value>
+  </data>
   <data name="WriteSettingsError" xml:space="preserve">
     <value>Einstellungen konnten nicht gespeichert werden. Grund:
 {0}</value>
