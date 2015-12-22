@@ -1272,7 +1272,10 @@ namespace Ares.Players.Web
                 new IAuthProvider[] {
                     new BasicAuthProvider()
                 }));
-            Plugins.Add(new CultureAwareRazorFormat());
+            Plugins.Add(new CultureAwareRazorFormat
+            {
+                LoadFromAssemblies = { typeof(ControlService).Assembly }
+            });
 
             PreRequestFilters.Add((httpReq, httpResp) =>
             {
@@ -1420,7 +1423,10 @@ namespace Ares.Players.Web
 
         public void StopListenForClient()
         {
-            mAppHost.Stop();
+            if (mAppHost != null)
+            {
+                mAppHost.Stop();
+            }
         }
 
         public bool ClientConnected
@@ -1515,7 +1521,7 @@ namespace Ares.Players.Web
 
         public override ServiceStack.Razor.Managers.RazorViewManager CreateViewManager()
         {
-            return new CultureAwareRazorViewManager(this, VirtualPathProvider);
+            return new CultureAwareRazorViewManager(this, VirtualFileSources);
         }
     }
 

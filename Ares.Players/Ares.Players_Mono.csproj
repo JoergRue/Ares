@@ -62,6 +62,7 @@
       <HintPath>..\Libraries\System.Web.Razor.Unofficial.dll</HintPath>
     </Reference>
     <Reference Include="System.Web" />
+    <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Messages.cs" />
@@ -84,6 +85,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="ServiceStack.Razor.BuildTask\ServiceStack.Razor.BuildTask.targets" Condition="Exists('ServiceStack.Razor.BuildTask\ServiceStack.Razor.BuildTask.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
@@ -108,5 +110,22 @@
       <Project>{42A8F91D-6E6B-4740-AC3F-99A34074E695}</Project>
       <Name>Ares.Tags_Mono</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\_Layout.cshtml" />
+    <Content Include="Views\Control.cshtml" />
+    <Content Include="Views\Control.de.cshtml" />
+    <Content Include="Views\Elements.cshtml" />
+    <Content Include="Views\Elements.de.cshtml" />
+    <Content Include="Views\Modes.cshtml" />
+    <Content Include="Views\Modes.de.cshtml" />
+    <Content Include="Views\Playlist.cshtml" />
+    <Content Include="Views\Playlist.de.cshtml" />
+    <Content Include="Views\Projects.cshtml" />
+    <Content Include="Views\Projects.de.cshtml" />
+    <Content Include="Views\Settings.cshtml" />
+    <Content Include="Views\Settings.de.cshtml" />
+    <Content Include="Views\Tags.cshtml" />
+    <Content Include="Views\Tags.de.cshtml" />
   </ItemGroup>
 </Project>
