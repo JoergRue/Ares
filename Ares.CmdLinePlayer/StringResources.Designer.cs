@@ -341,6 +341,16 @@ namespace Ares.CmdLinePlayer {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Windows security settings could not be adapted. Reason:
+        ///{0}.
+        /// </summary>
+        internal static string WinSecurityError {
+            get {
+                return ResourceManager.GetString("WinSecurityError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Settings could not be saved. Reason:
         ///{0}.
         /// </summary>
