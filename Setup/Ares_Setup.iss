@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Ares"
-#define MyAppVersion "3.0.0"
+#define MyAppVersion "3.0.1"
 #define MyAppPublisher "Joerg Ruedenauer"
 #define MyAppURL "http://aresrpg.sourceforge.net/"
 
@@ -20,13 +20,15 @@ AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
 DefaultDirName={pf}\{#MyAppName}
 DefaultGroupName={#MyAppName}
-OutputDir=D:\Projekte\Ares\trunk\build\output
+OutputDir=..\build\output
 OutputBaseFilename=Ares-{#MyAppVersion}-Setup
 Compression=lzma2
 SolidCompression=yes
 UninstallDisplayIcon=..\build\Ares\Player_Editor\Ares.ico
 UninstallDisplayName={#MyAppName}
 ChangesAssociations=yes
+SignTool=signscript
+SignedUninstaller=yes
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -48,6 +50,7 @@ Source: "..\build\Ares\Player_Editor\Ares.CmdLinePlayer.exe"; DestDir: "{app}\Pl
 Source: "..\build\Ares\Player_Editor\Ares.CmdLinePlayer.exe.config"; DestDir: "{app}\Player_Editor\"; Flags: ignoreversion; Components: Player
 Source: "..\build\Ares\Player_Editor\Ares.Player.exe"; DestDir: "{app}\Player_Editor\"; Flags: ignoreversion; Components: Player
 Source: "..\build\Ares\Player_Editor\Ares.Player.exe.config"; DestDir: "{app}\Player_Editor\"; Flags: ignoreversion; Components: Player
+Source: "..\build\Ares\Player_Editor\Ares.WinSecurity.exe"; DestDir: "{app}\Player_Editor\"; Flags: ignoreversion; Components: Player
 Source: "..\build\Ares\Player_Editor\MouseKeyboardActivityMonitor.dll"; DestDir: "{app}\Player_Editor\"; Flags: ignoreversion; Components: Player
 Source: "..\build\Ares\Player_Editor\MouseKeyboardHooksLicence.txt"; DestDir: "{app}\Player_Editor\"; Flags: ignoreversion; Components: Player
 Source: "..\build\Ares\Player_Editor\de\Ares.CmdLinePlayer.resources.dll"; DestDir: "{app}\Player_Editor\de\"; Flags: ignoreversion; Components: Player
@@ -130,7 +133,7 @@ Name: "{group}\{#MyAppName} Controller"; Filename: "{app}\Controller\{#MyAppName
 Name: "{commondesktop}\{#MyAppName} Controller"; Filename: "{app}\Controller\{#MyAppName}.Controller.exe"; Components: Controller; Tasks: desktopicon
 
 [Run]
-Filename: "{sys}\netsh.exe"; Parameters: "http add urlacl url=http://+:11113/ user={%USERDOMAIN}\{%USERNAME}"; WorkingDir: "{sys}"; Flags: postinstall runascurrentuser; Description: {cm:openFirewall}; Components: Player
+Filename: "{app}\Player_Editor\Ares.WinSecurity.exe"; Parameters: "AddPort"; WorkingDir: "{app}\Player_Editor"; Flags: postinstall runascurrentuser; Description: "{cm:openFirewall}"; Components: Player
 Filename: "{app}\Player_Editor\Ares.Editor.exe"; Flags: nowait postinstall skipifsilent skipifdoesntexist; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Components: Editor; Check: ShallStartEditor
 Filename: "{app}\Player_Editor\Ares.Player.exe"; Flags: nowait postinstall skipifsilent skipifdoesntexist; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Components: Player; Check: ShallStartPlayer
 Filename: "{app}\Controller\Ares.Controller.exe"; Flags: nowait postinstall skipifsilent skipifdoesntexist; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Components: Controller; Check: ShallStartController
@@ -191,7 +194,7 @@ Root: HKCR; Subkey: "AresPackedProject\shell\open\command"; ValueType: string; V
 Root: HKCR; Subkey: "AresPackedProject\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\Player_Editor\Ares.Player.exe"" ""%1"""; Check: ShallStartPlayer
 
 [UninstallRun]
-Filename: "{sys}\netsh.exe"; Parameters: "http delete urlacl url=http://+:11113/"; WorkingDir: "{sys}"; Flags: runascurrentuser; Components: Player
+Filename: "{app}\Player_Editor\Ares.WinSecurity.exe"; Parameters: "RemovePort"; WorkingDir: "{app}\Player_Editor\"; Flags: runascurrentuser; Components: Player
 
 [Code]
 var 

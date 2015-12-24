@@ -1,3 +1,18 @@
+Version 3.0.1
+----------------------------------------------------------------------------------
+- Player: Setup öffnet die Windows Firewall für den Webserver-Port
+- Player: Windows Sicherheitseinstellungen werden automatisch angepasst wenn der
+  Port für den Websever geändert wird
+- Player: schnellerer Start des Webservers durch vorkompilierte Webseiten;
+  merklich vor allem auf sehr langsamen Rechnern wie Raspberry Pi
+- Player: Bugfix: längere Timeouts im Webserver erlaubt sodass er auch mit sehr
+  langsamen Rechnern, speziell Raspberry Pi, funktioniert
+- Player: Meldungen des Webservers werden jetzt zu Ares Meldungen konvertiert
+  statt immer auf der Kommandozeile ausgegeben
+- Player/Kommandozeile: Bugfix: wenn die Option --Daemon nicht benutzt wurde, 
+  klappte die automatische Verbindung mit dem Controller nur beim Programmstart
+- Player/Linux: Bass-Library aktualisiert, sollte besser mit pulseaudio gehen
+
 Version 3.0.0
 ----------------------------------------------------------------------------------
 - Allgemein: Player kann auch mit (modernem) Browser gesteuert werden [BETA]

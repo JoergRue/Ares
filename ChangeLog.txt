@@ -1,3 +1,19 @@
+Version 3.0.1
+----------------------------------------------------------------------------------
+- Player: Setup opens Windows firewall for web server port
+- Player: automatically reconfigure Windows security settings if port
+  for web server is changed
+- Player: faster web server start by precompiling web pages; noticable especially
+  on very slow computer like Raspberry Pi
+- Player: Bugfix: allow larger timeouts in web server so that it works with very
+  slow computers, especially Raspberry Pi
+- Player: web server messages are now converted to Ares messages instead of 
+  always appearing on the command line
+- Player/command line: Bugfix: if option --Daemon wasn't used, automatic 
+  connection with Controller worked only at program start
+- Player/Linux: bass library updated, should work better with pulseaudio
+
+
 Version 3.0.0
 ----------------------------------------------------------------------------------
 - General: Player can also be controlled through a (modern) Browser [BETA]

@@ -1,10 +1,11 @@
 set ant="D:\eclipse_mars\plugins\org.apache.ant_1.9.4.v201504302020\bin\ant"
 set nant="D:\nant-0.91-alpha1\bin\NAnt.exe"
-rem set installjammer="C:\Program Files (x86)\InstallJammer\installjammer.exe"
 set innosetup="C:\Program Files (x86)\Inno Setup 5\ISCC.exe"
-set svn="C:\Program Files (x86)\VisualSVN Server\bin\svn.exe"
+set git="C:\Program Files (x86)\Git\bin\git.exe"
 set zip="C:\Program Files\7-Zip\7z.exe"
+set signtool=$qC:\Program Files (x86)\Windows Kits\8.0\bin\x86\$q
 set JAVA_HOME=""C:\Program Files (x86)\Java\jdk1.6.0_20""
+set ARES_BASE_PATH=D:\Projekte\Ares\
 
 call %ant% -DProductVersion=%1
 
@@ -16,8 +17,7 @@ cd ..\..\..
 
 %nant% clean prepareSetup
 
-rem %installjammer% -DProductVersion %1 --build-dir build\temp --build-log-file build\setup.log --output-dir build\output --build-for-release --build Setup\Ares\Ares.mpi
-%innosetup% /Qp /DMyAppVersion=ProductVersion Setup\Ares_Setup.iss
+%innosetup% /Qp /Ssignscript="%ARES_BASE_PATH%\CodeSigning\sign.cmd %signtool% $f" Setup\Ares_Setup.iss
 
 cd build\MGPlugin
 %zip% a ..\output\Ares-%1-MGPlugin.zip Ares.MeisterGeisterPlugin.dll de
@@ -25,9 +25,9 @@ cd ..
 rmdir /S/Q MGPlugin
 cd ..
 
-%svn% export https://localhost/svn/Ares/trunk build\Ares_%1_Source
+%git% archive --format zip --output build\output\Ares_%1_Source.zip HEAD 
+
 cd build
-%zip% a output\Ares_%1_Source.7z Ares_%1_Source
 
 xcopy /S /E /Q /I Ares Ares_Portable
 xcopy /S /E /Q /Y ..\Ares_Portable Ares_Portable

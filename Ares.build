@@ -87,6 +87,7 @@
 		   <fileset basedir="Ares.Players">
 		     <include name="Images/" />
 			 <include name="Views/" />
+			 <exclude name="Views/*.cshtml"/>
 		   </fileset>
 		</copy>
 		<copy todir="${monooutput.dir}">
@@ -99,6 +100,7 @@
 		   <fileset basedir="Ares.Players">
 		     <include name="Images/" />
 			 <include name="Views/" />
+			 <exclude name="Views/*.cshtml"/>
 		   </fileset>
 		</copy>
 		<copy todir="${monooutput.dir}">
@@ -127,6 +129,7 @@
 		   <fileset basedir="Ares.Players">
 		     <include name="Images/" />
 			 <include name="Views/" />
+			 <exclude name="Views/*.cshtml"/>
 		   </fileset>
 		</copy>
 		<copy todir="${monooutput64.dir}">

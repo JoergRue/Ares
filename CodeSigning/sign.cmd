@@ -1,5 +1,4 @@
 @echo off
-echo called path is %~dp0
 if exist %~dp0ares_code_signing_certificate.pfx goto sign
 echo Certificate not found, Exe will not be signed
 goto end

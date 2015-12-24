@@ -99,16 +99,26 @@ namespace Ares.WinSecurity
 
         private static int AddPort(string[] args)
         {
-            if (args.Length > 3 || args.Length < 2)
+            if (args.Length > 3)
             {
                 Console.Error.WriteLine("Invalid number of arguments");
                 return 1;
             }
             int newPort;
-            if (!Int32.TryParse(args[1], out newPort))
+            if (args.Length > 1)
             {
-                Console.Error.WriteLine("Invalid new port " + args[2]);
-                return 4;
+                if (!Int32.TryParse(args[1], out newPort))
+                {
+                    Console.Error.WriteLine("Invalid new port " + args[2]);
+                    return 4;
+                }
+            }
+            else
+            {
+                Ares.Settings.BasicSettings basicSettings = new Ares.Settings.BasicSettings();
+                bool foundSettings = basicSettings.ReadFromFile();
+                Ares.Settings.Settings.Instance.InitializeWithoutSharedMemory(foundSettings ? basicSettings.GetSettingsDir() : null);
+                newPort = Ares.Settings.Settings.Instance.WebTcpPort;
             }
             return WrapExceptions(() =>
             {
