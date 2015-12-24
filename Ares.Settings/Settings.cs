@@ -197,6 +197,16 @@ namespace Ares.Settings
         public static readonly string PlayerID = "Player";
         public static readonly string EditorID = "Editor";
 
+        public bool InitializeWithoutSharedMemory(String directory)
+        {
+            bool success = String.IsNullOrEmpty(directory) ? false : ReadFromFile(directory);
+            if (!success)
+            {
+                InitDefaults();
+            }
+            return success;
+        }
+
         public bool Initialize(String id, String directory)
         {
             m_ID = id;

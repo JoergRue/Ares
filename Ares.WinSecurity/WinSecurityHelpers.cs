@@ -17,6 +17,7 @@
  along with Ares; if not, write to the Free Software
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
+using NetFwTypeLib;
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
@@ -134,6 +135,87 @@ namespace Ares.WinSecurity
         {
             HTTPAPI_VERSION version = new HTTPAPI_VERSION(1, 0);
             HttpInitialize(version, HTTP_INITIALIZE_CONFIG, IntPtr.Zero);
+        }
+
+        public static bool FirewallEnabled
+        {
+            get
+            {
+                try
+                {
+                    Type fwManagerType = Type.GetTypeFromProgID("HNetCfg.FwMgr");
+                    INetFwMgr fwManager = (INetFwMgr)Activator.CreateInstance(fwManagerType);
+                    return fwManager.LocalPolicy.CurrentProfile.FirewallEnabled;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+        }
+
+        private static INetFwPolicy2 GetFirewallPolicy()
+        {
+            Type fwPolicyType = Type.GetTypeFromProgID("HNetCfg.FwPolicy2");
+            INetFwPolicy2 firewallPolicy = (INetFwPolicy2)Activator.CreateInstance(fwPolicyType);
+            return firewallPolicy;
+        }
+
+        private static INetFwRule FindFirewallRule(INetFwPolicy2 firewallPolicy, String ruleName)
+        {
+            foreach (INetFwRule rule in firewallPolicy.Rules)
+            {
+                if (rule.Name == ruleName)
+                    return rule;
+            }
+            return null;
+        }
+
+        public static void RemoveFirewallRule(String ruleName)
+        {
+            try
+            {
+                INetFwPolicy2 firewallPolicy = GetFirewallPolicy();
+                INetFwRule fwRule = FindFirewallRule(firewallPolicy, ruleName);
+                if (fwRule != null)
+                {
+                    firewallPolicy.Rules.Remove(ruleName);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new WinSecurityException("Error removing firewall rule", ex);
+            }
+        }
+
+        public static void AddFirewallRule(String ruleName, int newPort)
+        {
+            try
+            {
+                INetFwPolicy2 firewallPolicy = GetFirewallPolicy();
+                INetFwRule fwRule = FindFirewallRule(firewallPolicy, ruleName);
+                if (fwRule != null)
+                {
+                    fwRule.LocalPorts = newPort.ToString(System.Globalization.CultureInfo.InvariantCulture);
+                }
+                else
+                {
+                    Type fwRuleType = Type.GetTypeFromProgID("HNetCfg.FWRule");
+                    fwRule = (INetFwRule)Activator.CreateInstance(fwRuleType);
+                    fwRule.Name = ruleName;
+                    fwRule.Description = "Allow TCP Port for Web Controller access to Ares Player";
+                    fwRule.Protocol = (int)NET_FW_IP_PROTOCOL_.NET_FW_IP_PROTOCOL_TCP;
+                    fwRule.LocalPorts = newPort.ToString(System.Globalization.CultureInfo.InvariantCulture);
+                    fwRule.Direction = NET_FW_RULE_DIRECTION_.NET_FW_RULE_DIR_IN;
+                    fwRule.Action = NET_FW_ACTION_.NET_FW_ACTION_ALLOW;
+                    fwRule.Enabled = true;
+                    firewallPolicy.Rules.Add(fwRule);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new WinSecurityException("Error changing firewall rule", ex);
+            }
         }
 
         public static void AddUrlPrefix(String urlPrefix)
