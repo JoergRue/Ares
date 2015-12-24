@@ -333,6 +333,15 @@ namespace Ares.Player {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Needs administrator rights to configure Windows security settings.
+        /// </summary>
+        internal static string ShieldIconToolTip {
+            get {
+                return ResourceManager.GetString("ShieldIconToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to About Ares ....
         /// </summary>
         internal static string ShowInfo {
