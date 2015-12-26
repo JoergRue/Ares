@@ -128,6 +128,10 @@
     <Reference Include="MouseKeyboardActivityMonitor">
       <HintPath>..\Libraries\MouseKeyboardActivityMonitor.dll</HintPath>
     </Reference>
+    <Reference Include="ServiceStack.Text, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libraries\ServiceStack.Text.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
     </Reference>
