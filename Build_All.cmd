@@ -39,16 +39,16 @@ rmdir /S /Q Ares_Portable\Player64
 
 xcopy /S /E /Q /I Ares Ares_Portable_Linux
 xcopy /S /E /Q /Y ..\Ares_Portable Ares_Portable_Linux
-del /Q Ares_Portable\Music\.gitignore
-del /Q Ares_Portable\Sounds\.gitignore
+del /Q Ares_Portable_Linux\Music\.gitignore
+del /Q Ares_Portable_Linux\Sounds\.gitignore
 rmdir /S /Q Ares_Portable_Linux\Player_Editor
 rmdir /S /Q Ares_Portable_Linux\Player64
 %zip% a output\Ares_Portable_Linux_x86_%1.zip Ares_Portable_Linux
 
 xcopy /S /E /Q /I Ares Ares_Portable_Linux_x64
 xcopy /S /E /Q /Y ..\Ares_Portable Ares_Portable_Linux_x64
-del /Q Ares_Portable\Music\.gitignore
-del /Q Ares_Portable\Sounds\.gitignore
+del /Q Ares_Portable_Linux_x64\Music\.gitignore
+del /Q Ares_Portable_Linux_x64\Sounds\.gitignore
 rmdir /S /Q Ares_Portable_Linux_x64\Player_Editor
 rmdir /S /Q Ares_Portable_Linux_x64\Player
 move /Y Ares_Portable_Linux_x64\Player64 Ares_Portable_Linux_x64\Player
@@ -56,8 +56,8 @@ move /Y Ares_Portable_Linux_x64\Player64 Ares_Portable_Linux_x64\Player
 
 xcopy /S /E /Q /I Ares Ares_Portable_Linux_arm_softfp
 xcopy /S /E /Q /Y ..\Ares_Portable Ares_Portable_Linux_arm_softfp
-del /Q Ares_Portable\Music\.gitignore
-del /Q Ares_Portable\Sounds\.gitignore
+del /Q Ares_Portable_Linux_arm_softfp\Music\.gitignore
+del /Q Ares_Portable_Linux_arm_softfp\Sounds\.gitignore
 rmdir /S /Q Ares_Portable_Linux_arm_softfp\Player_Editor
 rmdir /S /Q Ares_Portable_Linux_arm_softfp\Player64
 xcopy /S /E /Q /I /Y ..\Libraries_Linux_arm_softfp Ares_Portable_Linux_arm_softfp\Player
@@ -66,8 +66,8 @@ del Ares_Portable_Linux_arm_softfp\Player\libbass_aac.so
 
 xcopy /S /E /Q /I Ares Ares_Portable_Linux_arm_hardfp
 xcopy /S /E /Q /Y ..\Ares_Portable Ares_Portable_Linux_arm_hardfp
-del /Q Ares_Portable\Music\.gitignore
-del /Q Ares_Portable\Sounds\.gitignore
+del /Q Ares_Portable_Linux_arm_hardfp\Music\.gitignore
+del /Q Ares_Portable_Linux_arm_hardfp\Sounds\.gitignore
 rmdir /S /Q Ares_Portable_Linux_arm_hardfp\Player_Editor
 rmdir /S /Q Ares_Portable_Linux_arm_hardfp\Player64
 xcopy /S /E /Q /I /Y ..\Libraries_Linux_arm_hardfp Ares_Portable_Linux_arm_hardfp\Player
