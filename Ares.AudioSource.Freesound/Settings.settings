@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Ares.AudioSource.Freesound" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="FreesoundApiBase" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://www.freesound.org/apiv2/</Value>
+    </Setting>
+    <Setting Name="TextSearchPath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">search/text/</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

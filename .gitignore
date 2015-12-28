@@ -1,6 +1,10 @@
 **/bin/
 **/obj/
 *.suo
+<<<<<<< HEAD
 /CodeSigning/signing_password.cmd
 /CodeSigning/ares_code_signing_certificate.pfx
 /Ares.Controller/out
+=======
+Ares.AudioSource.Freesound/ApiKey.cs
+>>>>>>> Basic structure for extensible AudioSources and the Freesound AudioSource plugin
