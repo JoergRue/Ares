@@ -3,3 +3,4 @@
 *.suo
 /CodeSigning/signing_password.cmd
 /CodeSigning/ares_code_signing_certificate.pfx
+/Ares.Controller/out
