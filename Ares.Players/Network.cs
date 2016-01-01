@@ -143,7 +143,9 @@ namespace Ares.Players
             }
             if (mNetworks[1] == null && useIt)
             {
+				#if !ANDROID
                 mNetworks[1] = new Ares.Players.Web.WebNetwork(mClient);
+				#endif
             }
         }
 

@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="hello">Start / Stop</string>
+	<string name="app_name">Ares Player</string>
+	<string name="no_ip_address">No usable IP address found. Is the network available?</string>
+	<string name="no_status_info_error">Couldn\'t send status info. Check network connection.</string>
+	<string name="tags_db_error">Error accessing tags database: {0}</string>
+	<string name="no_settings">No settings found. Using default settings.</string>
+	<string name="load_error">Error opening the project: {0}</string>
+	<string name="import_error">Error importing the project: {0}</string>
+	<string name="Debug">Debug: </string>
+	<string name="Info">Info: </string>
+	<string name="Warning">Warning: </string>
+	<string name="Error">Error: </string>
+	<string name="connected_with">Connected with </string>
+	<string name="not_connected">Not connected</string>
+</resources>

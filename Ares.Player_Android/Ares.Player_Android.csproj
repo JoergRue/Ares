@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Android_Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{326CB2F7-26D1-4AE2-AABA-56352729D372}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Ares.Player_Android</RootNamespace>
+    <AndroidApplication>True</AndroidApplication>
+    <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
+    <AndroidResgenClass>Resource</AndroidResgenClass>
+    <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
+    <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
+    <AndroidUseLatestPlatformSdk>False</AndroidUseLatestPlatformSdk>
+    <AssemblyName>Ares.Player_Android</AssemblyName>
+    <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
+    <XamarinInsightsApiKey>37524bc2b17275457bf49fbb984cb391113fe8f3</XamarinInsightsApiKey>
+    <TargetFrameworkVersion>v4.0.3</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Android_Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\Android_Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <ConsolePause>false</ConsolePause>
+    <AndroidLinkMode>None</AndroidLinkMode>
+    <AndroidSupportedAbis>armeabi;armeabi-v7a;x86</AndroidSupportedAbis>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Android_Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\bin\Android_Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <ConsolePause>false</ConsolePause>
+    <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="Mono.Android" />
+    <Reference Include="Xamarin.Insights">
+      <HintPath>..\packages\Xamarin.Insights.1.10.6\lib\MonoAndroid10\Xamarin.Insights.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="MainActivity.cs" />
+    <Compile Include="Resources\Resource.designer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PlayerService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\AndroidManifest.xml" />
+    <None Include="Assets\AboutAssets.txt" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\Main.axml" />
+    <AndroidResource Include="Resources\values\Strings.xml" />
+    <AndroidResource Include="Resources\mipmap-hdpi\Icon.png" />
+    <AndroidResource Include="Resources\mipmap-mdpi\Icon.png" />
+    <AndroidResource Include="Resources\mipmap-xhdpi\Icon.png" />
+    <AndroidResource Include="Resources\mipmap-xxhdpi\Icon.png" />
+    <AndroidResource Include="Resources\mipmap-xxxhdpi\Icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\drawable\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
+  <Import Project="..\packages\Xamarin.Insights.1.10.6\build\MonoAndroid10\Xamarin.Insights.targets" Condition="Exists('..\packages\Xamarin.Insights.1.10.6\build\MonoAndroid10\Xamarin.Insights.targets')" />
+  <ItemGroup>
+    <ProjectReference Include="..\Ares.Data\Ares.Data_Android.csproj">
+      <Project>{2400A424-6F42-4BE9-811A-566FF1802441}</Project>
+      <Name>Ares.Data_Android</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ares.Settings\Ares.Settings_Android.csproj">
+      <Project>{6EAFF9D6-0D29-4116-A42E-0D6A336C4C8D}</Project>
+      <Name>Ares.Settings_Android</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ares.ModelChecks\Ares.ModelInfo_Android.csproj">
+      <Project>{4A4E965A-76C5-423F-82F3-7D900EFC91DF}</Project>
+      <Name>Ares.ModelInfo_Android</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ares.Players\Ares.Players_Android.csproj">
+      <Project>{7774CDB7-CCF2-4EC7-A4D8-A8DEE6A9E610}</Project>
+      <Name>Ares.Players_Android</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ares.Playing\Ares.Playing_Android.csproj">
+      <Project>{D25E4C1D-941E-4475-931B-F309A4F783CE}</Project>
+      <Name>Ares.Playing_Android</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ares.Tags\Ares.Tags_Android.csproj">
+      <Project>{42A8F91D-6E6B-4740-AC3F-99A34074E695}</Project>
+      <Name>Ares.Tags_Android</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Android_Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4A4E965A-76C5-423F-82F3-7D900EFC91DF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Ares.ModelInfo_Android</RootNamespace>
+    <FileAlignment>512</FileAlignment>
+    <AssemblyName>Ares.ModelInfo_Android</AssemblyName>
+    <SignAssembly>false</SignAssembly>
+    <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
+    <AndroidResgenClass>Resource</AndroidResgenClass>
+    <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
+    <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
+    <AndroidUseLatestPlatformSdk>False</AndroidUseLatestPlatformSdk>
+    <TargetFrameworkVersion>v4.0.3</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Android_Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\Android_Debug</OutputPath>
+    <DefineConstants>DEBUG;MONO</DefineConstants>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <AndroidLinkMode>None</AndroidLinkMode>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Android_Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>..\bin\Android_Release</OutputPath>
+    <DefineConstants>MONO</DefineConstants>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Mono.Android" />
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\Libraries_Android\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\Resource.designer.cs" />
+    <Compile Include="DataExtensions.cs" />
+    <Compile Include="FileChecks.cs" />
+    <Compile Include="FileLists.cs" />
+    <Compile Include="FileSearch.cs" />
+    <Compile Include="ImportExport.cs" />
+    <Compile Include="ModelChecks.cs" />
+    <Compile Include="Playlists.cs" />
+    <Compile Include="Progress.cs" />
+    <Compile Include="ReferenceChecks.cs" />
+    <Compile Include="AndroidStringResources.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ItemGroup>
+    <AndroidResource Include="Resources\values\Strings.xml" />
+    <AndroidResource Include="Resources\values-de\Strings.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Ares.Data\Ares.Data_Android.csproj">
+      <Project>{2400A424-6F42-4BE9-811A-566FF1802441}</Project>
+      <Name>Ares.Data_Android</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ares.Settings\Ares.Settings_Android.csproj">
+      <Project>{6EAFF9D6-0D29-4116-A42E-0D6A336C4C8D}</Project>
+      <Name>Ares.Settings_Android</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ares.Tags\Ares.Tags_Android.csproj">
+      <Project>{42A8F91D-6E6B-4740-AC3F-99A34074E695}</Project>
+      <Name>Ares.Tags_Android</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\values-de\" />
+  </ItemGroup>
+</Project>

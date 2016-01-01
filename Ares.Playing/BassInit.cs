@@ -120,13 +120,15 @@ namespace Ares.Playing
                     throw new BassInitException(StringResources.BassFxLoadFail);
                 }
 #endif
-                string exepath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+				string exepath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+				#if !ANDROID
                 String flacPlugin = IsLinux ? exepath + "/libbassflac.so" : "bassflac.dll";
                 bassPlugin1 = Un4seen.Bass.Bass.BASS_PluginLoad(flacPlugin);
                 if (bassPlugin1 == 0 && Un4seen.Bass.Bass.BASS_ErrorGetCode() != Un4seen.Bass.BASSError.BASS_ERROR_ALREADY)
                 {
                     warningHandler(StringResources.BassFlacLoadFail);
                 }
+				#endif
 				
                 String aacPlugin = IsLinux ? exepath + "/libbass_aac.so" : "bass_aac.dll";
 				if (!IsLinux || System.IO.File.Exists(aacPlugin))
@@ -138,12 +140,14 @@ namespace Ares.Playing
 	                }
                 }
 
+				#if !ANDROID
                 String opusPlugin = IsLinux ? exepath + "/libbassopus.so" : "bassopus.dll";
                 bassPlugin3 = Un4seen.Bass.Bass.BASS_PluginLoad(opusPlugin);
                 if (bassPlugin3 == 0 && Un4seen.Bass.Bass.BASS_ErrorGetCode() != Un4seen.Bass.BASSError.BASS_ERROR_ALREADY)
                 {
                     warningHandler(StringResources.BassOpusLoadFail);
                 }
+				#endif
 
             }
             catch (Exception ex)

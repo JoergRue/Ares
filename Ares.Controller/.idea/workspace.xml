@@ -10,9 +10,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c958e106-e185-40d9-b1ac-187735b3b8da" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Ares.Controllers/.classpath" afterPath="$PROJECT_DIR$/Ares.Controllers/.classpath" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Android/Android.iml" afterPath="$PROJECT_DIR$/Android/Android.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Ares.Controllers/Ares.Controllers.iml" afterPath="$PROJECT_DIR$/Ares.Controllers/Ares.Controllers.iml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../Ares.AndroidPlayer.sln" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../Ares.Data/Ares.Data_Android.csproj" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../Ares.ModelChecks/Ares.ModelInfo_Android.csproj" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../Ares.Players/Ares.Players_Android.csproj" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../Ares.Playing/Ares.Playing_Android.csproj" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../Ares.Settings/Ares.Settings_Android.csproj" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../Ares.Tags/Ares.Tags_Android.csproj" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Ares.Tags/DbUtils.cs" afterPath="$PROJECT_DIR$/../Ares.Tags/DbUtils.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Ares.Tags/Files.cs" afterPath="$PROJECT_DIR$/../Ares.Tags/Files.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Ares.Tags/Reading.cs" afterPath="$PROJECT_DIR$/../Ares.Tags/Reading.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Ares.Data/StringResources.Designer.cs" afterPath="$PROJECT_DIR$/../Ares.Data/StringResources.Designer.cs" />
     </list>
     <ignored path="Ares.Controller.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -100,6 +108,8 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
@@ -279,8 +289,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">

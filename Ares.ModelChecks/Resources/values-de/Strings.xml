@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+<string name="Ares">Ares</string>
+<string name="FileNotFound">Datei {0} nicht gefunden</string>
+<string name="ImportOverwrite">
+Einige importierte Dateien sind bereits vorhanden. Sollen die vorhandenen Dateien überschrieben werden?
+</string>
+<string name="InvalidImportFile">Die importierte Datei ist ungültig.</string>
+<string name="CannotPlayURLS">
+URLs in Playlists können nicht verwendet werden. Eintrag {0} ignoriert.
+</string>
+<string name="ErrorReadingPlaylist">Fehler beim Lesen von {0}: {1}</string>
+<string name="PlaylistNotFound">Playlist {0} wurde nicht gefunden.</string>
+<string name="ConditionElementNotFound">Element für die Bedingung wurde nicht gefunden.</string>
+<string name="AwaitedElementNotFound">
+Element, auf das gewartet werden soll, wurde nicht gefunden.
+</string>
+<string name="StartedElementNotFound">Zu startendes Element wurde nicht gefunden.</string>
+<string name="StoppedElementNotFound">Zu stoppendes Element wurde nicht gefunden.</string>
+<string name="ReferencedElementNotFound">Verlinktes Element wurde nicht gefunden.</string>
+<string name="TagNotFound">
+Hinzuzufügender / zu löschender Tag wurde nicht gefunden.
+</string>
+</resources>
