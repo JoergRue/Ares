@@ -24,7 +24,7 @@ The Setup can only be built / tested by using the build scripts (see below).
 
 ### Controller plugin for MeisterGeister
 
-The Controller plugin for the MeisterGeister program is built with Visual Studio. It is contained in the Ares.Controllers.sln. You'll also need to have [ILMerge](https://www.microsoft.com/en-us/download/details.aspx?id=17630) installed which is used to produce a single plugin assembly out of several modules.
+The Controller plugin for the MeisterGeister program is built with Visual Studio. It is contained in the Ares.Controllers.sln. You'll also need to have [ILMerge](https://www.microsoft.com/en-us/download/details.aspx?id=17630) installed which is used to produce a single plugin assembly out of several modules. Note that ILMerge still needs the .NET Framework 3.5.
 
 ### Controller for Android
 
@@ -42,7 +42,13 @@ The online tags database (reachable at http://www.rpgmusictags.org/) is also par
 
 ### Build\_All.cmd
 
-The Build\_All.cmd builds most of the applications in preparations for a release. For it to work, you need to have several build tools installed (see also above). Adapt the paths to those tools in the top part of the build script. It needs as parameter the version of the release (three version numbers) and will adapt file versions if necessary. If everything works, it will generate a Windows setup program, several zip files for Ares Portable (one per OS / architecture) and a zip of the sources in the directory build/output.
+The Build\_All.cmd builds most of the applications in preparations for a release. For it to work, you need to have several build tools installed (see also above). Adapt the paths to those tools in the top part of the build script. Additionally, you'll need some more build tools:
+
+- [Nant](http://sourceforge.net/projects/nant/). Note: Under Windows 10, you need to install the Windows SDK for Windows __8__ (in particular, the .NET Framework 4.5 SDK, strange as that sounds) for Nant to work correctly.
+- [launch4j](http://launch4j.sourceforge.net/). You may need to adapt the path to the tool in Ares.Controller/Ares.Controller/ant/build.xml.
+- [Git for Windows](https://desktop.github.com/)
+
+The script needs as parameter the version of the release (three version numbers) and will adapt file versions if necessary. If everything works, it will generate a Windows setup program, several zip files for Ares Portable (one per OS / architecture) and a zip of the sources in the directory build/output.
 
 ### Prepare\_Setup.cmd
 
