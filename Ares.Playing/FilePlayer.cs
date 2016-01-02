@@ -338,6 +338,7 @@ namespace Ares.Playing
                             }
                         }
                 }
+#pragma warning disable CS0618 // Type or member is obsolete
                 if (file.Effects != null && file.Effects.Reverb.Active)
                 {
                     float linearLevel = (float)Math.Pow(10d, file.Effects.Reverb.Level / 20);
@@ -354,20 +355,21 @@ namespace Ares.Playing
                         return 0;
                     }
                     if (info.LinkedChannels != null) foreach (int splitStream2 in info.LinkedChannels)
+                    {
+                        int reverbFx2 = splitStream2 != 0 ? Bass.BASS_ChannelSetFX(splitStream2, BASSFXType.BASS_FX_BFX_REVERB, 1) : 0;
+                        if (splitStream2 != 0 && reverbFx2 == 0)
                         {
-                            int reverbFx2 = splitStream2 != 0 ? Bass.BASS_ChannelSetFX(splitStream2, BASSFXType.BASS_FX_BFX_REVERB, 1) : 0;
-                            if (splitStream2 != 0 && reverbFx2 == 0)
-                            {
-                                ErrorHandling.BassErrorOccurred(file.Id, StringResources.SetEffectError);
-                                return 0;
-                            }
-                            if (reverbFx2 != 0 && !Bass.BASS_FXSetParameters(reverbFx2, fxReverb))
-                            {
-                                ErrorHandling.BassErrorOccurred(file.Id, StringResources.SetEffectError);
-                                return 0;
-                            }
+                            ErrorHandling.BassErrorOccurred(file.Id, StringResources.SetEffectError);
+                            return 0;
                         }
+                        if (reverbFx2 != 0 && !Bass.BASS_FXSetParameters(reverbFx2, fxReverb))
+                        {
+                            ErrorHandling.BassErrorOccurred(file.Id, StringResources.SetEffectError);
+                            return 0;
+                        }
+                    }
                 }
+#pragma warning restore CS0618 // Type or member is obsolete
                 if (loop)
                 {
                     Bass.BASS_ChannelFlags(channel, BASSFlag.BASS_SAMPLE_LOOP, BASSFlag.BASS_SAMPLE_LOOP);
