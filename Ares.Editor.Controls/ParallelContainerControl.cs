@@ -51,7 +51,7 @@ namespace Ares.Editor.Controls
             {
                 if (m_Container.GetElements().Count > 0 && elementsGrid.CurrentRow != null)
                 {
-                    return m_Container.GetElements()[elementsGrid.CurrentRow.Index];
+                    return m_Container.GetElements()[GetElementIndex(elementsGrid.CurrentRow)];
                 }
                 else
                 {
@@ -96,7 +96,7 @@ namespace Ares.Editor.Controls
 
         private void elementsGrid_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            FireElementDoubleClick(m_Container.GetElements()[e.RowIndex]);
+            FireElementDoubleClick(m_Container.GetElements()[GetElementIndex(elementsGrid.Rows[e.RowIndex])]);
         }
     
     }
