@@ -1,10 +1,11 @@
+@echo off
 set ant="D:\eclipse_mars\plugins\org.apache.ant_1.9.4.v201504302020\bin\ant"
-set nant="D:\nant-0.91-alpha1\bin\NAnt.exe"
+set nant="D:\nant-0.92\bin\NAnt.exe"
 set innosetup="C:\Program Files (x86)\Inno Setup 5\ISCC.exe"
-set git="C:\Program Files (x86)\Git\bin\git.exe"
+set git="C:\Program Files\Git\bin\git.exe"
 set zip="C:\Program Files\7-Zip\7z.exe"
-set signtool=$qC:\Program Files (x86)\Windows Kits\8.0\bin\x86\$q
-set JAVA_HOME=""C:\Program Files (x86)\Java\jdk1.6.0_20""
+set signtool=$qC:\Program Files (x86)\Windows Kits\8.1\bin\x86\$q
+set JAVA_HOME=""C:\Program Files (x86)\Java\jdk1.7.0_71""
 set ARES_BASE_PATH=D:\Projekte\Ares\
 
 call %ant% -DProductVersion=%1
