@@ -1,5 +1,13 @@
 Version 3.0.1
 ----------------------------------------------------------------------------------
+- Editor: Bugfix für Operationen (z.B. Löschen) auf umsortierten zufälligen oder
+  parallelen Listen
+- Editor: Bugfix: erlaube Umbenennen von Tags zu gleichem Namen mit anderer 
+  Groß- / Kleinschreibung
+- Player: Bugfix für seltenen Crash wenn zwei Dateien gleichzeitig gestartet werden
+
+Version 3.0.1
+----------------------------------------------------------------------------------
 - Player: Setup öffnet die Windows Firewall für den Webserver-Port
 - Player: Windows Sicherheitseinstellungen werden automatisch angepasst wenn der
   Port für den Websever geändert wird
