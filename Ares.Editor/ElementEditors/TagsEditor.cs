@@ -679,7 +679,7 @@ namespace Ares.Editor.ElementEditors
                 if (oldName.Equals(newName, StringComparison.Ordinal))
                     return;
                 var existing = m_Tags.FirstOrDefault((Ares.Tags.TagForLanguage item) => { return item.Name.Equals(newName, StringComparison.OrdinalIgnoreCase); });
-                if (existing != null && existing.Id != m_LastCategoryId)
+                if (existing != null && existing.Id != m_LastTagId)
                 {
                     // tag exists
                     MessageBox.Show(this, StringResources.TagExists, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Information);
