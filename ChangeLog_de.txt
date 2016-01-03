@@ -1,4 +1,4 @@
-Version 3.0.1
+Version 3.0.2
 ----------------------------------------------------------------------------------
 - Editor: Bugfix für Operationen (z.B. Löschen) auf umsortierten zufälligen oder
   parallelen Listen
@@ -11,7 +11,7 @@ Version 3.0.1
 ----------------------------------------------------------------------------------
 - Player: Setup öffnet die Windows Firewall für den Webserver-Port
 - Player: Windows Sicherheitseinstellungen werden automatisch angepasst wenn der
-  Port für den Websever geändert wird
+  Port für den Webserver geändert wird
 - Player: schnellerer Start des Webservers durch vorkompilierte Webseiten;
   merklich vor allem auf sehr langsamen Rechnern wie Raspberry Pi
 - Player: Bugfix: längere Timeouts im Webserver erlaubt sodass er auch mit sehr
