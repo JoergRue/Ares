@@ -3,6 +3,7 @@ Version 3.0.2
 - Editor: Bugfix for operations (like delete) on resorted random or parallel lists
 - Editor: Bugfix: allow renaming of tags to the same name with different case
 - Player: Bugfix for rare crash when two files are started at the same time
+- Player: Bugfix for rare crash when connection to Controller is lost
 
 Version 3.0.1
 ----------------------------------------------------------------------------------

@@ -5,6 +5,7 @@ Version 3.0.1
 - Editor: Bugfix: erlaube Umbenennen von Tags zu gleichem Namen mit anderer 
   Groß- / Kleinschreibung
 - Player: Bugfix für seltenen Crash wenn zwei Dateien gleichzeitig gestartet werden
+- Player: Bugfix für seltenen Crash wenn Verbindung zum Controller verloren geht
 
 Version 3.0.1
 ----------------------------------------------------------------------------------
