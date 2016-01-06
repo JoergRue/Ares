@@ -78,8 +78,6 @@ namespace Ares.Player_Android
 		private PlayingControl m_PlayingControl;
 		private Ares.Playing.BassInit m_BassInit;
 
-		private BasicSettings m_BasicSettings;
-
 		private IProject m_Project;
 		private int m_TagLanguageId;
 
@@ -94,10 +92,8 @@ namespace Ares.Player_Android
 		{
 			m_Handler = new Handler();
 			m_PlayingControl = new PlayingControl();
-			m_BasicSettings = new BasicSettings();
 			ReadSettings();
 			Settings.Settings.Instance.MessageFilterLevel = 0;
-			Settings.Settings.Instance.UseWebNetwork = false;
 			Messages.Instance.MessageReceived += new MessageReceivedHandler(MessageReceived);
 			if (Ares.Settings.Settings.Instance.RecentFiles.GetFiles().Count > 0)
 			{
@@ -205,8 +201,7 @@ namespace Ares.Player_Android
 
 		private void ReadSettings()
 		{
-			bool foundSettings = m_BasicSettings.ReadFromFile();
-			bool hasSettings = Ares.Settings.Settings.Instance.Initialize(Ares.Settings.Settings.PlayerID, foundSettings ? m_BasicSettings.GetSettingsDir() : null);
+			bool hasSettings = Ares.Settings.Settings.Instance.Initialize();
 			if (!hasSettings)
 			{
 				Toast.MakeText(this, Resource.String.no_settings, ToastLength.Long).Show();
@@ -218,12 +213,35 @@ namespace Ares.Player_Android
 			}
 		}
 
+		private void EnsureDirectoryExists(String directory)
+		{
+			if (!System.IO.Directory.Exists(directory))
+			{
+				try
+				{
+					System.IO.Directory.CreateDirectory(directory);
+				}
+				catch (Exception ex)
+				{
+					Toast.MakeText(this, String.Format(Resources.GetString(Resource.String.directory_error), directory, ex.Message), ToastLength.Long).Show();
+				}
+			}
+		}
+
+		private void EnsureDirectoriesExist(Ares.Settings.Settings settings)
+		{
+			EnsureDirectoryExists(settings.MusicDirectory);
+			EnsureDirectoryExists(settings.SoundDirectory);
+			EnsureDirectoryExists(settings.ProjectDirectory);
+		}
+
 		private void SettingsChanged(bool fundamentalChange)
 		{
 			Ares.Settings.Settings settings = Ares.Settings.Settings.Instance;
 			if (fundamentalChange)
 			{
 				m_PlayingControl.KeyReceived((int)Ares.Data.Keys.Escape);
+				EnsureDirectoriesExist(settings);
 				m_PlayingControl.UpdateDirectories();
 				LoadTagsDB();
 			}
@@ -270,7 +288,7 @@ namespace Ares.Player_Android
 			String path = fileName;
 			if (!System.IO.Path.IsPathRooted(path))
 			{
-				String oldPath = m_Project != null ? m_Project.FileName : System.Environment.CurrentDirectory;
+				String oldPath = m_Project != null ? m_Project.FileName : Settings.Settings.Instance.ProjectDirectory;
 				if (m_Project != null)
 				{
 					oldPath = System.IO.Directory.GetParent(oldPath).FullName;
@@ -309,6 +327,7 @@ namespace Ares.Player_Android
 			}
 			try
 			{
+				Messages.AddMessage(Ares.Players.MessageType.Debug, "Opening project " + filePath);
 				m_Project = Ares.Data.DataModule.ProjectManager.LoadProject(filePath);
 				m_CurrentProjectPath = filePath;
 				if (m_Project != null && m_Project.TagLanguageId != -1)
@@ -372,6 +391,7 @@ namespace Ares.Player_Android
 
 		private void ImportProject(String fileName, bool controllerRequest)
 		{
+			Messages.AddMessage(Ares.Players.MessageType.Debug, "Importing project " + fileName);
 			String defaultProjectName = fileName;
 			if (defaultProjectName.EndsWith(".apkg"))
 			{
@@ -505,7 +525,7 @@ namespace Ares.Player_Android
 
 		public string GetProjectsDirectory()
 		{
-			String oldPath = m_Project != null ? m_Project.FileName : System.Environment.CurrentDirectory;
+			String oldPath = m_Project != null ? m_Project.FileName : Settings.Settings.Instance.ProjectDirectory;
 			if (m_Project != null)
 			{
 				oldPath = System.IO.Directory.GetParent(oldPath).FullName;

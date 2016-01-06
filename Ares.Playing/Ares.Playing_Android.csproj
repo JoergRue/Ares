@@ -15,7 +15,7 @@
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
     <AndroidUseLatestPlatformSdk>False</AndroidUseLatestPlatformSdk>
     <AssemblyName>Ares.Playing_Android</AssemblyName>
-    <TargetFrameworkVersion>v4.0.3</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.1</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Android_Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -96,5 +96,11 @@
     <EmbeddedNativeLibrary Include="Android_Libs\x86\libbass.so" />
     <EmbeddedNativeLibrary Include="Android_Libs\x86\libbass_aac.so" />
     <EmbeddedNativeLibrary Include="Android_Libs\x86\libbass_fx.so" />
+    <EmbeddedNativeLibrary Include="Android_Libs\armeabi\libbassflac.so" />
+    <EmbeddedNativeLibrary Include="Android_Libs\armeabi\libbassopus.so" />
+    <EmbeddedNativeLibrary Include="Android_Libs\armeabi-v7a\libbassflac.so" />
+    <EmbeddedNativeLibrary Include="Android_Libs\armeabi-v7a\libbassopus.so" />
+    <EmbeddedNativeLibrary Include="Android_Libs\x86\libbassflac.so" />
+    <EmbeddedNativeLibrary Include="Android_Libs\x86\libbassopus.so" />
   </ItemGroup>
 </Project>

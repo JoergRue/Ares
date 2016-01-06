@@ -609,6 +609,9 @@ namespace Ares.Player_Android
 			// aapt resource value: 0x7f05006b
 			public const int connected_with = 2131034219;
 			
+			// aapt resource value: 0x7f05006d
+			public const int directory_error = 2131034221;
+			
 			// aapt resource value: 0x7f05005f
 			public const int hello = 2131034207;
 			

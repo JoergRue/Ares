@@ -14,4 +14,5 @@
 	<string name="Error">Error: </string>
 	<string name="connected_with">Connected with </string>
 	<string name="not_connected">Not connected</string>
+	<string name="directory_error">Could not create directory {0}: {1}</string>
 </resources>

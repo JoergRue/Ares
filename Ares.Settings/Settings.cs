@@ -92,6 +92,10 @@ namespace Ares.Settings
         public int LastTipOfTheDay { get; set; }
 
         public int OutputDeviceIndex { get; set; }
+
+		#if ANDROID
+		public String ProjectDirectory {get;set;}
+		#endif
     }
 
     public class Settings
@@ -165,6 +169,10 @@ namespace Ares.Settings
 
         public int OutputDeviceIndex { get { return Data.OutputDeviceIndex; } set { Data.OutputDeviceIndex = value; } }
 
+		#if ANDROID
+		public String ProjectDirectory { get { return Data.ProjectDirectory; } set { Data.ProjectDirectory = value; } }
+		#endif
+
         public static Settings Instance
         {
             get
@@ -197,6 +205,7 @@ namespace Ares.Settings
         public static readonly string PlayerID = "Player";
         public static readonly string EditorID = "Editor";
 
+		#if !ANDROID
         public bool InitializeWithoutSharedMemory(String directory)
         {
             bool success = String.IsNullOrEmpty(directory) ? false : ReadFromFile(directory);
@@ -206,19 +215,28 @@ namespace Ares.Settings
             }
             return success;
         }
+		#endif
 
+		#if !ANDROID
         public bool Initialize(String id, String directory)
+		#else
+		public bool Initialize()
+		#endif
         {
+			#if !ANDROID
             m_ID = id;
+			#endif
 #if MONO
 			bool success = false;
 #else
             bool success = ReadFromSharedMemory();
 #endif
+			#if !ANDROID
             if (!success && !String.IsNullOrEmpty(directory))
             {
                 success = ReadFromFile(directory);
             }
+			#endif
             if (!success)
             {
                 InitDefaults();
@@ -309,7 +327,8 @@ namespace Ares.Settings
         }
 #endif
 
-        public readonly String settingsFileName = "Ares.Editor.Settings.xml";
+#if !ANDROID
+		public readonly String settingsFileName = "Ares.Editor.Settings.xml";
 
         public void WriteToFile(String directory)
         {
@@ -366,22 +385,36 @@ namespace Ares.Settings
                 return false;
             }
         }
+#endif
 
         private void InitDefaults()
         {
             Version = 1;
             WindowLayout = null;
             RecentFiles = new RecentFiles();
+			#if !ANDROID
             MusicDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
             SoundDirectory = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyMusic), "Sounds");
+			#else
+			MusicDirectory = "/sdcard/Ares/Music";
+			SoundDirectory = "/sdcard/Ares/Sounds";
+			#endif
             GlobalVolume = MusicVolume = SoundVolume = 100;
             TcpPort = 11112;
             WebTcpPort = 11113;
             UseLegacyNetwork = true;
+			#if !ANDROID
             UseWebNetwork = true;
+			#else
+			UseWebNetwork = false;
+			#endif
             UdpPort = 8009;
             IPAddress = String.Empty;
+			#if !ANDROID
             CheckForUpdate = true;
+			#else
+			CheckForUpdate = false;
+			#endif
             SoundFileEditor = String.Empty;
             ExternalMusicPlayer = String.Empty;
             MessageFilterLevel = 2; // warning
@@ -407,8 +440,12 @@ namespace Ares.Settings
             ShowTipOfTheDay = true;
             LastTipOfTheDay = -1;
             OutputDeviceIndex = -1;
+			#if ANDROID
+			ProjectDirectory = "/sdcard/Ares/Projects";
+			#endif
         }
 
+		#if !ANDROID
         private void WriteSettings(XmlWriter writer)
         {
             writer.WriteStartElement("Settings");
@@ -682,6 +719,7 @@ namespace Ares.Settings
             }
             reader.ReadEndElement();
         }
+		#endif
 
         private bool CompareForFundamentalChange(SettingsData other)
         {
@@ -778,7 +816,9 @@ namespace Ares.Settings
         private bool m_ContinueSMThread;
 #endif
 
+		#if !ANDROID
         private String m_ID;
+		#endif
 
         private static Object syncObject = new Int16();
     }

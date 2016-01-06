@@ -15,14 +15,14 @@
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
     <AndroidUseLatestPlatformSdk>False</AndroidUseLatestPlatformSdk>
     <AssemblyName>Ares.Settings_Android</AssemblyName>
-    <TargetFrameworkVersion>v4.0.3</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.1</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Android_Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\bin\Android_Debug</OutputPath>
-    <DefineConstants>DEBUG;MONO</DefineConstants>
+    <DefineConstants>DEBUG;MONO;ANDROID</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
@@ -31,7 +31,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Android_Release|AnyCPU' ">
     <Optimize>true</Optimize>
     <OutputPath>..\bin\Android_Release</OutputPath>
-    <DefineConstants>MONO</DefineConstants>
+    <DefineConstants>MONO;ANDROID</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
@@ -46,7 +46,6 @@
   <ItemGroup>
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="BasicSettings.cs" />
     <Compile Include="RecentFiles.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="XmlHelpers.cs" />
