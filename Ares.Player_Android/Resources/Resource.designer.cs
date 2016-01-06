@@ -246,7 +246,10 @@ namespace Ares.Player_Android
 		{
 			
 			// aapt resource value: 0x7f020000
-			public const int monoandroidsplash = 2130837504;
+			public const int Ares = 2130837504;
+			
+			// aapt resource value: 0x7f020001
+			public const int monoandroidsplash = 2130837505;
 			
 			static Drawable()
 			{
@@ -624,8 +627,14 @@ namespace Ares.Player_Android
 			// aapt resource value: 0x7f050065
 			public const int load_error = 2131034213;
 			
+			// aapt resource value: 0x7f05006f
+			public const int loaded_project = 2131034223;
+			
 			// aapt resource value: 0x7f050061
 			public const int no_ip_address = 2131034209;
+			
+			// aapt resource value: 0x7f050070
+			public const int no_project = 2131034224;
 			
 			// aapt resource value: 0x7f050064
 			public const int no_settings = 2131034212;
@@ -635,6 +644,9 @@ namespace Ares.Player_Android
 			
 			// aapt resource value: 0x7f05006c
 			public const int not_connected = 2131034220;
+			
+			// aapt resource value: 0x7f05006e
+			public const int service_running = 2131034222;
 			
 			// aapt resource value: 0x7f050063
 			public const int tags_db_error = 2131034211;

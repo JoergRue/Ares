@@ -25,6 +25,7 @@ using Ares.Settings;
 using Ares.Data;
 using Android.Widget;
 using Android.OS;
+using Android.Content;
 
 namespace Ares.Player_Android
 {
@@ -36,6 +37,49 @@ namespace Ares.Player_Android
 		{
 		}
 
+		Notification.Builder mNotificationBuilder = null;
+		readonly int mNotificationId = 1;
+
+		private void UpdateNotification()
+		{
+			if (mNotificationBuilder == null)
+			{
+				mNotificationBuilder = new Notification.Builder(this);
+				mNotificationBuilder.SetSmallIcon(Resource.Drawable.Ares);
+				mNotificationBuilder.SetOngoing(true);
+				mNotificationBuilder.SetContentTitle(Resources.GetString(Resource.String.service_running));
+				TaskStackBuilder stackBuilder = TaskStackBuilder.Create(this);
+				stackBuilder.AddParentStack(Java.Lang.Class.FromType(typeof(MainActivity)));
+				Intent resultIntent = new Intent(this, typeof(MainActivity));
+				stackBuilder.AddNextIntent(resultIntent);
+				PendingIntent resultPendingIntent = stackBuilder.GetPendingIntent(0, PendingIntentFlags.UpdateCurrent);
+				mNotificationBuilder.SetContentIntent(resultPendingIntent);
+				mNotificationBuilder.SetPriority((int)NotificationPriority.Low);
+
+			}
+			String secondLine = m_Network.ClientConnected ? 
+				String.Format(Resources.GetString(Resource.String.connected_with), m_Network.ClientName) : 
+				Resources.GetString(Resource.String.not_connected);
+			mNotificationBuilder.SetContentText(secondLine);
+			var style = new Notification.BigTextStyle(mNotificationBuilder);
+			String project = m_Project != null ? 
+				String.Format(Resources.GetString(Resource.String.loaded_project), m_Project.Title) :
+				Resources.GetString(Resource.String.no_project);
+			style.BigText(secondLine + "\n" + project);
+			mNotificationBuilder.SetStyle(style);
+			var nMgr = (NotificationManager)GetSystemService(NotificationService);
+			nMgr.Notify(mNotificationId, mNotificationBuilder.Build());
+		}
+
+		private void RemoveNotification()
+		{
+			if (mNotificationBuilder != null)
+			{
+				var nMgr = (NotificationManager)GetSystemService(NotificationService);
+				nMgr.Cancel(mNotificationId);
+			}
+		}
+
 		public override void OnCreate ()
 		{
 			base.OnCreate ();
@@ -43,7 +87,7 @@ namespace Ares.Player_Android
 			{
 				m_BassInit = new BassInit(-1, (w) => { Toast.MakeText(this, w, ToastLength.Long).Show(); });
 				Initialize();
-				Toast.MakeText(this, "Player Service running!", ToastLength.Long).Show();
+				UpdateNotification();
 			}
 			catch (BassInitException ex) 
 			{
@@ -59,7 +103,7 @@ namespace Ares.Player_Android
 				m_BassInit.Dispose();
 			}
 
-			Toast.MakeText(this, "Player Service stopped!", ToastLength.Long).Show();
+			RemoveNotification();
 
 			base.OnDestroy();
 		}
@@ -355,6 +399,7 @@ namespace Ares.Player_Android
 			}
 			Ares.Playing.PlayingModule.ProjectPlayer.SetProject(m_Project);
 			DoModelChecks();
+			UpdateNotification();
 			if (m_Network != null)
 			{
 				m_Network.InformClientOfProject(m_Project);
@@ -512,6 +557,7 @@ namespace Ares.Player_Android
 					Settings.Settings.Instance.TagMusicFadeTime, Settings.Settings.Instance.TagMusicFadeOnlyOnChange,
 					Settings.Settings.Instance.PlayMusicOnAllSpeakers,
 					Settings.Settings.Instance.ButtonMusicFadeMode, Settings.Settings.Instance.ButtonMusicFadeTime);
+				UpdateNotification();
 			}
 			else
 			{
@@ -519,6 +565,7 @@ namespace Ares.Player_Android
 				if (listenAgainAfterDisconnect)
 				{
 					m_Network.StartUdpBroadcast();
+					UpdateNotification();
 				}
 			}
 		}

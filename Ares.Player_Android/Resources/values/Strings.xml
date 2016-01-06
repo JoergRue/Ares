@@ -12,7 +12,10 @@
 	<string name="Info">Info: </string>
 	<string name="Warning">Warning: </string>
 	<string name="Error">Error: </string>
-	<string name="connected_with">Connected with </string>
-	<string name="not_connected">Not connected</string>
+	<string name="connected_with">Connected with {0}</string>
+	<string name="not_connected">No controller connected</string>
 	<string name="directory_error">Could not create directory {0}: {1}</string>
+	<string name="service_running">Ares Player is running</string>
+	<string name="loaded_project">Project: {0}</string>
+	<string name="no_project">No project loaded</string>
 </resources>

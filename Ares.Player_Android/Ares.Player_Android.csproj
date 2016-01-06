@@ -71,6 +71,7 @@
     <AndroidResource Include="Resources\mipmap-xhdpi\Icon.png" />
     <AndroidResource Include="Resources\mipmap-xxhdpi\Icon.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\Icon.png" />
+    <AndroidResource Include="Resources\drawable\Ares.ico" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable\" />
