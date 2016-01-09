@@ -40,7 +40,7 @@ namespace Ares.Player_Android
 		Notification.Builder mNotificationBuilder = null;
 		readonly int mNotificationId = 1;
 
-		private void UpdateNotification()
+		private void InitNotification()
 		{
 			if (mNotificationBuilder == null)
 			{
@@ -55,8 +55,12 @@ namespace Ares.Player_Android
 				PendingIntent resultPendingIntent = stackBuilder.GetPendingIntent(0, PendingIntentFlags.UpdateCurrent);
 				mNotificationBuilder.SetContentIntent(resultPendingIntent);
 				mNotificationBuilder.SetPriority((int)NotificationPriority.Low);
-
 			}
+		}
+
+		private void UpdateNotification(bool firstNotification)
+		{
+			InitNotification();
 			String secondLine = m_Network.ClientConnected ? 
 				String.Format(Resources.GetString(Resource.String.connected_with), m_Network.ClientName) : 
 				Resources.GetString(Resource.String.not_connected);
@@ -67,6 +71,35 @@ namespace Ares.Player_Android
 				Resources.GetString(Resource.String.no_project);
 			style.BigText(secondLine + "\n" + project);
 			mNotificationBuilder.SetStyle(style);
+			mNotificationBuilder.SetProgress(0, 0, false);
+			if (firstNotification)
+			{
+				StartForeground(mNotificationId, mNotificationBuilder.Build());
+			}
+			else
+			{
+				var nMgr = (NotificationManager)GetSystemService(NotificationService);
+				var notification = mNotificationBuilder.Build();
+				notification.Flags |= NotificationFlags.ForegroundService;
+				nMgr.Notify(mNotificationId, notification);
+			}
+		}
+
+		private void UpdateProgressNotification(int percent, String text)
+		{
+			InitNotification();
+			mNotificationBuilder.SetProgress(100, percent, false);
+			if (!String.IsNullOrEmpty(text))
+			{
+				var style = new Notification.BigTextStyle(mNotificationBuilder);
+				style.BigText(Resources.GetString(Resource.String.importing_project) + "\n" + text);
+				mNotificationBuilder.SetStyle(style);
+			}
+			else
+			{
+				mNotificationBuilder.SetContentText(Resources.GetString(Resource.String.importing_project));
+				mNotificationBuilder.SetStyle(null);
+			}
 			var nMgr = (NotificationManager)GetSystemService(NotificationService);
 			nMgr.Notify(mNotificationId, mNotificationBuilder.Build());
 		}
@@ -75,8 +108,9 @@ namespace Ares.Player_Android
 		{
 			if (mNotificationBuilder != null)
 			{
-				var nMgr = (NotificationManager)GetSystemService(NotificationService);
-				nMgr.Cancel(mNotificationId);
+				StopForeground(true);
+				//var nMgr = (NotificationManager)GetSystemService(NotificationService);
+				//nMgr.Cancel(mNotificationId);
 			}
 		}
 
@@ -87,7 +121,7 @@ namespace Ares.Player_Android
 			{
 				m_BassInit = new BassInit(-1, (w) => { Toast.MakeText(this, w, ToastLength.Long).Show(); });
 				Initialize();
-				UpdateNotification();
+				UpdateNotification(true);
 			}
 			catch (BassInitException ex) 
 			{
@@ -137,7 +171,7 @@ namespace Ares.Player_Android
 			m_Handler = new Handler();
 			m_PlayingControl = new PlayingControl();
 			ReadSettings();
-			Settings.Settings.Instance.MessageFilterLevel = 0;
+			Settings.Settings.Instance.MessageFilterLevel = 1;
 			Messages.Instance.MessageReceived += new MessageReceivedHandler(MessageReceived);
 			if (Ares.Settings.Settings.Instance.RecentFiles.GetFiles().Count > 0)
 			{
@@ -386,11 +420,8 @@ namespace Ares.Player_Android
 			}
 			catch (Exception e)
 			{
-				if (!onControllerRequest)
-				{
-					ShowToast(String.Format(Resources.GetString(Resource.String.load_error, e.Message)));
-				}
-				else
+				ShowToast(String.Format(Resources.GetString(Resource.String.load_error, e.Message)));
+				if (onControllerRequest)
 				{
 					m_Network.ErrorOccurred(-1, String.Format(Resources.GetString(Resource.String.load_error, e.Message)));
 				}
@@ -399,7 +430,7 @@ namespace Ares.Player_Android
 			}
 			Ares.Playing.PlayingModule.ProjectPlayer.SetProject(m_Project);
 			DoModelChecks();
-			UpdateNotification();
+			UpdateNotification(false);
 			if (m_Network != null)
 			{
 				m_Network.InformClientOfProject(m_Project);
@@ -410,7 +441,7 @@ namespace Ares.Player_Android
 			}
 		}
 
-		class NoProgressMonitor : Ares.ModelInfo.IProgressMonitor
+		class NotificationProgressMonitor : Ares.ModelInfo.IProgressMonitor
 		{
 			public bool Canceled
 			{
@@ -427,11 +458,19 @@ namespace Ares.Player_Android
 
 			public void SetProgress(int percent, string text)
 			{
+				m_PlayerService.UpdateProgressNotification(percent, text);
 			}
 
 			public void SetIndeterminate(string text)
 			{
 			}
+
+			public NotificationProgressMonitor(PlayerService service)
+			{
+				m_PlayerService= service;
+			}
+
+			private PlayerService m_PlayerService;
 		}
 
 		private void ImportProject(String fileName, bool controllerRequest)
@@ -445,17 +484,14 @@ namespace Ares.Player_Android
 			defaultProjectName = defaultProjectName + ".ares";
 			String projectFileName = defaultProjectName;
 
-			Ares.ModelInfo.Importer.Import(new NoProgressMonitor(), fileName, projectFileName, true, null, (error, cancelled) =>
+			Ares.ModelInfo.Importer.Import(new NotificationProgressMonitor(this), fileName, projectFileName, true, null, (error, cancelled) =>
 				{
 					if (error != null)
 					{
+						ShowToast(String.Format(Resources.GetString(Resource.String.import_error), error.Message));
 						if (controllerRequest)
 						{
 							m_Network.ErrorOccurred(-1, String.Format(Resources.GetString(Resource.String.load_error, error.Message)));
-						}
-						else
-						{
-							ShowToast(String.Format(Resources.GetString(Resource.String.import_error), error.Message));
 						}
 					}
 					else if (!cancelled)
@@ -557,7 +593,7 @@ namespace Ares.Player_Android
 					Settings.Settings.Instance.TagMusicFadeTime, Settings.Settings.Instance.TagMusicFadeOnlyOnChange,
 					Settings.Settings.Instance.PlayMusicOnAllSpeakers,
 					Settings.Settings.Instance.ButtonMusicFadeMode, Settings.Settings.Instance.ButtonMusicFadeTime);
-				UpdateNotification();
+				UpdateNotification(false);
 			}
 			else
 			{
@@ -565,7 +601,7 @@ namespace Ares.Player_Android
 				if (listenAgainAfterDisconnect)
 				{
 					m_Network.StartUdpBroadcast();
-					UpdateNotification();
+					UpdateNotification(false);
 				}
 			}
 		}

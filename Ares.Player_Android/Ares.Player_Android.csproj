@@ -19,6 +19,7 @@
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <XamarinInsightsApiKey>37524bc2b17275457bf49fbb984cb391113fe8f3</XamarinInsightsApiKey>
     <TargetFrameworkVersion>v4.1</TargetFrameworkVersion>
+    <AndroidSupportedAbis>armeabi;armeabi-v7a;x86</AndroidSupportedAbis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Android_Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,10 +32,8 @@
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <ConsolePause>false</ConsolePause>
     <AndroidLinkMode>None</AndroidLinkMode>
-    <AndroidSupportedAbis>armeabi;armeabi-v7a;x86</AndroidSupportedAbis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Android_Release|AnyCPU' ">
-    <DebugType>full</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>..\bin\Android_Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
@@ -42,6 +41,11 @@
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <ConsolePause>false</ConsolePause>
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
+    <AndroidKeyStore>True</AndroidKeyStore>
+    <AndroidSigningKeyStore>D:\Projekte\Ares\Ares.Player_Android\tempbuild.keystore</AndroidSigningKeyStore>
+    <AndroidSigningStorePass>ares_player</AndroidSigningStorePass>
+    <AndroidSigningKeyAlias>ares</AndroidSigningKeyAlias>
+    <AndroidSigningKeyPass>ares_player</AndroidSigningKeyPass>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />

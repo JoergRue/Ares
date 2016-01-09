@@ -18,4 +18,5 @@
 	<string name="service_running">Ares Player is running</string>
 	<string name="loaded_project">Project: {0}</string>
 	<string name="no_project">No project loaded</string>
+	<string name="importing_project">Importing project ...</string>
 </resources>

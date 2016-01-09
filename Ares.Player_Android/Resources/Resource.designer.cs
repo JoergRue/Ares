@@ -621,6 +621,9 @@ namespace Ares.Player_Android
 			// aapt resource value: 0x7f050066
 			public const int import_error = 2131034214;
 			
+			// aapt resource value: 0x7f050071
+			public const int importing_project = 2131034225;
+			
 			// aapt resource value: 0x7f050000
 			public const int library_name = 2131034112;
 			
