@@ -310,6 +310,12 @@
     <Compile Include="ErrorWindow.Designer.cs">
       <DependentUpon>ErrorWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="AudioSourceSearchWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AudioSourceSearchWindow.Designer.cs">
+      <DependentUpon>AudioSourceSearchWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="FileExplorer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -327,6 +333,7 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="PluginManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProjectExplorer.cs">
       <SubType>Form</SubType>
@@ -523,6 +530,14 @@
       <DependentUpon>ErrorWindow.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="AudioSourceSearchWindow.de.resx">
+      <DependentUpon>AudioSourceSearchWindow.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AudioSourceSearchWindow.resx">
+      <DependentUpon>AudioSourceSearchWindow.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="FileExplorer.de.resx">
       <DependentUpon>FileExplorer.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -588,6 +603,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Ares.AudioSource\Ares.AudioSource.csproj">
+      <Project>{505bf261-dd7f-4201-b0e3-471e464b39af}</Project>
+      <Name>Ares.AudioSource</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Ares.CommonGUI\Ares.CommonGUI.csproj">
       <Project>{ED16F93E-23F3-4075-B72D-F64E49D08E2D}</Project>
       <Name>Ares.CommonGUI</Name>
@@ -784,6 +803,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\WebRadio_Ref.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AudioSourceSearchIcon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -22,14 +22,14 @@ namespace Ares.AudioSource.Freesound {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class StringResources {
+    internal class ImageResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal StringResources() {
+        internal ImageResources() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Ares.AudioSource.Freesound {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Ares.AudioSource.Freesound.StringResources", typeof(StringResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Ares.AudioSource.Freesound.ImageResources", typeof(ImageResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,20 +61,12 @@ namespace Ares.AudioSource.Freesound {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Suche wird ausgeführt ähnelt.
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Icon ähnlich wie (Symbol).
         /// </summary>
-        internal static string ExecutingSearch {
+        internal static System.Drawing.Icon FreesoundAudioSourceIcon {
             get {
-                return ResourceManager.GetString("ExecutingSearch", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Freesound ähnelt.
-        /// </summary>
-        internal static string FreesoundAudioSourceName {
-            get {
-                return ResourceManager.GetString("FreesoundAudioSourceName", resourceCulture);
+                object obj = ResourceManager.GetObject("FreesoundAudioSourceIcon", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
     }

@@ -1,23 +1,70 @@
-﻿using RestSharp;
+﻿using Ares.AudioSource;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Drawing;
+using Ares.ModelInfo;
 
 namespace Ares.AudioSource.Freesound
 {
-    public class FreesoundAudioSource
+    public class FreesoundAudioSource : IAudioSource
     {
-        
+        public const string AUDIO_SOURCE_ID = "freesound";
 
+        public Bitmap Icon
+        {
+            get
+            {
+                return ImageResources.FreesoundAudioSourceIcon.ToBitmap();
+            }
+        }
+
+        public string Id
+        {
+            get
+            {
+                return AUDIO_SOURCE_ID;
+            }
+        }
+
+        public string Name
+        {
+            get
+            {
+                return StringResources.FreesoundAudioSourceName;
+            }
+        }
+                
+        public bool IsAudioTypeSupported(AudioType type)
+        {
+            return type == AudioType.Sound;
+        }
+
+        public ICollection<AudioSourceSearchResult> Search(string query, AudioType type, Ares.ModelInfo.IProgressMonitor monitor, CancellationToken token)
+        {
+            // TODO: perform search using the API
+            List<AudioSourceSearchResult> results = new List<AudioSourceSearchResult>();
+
+            results.Add(new AudioSourceSearchResult(this, "test", "Test Sound", AudioType.Sound));
+
+            return results;
+        }
+
+        public void DownloadSearchResult(AudioSourceSearchResult searchResult, IProgressMonitor monitor, CancellationToken token)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class FreesoundApi
     {
         public static String BaseUrl { get { return Settings.Default.FreesoundApiBase; } }
         public static String TextSearchPath { get { return Settings.Default.TextSearchPath; } }
+        public static String ApiKey { get { return Freesound.ApiKey.Key; } } 
     }
 
     public class FreesoundApiSearch
@@ -37,14 +84,15 @@ namespace Ares.AudioSource.Freesound
 
             //var proxy = System.Net.WebRequest.GetSystemWebProxy(); // Unused!
             var request = new RestSharp.RestRequest(FreesoundApi.TextSearchPath, RestSharp.Method.GET);
+
+            request.AddParameter("page", 1);
+            request.AddParameter("pageSize", 10);
+            request.AddParameter("fields", "id,url,name,tags,images,description,license,duration,username,previews,num_downloads,avg_rating,num_ratings");
+
             request.AddParameter("query", searchQuery);
-            request.AddParameter("token",   )
-            var client = new RestSharp.RestClient();
+            request.AddParameter("token", FreesoundApi.ApiKey);
 
-            client.BaseUrl = FreesoundApi.BaseUrl;
-            client.Timeout = 20 * 1000;
-
-            var response = client.Execute<SearchResponse>(request);
+            /*FreesoundApiSearchResult response = client.Execute<FreesoundApiSearchResult>(request);
 
             m_Token.ThrowIfCancellationRequested();
                 if (response.ErrorException != null)
@@ -66,6 +114,18 @@ namespace Ares.AudioSource.Freesound
                 logBuilder.Append(response.Data.Log);
             }
             return logBuilder.ToString();
+            */
+        }
+
+    }
+
+    public class FreesoundApiSearchResult: AudioSourceSearchResult
+    {
+        private long m_FreesoundId;
+
+        FreesoundApiSearchResult(FreesoundAudioSource source, long freesoundId, string title): base(source, freesoundId.ToString(),title,AudioType.Sound)
+        {
+            this.m_FreesoundId = freesoundId;
         }
     }
 }

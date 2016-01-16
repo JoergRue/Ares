@@ -1550,7 +1550,7 @@ namespace Ares.Editor
         }
 
         [Serializable]
-        private class ClipboardElements
+        public class ClipboardElements
         {
             public String SerializedForm { get; set; }
             public int SourceId { get; set; }

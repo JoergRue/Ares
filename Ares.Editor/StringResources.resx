@@ -503,4 +503,10 @@ You should adapt some settings first.</value>
   <data name="NewWebRadio" xml:space="preserve">
     <value>New Web Radio</value>
   </data>
+  <data name="AudioSourceSearchTitle" xml:space="preserve">
+    <value>Online Audio Sources</value>
+  </data>
+  <data name="DownloadingAudio" xml:space="preserve">
+    <value>Downloading Audio from online sources ...</value>
+  </data>
 </root>
