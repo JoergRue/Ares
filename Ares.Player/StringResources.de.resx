@@ -209,6 +209,9 @@ Sie sollten zuerst ein paar Einstellungen vornehmen.</value>
   <data name="ReloadProject" xml:space="preserve">
     <value>Projektdatei wurde geändert. Abspielen stoppen und Datei neu laden?</value>
   </data>
+  <data name="ShieldIconToolTip" xml:space="preserve">
+    <value>Braucht Admin-Rechte um Windows-Sicherheitseinstellungen zu ändern</value>
+  </data>
   <data name="ShowInfo" xml:space="preserve">
     <value>Über Ares ...</value>
   </data>

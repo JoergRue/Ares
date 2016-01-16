@@ -556,8 +556,11 @@ namespace Ares.Players
             }
             catch (System.IO.IOException)
             {
-                client = null;
-                ClientConnected = false;
+                lock (syncObject)
+                {
+                    client = null;
+                    ClientConnected = false;
+                }
                 if (listenAgain)
                 {
                     ListenForClient();
@@ -734,7 +737,7 @@ namespace Ares.Players
             Byte[] data = new Byte[4];
             lock (syncObject)
             {
-                bool success = client != null && ReadFromStream(client.GetStream(), data, 4, 500);
+                bool success = client != null && client.Connected && ReadFromStream(client.GetStream(), data, 4, 500);
                 if (success)
                 {
                     if (BitConverter.IsLittleEndian)
@@ -760,7 +763,7 @@ namespace Ares.Players
                     int command = -1;
                     lock (syncObject)
                     {
-                        if (client != null && client.GetStream().DataAvailable)
+                        if (client != null && client.Connected && client.GetStream().DataAvailable)
                         {
                             client.GetStream().ReadTimeout = 100;
                             try
@@ -783,7 +786,7 @@ namespace Ares.Players
                         bool success = false;
                         lock (syncObject)
                         {
-                            success = client != null && ReadFromStream(client.GetStream(), keyCode, 2, 500);
+                            success = client != null && client.Connected && ReadFromStream(client.GetStream(), keyCode, 2, 500);
                         }
                         if (success)
                         {
@@ -803,7 +806,7 @@ namespace Ares.Players
                         bool success = false;
                         lock (syncObject)
                         {
-                            success = client != null && ReadFromStream(client.GetStream(), data, 2, 500);
+                            success = client != null && client.Connected && ReadFromStream(client.GetStream(), data, 2, 500);
                         }
                         if (success)
                         {
@@ -838,13 +841,13 @@ namespace Ares.Players
                         bool success = false;
                         lock (syncObject)
                         {
-                            success = client != null && ReadFromStream(client.GetStream(), data, 2, 500);
+                            success = client != null && client.Connected && ReadFromStream(client.GetStream(), data, 2, 500);
                             if (success)
                             {
                                 int length = data[0] * (1 << 8);
                                 length += data[1];
                                 Byte[] bytes = new Byte[length];
-                                success = client != null && ReadFromStream(client.GetStream(), bytes, length, 500);
+                                success = client != null && client.Connected && ReadFromStream(client.GetStream(), bytes, length, 500);
                                 if (success)
                                 {
                                     projectName = System.Text.Encoding.UTF8.GetString(bytes);
@@ -978,6 +981,25 @@ namespace Ares.Players
             }
         }
 
+        private void WriteToClient(byte[] package, int offset, int length)
+        {
+            lock (syncObject)
+            {
+                try
+                {
+                    if (client != null && client.Connected)
+                    {
+                        client.GetStream().Write(package, offset, length);
+                    }
+                }
+                catch (InvalidOperationException)
+                {
+                    Messages.AddMessage(MessageType.Error, StringResources.ClientSendError);
+                    DoDisconnect(true);
+                }
+            }
+        }
+
         private void InformModeChange(Ares.Data.IMode mode)
         {
             if (ClientConnected)
@@ -989,10 +1011,7 @@ namespace Ares.Players
                 package[1] = (byte)(bytes.Length / (1 << 8));
                 package[2] = (byte)(bytes.Length % (1 << 8));
                 Array.Copy(bytes, 0, package, 3, bytes.Length);
-                lock (syncObject)
-                {
-                    client.GetStream().Write(package, 0, package.Length);
-                }
+                WriteToClient(package, 0, package.Length);
             }
         }
 
@@ -1005,10 +1024,7 @@ namespace Ares.Players
                 bytes[1] = (byte)(element.Id / (1 << 8));
                 bytes[2] = (byte)(element.Id % (1 << 8));
                 bytes[3] = (byte)(isActive ? 1 : 0);
-                lock (syncObject)
-                {
-                    client.GetStream().Write(bytes, 0, bytes.Length);
-                }
+                WriteToClient(bytes, 0, bytes.Length);
             }
         }
 
@@ -1026,10 +1042,7 @@ namespace Ares.Players
                 package[3 + bytes1.Length] = (byte)(bytes2.Length / (1 << 8));
                 package[3 + bytes1.Length + 1] = (byte)(bytes2.Length % (1 << 8));
                 Array.Copy(bytes2, 0, package, 3 + bytes1.Length + 2, bytes2.Length);
-                lock (syncObject)
-                {
-                    client.GetStream().Write(package, 0, package.Length);
-                }
+                WriteToClient(package, 0, package.Length);
             }
         }
 
@@ -1047,10 +1060,7 @@ namespace Ares.Players
             elementPackage[3 + ia.Length] = (byte)(sa.Length / (1 << 8));
             elementPackage[3 + ia.Length + 1] = (byte)(sa.Length % (1 << 8));
             Array.Copy(sa, 0, elementPackage, 3 + ia.Length + 2, sa.Length);
-            lock (syncObject)
-            {
-                client.GetStream().Write(elementPackage, 0, elementPackage.Length);
-            }
+            WriteToClient(elementPackage, 0, elementPackage.Length);
         }
 
         private void InformMusicList(Int32 musicListId)
@@ -1062,10 +1072,7 @@ namespace Ares.Players
                 package[0] = 8;
                 package[1] = 0;
                 package[2] = 0;
-                lock (syncObject)
-                {
-                    client.GetStream().Write(package, 0, package.Length);
-                }
+                WriteToClient(package, 0, package.Length);
                 Ares.Data.IElement element = musicListId != -1 ? Ares.Data.DataModule.ElementRepository.GetElement(musicListId) : null;
                 Ares.Data.IMusicList musicList = (element != null && element is Ares.Data.IMusicList) ? element as Ares.Data.IMusicList : null;
                 // one packet each for each music title
@@ -1078,10 +1085,7 @@ namespace Ares.Players
                 }
                 // end packet
                 package[1] = 2;
-                lock (syncObject)
-                {
-                    client.GetStream().Write(package, 0, package.Length);
-                }
+                WriteToClient(package, 0, package.Length);
             }
         }
 
@@ -1100,10 +1104,7 @@ namespace Ares.Players
                     package[0] = 11;
                     package[1] = 0;
                     package[2] = 0;
-                    lock (syncObject)
-                    {
-                        client.GetStream().Write(package, 0, package.Length);
-                    }
+                    WriteToClient(package, 0, package.Length);
                     foreach (var category in categories)
                     {
                         if (hiddenCategories.Contains(category.Id))
@@ -1122,10 +1123,7 @@ namespace Ares.Players
                     }
                     // end packet
                     package[1] = 3;
-                    lock (syncObject)
-                    {
-                        client.GetStream().Write(package, 0, package.Length);
-                    }
+                    WriteToClient(package, 0, package.Length);
                 }
                 catch (Ares.Tags.TagsDbException ex)
                 {
@@ -1143,10 +1141,7 @@ namespace Ares.Players
                 package[0] = 12;
                 package[1] = 0;
                 package[2] = 0;
-                lock (syncObject)
-                {
-                    client.GetStream().Write(package, 0, package.Length);
-                }
+                WriteToClient(package, 0, package.Length);
                 foreach (Int32 tagId in tags)
                 {
                     byte[] ia = BitConverter.GetBytes(tagId);
@@ -1157,17 +1152,11 @@ namespace Ares.Players
                     elementPackage[1] = 1;
                     elementPackage[2] = 0;
                     Array.Copy(ia, 0, elementPackage, 3, ia.Length);
-                    lock (syncObject)
-                    {
-                        client.GetStream().Write(elementPackage, 0, elementPackage.Length);
-                    }
+                    WriteToClient(elementPackage, 0, elementPackage.Length);
                 }
                 // end packet
                 package[1] = 2;
-                lock (syncObject)
-                {
-                    client.GetStream().Write(package, 0, package.Length);
-                }
+                WriteToClient(package, 0, package.Length);
             }
         }
 
@@ -1183,10 +1172,7 @@ namespace Ares.Players
                 package[1] = (byte) (active ? 1 : 0);
                 package[2] = 0;
                 Array.Copy(ia, 0, package, 3, ia.Length);
-                lock (syncObject)
-                {
-                    client.GetStream().Write(package, 0, package.Length);
-                }
+                WriteToClient(package, 0, package.Length);
             }
         }
 
@@ -1198,10 +1184,7 @@ namespace Ares.Players
                 package[0] = 14;
                 package[1] = (byte)(categoryCombination);
                 package[2] = 0;
-                lock (syncObject)
-                {
-                    client.GetStream().Write(package, 0, package.Length);
-                }
+                WriteToClient(package, 0, package.Length);
             }
         }
 
@@ -1217,10 +1200,7 @@ namespace Ares.Players
                 package[1] = (byte)(fadeOnlyOnChange ? 1 : 0);
                 package[2] = 0;
                 Array.Copy(ia, 0, package, 3, ia.Length);
-                lock (syncObject)
-                {
-                    client.GetStream().Write(package, 0, package.Length);
-                }
+                WriteToClient(package, 0, package.Length);
             }
         }
 
@@ -1234,10 +1214,7 @@ namespace Ares.Players
                 package[1] = (byte)(bytes.Length / (1 << 8));
                 package[2] = (byte)(bytes.Length % (1 << 8));
                 Array.Copy(bytes, 0, package, 3, bytes.Length);
-                lock (syncObject)
-                {
-                    client.GetStream().Write(package, 0, package.Length);
-                }
+                WriteToClient(package, 0, package.Length);
             }
         }
 
@@ -1249,10 +1226,7 @@ namespace Ares.Players
                 bytes[0] = 4;
                 bytes[1] = (byte)target;
                 bytes[2] = (byte)value;
-                lock (syncObject)
-                {
-                    client.GetStream().Write(bytes, 0, bytes.Length);
-                }
+                WriteToClient(bytes, 0, bytes.Length);
             }
         }
 
@@ -1264,10 +1238,7 @@ namespace Ares.Players
                 bytes[0] = 5;
                 bytes[1] = 0;
                 bytes[2] = 0;
-                lock (syncObject)
-                {
-                    client.GetStream().Write(bytes, 0, bytes.Length);
-                }                
+                WriteToClient(bytes, 0, bytes.Length);
             }
         }
 
@@ -1283,10 +1254,7 @@ namespace Ares.Players
                 package[1] = (byte)(bytes.Length / (1 << 8));
                 package[2] = (byte)(bytes.Length % (1 << 8));
                 Array.Copy(bytes, 0, package, 3, bytes.Length);
-                lock (syncObject)
-                {
-                    client.GetStream().Write(package, 0, package.Length);
-                }
+                WriteToClient(package, 0, package.Length);
             }
         }
 
@@ -1298,10 +1266,7 @@ namespace Ares.Players
                 package[0] = 7;
                 package[1] = 0;
                 package[2] = 0;
-                lock (syncObject)
-                {
-                    client.GetStream().Write(package, 0, package.Length);
-                }
+                WriteToClient(package, 0, package.Length);
             }
         }
 
@@ -1313,10 +1278,7 @@ namespace Ares.Players
                 package[0] = 10;
                 package[1] = (byte)(repeat ? 1 : 0);
                 package[2] = 0;
-                lock (syncObject)
-                {
-                    client.GetStream().Write(package, 0, package.Length);
-                }
+                WriteToClient(package, 0, package.Length);
             }
         }
 
@@ -1328,10 +1290,7 @@ namespace Ares.Players
                 package[0] = 18;
                 package[1] = (byte)(onAllSpeakers ? 1 : 0);
                 package[2] = 0;
-                lock (syncObject)
-                {
-                    client.GetStream().Write(package, 0, package.Length);
-                }
+                WriteToClient(package, 0, package.Length);
             }
         }
 
@@ -1347,10 +1306,7 @@ namespace Ares.Players
                 package[1] = (byte)(fadingOption);
                 package[2] = 0;
                 Array.Copy(ia, 0, package, 3, ia.Length);
-                lock (syncObject)
-                {
-                    client.GetStream().Write(package, 0, package.Length);
-                }
+                WriteToClient(package, 0, package.Length);
             }
         }
 
@@ -1376,10 +1332,7 @@ namespace Ares.Players
                 package[0] = 15;
                 package[1] = 0;
                 package[2] = 0;
-                lock (syncObject)
-                {
-                    client.GetStream().Write(package, 0, package.Length);
-                }
+                WriteToClient(package, 0, package.Length);
                 foreach (String file in files)
                 {
                     // category packet
@@ -1387,10 +1340,7 @@ namespace Ares.Players
                 }
                 // end packet
                 package[1] = 2;
-                lock (syncObject)
-                {
-                    client.GetStream().Write(package, 0, package.Length);
-                }
+                WriteToClient(package, 0, package.Length);
             }
         }
 
@@ -1411,10 +1361,7 @@ namespace Ares.Players
                     package[0] = 16;
                     package[1] = 0;
                     package[2] = 1;
-                    lock (syncObject)
-                    {
-                        client.GetStream().Write(package, 0, package.Length);
-                    }
+                    WriteToClient(package, 0, package.Length);
                     return;
                 }
                 String filePath = project.FileName;
@@ -1431,10 +1378,7 @@ namespace Ares.Players
                 startPackage[3 + 2 + na.Length] = (byte)(pa.Length / (1 << 8));
                 startPackage[3 + 2 + na.Length + 1] = (byte)(pa.Length % (1 << 8));
                 Array.Copy(pa, 0, startPackage, 3 + 2 + na.Length + 2, pa.Length);
-                lock (syncObject)
-                {
-                    client.GetStream().Write(startPackage, 0, startPackage.Length);
-                }
+                WriteToClient(startPackage, 0, startPackage.Length);
                 foreach (Ares.Data.IMode mode in project.GetModes())
                 {
                     // mode package
@@ -1447,10 +1391,7 @@ namespace Ares.Players
                     modePackage[3 + 1] = (byte)(sa.Length % (1 << 8));
                     Array.Copy(sa, 0, modePackage, 3 + 2, sa.Length);
                     Array.Copy(MapKeyToKeyCode(mode.KeyCode), 0, modePackage, 3 + 2 + sa.Length, 2);
-                    lock (syncObject)
-                    {
-                        client.GetStream().Write(modePackage, 0, modePackage.Length);
-                    }
+                    WriteToClient(modePackage, 0, modePackage.Length);
                     foreach (Ares.Data.IModeElement modeElement in mode.GetElements())
                     {
                         if (!modeElement.IsVisibleInPlayer)
@@ -1471,10 +1412,7 @@ namespace Ares.Players
                         Array.Copy(sa2, 0, elementPackage, 3 + 2, sa2.Length);
                         Array.Copy(ia, 0, elementPackage, 3 + 2 + sa2.Length, ia.Length);
                         Array.Copy(keyCode, 0, elementPackage, 3 + 2 + sa2.Length + ia.Length, 2);
-                        lock (syncObject)
-                        {
-                            client.GetStream().Write(elementPackage, 0, elementPackage.Length);
-                        }
+                        WriteToClient(elementPackage, 0, elementPackage.Length);
                     }
                 }
                 // end package
@@ -1482,10 +1420,7 @@ namespace Ares.Players
                 endPackage[0] = 16;
                 endPackage[1] = 3;
                 endPackage[2] = 1;
-                lock (syncObject)
-                {
-                    client.GetStream().Write(endPackage, 0, endPackage.Length);
-                }
+                WriteToClient(endPackage, 0, endPackage.Length);
             }
         }
 
@@ -1499,13 +1434,7 @@ namespace Ares.Players
                 package[2] = (byte)(Networks.PLAYER_VERSION % (1 << 8));
                 try
                 {
-                    lock (syncObject)
-                    {
-                        if (client != null && client.Client != null)
-                        {
-                            client.GetStream().Write(package, 0, package.Length);
-                        }
-                    }
+                    WriteToClient(package, 0, package.Length);
                 }
                 catch (Exception)
                 {

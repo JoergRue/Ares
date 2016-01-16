@@ -54,7 +54,7 @@ namespace Ares.Editor.ElementEditorControls
             {
                 int chance = Convert.ToInt32(elementsGrid.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
                 Actions.Actions.Instance.AddNew(new Actions.ChoiceElementChangeAction(
-                    m_Container.GetElements()[e.RowIndex], chance), m_Project);
+                    m_Container.GetElements()[GetElementIndex(elementsGrid.Rows[e.RowIndex])], chance), m_Project);
             }
             listen = oldListen;
         }
@@ -92,7 +92,7 @@ namespace Ares.Editor.ElementEditorControls
         {
             if (e.ColumnIndex != 1)
             {
-                FireElementDoubleClick(m_Container.GetElements()[e.RowIndex]);
+                FireElementDoubleClick(m_Container.GetElements()[GetElementIndex(elementsGrid.Rows[e.RowIndex])]);
             }
             else
             {

@@ -25,6 +25,8 @@ using Ares.Players;
 using Ares.Data;
 using Ares.Settings;
 using Ares.ModelInfo;
+using System.IO;
+using System.Diagnostics;
 
 namespace Ares.CmdLinePlayer
 {
@@ -176,6 +178,64 @@ namespace Ares.CmdLinePlayer
             return 0;
         }
 
+        private static bool IsLinux
+        {
+            get
+            {
+                int p = (int)Environment.OSVersion.Platform;
+                return (p == 4) || (p == 6) || (p == 128);
+            }
+        }
+
+        private void ChangeSecuritySettings(String args)
+        {
+            String tempFile = Path.GetTempFileName();
+            try
+            {
+                args += " " + tempFile;
+                ProcessStartInfo psi = new ProcessStartInfo("Ares.WinSecurity.exe", args);
+                psi.Verb = "runas";
+                psi.CreateNoWindow = true;
+                psi.WindowStyle = ProcessWindowStyle.Hidden;
+                psi.UseShellExecute = true;
+
+                var res = Process.Start(psi);
+                res.WaitForExit();
+                if (res.ExitCode != 0)
+                {
+                    using (StreamReader reader = new StreamReader(tempFile))
+                    {
+                        string errorMsg = reader.ReadLine();
+                        if (!String.IsNullOrEmpty(errorMsg))
+                        {
+                            Messages.AddMessage(MessageType.Error, String.Format(StringResources.WinSecurityError, errorMsg));
+                            while (!String.IsNullOrEmpty(errorMsg))
+                            {
+                                errorMsg = reader.ReadLine();
+                            }
+                        }
+                        else
+                        {
+                            Messages.AddMessage(MessageType.Error, String.Format(StringResources.WinSecurityError, "Unknown"));
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Messages.AddMessage(MessageType.Error, String.Format(StringResources.WinSecurityError, ex.Message));
+            }
+            finally
+            {
+                try
+                {
+                    File.Delete(tempFile);
+                }
+                catch (IOException)
+                { }
+            }
+        }
+
         private int Initialize(PlayerOptions options)
         {
             m_BasicSettings = new BasicSettings();
@@ -200,6 +260,11 @@ namespace Ares.CmdLinePlayer
             }
             if (options.WebTcpPort != -1)
             {
+                if (!IsLinux && options.WebTcpPort != Settings.Settings.Instance.WebTcpPort)
+                {
+                    String args = String.Format("ChangePort {0} {1}", Settings.Settings.Instance.WebTcpPort, options.WebTcpPort);
+                    ChangeSecuritySettings(args);
+                }
                 Settings.Settings.Instance.WebTcpPort = options.WebTcpPort;
                 Settings.Settings.Instance.UseWebNetwork = true;
             }

@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ClientConnected" xml:space="preserve">
     <value>Mit Client {0} verbunden</value>
@@ -128,6 +128,9 @@
   </data>
   <data name="ClientListenError" xml:space="preserve">
     <value>Fehler beim Warten auf Clients: </value>
+  </data>
+  <data name="ClientSendError" xml:space="preserve">
+    <value>Verbindung mit Client verloren.</value>
   </data>
   <data name="CommandReceived" xml:space="preserve">
     <value>Befehl '{0}' empfangen</value>

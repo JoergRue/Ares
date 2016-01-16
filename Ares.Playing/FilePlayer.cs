@@ -208,7 +208,10 @@ namespace Ares.Playing
                     }
                     else
                     {
-                        m_NotLoops[channel] = sync;
+                        lock (m_Mutex)
+                        {
+                            m_NotLoops[channel] = sync;
+                        }
                     }
                 }
                 if (!SetStartVolume(file, fadeInTime, channel, info))
@@ -335,6 +338,7 @@ namespace Ares.Playing
                             }
                         }
                 }
+#pragma warning disable CS0618 // Type or member is obsolete
                 if (file.Effects != null && file.Effects.Reverb.Active)
                 {
                     float linearLevel = (float)Math.Pow(10d, file.Effects.Reverb.Level / 20);
@@ -351,28 +355,32 @@ namespace Ares.Playing
                         return 0;
                     }
                     if (info.LinkedChannels != null) foreach (int splitStream2 in info.LinkedChannels)
+                    {
+                        int reverbFx2 = splitStream2 != 0 ? Bass.BASS_ChannelSetFX(splitStream2, BASSFXType.BASS_FX_BFX_REVERB, 1) : 0;
+                        if (splitStream2 != 0 && reverbFx2 == 0)
                         {
-                            int reverbFx2 = splitStream2 != 0 ? Bass.BASS_ChannelSetFX(splitStream2, BASSFXType.BASS_FX_BFX_REVERB, 1) : 0;
-                            if (splitStream2 != 0 && reverbFx2 == 0)
-                            {
-                                ErrorHandling.BassErrorOccurred(file.Id, StringResources.SetEffectError);
-                                return 0;
-                            }
-                            if (reverbFx2 != 0 && !Bass.BASS_FXSetParameters(reverbFx2, fxReverb))
-                            {
-                                ErrorHandling.BassErrorOccurred(file.Id, StringResources.SetEffectError);
-                                return 0;
-                            }
+                            ErrorHandling.BassErrorOccurred(file.Id, StringResources.SetEffectError);
+                            return 0;
                         }
+                        if (reverbFx2 != 0 && !Bass.BASS_FXSetParameters(reverbFx2, fxReverb))
+                        {
+                            ErrorHandling.BassErrorOccurred(file.Id, StringResources.SetEffectError);
+                            return 0;
+                        }
+                    }
                 }
+#pragma warning restore CS0618 // Type or member is obsolete
                 if (loop)
                 {
                     Bass.BASS_ChannelFlags(channel, BASSFlag.BASS_SAMPLE_LOOP, BASSFlag.BASS_SAMPLE_LOOP);
                 }
-                m_Loops[file.Id] = file;
-                if (file.Effects != null && file.Effects.CueOut.Active)
+                lock (m_Mutex)
                 {
-                    m_CueOutRepeats[channel] = loop;
+                    m_Loops[file.Id] = file;
+                    if (file.Effects != null && file.Effects.CueOut.Active)
+                    {
+                        m_CueOutRepeats[channel] = loop;
+                    }
                 }
 
                 if (file.Effects.CueIn.Active)
@@ -652,25 +660,28 @@ namespace Ares.Playing
 
         public void SetRepeatFile(int handle, bool repeat)
         {
-            if (!m_NotLoops.ContainsKey(handle))
-                return; // file is looped anyway
+            lock (m_Mutex)
+            {
+                if (!m_NotLoops.ContainsKey(handle))
+                    return; // file is looped anyway
 
-            if (m_CueOutRepeats.ContainsKey(handle))
-            {
-                m_CueOutRepeats[handle] = repeat;
-                return;
-            }
+                if (m_CueOutRepeats.ContainsKey(handle))
+                {
+                    m_CueOutRepeats[handle] = repeat;
+                    return;
+                }
 
-            if (repeat)
-            {
-                Bass.BASS_ChannelFlags(handle, BASSFlag.BASS_SAMPLE_LOOP, BASSFlag.BASS_SAMPLE_LOOP);
-                Bass.BASS_ChannelRemoveSync(handle, m_NotLoops[handle]);
-            }
-            else
-            {
-                Bass.BASS_ChannelFlags(handle, BASSFlag.BASS_DEFAULT, BASSFlag.BASS_SAMPLE_LOOP);
-                int sync = Bass.BASS_ChannelSetSync(handle, BASSSync.BASS_SYNC_END, 0, m_EndSync, IntPtr.Zero);
-                m_NotLoops[handle] = sync;
+                if (repeat)
+                {
+                    Bass.BASS_ChannelFlags(handle, BASSFlag.BASS_SAMPLE_LOOP, BASSFlag.BASS_SAMPLE_LOOP);
+                    Bass.BASS_ChannelRemoveSync(handle, m_NotLoops[handle]);
+                }
+                else
+                {
+                    Bass.BASS_ChannelFlags(handle, BASSFlag.BASS_DEFAULT, BASSFlag.BASS_SAMPLE_LOOP);
+                    int sync = Bass.BASS_ChannelSetSync(handle, BASSSync.BASS_SYNC_END, 0, m_EndSync, IntPtr.Zero);
+                    m_NotLoops[handle] = sync;
+                }
             }
         }
 
@@ -750,18 +761,26 @@ namespace Ares.Playing
 
         private void EndSync(int handle, int channel, int data, IntPtr user)
         {
-            if (m_NotLoops.ContainsKey(user.ToInt32()))
-                m_NotLoops.Remove(user.ToInt32());
-            if (m_Loops.ContainsKey(user.ToInt32()))
-                m_Loops.Remove(user.ToInt32());
-            if (m_CueOutRepeats.ContainsKey(channel))
-                m_CueOutRepeats.Remove(channel);
+            lock (m_Mutex)
+            {
+                if (m_NotLoops.ContainsKey(user.ToInt32()))
+                    m_NotLoops.Remove(user.ToInt32());
+                if (m_Loops.ContainsKey(user.ToInt32()))
+                    m_Loops.Remove(user.ToInt32());
+                if (m_CueOutRepeats.ContainsKey(channel))
+                    m_CueOutRepeats.Remove(channel);
+            }
             FileFinished(channel, true);
         }
 
         private void CueOutSync(int handle, int channel, int data, IntPtr user)
         {
-            if (m_CueOutRepeats.ContainsKey(channel) && m_CueOutRepeats[channel])
+            bool cueOutRepeat = false;
+            lock (m_Mutex)
+            {
+                cueOutRepeat = m_CueOutRepeats.ContainsKey(channel) && m_CueOutRepeats[channel];
+            }
+            if (cueOutRepeat)
             {
                 LoopSync(handle, channel, data, user);
             }

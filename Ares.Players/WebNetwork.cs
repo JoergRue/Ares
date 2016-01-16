@@ -1638,6 +1638,11 @@ namespace Ares.Players.Web
 
         public override RazorPage GetPage(string absolutePath)
         {
+            var basePage = base.GetPage(absolutePath);
+            if (basePage == null)
+                // during init / precompilation: must not yet return localized pages, else non-localized pages won't get cached
+                return basePage;
+
             var extension = GetExtension(absolutePath);
             if (extension != null)
             {
@@ -1647,7 +1652,7 @@ namespace Ares.Players.Web
                     return localizedPage;
             }
 
-            return base.GetPage(absolutePath);
+            return basePage;
         }
 
         private static String GetExtension(String path)

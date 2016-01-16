@@ -58,9 +58,9 @@
             <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="true">
               <Param1 />
               <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>..\Images\Ares.png</LocalFileName>
+              <LocalFileName>..\Ares.png</LocalFileName>
               <ZipFileName>Installer{GenericSkinFile}\{93e9f113-c09d-4617-82ae-357be0ca0c99}-Ares.png</ZipFileName>
-              <DestinationFilename>%Skin%\[DEFAULT]\Media\Ares.png</DestinationFilename>
+              <DestinationFilename>%Skin%\[DEFAULT]\Ares.png</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
               <Param1 />
@@ -214,7 +214,7 @@ Click Next to continue or Cancel to exit Setup.</Value>
     <Version>
       <Major>3</Major>
       <Minor>0</Minor>
-      <Build>0</Build>
+      <Build>1</Build>
       <Revision>0</Revision>
     </Version>
     <ExtensionDescription>Plugin for the Ares (Aureal RPG Experience System) program.
@@ -225,11 +225,11 @@ Makes sense only in conjunction with the Ares Controller.</ExtensionDescription>
     <OnlineLocation />
     <ReleaseDate>2015-11-03T16:32:29</ReleaseDate>
     <Tags />
-    <Location>D:\Projekte\Ares\trunk\build\Output\Ares.mpe1</Location>
+    <Location>D:\Projekte\Ares\build\Output\Ares.mpe1</Location>
     <Params>
       <Items>
         <SectionParam Name="Icon">
-          <Value>..\Images\Ares.png</Value>
+          <Value>..\Ares.png</Value>
           <ValueType>File</ValueType>
           <Description>The icon file of the package (jpg,png,bmp)</Description>
         </SectionParam>
@@ -298,9 +298,9 @@ Makes sense only in conjunction with the Ares Controller.</ExtensionDescription>
       <FileItem InstallType="GenericSkinFile" SystemFile="true" Modified="true">
         <Param1 />
         <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>..\Images\Ares.png</LocalFileName>
+        <LocalFileName>..\Ares.png</LocalFileName>
         <ZipFileName>Installer{GenericSkinFile}\{93e9f113-c09d-4617-82ae-357be0ca0c99}-Ares.png</ZipFileName>
-        <DestinationFilename>%Skin%\[DEFAULT]\Media\Ares.png</DestinationFilename>
+        <DestinationFilename>%Skin%\[DEFAULT]\Ares.png</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
         <Param1 />

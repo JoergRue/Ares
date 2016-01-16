@@ -88,7 +88,7 @@ namespace Ares.Editor.Controls
                 int fixedDelay = Convert.ToInt32(elementsGrid.Rows[e.RowIndex].Cells[1].Value);
                 int randomDelay = Convert.ToInt32(elementsGrid.Rows[e.RowIndex].Cells[2].Value);
                 Actions.Actions.Instance.AddNew(new Actions.SequentialElementChangeAction(
-                    m_Container.GetElements()[e.RowIndex], fixedDelay, randomDelay), m_Project);
+                    m_Container.GetElements()[GetElementIndex(elementsGrid.Rows[e.RowIndex])], fixedDelay, randomDelay), m_Project);
             }
             listen = oldListen;
         }
@@ -98,7 +98,7 @@ namespace Ares.Editor.Controls
             List<int> indices = new List<int>();
             for (int i = 0; i < elementsGrid.SelectedRows.Count; ++i)
             {
-                indices.Add(elementsGrid.SelectedRows[i].Index);
+                indices.Add(GetElementIndex(elementsGrid.SelectedRows[i]));
             }
             Actions.Actions.Instance.AddNew(new Actions.ReorderElementsAction<ISequentialElement>(m_Container, indices, -1), m_Project);
             // note: the action modified the list
@@ -114,7 +114,7 @@ namespace Ares.Editor.Controls
             List<int> indices = new List<int>();
             for (int i = 0; i < elementsGrid.SelectedRows.Count; ++i)
             {
-                indices.Add(elementsGrid.SelectedRows[i].Index);
+                indices.Add(GetElementIndex(elementsGrid.SelectedRows[i]));
             }
             Actions.Actions.Instance.AddNew(new Actions.ReorderElementsAction<ISequentialElement>(m_Container, indices, 1), m_Project);
             // note: the action modified the list
@@ -138,7 +138,7 @@ namespace Ares.Editor.Controls
 
         private void elementsGrid_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            FireElementDoubleClick(m_Container.GetElements()[e.RowIndex]);
+            FireElementDoubleClick(m_Container.GetElements()[GetElementIndex(elementsGrid.Rows[e.RowIndex])]);
         }
     }
 }

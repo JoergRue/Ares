@@ -58,6 +58,9 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Deployment" />
+    <Reference Include="ServiceStack.Text">
+      <HintPath>..\Libraries\ServiceStack.Text.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MessagesForm.cs">

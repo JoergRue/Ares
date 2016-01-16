@@ -11,6 +11,11 @@
 		   <exclude name="Ares.MGPlugin/Properties/AssemblyInfo.cs"/>
 		 </fileset>
 	   </replaceregexp>
+	   <replaceregexp match="efine MyAppVersion &quot;.\..\..&quot;" replace="efine MyAppVersion &quot;${ProductVersion}&quot;">
+	     <fileset dir="Setup">
+		   <include name="*.iss"/>
+		 </fileset>
+	   </replaceregexp>
 	   <replaceregexp match="AssemblyFileVersion\(&quot;.\..\..\..&quot;\)" replace="AssemblyFileVersion(&quot;${ProductVersion}.0&quot;)">
 	     <fileset dir=".">
 		   <include name="**/AssemblyInfo.cs"/>

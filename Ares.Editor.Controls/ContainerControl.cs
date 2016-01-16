@@ -142,6 +142,15 @@ namespace Ares.Editor.Controls
             }
         }
 
+        protected int GetElementIndex(DataGridViewRow row)
+        {
+            if (row.Tag != null)
+                return (int)row.Tag;
+            else
+                // during row creation
+                return row.Index;
+        }
+
         private void FillGrid()
         {
             bool oldListen = listen;
@@ -164,6 +173,7 @@ namespace Ares.Editor.Controls
 
         protected void SetElementAttributes(DataGridView grid, Ares.Data.IContainerElement element, int row)
         {
+            grid.Rows[row].Tag = row;
             if (element.InnerElement is Ares.Data.IFileElement)
             {
                 String path = (element.InnerElement as Ares.Data.IFileElement).FilePath;
@@ -203,9 +213,10 @@ namespace Ares.Editor.Controls
             IList<IContainerElement> containerElements = ElementsContainer.GetGeneralElements();
             for (int i = 0; i < e.RowCount; ++i)
             {
-                elements.Add(containerElements[e.RowIndex + i]);
+                elements.Add(containerElements[GetElementIndex(Grid.Rows[e.RowIndex]) + i]);
             }
-            Actions.Actions.Instance.AddNew(new Actions.RemoveContainerElementsAction(ElementsContainer, elements, e.RowIndex), m_Project);
+            Actions.Actions.Instance.AddNew(new Actions.RemoveContainerElementsAction(ElementsContainer, elements, 
+                GetElementIndex(Grid.Rows[e.RowIndex])), m_Project);
             listen = true;
         }
 
@@ -263,7 +274,7 @@ namespace Ares.Editor.Controls
             {
                 Grid.EndEdit();
                 List<int> selectedRows = new List<int>();
-                foreach (DataGridViewRow row in Grid.SelectedRows) selectedRows.Add(row.Index);
+                foreach (DataGridViewRow row in Grid.SelectedRows) selectedRows.Add(GetElementIndex(row));
                 GridDataExchangeData data = new GridDataExchangeData() { SelectedRows = selectedRows, SerializedData = SerializeSelectedRows() };
                 dragStoppedHere = false;
                 dragStartedHere = true;
@@ -324,7 +335,7 @@ namespace Ares.Editor.Controls
             {
                 if (e.Effect == DragDropEffects.Move)
                 {
-                    MoveRows(((GridDataExchangeData)e.Data.GetData(typeof(GridDataExchangeData))).SelectedRows, targetRow);
+                    MoveRows(((GridDataExchangeData)e.Data.GetData(typeof(GridDataExchangeData))).SelectedRows, GetElementIndex(Grid.Rows[targetRow]));
                     dragStoppedHere = true;
                     return true;
                 }
@@ -350,7 +361,7 @@ namespace Ares.Editor.Controls
             List<int> selectedIndices = new List<int>();
             foreach (DataGridViewRow row in Grid.SelectedRows)
             {
-                selectedIndices.Add(row.Index);
+                selectedIndices.Add(GetElementIndex(row));
             }
             selectedIndices.Sort();
             foreach (int rowIndex in selectedIndices)
@@ -376,12 +387,13 @@ namespace Ares.Editor.Controls
             foreach (DataGridViewRow row in Grid.SelectedRows)
             {
                 selectedRows.Add(row);
-                if (row.Index < minIndex)
-                    minIndex = row.Index;
+                int elementIndex = GetElementIndex(row);
+                if (elementIndex < minIndex)
+                    minIndex = elementIndex;
             }
-            foreach (DataGridViewRow row in selectedRows.OrderBy(row => row.Index))
+            foreach (DataGridViewRow row in selectedRows.OrderBy(row => GetElementIndex(row)))
             {
-                elements.Add(containerElements[row.Index]);
+                elements.Add(containerElements[GetElementIndex(row)]);
                 rows.Add(row);
             }
             Actions.Actions.Instance.AddNew(new Actions.RemoveContainerElementsAction(ElementsContainer, elements, minIndex), m_Project);
@@ -437,7 +449,7 @@ namespace Ares.Editor.Controls
         {
             if (Grid.SelectedRows.Count > 0)
             {
-                FireElementDoubleClick(ElementsContainer.GetGeneralElements()[Grid.SelectedRows[0].Index]);
+                FireElementDoubleClick(ElementsContainer.GetGeneralElements()[GetElementIndex(Grid.SelectedRows[0])]);
             }
         }
 
@@ -657,7 +669,7 @@ namespace Ares.Editor.Controls
             List<int> selectedIndices = new List<int>();
             foreach (DataGridViewRow row in Grid.SelectedRows)
             {
-                elements.Add(containerElements[row.Index]);
+                elements.Add(containerElements[GetElementIndex(row)]);
             }
             Ares.ModelInfo.FileLists fileLists = new ModelInfo.FileLists(ModelInfo.DuplicateRemoval.None);
             return fileLists.GetAllFiles(elements);

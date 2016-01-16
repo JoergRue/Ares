@@ -32,6 +32,7 @@ namespace Ares.Player
             if (!IsLinux)
             {
                 shieldBox.Image = System.Drawing.SystemIcons.Shield.ToBitmap();
+                new ToolTip().SetToolTip(shieldBox, StringResources.ShieldIconToolTip);
             }
             else
             {
@@ -102,63 +103,85 @@ namespace Ares.Player
             }
         }
 
+        private void ChangeSecuritySettings(String args)
+        {
+            String tempFile = Path.GetTempFileName();
+            try
+            {
+                args += " " + tempFile;
+                ProcessStartInfo psi = new ProcessStartInfo("Ares.WinSecurity.exe", args);
+                psi.Verb = "runas";
+                psi.CreateNoWindow = true;
+                psi.WindowStyle = ProcessWindowStyle.Hidden;
+                psi.UseShellExecute = true;
+
+                var res = Process.Start(psi);
+                res.WaitForExit();
+                if (res.ExitCode != 0)
+                {
+                    using (StreamReader reader = new StreamReader(tempFile))
+                    {
+                        string errorMsg = reader.ReadLine();
+                        if (!String.IsNullOrEmpty(errorMsg))
+                        {
+                            MessageBox.Show(this, String.Format(StringResources.WinSecurityError, errorMsg), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            while (!String.IsNullOrEmpty(errorMsg))
+                            {
+                                errorMsg = reader.ReadLine();
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show(this, String.Format(StringResources.WinSecurityError, "Unknown"), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, String.Format(StringResources.WinSecurityError, ex.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                try
+                {
+                    File.Delete(tempFile);
+                }
+                catch (IOException)
+                { }
+            }
+        }
+
         private void SaveData()
         {
             Ares.Settings.Settings settings = Ares.Settings.Settings.Instance;
-            settings.UseWebNetwork = enableWebBox.Checked;
             settings.UseLegacyNetwork = enableCustomIpBox.Checked;
             if (settings.WebTcpPort != (int)webPortUpDown.Value)
             {
                 int newPort = (int)webPortUpDown.Value;
-                if (!IsLinux)
+                if (!IsLinux && enableWebBox.Checked && settings.UseWebNetwork)
                 {
-                    String tempFile = Path.GetTempFileName();
-                    try
-                    {
-                        String args = String.Format("ChangePort {0} {1} {2}", settings.WebTcpPort, newPort, tempFile);
-                        ProcessStartInfo psi = new ProcessStartInfo("Ares.WinSecurity.exe", args);
-                        psi.Verb = "runas";
-                        psi.CreateNoWindow = true;
-                        psi.WindowStyle = ProcessWindowStyle.Hidden;
-                        psi.UseShellExecute = true;
-
-                        var res = Process.Start(psi);
-                        res.WaitForExit();
-                        if (res.ExitCode != 0)
-                        {
-                            using (StreamReader reader = new StreamReader(tempFile))
-                            { 
-                                string errorMsg = reader.ReadLine();
-                                if (!String.IsNullOrEmpty(errorMsg))
-                                {
-                                    MessageBox.Show(this, String.Format(StringResources.WinSecurityError, errorMsg), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                    while (!String.IsNullOrEmpty(errorMsg))
-                                    {
-                                        errorMsg = reader.ReadLine();
-                                    }
-                                }
-                                else
-                                {
-                                    MessageBox.Show(this, String.Format(StringResources.WinSecurityError, "Unknown"), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                }
-                            }
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(this, String.Format(StringResources.WinSecurityError, ex.Message), StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    finally
-                    {
-                        try
-                        {
-                            File.Delete(tempFile);
-                        }
-                        catch (IOException)
-                        { }
-                    }
+                    String args = String.Format("ChangePort {0} {1}", settings.WebTcpPort, newPort);
+                    ChangeSecuritySettings(args);
                 }
                 settings.WebTcpPort = newPort;
+            }
+            if (settings.UseWebNetwork != enableWebBox.Checked)
+            {
+                if (!IsLinux)
+                {
+                    if (enableWebBox.Checked)
+                    {
+                        String args = String.Format("AddPort {0}", settings.WebTcpPort);
+                        ChangeSecuritySettings(args);
+                    }
+                    else
+                    {
+                        String args = "RemovePort";
+                        ChangeSecuritySettings(args);
+                    }
+                }
+                settings.UseWebNetwork = enableWebBox.Checked;
             }
             settings.TcpPort = (int)customIpPortUpDown.Value;
             settings.IPAddress = ipAddressBox.SelectedItem.ToString();

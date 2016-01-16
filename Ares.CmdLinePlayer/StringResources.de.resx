@@ -211,6 +211,10 @@
   <data name="Warning" xml:space="preserve">
     <value>Warnung: </value>
   </data>
+  <data name="WinSecurityError" xml:space="preserve">
+    <value>Windows-Sicherheitseinstellungen konnten nicht angepasst werden. Grund:
+{0}</value>
+  </data>
   <data name="WriteSettingsError" xml:space="preserve">
     <value>Einstellungen konnten nicht gespeichert werden. Grund:
 {0}</value>
