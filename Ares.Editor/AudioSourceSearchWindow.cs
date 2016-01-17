@@ -120,7 +120,7 @@ namespace Ares.Editor.AudioSourceSearch
             }
             
             // Collect download actions for each dragged element to be executed after a drag completes
-            List<Func<IProgressMonitor,double,AudioDownloadResult>> downloadFunctions = new List<Func<IProgressMonitor, double, AudioDownloadResult>>();
+            List<Func<IProgressMonitor,CancellationToken,double,AudioDownloadResult>> downloadFunctions = new List<Func<IProgressMonitor, CancellationToken, double, AudioDownloadResult>>();
             double totalDownloadSize = 0;
 
             foreach (AudioSourceSearchResultItem searchResultItem in selected) {
@@ -199,7 +199,7 @@ namespace Ares.Editor.AudioSourceSearch
                     monitor.SetIndeterminate(StringResources.DownloadingAudio);
                     List<AudioDownloadResult> downloadResults = new List<AudioDownloadResult>();
 
-                    foreach (Func<IProgressMonitor, double, AudioDownloadResult> downloadFunction in downloadFunctions)
+                    foreach (Func<IProgressMonitor, CancellationToken, double, AudioDownloadResult> downloadFunction in downloadFunctions)
                     {
                         downloadResults.Add(downloadFunction(monitor, token, totalDownloadSize));
                         token.ThrowIfCancellationRequested();

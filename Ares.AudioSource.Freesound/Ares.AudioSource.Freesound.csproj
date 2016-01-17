@@ -45,8 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ApiKey.cs.example" />
     <Compile Include="ApiKey.cs" />
+    <None Include="ApiKey.example.cs" />
     <Compile Include="FreesoundAudioSource.cs" />
     <Compile Include="ImageResources.Designer.cs">
       <AutoGen>True</AutoGen>

@@ -1,8 +1,0 @@
-﻿namespace Ares.AudioSource.Freesound
-{
-    class ApiKey
-    {
-        // Enter your Freesound API Key / Token here
-        public const string Key = "YOUR_API_KEY_HERE";
-    }
-}
