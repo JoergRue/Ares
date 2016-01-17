@@ -39,22 +39,22 @@ namespace Ares.AudioSource.Freesound
             }
         }
                 
-        public bool IsAudioTypeSupported(AudioType type)
+        public bool IsAudioTypeSupported(AudioSearchResultType type)
         {
-            return type == AudioType.Sound;
+            return type == AudioSearchResultType.SoundFile;
         }
 
-        public ICollection<AudioSourceSearchResult> Search(string query, AudioType type, Ares.ModelInfo.IProgressMonitor monitor, CancellationToken token)
+        public ICollection<SearchResult> Search(string query, AudioSearchResultType type, Ares.ModelInfo.IProgressMonitor monitor, CancellationToken token)
         {
             // TODO: perform search using the API
-            List<AudioSourceSearchResult> results = new List<AudioSourceSearchResult>();
+            List<SearchResult> results = new List<SearchResult>();
 
-            results.Add(new AudioSourceSearchResult(this, "test", "Test Sound", AudioType.Sound));
+            results.Add(new SearchResult(this, "test", "Test Sound", AudioSearchResultType.SoundFile));
 
             return results;
         }
 
-        public void DownloadSearchResult(AudioSourceSearchResult searchResult, IProgressMonitor monitor, CancellationToken token)
+        public void DownloadSearchResult(SearchResult searchResult, IProgressMonitor monitor, CancellationToken token)
         {
             throw new NotImplementedException();
         }
@@ -119,11 +119,11 @@ namespace Ares.AudioSource.Freesound
 
     }
 
-    public class FreesoundApiSearchResult: AudioSourceSearchResult
+    public class FreesoundApiSearchResult: SearchResult
     {
         private long m_FreesoundId;
 
-        FreesoundApiSearchResult(FreesoundAudioSource source, long freesoundId, string title): base(source, freesoundId.ToString(),title,AudioType.Sound)
+        FreesoundApiSearchResult(FreesoundAudioSource source, long freesoundId, string title): base(source, freesoundId.ToString(),title,AudioSearchResultType.SoundFile)
         {
             this.m_FreesoundId = freesoundId;
         }

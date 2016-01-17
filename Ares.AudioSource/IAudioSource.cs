@@ -17,6 +17,8 @@
  along with Ares; if not, write to the Free Software
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
+using Ares.Data;
+using Ares.ModelInfo;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -27,10 +29,6 @@ using System.Threading.Tasks;
 
 namespace Ares.AudioSource
 {
-    public enum AudioType
-    {
-        Music, Sound, ModeElement
-    }
 
     public interface IAudioSource
     {
@@ -54,7 +52,7 @@ namespace Ares.AudioSource
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        bool IsAudioTypeSupported(AudioType type);
+        bool IsAudioTypeSupported(AudioSearchResultType type);
 
         /// <summary>
         /// Search for audio (music, sounds, ...)
@@ -62,7 +60,7 @@ namespace Ares.AudioSource
         /// <param name="query"></param>
         /// <param name="type">optional parameter indicating the requested AudioType</param>
         /// <returns></returns>
-        ICollection<AudioSourceSearchResult> Search(string query, AudioType type, Ares.ModelInfo.IProgressMonitor monitor, CancellationToken token);
+        ICollection<SearchResult> Search(string query, AudioSearchResultType type, Ares.ModelInfo.IProgressMonitor monitor, CancellationToken token);
 
         // TODO: Download search results
 
@@ -72,40 +70,69 @@ namespace Ares.AudioSource
         /// <param name="searchResult"></param>
         /// <param name="monitor"></param>
         /// <param name="token"></param>
-        void DownloadSearchResult(AudioSourceSearchResult searchResult, Ares.ModelInfo.IProgressMonitor monitor, CancellationToken token);
+        void DownloadSearchResult(SearchResult searchResult, Ares.ModelInfo.IProgressMonitor monitor, CancellationToken token);
     }
 
-    public class AudioSourceSearchResult
+    public enum AudioSearchResultType
+    {
+        MusicFile,
+        SoundFile,
+        ModeElement
+    }
+
+    public abstract class SearchResult
     {
 
         private IAudioSource m_Source;
         private string m_Id = "";
         private string m_Title = "";
-        private AudioType m_AudioType = AudioType.Music;
+        private AudioSearchResultType m_ResultType = AudioSearchResultType.MusicFile;
 
-        public AudioSourceSearchResult(IAudioSource source, string id, string title, AudioType audioType)
+        public SearchResult(IAudioSource source, string id, string title, AudioSearchResultType resultType)
         {
             this.m_Source = source;
             this.m_Id = id;
             this.m_Title = title;
-            this.m_AudioType = audioType;
+            this.m_ResultType = resultType;
         }
 
         public string Id { get { return m_Id; } }
         public string Title { get { return m_Title; } }
         public IAudioSource AudioSource { get { return m_Source; } }
-        public AudioType AudioType { get { return m_AudioType; } }
+        public AudioSearchResultType ResultType { get { return m_ResultType; } }
+
+        public abstract double DownloadSize { get; }
 
         /// <summary>
         /// Download this search result
         /// </summary>
-        /// <param name="musicDownloadDirectoryForSourceAndItem"></param>
-        /// <param name="soundsDownloadDirectoryForSourceAndItem"></param>
+        /// <param name="musicBaseDirectory"></param>
+        /// <param name="soundsBaseDirectory"></param>
+        /// <param name="relativeDownloadPath"></param>
+        /// <param name="monitor"></param>
+        /// <param name="totalSize"></param>
         /// <returns></returns>
-        public AudioDownloadResult Download(string musicDownloadDirectory, string soundsDownloadDirectory)
+        public abstract AudioDownloadResult Download(string musicBaseDirectory, string soundsBaseDirectory, string relativeDownloadPath, IProgressMonitor monitor, CancellationToken cancellationToken, double totalSize);
+    }
+
+    public abstract class ModeElementSearchResult: SearchResult
+    {
+        public ModeElementSearchResult(IAudioSource source, string id, string title)
+            : base(source, id, title, AudioSearchResultType.ModeElement)
         {
-            throw new NotImplementedException();
         }
+
+        public abstract IModeElement GetModeElementDefinition(string musicBaseDirectory, string soundsBaseDirectory, string relativeDownloadPath);
+    }
+
+    public abstract class FileSearchResult: SearchResult
+    {
+        public FileSearchResult(IAudioSource source, string id, string title, SoundFileType soundFileType)
+            : base(source, id, title, soundFileType == SoundFileType.Music ? AudioSearchResultType.MusicFile : AudioSearchResultType.SoundFile)
+        { 
+        }
+
+        public abstract string GetRelativeDownloadFilePath(string relativeDownloadPath);
     }
 
     /// <summary>
