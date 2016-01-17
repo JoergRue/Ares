@@ -264,8 +264,44 @@ namespace Ares.Player_Android
 		public partial class Id
 		{
 			
+			// aapt resource value: 0x7f07000a
+			public const int controllerButton = 2131165194;
+			
+			// aapt resource value: 0x7f070008
+			public const int controllerVIew = 2131165192;
+			
+			// aapt resource value: 0x7f070002
+			public const int linearLayout1 = 2131165186;
+			
+			// aapt resource value: 0x7f070007
+			public const int linearLayout2 = 2131165191;
+			
+			// aapt resource value: 0x7f07000c
+			public const int projectView = 2131165196;
+			
+			// aapt resource value: 0x7f070005
+			public const int serviceButton = 2131165189;
+			
+			// aapt resource value: 0x7f070003
+			public const int serviceView = 2131165187;
+			
 			// aapt resource value: 0x7f070000
-			public const int myButton = 2131165184;
+			public const int service_fragment = 2131165184;
+			
+			// aapt resource value: 0x7f070004
+			public const int space1 = 2131165188;
+			
+			// aapt resource value: 0x7f070009
+			public const int space2 = 2131165193;
+			
+			// aapt resource value: 0x7f070001
+			public const int textView1 = 2131165185;
+			
+			// aapt resource value: 0x7f070006
+			public const int textView3 = 2131165190;
+			
+			// aapt resource value: 0x7f07000b
+			public const int textView5 = 2131165195;
 			
 			static Id()
 			{
@@ -282,6 +318,9 @@ namespace Ares.Player_Android
 			
 			// aapt resource value: 0x7f040000
 			public const int Main = 2130968576;
+			
+			// aapt resource value: 0x7f040001
+			public const int ServiceFragment = 2130968577;
 			
 			static Layout()
 			{
@@ -390,8 +429,8 @@ namespace Ares.Player_Android
 			// aapt resource value: 0x7f050005
 			public const int CreateError = 2131034117;
 			
-			// aapt resource value: 0x7f050067
-			public const int Debug = 2131034215;
+			// aapt resource value: 0x7f050066
+			public const int Debug = 2131034214;
 			
 			// aapt resource value: 0x7f050037
 			public const int Default = 2131034167;
@@ -417,8 +456,8 @@ namespace Ares.Player_Android
 			// aapt resource value: 0x7f050009
 			public const int EndedError = 2131034121;
 			
-			// aapt resource value: 0x7f05006a
-			public const int Error = 2131034218;
+			// aapt resource value: 0x7f050069
+			public const int Error = 2131034217;
 			
 			// aapt resource value: 0x7f050052
 			public const int ErrorReadingPlaylist = 2131034194;
@@ -471,8 +510,8 @@ namespace Ares.Player_Android
 			// aapt resource value: 0x7f05004f
 			public const int ImportOverwrite = 2131034191;
 			
-			// aapt resource value: 0x7f050068
-			public const int Info = 2131034216;
+			// aapt resource value: 0x7f050067
+			public const int Info = 2131034215;
 			
 			// aapt resource value: 0x7f050050
 			public const int InvalidImportFile = 2131034192;
@@ -600,59 +639,86 @@ namespace Ares.Player_Android
 			// aapt resource value: 0x7f05004b
 			public const int VolumeOutOfRange = 2131034187;
 			
-			// aapt resource value: 0x7f050069
-			public const int Warning = 2131034217;
+			// aapt resource value: 0x7f050068
+			public const int Warning = 2131034216;
 			
 			// aapt resource value: 0x7f05004c
 			public const int WrongClientLength = 2131034188;
 			
-			// aapt resource value: 0x7f050060
-			public const int app_name = 2131034208;
-			
-			// aapt resource value: 0x7f05006b
-			public const int connected_with = 2131034219;
-			
-			// aapt resource value: 0x7f05006d
-			public const int directory_error = 2131034221;
-			
 			// aapt resource value: 0x7f05005f
-			public const int hello = 2131034207;
+			public const int app_name = 2131034207;
 			
-			// aapt resource value: 0x7f050066
-			public const int import_error = 2131034214;
+			// aapt resource value: 0x7f05006a
+			public const int connected_with = 2131034218;
 			
-			// aapt resource value: 0x7f050071
-			public const int importing_project = 2131034225;
+			// aapt resource value: 0x7f050073
+			public const int controller = 2131034227;
+			
+			// aapt resource value: 0x7f050074
+			public const int controller_status = 2131034228;
+			
+			// aapt resource value: 0x7f05006c
+			public const int directory_error = 2131034220;
+			
+			// aapt resource value: 0x7f050065
+			public const int import_error = 2131034213;
+			
+			// aapt resource value: 0x7f050070
+			public const int importing_project = 2131034224;
 			
 			// aapt resource value: 0x7f050000
 			public const int library_name = 2131034112;
 			
-			// aapt resource value: 0x7f050065
-			public const int load_error = 2131034213;
-			
-			// aapt resource value: 0x7f05006f
-			public const int loaded_project = 2131034223;
-			
-			// aapt resource value: 0x7f050061
-			public const int no_ip_address = 2131034209;
-			
-			// aapt resource value: 0x7f050070
-			public const int no_project = 2131034224;
-			
 			// aapt resource value: 0x7f050064
-			public const int no_settings = 2131034212;
-			
-			// aapt resource value: 0x7f050062
-			public const int no_status_info_error = 2131034210;
-			
-			// aapt resource value: 0x7f05006c
-			public const int not_connected = 2131034220;
+			public const int load_error = 2131034212;
 			
 			// aapt resource value: 0x7f05006e
-			public const int service_running = 2131034222;
+			public const int loaded_project = 2131034222;
+			
+			// aapt resource value: 0x7f050060
+			public const int no_ip_address = 2131034208;
+			
+			// aapt resource value: 0x7f05006f
+			public const int no_project = 2131034223;
 			
 			// aapt resource value: 0x7f050063
-			public const int tags_db_error = 2131034211;
+			public const int no_settings = 2131034211;
+			
+			// aapt resource value: 0x7f050061
+			public const int no_status_info_error = 2131034209;
+			
+			// aapt resource value: 0x7f05006b
+			public const int not_connected = 2131034219;
+			
+			// aapt resource value: 0x7f050071
+			public const int player_service = 2131034225;
+			
+			// aapt resource value: 0x7f050076
+			public const int project = 2131034230;
+			
+			// aapt resource value: 0x7f050079
+			public const int running = 2131034233;
+			
+			// aapt resource value: 0x7f05006d
+			public const int service_running = 2131034221;
+			
+			// aapt resource value: 0x7f050072
+			public const int service_status = 2131034226;
+			
+			// aapt resource value: 0x7f050077
+			public const int start = 2131034231;
+			
+			// aapt resource value: 0x7f050075
+			public const int start_controller = 2131034229;
+			
+			// aapt resource value: 0x7f050078
+			public const int stop = 2131034232;
+			
+			// aapt resource value: 0x7f05007a
+			public const int stopped = 2131034234;
+			
+			// aapt resource value: 0x7f050062
+			public const int tags_db_error = 2131034210;
 			
 			static String()
 			{

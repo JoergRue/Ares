@@ -31,11 +31,49 @@ namespace Ares.Player_Android
 {
 	[Service]
 	[IntentFilter(new string[]{"de.joerg_ruedenauer.ares.PlayerService"})]
-	public class PlayerService : Service, INetworkClient
+	public class PlayerService : IntentService, INetworkClient
 	{
+		public const String StateChangedAction = "StateChanged";
+
+		public class ServiceBinder : Binder
+		{
+			public PlayerService Service { get; private set; }
+
+			public ServiceBinder(PlayerService service)
+			{
+				Service = service;
+			}
+		}
+
+		private ServiceBinder binder;
+
 		public PlayerService ()
 		{
 		}
+
+		public override IBinder OnBind(Intent intent)
+		{
+			binder = new ServiceBinder(this);
+			return binder;
+		}
+
+		protected override void OnHandleIntent(Intent intent)
+		{
+		}
+
+		private void InformActivity()
+		{
+			var intent = new Intent(StateChangedAction);
+			SendBroadcast(intent);
+		}
+
+		public bool HasProject { get { return m_Project != null; } }
+
+		public String ProjectTitle { get { return m_Project != null ? m_Project.Title : String.Empty; } }
+
+		public bool HasController { get { return m_Network.ClientConnected; } }
+
+		public String ControllerName { get { return HasController ? m_Network.ClientName : String.Empty; } }
 
 		Notification.Builder mNotificationBuilder = null;
 		readonly int mNotificationId = 1;
@@ -145,11 +183,6 @@ namespace Ares.Player_Android
 		public override StartCommandResult OnStartCommand (Android.Content.Intent intent, StartCommandFlags flags, int startId)
 		{
 			return StartCommandResult.Sticky;
-		}
-
-		public override Android.OS.IBinder OnBind (Android.Content.Intent intent)
-		{
-			return null;
 		}
 
 		private INetworks m_Network;
@@ -431,6 +464,7 @@ namespace Ares.Player_Android
 			Ares.Playing.PlayingModule.ProjectPlayer.SetProject(m_Project);
 			DoModelChecks();
 			UpdateNotification(false);
+			InformActivity();
 			if (m_Network != null)
 			{
 				m_Network.InformClientOfProject(m_Project);
@@ -584,7 +618,7 @@ namespace Ares.Player_Android
 		{
 			if (m_Network.ClientConnected)
 			{
-				Messages.AddMessage(Ares.Players.MessageType.Info, Resources.GetString(Resource.String.connected_with) + m_Network.ClientName);
+				Messages.AddMessage(Ares.Players.MessageType.Info, String.Format(Resources.GetString(Resource.String.connected_with), m_Network.ClientName));
 				m_Network.InformClientOfEverything(m_PlayingControl.GlobalVolume, m_PlayingControl.MusicVolume,
 					m_PlayingControl.SoundVolume, m_PlayingControl.CurrentMode, MusicInfo.GetInfo(m_PlayingControl.CurrentMusicElement),
 					m_PlayingControl.CurrentModeElements, m_Project,
@@ -594,6 +628,7 @@ namespace Ares.Player_Android
 					Settings.Settings.Instance.PlayMusicOnAllSpeakers,
 					Settings.Settings.Instance.ButtonMusicFadeMode, Settings.Settings.Instance.ButtonMusicFadeTime);
 				UpdateNotification(false);
+				InformActivity();
 			}
 			else
 			{
@@ -602,6 +637,7 @@ namespace Ares.Player_Android
 				{
 					m_Network.StartUdpBroadcast();
 					UpdateNotification(false);
+					InformActivity();
 				}
 			}
 		}

@@ -217,7 +217,11 @@ namespace Ares.Players
             int tcpPort = Settings.Settings.Instance.TcpPort;
             String ipAddress = Settings.Settings.Instance.IPAddress;
             StringBuilder str = new StringBuilder();
+			#if !ANDROID
             String machineName = Dns.GetHostName();
+			#else
+			String machineName = "Android Player";
+			#endif
             str.Append(machineName);
             str.Append("|");
             str.Append(tcpPort);

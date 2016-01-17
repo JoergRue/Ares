@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="hello">Start / Stop</string>
 	<string name="app_name">Ares Player</string>
 	<string name="no_ip_address">No usable IP address found. Is the network available?</string>
 	<string name="no_status_info_error">Couldn\'t send status info. Check network connection.</string>
@@ -19,4 +18,14 @@
 	<string name="loaded_project">Project: {0}</string>
 	<string name="no_project">No project loaded</string>
 	<string name="importing_project">Importing project ...</string>
+	<string name="player_service">Player Service</string>
+	<string name="service_status">Status: {0}</string>
+	<string name="controller">Controller</string>
+	<string name="controller_status">Status: {0}</string>
+	<string name="start_controller">Start App</string>
+	<string name="project">Project</string>
+	<string name="start">Start</string>
+	<string name="stop">Stop</string>
+	<string name="running">Running</string>
+	<string name="stopped">Stopped</string>
 </resources>
