@@ -220,7 +220,7 @@ namespace Ares.Settings
 		#if !ANDROID
         public bool Initialize(String id, String directory)
 		#else
-		public bool Initialize()
+		public bool Initialize(Android.Content.Context context)
 		#endif
         {
 			#if !ANDROID
@@ -236,11 +236,14 @@ namespace Ares.Settings
             {
                 success = ReadFromFile(directory);
             }
+			if (!success)
+			{
+			InitDefaults();
+			}
+			#else
+			InitDefaults();
+			success = Read(context);
 			#endif
-            if (!success)
-            {
-                InitDefaults();
-            }
             bool hasIP = !String.IsNullOrEmpty(IPAddress);
             if (hasIP)
             {
@@ -819,6 +822,61 @@ namespace Ares.Settings
 		#if !ANDROID
         private String m_ID;
 		#endif
+
+#if ANDROID
+		public void Write(Android.Content.Context context)
+		{
+			var prefs = Android.Preferences.PreferenceManager.GetDefaultSharedPreferences(context);
+			var editor = prefs.Edit();
+			editor.PutInt("version", Version);
+			editor.PutInt("messageFilterLevel", MessageFilterLevel);
+			editor.PutString("musicDirectory", MusicDirectory);
+			editor.PutString("soundDirectory", SoundDirectory);
+			editor.PutString("projectDirectory", ProjectDirectory);
+			editor.PutInt("overallVolume", GlobalVolume);
+			editor.PutInt("musicVolume", MusicVolume);
+			editor.PutInt("soundVolume", SoundVolume);
+			editor.PutInt("udpPort", UdpPort);
+			editor.PutInt("tcpPort", TcpPort);
+			editor.PutString("lastProject", RecentFiles.GetFiles().Count > 0 ? RecentFiles.GetFiles()[0].FilePath : String.Empty);
+			editor.PutInt("tagMusicFadeTime", TagMusicFadeTime);
+			editor.PutBoolean("tagMusicFadeOnlyOnChange", TagMusicFadeOnlyOnChange);
+			editor.PutInt("buttonMusicFadeMode", ButtonMusicFadeMode);
+			editor.PutInt("buttonMusicFadeTime", ButtonMusicFadeTime);
+			editor.Apply();
+		}
+	
+		public void WriteMessageLevel(Android.Content.Context context)
+		{
+			var prefs = Android.Preferences.PreferenceManager.GetDefaultSharedPreferences(context);
+			var editor = prefs.Edit();
+			editor.PutInt("messageFilterLevel", MessageFilterLevel);
+			editor.Apply();
+		}
+
+		public bool Read(Android.Content.Context context)
+		{
+			var prefs = Android.Preferences.PreferenceManager.GetDefaultSharedPreferences(context);
+			bool hasPrefs = prefs.GetInt("version", 0) > 0;
+			MessageFilterLevel = prefs.GetInt("messageFilterLevel", 2);
+			MusicDirectory = prefs.GetString("musicDirectory", "/sdcard/Ares/Music");
+			SoundDirectory = prefs.GetString("soundDirectory", "/sdcard/Ares/Sounds");
+			ProjectDirectory = prefs.GetString("projectDirectory", "/sdcard/Ares/Projects");
+			GlobalVolume = prefs.GetInt("overallVolume", 100);
+			MusicVolume = prefs.GetInt("musicVolume", 100);
+			SoundVolume = prefs.GetInt("soundVolume", 100);
+			UdpPort = prefs.GetInt("udpPort", 8009);
+			TcpPort = prefs.GetInt("tcpPort", 11112);
+			String lastProject = prefs.GetString("lastProject", String.Empty);
+			if (!String.IsNullOrEmpty(lastProject))
+				RecentFiles.AddFile(new RecentFiles.ProjectEntry(lastProject, "Project0"));
+			TagMusicFadeTime = prefs.GetInt("tagMusicFadeTime", 0);
+			TagMusicFadeOnlyOnChange = prefs.GetBoolean("tagMusicFadeOnlyOnChange", false);
+			ButtonMusicFadeMode = prefs.GetInt("buttonMusicFadeMode", 0);
+			ButtonMusicFadeTime = prefs.GetInt("buttonMusicFadeTime", 0);
+			return hasPrefs;
+		}
+#endif
 
         private static Object syncObject = new Int16();
     }

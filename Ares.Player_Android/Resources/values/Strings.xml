@@ -11,6 +11,7 @@
 	<string name="Info">Info: </string>
 	<string name="Warning">Warning: </string>
 	<string name="Error">Error: </string>
+	<string name="service_error">Ares Player Error: </string>
 	<string name="connected_with">Connected with {0}</string>
 	<string name="not_connected">No controller connected</string>
 	<string name="directory_error">Could not create directory {0}: {1}</string>
@@ -28,4 +29,13 @@
 	<string name="stop">Stop</string>
 	<string name="running">Running</string>
 	<string name="stopped">Stopped</string>
+	<string name="filter">Filter:</string>
+	<string name="clear">Clear</string>
+	<string-array name="filterChoices">
+	  <item>Debug</item>
+	  <item>Info</item>
+	  <item>Warning</item>
+	  <item>Error</item>
+	</string-array>
+	<string name="messages">Messages</string>
 </resources>

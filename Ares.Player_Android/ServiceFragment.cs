@@ -139,6 +139,8 @@ namespace Ares.Player_Android
 				{
 					projectView.Text = Resources.GetString(Resource.String.no_project);
 				}
+				if (messagesButton != null)
+					messagesButton.Enabled = true;
 			}
 			else
 			{
@@ -146,6 +148,8 @@ namespace Ares.Player_Android
 				controllerButton.Enabled = false;
 				controllerButton.Visibility = ViewStates.Visible;
 				projectView.Text = Resources.GetString(Resource.String.no_project);
+				if (messagesButton != null)
+					messagesButton.Enabled = false;
 			}
 		}
 
@@ -184,6 +188,10 @@ namespace Ares.Player_Android
 			controllerButton.Enabled = false;
 			controllerButton.Visibility = ViewStates.Visible;
 			projectView.Text = Resources.GetString(Resource.String.no_project);
+			if (messagesButton != null)
+			{
+				messagesButton.Enabled = false;
+			}
 		}
 
 		TextView serviceStateView;
@@ -191,6 +199,7 @@ namespace Ares.Player_Android
 		TextView controllerStateView;
 		Button controllerButton;
 		TextView projectView;
+		Button messagesButton;
 
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 		{
@@ -231,6 +240,14 @@ namespace Ares.Player_Android
 				}
 			};
 			projectView = view.FindViewById<TextView>(Resource.Id.projectView);
+
+			messagesButton = view.FindViewById<Button>(Resource.Id.messagesButton);
+			if (messagesButton != null)
+			{
+				messagesButton.Click += delegate {
+					Activity.StartActivity(typeof(MessagesActivity));
+				};
+			}
 
 			DoUpdateServiceState();
 			if (!PlayerServiceRunning)

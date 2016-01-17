@@ -99,7 +99,7 @@ namespace Ares.Player_Android
 		private void UpdateNotification(bool firstNotification)
 		{
 			InitNotification();
-			String secondLine = m_Network.ClientConnected ? 
+			String secondLine = m_Network != null && m_Network.ClientConnected ? 
 				String.Format(Resources.GetString(Resource.String.connected_with), m_Network.ClientName) : 
 				Resources.GetString(Resource.String.not_connected);
 			mNotificationBuilder.SetContentText(secondLine);
@@ -308,11 +308,12 @@ namespace Ares.Player_Android
 			{
 				m_PlayingControl.Dispose();
 			}
+			Settings.Settings.Instance.Write(ApplicationContext);
 		}
 
 		private void ReadSettings()
 		{
-			bool hasSettings = Ares.Settings.Settings.Instance.Initialize();
+			bool hasSettings = Ares.Settings.Settings.Instance.Initialize(ApplicationContext);
 			if (!hasSettings)
 			{
 				Toast.MakeText(this, Resource.String.no_settings, ToastLength.Long).Show();
@@ -547,25 +548,9 @@ namespace Ares.Player_Android
 
 		private void MessageReceived(Ares.Players.Message m)
 		{
-			if ((int)m.Type >= Ares.Settings.Settings.Instance.MessageFilterLevel)
+			if (m.Type == Ares.Players.MessageType.Error)
 			{
-				String s;
-				switch (m.Type)
-				{
-				case Ares.Players.MessageType.Debug:
-					s = Resources.GetString(Resource.String.Debug);
-					break;
-				case Ares.Players.MessageType.Info:
-					s = Resources.GetString(Resource.String.Info);
-					break;
-				case Ares.Players.MessageType.Warning:
-					s = Resources.GetString(Resource.String.Warning);
-					break;
-				case Ares.Players.MessageType.Error:
-				default:
-					s = Resources.GetString(Resource.String.Error);
-					break;
-				}
+				String s = Resources.GetString(Resource.String.service_error);
 				s += m.Text;
 				ShowToast(s);
 			}
