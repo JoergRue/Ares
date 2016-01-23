@@ -84,6 +84,11 @@
     <AndroidResource Include="Resources\layout\MessagesListEntry.axml" />
     <AndroidResource Include="Resources\drawable\eventlogError.png" />
     <AndroidResource Include="Resources\layout\Messages.axml" />
+    <AndroidResource Include="Resources\layout-large\ServiceFragment.axml" />
+    <AndroidResource Include="Resources\layout-large\Main.axml" />
+    <AndroidResource Include="Resources\layout-large-land\Main.axml" />
+    <AndroidResource Include="Resources\layout-land\ServiceFragment.axml" />
+    <AndroidResource Include="Resources\layout-large-land\ServiceFragment.axml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable\" />
