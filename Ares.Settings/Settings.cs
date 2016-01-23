@@ -399,8 +399,8 @@ namespace Ares.Settings
             MusicDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
             SoundDirectory = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyMusic), "Sounds");
 			#else
-			MusicDirectory = "/sdcard/Ares/Music";
-			SoundDirectory = "/sdcard/Ares/Sounds";
+			MusicDirectory = Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + Java.IO.File.Separator + "Ares" + Java.IO.File.Separator + "Music";
+			SoundDirectory = Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + Java.IO.File.Separator + "Ares" + Java.IO.File.Separator + "Sounds";
 			#endif
             GlobalVolume = MusicVolume = SoundVolume = 100;
             TcpPort = 11112;
@@ -444,7 +444,7 @@ namespace Ares.Settings
             LastTipOfTheDay = -1;
             OutputDeviceIndex = -1;
 			#if ANDROID
-			ProjectDirectory = "/sdcard/Ares/Projects";
+			ProjectDirectory = Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + Java.IO.File.Separator + "Ares" + Java.IO.File.Separator + "Projects";
 			#endif
         }
 
@@ -859,9 +859,9 @@ namespace Ares.Settings
 			var prefs = Android.Preferences.PreferenceManager.GetDefaultSharedPreferences(context);
 			bool hasPrefs = prefs.GetInt("version", 0) > 0;
 			MessageFilterLevel = prefs.GetInt("messageFilterLevel", 2);
-			MusicDirectory = prefs.GetString("musicDirectory", "/sdcard/Ares/Music");
-			SoundDirectory = prefs.GetString("soundDirectory", "/sdcard/Ares/Sounds");
-			ProjectDirectory = prefs.GetString("projectDirectory", "/sdcard/Ares/Projects");
+			MusicDirectory = prefs.GetString("musicDirectory", Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + Java.IO.File.Separator + "Ares" + Java.IO.File.Separator + "Music");
+			SoundDirectory = prefs.GetString("soundDirectory", Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + Java.IO.File.Separator + "Ares" + Java.IO.File.Separator + "Sounds");
+			ProjectDirectory = prefs.GetString("projectDirectory", Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + Java.IO.File.Separator + "Ares" + Java.IO.File.Separator + "Projects");
 			GlobalVolume = prefs.GetInt("overallVolume", 100);
 			MusicVolume = prefs.GetInt("musicVolume", 100);
 			SoundVolume = prefs.GetInt("soundVolume", 100);
