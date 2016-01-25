@@ -509,4 +509,10 @@ You should adapt some settings first.</value>
   <data name="DownloadingAudio" xml:space="preserve">
     <value>Downloading Audio from online sources ...</value>
   </data>
+  <data name="SearchingForAudio" xml:space="preserve">
+    <value>Searching for Audio...</value>
+  </data>
+  <data name="SearchError" xml:space="preserve">
+    <value>Error searching for audio: {0}</value>
+  </data>
 </root>

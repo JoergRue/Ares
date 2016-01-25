@@ -8,6 +8,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Drawing;
 using Ares.ModelInfo;
+using Ares.Data;
+using System.Net;
+using RestSharp.Deserializers;
 
 namespace Ares.AudioSource.Freesound
 {
@@ -15,49 +18,26 @@ namespace Ares.AudioSource.Freesound
     {
         public const string AUDIO_SOURCE_ID = "freesound";
 
-        public Bitmap Icon
-        {
-            get
-            {
-                return ImageResources.FreesoundAudioSourceIcon.ToBitmap();
-            }
-        }
+        private IRestClient m_Client = new RestClient("https://www.freesound.org/apiv2/");
 
-        public string Id
-        {
-            get
-            {
-                return AUDIO_SOURCE_ID;
-            }
-        }
+        #region IAudioSource interface implementation
 
-        public string Name
-        {
-            get
-            {
-                return StringResources.FreesoundAudioSourceName;
-            }
-        }
+        public Bitmap Icon { get { return ImageResources.FreesoundAudioSourceIcon.ToBitmap(); } }
+        public string Id { get { return AUDIO_SOURCE_ID; } }
+        public string Name { get { return StringResources.FreesoundAudioSourceName; } }
                 
         public bool IsAudioTypeSupported(AudioSearchResultType type)
         {
-            return type == AudioSearchResultType.SoundFile;
+            return type == AudioSearchResultType.Unknown || type == AudioSearchResultType.SoundFile;
         }
 
-        public ICollection<SearchResult> Search(string query, AudioSearchResultType type, Ares.ModelInfo.IProgressMonitor monitor, CancellationToken token)
+        public ICollection<ISearchResult> Search(string query, AudioSearchResultType type, Ares.ModelInfo.IProgressMonitor monitor, CancellationToken token)
         {
-            // TODO: perform search using the API
-            List<SearchResult> results = new List<SearchResult>();
-
-            results.Add(new SearchResult(this, "test", "Test Sound", AudioSearchResultType.SoundFile));
-
-            return results;
+            List<ISearchResult> results = new List<ISearchResult>();
+            return new FreesoundApiSearch(this.m_Client, monitor, token).DoSearch(query);            
         }
 
-        public void DownloadSearchResult(SearchResult searchResult, IProgressMonitor monitor, CancellationToken token)
-        {
-            throw new NotImplementedException();
-        }
+        #endregion
     }
 
     public class FreesoundApi
@@ -69,18 +49,103 @@ namespace Ares.AudioSource.Freesound
 
     public class FreesoundApiSearch
     {
+        private IRestClient m_Client;
         private Ares.ModelInfo.IProgressMonitor m_Monitor;
         private CancellationToken m_Token;
         
-        public FreesoundApiSearch(Ares.ModelInfo.IProgressMonitor monitor, CancellationToken token)
+        public FreesoundApiSearch(IRestClient client, Ares.ModelInfo.IProgressMonitor monitor, CancellationToken token)
         {
             this.m_Monitor = monitor;
             this.m_Token = token;
+            this.m_Client = client;
         }
 
-        public void DoSearch(string searchQuery)
+        public List<ISearchResult> DoSearch(string searchQuery)
         {
-            m_Monitor.SetIndeterminate(StringResources.ExecutingSearch);
+            // https://www.freesound.org/apiv2/search/text/?query=fanfare&page_size=10&fields=id,url,name,tags,images,description,license,duration,username,previews,num_downloads,avg_rating,num_ratings&token=29459bf2d6e537cc4240d8b366207d439dd28272
+            /*
+            {
+                "count": 130
+                "next": "http://www.freesound.org/apiv2/search/text/?&query=fanfare&page=2&page_size=10&fields=id,url,name,tags,images,description,license,duration,username,previews,num_downloads,avg_rating,num_ratings"
+                "results": [10]
+                    0:  {
+                        "id": 49477
+                        "url": "https://www.freesound.org/people/neonaeon/sounds/49477/"
+                        "name": "fanfare1.flac"
+                        "tags": [12]
+                            0:  "announcement"
+                            1:  "environmental-sounds-research"
+                            2:  "fan"
+                            3:  "fanfair"
+                            4:  "fanfare"
+                            5:  "fare"
+                            6:  "horn"
+                            7:  "king"
+                            8:  "royal"
+                            9:  "trom"
+                            10:  "trombone"
+                            11:  "trumpet"
+                            -
+                        "description": "This is just a short fanfare used to announce a king in a short play. The is a recording I made for a fund raiser i am taking part in. I recorded this trombone with a Zoom h4 and an AKG c3000 microphone at 48k/24bit. After editing i encoded them at 44.1k/16bit and then encoded to FLAC for the website."
+                        "license": "http://creativecommons.org/licenses/by/3.0/"
+                        "duration": 8.66253968254
+                        "username": "neonaeon"
+                        "previews": {
+                            "preview-lq-ogg": "https://www.freesound.org/data/previews/49/49477_52325-lq.ogg"
+                            "preview-lq-mp3": "https://www.freesound.org/data/previews/49/49477_52325-lq.mp3"
+                            "preview-hq-ogg": "https://www.freesound.org/data/previews/49/49477_52325-hq.ogg"
+                            "preview-hq-mp3": "https://www.freesound.org/data/previews/49/49477_52325-hq.mp3"
+                        }-
+                        "images": {
+                            "waveform_l": "https://www.freesound.org/data/displays/49/49477_52325_wave_L.png"
+                            "waveform_m": "https://www.freesound.org/data/displays/49/49477_52325_wave_M.png"
+                            "spectral_m": "https://www.freesound.org/data/displays/49/49477_52325_spec_M.jpg"
+                            "spectral_l": "https://www.freesound.org/data/displays/49/49477_52325_spec_L.jpg"
+                        }-
+                        "num_downloads": 16228
+                        "avg_rating": 4.18609865470852
+                        "num_ratings": 223
+                    }-
+                    1:  {
+                        "id": 49478
+                        "url": "https://www.freesound.org/people/neonaeon/sounds/49478/"
+                        "name": "fanfarejazz1.flac"
+                        "tags": [12]
+                            0:  "announcement"
+                            1:  "fan"
+                            2:  "fanfair"
+                            3:  "fanfare"
+                            4:  "fare"
+                            5:  "horn"
+                            6:  "jazz"
+                            7:  "king"
+                            8:  "royal"
+                            9:  "trom"
+                            10:  "trombone"
+                            11:  "trumpet"
+                            -
+                        "description": "This is just a short fanfare used to announce a king in a short play. After the fanfare the horn player goes into a jazz riff and is stopped. Take 1 The is a recording I made for a fund raiser i am taking part in. I recorded this trombone with a Zoom h4 and an AKG c3000 microphone at 48k/24bit. After editing i encoded them at 44.1k/16bit and then encoded to FLAC for the website."
+                        "license": "http://creativecommons.org/licenses/by/3.0/"
+                        "duration": 13.6306349206
+                        "username": "neonaeon"
+                        "previews": {
+                            "preview-lq-ogg": "https://www.freesound.org/data/previews/49/49478_52325-lq.ogg"
+                            "preview-lq-mp3": "https://www.freesound.org/data/previews/49/49478_52325-lq.mp3"
+                            "preview-hq-ogg": "https://www.freesound.org/data/previews/49/49478_52325-hq.ogg"
+                            "preview-hq-mp3": "https://www.freesound.org/data/previews/49/49478_52325-hq.mp3"
+                        }-
+                        "images": {
+                            "waveform_l": "https://www.freesound.org/data/displays/49/49478_52325_wave_L.png"
+                            "waveform_m": "https://www.freesound.org/data/displays/49/49478_52325_wave_M.png"
+                            "spectral_m": "https://www.freesound.org/data/displays/49/49478_52325_spec_M.jpg"
+                            "spectral_l": "https://www.freesound.org/data/displays/49/49478_52325_spec_L.jpg"
+                        }-
+                        "num_downloads": 879
+                        "avg_rating": 3.921052631578945
+                        "num_ratings": 19
+                    }
+            }
+            */
 
             //var proxy = System.Net.WebRequest.GetSystemWebProxy(); // Unused!
             var request = new RestSharp.RestRequest(FreesoundApi.TextSearchPath, RestSharp.Method.GET);
@@ -92,40 +157,148 @@ namespace Ares.AudioSource.Freesound
             request.AddParameter("query", searchQuery);
             request.AddParameter("token", FreesoundApi.ApiKey);
 
-            /*FreesoundApiSearchResult response = client.Execute<FreesoundApiSearchResult>(request);
+            IRestResponse<Dao.RootObject> response = m_Client.Execute<Dao.RootObject>(request);
 
-            m_Token.ThrowIfCancellationRequested();
-                if (response.ErrorException != null)
-                {
-                    throw new GlobalDbException(response.ErrorException);
+            if (response.ErrorException != null)
+            {
+                throw response.ErrorException;
+            } else
+            {
+                List<ISearchResult> searchResults = new List<ISearchResult>();
+                foreach (Dao.Result result in response.Data.results) {
+                    FreesoundApiSearchResult searchResult = new FreesoundApiSearchResult();
+                    searchResult.Title = result.name;
+                    searchResult.PreviewUrls = result.previews;
+                    searchResult.License = result.license;
+                    searchResult.Author = result.username;
+                    searchResult.FreesoundId = result.id;
+                    searchResult.AverageRating = result.avg_rating;
+                    searchResult.NumberOfRatings = result.num_ratings;
+                    searchResult.DurationSeconds = result.duration;
+
+                    searchResults.Add(searchResult);
                 }
-                if (response.Data == null)
-                {
-                    throw new GlobalDbException(String.IsNullOrEmpty(response.ErrorMessage) ? "No data received" : response.ErrorMessage);
-                }
-                if (response.Data.Status != 0)
-                {
-                    throw new GlobalDbException(response.Data.ErrorMessage);
-                }
-                if (i > 0)
-                {
-                    logBuilder.AppendLine("---------------------------------------------------------");
-                }
-                logBuilder.Append(response.Data.Log);
+
+                return searchResults;
             }
-            return logBuilder.ToString();
-            */
         }
 
     }
 
-    public class FreesoundApiSearchResult: SearchResult
+    namespace Dao
     {
-        private long m_FreesoundId;
 
-        FreesoundApiSearchResult(FreesoundAudioSource source, long freesoundId, string title): base(source, freesoundId.ToString(),title,AudioSearchResultType.SoundFile)
+        public class Images
         {
-            this.m_FreesoundId = freesoundId;
+            public string waveform_l { get; set; }
+            public string waveform_m { get; set; }
+            public string spectral_m { get; set; }
+            public string spectral_l { get; set; }
+        }
+
+        public class Result
+        {
+            public int id { get; set; }
+            public string url { get; set; }
+            public string name { get; set; }
+            public List<string> tags { get; set; }
+            public string description { get; set; }
+            public string license { get; set; }
+            public double duration { get; set; }
+            public string username { get; set; }
+            public Dictionary<string,string> previews { get; set; }
+            public Images images { get; set; }
+            public int num_downloads { get; set; }
+            public double avg_rating { get; set; }
+            public int num_ratings { get; set; }
+        }
+
+        public class RootObject
+        {
+            public int count { get; set; }
+            public string next { get; set; }
+            public List<Result> results { get; set; }
+            public object previous { get; set; }
+        }
+
+
+    }
+
+    public class FreesoundApiSearchResults
+    {
+        public FreesoundApiSearchResults()
+        {
+            Console.WriteLine("Test");
+        }
+
+        public int Count { get; set; }
+        public string Next { get; set; }
+
+        private List<FreesoundApiSearchResult> m_SearchResults = new List<FreesoundApiSearchResult>();
+
+        [DeserializeAs(Name ="results")]
+        public List<FreesoundApiSearchResult> SearchResults { get { return m_SearchResults; } set { m_SearchResults = value; } }
+    }
+
+    public class FreesoundApiSearchResult: IFileSearchResult
+    {
+        [DeserializeAs(Name = "id")]
+        public long FreesoundId { get; set; }
+        [DeserializeAs(Name = "name")]
+        public string Title { get; set; }
+        [DeserializeAs(Name = "username")]
+        public string Author { get; set; }
+
+        [DeserializeAs(Name = "license")]
+        public string License {
+            get
+            {
+                return m_License;
+            }
+            set
+            {
+                m_License = value;
+                // TODO: parse License URLs provided by Freesound into human-readable License descriptions/names
+            }
+        }
+        private string m_License;
+
+        [DeserializeAs(Name = "duration")]
+        public double DurationSeconds { get; set; }
+        [DeserializeAs(Name = "description")]
+        public string Description { get; set; }
+        [DeserializeAs(Name = "avg_rating")]
+        public double AverageRating { get; set; }
+        [DeserializeAs(Name = "num_ratings")]
+        public int NumberOfRatings { get; set; }
+
+        [DeserializeAs(Name = "previews")]
+        public Dictionary<string, string> PreviewUrls { get; set; }
+
+        public string AudioSourceId { get { return FreesoundAudioSource.AUDIO_SOURCE_ID; } }
+        public double DownloadSize { get { return 1; } }
+        public string Id { get { return FreesoundId.ToString(); } }
+        public AudioSearchResultType ResultType { get { return AudioSearchResultType.SoundFile; } }
+
+
+        public AudioDownloadResult Download(string musicBaseDirectory, string soundsBaseDirectory, string relativeDownloadPath, IProgressMonitor monitor, CancellationToken cancellationToken, double totalSize)
+        {
+            double percentageForThisDownload = DownloadSize / totalSize;
+            string downloadTargetPath = System.IO.Path.Combine(soundsBaseDirectory,GetRelativeDownloadFilePath(relativeDownloadPath));
+            string downloadTargetDirectory = System.IO.Path.GetDirectoryName(downloadTargetPath);
+
+            System.IO.Directory.CreateDirectory(downloadTargetDirectory);
+
+            WebClient client = new WebClient();
+            client.DownloadFile(PreviewUrls["preview-hq-mp3"], downloadTargetPath);
+
+            return new AudioDownloadResult();
+        }
+
+        public string GetRelativeDownloadFilePath(string relativeDownloadPath)
+        {
+            String filenameWithoutExtension = System.IO.Path.GetFileNameWithoutExtension(Title);
+            return System.IO.Path.Combine(relativeDownloadPath, filenameWithoutExtension + ".mp3");
         }
     }
 }

@@ -956,6 +956,24 @@ namespace Ares.Editor {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Error searching for audio: {0} ähnelt.
+        /// </summary>
+        internal static string SearchError {
+            get {
+                return ResourceManager.GetString("SearchError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Searching for Audio... ähnelt.
+        /// </summary>
+        internal static string SearchingForAudio {
+            get {
+                return ResourceManager.GetString("SearchingForAudio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Set fading settings for all top-level elements. ähnelt.
         /// </summary>
         internal static string SetFadingForAll {

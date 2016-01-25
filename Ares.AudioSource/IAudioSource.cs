@@ -60,48 +60,35 @@ namespace Ares.AudioSource
         /// <param name="query"></param>
         /// <param name="type">optional parameter indicating the requested AudioType</param>
         /// <returns></returns>
-        ICollection<SearchResult> Search(string query, AudioSearchResultType type, Ares.ModelInfo.IProgressMonitor monitor, CancellationToken token);
+        ICollection<ISearchResult> Search(string query, AudioSearchResultType type, Ares.ModelInfo.IProgressMonitor monitor, CancellationToken token);
 
-        // TODO: Download search results
-
-        /// <summary>
-        /// Download the given search result to the target directory
-        /// </summary>
-        /// <param name="searchResult"></param>
-        /// <param name="monitor"></param>
-        /// <param name="token"></param>
-        void DownloadSearchResult(SearchResult searchResult, Ares.ModelInfo.IProgressMonitor monitor, CancellationToken token);
     }
 
     public enum AudioSearchResultType
     {
+        Unknown,
         MusicFile,
         SoundFile,
         ModeElement
     }
 
-    public abstract class SearchResult
+    public interface ISearchResult
     {
 
-        private IAudioSource m_Source;
-        private string m_Id = "";
-        private string m_Title = "";
-        private AudioSearchResultType m_ResultType = AudioSearchResultType.MusicFile;
+        string Id { get; }
+        string Title { get; }
+        string Author { get; }
+        string License { get; }
+        double DurationSeconds { get; }
+        string Description { get; }
+        double AverageRating { get; }
+        int NumberOfRatings { get; }
 
-        public SearchResult(IAudioSource source, string id, string title, AudioSearchResultType resultType)
-        {
-            this.m_Source = source;
-            this.m_Id = id;
-            this.m_Title = title;
-            this.m_ResultType = resultType;
-        }
+        string AudioSourceId { get; }
 
-        public string Id { get { return m_Id; } }
-        public string Title { get { return m_Title; } }
-        public IAudioSource AudioSource { get { return m_Source; } }
-        public AudioSearchResultType ResultType { get { return m_ResultType; } }
+        AudioSearchResultType ResultType { get; }
 
-        public abstract double DownloadSize { get; }
+        double DownloadSize { get; }
 
         /// <summary>
         /// Download this search result
@@ -112,27 +99,17 @@ namespace Ares.AudioSource
         /// <param name="monitor"></param>
         /// <param name="totalSize"></param>
         /// <returns></returns>
-        public abstract AudioDownloadResult Download(string musicBaseDirectory, string soundsBaseDirectory, string relativeDownloadPath, IProgressMonitor monitor, CancellationToken cancellationToken, double totalSize);
+        AudioDownloadResult Download(string musicBaseDirectory, string soundsBaseDirectory, string relativeDownloadPath, IProgressMonitor monitor, CancellationToken cancellationToken, double totalSize);
     }
 
-    public abstract class ModeElementSearchResult: SearchResult
+    public interface IModeElementSearchResult: ISearchResult
     {
-        public ModeElementSearchResult(IAudioSource source, string id, string title)
-            : base(source, id, title, AudioSearchResultType.ModeElement)
-        {
-        }
-
-        public abstract IModeElement GetModeElementDefinition(string musicBaseDirectory, string soundsBaseDirectory, string relativeDownloadPath);
+        IModeElement GetModeElementDefinition(string musicBaseDirectory, string soundsBaseDirectory, string relativeDownloadPath);
     }
 
-    public abstract class FileSearchResult: SearchResult
+    public interface IFileSearchResult: ISearchResult
     {
-        public FileSearchResult(IAudioSource source, string id, string title, SoundFileType soundFileType)
-            : base(source, id, title, soundFileType == SoundFileType.Music ? AudioSearchResultType.MusicFile : AudioSearchResultType.SoundFile)
-        { 
-        }
-
-        public abstract string GetRelativeDownloadFilePath(string relativeDownloadPath);
+        string GetRelativeDownloadFilePath(string relativeDownloadPath);
     }
 
     /// <summary>

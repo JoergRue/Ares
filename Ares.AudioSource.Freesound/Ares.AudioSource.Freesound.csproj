@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\plugins\</OutputPath>
+    <OutputPath>..\bin\Debug\plugins\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -69,6 +69,10 @@
     <ProjectReference Include="..\Ares.AudioSource\Ares.AudioSource.csproj">
       <Project>{505bf261-dd7f-4201-b0e3-471e464b39af}</Project>
       <Name>Ares.AudioSource</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ares.Data\Ares.Data.csproj">
+      <Project>{f64d6af3-3543-47f0-a7b8-0336750b09c3}</Project>
+      <Name>Ares.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\Ares.ModelChecks\Ares.ModelInfo.csproj">
       <Project>{50ea19ee-5337-499c-8b7b-1b22ea9e24a6}</Project>

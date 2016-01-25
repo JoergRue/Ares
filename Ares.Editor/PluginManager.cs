@@ -114,7 +114,7 @@ namespace Ares.Editor.Plugins
 
             foreach (Type pluginType in pluginTypes)
             {
-                if (this.pluginInstances[pluginType] != null)
+                if (!this.pluginInstances.ContainsKey(pluginType))
                 {
                     this.pluginInstances.Add(pluginType,(T)Activator.CreateInstance(pluginType));
                 }
