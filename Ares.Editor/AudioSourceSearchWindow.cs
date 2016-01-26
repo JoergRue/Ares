@@ -99,16 +99,6 @@ namespace Ares.Editor.AudioSourceSearch
             Ares.Editor.Actions.ElementChanges.Instance.AddListener(-1, ElementChanged);
         }
 
-        private void ElementChanged(int elementId, Ares.Editor.Actions.ElementChanges.ChangeType changeType)
-        {
-            //updateInformationPanel();
-        }
-
-        public void SetProject(Ares.Data.IProject project)
-        {
-            m_Project = project;
-        }
-
         #region Search across all (or only selected) available sources
 
         /// <summary>
@@ -163,6 +153,7 @@ namespace Ares.Editor.AudioSourceSearch
                         new AudioSourceSearchResultItem(result)
                     );
                 }
+                this.resultsListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
                 this.resultsListView.EndUpdate();
             }, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskContinuationOptions.NotOnFaulted, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
 
@@ -221,52 +212,6 @@ namespace Ares.Editor.AudioSourceSearch
         }
 
         /// <summary>
-        /// Start a Task to sequentially execute the given download functions.
-        /// Progress is monitored using a TaskProgressMonitor and the downloads can be cancelled using the given CancellationToken
-        /// </summary>
-        /// <param name="downloadFunctions"></param>
-        /// <param name="totalDownloadSize"></param>
-        private void ExecuteDownloads(List<Func<IProgressMonitor, CancellationToken, double, AudioDownloadResult>> downloadFunctions, double totalDownloadSize)
-        {
-            TaskProgressMonitor monitor = new TaskProgressMonitor(this, StringResources.DownloadingAudio, this.m_cancellationTokenSource);
-            CancellationToken token = this.m_cancellationTokenSource.Token;
-
-            Task<List<AudioDownloadResult>> task = Task.Factory.StartNew(() =>
-            {
-                monitor.SetIndeterminate(StringResources.DownloadingAudio);
-                List<AudioDownloadResult> downloadResults = new List<AudioDownloadResult>();
-
-                foreach (Func<IProgressMonitor, CancellationToken, double, AudioDownloadResult> downloadFunction in downloadFunctions)
-                {
-                    downloadResults.Add(downloadFunction(monitor, token, totalDownloadSize));
-                    token.ThrowIfCancellationRequested();
-                }
-
-                return downloadResults;
-            });
-
-            // What to do when the downloads complete
-            task.ContinueWith((t) =>
-            {
-                monitor.Close();
-
-                // TODO: Do something with the collected DownloadResults
-                List<AudioDownloadResult> downloadResults = task.Result;
-            }, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskContinuationOptions.NotOnFaulted, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
-
-            // What to do when the downloads fail
-            task.ContinueWith((t) =>
-            {
-                monitor.Close();
-                if (t.Exception != null)
-                {
-                    TaskHelpers.HandleTaskException(this, t.Exception, StringResources.SearchError);
-                }
-            }, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskContinuationOptions.OnlyOnFaulted, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
-            
-        }
-
-        /// <summary>
         /// Determine the AudioSearchResultType of the given selected items.
         /// The first item's AudioSearchResultType is assumed to apply to all items, but
         /// this is verified and an InvalidOperationException is thrown if any item in the 
@@ -292,30 +237,7 @@ namespace Ares.Editor.AudioSourceSearch
 
             return overallItemAudioType;
         }
-
-        private double CollectDownloadFunctionsAndSize(IEnumerable<AudioSourceSearchResultItem> selected, List<Func<IProgressMonitor, CancellationToken, double, AudioDownloadResult>> downloadFunctions)
-        {
-            double totalDownloadSize = 0;
-
-            foreach (AudioSourceSearchResultItem searchResultItem in selected)
-            {
-                ISearchResult searchResult = searchResultItem.SearchResult;
-
-                string musicBaseDirectory = Ares.Settings.Settings.Instance.MusicDirectory;
-                string soundBaseDirectory = Ares.Settings.Settings.Instance.SoundDirectory;
-                string relativeDownloadPath = GetRelativeDownloadPathForSearchResult(searchResult);
-
-                // Create a function to download audio to the applicable relative download path
-                downloadFunctions.Add((IProgressMonitor monitor, CancellationToken cancellationToken, double totalSize) =>
-                {
-                    return searchResult.Download(musicBaseDirectory, soundBaseDirectory, relativeDownloadPath, monitor, cancellationToken, totalSize);
-                });
-                totalDownloadSize += searchResult.DownloadSize;
-            }
-
-            return totalDownloadSize;
-        }
-
+     
         private DragDropEffects StartDragSelectedModeElement(IEnumerable<AudioSourceSearchResultItem> selected)
         {
             DragDropEffects dragDropResult;
@@ -376,7 +298,7 @@ namespace Ares.Editor.AudioSourceSearch
         /// <param name="soundsDownloadDirectory"></param>
         public string GetRelativeDownloadPathForSearchResult(ISearchResult searchResult)
         {
-            string audioSourceId = searchResult.AudioSourceId;
+            string audioSourceId = searchResult.AudioSource.Id;
             return System.IO.Path.Combine("OnlineAudioSources", audioSourceId);
         }
 
@@ -406,6 +328,100 @@ namespace Ares.Editor.AudioSourceSearch
 
         #endregion
 
+        #region File downloading
+
+        private double CollectDownloadFunctionsAndSize(IEnumerable<AudioSourceSearchResultItem> selected, List<Func<IProgressMonitor, CancellationToken, double, AudioDownloadResult>> downloadFunctions)
+        {
+            double totalDownloadSize = 0;
+
+            foreach (AudioSourceSearchResultItem searchResultItem in selected)
+            {
+                ISearchResult searchResult = searchResultItem.SearchResult;
+
+                string musicBaseDirectory = Ares.Settings.Settings.Instance.MusicDirectory;
+                string soundBaseDirectory = Ares.Settings.Settings.Instance.SoundDirectory;
+                string relativeDownloadPath = GetRelativeDownloadPathForSearchResult(searchResult);
+
+                // Create a function to download audio to the applicable relative download path
+                downloadFunctions.Add((IProgressMonitor monitor, CancellationToken cancellationToken, double totalSize) =>
+                {
+                    return searchResult.Download(musicBaseDirectory, soundBaseDirectory, relativeDownloadPath, monitor, cancellationToken, totalSize);
+                });
+                totalDownloadSize += searchResult.DownloadSize;
+            }
+
+            return totalDownloadSize;
+        }
+
+        /// <summary>
+        /// Start a Task to sequentially execute the given download functions.
+        /// Progress is monitored using a TaskProgressMonitor and the downloads can be cancelled using the given CancellationToken
+        /// </summary>
+        /// <param name="downloadFunctions"></param>
+        /// <param name="totalDownloadSize"></param>
+        private void ExecuteDownloads(List<Func<IProgressMonitor, CancellationToken, double, AudioDownloadResult>> downloadFunctions, double totalDownloadSize)
+        {
+            TaskProgressMonitor monitor = new TaskProgressMonitor(this, StringResources.DownloadingAudio, this.m_cancellationTokenSource);
+            CancellationToken token = this.m_cancellationTokenSource.Token;
+
+            Task<List<AudioDownloadResult>> task = Task.Factory.StartNew(() =>
+            {
+                monitor.SetIndeterminate(StringResources.DownloadingAudio);
+                List<AudioDownloadResult> downloadResults = new List<AudioDownloadResult>();
+
+                foreach (Func<IProgressMonitor, CancellationToken, double, AudioDownloadResult> downloadFunction in downloadFunctions)
+                {
+                    downloadResults.Add(downloadFunction(monitor, token, totalDownloadSize));
+                    token.ThrowIfCancellationRequested();
+                }
+
+                return downloadResults;
+            });
+
+            // What to do when the downloads complete
+            task.ContinueWith((t) =>
+            {
+                monitor.Close();
+
+                // TODO: Do something with the collected DownloadResults
+                List<AudioDownloadResult> downloadResults = task.Result;
+            }, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskContinuationOptions.NotOnFaulted, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
+
+            // What to do when the downloads fail
+            task.ContinueWith((t) =>
+            {
+                monitor.Close();
+                if (t.Exception != null)
+                {
+                    TaskHelpers.HandleTaskException(this, t.Exception, StringResources.SearchError);
+                }
+            }, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskContinuationOptions.OnlyOnFaulted, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
+
+        }
+
+        #endregion
+
+        public void UpdateInformationPanel()
+        {
+            IEnumerable<AudioSourceSearchResultItem> selectedItems = resultsListView.SelectedItems.Cast<AudioSourceSearchResultItem>();
+            int count = resultsListView.SelectedItems.Count;
+
+            if (count > 1)
+            {
+                // TODO: multiple elements selected, show either an appropriate message ("Multiple entries selected") or common info in the info box
+            }
+            else if (count == 1)
+            {
+                // TODO: just a single element selected, show info in the info box
+            }
+            else if (count < 1)
+            {
+                // TODO: no elements selected
+            }
+        }
+
+        #region Event Handlers
+
         private void searchButton_Click(object sender, EventArgs e)
         {
             ExecuteSearch();
@@ -429,6 +445,23 @@ namespace Ares.Editor.AudioSourceSearch
                 this.ExecuteSearch();
             }
         }
+
+        private void resultsListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateInformationPanel();
+        }
+
+        private void ElementChanged(int elementId, Ares.Editor.Actions.ElementChanges.ChangeType changeType)
+        {
+            //updateInformationPanel();
+        }
+
+        public void SetProject(Ares.Data.IProject project)
+        {
+            m_Project = project;
+        }
+
+        #endregion
     }
 
     public class AudioSourceSearchResultItem : ListViewItem
@@ -447,6 +480,8 @@ namespace Ares.Editor.AudioSourceSearch
         public AudioSourceSearchResultItem(ISearchResult result): base()
         {
             this.Text = result.Title;
+            this.SubItems.Add(result.Author);
+            this.SubItems.Add(result.Duration.ToString(@"mm\:ss\:fff"));
             this.m_ItemAudioType = result.ResultType;
             this.m_SearchResult = result;
 

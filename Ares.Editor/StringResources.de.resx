@@ -504,4 +504,7 @@ Soll es jetzt gespeichert werden?</value>
   <data name="NewWebRadio" xml:space="preserve">
     <value>Neues Web-Radio</value>
   </data>
+  <data name="AudioSourceSearchTitle" xml:space="preserve">
+    <value>Online Audio-Quellen</value>
+  </data>
 </root>

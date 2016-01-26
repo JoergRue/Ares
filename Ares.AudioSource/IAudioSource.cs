@@ -79,12 +79,12 @@ namespace Ares.AudioSource
         string Title { get; }
         string Author { get; }
         string License { get; }
-        double DurationSeconds { get; }
+        TimeSpan Duration { get; }
         string Description { get; }
         double AverageRating { get; }
         int NumberOfRatings { get; }
 
-        string AudioSourceId { get; }
+        IAudioSource AudioSource { get; }
 
         AudioSearchResultType ResultType { get; }
 

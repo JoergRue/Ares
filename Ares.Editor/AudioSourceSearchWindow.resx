@@ -137,6 +137,9 @@
   <data name="colHeaderAuthor.Text" xml:space="preserve">
     <value>Author</value>
   </data>
+  <data name="colHeaderDuration.Text" xml:space="preserve">
+    <value>Duration</value>
+  </data>
   <metadata name="searchResultContextMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>122, 17</value>
   </metadata>
@@ -443,6 +446,12 @@
     <value>colHeaderAuthor</value>
   </data>
   <data name="&gt;&gt;colHeaderAuthor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;colHeaderDuration.Name" xml:space="preserve">
+    <value>colHeaderDuration</value>
+  </data>
+  <data name="&gt;&gt;colHeaderDuration.Type" xml:space="preserve">
     <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;playToolStripMenuItem.Name" xml:space="preserve">

@@ -34,7 +34,7 @@ namespace Ares.AudioSource.Freesound
         public ICollection<ISearchResult> Search(string query, AudioSearchResultType type, Ares.ModelInfo.IProgressMonitor monitor, CancellationToken token)
         {
             List<ISearchResult> results = new List<ISearchResult>();
-            return new FreesoundApiSearch(this.m_Client, monitor, token).DoSearch(query);            
+            return new FreesoundApiSearch(this,this.m_Client, monitor, token).DoSearch(query);            
         }
 
         #endregion
@@ -49,15 +49,17 @@ namespace Ares.AudioSource.Freesound
 
     public class FreesoundApiSearch
     {
+        private FreesoundAudioSource m_AudioSource;
         private IRestClient m_Client;
         private Ares.ModelInfo.IProgressMonitor m_Monitor;
         private CancellationToken m_Token;
         
-        public FreesoundApiSearch(IRestClient client, Ares.ModelInfo.IProgressMonitor monitor, CancellationToken token)
+        public FreesoundApiSearch(FreesoundAudioSource audioSource, IRestClient client, Ares.ModelInfo.IProgressMonitor monitor, CancellationToken token)
         {
             this.m_Monitor = monitor;
             this.m_Token = token;
             this.m_Client = client;
+            this.m_AudioSource = audioSource;
         }
 
         public List<ISearchResult> DoSearch(string searchQuery)
@@ -166,7 +168,7 @@ namespace Ares.AudioSource.Freesound
             {
                 List<ISearchResult> searchResults = new List<ISearchResult>();
                 foreach (Dao.Result result in response.Data.results) {
-                    FreesoundApiSearchResult searchResult = new FreesoundApiSearchResult();
+                    FreesoundApiSearchResult searchResult = new FreesoundApiSearchResult(m_AudioSource);
                     searchResult.Title = result.name;
                     searchResult.PreviewUrls = result.previews;
                     searchResult.License = result.license;
@@ -174,7 +176,7 @@ namespace Ares.AudioSource.Freesound
                     searchResult.FreesoundId = result.id;
                     searchResult.AverageRating = result.avg_rating;
                     searchResult.NumberOfRatings = result.num_ratings;
-                    searchResult.DurationSeconds = result.duration;
+                    searchResult.Duration = TimeSpan.FromSeconds(result.duration);
 
                     searchResults.Add(searchResult);
                 }
@@ -224,32 +226,11 @@ namespace Ares.AudioSource.Freesound
 
     }
 
-    public class FreesoundApiSearchResults
-    {
-        public FreesoundApiSearchResults()
-        {
-            Console.WriteLine("Test");
-        }
-
-        public int Count { get; set; }
-        public string Next { get; set; }
-
-        private List<FreesoundApiSearchResult> m_SearchResults = new List<FreesoundApiSearchResult>();
-
-        [DeserializeAs(Name ="results")]
-        public List<FreesoundApiSearchResult> SearchResults { get { return m_SearchResults; } set { m_SearchResults = value; } }
-    }
-
     public class FreesoundApiSearchResult: IFileSearchResult
     {
-        [DeserializeAs(Name = "id")]
         public long FreesoundId { get; set; }
-        [DeserializeAs(Name = "name")]
         public string Title { get; set; }
-        [DeserializeAs(Name = "username")]
         public string Author { get; set; }
-
-        [DeserializeAs(Name = "license")]
         public string License {
             get
             {
@@ -262,24 +243,25 @@ namespace Ares.AudioSource.Freesound
             }
         }
         private string m_License;
+        private FreesoundAudioSource m_FreesoundAudioSource;
 
-        [DeserializeAs(Name = "duration")]
-        public double DurationSeconds { get; set; }
-        [DeserializeAs(Name = "description")]
+        public TimeSpan Duration { get; set; }
         public string Description { get; set; }
-        [DeserializeAs(Name = "avg_rating")]
         public double AverageRating { get; set; }
-        [DeserializeAs(Name = "num_ratings")]
         public int NumberOfRatings { get; set; }
-
-        [DeserializeAs(Name = "previews")]
         public Dictionary<string, string> PreviewUrls { get; set; }
 
-        public string AudioSourceId { get { return FreesoundAudioSource.AUDIO_SOURCE_ID; } }
+
+
+        public IAudioSource AudioSource { get { return this.m_FreesoundAudioSource; } }
         public double DownloadSize { get { return 1; } }
         public string Id { get { return FreesoundId.ToString(); } }
         public AudioSearchResultType ResultType { get { return AudioSearchResultType.SoundFile; } }
 
+        public FreesoundApiSearchResult(FreesoundAudioSource freesoundAudioSource)
+        {
+            this.m_FreesoundAudioSource = freesoundAudioSource;
+        }
 
         public AudioDownloadResult Download(string musicBaseDirectory, string soundsBaseDirectory, string relativeDownloadPath, IProgressMonitor monitor, CancellationToken cancellationToken, double totalSize)
         {
@@ -289,8 +271,11 @@ namespace Ares.AudioSource.Freesound
 
             System.IO.Directory.CreateDirectory(downloadTargetDirectory);
 
-            WebClient client = new WebClient();
-            client.DownloadFile(PreviewUrls["preview-hq-mp3"], downloadTargetPath);
+            if (!System.IO.File.Exists(downloadTargetPath))
+            {
+                WebClient client = new WebClient();
+                client.DownloadFile(PreviewUrls["preview-hq-mp3"], downloadTargetPath);
+            }
 
             return new AudioDownloadResult();
         }
@@ -298,7 +283,7 @@ namespace Ares.AudioSource.Freesound
         public string GetRelativeDownloadFilePath(string relativeDownloadPath)
         {
             String filenameWithoutExtension = System.IO.Path.GetFileNameWithoutExtension(Title);
-            return System.IO.Path.Combine(relativeDownloadPath, filenameWithoutExtension + ".mp3");
+            return System.IO.Path.Combine(relativeDownloadPath, filenameWithoutExtension + " (Freesound Sound "+this.FreesoundId+" by "+this.Author+").mp3");
         }
     }
 }
