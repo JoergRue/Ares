@@ -515,4 +515,7 @@ You should adapt some settings first.</value>
   <data name="SearchError" xml:space="preserve">
     <value>Error searching for audio: {0}</value>
   </data>
+  <data name="PleaseSelectASingleItemToSeeMoreInfo" xml:space="preserve">
+    <value>Please select a single item to see more information.</value>
+  </data>
 </root>

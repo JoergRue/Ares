@@ -55,13 +55,17 @@ namespace Ares.AudioSource
         bool IsAudioTypeSupported(AudioSearchResultType type);
 
         /// <summary>
-        /// Search for audio (music, sounds, ...)
+        /// Search for audio (music, sounds, ...) 
         /// </summary>
         /// <param name="query"></param>
-        /// <param name="type">optional parameter indicating the requested AudioType</param>
+        /// <param name="type"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="monitor"></param>
+        /// <param name="token"></param>
+        /// <param name="totalNumberOfResults">Optional out parameter that *may* return the total number of results</param>
         /// <returns></returns>
-        ICollection<ISearchResult> Search(string query, AudioSearchResultType type, Ares.ModelInfo.IProgressMonitor monitor, CancellationToken token);
-
+        ICollection<ISearchResult> GetSearchResults(string query, AudioSearchResultType type, int pageSize, int pageIndex, Ares.ModelInfo.IProgressMonitor monitor, CancellationToken token, out int? totalNumberOfResults);
     }
 
     public enum AudioSearchResultType
@@ -74,7 +78,6 @@ namespace Ares.AudioSource
 
     public interface ISearchResult
     {
-
         string Id { get; }
         string Title { get; }
         string Author { get; }
@@ -83,6 +86,8 @@ namespace Ares.AudioSource
         string Description { get; }
         double AverageRating { get; }
         int NumberOfRatings { get; }
+    
+        List<String> Tags { get; }
 
         IAudioSource AudioSource { get; }
 
@@ -91,7 +96,8 @@ namespace Ares.AudioSource
         double DownloadSize { get; }
 
         /// <summary>
-        /// Download this search result
+        /// Download this search result (including anything that is required, i.e. audio files required by an IModeElementSearchResult).
+        /// All audio files will be placed at the given relative path beneath either the sounds or music directory - depending on their type.
         /// </summary>
         /// <param name="musicBaseDirectory"></param>
         /// <param name="soundsBaseDirectory"></param>
@@ -99,17 +105,28 @@ namespace Ares.AudioSource
         /// <param name="monitor"></param>
         /// <param name="totalSize"></param>
         /// <returns></returns>
-        AudioDownloadResult Download(string musicBaseDirectory, string soundsBaseDirectory, string relativeDownloadPath, IProgressMonitor monitor, CancellationToken cancellationToken, double totalSize);
+        AudioDownloadResult Download(string musicTargetDirectory, string soundsTargetDirectory, IProgressMonitor monitor, CancellationToken cancellationToken, double totalSize);
     }
 
     public interface IModeElementSearchResult: ISearchResult
     {
-        IModeElement GetModeElementDefinition(string musicBaseDirectory, string soundsBaseDirectory, string relativeDownloadPath);
+        /// <summary>
+        /// Returns the IModeElement definition of this search result.
+        /// The assumption is, that all required audio files will be placed at the given relative path beneath
+        /// the sounds/music directories when downloaded.
+        /// </summary>
+        /// <param name="relativeDownloadPath"></param>
+        /// <returns></returns>
+        IModeElement GetModeElementDefinition(string relativeDownloadPath);
     }
 
     public interface IFileSearchResult: ISearchResult
     {
-        string GetRelativeDownloadFilePath(string relativeDownloadPath);
+        /// <summary>
+        /// Returns the filename under which this download will be saved as determined by the source
+        /// </summary>
+        /// <returns></returns>
+        string GetDownloadFilename();
     }
 
     /// <summary>

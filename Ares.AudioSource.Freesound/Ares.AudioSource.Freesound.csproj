@@ -47,6 +47,8 @@
   <ItemGroup>
     <Compile Include="ApiKey.cs" />
     <None Include="ApiKey.example.cs" />
+    <Compile Include="FreesoundApiSearch.cs" />
+    <Compile Include="FreesoundApiSearchResult.cs" />
     <Compile Include="FreesoundAudioSource.cs" />
     <Compile Include="ImageResources.Designer.cs">
       <AutoGen>True</AutoGen>

@@ -144,67 +144,31 @@
     <value>122, 17</value>
   </metadata>
   <data name="playToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>146, 22</value>
+    <value>154, 22</value>
   </data>
   <data name="playToolStripMenuItem.Text" xml:space="preserve">
     <value>Play</value>
   </data>
   <data name="stopToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>146, 22</value>
+    <value>154, 22</value>
   </data>
   <data name="stopToolStripMenuItem.Text" xml:space="preserve">
     <value>Stop</value>
   </data>
-  <data name="editToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>146, 22</value>
+  <data name="downloadMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>154, 22</value>
   </data>
-  <data name="editToolStripMenuItem.Text" xml:space="preserve">
-    <value>Edit ...</value>
+  <data name="downloadMenuItem.Text" xml:space="preserve">
+    <value>Download</value>
   </data>
-  <data name="editTagsMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>146, 22</value>
+  <data name="downloadToMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>154, 22</value>
   </data>
-  <data name="editTagsMenuItem.Text" xml:space="preserve">
-    <value>Edit Tags ...</value>
-  </data>
-  <data name="toolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>143, 6</value>
-  </data>
-  <data name="copyToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Strg+X</value>
-  </data>
-  <data name="copyToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>146, 22</value>
-  </data>
-  <data name="copyToolStripMenuItem.Text" xml:space="preserve">
-    <value>Cut</value>
-  </data>
-  <data name="copyToolStripMenuItem1.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Strg+C</value>
-  </data>
-  <data name="copyToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>146, 22</value>
-  </data>
-  <data name="copyToolStripMenuItem1.Text" xml:space="preserve">
-    <value>Copy</value>
-  </data>
-  <data name="pasteToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Strg+V</value>
-  </data>
-  <data name="pasteToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>146, 22</value>
-  </data>
-  <data name="pasteToolStripMenuItem.Text" xml:space="preserve">
-    <value>Paste</value>
-  </data>
-  <data name="deleteToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>146, 22</value>
-  </data>
-  <data name="deleteToolStripMenuItem.Text" xml:space="preserve">
-    <value>Delete</value>
+  <data name="downloadToMenuItem.Text" xml:space="preserve">
+    <value>Download to ...</value>
   </data>
   <data name="searchResultContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>147, 186</value>
+    <value>155, 92</value>
   </data>
   <data name="&gt;&gt;searchResultContextMenu.Name" xml:space="preserve">
     <value>searchResultContextMenu</value>
@@ -342,29 +306,8 @@
   <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <data name="playButton.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="playButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
-    <value>Magenta</value>
-  </data>
-  <data name="playButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 22</value>
-  </data>
-  <data name="playButton.Text" xml:space="preserve">
-    <value>Play</value>
-  </data>
-  <data name="stopButton.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="stopButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
-    <value>Magenta</value>
-  </data>
-  <data name="stopButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 22</value>
-  </data>
-  <data name="stopButton.Text" xml:space="preserve">
-    <value>Stop</value>
+  <data name="audioSourceComboBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>121, 25</value>
   </data>
   <data name="searchBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>100, 25</value>
@@ -396,6 +339,30 @@
   </data>
   <data name="searchButton.Text" xml:space="preserve">
     <value>Search</value>
+  </data>
+  <data name="stopButton.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="stopButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="stopButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 20</value>
+  </data>
+  <data name="stopButton.Text" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+  <data name="playButton.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="playButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="playButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 20</value>
+  </data>
+  <data name="playButton.Text" xml:space="preserve">
+    <value>Play</value>
   </data>
   <data name="toolStrip1.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
@@ -466,59 +433,23 @@
   <data name="&gt;&gt;stopToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;editToolStripMenuItem.Name" xml:space="preserve">
-    <value>editToolStripMenuItem</value>
+  <data name="&gt;&gt;downloadMenuItem.Name" xml:space="preserve">
+    <value>downloadMenuItem</value>
   </data>
-  <data name="&gt;&gt;editToolStripMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;downloadMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;editTagsMenuItem.Name" xml:space="preserve">
-    <value>editTagsMenuItem</value>
+  <data name="&gt;&gt;downloadToMenuItem.Name" xml:space="preserve">
+    <value>downloadToMenuItem</value>
   </data>
-  <data name="&gt;&gt;editTagsMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;downloadToMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;toolStripSeparator1.Name" xml:space="preserve">
-    <value>toolStripSeparator1</value>
+  <data name="&gt;&gt;audioSourceComboBox.Name" xml:space="preserve">
+    <value>audioSourceComboBox</value>
   </data>
-  <data name="&gt;&gt;toolStripSeparator1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;copyToolStripMenuItem.Name" xml:space="preserve">
-    <value>copyToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;copyToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;copyToolStripMenuItem1.Name" xml:space="preserve">
-    <value>copyToolStripMenuItem1</value>
-  </data>
-  <data name="&gt;&gt;copyToolStripMenuItem1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;pasteToolStripMenuItem.Name" xml:space="preserve">
-    <value>pasteToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;pasteToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;deleteToolStripMenuItem.Name" xml:space="preserve">
-    <value>deleteToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;deleteToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;playButton.Name" xml:space="preserve">
-    <value>playButton</value>
-  </data>
-  <data name="&gt;&gt;playButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;stopButton.Name" xml:space="preserve">
-    <value>stopButton</value>
-  </data>
-  <data name="&gt;&gt;stopButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;audioSourceComboBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;searchBox.Name" xml:space="preserve">
     <value>searchBox</value>
@@ -530,6 +461,18 @@
     <value>searchButton</value>
   </data>
   <data name="&gt;&gt;searchButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;stopButton.Name" xml:space="preserve">
+    <value>stopButton</value>
+  </data>
+  <data name="&gt;&gt;stopButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;playButton.Name" xml:space="preserve">
+    <value>playButton</value>
+  </data>
+  <data name="&gt;&gt;playButton.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">

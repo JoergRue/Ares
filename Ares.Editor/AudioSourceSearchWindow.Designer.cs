@@ -63,20 +63,16 @@ namespace Ares.Editor.AudioSourceSearch
             this.searchResultContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.playToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.editTagsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.copyToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.downloadMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.downloadToMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.informationBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.playButton = new System.Windows.Forms.ToolStripButton();
-            this.stopButton = new System.Windows.Forms.ToolStripButton();
+            this.audioSourceComboBox = new System.Windows.Forms.ToolStripComboBox();
             this.searchBox = new System.Windows.Forms.ToolStripTextBox();
             this.searchButton = new System.Windows.Forms.ToolStripButton();
+            this.stopButton = new System.Windows.Forms.ToolStripButton();
+            this.playButton = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -110,7 +106,9 @@ namespace Ares.Editor.AudioSourceSearch
             this.resultsListView.Name = "resultsListView";
             this.resultsListView.UseCompatibleStateImageBehavior = false;
             this.resultsListView.View = System.Windows.Forms.View.Details;
+            this.resultsListView.CacheVirtualItems += new System.Windows.Forms.CacheVirtualItemsEventHandler(this.resultsListView_CacheVirtualItems);
             this.resultsListView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.resultsListView_ItemDrag);
+            this.resultsListView.RetrieveVirtualItem += new System.Windows.Forms.RetrieveVirtualItemEventHandler(this.resultsListView_RetrieveVirtualItem);
             this.resultsListView.SelectedIndexChanged += new System.EventHandler(this.resultsListView_SelectedIndexChanged);
             // 
             // colHeaderTitle
@@ -130,13 +128,8 @@ namespace Ares.Editor.AudioSourceSearch
             this.searchResultContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.playToolStripMenuItem,
             this.stopToolStripMenuItem,
-            this.editToolStripMenuItem,
-            this.editTagsMenuItem,
-            this.toolStripSeparator1,
-            this.copyToolStripMenuItem,
-            this.copyToolStripMenuItem1,
-            this.pasteToolStripMenuItem,
-            this.deleteToolStripMenuItem});
+            this.downloadMenuItem,
+            this.downloadToMenuItem});
             this.searchResultContextMenu.Name = "contextMenuStrip1";
             resources.ApplyResources(this.searchResultContextMenu, "searchResultContextMenu");
             // 
@@ -150,40 +143,17 @@ namespace Ares.Editor.AudioSourceSearch
             this.stopToolStripMenuItem.Name = "stopToolStripMenuItem";
             resources.ApplyResources(this.stopToolStripMenuItem, "stopToolStripMenuItem");
             // 
-            // editToolStripMenuItem
+            // downloadMenuItem
             // 
-            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            resources.ApplyResources(this.editToolStripMenuItem, "editToolStripMenuItem");
+            this.downloadMenuItem.Name = "downloadMenuItem";
+            resources.ApplyResources(this.downloadMenuItem, "downloadMenuItem");
+            this.downloadMenuItem.Click += new System.EventHandler(this.downloadMenuItem_Click);
             // 
-            // editTagsMenuItem
+            // downloadToMenuItem
             // 
-            this.editTagsMenuItem.Name = "editTagsMenuItem";
-            resources.ApplyResources(this.editTagsMenuItem, "editTagsMenuItem");
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            resources.ApplyResources(this.toolStripSeparator1, "toolStripSeparator1");
-            // 
-            // copyToolStripMenuItem
-            // 
-            this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-            resources.ApplyResources(this.copyToolStripMenuItem, "copyToolStripMenuItem");
-            // 
-            // copyToolStripMenuItem1
-            // 
-            this.copyToolStripMenuItem1.Name = "copyToolStripMenuItem1";
-            resources.ApplyResources(this.copyToolStripMenuItem1, "copyToolStripMenuItem1");
-            // 
-            // pasteToolStripMenuItem
-            // 
-            this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
-            resources.ApplyResources(this.pasteToolStripMenuItem, "pasteToolStripMenuItem");
-            // 
-            // deleteToolStripMenuItem
-            // 
-            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            resources.ApplyResources(this.deleteToolStripMenuItem, "deleteToolStripMenuItem");
+            this.downloadToMenuItem.Name = "downloadToMenuItem";
+            resources.ApplyResources(this.downloadToMenuItem, "downloadToMenuItem");
+            this.downloadToMenuItem.Click += new System.EventHandler(this.downloadToMenuItem_Click);
             // 
             // informationBox
             // 
@@ -199,28 +169,20 @@ namespace Ares.Editor.AudioSourceSearch
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.playButton,
-            this.stopButton,
+            this.audioSourceComboBox,
             this.searchBox,
-            this.searchButton});
+            this.searchButton,
+            this.stopButton,
+            this.playButton});
             resources.ApplyResources(this.toolStrip1, "toolStrip1");
             this.toolStrip1.Name = "toolStrip1";
             // 
-            // playButton
+            // audioSourceComboBox
             // 
-            this.playButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            resources.ApplyResources(this.playButton, "playButton");
-            this.playButton.Image = global::Ares.Editor.ImageResources.RunSmall;
-            this.playButton.Name = "playButton";
-            this.playButton.Click += new System.EventHandler(this.playButton_Click);
-            // 
-            // stopButton
-            // 
-            this.stopButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            resources.ApplyResources(this.stopButton, "stopButton");
-            this.stopButton.Image = global::Ares.Editor.ImageResources.StopSmall;
-            this.stopButton.Name = "stopButton";
-            this.stopButton.Click += new System.EventHandler(this.stopButton_Click);
+            this.audioSourceComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.audioSourceComboBox.Name = "audioSourceComboBox";
+            resources.ApplyResources(this.audioSourceComboBox, "audioSourceComboBox");
+            this.audioSourceComboBox.SelectedIndexChanged += new System.EventHandler(this.audioSourceComboBox_SelectedIndexChanged);
             // 
             // searchBox
             // 
@@ -234,6 +196,22 @@ namespace Ares.Editor.AudioSourceSearch
             resources.ApplyResources(this.searchButton, "searchButton");
             this.searchButton.Name = "searchButton";
             this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
+            // 
+            // stopButton
+            // 
+            this.stopButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.stopButton, "stopButton");
+            this.stopButton.Image = global::Ares.Editor.ImageResources.StopSmall;
+            this.stopButton.Name = "stopButton";
+            this.stopButton.Click += new System.EventHandler(this.stopButton_Click);
+            // 
+            // playButton
+            // 
+            this.playButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.playButton, "playButton");
+            this.playButton.Image = global::Ares.Editor.ImageResources.RunSmall;
+            this.playButton.Name = "playButton";
+            this.playButton.Click += new System.EventHandler(this.playButton_Click);
             // 
             // AudioSourceSearchWindow
             // 
@@ -263,21 +241,17 @@ namespace Ares.Editor.AudioSourceSearch
         private System.Windows.Forms.ContextMenuStrip searchResultContextMenu;
         private System.Windows.Forms.ToolStripMenuItem playToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem stopToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem downloadMenuItem;
         private System.Windows.Forms.ToolStripTextBox searchBox;
         private System.Windows.Forms.ToolStripButton searchButton;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
         private System.Windows.Forms.TextBox informationBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.ToolStripMenuItem editTagsMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem downloadToMenuItem;
         private System.Windows.Forms.ListView resultsListView;
         private System.Windows.Forms.ColumnHeader colHeaderTitle;
         private System.Windows.Forms.ColumnHeader colHeaderAuthor;
         private System.Windows.Forms.ColumnHeader colHeaderDuration;
+        private System.Windows.Forms.ToolStripComboBox audioSourceComboBox;
     }
 }

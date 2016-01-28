@@ -839,6 +839,15 @@ namespace Ares.Editor {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Please select a single item to see more information. ähnelt.
+        /// </summary>
+        internal static string PleaseSelectASingleItemToSeeMoreInfo {
+            get {
+                return ResourceManager.GetString("PleaseSelectASingleItemToSeeMoreInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Please select an element ähnelt.
         /// </summary>
         internal static string PleaseSelectElement {

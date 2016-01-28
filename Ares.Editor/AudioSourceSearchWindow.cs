@@ -44,6 +44,9 @@ namespace Ares.Editor.AudioSourceSearch
     /// The target path for each audio file to be downloaded is determined when the drag operation is started.
     /// The actual download only occurs when and if the drag completes.
     /// 
+    /// TODO: Add "Download as" functionality
+    /// TODO: Add "Preview" functionality
+    /// 
     /// TODO: Possibly use ObjectListView instead of normal Listview http://objectlistview.sourceforge.net/cs/index.html
     /// </summary>
     partial class AudioSourceSearchWindow : ToolWindow
@@ -70,10 +73,14 @@ namespace Ares.Editor.AudioSourceSearch
 
         #endregion
 
+        private const int SEARCH_PAGE_SIZE = 100;
+        private const bool VIRTUAL_MODE = false;
+
         private PluginManager m_PluginManager;
         private ICollection<IAudioSource> m_AudioSources;
         private CancellationTokenSource m_cancellationTokenSource = new CancellationTokenSource();
         private Ares.Data.IProject m_Project;
+        private int m_selectedAudioSourceIndex = 0;
 
         public AudioSourceSearchWindow(PluginManager pluginManager)
         {
@@ -84,55 +91,76 @@ namespace Ares.Editor.AudioSourceSearch
             // Initialize the component
             InitializeComponent();
 
+            // Populate the audio sources combo box
+            foreach (IAudioSource audioSource in this.m_AudioSources)
+            {
+                this.audioSourceComboBox.Items.Add(audioSource.Name);
+            }
+            this.audioSourceComboBox.SelectedIndex = 0;
+
             // Setup window title & icon
             this.Text = String.Format(StringResources.AudioSourceSearchTitle);
             this.Icon = ImageResources.AudioSourceSearchIcon;
 
-            // Define the image lists used for the list view
-            resultsListView.SmallImageList = sImageList;
-            resultsListView.LargeImageList = sImageList;
+            // Define the page size, image lists used for the list view
+            if (VIRTUAL_MODE)
+            {
+                this.resultsListView.VirtualListSize = 0;
+                this.resultsListView.VirtualMode = true;
+            }
+
+            this.resultsListView.SmallImageList = sImageList;
+            this.resultsListView.LargeImageList = sImageList;
 
             if (Height > 200)
             {
                 splitContainer1.SplitterDistance = Height - 100;
             }
             Ares.Editor.Actions.ElementChanges.Instance.AddListener(-1, ElementChanged);
+
+            this.UpdateButtonsForSelection();
+            this.UpdateInformationPanel();
         }
 
-        #region Search across all (or only selected) available sources
+        #region Search 
 
         /// <summary>
-        /// Execute a search with the parameters given in the UI
+        /// Execute a search with the query given in the UI, retrieving the first result page with the default
+        /// (SEARCH_PAGE_SIZE) page size.
         /// </summary>
-        public void ExecuteSearch()
+        public void ExecuteSearchAndApplyResults()
         {
             // Read the search query from the UI
             string query = this.searchBox.Text;
 
+            ExecuteSearchAndApplyResults(query, 0, SEARCH_PAGE_SIZE);
+        }
+
+        /// <summary>
+        /// Execute a search with the given parameters (search query, page number, page size)
+        /// The results will 
+        /// </summary>
+        /// <param name="pageIndex"></param>
+        /// <returns></returns>
+        public void ExecuteSearchAndApplyResults(string query, int pageIndex, int pageSize)
+        {
             // By default search for any kind of audio (in the future this might be narrowed down based on user input through the UI)
             AudioSearchResultType requestedResultType = AudioSearchResultType.Unknown;
 
             TaskProgressMonitor monitor = new TaskProgressMonitor(this, StringResources.SearchingForAudio, this.m_cancellationTokenSource);
             CancellationToken token = this.m_cancellationTokenSource.Token;
 
-            Task<List<ISearchResult>> task = Task.Factory.StartNew(() =>
+            int? totalNumberOfResults = null;
+
+            // Start a separate task for executing the search
+            Task<IEnumerable<ISearchResult>> task = Task.Factory.StartNew(() =>
             {
-                List<ISearchResult> results = new List<ISearchResult>();
+                IEnumerable<ISearchResult> results = null;
+                IAudioSource audioSource = this.m_AudioSources.ElementAt(this.m_selectedAudioSourceIndex);
 
                 monitor.SetIndeterminate(StringResources.SearchingForAudio);
-                foreach (IAudioSource audioSource in m_AudioSources)
-                {
-                    // TODO: in the future the list of sources to be searched might be narrowed down (possibly even limited to just one source)
-                    // based on user input through the UI
 
-                    // Only search through sources that actually support the requested result type
-                    if (audioSource.IsAudioTypeSupported(requestedResultType))
-                    {
-                        results.AddRange(audioSource.Search(query, AudioSearchResultType.Unknown, monitor, token));
-                    }
-                    //monitor.IncreaseProgress(1.0 / m_AudioSources.Count);
-                    token.ThrowIfCancellationRequested();
-                }
+                results = ExecuteSearchAgainstAudioSource(query, pageSize, pageIndex, audioSource, requestedResultType, monitor, token, out totalNumberOfResults);
 
                 return results;
             });
@@ -140,21 +168,36 @@ namespace Ares.Editor.AudioSourceSearch
             // What to do when the search completes
             task.ContinueWith((t) =>
             {
+                IEnumerable<ISearchResult> results = task.Result;
                 monitor.Close();
 
-                this.resultsListView.BeginUpdate();
-                // Clear the results list in the UI
-                this.resultsListView.Items.Clear();
-                // Go through all search results
-                foreach (ISearchResult result in task.Result)
+                // If the list is in virtual mode cache the results & pass the total number of results to the list
+                if (VIRTUAL_MODE)
                 {
-                    // Wrap them into AudioSourceSearchResultItems and add to UI results list
-                    this.resultsListView.Items.Add(
-                        new AudioSourceSearchResultItem(result)
-                    );
+                    this.m_ItemCacheQuery = query;
+                    this.m_ItemCache = results
+                                        .Select(result => new SearchResultListItem(result))
+                                        .ToArray();
+                    this.m_ItemCacheFirstIndex = pageIndex * pageSize;
+                    this.resultsListView.VirtualListSize = totalNumberOfResults.GetValueOrDefault(0);
                 }
-                this.resultsListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-                this.resultsListView.EndUpdate();
+                else
+                // Otherwise put the results right into the list
+                {
+                    this.resultsListView.BeginUpdate();
+                    // Clear the results list in the UI
+                    this.resultsListView.Items.Clear();
+                    // Go through all search results
+                    foreach (ISearchResult result in results)
+                    {
+                        // Wrap them into AudioSourceSearchResultItems and add to UI results list
+                        this.resultsListView.Items.Add(
+                            new SearchResultListItem(result)
+                        );
+                    }
+                    this.resultsListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+                    this.resultsListView.EndUpdate();
+                }
             }, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskContinuationOptions.NotOnFaulted, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
 
             // What to do when the search fails
@@ -167,12 +210,49 @@ namespace Ares.Editor.AudioSourceSearch
                 }
             }, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskContinuationOptions.OnlyOnFaulted, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
         }
-        
+
+        /// <summary>
+        /// Actually execute a search against a specific IAudioSource
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="audioSource"></param>
+        /// <param name="requestedResultType"></param>
+        /// <param name="monitor"></param>
+        /// <param name="token"></param>
+        /// <param name="totalNumberOfResults"></param>
+        /// <returns></returns>
+        private IEnumerable<ISearchResult> ExecuteSearchAgainstAudioSource(string query, int pageSize, int pageIndex, IAudioSource audioSource, AudioSearchResultType requestedResultType, IProgressMonitor monitor, CancellationToken token, out int? totalNumberOfResults)
+        {
+            IEnumerable<ISearchResult> results = null;
+
+            // Only search through sources that actually support the requested result type
+            if (audioSource.IsAudioTypeSupported(requestedResultType))
+            {
+                // Retrieve the results
+                results = audioSource.GetSearchResults(query, AudioSearchResultType.Unknown, pageSize, pageIndex, monitor, token, out totalNumberOfResults);
+            }
+            else
+            {
+                // Other sources return no results
+                totalNumberOfResults = 0;
+                results = new List<ISearchResult>();
+            }
+
+            token.ThrowIfCancellationRequested();
+
+            return results;
+        }
+
         #endregion
 
         #region Drag & Drop of search results into the project
 
-        private void resultsListView_ItemDrag(object sender, ItemDragEventArgs e)
+        /// <summary>
+        /// Start a drag&drop operation for the items currently selected in the results list
+        /// </summary>
+        private void StartDragSelectedItems()
         {
             // Make sure there actually is a selection
             if (resultsListView.SelectedItems.Count < 1)
@@ -181,13 +261,9 @@ namespace Ares.Editor.AudioSourceSearch
                 return;
             }
 
-            IEnumerable<AudioSourceSearchResultItem> selected = resultsListView.SelectedItems.Cast<AudioSourceSearchResultItem>();
+            IEnumerable<SearchResultListItem> selectedItems = resultsListView.SelectedItems.Cast<SearchResultListItem>();
 
-            AudioSearchResultType overallItemAudioType = FindAndVerifySelectedAudioType(selected);
-
-            // Collect download actions for each dragged element to be executed after a drag completes
-            List<Func<IProgressMonitor, CancellationToken, double, AudioDownloadResult>> downloadFunctions = new List<Func<IProgressMonitor, CancellationToken, double, AudioDownloadResult>>();
-            double totalDownloadSize = CollectDownloadFunctionsAndSize(selected, downloadFunctions);
+            AudioSearchResultType overallItemAudioType = FindAndVerifySelectedAudioType(selectedItems);
 
             // Decide depending on the overall AudioType of the selected items
             DragDropEffects dragDropResult = DragDropEffects.None;
@@ -196,18 +272,29 @@ namespace Ares.Editor.AudioSourceSearch
                 // If the dragged items are Music or Sound files
                 case AudioSearchResultType.MusicFile:
                 case AudioSearchResultType.SoundFile:
-                    dragDropResult = StartDragSelectedMusicOrSoundFile(selected, overallItemAudioType);
+                    dragDropResult = StartDragFileSearchResults(
+                        selectedItems
+                        // Extract the IFileSearchResult from the SearchResultListItem
+                        .Select(item => item.SearchResult as IFileSearchResult)
+                        // Filter out null/incompatible search results
+                        .Where(result => result != null)
+                    , overallItemAudioType);
                     break;
                 // If the dragged items are ModeElements
                 case AudioSearchResultType.ModeElement:
-                    dragDropResult = StartDragSelectedModeElement(selected);
+                    dragDropResult = StartDragModeElementSearchResults(
+                        selectedItems
+                        // Extract the IModeElementSearchResult from the SearchResultListItem
+                        .Select(item => item.SearchResult as IModeElementSearchResult)
+                        // Filter out null/incompatible search results
+                        .Where(result => result != null)
+                    );
                     break;
             }
 
-            // If the drag&drop resulted in a Copy action, download the audio content
             if (dragDropResult == DragDropEffects.Copy)
             {
-                ExecuteDownloads(downloadFunctions, totalDownloadSize);
+                DownloadFiles(selectedItems,null);
             }
         }
 
@@ -217,16 +304,16 @@ namespace Ares.Editor.AudioSourceSearch
         /// this is verified and an InvalidOperationException is thrown if any item in the 
         /// list has a different AudioSearchResultType than the first one.
         /// </summary>
-        /// <param name="selected"></param>
+        /// <param name="selectedItems"></param>
         /// <returns></returns>
-        private static AudioSearchResultType FindAndVerifySelectedAudioType(IEnumerable<AudioSourceSearchResultItem> selected)
+        private static AudioSearchResultType FindAndVerifySelectedAudioType(IEnumerable<SearchResultListItem> selectedItems)
         {
             // Determine the overall AudioType from the first selected item
-            AudioSourceSearchResultItem firstItem = selected.First();
+            SearchResultListItem firstItem = selectedItems.First();
             AudioSearchResultType overallItemAudioType = firstItem.ItemAudioType;
 
             // Make sure all other items' AudioTypes are compatible (the same)
-            foreach (AudioSourceSearchResultItem item in selected)
+            foreach (SearchResultListItem item in selectedItems)
             {
                 if (item.ItemAudioType != overallItemAudioType)
                 {
@@ -237,40 +324,46 @@ namespace Ares.Editor.AudioSourceSearch
 
             return overallItemAudioType;
         }
-     
-        private DragDropEffects StartDragSelectedModeElement(IEnumerable<AudioSourceSearchResultItem> selected)
+
+        /// <summary>
+        /// Start a drag&drop operation with the given IModelElementSearchResults
+        /// </summary>
+        /// <param name="selectedItems"></param>
+        /// <returns></returns>
+        private DragDropEffects StartDragModeElementSearchResults(IEnumerable<IModeElementSearchResult> searchResults)
         {
             DragDropEffects dragDropResult;
             List<IXmlWritable> draggedItems = new List<IXmlWritable>();
 
-            foreach (AudioSourceSearchResultItem searchResultItem in selected)
+            foreach (IModeElementSearchResult modeElementSearchResult in searchResults)
             {
-                // Cast the SearchResult
-                IModeElementSearchResult modeElementSearchResult = searchResultItem.SearchResult as IModeElementSearchResult;
-
                 // Determine relevant directories
                 string musicBaseDirectory = Ares.Settings.Settings.Instance.MusicDirectory;
                 string soundBaseDirectory = Ares.Settings.Settings.Instance.SoundDirectory;
                 string relativeDownloadPath = GetRelativeDownloadPathForSearchResult(modeElementSearchResult);
 
                 // Get the ModeElement definition
-                draggedItems.Add(modeElementSearchResult.GetModeElementDefinition(musicBaseDirectory, soundBaseDirectory, relativeDownloadPath));
+                draggedItems.Add(modeElementSearchResult.GetModeElementDefinition(relativeDownloadPath));
             }
 
             // Start a drag & drop operation for those project elements
-            dragDropResult = StartDragProjectElements(draggedItems);
+            dragDropResult = StartDragXmlWritables(draggedItems);
             return dragDropResult;
         }
 
-        private DragDropEffects StartDragSelectedMusicOrSoundFile(IEnumerable<AudioSourceSearchResultItem> selected, AudioSearchResultType overallItemAudioType)
+        /// <summary>
+        /// Start a drag&drop operation with the given IFileSearchResults 
+        /// </summary>
+        /// <param name="searchResults"></param>
+        /// <param name="overallItemAudioType"></param>
+        /// <returns></returns>
+        private DragDropEffects StartDragFileSearchResults(IEnumerable<IFileSearchResult> searchResults, AudioSearchResultType overallItemAudioType)
         {
             DragDropEffects dragDropResult;
             List<DraggedItem> draggedFiles = new List<DraggedItem>();
 
-            foreach (AudioSourceSearchResultItem searchResultItem in selected)
+            foreach (IFileSearchResult fileSearchResult in searchResults)
             {
-                // Cast the SearchResult
-                IFileSearchResult fileSearchResult = searchResultItem.SearchResult as IFileSearchResult;
                 // Create a new DraggedItem (dragged file/folder)
                 DraggedItem draggedFile = new DraggedItem();
 
@@ -278,9 +371,9 @@ namespace Ares.Editor.AudioSourceSearch
                 draggedFile.ItemType = overallItemAudioType == AudioSearchResultType.MusicFile ? FileType.Music : FileType.Sound;
                 draggedFile.NodeType = DraggedItemType.File;
 
-                // Get the relative path where the downloaded file will be placed
-                string relativeDownloadPath = GetRelativeDownloadPathForSearchResult(searchResultItem.SearchResult);
-                draggedFile.RelativePath = fileSearchResult.GetRelativeDownloadFilePath(relativeDownloadPath);
+                // Determine tthe relative path where the downloaded file will be placed
+                string relativeDownloadPath = GetRelativeDownloadPathForSearchResult(fileSearchResult);
+                draggedFile.RelativePath = System.IO.Path.Combine(relativeDownloadPath, fileSearchResult.GetDownloadFilename());
 
                 draggedFiles.Add(draggedFile);
             }
@@ -291,22 +384,10 @@ namespace Ares.Editor.AudioSourceSearch
         }
 
         /// <summary>
-        /// Get the relative path below the music/sounds directories where files downloaded for the given search result should be placed
-        /// </summary>
-        /// <param name="searchResult"></param>
-        /// <param name="musicDownloadDirectory"></param>
-        /// <param name="soundsDownloadDirectory"></param>
-        public string GetRelativeDownloadPathForSearchResult(ISearchResult searchResult)
-        {
-            string audioSourceId = searchResult.AudioSource.Id;
-            return System.IO.Path.Combine("OnlineAudioSources", audioSourceId);
-        }
-
-        /// <summary>
         /// Start a drag&drop operation with a collection of Project elements (IXmlWritable) to be dropped into the project structure
         /// </summary>
         /// <param name="exportItems"></param>
-        public DragDropEffects StartDragProjectElements(List<IXmlWritable> draggedItems)
+        public DragDropEffects StartDragXmlWritables(List<IXmlWritable> draggedItems)
         {
             StringBuilder serializedForm = new StringBuilder();
             Data.DataModule.ProjectManager.ExportElements(draggedItems, serializedForm);
@@ -330,27 +411,58 @@ namespace Ares.Editor.AudioSourceSearch
 
         #region File downloading
 
-        private double CollectDownloadFunctionsAndSize(IEnumerable<AudioSourceSearchResultItem> selected, List<Func<IProgressMonitor, CancellationToken, double, AudioDownloadResult>> downloadFunctions)
+        /// <summary>
+        /// Get the relative path below the music/sounds directories where files downloaded for the given ISearchResult should be placed
+        /// </summary>
+        /// <param name="searchResult"></param>
+        /// <param name="musicDownloadDirectory"></param>
+        /// <param name="soundsDownloadDirectory"></param>
+        public string GetRelativeDownloadPathForSearchResult(ISearchResult searchResult)
         {
+            string audioSourceId = searchResult.AudioSource.Id;
+            return System.IO.Path.Combine("OnlineAudioSources", audioSourceId);
+        }
+
+        /// <summary>
+        /// Download the files for all selected items to the default locations (relative path determined by GetRelativeDownloadPathForSearchResult)
+        /// based on their type (sound/music)
+        /// </summary>
+        /// <param name="selected"></param>
+        private void DownloadFiles(IEnumerable<SearchResultListItem> selected, string overrideTargetPath)
+        {
+            // Collect download actions for each dragged element to be executed after a drag completes
+            List<Func<IProgressMonitor, CancellationToken, double, AudioDownloadResult>> downloadFunctions = new List<Func<IProgressMonitor, CancellationToken, double, AudioDownloadResult>>();
             double totalDownloadSize = 0;
 
-            foreach (AudioSourceSearchResultItem searchResultItem in selected)
+            foreach (SearchResultListItem searchResultItem in selected)
             {
                 ISearchResult searchResult = searchResultItem.SearchResult;
+                totalDownloadSize += searchResult.DownloadSize;
 
-                string musicBaseDirectory = Ares.Settings.Settings.Instance.MusicDirectory;
-                string soundBaseDirectory = Ares.Settings.Settings.Instance.SoundDirectory;
                 string relativeDownloadPath = GetRelativeDownloadPathForSearchResult(searchResult);
+
+                // Determine the music & sound target directories
+                // If given, use the overrideTargetPath, otherwise use the defaults
+                string musicTargetDirectory = overrideTargetPath;
+                if (musicTargetDirectory == null) { 
+                    musicTargetDirectory = System.IO.Path.Combine(Ares.Settings.Settings.Instance.MusicDirectory, relativeDownloadPath);
+                }
+                string soundTargetDirectory = overrideTargetPath;
+                if (soundTargetDirectory == null)
+                {
+                    System.IO.Path.Combine(Ares.Settings.Settings.Instance.SoundDirectory, relativeDownloadPath);
+                }
 
                 // Create a function to download audio to the applicable relative download path
                 downloadFunctions.Add((IProgressMonitor monitor, CancellationToken cancellationToken, double totalSize) =>
                 {
-                    return searchResult.Download(musicBaseDirectory, soundBaseDirectory, relativeDownloadPath, monitor, cancellationToken, totalSize);
+                    return searchResult.Download(musicTargetDirectory, soundTargetDirectory, monitor, cancellationToken, totalSize);
                 });
-                totalDownloadSize += searchResult.DownloadSize;
+
             }
 
-            return totalDownloadSize;
+            // If the drag&drop resulted in a Copy action, download the audio content
+            ExecuteDownloadFunctionsInTask(downloadFunctions, totalDownloadSize);            
         }
 
         /// <summary>
@@ -359,7 +471,7 @@ namespace Ares.Editor.AudioSourceSearch
         /// </summary>
         /// <param name="downloadFunctions"></param>
         /// <param name="totalDownloadSize"></param>
-        private void ExecuteDownloads(List<Func<IProgressMonitor, CancellationToken, double, AudioDownloadResult>> downloadFunctions, double totalDownloadSize)
+        private void ExecuteDownloadFunctionsInTask(List<Func<IProgressMonitor, CancellationToken, double, AudioDownloadResult>> downloadFunctions, double totalDownloadSize)
         {
             TaskProgressMonitor monitor = new TaskProgressMonitor(this, StringResources.DownloadingAudio, this.m_cancellationTokenSource);
             CancellationToken token = this.m_cancellationTokenSource.Token;
@@ -396,35 +508,108 @@ namespace Ares.Editor.AudioSourceSearch
                     TaskHelpers.HandleTaskException(this, t.Exception, StringResources.SearchError);
                 }
             }, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskContinuationOptions.OnlyOnFaulted, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
-
         }
 
         #endregion
 
         public void UpdateInformationPanel()
         {
-            IEnumerable<AudioSourceSearchResultItem> selectedItems = resultsListView.SelectedItems.Cast<AudioSourceSearchResultItem>();
-            int count = resultsListView.SelectedItems.Count;
+            Action action = new Action(() => {
+                IEnumerable<SearchResultListItem> selectedItems = resultsListView.SelectedItems.Cast<SearchResultListItem>();
+                int count = resultsListView.SelectedItems.Count;
 
-            if (count > 1)
+                if (count > 1)
+                {
+                    // multiple elements selected
+                    // show either an appropriate message ("Multiple entries selected") or common info in the info box
+                    informationBox.Text = StringResources.PleaseSelectASingleItemToSeeMoreInfo;
+                }
+                else if (count == 1)
+                {
+                    // Just a single element has been selected
+                    string msg = "";
+                    SearchResultListItem item = selectedItems.First();
+                    msg += String.Format(StringResources.Length, (DateTime.Today + item.SearchResult.Duration).ToString("HH::mm::ss.fff"));
+
+                    if (item.SearchResult.ResultType == AudioSearchResultType.MusicFile)
+                    {
+                        if (item.SearchResult.Tags.Count > 0)
+                        {
+                            msg += Environment.NewLine + StringResources.Tags + item.SearchResult.Tags.Aggregate((s1, s2) =>
+                            {
+                                return s1 + ";" + s2;
+                            });
+                        }
+                        else
+                        {
+                            msg += Environment.NewLine + StringResources.NoTags;
+                        }
+                    }
+                    informationBox.Text = msg;
+                }
+                else if (count < 1)
+                {
+                    // no elements selected
+                    informationBox.Text = "";
+                }
+            });
+
+            if (InvokeRequired)
             {
-                // TODO: multiple elements selected, show either an appropriate message ("Multiple entries selected") or common info in the info box
+                Invoke(action);
             }
-            else if (count == 1)
+            else
             {
-                // TODO: just a single element selected, show info in the info box
+                action.Invoke();
             }
-            else if (count < 1)
+        }
+
+        /// <summary>
+        /// Update all relevant buttons in the window depending on whether any items are selected
+        /// </summary>
+        /// <param name="selectionIsEmpty"></param>
+        private void UpdateButtonsForSelection()
+        {
+            Action action = new Action(() => {
+                bool selectionIsNotEmpty = resultsListView.SelectedItems.Count > 0;
+                bool isCurrentlyPlaying = false;
+
+                downloadMenuItem.Enabled = selectionIsNotEmpty;
+                //downloadToMenuItem.Enabled = selectionIsNotEmpty;
+                downloadToMenuItem.Enabled = false;
+                
+                playButton.Enabled = selectionIsNotEmpty && !isCurrentlyPlaying;
+                playToolStripMenuItem.Enabled = selectionIsNotEmpty && !isCurrentlyPlaying;
+                stopButton.Enabled = selectionIsNotEmpty && isCurrentlyPlaying;
+                stopToolStripMenuItem.Enabled = selectionIsNotEmpty && isCurrentlyPlaying;
+            });
+
+            if (InvokeRequired)
             {
-                // TODO: no elements selected
+                Invoke(action);
             }
+            else
+            {
+                action.Invoke();
+            }
+        }
+
+        public void PlaySelectedElement()
+        {
+            
         }
 
         #region Event Handlers
 
+        private void resultsListView_ItemDrag(object sender, ItemDragEventArgs e)
+        {
+            StartDragSelectedItems();
+        }
+
+
         private void searchButton_Click(object sender, EventArgs e)
         {
-            ExecuteSearch();
+            ExecuteSearchAndApplyResults();
         }
 
         private void playButton_Click(object sender, EventArgs e)
@@ -442,13 +627,14 @@ namespace Ares.Editor.AudioSourceSearch
             if (e.KeyChar == (char)Data.Keys.Return)
             {
                 e.Handled = true;
-                this.ExecuteSearch();
+                this.ExecuteSearchAndApplyResults();
             }
         }
 
         private void resultsListView_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateInformationPanel();
+            UpdateButtonsForSelection();
         }
 
         private void ElementChanged(int elementId, Ares.Editor.Actions.ElementChanges.ChangeType changeType)
@@ -461,10 +647,63 @@ namespace Ares.Editor.AudioSourceSearch
             m_Project = project;
         }
 
+        private void downloadMenuItem_Click(object sender, EventArgs e)
+        {
+            // Download the selected files to their default target path
+            DownloadFiles(this.resultsListView.SelectedItems.Cast<SearchResultListItem>(),null);
+        }
+
+        private void downloadToMenuItem_Click(object sender, EventArgs e)
+        {
+            // TODO: provide "download to" functionality overriding the default target folder
+        }
+
+        private void audioSourceComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.m_selectedAudioSourceIndex = this.audioSourceComboBox.SelectedIndex;   
+            // If there is an active search query, re-run it
+            if (!String.IsNullOrWhiteSpace(this.searchBox.Text))
+            {
+                ExecuteSearchAndApplyResults();
+            }
+        }
+
+        #endregion
+
+        #region List View item cache
+
+        private string m_ItemCacheQuery = "";
+        private int m_ItemCacheFirstIndex = 0;
+        private SearchResultListItem[] m_ItemCache = null;
+
+        private void resultsListView_CacheVirtualItems(object sender, CacheVirtualItemsEventArgs e)
+        {
+            
+        }
+
+        private void resultsListView_RetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
+        {
+            // Check whether the requested result index is in our current cache
+            if (m_ItemCache != null && e.ItemIndex >= m_ItemCacheFirstIndex && e.ItemIndex < m_ItemCacheFirstIndex + m_ItemCache.Length)
+            {
+                //A cache hit, so get the item from the cache instead of making a new one.
+                e.Item = m_ItemCache[e.ItemIndex - m_ItemCacheFirstIndex];
+            }
+            else
+            {
+                // Otherwise figure out which page the item is on
+                int pageIndex = e.ItemIndex / SEARCH_PAGE_SIZE;
+                // Search for & load that page into the cache
+                ExecuteSearchAndApplyResults(m_ItemCacheQuery,pageIndex,SEARCH_PAGE_SIZE);
+
+                // TODO: figure out how to (in an async way) get the requested item back into the event once the search returns
+            }
+        }
+
         #endregion
     }
 
-    public class AudioSourceSearchResultItem : ListViewItem
+    public class SearchResultListItem : ListViewItem
     {
 
         private AudioSearchResultType m_ItemAudioType;
@@ -477,7 +716,7 @@ namespace Ares.Editor.AudioSourceSearch
         /// Create an AudioSourceSearchResultItem from te given AudioSource SearchResult
         /// </summary>
         /// <param name="result"></param>
-        public AudioSourceSearchResultItem(ISearchResult result): base()
+        public SearchResultListItem(ISearchResult result): base()
         {
             this.Text = result.Title;
             this.SubItems.Add(result.Author);
