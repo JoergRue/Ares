@@ -71,7 +71,7 @@ namespace Ares.Player_Android
 
 		public String ProjectTitle { get { return m_Project != null ? m_Project.Title : String.Empty; } }
 
-		public bool HasController { get { return m_Network.ClientConnected; } }
+		public bool HasController { get { return m_Network != null && m_Network.ClientConnected; } }
 
 		public String ControllerName { get { return HasController ? m_Network.ClientName : String.Empty; } }
 
@@ -155,20 +155,33 @@ namespace Ares.Player_Android
 		public override void OnCreate ()
 		{
 			base.OnCreate ();
+			m_Handler = new Handler();
+			// Initialization of native bass libraries must happen on main thread
 			try 
 			{
-				m_BassInit = new BassInit(-1, (w) => { Toast.MakeText(this, w, ToastLength.Long).Show(); });
-				Initialize();
-				UpdateNotification(true);
+				m_BassInit = new BassInit(-1, (w) => {
+					ShowToast(w);
+				});
 			}
-			catch (BassInitException ex) 
+			catch (BassInitException ex)
 			{
-				Toast.MakeText(this, ex.Message, ToastLength.Long).Show();	
+				ShowToast(ex.Message);
 			}
+			System.Threading.ThreadPool.QueueUserWorkItem((state) => {
+				try
+				{
+					Initialize();
+					UpdateNotification(true);
+				}
+				catch (Exception ex)
+				{
+					ShowToast(ex.Message);
+				}
+			});
 		}
 
 		public override void OnDestroy ()
-		{
+		{	
 			Shutdown();
 			if (m_BassInit != null)
 			{
@@ -201,7 +214,6 @@ namespace Ares.Player_Android
 
 		private void Initialize()
 		{
-			m_Handler = new Handler();
 			m_PlayingControl = new PlayingControl();
 			ReadSettings();
 			Settings.Settings.Instance.MessageFilterLevel = 1;
@@ -265,6 +277,7 @@ namespace Ares.Player_Android
 
 		private void ShowToast(String text)
 		{
+			Android.Util.Log.Error("Ares", text);
 			m_Handler.Post(() => {
 				Toast.MakeText(this, text, ToastLength.Long).Show();
 			});
@@ -316,7 +329,6 @@ namespace Ares.Player_Android
 			bool hasSettings = Ares.Settings.Settings.Instance.Initialize(ApplicationContext);
 			if (!hasSettings)
 			{
-				Toast.MakeText(this, Resource.String.no_settings, ToastLength.Long).Show();
 				SettingsChanged(true);
 			}
 			else
