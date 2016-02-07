@@ -16,8 +16,8 @@ namespace Ares.Player_Android
 {
 	public class ServiceFragment : Fragment
 	{
-		private readonly string cServiceIntentName = "de.joerg_ruedenauer.ares.PlayerService";
-		private readonly string cServicePackageName = "de.joerg_ruedenauer.ares_player";
+		public static readonly string cServiceIntentName = "de.joerg_ruedenauer.ares.PlayerService";
+		public static readonly string cServicePackageName = "de.joerg_ruedenauer.ares_player";
 
 		private class ServiceStateUpdateReceiver : BroadcastReceiver
 		{
@@ -56,6 +56,7 @@ namespace Ares.Player_Android
 
 			private ServiceFragment mFragment;
 		}
+			
 
 		public override void OnStart()
 		{
@@ -104,7 +105,7 @@ namespace Ares.Player_Android
 
 		public void UpdateServiceState()
 		{
-			if (IsBound)
+			if (IsBound && Activity != null)
 			{
 				Activity.RunOnUiThread(() => DoUpdateServiceState());
 			}

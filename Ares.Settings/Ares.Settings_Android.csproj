@@ -50,6 +50,7 @@
     <Compile Include="Settings.cs" />
     <Compile Include="XmlHelpers.cs" />
     <Compile Include="AndroidStringResources.cs" />
+    <Compile Include="Folders.cs" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\Strings.xml" />

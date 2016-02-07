@@ -38,4 +38,18 @@
 	  <item>Error</item>
 	</string-array>
 	<string name="messages">Messages</string>
+	<string name="up">Up</string>
+	<string name="create">New</string>
+	<string name="select">Select</string>
+	<string name="folders">Folders</string>
+	<string name="musicDir">Music</string>
+	<string name="soundDir">Sounds</string>
+	<string name="projectDir">Projects</string>
+	<string name="settings">Settings</string>
+	<string name="about">About</string>
+	<string name="createDir">Create Folder</string>
+	<string name="connection">Controller Connection</string>
+	<string name="udpPort">UDP Port</string>
+	<string name="tcpPort">TCP Port</string>
+	<string name="aboutInfo">Ares Player\nVersion {0}</string>
 </resources>

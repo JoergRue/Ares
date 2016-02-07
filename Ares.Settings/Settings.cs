@@ -102,8 +102,13 @@ namespace Ares.Settings
     {
         private SettingsData Data { get; set; }
 
+		#if !ANDROID
         public String MusicDirectory { get { return Data.MusicDirectory; } set { Data.MusicDirectory = value; } }
         public String SoundDirectory { get { return Data.SoundDirectory; } set { Data.SoundDirectory = value; } }
+		#else
+		public String MusicDirectory { get { return Data.MusicDirectory; } private set { Data.MusicDirectory = value; } }
+		public String SoundDirectory { get { return Data.SoundDirectory; } private set { Data.SoundDirectory = value; } }
+		#endif
 
         public String WindowLayout { get { return Data.WindowLayout; } set { Data.WindowLayout = value; } }
 
@@ -170,7 +175,33 @@ namespace Ares.Settings
         public int OutputDeviceIndex { get { return Data.OutputDeviceIndex; } set { Data.OutputDeviceIndex = value; } }
 
 		#if ANDROID
-		public String ProjectDirectory { get { return Data.ProjectDirectory; } set { Data.ProjectDirectory = value; } }
+		public String ProjectDirectory { get { return Data.ProjectDirectory; } private set { Data.ProjectDirectory = value; } }
+
+		private IFolder mMusicFolder;
+		private IFolder mSoundFolder;
+		private IFolder mProjectFolder;
+
+		public IFolder MusicFolder {
+			get { return mMusicFolder; }
+			set {
+				mMusicFolder = value;
+				MusicDirectory = value.IOName;
+			}
+		}
+		public IFolder SoundFolder {
+			get { return mSoundFolder; }
+			set {
+				mSoundFolder = value;
+				SoundDirectory = value.IOName;
+			}
+		}
+		public IFolder ProjectFolder {
+			get { return mProjectFolder; }
+			set {
+				mProjectFolder = value;
+				ProjectDirectory = value.IOName;
+			}
+		}
 		#endif
 
         public static Settings Instance
@@ -399,8 +430,8 @@ namespace Ares.Settings
             MusicDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
             SoundDirectory = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyMusic), "Sounds");
 			#else
-			MusicDirectory = Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + Java.IO.File.Separator + "Ares" + Java.IO.File.Separator + "Music";
-			SoundDirectory = Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + Java.IO.File.Separator + "Ares" + Java.IO.File.Separator + "Sounds";
+			MusicFolder = GetDefaultMusicDirectory();
+			SoundFolder = GetDefaultSoundDirectory();
 			#endif
             GlobalVolume = MusicVolume = SoundVolume = 100;
             TcpPort = 11112;
@@ -444,7 +475,7 @@ namespace Ares.Settings
             LastTipOfTheDay = -1;
             OutputDeviceIndex = -1;
 			#if ANDROID
-			ProjectDirectory = Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + Java.IO.File.Separator + "Ares" + Java.IO.File.Separator + "Projects";
+			ProjectFolder = GetDefaultProjectDirectory();
 			#endif
         }
 
@@ -830,9 +861,9 @@ namespace Ares.Settings
 			var editor = prefs.Edit();
 			editor.PutInt("version", Version);
 			editor.PutInt("messageFilterLevel", MessageFilterLevel);
-			editor.PutString("musicDirectory", MusicDirectory);
-			editor.PutString("soundDirectory", SoundDirectory);
-			editor.PutString("projectDirectory", ProjectDirectory);
+			editor.PutString("musicFolder", MusicFolder.Serialize());
+			editor.PutString("soundFolder", SoundFolder.Serialize());
+			editor.PutString("projectFolder", ProjectFolder.Serialize());
 			editor.PutInt("overallVolume", GlobalVolume);
 			editor.PutInt("musicVolume", MusicVolume);
 			editor.PutInt("soundVolume", SoundVolume);
@@ -859,9 +890,12 @@ namespace Ares.Settings
 			var prefs = Android.Preferences.PreferenceManager.GetDefaultSharedPreferences(context);
 			bool hasPrefs = prefs.GetInt("version", 0) > 0;
 			MessageFilterLevel = prefs.GetInt("messageFilterLevel", 2);
-			MusicDirectory = prefs.GetString("musicDirectory", Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + Java.IO.File.Separator + "Ares" + Java.IO.File.Separator + "Music");
-			SoundDirectory = prefs.GetString("soundDirectory", Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + Java.IO.File.Separator + "Ares" + Java.IO.File.Separator + "Sounds");
-			ProjectDirectory = prefs.GetString("projectDirectory", Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + Java.IO.File.Separator + "Ares" + Java.IO.File.Separator + "Projects");
+			String musicFolder = prefs.GetString("musicFolder", GetDefaultMusicDirectory().Serialize());
+			MusicFolder = FolderFactory.CreateFromSerialization(musicFolder);
+			String soundFolder = prefs.GetString("soundFolder", GetDefaultSoundDirectory().Serialize());
+			SoundFolder = FolderFactory.CreateFromSerialization(soundFolder);
+			String projectFolder = prefs.GetString("projectFolder", GetDefaultProjectDirectory().Serialize());
+			ProjectFolder = FolderFactory.CreateFromSerialization(projectFolder);
 			GlobalVolume = prefs.GetInt("overallVolume", 100);
 			MusicVolume = prefs.GetInt("musicVolume", 100);
 			SoundVolume = prefs.GetInt("soundVolume", 100);
@@ -875,6 +909,21 @@ namespace Ares.Settings
 			ButtonMusicFadeMode = prefs.GetInt("buttonMusicFadeMode", 0);
 			ButtonMusicFadeTime = prefs.GetInt("buttonMusicFadeTime", 0);
 			return hasPrefs;
+		}
+
+		public static IFolder GetDefaultMusicDirectory()
+		{
+			return FolderFactory.CreateFileSystemFolder(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + Java.IO.File.Separator + "Ares" + Java.IO.File.Separator + "Music");
+		}
+
+		public static IFolder GetDefaultSoundDirectory()
+		{
+			return FolderFactory.CreateFileSystemFolder(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + Java.IO.File.Separator + "Ares" + Java.IO.File.Separator + "Sounds");
+		}
+
+		public static IFolder GetDefaultProjectDirectory()
+		{
+			return FolderFactory.CreateFileSystemFolder(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + Java.IO.File.Separator + "Ares" + Java.IO.File.Separator + "Projects");
 		}
 #endif
 

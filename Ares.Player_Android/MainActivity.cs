@@ -21,5 +21,43 @@ namespace Ares.Player_Android
 			// Set our view from the "main" layout resource
 			SetContentView (Resource.Layout.Main);
 		}
+
+		public override bool OnCreateOptionsMenu(Android.Views.IMenu menu)
+		{
+			MenuInflater.Inflate(Resource.Menu.OptionsMenu, menu);
+			return base.OnCreateOptionsMenu(menu);
+		}
+
+		public override bool OnOptionsItemSelected(Android.Views.IMenuItem item)
+		{
+			switch (item.ItemId)
+			{
+			case Resource.Id.menu_about:
+				ShowAboutDialog();
+				break;
+			case Resource.Id.menu_settings:
+				ShowSettings();
+				break;
+			}
+			return base.OnOptionsItemSelected(item);
+		}
+
+		private void ShowSettings()
+		{
+			StartActivity(typeof(SettingsActivity));
+			var serviceFragment = (ServiceFragment)FragmentManager.FindFragmentById(Resource.Id.service_fragment);
+		}
+
+		private void ShowAboutDialog()
+		{
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			var pinfo = PackageManager.GetPackageInfo(PackageName, 0);
+			builder.SetMessage(string.Format(Resources.GetString(Resource.String.aboutInfo), pinfo.VersionName))
+				.SetCancelable(true)
+				.SetIcon(Resource.Drawable.Ares)
+				.SetNeutralButton(Android.Resource.String.Ok, (sender, EventArgs) => {
+			});
+			builder.Show();
+		}
 	}
 }
