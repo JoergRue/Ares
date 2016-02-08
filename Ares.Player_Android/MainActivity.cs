@@ -20,6 +20,15 @@ namespace Ares.Player_Android
 			base.OnCreate (savedInstanceState);
 			// Set our view from the "main" layout resource
 			SetContentView (Resource.Layout.Main);
+
+			var prefs = Android.Preferences.PreferenceManager.GetDefaultSharedPreferences(this);
+			if (prefs.GetBoolean("FirstStart", true))
+			{
+				var editor = prefs.Edit();
+				editor.PutBoolean("FirstStart", false);
+				editor.Commit();
+				ShowUsageHint();
+			}
 		}
 
 		public override bool OnCreateOptionsMenu(Android.Views.IMenu menu)
@@ -37,6 +46,9 @@ namespace Ares.Player_Android
 				break;
 			case Resource.Id.menu_settings:
 				ShowSettings();
+				break;
+			case Resource.Id.menu_usage:
+				ShowUsageHint();
 				break;
 			}
 			return base.OnOptionsItemSelected(item);
@@ -58,6 +70,12 @@ namespace Ares.Player_Android
 				.SetNeutralButton(Android.Resource.String.Ok, (sender, EventArgs) => {
 			});
 			builder.Show();
+		}
+
+		private void ShowUsageHint()
+		{
+			UsageDialogFragment dialogFragment = new UsageDialogFragment();
+			dialogFragment.Show(FragmentManager, "UsageDialogFragment");
 		}
 	}
 }

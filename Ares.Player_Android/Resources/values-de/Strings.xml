@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">Ares Player</string>
+	<string name="no_ip_address">Keine verwendbare IP-Adresse gefunden. Ist das Netzwerk verfügbar?</string>
+	<string name="no_status_info_error">Konnte Status-Info nicht senden. Bitte Netzwerkverbindung prüfen.</string>
+	<string name="tags_db_error">Konnte nicht auf Tags-Datenbank zugreifen: {0}</string>
+	<string name="no_settings">Keine Einstellungen gefunden. Verwende Standard-Einstellungen.</string>
+	<string name="load_error">Fehler beim Öffnen des Projektes: {0}</string>
+	<string name="import_error">Fehler beim Importieren des Projektes: {0}</string>
+	<string name="Debug">Debug: </string>
+	<string name="Info">Info: </string>
+	<string name="Warning">Warnung: </string>
+	<string name="Error">Fehler: </string>
+	<string name="service_error">Ares Player Fehler: </string>
+	<string name="connected_with">Verbunden mit {0}</string>
+	<string name="not_connected">Kein Controller verbunden</string>
+	<string name="directory_error">Konnte Verzeichnis {0} nicht anlegen: {1}</string>
+	<string name="service_running">Ares Player ist aktiv</string>
+	<string name="loaded_project">Projekt: {0}</string>
+	<string name="no_project">Kein Projekt geladen</string>
+	<string name="importing_project">Importiere Projekt ...</string>
+	<string name="player_service">Player Service</string>
+	<string name="service_status">Status: {0}</string>
+	<string name="controller">Controller</string>
+	<string name="controller_status">Status: {0}</string>
+	<string name="start_controller">Starte App</string>
+	<string name="project">Projekt</string>
+	<string name="start">Start</string>
+	<string name="stop">Stopp</string>
+	<string name="running">Aktiv</string>
+	<string name="stopped">Gestoppt</string>
+	<string name="filter">Filter:</string>
+	<string name="clear">Löschen</string>
+	<string-array name="filterChoices">
+	  <item>Debug</item>
+	  <item>Info</item>
+	  <item>Warnung</item>
+	  <item>Fehler</item>
+	</string-array>
+	<string name="messages">Meldungen</string>
+	<string name="up">Hoch</string>
+	<string name="create">Neu</string>
+	<string name="select">Wählen</string>
+	<string name="folders">Verzeichnisse</string>
+	<string name="musicDir">Musik</string>
+	<string name="soundDir">Geräusche</string>
+	<string name="projectDir">Projekte</string>
+	<string name="settings">Einstellungen</string>
+	<string name="about">Über</string>
+	<string name="createDir">Verzeichnis anlegen</string>
+	<string name="connection">Verbindung zum Controller</string>
+	<string name="udpPort">UDP-Port</string>
+	<string name="tcpPort">TCP-Port</string>
+	<string name="aboutInfo">Ares Player\nVersion {0}</string>
+	<string name="usage">Anleitung</string>
+	<string name="usageHtml">&lt;h4&gt;Um den Ares Player zu verwenden:&lt;/h4&gt;
+	&lt;ol&gt;
+	&lt;li&gt;Erstelle ein Projekt mit dem Ares Editor (auf Windows)&lt;/li&gt;
+	&lt;li&gt;Kopiere Musikdateien nach &lt;i&gt;{0}&lt;/i&gt;&lt;/li&gt;
+	&lt;li&gt;Kopiere Geräuschdateien nach &lt;i&gt;{1}&lt;/i&gt;&lt;/li&gt;
+	&lt;li&gt;Kopiere die Projektdatei nach &lt;i&gt;{2}&lt;/i&gt;&lt;/li&gt;
+	&lt;li&gt;Verbinde einen Controller und öffne das Projekt dort&lt;/li&gt;
+	&lt;/ol&gt;
+	&lt;p&gt;Die Verzeichnisse kann man in den Einstellungen ändern.&lt;br /&gt;&lt;br /&gt;Man kann auch ein gepacktes Projekt verwenden, aber das Auspacken auf dem Gerät kann eine Weile dauern.&lt;/p&gt;
+	</string>
+</resources>

@@ -322,11 +322,14 @@ namespace Ares.Player_Android
 			// aapt resource value: 0x7f090001
 			public const int linearLayout5 = 2131296257;
 			
-			// aapt resource value: 0x7f09001e
-			public const int menu_about = 2131296286;
+			// aapt resource value: 0x7f090020
+			public const int menu_about = 2131296288;
 			
-			// aapt resource value: 0x7f09001d
-			public const int menu_settings = 2131296285;
+			// aapt resource value: 0x7f09001e
+			public const int menu_settings = 2131296286;
+			
+			// aapt resource value: 0x7f09001f
+			public const int menu_usage = 2131296287;
 			
 			// aapt resource value: 0x7f090011
 			public const int messageIcon = 2131296273;
@@ -379,6 +382,9 @@ namespace Ares.Player_Android
 			// aapt resource value: 0x7f090007
 			public const int upButton = 2131296263;
 			
+			// aapt resource value: 0x7f09001d
+			public const int usageText = 2131296285;
+			
 			static Id()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
@@ -412,6 +418,9 @@ namespace Ares.Player_Android
 			
 			// aapt resource value: 0x7f040006
 			public const int ServiceFragment = 2130968582;
+			
+			// aapt resource value: 0x7f040007
+			public const int Usage = 2130968583;
 			
 			static Layout()
 			{
@@ -880,6 +889,12 @@ namespace Ares.Player_Android
 			
 			// aapt resource value: 0x7f06007f
 			public const int up = 2131099775;
+			
+			// aapt resource value: 0x7f06008d
+			public const int usage = 2131099789;
+			
+			// aapt resource value: 0x7f06008e
+			public const int usageHtml = 2131099790;
 			
 			static String()
 			{

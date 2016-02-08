@@ -69,6 +69,7 @@
     <Compile Include="PrefsFragment.cs" />
     <Compile Include="SettingsActivity.cs" />
     <Compile Include="PortPreference.cs" />
+    <Compile Include="UsageDialogFragment.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AndroidManifest.xml" />
@@ -99,12 +100,15 @@
     <AndroidResource Include="Resources\menu\OptionsMenu.xml" />
     <AndroidResource Include="Resources\layout\FolderListItem.axml" />
     <AndroidResource Include="Resources\values\PrefsAttrs.xml" />
+    <AndroidResource Include="Resources\layout\Usage.axml" />
+    <AndroidResource Include="Resources\values-de\Strings.xml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable\" />
     <Folder Include="FolderBrowser\" />
     <Folder Include="Resources\xml\" />
     <Folder Include="Resources\menu\" />
+    <Folder Include="Resources\values-de\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Insights.1.11.3\build\MonoAndroid10\Xamarin.Insights.targets" Condition="Exists('..\packages\Xamarin.Insights.1.11.3\build\MonoAndroid10\Xamarin.Insights.targets')" />

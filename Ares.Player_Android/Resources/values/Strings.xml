@@ -52,4 +52,14 @@
 	<string name="udpPort">UDP Port</string>
 	<string name="tcpPort">TCP Port</string>
 	<string name="aboutInfo">Ares Player\nVersion {0}</string>
-</resources>
+	<string name="usage">Usage</string>
+	<string name="usageHtml">&lt;h4&gt;To use the Ares Player:&lt;/h4&gt;
+	&lt;ol&gt;
+	&lt;li&gt;Create a project with the Ares Editor (on Windows)&lt;/li&gt;
+	&lt;li&gt;Copy music files to &lt;i&gt;{0}&lt;/i&gt;&lt;/li&gt;
+	&lt;li&gt;Copy sound files to &lt;i&gt;{1}&lt;/i&gt;&lt;/li&gt;
+	&lt;li&gt;Copy the project file to &lt;i&gt;{2}&lt;/i&gt;&lt;/li&gt;
+	&lt;li&gt;Connect a controller and open the project there&lt;/li&gt;
+	&lt;/ol&gt;
+	&lt;p&gt;You can change the folders in the settings.&lt;br /&gt;&lt;br /&gt;You can also use a packed project, though unzipping on the device may take some time.&lt;/p&gt;
+	</string></resources>
