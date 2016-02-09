@@ -122,7 +122,7 @@ namespace Ares.Player_Android
 				var service = Binder.Service;
 				if (service.HasController)
 				{
-					controllerStateView.Text = Resources.GetString(Resource.String.connected_with) + service.ControllerName;
+					controllerStateView.Text = String.Format(Resources.GetString(Resource.String.connected_with), service.ControllerName);
 					controllerButton.Enabled = false;
 					controllerButton.Visibility = ViewStates.Invisible;
 				}

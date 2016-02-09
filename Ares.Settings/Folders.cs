@@ -44,7 +44,14 @@ namespace Ares.Settings
 
 		public List<String> GetSubFolderNames()
 		{
-			return new List<String>(System.IO.Directory.GetDirectories(mPath));
+			try 
+			{
+				return new List<String>(System.IO.Directory.GetDirectories(mPath));
+			}
+			catch (System.IO.IOException)
+			{
+				return new List<String>();
+			}
 		}
 
 		public IFolder GetSubFolder(String name)

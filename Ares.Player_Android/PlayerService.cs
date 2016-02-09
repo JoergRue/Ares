@@ -392,7 +392,7 @@ namespace Ares.Player_Android
 				}
 				catch (Exception ex)
 				{
-					Toast.MakeText(this, String.Format(Resources.GetString(Resource.String.directory_error), directory, ex.Message), ToastLength.Long).Show();
+					ShowToast(String.Format(Resources.GetString(Resource.String.directory_error), directory, ex.Message));
 				}
 			}
 		}
@@ -439,7 +439,7 @@ namespace Ares.Player_Android
 			}
 			catch (Ares.Tags.TagsDbException ex)
 			{
-				Toast.MakeText(this, String.Format(Resources.GetString(Resource.String.tags_db_error), ex.Message), ToastLength.Long).Show();
+				ShowToast(String.Format(Resources.GetString(Resource.String.tags_db_error), ex.Message));
 			}
 		}
 
@@ -511,7 +511,7 @@ namespace Ares.Player_Android
 			}
 			catch (Exception e)
 			{
-				ShowToast(String.Format(Resources.GetString(Resource.String.load_error, e.Message)));
+				ShowToast(String.Format(Resources.GetString(Resource.String.load_error), e.Message));
 				if (onControllerRequest)
 				{
 					m_Network.ErrorOccurred(-1, String.Format(Resources.GetString(Resource.String.load_error, e.Message)));
