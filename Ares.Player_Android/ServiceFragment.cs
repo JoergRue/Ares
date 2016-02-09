@@ -226,6 +226,7 @@ namespace Ares.Player_Android
 				if (IsControllerInstalled())
 				{
 					Intent launchIntent = Activity.PackageManager.GetLaunchIntentForPackage(controllerPackage);
+					launchIntent.PutExtra("UDPPort", Settings.Settings.Instance.UdpPort);
 					StartActivity(launchIntent);
 				}
 				else

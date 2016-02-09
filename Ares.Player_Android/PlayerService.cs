@@ -152,6 +152,8 @@ namespace Ares.Player_Android
 			}
 		}
 
+
+
 		public override void OnCreate ()
 		{
 			base.OnCreate ();
@@ -167,22 +169,14 @@ namespace Ares.Player_Android
 			{
 				ShowToast(ex.Message);
 			}
-			System.Threading.ThreadPool.QueueUserWorkItem((state) => {
-				try
-				{
-					Initialize();
-					UpdateNotification(true);
-				}
-				catch (Exception ex)
-				{
-					ShowToast(ex.Message);
-				}
-			});
 		}
 
 		public override void OnDestroy ()
 		{	
-			Shutdown();
+			lock (lockObject)
+			{
+				Shutdown();
+			}
 			if (m_BassInit != null)
 			{
 				m_BassInit.Dispose();
@@ -193,8 +187,59 @@ namespace Ares.Player_Android
 			base.OnDestroy();
 		}
 
+		private bool mIsInitialized = false;
+
+		private Object lockObject = new object();
+
 		public override StartCommandResult OnStartCommand (Android.Content.Intent intent, StartCommandFlags flags, int startId)
 		{
+			bool portChanged = false;
+			if (intent.HasExtra("UDPPort"))
+			{
+				int port = intent.GetIntExtra("UDPPort", Settings.Settings.Instance.UdpPort);
+				if (port != Settings.Settings.Instance.UdpPort)
+				{
+					Settings.Settings.Instance.UdpPort = port;
+					Settings.Settings.Instance.Write(ApplicationContext);
+					portChanged = true;
+				}
+			}
+			if (!mIsInitialized)
+			{
+				System.Threading.ThreadPool.QueueUserWorkItem((state) => {
+					lock(lockObject)
+					{
+						try
+						{
+							Initialize();
+							UpdateNotification(true);
+						}
+						catch (Exception ex)
+						{
+							ShowToast(ex.Message);
+						}
+					}
+				});
+				mIsInitialized = true;
+			}
+			else if (portChanged)
+			{
+				System.Threading.ThreadPool.QueueUserWorkItem((state) => {
+					lock (lockObject)
+					{
+						try
+						{
+							Shutdown();
+							Initialize();
+							UpdateNotification(true);
+						}
+						catch (Exception ex)
+						{
+							ShowToast(ex.Message);
+						}
+					}
+				});
+			}					
 			return StartCommandResult.Sticky;
 		}
 
