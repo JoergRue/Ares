@@ -331,7 +331,11 @@ public class ControlFragment extends ConnectedFragment implements INetworkClient
     
     private void projectOpened(Configuration config, String fileName) {
     	if (Control.getInstance().getFilePath().startsWith(fileName)) {
-    		getActivity().getPreferences(Activity.MODE_PRIVATE).edit().putString(LAST_PROJECT, Control.getInstance().getFilePath()).commit();
+			String path = Control.getInstance().getFilePath();
+			if (path.endsWith(".apkg")) {
+				path = path.substring(0, path.length() - 4) + "ares";
+			}
+    		getActivity().getPreferences(Activity.MODE_PRIVATE).edit().putString(LAST_PROJECT, path).commit();
     	}
     	Control.getInstance().setConfiguration(config, fileName);
 		updateProjectTitle();
