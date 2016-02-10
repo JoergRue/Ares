@@ -857,6 +857,15 @@ namespace Ares.Editor {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Please select only entries of the same type! ähnelt.
+        /// </summary>
+        internal static string PleaseSelectOnlyEntriesOfTheSameType {
+            get {
+                return ResourceManager.GetString("PleaseSelectOnlyEntriesOfTheSameType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Please select a tag ähnelt.
         /// </summary>
         internal static string PleaseSelectTag {

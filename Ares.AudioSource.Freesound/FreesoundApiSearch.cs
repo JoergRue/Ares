@@ -40,10 +40,17 @@ namespace Ares.AudioSource.Freesound
 
             if (response.ErrorException != null)
             {
+                // If an exception occurred during the request, throw it now
                 throw response.ErrorException;
+            }
+            else if (response.ErrorMessage != null)
+            {
+                // If there is an error message without exception, throw a new exception with that message
+                throw new Exception(response.ErrorMessage);
             }
             else
             {
+                // Otherwise work with the results and return them
                 List<ISearchResult> searchResults = new List<ISearchResult>();
                 foreach (SearchResultDtos.Result result in response.Data.results)
                 {

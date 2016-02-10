@@ -134,6 +134,39 @@ namespace Ares.AudioSource
     /// </summary>
     public class AudioDownloadResult
     {
+        private ResultState m_State;
+        private string m_Message;
+        private Exception m_Cause;
+
+        enum ResultState
+        {
+            SUCCESS,
+            ERROR
+        }
+
+        public static AudioDownloadResult SUCCESS = new AudioDownloadResult(ResultState.SUCCESS, null);
+        public static AudioDownloadResult ERROR(string message)
+        {
+            return new AudioDownloadResult(ResultState.ERROR, message);
+        }
+        public static AudioDownloadResult ERROR(string message, Exception cause)
+        {
+            return new AudioDownloadResult(ResultState.ERROR, message, cause);
+        }
+
+        private AudioDownloadResult(ResultState state, string message)
+        {
+            this.m_State = state;
+            this.m_Message = message;
+            this.m_Cause = null;
+        }
+
+        private AudioDownloadResult(ResultState state, string message, Exception cause)
+        {
+            this.m_State = state;
+            this.m_Message = message;
+            this.m_Cause = cause;
+        }
 
     }
 

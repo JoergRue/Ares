@@ -1,4 +1,5 @@
-﻿/*
+﻿//#define VIRTUAL_MODE_SEARCH_RESULTS
+/*
  Copyright (c) 2015 [Joerg Ruedenauer]
  
  This file is part of Ares.
@@ -34,7 +35,6 @@ using System.Windows.Forms;
 
 namespace Ares.Editor.AudioSourceSearch
 {
-
     /// <summary>
     /// This window/form allows the user to search for audio (Music, Sounds, complete Mode Elements) in various online sources (IAudioSource).
     /// The search results are displayed in a list an can be dragged into either the file-list containers or the project structure,
@@ -49,6 +49,7 @@ namespace Ares.Editor.AudioSourceSearch
     /// 
     /// TODO: Possibly use ObjectListView instead of normal Listview http://objectlistview.sourceforge.net/cs/index.html
     /// </summary>
+
     partial class AudioSourceSearchWindow : ToolWindow
     {
         #region Static ImageList for icons
@@ -73,9 +74,8 @@ namespace Ares.Editor.AudioSourceSearch
 
         #endregion
 
-        private const int SEARCH_PAGE_SIZE = 100;
-        private const bool VIRTUAL_MODE = false;
-
+        private int m_searchPageSize = 50;
+        
         private PluginManager m_PluginManager;
         private ICollection<IAudioSource> m_AudioSources;
         private CancellationTokenSource m_cancellationTokenSource = new CancellationTokenSource();
@@ -103,11 +103,10 @@ namespace Ares.Editor.AudioSourceSearch
             this.Icon = ImageResources.AudioSourceSearchIcon;
 
             // Define the page size, image lists used for the list view
-            if (VIRTUAL_MODE)
-            {
-                this.resultsListView.VirtualListSize = 0;
-                this.resultsListView.VirtualMode = true;
-            }
+#if VIRTUAL_MODE_SEARCH_RESULTS
+            this.resultsListView.VirtualListSize = 0;
+            this.resultsListView.VirtualMode = true;
+#endif
 
             this.resultsListView.SmallImageList = sImageList;
             this.resultsListView.LargeImageList = sImageList;
@@ -128,12 +127,14 @@ namespace Ares.Editor.AudioSourceSearch
         /// Execute a search with the query given in the UI, retrieving the first result page with the default
         /// (SEARCH_PAGE_SIZE) page size.
         /// </summary>
-        public void ExecuteSearchAndApplyResults()
+        public void ExecuteSearchWithUiQuery()
         {
             // Read the search query from the UI
             string query = this.searchBox.Text;
 
-            ExecuteSearchAndApplyResults(query, 0, SEARCH_PAGE_SIZE);
+
+
+            ExecuteSearch(query, 0, m_searchPageSize);
         }
 
         /// <summary>
@@ -142,7 +143,7 @@ namespace Ares.Editor.AudioSourceSearch
         /// </summary>
         /// <param name="pageIndex"></param>
         /// <returns></returns>
-        public void ExecuteSearchAndApplyResults(string query, int pageIndex, int pageSize)
+        public Task<IEnumerable<ISearchResult>> ExecuteSearch(string query, int pageIndex, int pageSize)
         {
             // By default search for any kind of audio (in the future this might be narrowed down based on user input through the UI)
             AudioSearchResultType requestedResultType = AudioSearchResultType.Unknown;
@@ -165,41 +166,6 @@ namespace Ares.Editor.AudioSourceSearch
                 return results;
             });
 
-            // What to do when the search completes
-            task.ContinueWith((t) =>
-            {
-                IEnumerable<ISearchResult> results = task.Result;
-                monitor.Close();
-
-                // If the list is in virtual mode cache the results & pass the total number of results to the list
-                if (VIRTUAL_MODE)
-                {
-                    this.m_ItemCacheQuery = query;
-                    this.m_ItemCache = results
-                                        .Select(result => new SearchResultListItem(result))
-                                        .ToArray();
-                    this.m_ItemCacheFirstIndex = pageIndex * pageSize;
-                    this.resultsListView.VirtualListSize = totalNumberOfResults.GetValueOrDefault(0);
-                }
-                else
-                // Otherwise put the results right into the list
-                {
-                    this.resultsListView.BeginUpdate();
-                    // Clear the results list in the UI
-                    this.resultsListView.Items.Clear();
-                    // Go through all search results
-                    foreach (ISearchResult result in results)
-                    {
-                        // Wrap them into AudioSourceSearchResultItems and add to UI results list
-                        this.resultsListView.Items.Add(
-                            new SearchResultListItem(result)
-                        );
-                    }
-                    this.resultsListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-                    this.resultsListView.EndUpdate();
-                }
-            }, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskContinuationOptions.NotOnFaulted, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
-
             // What to do when the search fails
             task.ContinueWith((t) =>
             {
@@ -209,6 +175,59 @@ namespace Ares.Editor.AudioSourceSearch
                     TaskHelpers.HandleTaskException(this, t.Exception, StringResources.SearchError);
                 }
             }, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskContinuationOptions.OnlyOnFaulted, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
+
+            // What to do when the search completes
+            return task.ContinueWith((t) =>
+            {
+                IEnumerable<ISearchResult> results = task.Result;
+                monitor.Close();
+
+                this.resultsListView.BeginUpdate();
+
+#if VIRTUAL_MODE_SEARCH_RESULTS
+                // If the list is in virtual mode...
+
+                // If the query has changed, reset the cache
+                if (this.m_ResultCacheQuery != query)
+                {
+                    this.m_ResultCacheItems = null;
+                    this.m_ResultCacheQuery = query;
+                }
+                // If there is no cache (initial or reset) create one
+                if (this.m_ResultCacheItems == null)
+                {
+                    this.m_ResultCacheItems = new Dictionary<int, SearchResultListItem>();
+                }
+                
+                // Put the results into the cache
+                int resultIndex = pageIndex * pageSize;
+                foreach (ISearchResult result in results)
+                {
+                    this.m_ResultCacheItems.Add(resultIndex, new SearchResultListItem(result));
+                    resultIndex++;
+                }
+
+                // Pass the result count to the list view
+                this.resultsListView.VirtualListSize = totalNumberOfResults.GetValueOrDefault(0);
+#else
+                // If the list is not in virtual mode actually put the results into the list
+                // Clear the results list in the UI
+                this.resultsListView.Items.Clear();
+                // Go through all search results
+                foreach (ISearchResult result in results)
+                {
+                    // Wrap them into AudioSourceSearchResultItems and add to UI results list
+                    this.resultsListView.Items.Add(
+                        new SearchResultListItem(result)
+                    );
+                }
+                this.resultsListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+#endif
+
+                this.resultsListView.EndUpdate();
+
+                return results;
+            }, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskContinuationOptions.NotOnFaulted, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         /// <summary>
@@ -245,9 +264,9 @@ namespace Ares.Editor.AudioSourceSearch
             return results;
         }
 
-        #endregion
+#endregion
 
-        #region Drag & Drop of search results into the project
+#region Drag & Drop of search results into the project
 
         /// <summary>
         /// Start a drag&drop operation for the items currently selected in the results list
@@ -255,13 +274,13 @@ namespace Ares.Editor.AudioSourceSearch
         private void StartDragSelectedItems()
         {
             // Make sure there actually is a selection
-            if (resultsListView.SelectedItems.Count < 1)
+            if (resultsListView.SelectedIndices.Count < 1)
             {
                 // No item selecte, don't drag
                 return;
             }
 
-            IEnumerable<SearchResultListItem> selectedItems = resultsListView.SelectedItems.Cast<SearchResultListItem>();
+            IEnumerable<SearchResultListItem> selectedItems = GetSelectedItems();
 
             AudioSearchResultType overallItemAudioType = FindAndVerifySelectedAudioType(selectedItems);
 
@@ -317,8 +336,8 @@ namespace Ares.Editor.AudioSourceSearch
             {
                 if (item.ItemAudioType != overallItemAudioType)
                 {
-                    // TODO: show a message to the user that he should only select items of the same type?
-                    throw new InvalidOperationException();
+                    // Show a message to the user that he should only select items of the same type?
+                    throw new InvalidOperationException(StringResources.PleaseSelectOnlyEntriesOfTheSameType);
                 }
             }
 
@@ -392,7 +411,7 @@ namespace Ares.Editor.AudioSourceSearch
             StringBuilder serializedForm = new StringBuilder();
             Data.DataModule.ProjectManager.ExportElements(draggedItems, serializedForm);
             ProjectExplorer.ClipboardElements cpElements = new ProjectExplorer.ClipboardElements() { SerializedForm = serializedForm.ToString() };
-            return DoDragDrop(cpElements, DragDropEffects.Copy);
+            return DoDragDrop(cpElements, DragDropEffects.Move);
         }
 
         /// <summary>
@@ -407,9 +426,9 @@ namespace Ares.Editor.AudioSourceSearch
             return DoDragDrop(info, DragDropEffects.Copy);
         }
 
-        #endregion
+#endregion
 
-        #region File downloading
+#region File downloading
 
         /// <summary>
         /// Get the relative path below the music/sounds directories where files downloaded for the given ISearchResult should be placed
@@ -450,7 +469,7 @@ namespace Ares.Editor.AudioSourceSearch
                 string soundTargetDirectory = overrideTargetPath;
                 if (soundTargetDirectory == null)
                 {
-                    System.IO.Path.Combine(Ares.Settings.Settings.Instance.SoundDirectory, relativeDownloadPath);
+                    soundTargetDirectory = System.IO.Path.Combine(Ares.Settings.Settings.Instance.SoundDirectory, relativeDownloadPath);
                 }
 
                 // Create a function to download audio to the applicable relative download path
@@ -510,13 +529,13 @@ namespace Ares.Editor.AudioSourceSearch
             }, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskContinuationOptions.OnlyOnFaulted, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
         }
 
-        #endregion
+#endregion
 
         public void UpdateInformationPanel()
         {
             Action action = new Action(() => {
-                IEnumerable<SearchResultListItem> selectedItems = resultsListView.SelectedItems.Cast<SearchResultListItem>();
-                int count = resultsListView.SelectedItems.Count;
+                IEnumerable<SearchResultListItem> selectedItems = GetSelectedItems();
+                int count = resultsListView.SelectedIndices.Count;
 
                 if (count > 1)
                 {
@@ -571,7 +590,7 @@ namespace Ares.Editor.AudioSourceSearch
         private void UpdateButtonsForSelection()
         {
             Action action = new Action(() => {
-                bool selectionIsNotEmpty = resultsListView.SelectedItems.Count > 0;
+                bool selectionIsNotEmpty = resultsListView.SelectedIndices.Count > 0;
                 bool isCurrentlyPlaying = false;
 
                 downloadMenuItem.Enabled = selectionIsNotEmpty;
@@ -599,6 +618,29 @@ namespace Ares.Editor.AudioSourceSearch
             
         }
 
+        public IEnumerable<SearchResultListItem> GetSelectedItems()
+        {
+#if VIRTUAL_MODE_SEARCH_RESULTS
+            List<SearchResultListItem> selected = new List<SearchResultListItem>(this.resultsListView.SelectedIndices.Count);
+
+            foreach (int index in this.resultsListView.SelectedIndices)
+            {
+                if (m_ResultCacheItems != null && m_ResultCacheItems.ContainsKey(index))
+                {
+                    selected.Add(m_ResultCacheItems[index]);
+                }
+                else
+                {
+                    // TODO: figure out how to handle un-cached items during GetSelectedItems call...
+                }
+            }
+
+            return selected;
+#else
+            return this.resultsListView.SelectedItems.Cast<SearchResultListItem>();
+#endif
+        }
+
         #region Event Handlers
 
         private void resultsListView_ItemDrag(object sender, ItemDragEventArgs e)
@@ -609,7 +651,7 @@ namespace Ares.Editor.AudioSourceSearch
 
         private void searchButton_Click(object sender, EventArgs e)
         {
-            ExecuteSearchAndApplyResults();
+            ExecuteSearchWithUiQuery();
         }
 
         private void playButton_Click(object sender, EventArgs e)
@@ -627,7 +669,7 @@ namespace Ares.Editor.AudioSourceSearch
             if (e.KeyChar == (char)Data.Keys.Return)
             {
                 e.Handled = true;
-                this.ExecuteSearchAndApplyResults();
+                this.ExecuteSearchWithUiQuery();
             }
         }
 
@@ -650,7 +692,7 @@ namespace Ares.Editor.AudioSourceSearch
         private void downloadMenuItem_Click(object sender, EventArgs e)
         {
             // Download the selected files to their default target path
-            DownloadFiles(this.resultsListView.SelectedItems.Cast<SearchResultListItem>(),null);
+            DownloadFiles(GetSelectedItems(),null);
         }
 
         private void downloadToMenuItem_Click(object sender, EventArgs e)
@@ -664,43 +706,56 @@ namespace Ares.Editor.AudioSourceSearch
             // If there is an active search query, re-run it
             if (!String.IsNullOrWhiteSpace(this.searchBox.Text))
             {
-                ExecuteSearchAndApplyResults();
+                ExecuteSearchWithUiQuery();
             }
         }
 
-        #endregion
+#endregion
 
-        #region List View item cache
-
-        private string m_ItemCacheQuery = "";
-        private int m_ItemCacheFirstIndex = 0;
-        private SearchResultListItem[] m_ItemCache = null;
+#region List View item caching
+        private string m_ResultCacheQuery = "";
+        private Dictionary<int,SearchResultListItem> m_ResultCacheItems = null;
 
         private void resultsListView_CacheVirtualItems(object sender, CacheVirtualItemsEventArgs e)
         {
-            
+            // Round up the size of the range to the nearest 100
+            double indexRange = e.EndIndex - e.StartIndex;
+            int roundedIndexRange = (int)Math.Ceiling(indexRange / 100.0) * 100;
+
+            // Increase the pageSize if necessary
+            if (m_searchPageSize < roundedIndexRange)
+            {
+                m_searchPageSize = roundedIndexRange;
+            }
+
+            // Determine the page index
+            int pageIndex = e.StartIndex / m_searchPageSize;
+
+            // Execute the search
+            ExecuteSearch(m_ResultCacheQuery, pageIndex, m_searchPageSize);
         }
 
         private void resultsListView_RetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
         {
             // Check whether the requested result index is in our current cache
-            if (m_ItemCache != null && e.ItemIndex >= m_ItemCacheFirstIndex && e.ItemIndex < m_ItemCacheFirstIndex + m_ItemCache.Length)
+            if (m_ResultCacheItems != null && m_ResultCacheItems.ContainsKey(e.ItemIndex))
             {
                 //A cache hit, so get the item from the cache instead of making a new one.
-                e.Item = m_ItemCache[e.ItemIndex - m_ItemCacheFirstIndex];
+                e.Item = m_ResultCacheItems[e.ItemIndex];
             }
             else
             {
                 // Otherwise figure out which page the item is on
-                int pageIndex = e.ItemIndex / SEARCH_PAGE_SIZE;
+                int pageIndex = e.ItemIndex / m_searchPageSize;
+
                 // Search for & load that page into the cache
-                ExecuteSearchAndApplyResults(m_ItemCacheQuery,pageIndex,SEARCH_PAGE_SIZE);
+                ExecuteSearch(m_ResultCacheQuery,pageIndex,m_searchPageSize);
 
                 // TODO: figure out how to (in an async way) get the requested item back into the event once the search returns
             }
         }
+#endregion
 
-        #endregion
     }
 
     public class SearchResultListItem : ListViewItem

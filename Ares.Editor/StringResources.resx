@@ -518,4 +518,7 @@ You should adapt some settings first.</value>
   <data name="PleaseSelectASingleItemToSeeMoreInfo" xml:space="preserve">
     <value>Please select a single item to see more information.</value>
   </data>
+  <data name="PleaseSelectOnlyEntriesOfTheSameType" xml:space="preserve">
+    <value>Please select only entries of the same type!</value>
+  </data>
 </root>

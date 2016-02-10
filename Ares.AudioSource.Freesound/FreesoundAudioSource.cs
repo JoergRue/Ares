@@ -49,19 +49,21 @@ namespace Ares.AudioSource.Freesound
 
         internal AudioDownloadResult DownloadSoundFile(FreesoundApiSearchResult searchResult, string downloadTargetPath)
         {
-            string downloadTargetDirectory = System.IO.Path.GetDirectoryName(downloadTargetPath);
-
-            System.IO.Directory.CreateDirectory(downloadTargetDirectory);
+            // Make sure the target directory exists
+            System.IO.Directory.CreateDirectory(System.IO.Path.GetDirectoryName(downloadTargetPath));
+            
+            // Only download if the target file doesn't exist
             if (!System.IO.File.Exists(downloadTargetPath))
             {
+                // Create a WebClient
                 WebClient client = new WebClient();
+                // Download the file (synchronously)
                 client.DownloadFile(searchResult.PreviewUrls["preview-hq-mp3"], downloadTargetPath);
 
                 // TODO: set additional ID3 information regarding source, author, license, tags etc. on the file
             }
 
-            return new AudioDownloadResult();
-
+            return AudioDownloadResult.SUCCESS;
         }
 
         #endregion
