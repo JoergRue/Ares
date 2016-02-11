@@ -85,7 +85,6 @@ namespace Ares.Player_Android
 				mNotificationBuilder = new Notification.Builder(this);
 				mNotificationBuilder.SetSmallIcon(Resource.Drawable.Ares);
 				mNotificationBuilder.SetOngoing(true);
-				mNotificationBuilder.SetContentTitle(Resources.GetString(Resource.String.service_running));
 				TaskStackBuilder stackBuilder = TaskStackBuilder.Create(this);
 				stackBuilder.AddParentStack(Java.Lang.Class.FromType(typeof(MainActivity)));
 				Intent resultIntent = new Intent(this, typeof(MainActivity));
@@ -99,6 +98,7 @@ namespace Ares.Player_Android
 		private void UpdateNotification(bool firstNotification)
 		{
 			InitNotification();
+			mNotificationBuilder.SetContentTitle(Resources.GetString(Resource.String.service_running));
 			String secondLine = m_Network != null && m_Network.ClientConnected ? 
 				String.Format(Resources.GetString(Resource.String.connected_with), m_Network.ClientName) : 
 				Resources.GetString(Resource.String.not_connected);
@@ -126,17 +126,16 @@ namespace Ares.Player_Android
 		private void UpdateProgressNotification(int percent, String text)
 		{
 			InitNotification();
+			mNotificationBuilder.SetStyle(null);
 			mNotificationBuilder.SetProgress(100, percent, false);
+			mNotificationBuilder.SetContentTitle(Resources.GetString(Resource.String.importing_project));
 			if (!String.IsNullOrEmpty(text))
 			{
-				var style = new Notification.BigTextStyle(mNotificationBuilder);
-				style.BigText(Resources.GetString(Resource.String.importing_project) + "\n" + text);
-				mNotificationBuilder.SetStyle(style);
+				mNotificationBuilder.SetContentText(text);
 			}
 			else
 			{
-				mNotificationBuilder.SetContentText(Resources.GetString(Resource.String.importing_project));
-				mNotificationBuilder.SetStyle(null);
+				mNotificationBuilder.SetContentText("");
 			}
 			var nMgr = (NotificationManager)GetSystemService(NotificationService);
 			nMgr.Notify(mNotificationId, mNotificationBuilder.Build());
@@ -207,7 +206,7 @@ namespace Ares.Player_Android
 			if (!mIsInitialized)
 			{
 				System.Threading.ThreadPool.QueueUserWorkItem((state) => {
-					lock(lockObject)
+					lock (lockObject)
 					{
 						try
 						{
@@ -239,7 +238,26 @@ namespace Ares.Player_Android
 						}
 					}
 				});
-			}					
+			}
+			else
+			{
+				System.Threading.ThreadPool.QueueUserWorkItem((state) => {
+					lock (lockObject)
+					{
+						try
+						{
+							if (m_Network.ClientConnected)
+							{
+								m_Network.DisconnectClient(true);
+							}
+						}
+						catch (Exception ex)
+						{
+							ShowToast(ex.Message);
+						}
+					}
+				});
+			}
 			return StartCommandResult.Sticky;
 		}
 
