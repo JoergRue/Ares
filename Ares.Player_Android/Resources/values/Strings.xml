@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">Ares Player</string>
+	<string name="no_ip_address">No usable IP address found. Is the network available?</string>
+	<string name="no_status_info_error">Couldn\'t send status info. Check network connection.</string>
+	<string name="tags_db_error">Error accessing tags database: {0}</string>
+	<string name="no_settings">No settings found. Using default settings.</string>
+	<string name="load_error">Error opening the project: {0}</string>
+	<string name="import_error">Error importing the project: {0}</string>
+	<string name="Debug">Debug: </string>
+	<string name="Info">Info: </string>
+	<string name="Warning">Warning: </string>
+	<string name="Error">Error: </string>
+	<string name="service_error">Ares Player Error: </string>
+	<string name="connected_with">Connected with {0}</string>
+	<string name="not_connected">No controller connected</string>
+	<string name="directory_error">Could not create directory {0}: {1}</string>
+	<string name="service_running">Ares Player is running</string>
+	<string name="loaded_project">Project: {0}</string>
+	<string name="no_project">No project loaded</string>
+	<string name="importing_project">Importing project ...</string>
+	<string name="player_service">Player Service</string>
+	<string name="service_status">Status: {0}</string>
+	<string name="controller">Controller</string>
+	<string name="controller_status">Status: {0}</string>
+	<string name="start_controller">Start App</string>
+	<string name="project">Project</string>
+	<string name="start">Start</string>
+	<string name="stop">Stop</string>
+	<string name="running">Running</string>
+	<string name="stopped">Stopped</string>
+	<string name="filter">Filter:</string>
+	<string name="clear">Clear</string>
+	<string-array name="filterChoices">
+	  <item>Debug</item>
+	  <item>Info</item>
+	  <item>Warning</item>
+	  <item>Error</item>
+	</string-array>
+	<string name="messages">Messages</string>
+	<string name="up">Up</string>
+	<string name="create">New</string>
+	<string name="select">Select</string>
+	<string name="folders">Folders</string>
+	<string name="musicDir">Music</string>
+	<string name="soundDir">Sounds</string>
+	<string name="projectDir">Projects</string>
+	<string name="settings">Settings</string>
+	<string name="about">About</string>
+	<string name="createDir">Create Folder</string>
+	<string name="connection">Controller Connection</string>
+	<string name="udpPort">UDP Port</string>
+	<string name="tcpPort">TCP Port</string>
+	<string name="aboutInfo">Ares Player\nVersion {0}</string>
+	<string name="usage">Usage</string>
+	<string name="usageHtml">&lt;h4&gt;To use the Ares Player:&lt;/h4&gt;
+	&lt;ol&gt;
+	&lt;li&gt;Create a project with the Ares Editor (on Windows)&lt;/li&gt;
+	&lt;li&gt;Copy music files to &lt;i&gt;{0}&lt;/i&gt;&lt;/li&gt;
+	&lt;li&gt;Copy sound files to &lt;i&gt;{1}&lt;/i&gt;&lt;/li&gt;
+	&lt;li&gt;Copy the project file to &lt;i&gt;{2}&lt;/i&gt;&lt;/li&gt;
+	&lt;li&gt;Connect a controller and open the project there&lt;/li&gt;
+	&lt;/ol&gt;
+	&lt;p&gt;You can change the folders in the settings.&lt;br /&gt;&lt;br /&gt;You can also use a packed project, though unzipping on the device may take some time.&lt;/p&gt;
+	</string></resources>

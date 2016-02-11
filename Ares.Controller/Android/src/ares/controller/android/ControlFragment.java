@@ -331,7 +331,7 @@ public class ControlFragment extends ConnectedFragment implements INetworkClient
     
     private void projectOpened(Configuration config, String fileName) {
     	if (Control.getInstance().getFilePath().startsWith(fileName)) {
-    		getActivity().getPreferences(Activity.MODE_PRIVATE).edit().putString(LAST_PROJECT, Control.getInstance().getFilePath()).commit();
+			getActivity().getPreferences(Activity.MODE_PRIVATE).edit().putString(LAST_PROJECT, Control.getInstance().getFilePath()).commit();
     	}
     	Control.getInstance().setConfiguration(config, fileName);
 		updateProjectTitle();
@@ -353,7 +353,12 @@ public class ControlFragment extends ConnectedFragment implements INetworkClient
     }
     
     public void openProject(String path, Activity activity) {
-    	Control.getInstance().openFile(path);
+		if (Control.getInstance().isConnected()) {
+			Control.getInstance().openFile(path);
+		}
+		else {
+			fileToOpenDelayed = path;
+		}
     }
     
     private void updateProjectTitle() {
@@ -559,6 +564,11 @@ public class ControlFragment extends ConnectedFragment implements INetworkClient
 		forwardButton.setEnabled(true);
 		repeatButton.setEnabled(true);
 		openButton.setEnabled(true);
+		if (fileToOpenDelayed != null) {
+			String path = fileToOpenDelayed;
+			fileToOpenDelayed = null;
+			openProject(path, getActivity());
+		}
 	}
 	
 	protected void onDisconnect(boolean startServerSearch) {

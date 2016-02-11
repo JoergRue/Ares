@@ -22,7 +22,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+#if ANDROID
+using Mono.Data.Sqlite;
+#else
 using System.Data.SQLite;
+#endif
 using System.Data.Common;
 
 namespace Ares.Tags

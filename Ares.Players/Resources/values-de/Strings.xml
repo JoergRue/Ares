@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+<string name="ClientConnected">Mit Client {0} verbunden</string>
+<string name="ClientDisconnected">Verbindung mit Client getrennt.</string>
+<string name="ClientLengthReceived">Länge vom Client bekommen:</string>
+<string name="ClientListenError">Fehler beim Warten auf Clients:</string>
+<string name="CommandReceived">Befehl \'{0}\' empfangen</string>
+<string name="DisconnectingClient">Verbindung gemäß Client-Wunsch getrennt.</string>
+<string name="InvalidKeyCode">Ungültiger Tastencode: {0}</string>
+<string name="KeyListenError">Fehler beim Empfangen von Tasten:</string>
+<string name="KeyReceived">Tasten-IDs empfangen: {0} {1}</string>
+<string name="LengthTooHigh">Länge ist zu groß.</string>
+<string name="NoClientID">Client hat keine ID gesendet</string>
+<string name="PingReceived">Ping empfangen.</string>
+<string name="PingTimeout">Kein Ping empfangen; nehme Netzwerkfehler an.</string>
+<string name="PlayError">Bei Element {0}: {1}</string>
+<string name="StartBroadcast">Starte UDP-Broadcast</string>
+<string name="StopBroadcast">Stoppe UDP-Broadcast</string>
+<string name="TagsDbError">Fehler beim Zugriff auf die Tags-Datenbasis: {0}</string>
+<string name="UDPError">Fehler beim Senden eines UDP-Pakets:</string>
+<string name="UDPSending">Sende UDP-Paket \'{0}\'</string>
+<string name="VolumeCommandReceived">Lautstärkebefehl empfangen: Typ {0}, Wert {1}</string>
+<string name="VolumeOutOfRange">Ungültigen Lautstärkebefehl empfangen.</string>
+<string name="WrongClientLength">Länge ist ungültig.</string>
+</resources>
+

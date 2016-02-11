@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+<string name="ExpectedAttribute">Attribut {0} erwartet.</string>
+<string name="ExpectedInteger">Zahl für Attribut {0} erwartet.</string>
+</resources>

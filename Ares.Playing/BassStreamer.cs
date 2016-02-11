@@ -127,6 +127,7 @@ namespace Ares.Playing
 #endif
         }
 
+#if !ANDROID
         void m_BroadCast_Notification(object sender, Un4seen.Bass.Misc.BroadCastEventArgs e)
         {
             lock (m_SyncObject)
@@ -167,17 +168,20 @@ namespace Ares.Playing
                 }
             }
         }
+#endif
 
         public void EndStreaming()
         {
             if (!IsStreaming)
                 return;
+	#if !ANDROID
             lock (m_SyncObject)
             {
                 if (m_BroadCast != null)
                     m_BroadCast.Disconnect();
                 m_BroadCast = null;
             }
+	#endif
             if (m_MixerChannel != 0)
                 Un4seen.Bass.Bass.BASS_StreamFree(m_MixerChannel);
             m_MixerChannel = 0;
@@ -239,7 +243,9 @@ namespace Ares.Playing
         }
 
         private int m_MixerChannel;
+#if !ANDROID
         private Un4seen.Bass.Misc.BroadCast m_BroadCast;
+#endif
         private static BassStreamer s_Instance;
     }
 }

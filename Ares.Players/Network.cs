@@ -143,7 +143,9 @@ namespace Ares.Players
             }
             if (mNetworks[1] == null && useIt)
             {
+				#if !ANDROID
                 mNetworks[1] = new Ares.Players.Web.WebNetwork(mClient);
+				#endif
             }
         }
 
@@ -215,7 +217,11 @@ namespace Ares.Players
             int tcpPort = Settings.Settings.Instance.TcpPort;
             String ipAddress = Settings.Settings.Instance.IPAddress;
             StringBuilder str = new StringBuilder();
+			#if !ANDROID
             String machineName = Dns.GetHostName();
+			#else
+			String machineName = "Android Player";
+			#endif
             str.Append(machineName);
             str.Append("|");
             str.Append(tcpPort);

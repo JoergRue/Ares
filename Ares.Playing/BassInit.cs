@@ -96,6 +96,23 @@ namespace Ares.Playing
             }
         }
 
+		private bool LoadBassPlugin(String pluginName, String exePath, out int pluginHandle)
+		{
+			#if ANDROID
+			Java.Lang.JavaSystem.LoadLibrary(pluginName);
+			String libName = "lib" + pluginName + ".so";
+			#else
+			String libName = IsLinux ? exePath + "/lib" + pluginName + ".so" : pluginName + ".dll";
+			if (IsLinux && !System.IO.File.Exists(libName))
+			{
+				pluginHandle = 0;
+				return false;
+			}
+			#endif
+			pluginHandle = Un4seen.Bass.Bass.BASS_PluginLoad(libName);
+			return true;
+		}
+
         public BassInit(int deviceIndex, Action<String> warningHandler)
         {
             try 
@@ -120,31 +137,26 @@ namespace Ares.Playing
                     throw new BassInitException(StringResources.BassFxLoadFail);
                 }
 #endif
-                string exepath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-                String flacPlugin = IsLinux ? exepath + "/libbassflac.so" : "bassflac.dll";
-                bassPlugin1 = Un4seen.Bass.Bass.BASS_PluginLoad(flacPlugin);
+				#if ANDROID
+				Java.Lang.JavaSystem.LoadLibrary("bass_fx");
+				#endif
+				string exepath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+				LoadBassPlugin("bassflac", exepath, out bassPlugin1);
                 if (bassPlugin1 == 0 && Un4seen.Bass.Bass.BASS_ErrorGetCode() != Un4seen.Bass.BASSError.BASS_ERROR_ALREADY)
                 {
                     warningHandler(StringResources.BassFlacLoadFail);
                 }
-				
-                String aacPlugin = IsLinux ? exepath + "/libbass_aac.so" : "bass_aac.dll";
-				if (!IsLinux || System.IO.File.Exists(aacPlugin))
-				{
-	                bassPlugin2 = Un4seen.Bass.Bass.BASS_PluginLoad(aacPlugin);
-	                if (bassPlugin2 == 0 && Un4seen.Bass.Bass.BASS_ErrorGetCode() != Un4seen.Bass.BASSError.BASS_ERROR_ALREADY)
-	                {
-	                    warningHandler(StringResources.BassAacLoadFail);
-	                }
-                }
 
-                String opusPlugin = IsLinux ? exepath + "/libbassopus.so" : "bassopus.dll";
-                bassPlugin3 = Un4seen.Bass.Bass.BASS_PluginLoad(opusPlugin);
+				bool pluginExists = LoadBassPlugin("bass_aac", exepath, out bassPlugin2);
+                if (pluginExists && bassPlugin2 == 0 && Un4seen.Bass.Bass.BASS_ErrorGetCode() != Un4seen.Bass.BASSError.BASS_ERROR_ALREADY)
+                {
+                    warningHandler(StringResources.BassAacLoadFail);
+                }
+				LoadBassPlugin("bassopus", exepath, out bassPlugin3);
                 if (bassPlugin3 == 0 && Un4seen.Bass.Bass.BASS_ErrorGetCode() != Un4seen.Bass.BASSError.BASS_ERROR_ALREADY)
                 {
                     warningHandler(StringResources.BassOpusLoadFail);
                 }
-
             }
             catch (Exception ex)
             {

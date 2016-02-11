@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:p1="http://schemas.android.com/apk/res/android"
+    p1:layout_width="match_parent"
+    p1:layout_height="match_parent"
+    p1:id="@+id/gridLayout1"
+    p1:stretchColumns="*">
+    <TableRow>
+        <fragment
+            class="Ares.Player_Android.ServiceFragment"
+            p1:id="@+id/service_fragment"
+            p1:layout_width="0dp"
+            p1:layout_height="match_parent" />
+        <LinearLayout
+            p1:layout_width="0dp"
+            p1:layout_height="match_parent"
+            p1:orientation="vertical">
+            <TextView
+                p1:text="@string/messages"
+                p1:textAppearance="?android:attr/textAppearanceLarge"
+                p1:layout_width="wrap_content"
+                p1:layout_height="wrap_content"
+                p1:id="@+id/messageTitleView"
+                p1:gravity="center_vertical" />
+            <fragment
+                class="Ares.Player_Android.MessagesFragment"
+                p1:id="@+id/messages_fragment"
+                p1:layout_width="match_parent"
+                p1:layout_height="match_parent"
+                p1:layout_marginTop="10dp" />
+        </LinearLayout>
+    </TableRow>
+</TableLayout>

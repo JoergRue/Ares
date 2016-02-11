@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="library_name">Ares.Data.Android</string>
+	<string name="ExpectedAttribute">Attribute {0} expected.</string>
+	<string name="ExpectedContent">Content expected</string>
+	<string name="ExpectedDouble">Floating point number expected for attribute {0}.</string>
+	<string name="ExpectedElement">Element {0} expected.</string>
+	<string name="ExpectedInteger">Number expected for attribute {0}.</string>
+	<string name="FileNameMustBeSet">You must specify a file name first!</string>
+	<string name="InvalidVolume">Volume must be a percent specification!</string>
+</resources>

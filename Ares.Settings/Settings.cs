@@ -92,14 +92,23 @@ namespace Ares.Settings
         public int LastTipOfTheDay { get; set; }
 
         public int OutputDeviceIndex { get; set; }
+
+		#if ANDROID
+		public String ProjectDirectory {get;set;}
+		#endif
     }
 
     public class Settings
     {
         private SettingsData Data { get; set; }
 
+		#if !ANDROID
         public String MusicDirectory { get { return Data.MusicDirectory; } set { Data.MusicDirectory = value; } }
         public String SoundDirectory { get { return Data.SoundDirectory; } set { Data.SoundDirectory = value; } }
+		#else
+		public String MusicDirectory { get { return Data.MusicDirectory; } private set { Data.MusicDirectory = value; } }
+		public String SoundDirectory { get { return Data.SoundDirectory; } private set { Data.SoundDirectory = value; } }
+		#endif
 
         public String WindowLayout { get { return Data.WindowLayout; } set { Data.WindowLayout = value; } }
 
@@ -165,6 +174,36 @@ namespace Ares.Settings
 
         public int OutputDeviceIndex { get { return Data.OutputDeviceIndex; } set { Data.OutputDeviceIndex = value; } }
 
+		#if ANDROID
+		public String ProjectDirectory { get { return Data.ProjectDirectory; } private set { Data.ProjectDirectory = value; } }
+
+		private IFolder mMusicFolder;
+		private IFolder mSoundFolder;
+		private IFolder mProjectFolder;
+
+		public IFolder MusicFolder {
+			get { return mMusicFolder; }
+			set {
+				mMusicFolder = value;
+				MusicDirectory = value.IOName;
+			}
+		}
+		public IFolder SoundFolder {
+			get { return mSoundFolder; }
+			set {
+				mSoundFolder = value;
+				SoundDirectory = value.IOName;
+			}
+		}
+		public IFolder ProjectFolder {
+			get { return mProjectFolder; }
+			set {
+				mProjectFolder = value;
+				ProjectDirectory = value.IOName;
+			}
+		}
+		#endif
+
         public static Settings Instance
         {
             get
@@ -197,6 +236,7 @@ namespace Ares.Settings
         public static readonly string PlayerID = "Player";
         public static readonly string EditorID = "Editor";
 
+		#if !ANDROID
         public bool InitializeWithoutSharedMemory(String directory)
         {
             bool success = String.IsNullOrEmpty(directory) ? false : ReadFromFile(directory);
@@ -206,23 +246,35 @@ namespace Ares.Settings
             }
             return success;
         }
+		#endif
 
+		#if !ANDROID
         public bool Initialize(String id, String directory)
+		#else
+		public bool Initialize(Android.Content.Context context)
+		#endif
         {
+			#if !ANDROID
             m_ID = id;
+			#endif
 #if MONO
 			bool success = false;
 #else
             bool success = ReadFromSharedMemory();
 #endif
+			#if !ANDROID
             if (!success && !String.IsNullOrEmpty(directory))
             {
                 success = ReadFromFile(directory);
             }
-            if (!success)
-            {
-                InitDefaults();
-            }
+			if (!success)
+			{
+			InitDefaults();
+			}
+			#else
+			InitDefaults();
+			success = Read(context);
+			#endif
             bool hasIP = !String.IsNullOrEmpty(IPAddress);
             if (hasIP)
             {
@@ -309,7 +361,8 @@ namespace Ares.Settings
         }
 #endif
 
-        public readonly String settingsFileName = "Ares.Editor.Settings.xml";
+#if !ANDROID
+		public readonly String settingsFileName = "Ares.Editor.Settings.xml";
 
         public void WriteToFile(String directory)
         {
@@ -366,22 +419,36 @@ namespace Ares.Settings
                 return false;
             }
         }
+#endif
 
         private void InitDefaults()
         {
             Version = 1;
             WindowLayout = null;
             RecentFiles = new RecentFiles();
+			#if !ANDROID
             MusicDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
             SoundDirectory = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyMusic), "Sounds");
+			#else
+			MusicFolder = GetDefaultMusicDirectory();
+			SoundFolder = GetDefaultSoundDirectory();
+			#endif
             GlobalVolume = MusicVolume = SoundVolume = 100;
             TcpPort = 11112;
             WebTcpPort = 11113;
             UseLegacyNetwork = true;
+			#if !ANDROID
             UseWebNetwork = true;
+			#else
+			UseWebNetwork = false;
+			#endif
             UdpPort = 8009;
             IPAddress = String.Empty;
+			#if !ANDROID
             CheckForUpdate = true;
+			#else
+			CheckForUpdate = false;
+			#endif
             SoundFileEditor = String.Empty;
             ExternalMusicPlayer = String.Empty;
             MessageFilterLevel = 2; // warning
@@ -407,8 +474,12 @@ namespace Ares.Settings
             ShowTipOfTheDay = true;
             LastTipOfTheDay = -1;
             OutputDeviceIndex = -1;
+			#if ANDROID
+			ProjectFolder = GetDefaultProjectDirectory();
+			#endif
         }
 
+		#if !ANDROID
         private void WriteSettings(XmlWriter writer)
         {
             writer.WriteStartElement("Settings");
@@ -682,6 +753,7 @@ namespace Ares.Settings
             }
             reader.ReadEndElement();
         }
+		#endif
 
         private bool CompareForFundamentalChange(SettingsData other)
         {
@@ -778,7 +850,82 @@ namespace Ares.Settings
         private bool m_ContinueSMThread;
 #endif
 
+		#if !ANDROID
         private String m_ID;
+		#endif
+
+#if ANDROID
+		public void Write(Android.Content.Context context)
+		{
+			var prefs = Android.Preferences.PreferenceManager.GetDefaultSharedPreferences(context);
+			var editor = prefs.Edit();
+			editor.PutInt("version", Version);
+			editor.PutInt("messageFilterLevel", MessageFilterLevel);
+			editor.PutString("musicFolder", MusicFolder.Serialize());
+			editor.PutString("soundFolder", SoundFolder.Serialize());
+			editor.PutString("projectFolder", ProjectFolder.Serialize());
+			editor.PutInt("overallVolume", GlobalVolume);
+			editor.PutInt("musicVolume", MusicVolume);
+			editor.PutInt("soundVolume", SoundVolume);
+			editor.PutInt("udpPort", UdpPort);
+			editor.PutInt("tcpPort", TcpPort);
+			editor.PutString("lastProject", RecentFiles.GetFiles().Count > 0 ? RecentFiles.GetFiles()[0].FilePath : String.Empty);
+			editor.PutInt("tagMusicFadeTime", TagMusicFadeTime);
+			editor.PutBoolean("tagMusicFadeOnlyOnChange", TagMusicFadeOnlyOnChange);
+			editor.PutInt("buttonMusicFadeMode", ButtonMusicFadeMode);
+			editor.PutInt("buttonMusicFadeTime", ButtonMusicFadeTime);
+			editor.Apply();
+		}
+	
+		public void WriteMessageLevel(Android.Content.Context context)
+		{
+			var prefs = Android.Preferences.PreferenceManager.GetDefaultSharedPreferences(context);
+			var editor = prefs.Edit();
+			editor.PutInt("messageFilterLevel", MessageFilterLevel);
+			editor.Apply();
+		}
+
+		public bool Read(Android.Content.Context context)
+		{
+			var prefs = Android.Preferences.PreferenceManager.GetDefaultSharedPreferences(context);
+			bool hasPrefs = prefs.GetInt("version", 0) > 0;
+			MessageFilterLevel = prefs.GetInt("messageFilterLevel", 2);
+			String musicFolder = prefs.GetString("musicFolder", GetDefaultMusicDirectory().Serialize());
+			MusicFolder = FolderFactory.CreateFromSerialization(musicFolder);
+			String soundFolder = prefs.GetString("soundFolder", GetDefaultSoundDirectory().Serialize());
+			SoundFolder = FolderFactory.CreateFromSerialization(soundFolder);
+			String projectFolder = prefs.GetString("projectFolder", GetDefaultProjectDirectory().Serialize());
+			ProjectFolder = FolderFactory.CreateFromSerialization(projectFolder);
+			GlobalVolume = prefs.GetInt("overallVolume", 100);
+			MusicVolume = prefs.GetInt("musicVolume", 100);
+			SoundVolume = prefs.GetInt("soundVolume", 100);
+			UdpPort = prefs.GetInt("udpPort", 8009);
+			TcpPort = prefs.GetInt("tcpPort", 11112);
+			String lastProject = prefs.GetString("lastProject", String.Empty);
+			if (!String.IsNullOrEmpty(lastProject))
+				RecentFiles.AddFile(new RecentFiles.ProjectEntry(lastProject, "Project0"));
+			TagMusicFadeTime = prefs.GetInt("tagMusicFadeTime", 0);
+			TagMusicFadeOnlyOnChange = prefs.GetBoolean("tagMusicFadeOnlyOnChange", false);
+			ButtonMusicFadeMode = prefs.GetInt("buttonMusicFadeMode", 0);
+			ButtonMusicFadeTime = prefs.GetInt("buttonMusicFadeTime", 0);
+			return hasPrefs;
+		}
+
+		public static IFolder GetDefaultMusicDirectory()
+		{
+			return FolderFactory.CreateFileSystemFolder(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + Java.IO.File.Separator + "Ares" + Java.IO.File.Separator + "Music");
+		}
+
+		public static IFolder GetDefaultSoundDirectory()
+		{
+			return FolderFactory.CreateFileSystemFolder(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + Java.IO.File.Separator + "Ares" + Java.IO.File.Separator + "Sounds");
+		}
+
+		public static IFolder GetDefaultProjectDirectory()
+		{
+			return FolderFactory.CreateFileSystemFolder(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + Java.IO.File.Separator + "Ares" + Java.IO.File.Separator + "Projects");
+		}
+#endif
 
         private static Object syncObject = new Int16();
     }
