@@ -28,6 +28,7 @@ namespace Ares.Players
 		public static String ClientDisconnected { get { return global::Android.App.Application.Context.Resources.GetText(Resource.String.ClientDisconnected); } }
 		public static String ClientLengthReceived { get { return global::Android.App.Application.Context.Resources.GetText(Resource.String.ClientLengthReceived); } }
 		public static String ClientListenError { get { return global::Android.App.Application.Context.Resources.GetText(Resource.String.ClientListenError); } }
+		public static String ClientSendError { get { return global::Android.App.Application.Context.Resources.GetText(Resource.String.ClientSendError); } }
 		public static String CommandReceived { get { return global::Android.App.Application.Context.Resources.GetText(Resource.String.CommandReceived); } }
 		public static String DisconnectingClient { get { return global::Android.App.Application.Context.Resources.GetText(Resource.String.DisconnectingClient); } }
 		public static String InvalidKeyCode { get { return global::Android.App.Application.Context.Resources.GetText(Resource.String.InvalidKeyCode); } }

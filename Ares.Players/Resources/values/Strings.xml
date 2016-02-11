@@ -5,6 +5,7 @@
 <string name="ClientDisconnected">Closed connection with client.</string>
 <string name="ClientLengthReceived">Got length from client:</string>
 <string name="ClientListenError">Error listening for client:</string>
+<string name="ClientSendError">Connection to client lost.</string>
 <string name="CommandReceived">Received command \'{0}\'</string>
 <string name="DisconnectingClient">Disconnecting on client request.</string>
 <string name="InvalidKeyCode">Invalid key code: {0}</string>

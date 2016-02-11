@@ -4,6 +4,7 @@
 <string name="ClientDisconnected">Verbindung mit Client getrennt.</string>
 <string name="ClientLengthReceived">Länge vom Client bekommen:</string>
 <string name="ClientListenError">Fehler beim Warten auf Clients:</string>
+<string name="ClientSendError">Verbindung mit Client verloren.</string>
 <string name="CommandReceived">Befehl \'{0}\' empfangen</string>
 <string name="DisconnectingClient">Verbindung gemäß Client-Wunsch getrennt.</string>
 <string name="InvalidKeyCode">Ungültiger Tastencode: {0}</string>
