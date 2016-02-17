@@ -532,7 +532,7 @@ namespace Ares.Player_Android
 				ShowToast(String.Format(Resources.GetString(Resource.String.load_error), e.Message));
 				if (onControllerRequest)
 				{
-					m_Network.ErrorOccurred(-1, String.Format(Resources.GetString(Resource.String.load_error, e.Message)));
+					m_Network.ErrorOccurred(-1, String.Format(Resources.GetString(Resource.String.load_error), e.Message));
 				}
 				m_Project = null;
 				m_CurrentProjectPath = String.Empty;

@@ -109,9 +109,10 @@ namespace Ares.Player_Android
 				Activity.UnbindService(serviceConnection);
 				IsBound = false;
 			}
-			if (stateUpdateReceiver != null)
+			if (stateUpdateReceiver != null	)
 			{
 				Activity.UnregisterReceiver(stateUpdateReceiver);
+				stateUpdateReceiver = null;
 			}
 		}
 
