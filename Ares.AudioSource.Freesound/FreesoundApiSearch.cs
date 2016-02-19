@@ -8,9 +8,7 @@ using System.Threading;
 namespace Ares.AudioSource.Freesound
 {
     public class FreesoundApiSearch
-    {
-        private const int NUMBER_OF_RESULTS = 100;
-
+    {      
         private FreesoundAudioSource m_AudioSource;
         private IRestClient m_Client;
         private Ares.ModelInfo.IProgressMonitor m_Monitor;
@@ -30,7 +28,7 @@ namespace Ares.AudioSource.Freesound
             var request = new RestSharp.RestRequest(Settings.Default.TextSearchPath, RestSharp.Method.GET);
 
             request.AddParameter("page", pageIndex + 1);
-            request.AddParameter("pageSize", pageSize);
+            request.AddParameter("page_size", pageSize);
             request.AddParameter("fields", "id,url,name,tags,images,description,license,duration,username,previews,num_downloads,avg_rating,num_ratings");
 
             request.AddParameter("query", query);

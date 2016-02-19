@@ -48,33 +48,37 @@ namespace Ares.AudioSource
         Bitmap Icon { get; }
 
         /// <summary>
-        /// Check whether an audio type is supported/available for this source
+        /// Check whether an audio type is supported/available for this source.
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
         bool IsAudioTypeSupported(AudioSearchResultType type);
 
         /// <summary>
-        /// Search for audio (music, sounds, ...) 
+        /// Search for audio (music, sounds, ...) through this IAudioSource
         /// </summary>
-        /// <param name="query"></param>
-        /// <param name="type"></param>
-        /// <param name="pageSize"></param>
-        /// <param name="pageIndex"></param>
-        /// <param name="monitor"></param>
-        /// <param name="token"></param>
-        /// <param name="totalNumberOfResults">Optional out parameter that *may* return the total number of results</param>
+        /// <param name = "query" >The actual search query/keywords.</param>
+        /// <param name="pageSize">The page size (number of results per page) to be retrieved.</param>
+        /// <param name="pageIndex">The zero-based index of the results page to be retrieved (first page is 0).</param>
+        /// <param name="requestedResultType">The requested IAudioSearchResultType. May be either null indicate that any
+        ///                                   type of result will be fine.</param>
+        /// <param name="monitor">The IProgressMonitor which the audio source should use to give feedback on the search progress.
+        ///                       Initially the monitor will be set to "indeterminate" progress, but the audio source can and should
+        ///                       use it to indicate actual progress where possible.</param>
+        /// <param name="token">A CancellationToken which might be used to signal cancellation to the audio source while the search is still running.
+        ///                     During longer search operations the audio source should check the token whenever possible and abort the search if
+        ///                     the token indicates that cancellation was requested.</param>
+        /// <param name="totalNumberOfResults">An optional output parameter to indicate the total number of results (if known), regardless of the selected page size & index.</param>
         /// <returns></returns>
-        ICollection<ISearchResult> GetSearchResults(string query, AudioSearchResultType type, int pageSize, int pageIndex, Ares.ModelInfo.IProgressMonitor monitor, CancellationToken token, out int? totalNumberOfResults);
+        ICollection<ISearchResult> GetSearchResults(string query, AudioSearchResultType? type, int pageSize, int pageIndex, Ares.ModelInfo.IProgressMonitor monitor, CancellationToken token, out int? totalNumberOfResults);
     }
 
     public enum AudioSearchResultType
     {
-        Unknown,
         MusicFile,
         SoundFile,
         ModeElement
-    }
+}
 
     public interface ISearchResult
     {

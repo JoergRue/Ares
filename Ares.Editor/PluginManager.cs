@@ -1,5 +1,5 @@
 ﻿/*
- Copyright (c) 2015 [Martin Ried]
+ Copyright (c) 2016 [Martin Ried]
  
  This file is part of Ares.
 
@@ -30,8 +30,11 @@ namespace Ares.Editor.Plugins
     /// <summary>
     /// The PluginManager scans the "plugins" directory for DLLs.
     /// 
-    /// It can then provide a list of all Types from those Assemblies implementing a specific Interface.
-    /// In addition, an instance of each plugin type can be created.
+    /// It can then provide a list of all Types from those DLLs implementing a specific Interface.
+    /// For example, the PluginManager can be queried to find all IAudioSource implementations from all DLLs in the plugins directory.
+    /// 
+    /// In addition, a (singleton per PluginManager instance) instance of each of those plugin types/interface implementations 
+    /// (in the example: IAudioSources) can be created.
     /// </summary>
     public class PluginManager
     {
@@ -39,13 +42,16 @@ namespace Ares.Editor.Plugins
         /// <summary>
         /// List of all Assemblies found in the "plugins" directory.
         /// </summary>
-        private ICollection<Assembly> assemblies = null;
+        private ICollection<Assembly> m_PluginAssemblies = null;
 
         /// <summary>
         /// Cached list of plugin instances.
         /// </summary>
-        private Dictionary<Type, object> pluginInstances = new Dictionary<Type, object>();
+        private Dictionary<Type, object> m_PluginInstances = new Dictionary<Type, object>();
 
+        /// <summary>
+        /// Constructor: scan the plugins directory for DLLs, load the associated assemblies 
+        /// </summary>
         public PluginManager()
         {
             string pluginDirectory = Path.Combine(Directory.GetCurrentDirectory(),"plugins");
@@ -60,12 +66,12 @@ namespace Ares.Editor.Plugins
                 pluginDlls = new string[0];
             }
 
-            this.assemblies = new List<Assembly>(pluginDlls.Length);
+            this.m_PluginAssemblies = new List<Assembly>(pluginDlls.Length);
             foreach (string dllFile in pluginDlls)
             {
                 AssemblyName an = AssemblyName.GetAssemblyName(dllFile);
                 Assembly assembly = Assembly.Load(an);
-                assemblies.Add(assembly);
+                m_PluginAssemblies.Add(assembly);
             }
         }
 
@@ -77,7 +83,7 @@ namespace Ares.Editor.Plugins
         public ICollection<Type> GetPluginTypes<T>()
         {
             ICollection<Type> pluginTypes = new List<Type>();
-            foreach (Assembly assembly in assemblies)
+            foreach (Assembly assembly in m_PluginAssemblies)
             {
                 if (assembly != null)
                 {
@@ -103,7 +109,10 @@ namespace Ares.Editor.Plugins
         }
 
         /// <summary>
-        /// 
+        /// Get instances for all types from the loaded plugin assemblies that conform to the given
+        /// interface T.
+        /// Note that for a single PluginManager instance, only one instance of each plugin type
+        /// will be created. These plugin instances are stored in the m_PluginInstances field.
         /// </summary>
         /// <typeparam name="T">Desired plugin interface type</typeparam>
         /// <returns></returns>
@@ -114,12 +123,12 @@ namespace Ares.Editor.Plugins
 
             foreach (Type pluginType in pluginTypes)
             {
-                if (!this.pluginInstances.ContainsKey(pluginType))
+                if (!this.m_PluginInstances.ContainsKey(pluginType))
                 {
-                    this.pluginInstances.Add(pluginType,(T)Activator.CreateInstance(pluginType));
+                    this.m_PluginInstances.Add(pluginType,(T)Activator.CreateInstance(pluginType));
                 }
 
-                relevantPluginInstances.Add((T)this.pluginInstances[pluginType]);
+                relevantPluginInstances.Add((T)this.m_PluginInstances[pluginType]);
             }
 
             return relevantPluginInstances;

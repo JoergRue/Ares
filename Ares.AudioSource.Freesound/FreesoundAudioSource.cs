@@ -28,16 +28,22 @@ namespace Ares.AudioSource.Freesound
                 
         public bool IsAudioTypeSupported(AudioSearchResultType type)
         {
-            return type == AudioSearchResultType.Unknown || type == AudioSearchResultType.SoundFile;
+            return type == AudioSearchResultType.SoundFile;
         }
 
         public int RetrieveNumberOfSearchResults(string query, AudioSearchResultType type, IProgressMonitor monitor, CancellationToken token)
         {
+            // TODO: implement this!
             throw new NotImplementedException();
         }
 
-        public ICollection<ISearchResult> GetSearchResults(string query, AudioSearchResultType type, int pageSize, int pageIndex, IProgressMonitor monitor, CancellationToken token, out int? totalNumberOfResults)
+        public ICollection<ISearchResult> GetSearchResults(string query, AudioSearchResultType? type, int pageSize, int pageIndex, IProgressMonitor monitor, CancellationToken token, out int? totalNumberOfResults)
         {
+            if (type != null && type != AudioSearchResultType.SoundFile)
+            {
+                throw new ArgumentException();
+            }
+
             ICollection<ISearchResult> results = new List<ISearchResult>();
             
             // Perform the search
