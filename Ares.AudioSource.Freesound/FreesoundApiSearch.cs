@@ -24,6 +24,8 @@ namespace Ares.AudioSource.Freesound
 
         internal ICollection<ISearchResult> GetSearchResults(string query, int pageSize, int pageIndex, out int? totalNumberOfResults)
         {
+            Console.WriteLine("Searching Freesound for \"{0}\" (page index {1} sized {2}", query, pageIndex, pageSize);
+
             //var proxy = System.Net.WebRequest.GetSystemWebProxy(); // Unused!
             var request = new RestSharp.RestRequest(Settings.Default.TextSearchPath, RestSharp.Method.GET);
 

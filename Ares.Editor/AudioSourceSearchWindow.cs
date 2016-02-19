@@ -26,7 +26,7 @@
  This is important for online sources that support only page-wise access to search results!
  Unfortunately at the moment the implementation does not work yet...
  */
-#define VIRTUAL_MODE_SEARCH_RESULTS
+//#define VIRTUAL_MODE_SEARCH_RESULTS
 
 using Ares.AudioSource;
 using Ares.Data;
@@ -134,6 +134,9 @@ namespace Ares.Editor.AudioSourceSearch
 #if VIRTUAL_MODE_SEARCH_RESULTS
             this.resultsListView.VirtualListSize = 0;
             this.resultsListView.VirtualMode = true;
+#else
+            // When not in virtual mode, results paging does not work, so we have get everything at once
+            this.m_searchPageSize = 1000;
 #endif
 
             // Define the page size, image lists used for the list view
@@ -166,6 +169,7 @@ namespace Ares.Editor.AudioSourceSearch
             string query = this.searchBox.Text;
 
 #if VIRTUAL_MODE_SEARCH_RESULTS
+            // Reset the results cache for the new search
             m_ResultCacheItems = new Dictionary<int, SearchResultListItem>();
 #endif
 
@@ -616,7 +620,7 @@ namespace Ares.Editor.AudioSourceSearch
                     // show either an appropriate message ("Multiple entries selected") or common info in the info box
                     informationBox.Text = StringResources.PleaseSelectASingleItemToSeeMoreInfo;
                 }
-                else if (count == 1)
+                else if (count == 1 && selectedItems.First().SearchResult != null)
                 {
                     // Just a single element has been selected
                     string msg = "";
@@ -804,12 +808,12 @@ namespace Ares.Editor.AudioSourceSearch
             // Determine the page index
             int pageIndex = e.StartIndex / m_searchPageSize;
 
-            Console.WriteLine("Caching requested from {0} to {1}", e.StartIndex, e.EndIndex);
+            //Console.WriteLine("Caching requested from {0} to {1}", e.StartIndex, e.EndIndex);
             for (int i = e.StartIndex; i < e.EndIndex; i++)
             {
                 if (!m_ResultCacheItems.ContainsKey(i))
                 {
-                    Console.WriteLine("Item {0} is missing, executing search for page {1} of size {2}", i, pageIndex, m_searchPageSize);
+                    //Console.WriteLine("Item {0} is missing, executing search for page {1} of size {2}", i, pageIndex, m_searchPageSize);
                     // Execute the search
                     ExecuteSearch(m_ResultCacheQuery, pageIndex, m_searchPageSize);
                     return;
@@ -829,7 +833,7 @@ namespace Ares.Editor.AudioSourceSearch
             }
             else
             {
-                Console.WriteLine("Looking for item {0} - not found!", e.ItemIndex);
+                //Console.WriteLine("Looking for item {0} - not found!", e.ItemIndex);
 
                 // Otherwise figure out which page the item is on
                 int pageIndex = e.ItemIndex / m_searchPageSize;
