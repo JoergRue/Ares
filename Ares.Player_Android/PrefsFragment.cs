@@ -36,6 +36,16 @@ namespace Ares.Player_Android
 	public class PrefsFragment : PreferenceFragment, ISharedPreferencesOnSharedPreferenceChangeListener
 	{
 		private FolderPreference[] mFolderPrefs = new FolderPreference[3];
+
+		private class SummarySetter : Java.Lang.Object, Preference.IOnPreferenceChangeListener
+		{
+			public bool OnPreferenceChange(Preference preference, Java.Lang.Object newValue)
+			{
+				preference.Summary = newValue.ToString();
+				return true;
+			}
+		};
+
 		public override void OnCreate(Bundle savedInstanceState)
 		{
 			base.OnCreate(savedInstanceState);
@@ -50,6 +60,10 @@ namespace Ares.Player_Android
 				pref.ParentFragment = this;
 				pref.FolderId = i;
 			}
+
+			var playerNamePref = (EditTextPreference)FindPreference("playerName");
+			playerNamePref.OnPreferenceChangeListener = new SummarySetter();
+			playerNamePref.Summary = Settings.Settings.Instance.PlayerName;
 		}
 
 		public override void OnResume()

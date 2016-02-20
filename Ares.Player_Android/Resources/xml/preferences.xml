@@ -8,6 +8,7 @@
   <PreferenceCategory android:title="@string/connection">
   	<Ares.Player_Android.PortPreference android:key="udpPort" android:title="@string/udpPort" android:defaultValue="8009" my:portType="udp" />
   	<Ares.Player_Android.PortPreference android:key="tcpPort" android:title="@string/tcpPort" android:defaultValue="11112" my:portType="tcp" />
+  	<EditTextPreference android:key="playerName" android:title="@string/playerName" android:defaultValue="Android Player" />
   </PreferenceCategory>
 </PreferenceScreen>
 

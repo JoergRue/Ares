@@ -220,7 +220,7 @@ namespace Ares.Players
 			#if !ANDROID
             String machineName = Dns.GetHostName();
 			#else
-			String machineName = "Android Player";
+			String machineName = Settings.Settings.Instance.PlayerName;
 			#endif
             str.Append(machineName);
             str.Append("|");

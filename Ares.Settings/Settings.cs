@@ -95,6 +95,7 @@ namespace Ares.Settings
 
 		#if ANDROID
 		public String ProjectDirectory {get;set;}
+		public String PlayerName {get;set;}
 		#endif
     }
 
@@ -176,6 +177,7 @@ namespace Ares.Settings
 
 		#if ANDROID
 		public String ProjectDirectory { get { return Data.ProjectDirectory; } private set { Data.ProjectDirectory = value; } }
+		public String PlayerName { get { return Data.PlayerName; } set { Data.PlayerName = value; } }
 
 		private IFolder mMusicFolder;
 		private IFolder mSoundFolder;
@@ -476,6 +478,7 @@ namespace Ares.Settings
             OutputDeviceIndex = -1;
 			#if ANDROID
 			ProjectFolder = GetDefaultProjectDirectory();
+			PlayerName = "Android Player";
 			#endif
         }
 
@@ -874,6 +877,7 @@ namespace Ares.Settings
 			editor.PutBoolean("tagMusicFadeOnlyOnChange", TagMusicFadeOnlyOnChange);
 			editor.PutInt("buttonMusicFadeMode", ButtonMusicFadeMode);
 			editor.PutInt("buttonMusicFadeTime", ButtonMusicFadeTime);
+			editor.PutString("playerName", PlayerName);
 			editor.Apply();
 		}
 	
@@ -908,6 +912,7 @@ namespace Ares.Settings
 			TagMusicFadeOnlyOnChange = prefs.GetBoolean("tagMusicFadeOnlyOnChange", false);
 			ButtonMusicFadeMode = prefs.GetInt("buttonMusicFadeMode", 0);
 			ButtonMusicFadeTime = prefs.GetInt("buttonMusicFadeTime", 0);
+			PlayerName = prefs.GetString("playerName", "Android Player");
 			return hasPrefs;
 		}
 

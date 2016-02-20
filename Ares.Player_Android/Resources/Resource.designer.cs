@@ -755,8 +755,8 @@ namespace Ares.Player_Android
 			// aapt resource value: 0x7f060088
 			public const int about = 2131099784;
 			
-			// aapt resource value: 0x7f06008d
-			public const int aboutInfo = 2131099789;
+			// aapt resource value: 0x7f06008e
+			public const int aboutInfo = 2131099790;
 			
 			// aapt resource value: 0x7f060060
 			public const int app_name = 2131099744;
@@ -827,6 +827,9 @@ namespace Ares.Player_Android
 			// aapt resource value: 0x7f06006d
 			public const int not_connected = 2131099757;
 			
+			// aapt resource value: 0x7f06008d
+			public const int playerName = 2131099789;
+			
 			// aapt resource value: 0x7f060073
 			public const int player_service = 2131099763;
 			
@@ -881,11 +884,11 @@ namespace Ares.Player_Android
 			// aapt resource value: 0x7f060080
 			public const int up = 2131099776;
 			
-			// aapt resource value: 0x7f06008e
-			public const int usage = 2131099790;
-			
 			// aapt resource value: 0x7f06008f
-			public const int usageHtml = 2131099791;
+			public const int usage = 2131099791;
+			
+			// aapt resource value: 0x7f060090
+			public const int usageHtml = 2131099792;
 			
 			static String()
 			{

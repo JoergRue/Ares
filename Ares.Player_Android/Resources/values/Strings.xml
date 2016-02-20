@@ -51,6 +51,7 @@
 	<string name="connection">Controller Connection</string>
 	<string name="udpPort">UDP Port</string>
 	<string name="tcpPort">TCP Port</string>
+	<string name="playerName">Player Name</string>
 	<string name="aboutInfo">Ares Player\nVersion {0}</string>
 	<string name="usage">Usage</string>
 	<string name="usageHtml">&lt;h4&gt;To use the Ares Player:&lt;/h4&gt;
