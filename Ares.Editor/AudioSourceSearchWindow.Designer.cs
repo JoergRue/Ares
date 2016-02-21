@@ -137,6 +137,7 @@ namespace Ares.Editor.AudioSourceSearch
             // 
             this.playToolStripMenuItem.Name = "playToolStripMenuItem";
             resources.ApplyResources(this.playToolStripMenuItem, "playToolStripMenuItem");
+            this.playToolStripMenuItem.Click += new System.EventHandler(this.playToolStripMenuItem_Click);
             // 
             // stopToolStripMenuItem
             // 

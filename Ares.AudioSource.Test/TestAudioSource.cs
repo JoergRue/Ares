@@ -30,7 +30,7 @@ namespace Ares.AudioSource.Test
 
         public string Name { get { return "Test"; } }
 
-        public ICollection<ISearchResult> GetSearchResults(string query, AudioSearchResultType type, int pageSize, int pageIndex, IProgressMonitor monitor, CancellationToken token, out int? totalNumberOfResults)
+        public ICollection<ISearchResult> GetSearchResults(string query, AudioSearchResultType? type, int pageSize, int pageIndex, IProgressMonitor monitor, CancellationToken token, out int? totalNumberOfResults)
         {
             List<ISearchResult> results = new List<ISearchResult>();
 

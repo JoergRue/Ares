@@ -102,7 +102,8 @@ namespace Ares.Editor.AudioSourceSearch
         /// It also controls the initial page size used in virtual mode.
         /// </summary>
         private int m_searchPageSize = 50;
-        
+        private int m_searchPageIndex = 0;
+
         private PluginManager m_PluginManager;
         private ICollection<IAudioSource> m_AudioSources;
         private CancellationTokenSource m_cancellationTokenSource = new CancellationTokenSource();
@@ -171,17 +172,22 @@ namespace Ares.Editor.AudioSourceSearch
 #if VIRTUAL_MODE_SEARCH_RESULTS
             // Reset the results cache for the new search
             m_ResultCacheItems = new Dictionary<int, SearchResultListItem>();
+#else
+            // Reset to the first page of search results
+            m_searchPageIndex = 0;
 #endif
 
-            ExecuteSearch(query, 0, m_searchPageSize);
+            // Run a search for the now current parameters
+            ExecuteSearch(query, m_searchPageIndex, m_searchPageSize);
         }
 
         /// <summary>
         /// Execute a search with the given parameters (search query, page number, page size)
-        /// The results will either be shown in the results ListView (non-virtual mode) or added to the
-        /// results cache (virtual mode)
+        /// The results will either be passed to ProcessSearchResults.
         /// </summary>
+        /// <param name="query"></param>
         /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
         /// <returns></returns>
         public Task<IEnumerable<ISearchResult>> ExecuteSearch(string query, int pageIndex, int pageSize)
         {
@@ -194,20 +200,26 @@ namespace Ares.Editor.AudioSourceSearch
             int? totalNumberOfResults = null;
 
 #if VIRTUAL_MODE_SEARCH_RESULTS
-            if (query != m_ResultCacheQuery)
+            // If the query is not the one used before, reset the cache
+            if (this.m_ResultCacheQuery != query)
             {
-                m_ResultCacheQuery = query;
-                m_ResultCacheItems = new Dictionary<int, SearchResultListItem>();
+                this.m_ResultCacheItems = null;
+                this.m_ResultCacheQuery = query;
+            }
+            // If there is no cache (initial or reset) create one
+            if (this.m_ResultCacheItems == null)
+            {
+                this.m_ResultCacheItems = new Dictionary<int, SearchResultListItem>();
             }
 
+            // Put placeholder results into the cache, to be replaced by the actual results later on
             int resultIndex = pageIndex * pageSize;
-            int maxResultIndex = 0;
             for (int i = 0; i < pageSize; i++) 
             {
                 this.m_ResultCacheItems[resultIndex+i] = new SearchResultListItem();
-                maxResultIndex = resultIndex + i;
+                resultIndex++;
             }
-            Console.WriteLine("Pre-populated cache from {0} to {1}", resultIndex, maxResultIndex);
+            Console.WriteLine("Putting placeholder results {0}-{1} into cache", pageIndex * pageSize, resultIndex-1);
 #endif
 
             // Start a separate task for executing the search
@@ -265,8 +277,9 @@ namespace Ares.Editor.AudioSourceSearch
         private void ProcessSearchResults(IEnumerable<ISearchResult> results, string query, int pageIndex, int pageSize, int? totalNumberOfResults)
         {
 #if VIRTUAL_MODE_SEARCH_RESULTS
-            // If the list is in virtual mode
-            // If the query has changed, reset the cache
+            // When in virtual mode...
+
+            // If the query is not the one used before, reset the cache
             if (this.m_ResultCacheQuery != query)
             {
                 this.m_ResultCacheItems = null;
@@ -277,21 +290,24 @@ namespace Ares.Editor.AudioSourceSearch
             {
                 this.m_ResultCacheItems = new Dictionary<int, SearchResultListItem>();
             }
-                
-            // Put the results into the cache
+            
+            // Put the results into the cache, replacing the previous results/placeholders
             int resultIndex = pageIndex * pageSize;
             foreach (ISearchResult result in results)
             {
                 this.m_ResultCacheItems[resultIndex] = new SearchResultListItem(result);
-                //this.m_ResultCacheItems.Add(resultIndex, new SearchResultListItem(result));
                 resultIndex++;
             }
-            Console.WriteLine("Populated cache from {0} to {1}", pageIndex * pageSize, resultIndex-1);
+            Console.WriteLine("Putting actual results {0}-{1} into cache", pageIndex * pageSize, resultIndex-1);
 
             // Pass the result count to the list view
             this.resultsListView.VirtualListSize = totalNumberOfResults.GetValueOrDefault(0);
+            // Invalidate the list view so it is refreshed
+            // (remember we added placeholder objects for the expected results right when the query was initially executed!)
             this.resultsListView.Invalidate();
 #else
+            // When not in virtual mode
+
             // If the list is not in virtual mode actually put the results into the list
             // Clear the results list in the UI
             this.resultsListView.Items.Clear();
@@ -692,7 +708,7 @@ namespace Ares.Editor.AudioSourceSearch
 
         public void PlaySelectedElement()
         {
-            
+            // TODO: preview/play the selected result   
         }
 
         public IEnumerable<SearchResultListItem> GetSelectedItems()
@@ -733,7 +749,7 @@ namespace Ares.Editor.AudioSourceSearch
 
         private void playButton_Click(object sender, EventArgs e)
         {
-            // TODO: preview/play the selected result
+            PlaySelectedElement();
         }
 
         private void stopButton_Click(object sender, EventArgs e)
@@ -764,6 +780,13 @@ namespace Ares.Editor.AudioSourceSearch
         public void SetProject(Ares.Data.IProject project)
         {
             m_Project = project;
+        }
+
+
+        private void playToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // TODO: preview/play the selected result
+            PlaySelectedElement();
         }
 
         private void downloadMenuItem_Click(object sender, EventArgs e)
@@ -846,7 +869,6 @@ namespace Ares.Editor.AudioSourceSearch
             }
         }
         #endregion
-
     }
 
     public class SearchResultListItem : ListViewItem

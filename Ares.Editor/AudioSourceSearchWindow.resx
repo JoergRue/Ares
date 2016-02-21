@@ -168,7 +168,7 @@
     <value>Download to ...</value>
   </data>
   <data name="searchResultContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>155, 92</value>
+    <value>155, 114</value>
   </data>
   <data name="&gt;&gt;searchResultContextMenu.Name" xml:space="preserve">
     <value>searchResultContextMenu</value>
