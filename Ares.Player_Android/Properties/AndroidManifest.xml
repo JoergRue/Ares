@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="de.joerg_ruedenauer.ares_player">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="1.1" package="de.joerg_ruedenauer.ares_player" android:versionCode="2">
 	<uses-sdk android:minSdkVersion="16" />
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 	<application android:allowBackup="true" android:icon="@mipmap/icon" android:label="@string/app_name"></application>
-	<service android:name="Ares.Player_Android.PlayerService"/>
+	<service android:name="Ares.Player_Android.PlayerService" />
 </manifest>
