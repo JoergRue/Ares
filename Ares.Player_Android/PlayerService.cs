@@ -601,7 +601,7 @@ namespace Ares.Player_Android
 						ShowToast(String.Format(Resources.GetString(Resource.String.import_error), error.Message));
 						if (controllerRequest)
 						{
-							m_Network.ErrorOccurred(-1, String.Format(Resources.GetString(Resource.String.load_error, error.Message)));
+							m_Network.ErrorOccurred(-1, String.Format(Resources.GetString(Resource.String.load_error), error.Message));
 						}
 					}
 					else if (!cancelled)
