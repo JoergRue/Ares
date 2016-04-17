@@ -25,7 +25,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\bin\Android_Debug</OutputPath>
-    <DefineConstants>DEBUG;MONO</DefineConstants>
+    <DefineConstants>DEBUG;MONO;ANDROID</DefineConstants>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <AndroidLinkMode>None</AndroidLinkMode>
@@ -33,7 +33,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Android_Release|AnyCPU' ">
     <Optimize>true</Optimize>
     <OutputPath>..\bin\Android_Release</OutputPath>
-    <DefineConstants>MONO</DefineConstants>
+    <DefineConstants>MONO;ANDROID</DefineConstants>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>

@@ -55,6 +55,8 @@ namespace Ares.Player_Android
 			global::Ares.ModelInfo_Android.Resource.String.StoppedElementNotFound = global::Ares.Player_Android.Resource.String.StoppedElementNotFound;
 			global::Ares.ModelInfo_Android.Resource.String.TagNotFound = global::Ares.Player_Android.Resource.String.TagNotFound;
 			global::Ares.ModelInfo_Android.Resource.String.library_name = global::Ares.Player_Android.Resource.String.library_name;
+			global::Ares.Players_Android.Resource.String.Ares = global::Ares.Player_Android.Resource.String.Ares;
+			global::Ares.Players_Android.Resource.String.AwaitedElementNotFound = global::Ares.Player_Android.Resource.String.AwaitedElementNotFound;
 			global::Ares.Players_Android.Resource.String.BassAacLoadFail = global::Ares.Player_Android.Resource.String.BassAacLoadFail;
 			global::Ares.Players_Android.Resource.String.BassDeviceAlready = global::Ares.Player_Android.Resource.String.BassDeviceAlready;
 			global::Ares.Players_Android.Resource.String.BassDeviceDriver = global::Ares.Player_Android.Resource.String.BassDeviceDriver;
@@ -70,6 +72,7 @@ namespace Ares.Player_Android
 			global::Ares.Players_Android.Resource.String.BassOpusLoadFail = global::Ares.Player_Android.Resource.String.BassOpusLoadFail;
 			global::Ares.Players_Android.Resource.String.BassUnknown = global::Ares.Player_Android.Resource.String.BassUnknown;
 			global::Ares.Players_Android.Resource.String.BufLostError = global::Ares.Player_Android.Resource.String.BufLostError;
+			global::Ares.Players_Android.Resource.String.CannotPlayURLS = global::Ares.Player_Android.Resource.String.CannotPlayURLS;
 			global::Ares.Players_Android.Resource.String.ClientConnected = global::Ares.Player_Android.Resource.String.ClientConnected;
 			global::Ares.Players_Android.Resource.String.ClientDisconnected = global::Ares.Player_Android.Resource.String.ClientDisconnected;
 			global::Ares.Players_Android.Resource.String.ClientLengthReceived = global::Ares.Player_Android.Resource.String.ClientLengthReceived;
@@ -77,6 +80,7 @@ namespace Ares.Player_Android
 			global::Ares.Players_Android.Resource.String.ClientSendError = global::Ares.Player_Android.Resource.String.ClientSendError;
 			global::Ares.Players_Android.Resource.String.CodecError = global::Ares.Player_Android.Resource.String.CodecError;
 			global::Ares.Players_Android.Resource.String.CommandReceived = global::Ares.Player_Android.Resource.String.CommandReceived;
+			global::Ares.Players_Android.Resource.String.ConditionElementNotFound = global::Ares.Player_Android.Resource.String.ConditionElementNotFound;
 			global::Ares.Players_Android.Resource.String.CreateError = global::Ares.Player_Android.Resource.String.CreateError;
 			global::Ares.Players_Android.Resource.String.Default = global::Ares.Player_Android.Resource.String.Default;
 			global::Ares.Players_Android.Resource.String.DeviceDisabled = global::Ares.Player_Android.Resource.String.DeviceDisabled;
@@ -86,12 +90,14 @@ namespace Ares.Player_Android
 			global::Ares.Players_Android.Resource.String.DriverError = global::Ares.Player_Android.Resource.String.DriverError;
 			global::Ares.Players_Android.Resource.String.DxError = global::Ares.Player_Android.Resource.String.DxError;
 			global::Ares.Players_Android.Resource.String.EndedError = global::Ares.Player_Android.Resource.String.EndedError;
+			global::Ares.Players_Android.Resource.String.ErrorReadingPlaylist = global::Ares.Player_Android.Resource.String.ErrorReadingPlaylist;
 			global::Ares.Players_Android.Resource.String.ExpectedAttribute = global::Ares.Player_Android.Resource.String.ExpectedAttribute;
 			global::Ares.Players_Android.Resource.String.ExpectedContent = global::Ares.Player_Android.Resource.String.ExpectedContent;
 			global::Ares.Players_Android.Resource.String.ExpectedDouble = global::Ares.Player_Android.Resource.String.ExpectedDouble;
 			global::Ares.Players_Android.Resource.String.ExpectedElement = global::Ares.Player_Android.Resource.String.ExpectedElement;
 			global::Ares.Players_Android.Resource.String.ExpectedInteger = global::Ares.Player_Android.Resource.String.ExpectedInteger;
 			global::Ares.Players_Android.Resource.String.FileNameMustBeSet = global::Ares.Player_Android.Resource.String.FileNameMustBeSet;
+			global::Ares.Players_Android.Resource.String.FileNotFound = global::Ares.Player_Android.Resource.String.FileNotFound;
 			global::Ares.Players_Android.Resource.String.FileOpenError = global::Ares.Player_Android.Resource.String.FileOpenError;
 			global::Ares.Players_Android.Resource.String.FilePlayingError = global::Ares.Player_Android.Resource.String.FilePlayingError;
 			global::Ares.Players_Android.Resource.String.FileformError = global::Ares.Player_Android.Resource.String.FileformError;
@@ -100,6 +106,8 @@ namespace Ares.Player_Android
 			global::Ares.Players_Android.Resource.String.HandleError = global::Ares.Player_Android.Resource.String.HandleError;
 			global::Ares.Players_Android.Resource.String.IllParamError = global::Ares.Player_Android.Resource.String.IllParamError;
 			global::Ares.Players_Android.Resource.String.IllTypeError = global::Ares.Player_Android.Resource.String.IllTypeError;
+			global::Ares.Players_Android.Resource.String.ImportOverwrite = global::Ares.Player_Android.Resource.String.ImportOverwrite;
+			global::Ares.Players_Android.Resource.String.InvalidImportFile = global::Ares.Player_Android.Resource.String.InvalidImportFile;
 			global::Ares.Players_Android.Resource.String.InvalidKeyCode = global::Ares.Player_Android.Resource.String.InvalidKeyCode;
 			global::Ares.Players_Android.Resource.String.InvalidVolume = global::Ares.Player_Android.Resource.String.InvalidVolume;
 			global::Ares.Players_Android.Resource.String.KeyListenError = global::Ares.Player_Android.Resource.String.KeyListenError;
@@ -121,14 +129,19 @@ namespace Ares.Player_Android
 			global::Ares.Players_Android.Resource.String.PingTimeout = global::Ares.Player_Android.Resource.String.PingTimeout;
 			global::Ares.Players_Android.Resource.String.PlayError = global::Ares.Player_Android.Resource.String.PlayError;
 			global::Ares.Players_Android.Resource.String.PlayingError = global::Ares.Player_Android.Resource.String.PlayingError;
+			global::Ares.Players_Android.Resource.String.PlaylistNotFound = global::Ares.Player_Android.Resource.String.PlaylistNotFound;
 			global::Ares.Players_Android.Resource.String.PositionError = global::Ares.Player_Android.Resource.String.PositionError;
+			global::Ares.Players_Android.Resource.String.ReferencedElementNotFound = global::Ares.Player_Android.Resource.String.ReferencedElementNotFound;
 			global::Ares.Players_Android.Resource.String.SetEffectError = global::Ares.Player_Android.Resource.String.SetEffectError;
 			global::Ares.Players_Android.Resource.String.SetVolumeError = global::Ares.Player_Android.Resource.String.SetVolumeError;
 			global::Ares.Players_Android.Resource.String.SpeakerError = global::Ares.Player_Android.Resource.String.SpeakerError;
 			global::Ares.Players_Android.Resource.String.SpeakerNotAvailable = global::Ares.Player_Android.Resource.String.SpeakerNotAvailable;
 			global::Ares.Players_Android.Resource.String.StartBroadcast = global::Ares.Player_Android.Resource.String.StartBroadcast;
+			global::Ares.Players_Android.Resource.String.StartedElementNotFound = global::Ares.Player_Android.Resource.String.StartedElementNotFound;
 			global::Ares.Players_Android.Resource.String.StopBroadcast = global::Ares.Player_Android.Resource.String.StopBroadcast;
+			global::Ares.Players_Android.Resource.String.StoppedElementNotFound = global::Ares.Player_Android.Resource.String.StoppedElementNotFound;
 			global::Ares.Players_Android.Resource.String.StreamingError = global::Ares.Player_Android.Resource.String.StreamingError;
+			global::Ares.Players_Android.Resource.String.TagNotFound = global::Ares.Player_Android.Resource.String.TagNotFound;
 			global::Ares.Players_Android.Resource.String.TaggedMusic = global::Ares.Player_Android.Resource.String.TaggedMusic;
 			global::Ares.Players_Android.Resource.String.TagsDbError = global::Ares.Player_Android.Resource.String.TagsDbError;
 			global::Ares.Players_Android.Resource.String.UDPError = global::Ares.Player_Android.Resource.String.UDPError;
@@ -274,14 +287,14 @@ namespace Ares.Player_Android
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f09000f
-			public const int clearButton = 2131296271;
+			// aapt resource value: 0x7f090010
+			public const int clearButton = 2131296272;
 			
-			// aapt resource value: 0x7f09001a
-			public const int controllerButton = 2131296282;
+			// aapt resource value: 0x7f09001b
+			public const int controllerButton = 2131296283;
 			
-			// aapt resource value: 0x7f090018
-			public const int controllerVIew = 2131296280;
+			// aapt resource value: 0x7f090019
+			public const int controllerVIew = 2131296281;
 			
 			// aapt resource value: 0x7f090008
 			public const int createButton = 2131296264;
@@ -289,14 +302,17 @@ namespace Ares.Player_Android
 			// aapt resource value: 0x7f090002
 			public const int currentFolderView = 2131296258;
 			
-			// aapt resource value: 0x7f09000e
-			public const int filterSpinner = 2131296270;
+			// aapt resource value: 0x7f090020
+			public const int domainEdit = 2131296288;
+			
+			// aapt resource value: 0x7f09000f
+			public const int filterSpinner = 2131296271;
 			
 			// aapt resource value: 0x7f090005
 			public const int folderList = 2131296261;
 			
-			// aapt resource value: 0x7f09000c
-			public const int gridLayout1 = 2131296268;
+			// aapt resource value: 0x7f09000d
+			public const int gridLayout1 = 2131296269;
 			
 			// aapt resource value: 0x7f090000
 			public const int linearLayout1 = 2131296256;
@@ -310,68 +326,77 @@ namespace Ares.Player_Android
 			// aapt resource value: 0x7f090001
 			public const int linearLayout5 = 2131296257;
 			
-			// aapt resource value: 0x7f090020
-			public const int menu_about = 2131296288;
+			// aapt resource value: 0x7f090024
+			public const int menu_about = 2131296292;
 			
-			// aapt resource value: 0x7f09001e
-			public const int menu_settings = 2131296286;
+			// aapt resource value: 0x7f090022
+			public const int menu_settings = 2131296290;
 			
-			// aapt resource value: 0x7f09001f
-			public const int menu_usage = 2131296287;
-			
-			// aapt resource value: 0x7f090011
-			public const int messageIcon = 2131296273;
+			// aapt resource value: 0x7f090023
+			public const int menu_usage = 2131296291;
 			
 			// aapt resource value: 0x7f090012
-			public const int messageLine = 2131296274;
+			public const int messageIcon = 2131296274;
 			
-			// aapt resource value: 0x7f09000a
-			public const int messageTitleView = 2131296266;
-			
-			// aapt resource value: 0x7f090016
-			public const int messagesButton = 2131296278;
-			
-			// aapt resource value: 0x7f090010
-			public const int messagesList = 2131296272;
+			// aapt resource value: 0x7f090013
+			public const int messageLine = 2131296275;
 			
 			// aapt resource value: 0x7f09000b
-			public const int messages_fragment = 2131296267;
+			public const int messageTitleView = 2131296267;
 			
-			// aapt resource value: 0x7f09001c
-			public const int projectView = 2131296284;
+			// aapt resource value: 0x7f090017
+			public const int messagesButton = 2131296279;
+			
+			// aapt resource value: 0x7f090011
+			public const int messagesList = 2131296273;
+			
+			// aapt resource value: 0x7f09000c
+			public const int messages_fragment = 2131296268;
+			
+			// aapt resource value: 0x7f09001f
+			public const int passwordEdit = 2131296287;
+			
+			// aapt resource value: 0x7f09001d
+			public const int projectView = 2131296285;
 			
 			// aapt resource value: 0x7f090003
 			public const int selectButton = 2131296259;
 			
-			// aapt resource value: 0x7f090015
-			public const int serviceButton = 2131296277;
-			
-			// aapt resource value: 0x7f090013
-			public const int serviceView = 2131296275;
-			
-			// aapt resource value: 0x7f090009
-			public const int service_fragment = 2131296265;
+			// aapt resource value: 0x7f090016
+			public const int serviceButton = 2131296278;
 			
 			// aapt resource value: 0x7f090014
-			public const int space1 = 2131296276;
+			public const int serviceView = 2131296276;
 			
-			// aapt resource value: 0x7f090019
-			public const int space2 = 2131296281;
+			// aapt resource value: 0x7f09000a
+			public const int service_fragment = 2131296266;
 			
-			// aapt resource value: 0x7f09000d
-			public const int textView1 = 2131296269;
+			// aapt resource value: 0x7f090015
+			public const int space1 = 2131296277;
 			
-			// aapt resource value: 0x7f090017
-			public const int textView3 = 2131296279;
+			// aapt resource value: 0x7f09001a
+			public const int space2 = 2131296282;
 			
-			// aapt resource value: 0x7f09001b
-			public const int textView5 = 2131296283;
+			// aapt resource value: 0x7f090009
+			public const int switchTypeButton = 2131296265;
+			
+			// aapt resource value: 0x7f09000e
+			public const int textView1 = 2131296270;
+			
+			// aapt resource value: 0x7f090018
+			public const int textView3 = 2131296280;
+			
+			// aapt resource value: 0x7f09001c
+			public const int textView5 = 2131296284;
 			
 			// aapt resource value: 0x7f090007
 			public const int upButton = 2131296263;
 			
-			// aapt resource value: 0x7f09001d
-			public const int usageText = 2131296285;
+			// aapt resource value: 0x7f090021
+			public const int usageText = 2131296289;
+			
+			// aapt resource value: 0x7f09001e
+			public const int userNameEdit = 2131296286;
 			
 			static Id()
 			{
@@ -408,7 +433,10 @@ namespace Ares.Player_Android
 			public const int ServiceFragment = 2130968582;
 			
 			// aapt resource value: 0x7f040007
-			public const int Usage = 2130968583;
+			public const int SmbAuth = 2130968583;
+			
+			// aapt resource value: 0x7f040008
+			public const int Usage = 2130968584;
 			
 			static Layout()
 			{
@@ -752,14 +780,17 @@ namespace Ares.Player_Android
 			// aapt resource value: 0x7f06004d
 			public const int WrongClientLength = 2131099725;
 			
-			// aapt resource value: 0x7f060088
-			public const int about = 2131099784;
+			// aapt resource value: 0x7f060091
+			public const int about = 2131099793;
 			
-			// aapt resource value: 0x7f06008e
-			public const int aboutInfo = 2131099790;
+			// aapt resource value: 0x7f060097
+			public const int aboutInfo = 2131099799;
 			
 			// aapt resource value: 0x7f060060
 			public const int app_name = 2131099744;
+			
+			// aapt resource value: 0x7f060087
+			public const int authDialogTitle = 2131099783;
 			
 			// aapt resource value: 0x7f06007e
 			public const int clear = 2131099774;
@@ -767,8 +798,8 @@ namespace Ares.Player_Android
 			// aapt resource value: 0x7f06006c
 			public const int connected_with = 2131099756;
 			
-			// aapt resource value: 0x7f06008a
-			public const int connection = 2131099786;
+			// aapt resource value: 0x7f060093
+			public const int connection = 2131099795;
 			
 			// aapt resource value: 0x7f060075
 			public const int controller = 2131099765;
@@ -779,17 +810,23 @@ namespace Ares.Player_Android
 			// aapt resource value: 0x7f060081
 			public const int create = 2131099777;
 			
-			// aapt resource value: 0x7f060089
-			public const int createDir = 2131099785;
+			// aapt resource value: 0x7f060092
+			public const int createDir = 2131099794;
 			
 			// aapt resource value: 0x7f06006e
 			public const int directory_error = 2131099758;
 			
+			// aapt resource value: 0x7f06008a
+			public const int domain = 2131099786;
+			
 			// aapt resource value: 0x7f06007d
 			public const int filter = 2131099773;
 			
-			// aapt resource value: 0x7f060083
-			public const int folders = 2131099779;
+			// aapt resource value: 0x7f06008c
+			public const int folders = 2131099788;
+			
+			// aapt resource value: 0x7f060086
+			public const int gettingDirs = 2131099782;
 			
 			// aapt resource value: 0x7f060066
 			public const int import_error = 2131099750;
@@ -806,11 +843,17 @@ namespace Ares.Player_Android
 			// aapt resource value: 0x7f060070
 			public const int loaded_project = 2131099760;
 			
+			// aapt resource value: 0x7f060083
+			public const int local = 2131099779;
+			
 			// aapt resource value: 0x7f06007f
 			public const int messages = 2131099775;
 			
-			// aapt resource value: 0x7f060084
-			public const int musicDir = 2131099780;
+			// aapt resource value: 0x7f06008d
+			public const int musicDir = 2131099789;
+			
+			// aapt resource value: 0x7f060082
+			public const int network = 2131099778;
 			
 			// aapt resource value: 0x7f060061
 			public const int no_ip_address = 2131099745;
@@ -827,8 +870,14 @@ namespace Ares.Player_Android
 			// aapt resource value: 0x7f06006d
 			public const int not_connected = 2131099757;
 			
-			// aapt resource value: 0x7f06008d
-			public const int playerName = 2131099789;
+			// aapt resource value: 0x7f060089
+			public const int password = 2131099785;
+			
+			// aapt resource value: 0x7f06008b
+			public const int passwordHint = 2131099787;
+			
+			// aapt resource value: 0x7f060096
+			public const int playerName = 2131099798;
 			
 			// aapt resource value: 0x7f060073
 			public const int player_service = 2131099763;
@@ -836,14 +885,17 @@ namespace Ares.Player_Android
 			// aapt resource value: 0x7f060078
 			public const int project = 2131099768;
 			
-			// aapt resource value: 0x7f060086
-			public const int projectDir = 2131099782;
+			// aapt resource value: 0x7f06008f
+			public const int projectDir = 2131099791;
 			
 			// aapt resource value: 0x7f06007b
 			public const int running = 2131099771;
 			
-			// aapt resource value: 0x7f060082
-			public const int select = 2131099778;
+			// aapt resource value: 0x7f060084
+			public const int select = 2131099780;
+			
+			// aapt resource value: 0x7f060085
+			public const int selectServer = 2131099781;
 			
 			// aapt resource value: 0x7f06006b
 			public const int service_error = 2131099755;
@@ -854,11 +906,11 @@ namespace Ares.Player_Android
 			// aapt resource value: 0x7f060074
 			public const int service_status = 2131099764;
 			
-			// aapt resource value: 0x7f060087
-			public const int settings = 2131099783;
+			// aapt resource value: 0x7f060090
+			public const int settings = 2131099792;
 			
-			// aapt resource value: 0x7f060085
-			public const int soundDir = 2131099781;
+			// aapt resource value: 0x7f06008e
+			public const int soundDir = 2131099790;
 			
 			// aapt resource value: 0x7f060079
 			public const int start = 2131099769;
@@ -875,20 +927,23 @@ namespace Ares.Player_Android
 			// aapt resource value: 0x7f060063
 			public const int tags_db_error = 2131099747;
 			
-			// aapt resource value: 0x7f06008c
-			public const int tcpPort = 2131099788;
+			// aapt resource value: 0x7f060095
+			public const int tcpPort = 2131099797;
 			
-			// aapt resource value: 0x7f06008b
-			public const int udpPort = 2131099787;
+			// aapt resource value: 0x7f060094
+			public const int udpPort = 2131099796;
 			
 			// aapt resource value: 0x7f060080
 			public const int up = 2131099776;
 			
-			// aapt resource value: 0x7f06008f
-			public const int usage = 2131099791;
+			// aapt resource value: 0x7f060098
+			public const int usage = 2131099800;
 			
-			// aapt resource value: 0x7f060090
-			public const int usageHtml = 2131099792;
+			// aapt resource value: 0x7f060099
+			public const int usageHtml = 2131099801;
+			
+			// aapt resource value: 0x7f060088
+			public const int username = 2131099784;
 			
 			static String()
 			{

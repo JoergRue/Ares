@@ -41,6 +41,15 @@
 	<string name="up">Hoch</string>
 	<string name="create">Neu</string>
 	<string name="select">Wählen</string>
+	<string name="selectServer">Servername</string>
+	<string name="gettingDirs">Hole Verzeichnisse</string>
+	<string name="network">Netzwerk...</string>
+	<string name="local">Lokal...</string>
+	<string name="authDialogTitle">Authentifizierung</string>
+	<string name="username">Benutzername</string>
+	<string name="password">Passwort</string>
+	<string name="domain">Domain (oder leer)</string>
+	<string name="passwordHint">Hinweis: Passwörter werden nicht verschlüsselt, daher wird empfohlen, einen speziellen Account mit einem unwichtigen Passwort für die Freigabe(n) zu verwenden.</string>
 	<string name="folders">Verzeichnisse</string>
 	<string name="musicDir">Musik</string>
 	<string name="soundDir">Geräusche</string>

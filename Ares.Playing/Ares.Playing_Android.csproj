@@ -85,6 +85,10 @@
       <Project>{42A8F91D-6E6B-4740-AC3F-99A34074E695}</Project>
       <Name>Ares.Tags_Android</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Ares.Settings\Ares.Settings_Android.csproj">
+      <Project>{6EAFF9D6-0D29-4116-A42E-0D6A336C4C8D}</Project>
+      <Name>Ares.Settings_Android</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedNativeLibrary Include="Android_Libs\armeabi\libbass.so" />

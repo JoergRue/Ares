@@ -895,11 +895,11 @@ namespace Ares.Settings
 			bool hasPrefs = prefs.GetInt("version", 0) > 0;
 			MessageFilterLevel = prefs.GetInt("messageFilterLevel", 2);
 			String musicFolder = prefs.GetString("musicFolder", GetDefaultMusicDirectory().Serialize());
-			MusicFolder = FolderFactory.CreateFromSerialization(musicFolder);
+			MusicFolder = FolderFactory.CreateFromSerialization(musicFolder).Result;
 			String soundFolder = prefs.GetString("soundFolder", GetDefaultSoundDirectory().Serialize());
-			SoundFolder = FolderFactory.CreateFromSerialization(soundFolder);
+			SoundFolder = FolderFactory.CreateFromSerialization(soundFolder).Result;
 			String projectFolder = prefs.GetString("projectFolder", GetDefaultProjectDirectory().Serialize());
-			ProjectFolder = FolderFactory.CreateFromSerialization(projectFolder);
+			ProjectFolder = FolderFactory.CreateFromSerialization(projectFolder).Result;
 			GlobalVolume = prefs.GetInt("overallVolume", 100);
 			MusicVolume = prefs.GetInt("musicVolume", 100);
 			SoundVolume = prefs.GetInt("soundVolume", 100);
@@ -918,17 +918,20 @@ namespace Ares.Settings
 
 		public static IFolder GetDefaultMusicDirectory()
 		{
-			return FolderFactory.CreateFileSystemFolder(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + Java.IO.File.Separator + "Ares" + Java.IO.File.Separator + "Music");
+			return FolderFactory.CreateFileSystemFolder(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath 
+				+ Java.IO.File.Separator + "Ares" + Java.IO.File.Separator + "Music").Result;
 		}
 
 		public static IFolder GetDefaultSoundDirectory()
 		{
-			return FolderFactory.CreateFileSystemFolder(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + Java.IO.File.Separator + "Ares" + Java.IO.File.Separator + "Sounds");
+			return FolderFactory.CreateFileSystemFolder(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath 
+				+ Java.IO.File.Separator + "Ares" + Java.IO.File.Separator + "Sounds").Result;
 		}
 
 		public static IFolder GetDefaultProjectDirectory()
 		{
-			return FolderFactory.CreateFileSystemFolder(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + Java.IO.File.Separator + "Ares" + Java.IO.File.Separator + "Projects");
+			return FolderFactory.CreateFileSystemFolder(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath 
+				+ Java.IO.File.Separator + "Ares" + Java.IO.File.Separator + "Projects").Result;
 		}
 #endif
 

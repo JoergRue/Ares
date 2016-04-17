@@ -40,7 +40,16 @@
 	<string name="messages">Messages</string>
 	<string name="up">Up</string>
 	<string name="create">New</string>
+	<string name="network">Network...</string>
+	<string name="local">Local...</string>
 	<string name="select">Select</string>
+	<string name="selectServer">Enter Server Name</string>
+	<string name="gettingDirs">Getting Folders</string>
+	<string name="authDialogTitle">Authentication</string>
+	<string name="username">Username</string>
+	<string name="password">Password</string>
+	<string name="domain">Domain (or leave empty)</string>
+	<string name="passwordHint">Note: passwords are not encrypted, so it is recommended to use a special account with an unimportant password for the share(s).</string>
 	<string name="folders">Folders</string>
 	<string name="musicDir">Music</string>
 	<string name="soundDir">Sounds</string>

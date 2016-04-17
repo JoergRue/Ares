@@ -42,6 +42,9 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Mono.Android" />
+    <Reference Include="jcifs">
+      <HintPath>..\Libraries_Android\jcifs.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Resources\Resource.designer.cs" />
@@ -51,6 +54,7 @@
     <Compile Include="XmlHelpers.cs" />
     <Compile Include="AndroidStringResources.cs" />
     <Compile Include="Folders.cs" />
+    <Compile Include="Samba.cs" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\Strings.xml" />

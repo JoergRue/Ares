@@ -22,8 +22,10 @@ using System.Text;
 using System.Net.Sockets;
 using System.Net;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Ares.Data;
 using Ares.Playing;
+using Ares.Settings;
 
 namespace Ares.Players
 {
@@ -1316,13 +1318,65 @@ namespace Ares.Players
             }
         }
 
+		#if ANDROID
+		private void GetProjectsFromFolder(String folderPath, out String[] files1, out String[] files2)
+		{
+			String[] res1 = null;
+			String[] res2 = null;
+			try 
+			{
+				var folderTask = Ares.Settings.FolderFactory.CreateFromSerialization(folderPath);
+				var task2 = folderTask.ContinueWith((firstTask) =>
+					{
+						var filesTask = firstTask.Result.GetProjectNames();
+						return filesTask;
+					}).Unwrap();
+				var task3 = task2.ContinueWith((secondTask) =>
+					{
+						var files = secondTask.Result;
+						var list1 = new List<String>();
+						var list2 = new List<String>();
+						foreach (var file in files)
+						{
+							if (file.DisplayName.EndsWith(".ares", StringComparison.InvariantCultureIgnoreCase))
+								list1.Add(file.DisplayName);
+							else
+								list2.Add(file.DisplayName);
+						}
+						if (Ares.Settings.Settings.Instance.MusicDirectory.IsSmbFile())
+						{
+							// can't open packed projects if music is on a share because the tags db can't be changed
+							list2.Clear();
+						}
+						res1 = list1.ToArray();
+						res2 = list2.ToArray();
+					});
+				task3.Wait();
+				files1 = res1;
+				files2 = res2;
+			}
+			catch (System.IO.IOException)
+			{
+				files1 = new string[0];
+				files2 = new string[0];
+			}
+		}
+		#else
+		private void GetProjectsFromFolder(String folderPath, out String[] files1, out String[] files2)
+		{
+			files1 = System.IO.Directory.GetFiles(folderPath, "*.ares");
+			files2 = System.IO.Directory.GetFiles(folderPath, "*.apkg");
+		}
+		#endif
+
         private void InformPossibleProjects()
         {
             if (ClientConnected)
             {
                 String directory = networkClient.GetProjectsDirectory();
-                String[] files1 = System.IO.Directory.GetFiles(directory, "*.ares");
-                String[] files2 = System.IO.Directory.GetFiles(directory, "*.apkg");
+				String[] files1 = null;
+				String[] files2 = null;
+				GetProjectsFromFolder(directory, out files1, out files2);
                 String[] files = new String[files1.Length + files2.Length];
                 for (int i = 0; i < files1.Length; ++i)
                 {

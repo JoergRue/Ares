@@ -43,17 +43,17 @@ namespace Ares.Data.Android
 			// aapt resource value: 0x7f020001
 			public static int ExpectedAttribute = 2130837505;
 			
-			// aapt resource value: 0x7f020002
-			public static int ExpectedContent = 2130837506;
-			
 			// aapt resource value: 0x7f020003
-			public static int ExpectedDouble = 2130837507;
+			public static int ExpectedContent = 2130837507;
 			
 			// aapt resource value: 0x7f020004
-			public static int ExpectedElement = 2130837508;
+			public static int ExpectedDouble = 2130837508;
 			
 			// aapt resource value: 0x7f020005
-			public static int ExpectedInteger = 2130837509;
+			public static int ExpectedElement = 2130837509;
+			
+			// aapt resource value: 0x7f020002
+			public static int ExpectedInteger = 2130837506;
 			
 			// aapt resource value: 0x7f020006
 			public static int FileNameMustBeSet = 2130837510;

@@ -215,6 +215,7 @@ namespace Ares.Player_Android
 						}
 						catch (Exception ex)
 						{
+							LogException(ex);
 							ShowToast(ex.Message);
 						}
 					}
@@ -234,6 +235,7 @@ namespace Ares.Player_Android
 						}
 						catch (Exception ex)
 						{
+							LogException(ex);
 							ShowToast(ex.Message);
 						}
 					}
@@ -253,6 +255,7 @@ namespace Ares.Player_Android
 						}
 						catch (Exception ex)
 						{
+							LogException(ex);
 							ShowToast(ex.Message);
 						}
 					}
@@ -283,7 +286,7 @@ namespace Ares.Player_Android
 			Messages.Instance.MessageReceived += new MessageReceivedHandler(MessageReceived);
 			if (Ares.Settings.Settings.Instance.RecentFiles.GetFiles().Count > 0)
 			{
-				OpenProject(Ares.Settings.Settings.Instance.RecentFiles.GetFiles()[0].FilePath, false);
+				OpenProject(Ares.Settings.FolderFactory.CreateFile(Ares.Settings.Settings.Instance.RecentFiles.GetFiles()[0].FilePath), false);
 			}
 			bool foundAddress = false;
 			bool foundIPv4Address = false;
@@ -402,6 +405,8 @@ namespace Ares.Player_Android
 
 		private void EnsureDirectoryExists(String directory)
 		{
+			if (directory.IsSmbFile())
+				return;
 			if (!System.IO.Directory.Exists(directory))
 			{
 				try
@@ -452,11 +457,32 @@ namespace Ares.Player_Android
 			try
 			{
 				Ares.Tags.ITagsDBFiles tagsDBFiles = Ares.Tags.TagsModule.GetTagsDB().FilesInterface;
-				String path = System.IO.Path.Combine(Ares.Settings.Settings.Instance.MusicDirectory, tagsDBFiles.DefaultFileName);
-				tagsDBFiles.OpenOrCreateDatabase(path);
+				String filePath = System.IO.Path.Combine(Ares.Settings.Settings.Instance.MusicDirectory, tagsDBFiles.DefaultFileName);
+				// if reading from a smb share, copy the database to a local file since SQLite can't open databases from input streams or memory bytes
+				if (filePath.IsSmbFile())
+				{
+					String cacheFileName = System.IO.Path.GetTempFileName();
+					try 
+					{
+						using (var ifs = new System.IO.BufferedStream(SambaHelpers.GetSambaInputStream(filePath))) 
+					    using (var ofs = System.IO.File.Create(cacheFileName))
+						{
+							ifs.CopyTo(ofs);
+						}
+					}
+					catch (System.IO.IOException ioEx)
+					{
+						LogException(ioEx);
+						ShowToast(String.Format(Resources.GetString(Resource.String.tags_db_error), ioEx.Message));
+						return;
+					}
+					filePath = cacheFileName;
+				}
+				tagsDBFiles.OpenOrCreateDatabase(filePath);
 			}
 			catch (Ares.Tags.TagsDbException ex)
 			{
+				LogException(ex);
 				ShowToast(String.Format(Resources.GetString(Resource.String.tags_db_error), ex.Message));
 			}
 		}
@@ -473,34 +499,66 @@ namespace Ares.Player_Android
 		private void OpenProjectFromController(String fileName)
 		{
 			String path = fileName;
-			if (!System.IO.Path.IsPathRooted(path))
+			Ares.Settings.IFile projectFile = null;
+			try
 			{
-				String oldPath = m_Project != null ? m_Project.FileName : Settings.Settings.Instance.ProjectDirectory;
-				if (m_Project != null)
+				if (!path.IsSmbFile() && !System.IO.Path.IsPathRooted(path))
 				{
-					oldPath = System.IO.Directory.GetParent(oldPath).FullName;
-				}
-				path = oldPath + System.IO.Path.DirectorySeparatorChar + fileName;
-			}
-			if (System.IO.File.Exists(path) && !path.Equals(m_CurrentProjectPath, StringComparison.OrdinalIgnoreCase))
-			{
-				if (path.EndsWith(".apkg", StringComparison.InvariantCultureIgnoreCase))
-				{
-					ImportProject(path, true);
+					var folder = Settings.Settings.Instance.ProjectFolder;
+					var files = folder.GetProjectNames().Result;
+					foreach (var file in files)
+					{
+						if (file.DisplayName == fileName)
+						{
+							projectFile = file;	
+							break;
+						}
+					}
 				}
 				else
 				{
-					OpenProject(path, true);
+					projectFile = Settings.FolderFactory.CreateFile(path);
+				}
+			}
+			catch (System.IO.IOException ex)
+			{
+				ShowToast(String.Format(Resources.GetString(Resource.String.load_error), ex.Message));
+			}
+			if (projectFile == null)
+				return;
+			if (!projectFile.IOName.Equals(m_CurrentProjectPath, StringComparison.InvariantCultureIgnoreCase))
+			{
+				if (path.EndsWith(".apkg", StringComparison.InvariantCultureIgnoreCase))
+				{
+					ImportProject(projectFile, true);
+				}
+				else
+				{
+					OpenProject(projectFile, true);
 				}
 			}
 		}
 
-		private void OpenProject(String filePath, bool onControllerRequest)
+		private static void LogException(Exception ex)
+		{
+			Android.Util.Log.Debug("Ares", "Exception: " + ex.GetType().Name + ": " + ex.Message);
+			Exception last = ex;
+			Exception inner = ex.InnerException;
+			while (inner != null)
+			{
+				Android.Util.Log.Debug("Ares", "    Inner: " + inner.GetType().Name + ":  " + inner.Message);
+				last = inner;
+				inner = inner.InnerException;
+			}
+			Android.Util.Log.Debug("Ares", "    Stack Trace: " + last.StackTrace);
+		}
+
+		private void OpenProject(IFile projectFile, bool onControllerRequest)
 		{
 			StopAllPlaying();
 			if (m_Project != null)
 			{
-				if (onControllerRequest && m_Project.FileName.Equals(filePath, StringComparison.InvariantCultureIgnoreCase))
+				if (onControllerRequest && m_Project.FileName.Equals(projectFile.IOName, StringComparison.InvariantCultureIgnoreCase))
 				{
 					if (m_Network != null)
 					{
@@ -514,9 +572,9 @@ namespace Ares.Player_Android
 			}
 			try
 			{
-				Messages.AddMessage(Ares.Players.MessageType.Debug, "Opening project " + filePath);
-				m_Project = Ares.Data.DataModule.ProjectManager.LoadProject(filePath);
-				m_CurrentProjectPath = filePath;
+				Messages.AddMessage(Ares.Players.MessageType.Debug, "Opening project " + projectFile.DisplayName);
+				m_Project = Ares.Data.DataModule.ProjectManager.LoadProject(projectFile.IOName);
+				m_CurrentProjectPath = projectFile.IOName;
 				if (m_Project != null && m_Project.TagLanguageId != -1)
 				{
 					m_TagLanguageId = m_Project.TagLanguageId;
@@ -529,6 +587,7 @@ namespace Ares.Player_Android
 			}
 			catch (Exception e)
 			{
+				LogException(e);
 				ShowToast(String.Format(Resources.GetString(Resource.String.load_error), e.Message));
 				if (onControllerRequest)
 				{
@@ -583,10 +642,10 @@ namespace Ares.Player_Android
 			private PlayerService m_PlayerService;
 		}
 
-		private void ImportProject(String fileName, bool controllerRequest)
+		private void ImportProject(IFile projectFile, bool controllerRequest)
 		{
-			Messages.AddMessage(Ares.Players.MessageType.Debug, "Importing project " + fileName);
-			String defaultProjectName = fileName;
+			Messages.AddMessage(Ares.Players.MessageType.Debug, "Importing project " + projectFile.DisplayName);
+			String defaultProjectName = projectFile.IOName;
 			if (defaultProjectName.EndsWith(".apkg"))
 			{
 				defaultProjectName = defaultProjectName.Substring(0, defaultProjectName.Length - 5);
@@ -594,10 +653,11 @@ namespace Ares.Player_Android
 			defaultProjectName = defaultProjectName + ".ares";
 			String projectFileName = defaultProjectName;
 
-			Ares.ModelInfo.Importer.Import(new NotificationProgressMonitor(this), fileName, projectFileName, true, null, (error, cancelled) =>
+			Ares.ModelInfo.Importer.Import(new NotificationProgressMonitor(this), projectFile.IOName, projectFileName, true, null, (error, cancelled) =>
 				{
 					if (error != null)
 					{
+						LogException(error);
 						ShowToast(String.Format(Resources.GetString(Resource.String.import_error), error.Message));
 						if (controllerRequest)
 						{
@@ -606,7 +666,8 @@ namespace Ares.Player_Android
 					}
 					else if (!cancelled)
 					{
-						OpenProject(projectFileName, controllerRequest);
+						var newFile = Settings.FolderFactory.CreateFile(projectFileName);
+						OpenProject(newFile, controllerRequest);
 					}
 				});
 		}
@@ -704,12 +765,8 @@ namespace Ares.Player_Android
 
 		public string GetProjectsDirectory()
 		{
-			String oldPath = m_Project != null ? m_Project.FileName : Settings.Settings.Instance.ProjectDirectory;
-			if (m_Project != null)
-			{
-				oldPath = System.IO.Directory.GetParent(oldPath).FullName;
-			}
-			return oldPath;
+			IFolder projectFolder = Settings.Settings.Instance.ProjectFolder;
+			return projectFolder.Serialize();
 		}
 
 		public Ares.Settings.RecentFiles GetLastUsedProjects()

@@ -20,6 +20,9 @@
 using System;
 using System.Collections.Generic;
 using System.Xml;
+#if ANDROID
+using Ares.Settings;
+#endif
 
 namespace Ares.Data
 {
@@ -93,6 +96,86 @@ namespace Ares.Data
         /// <returns>the read elements, or null</returns>
         IList<IXmlWritable> ImportElementsFromString(String serializedForm);
     }
+
+	public static class FileHelpers
+	{
+		public static System.IO.Stream GetFileContentStream(String filePath)
+		{
+			#if ANDROID
+			if (filePath.IsSmbFile())
+			{
+				/*
+				using (var stream = SambaHelpers.GetSambaInputStream(filePath))
+				{
+					var bytes = new byte[stream.Length];
+					stream.Read(bytes, 0, bytes.Length);
+					return new System.IO.MemoryStream(bytes);
+				}
+				*/
+				return SambaHelpers.GetSambaInputStream(filePath);
+			}
+			#endif
+			return new System.IO.FileStream(filePath, System.IO.FileMode.Open);
+		}
+
+		public static System.IO.Stream CreateFileOutputStream(String filePath)
+		{
+			#if ANDROID
+			if (filePath.IsSmbFile())
+			{
+				return SambaHelpers.GetSambaOutputStream(filePath);
+			}
+			#endif
+			return System.IO.File.Create(filePath);
+		}
+
+		public static bool FileExists(String filePath)
+		{
+			#if ANDROID
+			if (filePath.IsSmbFile())
+			{
+				return SambaHelpers.FileExists(filePath);
+			}
+			#endif
+			return System.IO.File.Exists(filePath);
+		}
+
+		public static String AppendFileName(String dir, String name)
+		{
+			#if ANDROID
+			if (dir.IsSmbFile())
+			{
+				return SambaHelpers.AppendFileName(dir, name);
+			}
+			#endif
+			name = name.Replace('/', System.IO.Path.DirectorySeparatorChar);
+			return System.IO.Path.Combine(dir, name);
+		}
+
+
+		public static String GetDirectory(String filePath)
+		{
+			#if ANDROID
+			if (filePath.IsSmbFile())
+			{
+				return SambaHelpers.GetDirectoryName(filePath);
+			}
+			#endif
+			return System.IO.Path.GetDirectoryName(filePath);
+		}
+
+		public static void CreateDirectory(String dirPath)
+		{
+			#if ANDROID
+			if (dirPath.IsSmbFile())
+			{
+				SambaHelpers.CreateDirectory(dirPath);
+				return;
+			}
+			#endif
+			System.IO.Directory.CreateDirectory(dirPath);
+		}
+	}
 
     class ProjectManager : IProjectManager
     {
@@ -211,13 +294,14 @@ namespace Ares.Data
             XmlReaderSettings settings = new XmlReaderSettings();
             settings.IgnoreComments = true;
             settings.DtdProcessing = DtdProcessing.Ignore;
-            using (System.IO.FileStream stream = new System.IO.FileStream(fileName, System.IO.FileMode.Open))
+			using (System.IO.Stream stream = FileHelpers.GetFileContentStream(fileName))
             {
-				using (System.IO.StreamReader streamReader = new System.IO.StreamReader(stream, System.Text.Encoding.UTF8)) {
-                using (XmlReader reader = XmlReader.Create(streamReader, settings))
-                {
-                    DoImportElements(reader, elements, fileName, isProject);
-                }
+				using (System.IO.StreamReader streamReader = new System.IO.StreamReader(stream, System.Text.Encoding.UTF8)) 
+				{
+	                using (XmlReader reader = XmlReader.Create(streamReader, settings))
+	                {
+	                    DoImportElements(reader, elements, fileName, isProject);
+	                }
 				}
             }
 

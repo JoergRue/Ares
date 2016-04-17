@@ -531,7 +531,7 @@ namespace Ares.Tags
         /// Opens a database at the specified path,
         /// or creates a new one if none exists.
         /// </summary>
-        void OpenOrCreateDatabase(String filePath);
+		void OpenOrCreateDatabase(String filePath);
 
         /// <summary>
         /// Closes the database.

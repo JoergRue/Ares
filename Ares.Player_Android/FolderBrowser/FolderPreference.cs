@@ -38,12 +38,18 @@ namespace Ares.Player_Android
 		public void OnActivityResult(Intent data)
 		{
 			String serialized = data.GetStringExtra(FolderBrowserActivity.FOLDER_EXTRA);
-			Settings.IFolder folder = Settings.FolderFactory.CreateFromSerialization(serialized);
+			DoOnActivityResult(serialized);
+		}
+
+		private async void DoOnActivityResult(String serialized)
+		{
+			var folderTask = Settings.FolderFactory.CreateFromSerialization(serialized);
+			var folder = await folderTask;
 			if (folder != null && CallChangeListener(folder.Serialize()))
 			{
 				mFolder = folder;
 				PersistString(mFolder.Serialize());
-				Summary = mFolder.IOName;
+				Summary = mFolder.DisplayName;
 			}
 		}
 
@@ -76,7 +82,7 @@ namespace Ares.Player_Android
 			mFolderType = ta.GetString(Resource.Styleable.FolderPreference_folderType);
 			ta.Recycle();
 			mFolder = RetrieveDefaultValue();
-			Summary = mFolder != null ? mFolder.IOName : String.Empty;
+			Summary = mFolder != null ? mFolder.DisplayName : String.Empty;
 		}
 
 		protected override void OnClick()
@@ -88,8 +94,8 @@ namespace Ares.Player_Android
 			}
 			else
 			{
-				var folder = Settings.FolderFactory.CreateFileSystemFolder("/");
-				intent.PutExtra(FolderBrowserActivity.FOLDER_EXTRA, folder.Serialize());
+				var folder = Settings.FolderFactory.CreateRootFolder(Ares.Settings.FolderType.FileSystem);
+				intent.PutExtra(FolderBrowserActivity.FOLDER_EXTRA, folder.Result.Serialize());
 			}
 			ParentFragment.StartActivityForResult(intent, FolderId);
 		}
@@ -98,7 +104,7 @@ namespace Ares.Player_Android
 		{
 			if (restorePersistedValue)
 			{
-				mFolder = Settings.FolderFactory.CreateFromSerialization(GetPersistedString(RetrieveDefaultValue().Serialize()));
+				DoRestorePersistedInitialValue();
 			}
 			else
 			{
@@ -107,8 +113,16 @@ namespace Ares.Player_Android
 				{
 					PersistString(mFolder.Serialize());
 				}
+				Summary = mFolder != null ? mFolder.DisplayName : String.Empty;
 			}
-			Summary = mFolder != null ? mFolder.IOName : String.Empty;
+		}
+
+		private async void DoRestorePersistedInitialValue()
+		{
+			var task = Settings.FolderFactory.CreateFromSerialization(GetPersistedString(RetrieveDefaultValue().Serialize()));
+			var folder = await task;
+			mFolder = folder;
+			Summary = mFolder != null ? mFolder.DisplayName : String.Empty;
 		}
 
 		protected override Java.Lang.Object OnGetDefaultValue(Android.Content.Res.TypedArray a, int index)
@@ -187,8 +201,13 @@ namespace Ares.Player_Android
 				return;
 			}
 			SavedState myState = state as SavedState;
-			mFolder = Settings.FolderFactory.CreateFromSerialization(myState.Value);
+			DoRestoreInstanceState(myState.Value);
 			base.OnRestoreInstanceState(myState.SuperState);
+		}
+
+		private async void DoRestoreInstanceState(String value)
+		{
+			mFolder = await Settings.FolderFactory.CreateFromSerialization(value);
 		}
 	}
 }
