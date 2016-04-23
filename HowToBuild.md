@@ -32,7 +32,7 @@ The Android Controller is built with [Android Studio](https://developer.android.
 
 ### Player for Android
 
-The Android Player is built with [Xamarin Studio](https://xamarin.com/platform). Load the Ares.AndroidPlayer.sln file, then just select Debug or Release configuration and build the solution. You need a Xamarin Android license to build it, but Xamarin offers complementary licenses to open source developers (a big thank you for that!). Note: you'll not be able to create a signed application package which fits to the existing Google play entry since you don't have the passphrase to the key store. The Android Player is not build with the build scripts.
+The Android Player is built with [Xamarin Studio](https://xamarin.com/platform). Load the Ares.AndroidPlayer.sln file, then just select Debug or Release configuration and build the solution. It should work with the now freely available Studio Community, though I haven't tested that yet; Xamarin previously gave complementary licenses to open source developers (a big thank you for that!). Note: you'll not be able to create a signed application package which fits to the existing Google play entry since you don't have the passphrase to the key store. The Android Player is not build with the build scripts.
 
 ### Plugin for MediaPortal
 
