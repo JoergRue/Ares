@@ -64,6 +64,8 @@ namespace Ares.Player_Android
 					Android.Util.Log.Debug("FolderBrowser", "AuthFailure Hook");
 					dialogDismissed = false;
 					mAuth = null;
+					if (mCurrentActivity == null)
+						return null;
 					mCurrentActivity.RunOnUiThread(() => {
 						if (mCurrentActivity == null)
 						{
