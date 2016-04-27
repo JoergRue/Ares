@@ -61,7 +61,7 @@ namespace Ares.AudioSource.Freesound {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Suche wird ausgeführt ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Executing Search ähnelt.
         /// </summary>
         internal static string ExecutingSearch {
             get {

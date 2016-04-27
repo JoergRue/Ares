@@ -73,12 +73,17 @@ namespace Ares.Editor.AudioSourceSearch
             this.searchButton = new System.Windows.Forms.ToolStripButton();
             this.stopButton = new System.Windows.Forms.ToolStripButton();
             this.playButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStrip2 = new System.Windows.Forms.ToolStrip();
+            this.prevPageButton = new System.Windows.Forms.ToolStripButton();
+            this.nextPageButton = new System.Windows.Forms.ToolStripButton();
+            this.pageLabel = new System.Windows.Forms.ToolStripLabel();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.searchResultContextMenu.SuspendLayout();
             this.toolStrip1.SuspendLayout();
+            this.toolStrip2.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -88,6 +93,7 @@ namespace Ares.Editor.AudioSourceSearch
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.toolStrip2);
             this.splitContainer1.Panel1.Controls.Add(this.resultsListView);
             // 
             // splitContainer1.Panel2
@@ -170,11 +176,11 @@ namespace Ares.Editor.AudioSourceSearch
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.playButton,
+            this.stopButton,
             this.audioSourceComboBox,
             this.searchBox,
-            this.searchButton,
-            this.stopButton,
-            this.playButton});
+            this.searchButton});
             resources.ApplyResources(this.toolStrip1, "toolStrip1");
             this.toolStrip1.Name = "toolStrip1";
             // 
@@ -214,6 +220,32 @@ namespace Ares.Editor.AudioSourceSearch
             this.playButton.Name = "playButton";
             this.playButton.Click += new System.EventHandler(this.playButton_Click);
             // 
+            // toolStrip2
+            // 
+            resources.ApplyResources(this.toolStrip2, "toolStrip2");
+            this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.prevPageButton,
+            this.pageLabel,
+            this.nextPageButton});
+            this.toolStrip2.Name = "toolStrip2";
+            // 
+            // prevPageButton
+            // 
+            this.prevPageButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.prevPageButton, "prevPageButton");
+            this.prevPageButton.Name = "prevPageButton";
+            // 
+            // nextPageButton
+            // 
+            this.nextPageButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.nextPageButton, "nextPageButton");
+            this.nextPageButton.Name = "nextPageButton";
+            // 
+            // pageLabel
+            // 
+            this.pageLabel.Name = "pageLabel";
+            resources.ApplyResources(this.pageLabel, "pageLabel");
+            // 
             // AudioSourceSearchWindow
             // 
             resources.ApplyResources(this, "$this");
@@ -222,6 +254,7 @@ namespace Ares.Editor.AudioSourceSearch
             this.Controls.Add(this.toolStrip1);
             this.Name = "AudioSourceSearchWindow";
             this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
@@ -229,6 +262,8 @@ namespace Ares.Editor.AudioSourceSearch
             this.searchResultContextMenu.ResumeLayout(false);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.toolStrip2.ResumeLayout(false);
+            this.toolStrip2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -254,5 +289,9 @@ namespace Ares.Editor.AudioSourceSearch
         private System.Windows.Forms.ColumnHeader colHeaderAuthor;
         private System.Windows.Forms.ColumnHeader colHeaderDuration;
         private System.Windows.Forms.ToolStripComboBox audioSourceComboBox;
+        private System.Windows.Forms.ToolStrip toolStrip2;
+        private System.Windows.Forms.ToolStripButton prevPageButton;
+        private System.Windows.Forms.ToolStripLabel pageLabel;
+        private System.Windows.Forms.ToolStripButton nextPageButton;
     }
 }

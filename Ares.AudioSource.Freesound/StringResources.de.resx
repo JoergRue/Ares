@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ExecutingSearch" xml:space="preserve">
-    <value>Executing Search</value>
+    <value>Suche wird ausgeführt</value>
   </data>
   <data name="FreesoundAudioSourceName" xml:space="preserve">
     <value>Freesound</value>
-    <comment>Name of the Audio Source</comment>
+    <comment>Name der Audio-Quelle</comment>
   </data>
 </root>

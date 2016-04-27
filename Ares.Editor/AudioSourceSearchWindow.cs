@@ -67,9 +67,6 @@ namespace Ares.Editor.AudioSourceSearch
     ///       This could be used for fine-grained control over whether preview is possible for specific audio sources.
     ///       If possible, the preview mechanism should be able to load audio data directly from URLs, otherwise we would
     ///       have to create temp files.
-    ///       
-    /// TODO: Possibly use ObjectListView instead of normal Listview http://objectlistview.sourceforge.net/cs/index.html
-    ///       This would allow for a much more appealing search results listing.
     /// </summary>
 
     partial class AudioSourceSearchWindow : ToolWindow
