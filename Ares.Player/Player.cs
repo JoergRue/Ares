@@ -29,10 +29,11 @@ using System.Windows.Forms;
 using Ares.Data;
 using Ares.Players;
 using Ares.Settings;
+using Ares.CommonGUI;
 
 namespace Ares.Player
 {
-    public partial class Player : Form, INetworkClient
+	public partial class Player : Ares.CommonGUI.InvokableForm, INetworkClient
     {
 #if !MONO
         private Ares.Ipc.ApplicationInstance m_Instance;
@@ -115,7 +116,7 @@ namespace Ares.Player
         {
             if (m.Type >= MessageType.Warning && (int)m.Type >= Ares.Settings.Settings.Instance.MessageFilterLevel)
             {
-                if (InvokeRequired)
+				if (this.IsInvokeRequired())
                 {
                     BeginInvoke(new MethodInvoker(() => ShowMessagesForm()));
                 }
@@ -259,7 +260,7 @@ namespace Ares.Player
 
         private void OpenProjectFromRequest(String projectName, String projectPath)
         {
-            if (InvokeRequired)
+            if (this.IsInvokeRequired ())
             {
                 Invoke(new MethodInvoker(() => OpenProjectFromRequest(projectName, projectPath)));
             }
@@ -274,7 +275,7 @@ namespace Ares.Player
 
         private void OpenProjectFromController(String fileName)
         {
-            if (InvokeRequired)
+            if (this.IsInvokeRequired ())
             {
                 Invoke(new MethodInvoker(() => OpenProjectFromController(fileName)));
                 return;
@@ -1121,7 +1122,7 @@ namespace Ares.Player
 
         private void SettingsChanged(bool fundamentalChange)
         {
-            if (InvokeRequired)
+            if (this.IsInvokeRequired ())
             {
                 Invoke(new MethodInvoker(() => SettingsChanged(fundamentalChange)));
                 return;
@@ -1584,6 +1585,55 @@ namespace Ares.Player
             }
         }
 
+        class GUIAndNetworkProgressMonitor : ModelInfo.IProgressMonitor
+        {
+            private ModelInfo.IProgressMonitor mGUIMonitor;
+            private INetwork mNetwork;
+            private double mPercent;
+
+            public GUIAndNetworkProgressMonitor(ModelInfo.IProgressMonitor guiMonitor, INetwork network)
+            {
+                mGUIMonitor = guiMonitor;
+                mNetwork = network;
+                mPercent = 0;
+            }
+
+            public bool Canceled
+            {
+                get
+                {
+                    return mGUIMonitor.Canceled;
+                }
+            }
+
+            public void IncreaseProgress(double percent)
+            {
+                mGUIMonitor.IncreaseProgress(percent);
+                mPercent += percent;
+                mNetwork.InformClientOfImportProgress((int)mPercent, String.Empty);
+            }
+
+            public void IncreaseProgress(double percent, string text)
+            {
+                mGUIMonitor.IncreaseProgress(percent, text);
+                mPercent += percent;
+                mNetwork.InformClientOfImportProgress((int)mPercent, text);
+            }
+
+            public void SetIndeterminate(string text)
+            {
+                mGUIMonitor.SetIndeterminate(text);
+                mNetwork.InformClientOfImportProgress(-1, text);
+            }
+
+            public void SetProgress(int percent, string text)
+            {
+                mGUIMonitor.SetProgress(percent, text);
+                mPercent = percent;
+                mNetwork.InformClientOfImportProgress(percent, text);
+            }
+        }
+
         private void ImportProject(String fileName, bool controllerRequest)
         {
             String defaultProjectName = fileName;
@@ -1603,7 +1653,8 @@ namespace Ares.Player
             }
 
             Ares.CommonGUI.ProgressMonitor monitor = new Ares.CommonGUI.ProgressMonitor(this, StringResources.Importing);
-            Ares.ModelInfo.Importer.Import(monitor, fileName, projectFileName, controllerRequest, new MessageBoxProvider(), (error, cancelled) => 
+            GUIAndNetworkProgressMonitor monitor2 = new GUIAndNetworkProgressMonitor(monitor, m_Network);
+            Ares.ModelInfo.Importer.Import(monitor2, fileName, projectFileName, controllerRequest, new MessageBoxProvider(), (error, cancelled) => 
             {
                 monitor.Close();
                 if (error != null)

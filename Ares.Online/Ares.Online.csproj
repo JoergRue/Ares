@@ -33,7 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>ares.snk</AssemblyOriginatorKeyFile>
@@ -147,6 +147,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ares.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Ares.CommonGUI\Ares.CommonGUI.csproj">
+      <Project>{ed16f93e-23f3-4075-b72d-f64e49d08e2d}</Project>
+      <Name>Ares.CommonGUI</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

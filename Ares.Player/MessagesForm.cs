@@ -27,19 +27,21 @@ using System.Text;
 using System.Windows.Forms;
 
 using Ares.Players;
+using Ares.CommonGUI;
 
 namespace Ares.Player
 {
-    partial class MessagesForm : Form
+	partial class MessagesForm : Ares.CommonGUI.InvokableForm
     {
+
         public MessagesForm()
         {
-            InitializeComponent();
+			InitializeComponent();
             Messages.Instance.MessageReceived += new MessageReceivedHandler(MessageReceived);
             filterBox.SelectedIndex = Ares.Settings.Settings.Instance.MessageFilterLevel;
         }
 
-        private void RefillGrid()
+	    private void RefillGrid()
         {
             messagesGrid.SuspendLayout();
             messagesGrid.Rows.Clear();
@@ -54,7 +56,7 @@ namespace Ares.Player
         {
             if (IsDisposed)
                 return;
-            if (InvokeRequired)
+			if (this.IsInvokeRequired())
             {
                 BeginInvoke(new MethodInvoker(() => AddMessage(m)));
             }

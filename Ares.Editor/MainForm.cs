@@ -28,7 +28,7 @@ using Ares.Settings;
 
 namespace Ares.Editor
 {
-    public partial class MainForm : Form, ErrorWindow.IErrorWindowClient, IFileExplorerParent, ElementEditors.IFileTagsEditorParent
+    public partial class MainForm : Ares.CommonGUI.InvokableForm, ErrorWindow.IErrorWindowClient, IFileExplorerParent, ElementEditors.IFileTagsEditorParent
     {
 		#if !MONO
         private Ares.Ipc.ApplicationInstance m_Instance;

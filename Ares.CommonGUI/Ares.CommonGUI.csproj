@@ -54,6 +54,9 @@
     <Compile Include="AboutDialog.designer.cs">
       <DependentUpon>AboutDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="InvokableForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="KeyChecks.cs" />
     <Compile Include="PathLabel.cs">
       <SubType>Component</SubType>
