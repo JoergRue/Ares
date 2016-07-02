@@ -124,14 +124,6 @@ namespace Ares.TagsImport
             // Block until we can enter the semaphore or until the timeout expires.
             var entered = _semaphore.Wait(millisecondsTimeout);
 
-            // If we entered the semaphore, compute the corresponding exit time 
-            // and add it to the queue.
-            if (entered)
-            {
-                var timeToExit = unchecked(Environment.TickCount + TimeUnitMilliseconds);
-                _exitTimes.Enqueue(timeToExit);
-            }
-
             return entered;
         }
 
@@ -152,6 +144,18 @@ namespace Ares.TagsImport
         public void WaitToProceed()
         {
             WaitToProceed(Timeout.Infinite);
+        }
+
+        /// <summary>
+        /// After WaitToProceed, do your work and then call ResetTimeToProceed to set the time
+        /// for the next allowed call. In simple cases, call it directly after WaitToProceed.
+        /// For the WaitToProceed overloads which return a bool, call it only if true was returned.
+        /// </summary>
+        public void ResetTimeToProceed()
+        {
+            // compute the corresponding exit time and add it to the queue.
+            var timeToExit = unchecked(Environment.TickCount + TimeUnitMilliseconds);
+            _exitTimes.Enqueue(timeToExit);
         }
 
         // Throws an ObjectDisposedException if this object is disposed.
