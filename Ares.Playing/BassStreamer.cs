@@ -23,9 +23,45 @@ namespace Ares.Playing
 {
     class BassStreamer : IStreamer
     {
+
+		#if MONO
+		#if !ANDROID
+		private String FindExecutableDirectory(String executableName)
+		{
+			try
+			{
+				System.Diagnostics.Process whichProcess = new System.Diagnostics.Process();
+				whichProcess.StartInfo.FileName = "which";
+				whichProcess.StartInfo.Arguments = executableName;
+				whichProcess.StartInfo.CreateNoWindow = true;
+				whichProcess.StartInfo.RedirectStandardOutput = true;
+				whichProcess.StartInfo.UseShellExecute = false;
+				whichProcess.Start();
+				String path = whichProcess.StandardOutput.ReadToEnd().Trim();
+				whichProcess.WaitForExit();
+				if (path.EndsWith(executableName))
+				{
+					ErrorHandling.AddMessage(MessageType.Debug, "Found " + executableName + " in " + path);
+					return path.Substring(0, path.Length - executableName.Length);
+				}
+				else
+				{
+					ErrorHandling.AddMessage(MessageType.Debug, "which " + executableName + " returned " + path);
+					return String.Empty;
+				}
+			}
+			catch (Exception ex)
+			{
+				ErrorHandling.AddMessage(MessageType.Error, ex.Message);
+				return String.Empty;
+			}
+		}
+		#endif
+		#endif
+
         public void BeginStreaming(StreamingParameters parameters)
         {
-#if !MONO
+#if !ANDROID
             ErrorSent = false;
             if (IsStreaming)
                 EndStreaming();
@@ -37,6 +73,7 @@ namespace Ares.Playing
                 return;
             }
             Un4seen.Bass.Misc.IBaseEncoder encoder = null;
+			#if !MONO
             switch (parameters.Encoding)
             {
                 case StreamEncoding.Wav:
@@ -74,6 +111,22 @@ namespace Ares.Playing
                     m_MixerChannel = 0;
                     return;
             }
+			#else
+			Un4seen.Bass.Misc.EncoderMP3 mp3Enc = new Un4seen.Bass.Misc.EncoderMP3(m_MixerChannel);
+			mp3Enc.CMDLN_Bitrate = (int)parameters.Bitrate;
+			mp3Enc.CMDLN_CBRString = "-r -h -b ${bps} - -";
+			mp3Enc.EncoderDirectory = FindExecutableDirectory("lame");
+			mp3Enc.CMDLN_EncoderType = Un4seen.Bass.BASSChannelType.BASS_CTYPE_STREAM_MP3;
+			mp3Enc.CMDLN_Executable = "lame";
+			mp3Enc.CMDLN_SupportsSTDOUT = true;
+			mp3Enc.CMDLN_VBRString = "-r -h -v - -";
+			if (!mp3Enc.EncoderExists)
+			{
+				ErrorHandling.AddMessage(MessageType.Error, StringResources.LameNotFound);
+				return;
+			}
+			encoder = mp3Enc;
+			#endif
             encoder.InputFile = null;
             encoder.OutputFile = null;
             Un4seen.Bass.Misc.IStreamingServer server = null;
@@ -161,6 +214,7 @@ namespace Ares.Playing
                         ErrorHandling.AddMessage(MessageType.Debug, "Connection to Icecast Server lost");
                         ErrorSent = true;
                     }
+					ErrorHandling.AddMessage(MessageType.Debug, m_BroadCast.Server.LastErrorMessage);
                 }
                 else if (e.EventType == Un4seen.Bass.Misc.BroadCastEventType.Disconnected)
                 {
@@ -178,7 +232,9 @@ namespace Ares.Playing
             lock (m_SyncObject)
             {
                 if (m_BroadCast != null)
+				{
                     m_BroadCast.Disconnect();
+				}
                 m_BroadCast = null;
             }
 	#endif

@@ -54,13 +54,17 @@ namespace Ares.Player
                     outputDeviceIndex = i;
             }
             outputDeviceCombo.SelectedIndex = outputDeviceIndex;
-#if !MONO
             streamingBox.Checked = settings.UseStreaming; ;
             serverAddressBox.Text = settings.StreamingServerAddress;
             serverPortUpDown.Value = settings.StreamingServerPort;
             passwordBox.Text = settings.StreamingPassword;
+			#if !MONO
             encodingBox.SelectedIndex = (settings.StreamingEncoder == (int)Playing.StreamEncoding.Ogg) ? 0 : 
                 ((settings.StreamingEncoder == (int)Playing.StreamEncoding.Opus) ? 2 : 1);
+			#else
+			encodingBox.SelectedIndex = 1;
+			encodingBox.Enabled = false;
+			#endif
             switch (settings.StreamingBitrate)
             {
                 case 32:
@@ -91,33 +95,6 @@ namespace Ares.Player
             streamNameBox.Text = settings.StreamingStreamName;
             userNameBox.Text = settings.StreamingUserName;
             UpdateUrl();
-#else
-            streamingBox.Enabled = false;
-            serverAddressBox.Enabled = false;
-            serverPortUpDown.Enabled = false;
-            passwordBox.Enabled = false;
-            encodingBox.Enabled = false;
-            userNameBox.Enabled = false;
-            bitrateBox.Enabled = false;
-            streamNameBox.Enabled = false;
-            streamingBox.Visible = false;
-            serverAddressBox.Visible = false;
-            serverPortUpDown.Visible = false;
-            passwordBox.Visible = false;
-            encodingBox.Visible = false;
-            userNameBox.Visible = false;
-            bitrateBox.Visible = false;
-            streamNameBox.Visible = false;
-            label1.Visible = false;
-            label2.Visible = false;
-            label3.Visible = false;
-            label4.Visible = false;
-            label5.Visible = false;
-            label6.Visible = false;
-            label7.Visible = false;
-            label8.Visible = false;
-            urlLabel.Visible = false;
-#endif
             listen = true;
         }
 
@@ -135,7 +112,6 @@ namespace Ares.Player
         {
             Ares.Settings.Settings settings = Ares.Settings.Settings.Instance;
             settings.OutputDeviceIndex = m_OutputDevices[outputDeviceCombo.SelectedIndex].Index;
-#if !MONO
             settings.UseStreaming = streamingBox.Checked;
             settings.StreamingServerAddress = serverAddressBox.Text;
             settings.StreamingServerPort = (int)serverPortUpDown.Value;
@@ -175,7 +151,6 @@ namespace Ares.Player
             }
             settings.StreamingStreamName = String.IsNullOrEmpty(streamNameBox.Text) ? "Ares" : streamNameBox.Text;
             settings.StreamingUserName = userNameBox.Text;
-#endif
         }
 
         private void encodingBox_SelectedIndexChanged(object sender, EventArgs e)
