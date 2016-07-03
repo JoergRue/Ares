@@ -10,6 +10,7 @@
 
 namespace Ares.Playing {
     using System;
+    using System.Reflection;
     
     
     /// <summary>
@@ -270,6 +271,15 @@ namespace Ares.Playing {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Encoder &apos;{0}&apos; not found ähnelt.
+        /// </summary>
+        internal static string EncoderNotFound {
+            get {
+                return ResourceManager.GetString("EncoderNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Channel / file has ended ähnelt.
         /// </summary>
         internal static string EndedError {
@@ -347,15 +357,6 @@ namespace Ares.Playing {
         internal static string IllTypeError {
             get {
                 return ResourceManager.GetString("IllTypeError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Lame Encoder not found ähnelt.
-        /// </summary>
-        internal static string LameNotFound {
-            get {
-                return ResourceManager.GetString("LameNotFound", resourceCulture);
             }
         }
         

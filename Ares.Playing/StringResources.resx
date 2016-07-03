@@ -279,7 +279,7 @@ Error message: {0}
   <data name="Default" xml:space="preserve">
     <value>Default</value>
   </data>
-  <data name="LameNotFound" xml:space="preserve">
-    <value>Lame Encoder not found</value>
+  <data name="EncoderNotFound" xml:space="preserve">
+    <value>Encoder '{0}' not found</value>
   </data>
 </root>

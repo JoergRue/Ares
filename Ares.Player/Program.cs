@@ -38,7 +38,11 @@ namespace Ares.Player
 		{
 #if MONO
 #if !ANDROID
-			XInitThreads ();
+			try {
+				XInitThreads ();
+			} catch (Exception) {
+				// silent failure
+			}
 #endif
 #endif
 		}

@@ -58,13 +58,8 @@ namespace Ares.Player
             serverAddressBox.Text = settings.StreamingServerAddress;
             serverPortUpDown.Value = settings.StreamingServerPort;
             passwordBox.Text = settings.StreamingPassword;
-			#if !MONO
             encodingBox.SelectedIndex = (settings.StreamingEncoder == (int)Playing.StreamEncoding.Ogg) ? 0 : 
                 ((settings.StreamingEncoder == (int)Playing.StreamEncoding.Opus) ? 2 : 1);
-			#else
-			encodingBox.SelectedIndex = 1;
-			encodingBox.Enabled = false;
-			#endif
             switch (settings.StreamingBitrate)
             {
                 case 32:
@@ -156,10 +151,12 @@ namespace Ares.Player
         private void encodingBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (!listen) return;
+			#if !MONO
             if (encodingBox.SelectedIndex == 1)
             {
                 MessageBox.Show(this, StringResources.GetLameYourself, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+			#endif
             UpdateUrl();
         }
 

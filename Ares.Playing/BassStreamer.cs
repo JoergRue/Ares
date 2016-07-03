@@ -73,7 +73,7 @@ namespace Ares.Playing
                 return;
             }
             Un4seen.Bass.Misc.IBaseEncoder encoder = null;
-			#if !MONO
+#if !MONO
             switch (parameters.Encoding)
             {
                 case StreamEncoding.Wav:
@@ -111,23 +111,52 @@ namespace Ares.Playing
                     m_MixerChannel = 0;
                     return;
             }
-			#else
-			Un4seen.Bass.Misc.EncoderMP3 mp3Enc = new Un4seen.Bass.Misc.EncoderMP3(m_MixerChannel);
-			mp3Enc.CMDLN_Bitrate = (int)parameters.Bitrate;
-			mp3Enc.CMDLN_CBRString = "-r -h -b ${bps} - -";
-			mp3Enc.EncoderDirectory = FindExecutableDirectory("lame");
-			mp3Enc.CMDLN_EncoderType = Un4seen.Bass.BASSChannelType.BASS_CTYPE_STREAM_MP3;
-			mp3Enc.CMDLN_Executable = "lame";
-			mp3Enc.CMDLN_SupportsSTDOUT = true;
-			mp3Enc.CMDLN_VBRString = "-r -h -v - -";
-			if (!mp3Enc.EncoderExists)
-			{
-				ErrorHandling.AddMessage(MessageType.Error, StringResources.LameNotFound);
+#else
+			String encoderName = String.Empty;
+			Un4seen.Bass.Misc.EncoderCMDLN theEnc = null;
+			switch (parameters.Encoding) {
+			case StreamEncoding.Lame: {
+					encoderName = "lame";
+					theEnc = new Un4seen.Bass.Misc.EncoderMP3 (m_MixerChannel);
+					theEnc.CMDLN_EncoderType = Un4seen.Bass.BASSChannelType.BASS_CTYPE_STREAM_MP3;
+					theEnc.CMDLN_CBRString = "-r -h -b ${bps} - -";
+					theEnc.CMDLN_VBRString = "-r -h -v - -";
+					break;
+				}
+			case StreamEncoding.Ogg: {
+					encoderName = "oggenc";
+					theEnc = new Un4seen.Bass.Misc.EncoderCMDLN (m_MixerChannel);
+					theEnc.CMDLN_EncoderType = Un4seen.Bass.BASSChannelType.BASS_CTYPE_STREAM_OGG;
+					theEnc.CMDLN_CBRString = "-r -";
+					theEnc.CMDLN_VBRString = "-r -";
+					break;
+				}
+			case StreamEncoding.Opus: {
+					encoderName = "opusenc";
+					theEnc = new Un4seen.Bass.Misc.EncoderCMDLN (m_MixerChannel);
+					theEnc.CMDLN_EncoderType = Un4seen.Bass.BASSChannelType.BASS_CTYPE_STREAM_OPUS;
+					theEnc.CMDLN_CBRString = "--raw - -";
+					theEnc.CMDLN_VBRString = "--raw - -";
+					break;
+				}
+			default:
+				Un4seen.Bass.Bass.BASS_StreamFree (m_MixerChannel);
+				m_MixerChannel = 0;
 				return;
 			}
-			encoder = mp3Enc;
-			#endif
-            encoder.InputFile = null;
+			theEnc.CMDLN_Bitrate = (int)parameters.Bitrate;
+			theEnc.EncoderDirectory = FindExecutableDirectory (encoderName);
+			theEnc.CMDLN_Executable = encoderName;
+			theEnc.CMDLN_SupportsSTDOUT = true;
+			if (!theEnc.EncoderExists) {
+				Un4seen.Bass.Bass.BASS_StreamFree (m_MixerChannel);
+				m_MixerChannel = 0;
+				ErrorHandling.AddMessage (MessageType.Error, String.Format (StringResources.EncoderNotFound, encoderName));
+				return;
+			}
+			encoder = theEnc;
+#endif
+			encoder.InputFile = null;
             encoder.OutputFile = null;
             Un4seen.Bass.Misc.IStreamingServer server = null;
             switch (parameters.Streamer)
