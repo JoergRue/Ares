@@ -263,6 +263,9 @@ public abstract class ConnectedFragment extends Fragment implements IServerListe
 
 	private void StartLocalPlayer()
 	{
+		boolean startLocalPlayer = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext()).getBoolean("start_local_player", true);
+		if (!startLocalPlayer)
+			return;
 		Log.d("ConnectedFragment", "Timeout: starting local player if installed.");
 		Handler handler = new Handler(getActivity().getMainLooper());
 		handler.post(new Runnable()

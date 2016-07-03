@@ -114,4 +114,6 @@
     <string name="MusicAllSpeakersDesc">Musik auf allen verfügbaren Lautsprechern abspielen</string>
     <string name="playMusic">Musik abspielen</string>
     <string name="importing">Importiere ...</string>
+    <string name="start_local_player">Starte lokalen Player</string>
+    <string name="start_local_player_summary">Automatisch lokal installierten Player starten</string>
 </resources>
