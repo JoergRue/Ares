@@ -1,3 +1,12 @@
+Version 3.1.0
+----------------------------------------------------------------------------------
+- General: increased ping interval between Players and Controllers
+- Editor: more robust communication with MusicBrainz.org to retrieve tags
+- Player/Linux: enabled streaming through icecast server
+- Player/Linux: workaround for bug in some Mono versions
+- Controller: all controllers show progress when importing a packed project
+- Controller/Android: option whether local Player shall be started
+
 Version 3.0.2
 ----------------------------------------------------------------------------------
 - Editor: Bugfix for operations (like delete) on resorted random or parallel lists

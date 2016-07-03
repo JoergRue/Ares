@@ -46,7 +46,7 @@
     <AndroidSigningStorePass>ares_player</AndroidSigningStorePass>
     <AndroidSigningKeyAlias>ares</AndroidSigningKeyAlias>
     <AndroidSigningKeyPass>ares_player</AndroidSigningKeyPass>
-    <DebugType>full</DebugType>
+    <DebugType></DebugType>
     <MandroidI18n>west</MandroidI18n>
   </PropertyGroup>
   <ItemGroup>

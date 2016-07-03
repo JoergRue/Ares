@@ -131,8 +131,9 @@
       <Name>Ares.Controllers</Name>
     </ProjectReference>
     <ProjectReference Include="..\Ares.Online\Ares.Online_MG.csproj">
-      <Project>{7550ad48-17a5-45bf-a632-b75eb82123dd}</Project>
+      <Project>{7A6185CD-7DC5-4583-A946-62C75CC7FFA1}</Project>
       <Name>Ares.Online_MG</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

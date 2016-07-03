@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ares.MGPlugin", "Ares.MGPlu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MGControllerTest", "MPControllerTest\MGControllerTest.csproj", "{19DBF02C-7B14-471F-A745-5796D7FF0A89}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ares.Online_MG", "Ares.Online\Ares.Online_MG.csproj", "{7550AD48-17A5-45BF-A632-B75EB82123DD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ares.Online_MG", "Ares.Online\Ares.Online_MG.csproj", "{7A6185CD-7DC5-4583-A946-62C75CC7FFA1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,14 +41,14 @@ Global
 		{19DBF02C-7B14-471F-A745-5796D7FF0A89}.Release|Any CPU.ActiveCfg = Release|x86
 		{19DBF02C-7B14-471F-A745-5796D7FF0A89}.Release|x86.ActiveCfg = Release|x86
 		{19DBF02C-7B14-471F-A745-5796D7FF0A89}.Release|x86.Build.0 = Release|x86
-		{7550AD48-17A5-45BF-A632-B75EB82123DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7550AD48-17A5-45BF-A632-B75EB82123DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7550AD48-17A5-45BF-A632-B75EB82123DD}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{7550AD48-17A5-45BF-A632-B75EB82123DD}.Debug|x86.Build.0 = Debug|Any CPU
-		{7550AD48-17A5-45BF-A632-B75EB82123DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7550AD48-17A5-45BF-A632-B75EB82123DD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7550AD48-17A5-45BF-A632-B75EB82123DD}.Release|x86.ActiveCfg = Release|Any CPU
-		{7550AD48-17A5-45BF-A632-B75EB82123DD}.Release|x86.Build.0 = Release|Any CPU
+		{7A6185CD-7DC5-4583-A946-62C75CC7FFA1}.Debug|Any CPU.ActiveCfg = Debug_MG|Any CPU
+		{7A6185CD-7DC5-4583-A946-62C75CC7FFA1}.Debug|Any CPU.Build.0 = Debug_MG|Any CPU
+		{7A6185CD-7DC5-4583-A946-62C75CC7FFA1}.Debug|x86.ActiveCfg = Debug_MG|Any CPU
+		{7A6185CD-7DC5-4583-A946-62C75CC7FFA1}.Debug|x86.Build.0 = Debug_MG|Any CPU
+		{7A6185CD-7DC5-4583-A946-62C75CC7FFA1}.Release|Any CPU.ActiveCfg = Release_MG|Any CPU
+		{7A6185CD-7DC5-4583-A946-62C75CC7FFA1}.Release|Any CPU.Build.0 = Release_MG|Any CPU
+		{7A6185CD-7DC5-4583-A946-62C75CC7FFA1}.Release|x86.ActiveCfg = Release_MG|Any CPU
+		{7A6185CD-7DC5-4583-A946-62C75CC7FFA1}.Release|x86.Build.0 = Release_MG|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
