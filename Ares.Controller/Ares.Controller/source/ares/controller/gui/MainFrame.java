@@ -671,6 +671,9 @@ public final class MainFrame extends FrameController implements IMessageListener
 	    	String text = Control.getInstance().getConfiguration().getTitle();
 	        projectLabel.setText(text);
 	    }
+	    else if (Control.getInstance().isConnected()) {
+	    	projectLabel.setText(Localization.getString("MainFrame.NoProjectOpened2"));          //$NON-NLS-1$
+	    }
 	    else {
 	        projectLabel.setText(Localization.getString("MainFrame.NoProjectOpened"));	    	 //$NON-NLS-1$
 	    }
@@ -1056,6 +1059,7 @@ public final class MainFrame extends FrameController implements IMessageListener
     	  item.setEnabled(false);
       }
     }
+    updateProjectTitle();
   }
 
   /**
@@ -1553,6 +1557,19 @@ public final class MainFrame extends FrameController implements IMessageListener
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				MainFrame.this.projectOpened(newConfiguration, fileName);
+			}
+		});
+	}
+	
+	@Override
+	public void importProgressChanged(final int percent, final String additionalInfo) {
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				String text = Localization.getString("MainFrame.Importing"); // $NON-NLS-1$
+				if (percent >= 0 && percent <= 100) {
+					text += " (" + percent + "%)"; // $NON-NLS-1$ $NON-NLS-2$
+				}
+				projectLabel.setText(text);
 			}
 		});
 	}

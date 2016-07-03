@@ -113,4 +113,5 @@
             <item >Crossfading</item>
         </string-array>
             <string name="playMusic">Playing Music</string>
+        <string name="importing">Importing ...</string>
 </resources>

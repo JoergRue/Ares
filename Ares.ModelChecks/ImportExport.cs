@@ -79,7 +79,7 @@ namespace Ares.ModelInfo
             try
             {
                 long overallSize = 0;
-                bool overWrite = false;
+                bool overWrite = true;
                 bool hasAskedForOverwrite = silent;
                 bool hasInnerFile = false;
                 using (ZipFile file = CreateZipFile(importFileName))

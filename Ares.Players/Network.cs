@@ -78,6 +78,7 @@ namespace Ares.Players
             bool musicOnAllChannels, int fadeOnPreviousNextOption, int fadeOnPreviousNextTime);
         void InformClientOfVolume(Ares.Playing.VolumeTarget target, int value);
         void InformClientOfFading(int fadeTime, bool fadeOnlyOnChange);
+        void InformClientOfImportProgress(int percent, String additionalInfo);
     }
 
     public interface INetworks : INetwork, IUDPBroadcast
@@ -88,7 +89,7 @@ namespace Ares.Players
         private INetworkClient mClient;
         private INetwork[] mNetworks = new INetwork[2];
 
-        public static readonly int PLAYER_VERSION = 3;
+        public static readonly int PLAYER_VERSION = 4;
 
         public bool ClientConnected
         {
@@ -201,6 +202,11 @@ namespace Ares.Players
         public void InformClientOfFading(int fadeTime, bool fadeOnlyOnChange)
         {
             foreach (INetwork network in mNetworks) if (network != null) network.InformClientOfFading(fadeTime, fadeOnlyOnChange);
+        }
+
+        public void InformClientOfImportProgress(int percent, String additionalInfo)
+        {
+            foreach (INetwork network in mNetworks) if (network != null) network.InformClientOfImportProgress(percent, additionalInfo);
         }
 
         public Networks(INetworkClient client, bool useLegacy, bool useWeb)
@@ -431,6 +437,11 @@ namespace Ares.Players
             InformPreviousNextFading(fadeOnPreviousNextOption, fadeOnPreviousNextTime);
         }
 
+        public void InformClientOfImportProgress(int percent, String additionalInfo)
+        {
+            InformImportProgress(percent, additionalInfo);
+        }
+
         public void ListenInThread()
         {
             bool goOn = true;
@@ -533,10 +544,10 @@ namespace Ares.Players
             continueListenForCommands = true;
             System.Threading.Thread commandThread = new System.Threading.Thread(ListenForCommands);
             commandThread.Start();
-            m_WatchdogTimer = new System.Timers.Timer(25000);
+            m_WatchdogTimer = new System.Timers.Timer(50000);
             m_WatchdogTimer.Elapsed += new System.Timers.ElapsedEventHandler(watchdogTimer_Elapsed);
             m_WatchdogTimer.Start();
-            m_PingTimer = new System.Timers.Timer(5000);
+            m_PingTimer = new System.Timers.Timer(10000);
             m_PingTimer.Elapsed += new System.Timers.ElapsedEventHandler(pingTimer_Elapsed);
             m_PingTimer.AutoReset = true;
             m_PingTimer.Start();
@@ -838,7 +849,7 @@ namespace Ares.Players
                         if (m_WatchdogTimer != null)
                         {
                             m_WatchdogTimer.Stop();
-                            m_WatchdogTimer.Interval = 7000;
+                            m_WatchdogTimer.Interval = 50000;
                             m_WatchdogTimer.Start();
                         }
                     }
@@ -1315,6 +1326,14 @@ namespace Ares.Players
                 package[2] = 0;
                 Array.Copy(ia, 0, package, 3, ia.Length);
                 WriteToClient(package, 0, package.Length);
+            }
+        }
+
+        private void InformImportProgress(int percent, String additionalInfo)
+        {
+            if (ClientConnected)
+            {
+                SendStringAndInt32(20, 0, additionalInfo, percent);
             }
         }
 

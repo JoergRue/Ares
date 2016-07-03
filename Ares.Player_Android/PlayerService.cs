@@ -139,6 +139,10 @@ namespace Ares.Player_Android
 			}
 			var nMgr = (NotificationManager)GetSystemService(NotificationService);
 			nMgr.Notify(mNotificationId, mNotificationBuilder.Build());
+			if (m_Network != null) 
+			{
+				m_Network.InformClientOfImportProgress(percent, text);
+			}
 		}
 
 		private void RemoveNotification()

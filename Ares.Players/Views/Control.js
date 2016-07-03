@@ -34,6 +34,30 @@ $(document).on('pageshow', '#control', function () {
                 }
                 setColumnWidth(modeSelection);
             },
+            ImportInfo: function(msg, e) {
+                var element = getElementById("loadedProject");
+                if (!element) return;
+                var langElement = getElementById("language");
+                var content = "<span style=\"white-space: nowrap;\">"
+                if (langElement && langElement.className == "de") {
+                    if (msg.Percent < 0 || msg.Percent > 100) {
+                        content += "Importiere ...";
+                    }
+                    else {
+                        content += "Importiere ... (" + msg.Percent + " %)";
+                    }
+                }
+                else {
+                    if (msg.Percent < 0 || msg.Percent > 100) {
+                        content += "Importing...";
+                    }
+                    else {
+                        content += "Importing... (" + msg.Percent + " %)";
+                    }
+                }
+                content += "</span>";
+                element.innerHTML = content;
+            },
             VolumeInfo: function (msg, e) {
                 switch (msg.Id) {
                     case 0: setVolumeValue("soundsValueSlider", msg.Value); break;

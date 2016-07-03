@@ -273,6 +273,10 @@ namespace Ares.MGPlugin
                 String text = Controllers.Control.Instance.Project.Title;
                 projectLabel.Text = text;
             }
+            else if (Controllers.Control.Instance.IsConnected)
+            {
+                projectLabel.Text = "-";
+            }
             else
             {
                 projectLabel.Text = "- (bitte zuerst mit Player verbinden)";
@@ -469,6 +473,7 @@ namespace Ares.MGPlugin
                 openButton.Enabled = false;
                 m_ServerSearch.StartSearch();
             }
+            UpdateProjectTitle();
         }
 
         private MessagesForm m_MessagesForm = null;
@@ -832,6 +837,19 @@ namespace Ares.MGPlugin
                 {
                     ProjectOpened(config, fileName);
                 });
+        }
+
+        public void ImportProgressChanged(int percent, String additionalInfo)
+        {
+            DispatchToUIThread(() =>
+            {
+                String text = "Importiere ...";
+                if (percent >= 0 && percent <= 100)
+                {
+                    text += " (" + percent + "%)";
+                }
+                projectLabel.Text = text;
+            });
         }
 
         public void ProjectFilesRetrieved(List<string> files)

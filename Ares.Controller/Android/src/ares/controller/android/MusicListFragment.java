@@ -226,6 +226,10 @@ public class MusicListFragment extends ModeLikeFragment implements INetworkClien
 	}
 
 	@Override
+	public void importProgressChanged(int percent, String additionalInfo) {
+	}
+
+	@Override
 	public void musicTagFadingChanged(int fadeTime, boolean fadeOnlyOnChange) {
 	}
 

@@ -11,9 +11,39 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c958e106-e185-40d9-b1ac-187735b3b8da" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Ares.Player_Android/Properties/AndroidManifest.xml" afterPath="$PROJECT_DIR$/../Ares.Player_Android/Properties/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Ares.Player_Android/Resources/Resource.designer.cs" afterPath="$PROJECT_DIR$/../Ares.Player_Android/Resources/Resource.designer.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Ares.Players/Resources/Resource.designer.cs" afterPath="$PROJECT_DIR$/../Ares.Players/Resources/Resource.designer.cs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../Ares.Online/Ares.Online_MG.csproj" />
+      <change type="DELETED" beforePath="D:\Projekte\Ares\Ares.Controller\Ares.Controllers\.settings\org.eclipse.jdt.core.prefs" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Ares.Controllers/.project" afterPath="$PROJECT_DIR$/Ares.Controllers/.project" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Ares.CommonGUI/AboutDialog.resx" afterPath="$PROJECT_DIR$/../Ares.CommonGUI/AboutDialog.resx" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Ares.MGPlugin/AboutDialog.resx" afterPath="$PROJECT_DIR$/../Ares.MGPlugin/AboutDialog.resx" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Ares.Controllers.sln" afterPath="$PROJECT_DIR$/../Ares.Controllers.sln" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Ares.MGPlugin/Ares.MGPlugin.csproj" afterPath="$PROJECT_DIR$/../Ares.MGPlugin/Ares.MGPlugin.csproj" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Ares.Online/Ares.Online.csproj" afterPath="$PROJECT_DIR$/../Ares.Online/Ares.Online.csproj" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Ares.sln" afterPath="$PROJECT_DIR$/../Ares.sln" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Ares.Players/Views/Control.cshtml" afterPath="$PROJECT_DIR$/../Ares.Players/Views/Control.cshtml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Ares.Players/Views/Control.de.cshtml" afterPath="$PROJECT_DIR$/../Ares.Players/Views/Control.de.cshtml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Ares.Players/Views/Control.js" afterPath="$PROJECT_DIR$/../Ares.Players/Views/Control.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Ares.Controllers/ControlConnection.cs" afterPath="$PROJECT_DIR$/../Ares.Controllers/ControlConnection.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Ares.Controllers/src/ares/controllers/network/ControlConnection.java" afterPath="$PROJECT_DIR$/Ares.Controllers/src/ares/controllers/network/ControlConnection.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Android/src/ares/controller/android/ControlFragment.java" afterPath="$PROJECT_DIR$/Android/src/ares/controller/android/ControlFragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Ares.MGPlugin/Controller.cs" afterPath="$PROJECT_DIR$/../Ares.MGPlugin/Controller.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Ares.Controllers/src/ares/controllers/network/INetworkClient.java" afterPath="$PROJECT_DIR$/Ares.Controllers/src/ares/controllers/network/INetworkClient.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Ares.ModelChecks/ImportExport.cs" afterPath="$PROJECT_DIR$/../Ares.ModelChecks/ImportExport.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Ares.Controller/source/ares/controller/gui/MainFrame.java" afterPath="$PROJECT_DIR$/Ares.Controller/source/ares/controller/gui/MainFrame.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Android/src/ares/controller/android/MusicListFragment.java" afterPath="$PROJECT_DIR$/Android/src/ares/controller/android/MusicListFragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Ares.Players/Network.cs" afterPath="$PROJECT_DIR$/../Ares.Players/Network.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Ares.CmdLinePlayer/Player.cs" afterPath="$PROJECT_DIR$/../Ares.CmdLinePlayer/Player.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Android/src/ares/controller/android/PlayingState.java" afterPath="$PROJECT_DIR$/Android/src/ares/controller/android/PlayingState.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Ares.Controllers/ServerSearch.cs" afterPath="$PROJECT_DIR$/../Ares.Controllers/ServerSearch.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Ares.Controllers/src/ares/controllers/network/ServerSearch.java" afterPath="$PROJECT_DIR$/Ares.Controllers/src/ares/controllers/network/ServerSearch.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Android/src/ares/controller/android/TagsFragment.java" afterPath="$PROJECT_DIR$/Android/src/ares/controller/android/TagsFragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Ares.Players/WebNetwork.cs" afterPath="$PROJECT_DIR$/../Ares.Players/WebNetwork.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Ares.Controller/resources/ares/controller/util/localization.properties" afterPath="$PROJECT_DIR$/Ares.Controller/resources/ares/controller/util/localization.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Ares.Controller/source/ares/controller/util/localization.properties" afterPath="$PROJECT_DIR$/Ares.Controller/source/ares/controller/util/localization.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Ares.Controller/resources/ares/controller/util/localization_de.properties" afterPath="$PROJECT_DIR$/Ares.Controller/resources/ares/controller/util/localization_de.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Ares.Controller/source/ares/controller/util/localization_de.properties" afterPath="$PROJECT_DIR$/Ares.Controller/source/ares/controller/util/localization_de.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Android/res/values/strings.xml" afterPath="$PROJECT_DIR$/Android/res/values/strings.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Android/res/values-de/strings.xml" afterPath="$PROJECT_DIR$/Android/res/values-de/strings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Ares.Controller.iws" />
@@ -40,11 +70,53 @@
         <entry file="file://$PROJECT_DIR$/Android/src/ares/controller/android/ControlFragment.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="411" column="17" selection-start-line="411" selection-start-column="17" selection-end-line="411" selection-end-column="17" />
+              <caret line="363" column="17" selection-start-line="363" selection-start-column="17" selection-end-line="363" selection-end-column="17" />
               <folding>
-                <element signature="e#13294#13295#0" expanded="true" />
-                <element signature="e#13344#13345#0" expanded="true" />
+                <element signature="e#13377#13378#0" expanded="true" />
+                <element signature="e#13427#13428#0" expanded="true" />
+                <element signature="e#20558#20559#0" expanded="true" />
+                <element signature="e#20583#20584#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MusicListFragment.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Android/src/ares/controller/android/MusicListFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="229" column="0" selection-start-line="229" selection-start-column="0" selection-end-line="229" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PlayingState.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Android/src/ares/controller/android/PlayingState.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="489" column="33" selection-start-line="489" selection-start-column="33" selection-end-line="489" selection-end-column="33" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ControlConnection.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Ares.Controllers/src/ares/controllers/network/ControlConnection.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.5988258">
+              <caret line="488" column="73" selection-start-line="488" selection-start-column="73" selection-end-line="488" selection-end-column="73" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="strings.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Android/res/values/strings.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="115" column="55" selection-start-line="115" selection-start-column="55" selection-end-line="115" selection-end-column="55" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -69,11 +141,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ConnectedFragment.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ConnectedFragment.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Android/src/ares/controller/android/ConnectedFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.712014">
-              <caret line="84" column="35" selection-start-line="84" selection-start-column="35" selection-end-line="84" selection-end-column="35" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="108" column="68" selection-start-line="108" selection-start-column="68" selection-end-line="108" selection-end-column="68" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TagsFragment.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Android/src/ares/controller/android/TagsFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="295" column="0" selection-start-line="295" selection-start-column="0" selection-end-line="295" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -111,13 +193,16 @@
         <option value="$PROJECT_DIR$/Ares.Controllers/src/ares/controllers/network/ControlConnection.java" />
         <option value="$PROJECT_DIR$/Android/res/menu/controlmenu.xml" />
         <option value="$PROJECT_DIR$/Android/res/xml/prefs.xml" />
-        <option value="$PROJECT_DIR$/Android/res/values/strings.xml" />
-        <option value="$PROJECT_DIR$/Android/res/values-de/strings.xml" />
         <option value="$PROJECT_DIR$/Android/src/ares/controller/android/ConnectedFragment.java" />
         <option value="$PROJECT_DIR$/Android/src/ares/controller/android/MainActivity.java" />
         <option value="$PROJECT_DIR$/Android/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/Ares.Controllers/src/ares/controllers/control/Control.java" />
+        <option value="$PROJECT_DIR$/Android/src/ares/controller/android/TagsFragment.java" />
+        <option value="$PROJECT_DIR$/Android/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/Android/res/values-de/strings.xml" />
         <option value="$PROJECT_DIR$/Android/src/ares/controller/android/ControlFragment.java" />
+        <option value="$PROJECT_DIR$/Android/src/ares/controller/android/MusicListFragment.java" />
+        <option value="$PROJECT_DIR$/Android/src/ares/controller/android/PlayingState.java" />
       </list>
     </option>
   </component>
@@ -160,16 +245,62 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
-      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
             <PATH_ELEMENT>
               <option name="myItemId" value="Ares.Controller" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Ares.Controller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Ares.Controllers" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Ares.Controller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Ares.Controllers" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controllers" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Ares.Controller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Ares.Controllers" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controllers" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="network" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -195,13 +326,63 @@
               <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+          </PATH>
+          <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="android" />
+              <option name="myItemId" value="Ares.Controller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Android" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Ares.Controller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Android" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="values-de" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Ares.Controller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Android" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="values" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
+      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -219,6 +400,9 @@
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="restartRequiresConfirmation" value="true" />
     <property name="AndroidTargetDevices" value="emulator-5554" />
+    <property name="DEBUGGABLE_DEVICE" value="Nexus_5_API_23_x86 [emulator-5554]" />
+    <property name="DEBUGGABLE_PROCESS" value="ares.controller.android" />
+    <property name="SHOW_ALL_PROCESSES" value="false" />
   </component>
   <component name="RunManager" selected="Android Application.Android">
     <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
@@ -369,7 +553,7 @@
       <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
       <option name="FORCE_STOP_RUNNING_APP" value="true" />
       <option name="USE_LAST_SELECTED_DEVICE" value="false" />
-      <option name="PREFERRED_AVD" value="Nexus_7" />
+      <option name="PREFERRED_AVD" value="Nexus_5_API_23_x86" />
       <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="0" />
       <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
       <option name="DEEP_LINK" value="" />
@@ -407,29 +591,29 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="0" />
     <editor active="false" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32850778" sideWeight="0.4664179" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32850778" sideWeight="0.45788914" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3062361" sideWeight="0.5362473" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3997773" sideWeight="0.53944564" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Android Monitor" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3062361" sideWeight="0.46375266" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3062361" sideWeight="0.45735607" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32850778" sideWeight="0.48187634" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32850778" sideWeight="0.47974414" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.17857143" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17857143" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3997773" sideWeight="0.46908316" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3997773" sideWeight="0.46055436" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -454,40 +638,11 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="6" />
+      <option name="time" value="10" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Android/src/ares/controller/android/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="133" column="32" selection-start-line="133" selection-start-column="32" selection-end-line="133" selection-end-column="32" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Android/src/ares/controller/android/ControlFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#13294#13295#0" expanded="true" />
-            <element signature="e#13344#13345#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Android/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="25" column="11" selection-start-line="25" selection-start-column="11" selection-end-line="25" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Ares.Controllers/src/ares/controllers/control/Control.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -527,8 +682,10 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#13294#13295#0" expanded="true" />
-            <element signature="e#13344#13345#0" expanded="true" />
+            <element signature="e#13377#13378#0" expanded="true" />
+            <element signature="e#13427#13428#0" expanded="true" />
+            <element signature="e#20558#20559#0" expanded="true" />
+            <element signature="e#20583#20584#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -572,8 +729,10 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#13294#13295#0" expanded="true" />
-            <element signature="e#13344#13345#0" expanded="true" />
+            <element signature="e#13377#13378#0" expanded="true" />
+            <element signature="e#13427#13428#0" expanded="true" />
+            <element signature="e#20558#20559#0" expanded="true" />
+            <element signature="e#20583#20584#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -617,8 +776,10 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="355" column="0" selection-start-line="355" selection-start-column="0" selection-end-line="355" selection-end-column="0" />
           <folding>
-            <element signature="e#13294#13295#0" expanded="true" />
-            <element signature="e#13344#13345#0" expanded="true" />
+            <element signature="e#13377#13378#0" expanded="true" />
+            <element signature="e#13427#13428#0" expanded="true" />
+            <element signature="e#20558#20559#0" expanded="true" />
+            <element signature="e#20583#20584#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -662,8 +823,10 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="577" column="37" selection-start-line="577" selection-start-column="37" selection-end-line="577" selection-end-column="37" />
           <folding>
-            <element signature="e#13294#13295#0" expanded="true" />
-            <element signature="e#13344#13345#0" expanded="true" />
+            <element signature="e#13377#13378#0" expanded="true" />
+            <element signature="e#13427#13428#0" expanded="true" />
+            <element signature="e#20558#20559#0" expanded="true" />
+            <element signature="e#20583#20584#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -707,8 +870,10 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="577" column="37" selection-start-line="577" selection-start-column="37" selection-end-line="577" selection-end-column="37" />
           <folding>
-            <element signature="e#13294#13295#0" expanded="true" />
-            <element signature="e#13344#13345#0" expanded="true" />
+            <element signature="e#13377#13378#0" expanded="true" />
+            <element signature="e#13427#13428#0" expanded="true" />
+            <element signature="e#20558#20559#0" expanded="true" />
+            <element signature="e#20583#20584#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -752,8 +917,10 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#13294#13295#0" expanded="true" />
-            <element signature="e#13344#13345#0" expanded="true" />
+            <element signature="e#13377#13378#0" expanded="true" />
+            <element signature="e#13427#13428#0" expanded="true" />
+            <element signature="e#20558#20559#0" expanded="true" />
+            <element signature="e#20583#20584#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -789,8 +956,10 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="494" column="37" selection-start-line="494" selection-start-column="18" selection-end-line="494" selection-end-column="37" />
           <folding>
-            <element signature="e#13294#13295#0" expanded="true" />
-            <element signature="e#13344#13345#0" expanded="true" />
+            <element signature="e#13377#13378#0" expanded="true" />
+            <element signature="e#13427#13428#0" expanded="true" />
+            <element signature="e#20558#20559#0" expanded="true" />
+            <element signature="e#20583#20584#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -817,20 +986,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="9" column="7" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Android/res/values-de/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.31040564">
-          <caret line="95" column="45" selection-start-line="95" selection-start-column="24" selection-end-line="95" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Android/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3227513">
-          <caret line="95" column="95" selection-start-line="95" selection-start-column="95" selection-end-line="95" selection-end-column="95" />
         </state>
       </provider>
     </entry>
@@ -873,14 +1028,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Ares.Controllers/src/ares/controllers/network/ControlConnection.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="666" column="0" selection-start-line="666" selection-start-column="0" selection-end-line="666" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Ares.Controllers/src/ares/controllers/control/Control.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -889,21 +1036,71 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Android/src/ares/controller/android/ConnectedFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="108" column="68" selection-start-line="108" selection-start-column="68" selection-end-line="108" selection-end-column="68" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Android/src/ares/controller/android/TagsFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="295" column="0" selection-start-line="295" selection-start-column="0" selection-end-line="295" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Android/res/values-de/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.9379562">
+          <caret line="115" column="52" selection-start-line="115" selection-start-column="52" selection-end-line="115" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Android/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="115" column="55" selection-start-line="115" selection-start-column="55" selection-end-line="115" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Android/src/ares/controller/android/ControlFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="411" column="17" selection-start-line="411" selection-start-column="17" selection-end-line="411" selection-end-column="17" />
+          <caret line="363" column="17" selection-start-line="363" selection-start-column="17" selection-end-line="363" selection-end-column="17" />
           <folding>
-            <element signature="e#13294#13295#0" expanded="true" />
-            <element signature="e#13344#13345#0" expanded="true" />
+            <element signature="e#13377#13378#0" expanded="true" />
+            <element signature="e#13427#13428#0" expanded="true" />
+            <element signature="e#20558#20559#0" expanded="true" />
+            <element signature="e#20583#20584#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Android/src/ares/controller/android/ConnectedFragment.java">
+    <entry file="file://$PROJECT_DIR$/Android/src/ares/controller/android/MusicListFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.712014">
-          <caret line="84" column="35" selection-start-line="84" selection-start-column="35" selection-end-line="84" selection-end-column="35" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="229" column="0" selection-start-line="229" selection-start-column="0" selection-end-line="229" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Android/src/ares/controller/android/PlayingState.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="489" column="33" selection-start-line="489" selection-start-column="33" selection-end-line="489" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Ares.Controllers/src/ares/controllers/network/ControlConnection.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5988258">
+          <caret line="488" column="73" selection-start-line="488" selection-start-column="73" selection-end-line="488" selection-end-column="73" />
           <folding />
         </state>
       </provider>

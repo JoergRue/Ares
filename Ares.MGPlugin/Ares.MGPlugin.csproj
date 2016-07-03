@@ -130,9 +130,9 @@
       <Project>{81481CB6-C6EE-4734-8D41-09202342E1B9}</Project>
       <Name>Ares.Controllers</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Ares.Online\Ares.Online.csproj">
-      <Project>{7550AD48-17A5-45BF-A632-B75EB82123DD}</Project>
-      <Name>Ares.Online</Name>
+    <ProjectReference Include="..\Ares.Online\Ares.Online_MG.csproj">
+      <Project>{7550ad48-17a5-45bf-a632-b75eb82123dd}</Project>
+      <Name>Ares.Online_MG</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
