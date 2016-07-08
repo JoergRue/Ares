@@ -20,6 +20,9 @@
 using System;
 using System.Collections.Generic;
 using Un4seen.Bass;
+#if ANDROID
+using Ares.Settings;
+#endif
 
 namespace Ares.Playing
 {
@@ -60,11 +63,23 @@ namespace Ares.Playing
 			    long length = 0;
 			    try 
 			    {
-				    System.IO.FileStream fs = System.IO.File.OpenRead(file.Path);
-				    length = fs.Length;
-				    buffer = new byte[length];
-				    fs.Read (buffer, 0, (int)length);
-				    fs.Close ();
+#if ANDROID
+					if (file.Path.IsSmbFile())
+					{
+						buffer = SambaHelpers.GetFileContent(file.Path);
+						length = buffer.Length;
+					}
+					else
+					{
+#endif						
+					    System.IO.FileStream fs = System.IO.File.OpenRead(file.Path);
+					    length = fs.Length;
+					    buffer = new byte[length];
+					    fs.Read (buffer, 0, (int)length);
+					    fs.Close ();
+#if ANDROID
+					}
+#endif
 			    }
 			    catch (System.IO.IOException e)
 			    {
@@ -73,7 +88,7 @@ namespace Ares.Playing
 			    }
 			    gcHandle = System.Runtime.InteropServices.GCHandle.Alloc(buffer, System.Runtime.InteropServices.GCHandleType.Pinned);
 			    channel = Bass.BASS_StreamCreateFile(gcHandle.AddrOfPinnedObject(), 0L, length, decodeFlag);
-#else
+#else // #if MONO
                 channel = Bass.BASS_StreamCreateFile(file.Path, 0, 0, decodeFlag);
 #endif
             }

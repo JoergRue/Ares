@@ -22,6 +22,9 @@ using System.Collections.Generic;
 using System.Threading;
 using Ares.Data;
 using Ares.ModelInfo;
+#if ANDROID
+using Ares.Settings;
+#endif
 
 namespace Ares.Playing
 {
@@ -62,7 +65,12 @@ namespace Ares.Playing
             Id = element.Id;
             SoundFileType = element.SoundFileType == Data.SoundFileType.Music ? SoundFileType.Music : SoundFileType.SoundEffect;
             String dir = (SoundFileType == Playing.SoundFileType.Music) ? PlayingModule.ThePlayer.MusicPath : PlayingModule.ThePlayer.SoundPath;
-            Path = System.IO.Path.Combine(dir, element.FilePath);
+#if ANDROID
+			if (dir.IsSmbFile())
+				Path = dir + element.FilePath;
+			else
+#endif
+            	Path = System.IO.Path.Combine(dir, element.FilePath);
             Volume = SoundFileType == Playing.SoundFileType.Music ? PlayingModule.ThePlayer.MusicVolume : PlayingModule.ThePlayer.SoundVolume;
             Effects = element.Effects;
             if (playMusicOnAllSpeakers && element.SoundFileType == Data.SoundFileType.Music && !element.Effects.SpeakerAssignment.Active && !element.Effects.Balance.Active)

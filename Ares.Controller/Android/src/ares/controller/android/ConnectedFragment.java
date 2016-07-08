@@ -23,10 +23,16 @@ import java.lang.reflect.Field;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -72,6 +78,10 @@ public abstract class ConnectedFragment extends Fragment implements IServerListe
 	public void onStart() {
 		super.onStart();
 
+		if (mScheduler == null) {
+			mScheduler = Executors.newSingleThreadScheduledExecutor();
+		}
+
 		if (serverSearch != null) {
 			serverSearch.dispose();
 		}
@@ -115,6 +125,17 @@ public abstract class ConnectedFragment extends Fragment implements IServerListe
 				doDisconnect(false, true);
 	    	}
 		}
+
+		if (mScheduler != null)
+		{
+			if (mFuture != null)
+			{
+				mFuture.cancel(false);
+			}
+			mScheduler.shutdown();
+			mScheduler = null;
+		}
+
 		super.onStop();
 	}
 	
@@ -220,6 +241,49 @@ public abstract class ConnectedFragment extends Fragment implements IServerListe
 		Control.getInstance().connect(info, PlayingState.getInstance(), false);		
 		onConnect(info);
 	}
+
+	private ScheduledExecutorService mScheduler;
+	private ScheduledFuture<?> mFuture;
+
+	private boolean IsAppInstalled(String pkg)
+	{
+		PackageManager pm = getActivity().getPackageManager();
+		boolean installed = false;
+		try
+		{
+			pm.getPackageInfo(pkg, PackageManager.GET_ACTIVITIES);
+			installed = true;
+		}
+		catch (PackageManager.NameNotFoundException ex)
+		{
+			installed = false;
+		}
+		return installed;
+	}
+
+	private void StartLocalPlayer()
+	{
+		boolean startLocalPlayer = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext()).getBoolean("start_local_player", true);
+		if (!startLocalPlayer)
+			return;
+		Log.d("ConnectedFragment", "Timeout: starting local player if installed.");
+		Handler handler = new Handler(getActivity().getMainLooper());
+		handler.post(new Runnable()
+		{
+			public void run()
+			{
+				if (servers.isEmpty()) {
+					if (IsAppInstalled("de.joerg_ruedenauer.ares_player"))
+					{
+						Log.d("ConnectedFragment", "Starting local player service");
+						Intent intent = new Intent("de.joerg_ruedenauer.ares.PlayerService");
+						intent.putExtra("UDPPort", getServerSearchPort());
+						getActivity().startService(intent);
+					}
+				}
+			}
+		});
+	}
 	
     protected void tryConnect() {
     	String connectMode = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext()).getString("player_connection", "auto");
@@ -227,6 +291,10 @@ public abstract class ConnectedFragment extends Fragment implements IServerListe
     		if (!serverSearch.isSearching()) {
 	    		Log.d("ConnectedFragment", "Starting server search");
 	    		serverSearch.startSearch();
+				if (mScheduler == null) {
+					mScheduler = Executors.newSingleThreadScheduledExecutor();
+				}
+				mFuture = mScheduler.schedule(new Runnable() { public void run() { StartLocalPlayer(); mFuture = null; } }, 1500, TimeUnit.MILLISECONDS);
     		}
     	}
     	else {
@@ -254,6 +322,10 @@ public abstract class ConnectedFragment extends Fragment implements IServerListe
 
 	@Override
 	public void serverFound(ServerInfo server) {
+		if (mFuture != null)
+		{
+			mFuture.cancel(false);
+		}
 		if (!servers.containsKey(server.getName())) {
 			Log.d("ConnectedFragment", "New server " + server.getName() + " found");
 			servers.put(server.getName(), server);

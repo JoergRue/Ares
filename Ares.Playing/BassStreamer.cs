@@ -23,9 +23,45 @@ namespace Ares.Playing
 {
     class BassStreamer : IStreamer
     {
+
+		#if MONO
+		#if !ANDROID
+		private String FindExecutableDirectory(String executableName)
+		{
+			try
+			{
+				System.Diagnostics.Process whichProcess = new System.Diagnostics.Process();
+				whichProcess.StartInfo.FileName = "which";
+				whichProcess.StartInfo.Arguments = executableName;
+				whichProcess.StartInfo.CreateNoWindow = true;
+				whichProcess.StartInfo.RedirectStandardOutput = true;
+				whichProcess.StartInfo.UseShellExecute = false;
+				whichProcess.Start();
+				String path = whichProcess.StandardOutput.ReadToEnd().Trim();
+				whichProcess.WaitForExit();
+				if (path.EndsWith(executableName))
+				{
+					ErrorHandling.AddMessage(MessageType.Debug, "Found " + executableName + " in " + path);
+					return path.Substring(0, path.Length - executableName.Length);
+				}
+				else
+				{
+					ErrorHandling.AddMessage(MessageType.Debug, "which " + executableName + " returned " + path);
+					return String.Empty;
+				}
+			}
+			catch (Exception ex)
+			{
+				ErrorHandling.AddMessage(MessageType.Error, ex.Message);
+				return String.Empty;
+			}
+		}
+		#endif
+		#endif
+
         public void BeginStreaming(StreamingParameters parameters)
         {
-#if !MONO
+#if !ANDROID
             ErrorSent = false;
             if (IsStreaming)
                 EndStreaming();
@@ -37,6 +73,7 @@ namespace Ares.Playing
                 return;
             }
             Un4seen.Bass.Misc.IBaseEncoder encoder = null;
+#if !MONO
             switch (parameters.Encoding)
             {
                 case StreamEncoding.Wav:
@@ -74,7 +111,52 @@ namespace Ares.Playing
                     m_MixerChannel = 0;
                     return;
             }
-            encoder.InputFile = null;
+#else
+			String encoderName = String.Empty;
+			Un4seen.Bass.Misc.EncoderCMDLN theEnc = null;
+			switch (parameters.Encoding) {
+			case StreamEncoding.Lame: {
+					encoderName = "lame";
+					theEnc = new Un4seen.Bass.Misc.EncoderMP3 (m_MixerChannel);
+					theEnc.CMDLN_EncoderType = Un4seen.Bass.BASSChannelType.BASS_CTYPE_STREAM_MP3;
+					theEnc.CMDLN_CBRString = "-r -h -b ${bps} - -";
+					theEnc.CMDLN_VBRString = "-r -h -v - -";
+					break;
+				}
+			case StreamEncoding.Ogg: {
+					encoderName = "oggenc";
+					theEnc = new Un4seen.Bass.Misc.EncoderCMDLN (m_MixerChannel);
+					theEnc.CMDLN_EncoderType = Un4seen.Bass.BASSChannelType.BASS_CTYPE_STREAM_OGG;
+					theEnc.CMDLN_CBRString = "-r -";
+					theEnc.CMDLN_VBRString = "-r -";
+					break;
+				}
+			case StreamEncoding.Opus: {
+					encoderName = "opusenc";
+					theEnc = new Un4seen.Bass.Misc.EncoderCMDLN (m_MixerChannel);
+					theEnc.CMDLN_EncoderType = Un4seen.Bass.BASSChannelType.BASS_CTYPE_STREAM_OPUS;
+					theEnc.CMDLN_CBRString = "--raw - -";
+					theEnc.CMDLN_VBRString = "--raw - -";
+					break;
+				}
+			default:
+				Un4seen.Bass.Bass.BASS_StreamFree (m_MixerChannel);
+				m_MixerChannel = 0;
+				return;
+			}
+			theEnc.CMDLN_Bitrate = (int)parameters.Bitrate;
+			theEnc.EncoderDirectory = FindExecutableDirectory (encoderName);
+			theEnc.CMDLN_Executable = encoderName;
+			theEnc.CMDLN_SupportsSTDOUT = true;
+			if (!theEnc.EncoderExists) {
+				Un4seen.Bass.Bass.BASS_StreamFree (m_MixerChannel);
+				m_MixerChannel = 0;
+				ErrorHandling.AddMessage (MessageType.Error, String.Format (StringResources.EncoderNotFound, encoderName));
+				return;
+			}
+			encoder = theEnc;
+#endif
+			encoder.InputFile = null;
             encoder.OutputFile = null;
             Un4seen.Bass.Misc.IStreamingServer server = null;
             switch (parameters.Streamer)
@@ -127,6 +209,7 @@ namespace Ares.Playing
 #endif
         }
 
+#if !ANDROID
         void m_BroadCast_Notification(object sender, Un4seen.Bass.Misc.BroadCastEventArgs e)
         {
             lock (m_SyncObject)
@@ -160,6 +243,7 @@ namespace Ares.Playing
                         ErrorHandling.AddMessage(MessageType.Debug, "Connection to Icecast Server lost");
                         ErrorSent = true;
                     }
+					ErrorHandling.AddMessage(MessageType.Debug, m_BroadCast.Server.LastErrorMessage);
                 }
                 else if (e.EventType == Un4seen.Bass.Misc.BroadCastEventType.Disconnected)
                 {
@@ -167,17 +251,22 @@ namespace Ares.Playing
                 }
             }
         }
+#endif
 
         public void EndStreaming()
         {
             if (!IsStreaming)
                 return;
+	#if !ANDROID
             lock (m_SyncObject)
             {
                 if (m_BroadCast != null)
+				{
                     m_BroadCast.Disconnect();
+				}
                 m_BroadCast = null;
             }
+	#endif
             if (m_MixerChannel != 0)
                 Un4seen.Bass.Bass.BASS_StreamFree(m_MixerChannel);
             m_MixerChannel = 0;
@@ -239,7 +328,9 @@ namespace Ares.Playing
         }
 
         private int m_MixerChannel;
+#if !ANDROID
         private Un4seen.Bass.Misc.BroadCast m_BroadCast;
+#endif
         private static BassStreamer s_Instance;
     }
 }

@@ -59,5 +59,10 @@ namespace Ares.AudioSource.Freesound
             String filenameWithoutExtension = System.IO.Path.GetFileNameWithoutExtension(Title);
             return filenameWithoutExtension + " (Freesound Sound " + this.FreesoundId + " by " + this.Author + ").mp3";
         }
+
+        public IEnumerable<string> GetFilePathsToBeDownloaded(string musicTargetDirectory, string soundsTargetDirectory)
+        {
+            return new string[] { System.IO.Path.Combine(soundsTargetDirectory, GetDownloadFilename()) };
+        }
     }
 }

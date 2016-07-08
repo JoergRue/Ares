@@ -113,4 +113,7 @@
             <item >Crossfading</item>
         </string-array>
             <string name="playMusic">Playing Music</string>
+        <string name="importing">Importing ...</string>
+        <string name="start_local_player">Start local Player</string>
+        <string name="start_local_player_summary">Automatically start locally installed Player</string>
 </resources>

@@ -22,6 +22,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Ares.Data;
+#if ANDROID
+using Ares.Settings;
+#endif
 
 namespace Ares.ModelInfo
 {
@@ -51,8 +54,34 @@ namespace Ares.ModelInfo
             String basePath = fileElement.SoundFileType == SoundFileType.Music ?
                 Ares.Settings.Settings.Instance.MusicDirectory : Ares.Settings.Settings.Instance.SoundDirectory;
             String fullPath = System.IO.Path.Combine(basePath, fileElement.FilePath);
-            if (!System.IO.File.Exists(fullPath))
-            {
+			bool found = false;
+			#if ANDROID
+			if (fullPath.IsSmbFile())
+			{
+				// don't check each file from a share; takes too long
+				found = true;
+			    /*
+				try
+				{
+					var smbFile = new Jcifs.Smb.SmbFile(fullPath);
+					if (smbFile.Exists())
+					{
+						found = true;
+					}
+				}
+				catch (Jcifs.Smb.SmbException)
+				{
+				}
+			    */
+			}
+			else
+			#endif
+            if (System.IO.File.Exists(fullPath))
+			{
+				found = true;
+			}
+			if (!found)
+			{
                 AddError(m_ModelErrors, ModelError.ErrorSeverity.Error,
                     String.Format(StringResources.FileNotFound, fullPath), fileElement);
             }

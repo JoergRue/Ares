@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+<string name="BufLostError">Samplingpuffer verloren</string>
+<string name="CodecError">Codec nicht verfügbar</string>
+<string name="CreateError">Datei konnte nicht erzeugt werden</string>
+<string name="DeviceError">Ungültige Gerätenummer</string>
+<string name="DriverError">Kann keinen Treiber finden</string>
+<string name="DxError">Keine ausreichende Version von DirectX installiert</string>
+<string name="EndedError">Kanal / Datei hat geendet</string>
+<string name="FileformError">Nicht unterstütztes Dateiformat</string>
+<string name="FileOpenError">Kann Datei nicht öffnen</string>
+<string name="FormatError">Nicht unterstütztes Sample Format</string>
+<string name="FreqError">Ungültige Samplingrate</string>
+<string name="HandleError">Ungültiges Handle</string>
+<string name="IllParamError">Ungültiger Parameter angegeben</string>
+<string name="IllTypeError">Ungültiger Typ angegeben</string>
+<string name="MemError">Speicherfehler</string>
+<string name="No3DError">Keine 3D-Unterstützung</string>
+<string name="NoChanError">Kann keinen freien Kanal finden</string>
+<string name="NoEaxError">Keine EAX-Unterstützung</string>
+<string name="NoFxError">Effekte sind nicht verfügbar</string>
+<string name="NoHwError">Keine Hardwarestimmen verfügbar</string>
+<string name="NoPlayError">Wird nicht abgespielt</string>
+<string name="NotAudioError">Kein Audio Track</string>
+<string name="NotFileError">Der Datenstrom ist kein Dateistrom</string>
+<string name="PlayingError">Kanal wird abgespielt</string>
+<string name="PositionError">Ungültige Abspielposition</string>
+<string name="SpeakerError">
+Lautsprecher nicht verfügbar oder Datei ist Stereo.
+</string>
+<string name="UnexpectedError">Unerwarteter Fehler: {0}</string>
+<string name="FilePlayingError">Fehler beim Abspielen der Datei: {0}</string>
+<string name="SetVolumeError">Fehler beim Setzen der Lautstärke: {0}</string>
+<string name="SetEffectError">Fehler beim Setzen eines Effekts: {0}</string>
+<string name="SpeakerNotAvailable">Der eingestellte Lautsprecher ist nicht verfügbar.</string>
+<string name="StreamingError">Streaming-Fehler: {0}</string>
+<string name="TagsDbError">Fehler beim Zugriff auf die Tags-Datenbasis:\n{0}</string>
+<string name="TaggedMusic">Musik per Tags</string>
+<string name="BassAacLoadFail">
+Konnte BASS Aac AddOn-Library nicht laden. Installationsproblem?
+</string>
+<string name="BassDeviceAlready">
+Gerät ist bereits initialisiert. Wird es von einer anderen Anwendung verwendet?
+</string>
+<string name="BassDeviceDriver">
+Kein Gerätetreiber verfügbar. Sind Soundkarte und Lautsprecher korrekt installiert? Wird das Gerät von einer anderen Anwendung verwendet?
+</string>
+<string name="BassDeviceFormat">Gerät unterstützt 44kHz Sampling nicht.</string>
+<string name="BassDeviceInfo">Gerät: {0}, Treiber: {1}, Status: {2}</string>
+<string name="BassDeviceInvalid">
+Ungültiges Gerät. Sind Soundkarte und Lautsprecher korrekt installiert?
+</string>
+<string name="BassFlacLoadFail">
+Konnte BASS Flac AddOn-Library nicht laden. Installationsproblem?
+</string>
+<string name="BassFxLoadFail">
+Konnte BASS Fx AddOn-Library nicht laden. Installationsproblem?
+</string>
+<string name="BassInitFail">
+Fehler: Konnte BASS nicht initialisieren!\nFehlermeldung: {0}\n{1}
+</string>
+<string name="BassLoadFail">
+Konnte BASS-Library nicht laden. Installationsproblem?
+</string>
+<string name="BassNo3D">Das Gerät unterstützt 3D-Ausgabe nicht.</string>
+<string name="BassNoMem">Es steht nicht genug Speicher zur Verfügung.</string>
+<string name="BassOpusLoadFail">
+Konnte BASS Opus AddOn-Library nicht laden. Installationsproblem?
+</string>
+<string name="BassUnknown">
+Unbekannter Fehler. Sind Soundkarte und Lautsprecher korrekt installiert?
+</string>
+<string name="DeviceDisabled">abgeschaltet</string>
+<string name="DeviceEnabled">angeschaltet</string>
+<string name="NoDevice">Keine Soundkarte gefunden.</string>
+<string name="NoDeviceDriver">Kein Sound-Treiber gefunden.</string>
+<string name="Default">Standard</string>
+</resources>

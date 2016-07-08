@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Android_Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2400A424-6F42-4BE9-811A-566FF1802441}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Ares.Data.Android</RootNamespace>
+    <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
+    <AndroidResgenClass>Resource</AndroidResgenClass>
+    <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
+    <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
+    <AndroidUseLatestPlatformSdk>False</AndroidUseLatestPlatformSdk>
+    <AssemblyName>Ares.Data.Android</AssemblyName>
+    <TargetFrameworkVersion>v4.1</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Android_Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\Android_Debug</OutputPath>
+    <DefineConstants>DEBUG;ANDROID</DefineConstants>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <AndroidLinkMode>None</AndroidLinkMode>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Android_Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>..\bin\Android_Release</OutputPath>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
+    <DefineConstants>ANDROID</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="Mono.Android" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Resources\Resource.designer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="BackgroundSounds.cs" />
+    <Compile Include="BasicFileElement.cs" />
+    <Compile Include="Containers.cs" />
+    <Compile Include="Data.cs" />
+    <Compile Include="ElementFactory.cs" />
+    <Compile Include="ElementRepository.cs" />
+    <Compile Include="HigherLevelInterfaces.cs" />
+    <Compile Include="Interfaces.cs" />
+    <Compile Include="Macros.cs" />
+    <Compile Include="Modes.cs" />
+    <Compile Include="MusicByTags.cs" />
+    <Compile Include="ProjectInterfaces.cs" />
+    <Compile Include="ProjectManager.cs" />
+    <Compile Include="Projects.cs" />
+    <Compile Include="RandomMusicList.cs" />
+    <Compile Include="References.cs" />
+    <Compile Include="SequentialBackgroundMusicList.cs" />
+    <Compile Include="Triggers.cs" />
+    <Compile Include="XmlHelpers.cs" />
+    <Compile Include="AndroidStringResources.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\values\Strings.xml" />
+    <AndroidResource Include="Resources\values-de\Strings.xml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Resources\values-de\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Ares.Settings\Ares.Settings_Android.csproj">
+      <Project>{6EAFF9D6-0D29-4116-A42E-0D6A336C4C8D}</Project>
+      <Name>Ares.Settings_Android</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

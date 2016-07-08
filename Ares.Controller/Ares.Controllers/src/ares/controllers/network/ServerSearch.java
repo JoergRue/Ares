@@ -128,7 +128,7 @@ public final class ServerSearch {
     }
   }
   
-  public static final int NEEDED_SERVER_VERSION = 3;
+  public static final int NEEDED_SERVER_VERSION = 4;
   
   public static ServerInfo getServerInfo(String text, String token) throws UnknownHostException {
       StringTokenizer tokenizer = new StringTokenizer(text, token); //$NON-NLS-1$

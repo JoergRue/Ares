@@ -23,11 +23,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ares.CmdLinePlayer_Mono", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ares.TagsImport_Mono", "Ares.TagsImport\Ares.TagsImport_Mono.csproj", "{5F09CB94-0FC1-4F91-90AD-C6F08A89C146}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ares.Editor.Actions_Mono", "Ares.Editor.Actions\Ares.Editor.Actions_Mono.csproj", "{7799985C-64E9-4414-ACA8-01184B704032}"
+Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "Ares.Editor.Actions_Mono", "Ares.Editor.Actions\Ares.Editor.Actions_Mono.csproj", "{0E9B5493-C25F-4A26-B2B8-29793CA3893B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ares.Editor.Controls_Mono", "Ares.Editor.Controls\Ares.Editor.Controls_Mono.csproj", "{E9189223-5024-4284-B02A-9F22C83DAE88}"
+Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "Ares.Editor.Controls_Mono", "Ares.Editor.Controls\Ares.Editor.Controls_Mono.csproj", "{DBBF416E-6F1F-4EE7-A0BF-330F4AC671D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ares.Editor_Mono", "Ares.Editor\Ares.Editor_Mono.csproj", "{499C1067-ECA5-4986-A985-8EAFD744BF80}"
+Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "Ares.Editor_Mono", "Ares.Editor\Ares.Editor_Mono.csproj", "{FAD07401-47E7-49AD-BEB1-CD1A3C794CAF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,10 +39,6 @@ Global
 		{42A8F91D-6E6B-4740-AC3F-99A34074E695}.Mono_Debug|Any CPU.Build.0 = Mono_Debug|Any CPU
 		{42A8F91D-6E6B-4740-AC3F-99A34074E695}.Mono_Release|Any CPU.ActiveCfg = Mono_Release|Any CPU
 		{42A8F91D-6E6B-4740-AC3F-99A34074E695}.Mono_Release|Any CPU.Build.0 = Mono_Release|Any CPU
-		{499C1067-ECA5-4986-A985-8EAFD744BF80}.Mono_Debug|Any CPU.ActiveCfg = Mono_Debug|x86
-		{499C1067-ECA5-4986-A985-8EAFD744BF80}.Mono_Debug|Any CPU.Build.0 = Mono_Debug|x86
-		{499C1067-ECA5-4986-A985-8EAFD744BF80}.Mono_Release|Any CPU.ActiveCfg = Mono_Release|x86
-		{499C1067-ECA5-4986-A985-8EAFD744BF80}.Mono_Release|Any CPU.Build.0 = Mono_Release|x86
 		{50EA19EE-5337-499C-8B7B-1B22EA9E24A6}.Mono_Debug|Any CPU.ActiveCfg = Mono_Debug|Any CPU
 		{50EA19EE-5337-499C-8B7B-1B22EA9E24A6}.Mono_Debug|Any CPU.Build.0 = Mono_Debug|Any CPU
 		{50EA19EE-5337-499C-8B7B-1B22EA9E24A6}.Mono_Release|Any CPU.ActiveCfg = Mono_Release|Any CPU
@@ -59,10 +55,6 @@ Global
 		{7550AD48-17A5-45BF-A632-B75EB82123DD}.Mono_Debug|Any CPU.Build.0 = Mono_Debug|Any CPU
 		{7550AD48-17A5-45BF-A632-B75EB82123DD}.Mono_Release|Any CPU.ActiveCfg = Mono_Release|Any CPU
 		{7550AD48-17A5-45BF-A632-B75EB82123DD}.Mono_Release|Any CPU.Build.0 = Mono_Release|Any CPU
-		{7799985C-64E9-4414-ACA8-01184B704032}.Mono_Debug|Any CPU.ActiveCfg = Mono_Debug|Any CPU
-		{7799985C-64E9-4414-ACA8-01184B704032}.Mono_Debug|Any CPU.Build.0 = Mono_Debug|Any CPU
-		{7799985C-64E9-4414-ACA8-01184B704032}.Mono_Release|Any CPU.ActiveCfg = Mono_Release|Any CPU
-		{7799985C-64E9-4414-ACA8-01184B704032}.Mono_Release|Any CPU.Build.0 = Mono_Release|Any CPU
 		{81CADB8C-BEDF-450B-9544-690DCA839B37}.Mono_Debug|Any CPU.ActiveCfg = Mono_Debug|Any CPU
 		{81CADB8C-BEDF-450B-9544-690DCA839B37}.Mono_Debug|Any CPU.Build.0 = Mono_Debug|Any CPU
 		{81CADB8C-BEDF-450B-9544-690DCA839B37}.Mono_Release|Any CPU.ActiveCfg = Mono_Release|Any CPU
@@ -71,10 +63,6 @@ Global
 		{87F61D82-5515-48C4-94F5-FC5EF8435DBF}.Mono_Debug|Any CPU.Build.0 = Mono_Debug|Any CPU
 		{87F61D82-5515-48C4-94F5-FC5EF8435DBF}.Mono_Release|Any CPU.ActiveCfg = Mono_Release|Any CPU
 		{87F61D82-5515-48C4-94F5-FC5EF8435DBF}.Mono_Release|Any CPU.Build.0 = Mono_Release|Any CPU
-		{E9189223-5024-4284-B02A-9F22C83DAE88}.Mono_Debug|Any CPU.ActiveCfg = Mono_Debug|Any CPU
-		{E9189223-5024-4284-B02A-9F22C83DAE88}.Mono_Debug|Any CPU.Build.0 = Mono_Debug|Any CPU
-		{E9189223-5024-4284-B02A-9F22C83DAE88}.Mono_Release|Any CPU.ActiveCfg = Mono_Release|Any CPU
-		{E9189223-5024-4284-B02A-9F22C83DAE88}.Mono_Release|Any CPU.Build.0 = Mono_Release|Any CPU
 		{E99E229E-2D6A-4C49-8E6F-C06E3F346606}.Mono_Debug|Any CPU.ActiveCfg = Mono_Debug|Any CPU
 		{E99E229E-2D6A-4C49-8E6F-C06E3F346606}.Mono_Debug|Any CPU.Build.0 = Mono_Debug|Any CPU
 		{E99E229E-2D6A-4C49-8E6F-C06E3F346606}.Mono_Release|Any CPU.ActiveCfg = Mono_Release|Any CPU
@@ -91,6 +79,18 @@ Global
 		{FF45F69E-C808-46A5-9557-307D5F8A0A6D}.Mono_Debug|Any CPU.Build.0 = Mono_Debug|Any CPU
 		{FF45F69E-C808-46A5-9557-307D5F8A0A6D}.Mono_Release|Any CPU.ActiveCfg = Mono_Release|Any CPU
 		{FF45F69E-C808-46A5-9557-307D5F8A0A6D}.Mono_Release|Any CPU.Build.0 = Mono_Release|Any CPU
+		{0E9B5493-C25F-4A26-B2B8-29793CA3893B}.Mono_Debug|Any CPU.ActiveCfg = Mono_Debug|Any CPU
+		{0E9B5493-C25F-4A26-B2B8-29793CA3893B}.Mono_Debug|Any CPU.Build.0 = Mono_Debug|Any CPU
+		{0E9B5493-C25F-4A26-B2B8-29793CA3893B}.Mono_Release|Any CPU.ActiveCfg = Mono_Release|Any CPU
+		{0E9B5493-C25F-4A26-B2B8-29793CA3893B}.Mono_Release|Any CPU.Build.0 = Mono_Release|Any CPU
+		{DBBF416E-6F1F-4EE7-A0BF-330F4AC671D7}.Mono_Debug|Any CPU.ActiveCfg = Mono_Debug|Any CPU
+		{DBBF416E-6F1F-4EE7-A0BF-330F4AC671D7}.Mono_Debug|Any CPU.Build.0 = Mono_Debug|Any CPU
+		{DBBF416E-6F1F-4EE7-A0BF-330F4AC671D7}.Mono_Release|Any CPU.ActiveCfg = Mono_Release|Any CPU
+		{DBBF416E-6F1F-4EE7-A0BF-330F4AC671D7}.Mono_Release|Any CPU.Build.0 = Mono_Release|Any CPU
+		{FAD07401-47E7-49AD-BEB1-CD1A3C794CAF}.Mono_Debug|Any CPU.ActiveCfg = Mono_Debug|x86
+		{FAD07401-47E7-49AD-BEB1-CD1A3C794CAF}.Mono_Debug|Any CPU.Build.0 = Mono_Debug|x86
+		{FAD07401-47E7-49AD-BEB1-CD1A3C794CAF}.Mono_Release|Any CPU.ActiveCfg = Mono_Release|x86
+		{FAD07401-47E7-49AD-BEB1-CD1A3C794CAF}.Mono_Release|Any CPU.Build.0 = Mono_Release|x86
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		Policies = $0
@@ -103,12 +103,16 @@ Global
 		$0.NameConventionPolicy = $3
 		$3.Rules = $4
 		$4.NamingRule = $5
-		$5.Name = Namespaces
-		$5.AffectedEntity = Namespace
+		$5.Name = Type Parameters
+		$5.AffectedEntity = TypeParameter
 		$5.VisibilityMask = VisibilityMask
 		$5.NamingStyle = PascalCase
 		$5.IncludeInstanceMembers = True
 		$5.IncludeStaticEntities = True
+		$5.RequiredPrefixes = $26
+		$26.String = T
+		$5.RequiredSuffixes = $27
+		$27.String = Exception
 		$4.NamingRule = $6
 		$6.Name = Types
 		$6.AffectedEntity = Class, Struct, Enum, Delegate

@@ -858,6 +858,11 @@ namespace Ares.MediaPortalPlugin
             DispatchToUIThread(() => m_Network.InformClientOfProject(newConfiguration));
         }
 
+        public void ImportProgressChanged(int percent, string additionalInfo)
+        {
+            DispatchToUIThread(() => m_Network.InformClientOfImportProgress(percent, additionalInfo));
+        }
+
         public void Disconnect()
         {
             DispatchToUIThread(() =>

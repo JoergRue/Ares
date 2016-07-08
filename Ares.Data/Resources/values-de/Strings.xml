@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+<string name="ExpectedAttribute">Attribut {0} erwartet.</string>
+<string name="ExpectedContent">Elementinhalt erwartet.</string>
+<string name="ExpectedDouble">Fließkommazahl für Attribut {0} erwartet.</string>
+<string name="ExpectedElement">Element {0} erwartet.</string>
+<string name="ExpectedInteger">Zahl für Attribut {0} erwartet.</string>
+<string name="FileNameMustBeSet">Es muss erst ein Dateiname angegeben werden!</string>
+<string name="InvalidVolume">Lautstärke muss eine Prozentangabe sein!</string>
+</resources>

@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="library_name">Ares.Playing_Android</string>
+<string name="BufLostError">Sample buffer was lost</string>
+<string name="CodecError">Unavailable codec</string>
+<string name="CreateError">Couldn\'t create the file</string>
+<string name="DeviceError">Illegal device number</string>
+<string name="DriverError">Can\'t find a driver</string>
+<string name="DxError">No sufficient DirectX version installed</string>
+<string name="EndedError">Channel / file has ended</string>
+<string name="FileformError">Unsupported file format</string>
+<string name="FileOpenError">Can\'t open the file</string>
+<string name="FormatError">Unsupported sample format</string>
+<string name="FreqError">Illegal sample rate</string>
+<string name="HandleError">Invalid handle</string>
+<string name="IllParamError">Illegal parameter specified</string>
+<string name="IllTypeError">Illegal type specified</string>
+<string name="MemError">Memory error</string>
+<string name="No3DError">No 3D support</string>
+<string name="NoChanError">Can\'t get a free channel</string>
+<string name="NoEaxError">No EAX support</string>
+<string name="NoFxError">Effects are not available</string>
+<string name="NoHwError">No hardware voices available</string>
+<string name="NoPlayError">Not playing</string>
+<string name="NotAudioError">Not an audio track</string>
+<string name="NotFileError">The stream is not a file stream</string>
+<string name="PlayingError">The channel is playing</string>
+<string name="PositionError">Invalid playback position</string>
+<string name="SpeakerError">Unavailable speaker, or file is stereo.</string>
+<string name="UnexpectedError">Unexpected error: {0}</string>
+<string name="FilePlayingError">Error playing the file: {0}</string>
+<string name="SetVolumeError">Error setting the volume: {0}</string>
+<string name="SetEffectError">Error setting an effect: {0}</string>
+<string name="SpeakerNotAvailable">The configured speaker is not available.</string>
+<string name="StreamingError">Streaming error: {0}</string>
+<string name="TagsDbError">Error accessing tags database:\n{0}</string>
+<string name="TaggedMusic">Tagged Music</string>
+<string name="BassAacLoadFail">
+Could not load BASS AAC add-on library. Installation problem?
+</string>
+<string name="BassDeviceAlready">Device already initialized.</string>
+<string name="BassDeviceDriver">
+No device driver available. Are soundcard and speakers installed properly? Is the device in use by another application?
+</string>
+<string name="BassDeviceFormat">Sound device doesn\'t support 44kHz sampling.</string>
+<string name="BassDeviceInfo">Device: {0}, Driver: {1}, State: {2}</string>
+<string name="BassDeviceInvalid">
+Invalid device. Are soundcard and speakers installed properly?
+</string>
+<string name="BassFlacLoadFail">
+Could not load BASS Flac add-on library. Installation problem?
+</string>
+<string name="BassFxLoadFail">
+Could not load BASS Fx add-on library. Installation problem?
+</string>
+<string name="BassInitFail">
+Fatal: Couldn\'t initialize BASS engine!\nError message: {0}\n{1}
+</string>
+<string name="BassLoadFail">Could not load BASS library. Installation problem?</string>
+<string name="BassNo3D">The device has no 3D support.</string>
+<string name="BassNoMem">There is insufficient memory.</string>
+<string name="BassOpusLoadFail">
+Could not load BASS Opus add-on library. Installation problem?
+</string>
+<string name="BassUnknown">
+Unknown error. Are soundcard and speakers installed properly?
+</string>
+<string name="DeviceDisabled">disabled</string>
+<string name="DeviceEnabled">enabled</string>
+<string name="NoDevice">No sound device found.</string>
+<string name="NoDeviceDriver">No sound device driver found.</string>
+<string name="Default">Default</string>
+</resources>

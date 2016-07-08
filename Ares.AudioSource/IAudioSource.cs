@@ -22,6 +22,7 @@ using Ares.ModelInfo;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -29,6 +30,74 @@ using System.Threading.Tasks;
 
 namespace Ares.AudioSource
 {
+
+    /// <summary>
+    /// This helper class can be used by IAudioSources to download content to temporary files,
+    /// keeping track of what content is already downloaded, deleting temp files when the application 
+    /// exits and deploying the 
+    /// </summary>
+    public class DownloadTempHelper
+    {
+        // Cache of temp files
+        private Dictionary<string, Task<TempFile>> m_TempFiles = new Dictionary<string, Task<TempFile>>();
+
+        /// <summary>
+        /// Allocate a temporary file and invoke the provided download function
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="downloadFunction"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public Task<TempFile> DownloadFileToTemp(string url, Func<TempFile,null> downloadFunction, CancellationToken cancellationToken)
+        {
+            lock (m_TempFiles)
+            {
+                if (m_TempFiles.ContainsKey(url))
+                {
+                    return m_TempFiles[url];
+                }
+                else
+                {
+                    new Task
+                    return new Task<TempFile>(downloadFunction, cancellationToken);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Deploy/copy a temporary file download to a target location
+        /// </summary>
+        /// <param name="tempFile"></param>
+        /// <param name="targetPath"></param>
+        /// <param name="overwrite"></param>
+        /// <returns></returns>
+        public Task DeployFileFromTemp(Task<TempFile> tempFileDownload, string targetPath, bool overwrite)
+        {
+            // Wait for the temp-file download to complete
+            return tempFileDownload.ContinueWith((task) =>
+            {
+                // And then copy the temp file to the target
+                File.Copy(task.Result.Path, targetPath, overwrite);
+            }, TaskContinuationOptions.ExecuteSynchronously | TaskContinuationOptions.NotOnCanceled | TaskContinuationOptions.NotOnFaulted);
+        }
+
+        public class TempFile: IDisposable
+        {
+            public TempFile()
+            {
+                this.m_Path = System.IO.Path.GetTempFileName();
+            }
+
+            public void Dispose()
+            {
+                File.Delete(m_Path);
+            }
+
+            private string m_Path;
+            public string Path { get { return m_Path;  } }
+        }
+
+    }
 
     public interface IAudioSource
     {
@@ -80,6 +149,9 @@ namespace Ares.AudioSource
         ModeElement
 }
 
+    /// <summary>
+    /// Generic search result
+    /// </summary>
     public interface ISearchResult
     {
         string Id { get; }
@@ -95,8 +167,16 @@ namespace Ares.AudioSource
 
         IAudioSource AudioSource { get; }
 
+        /// <summary>
+        /// The AudioSearchResultType of the search result
+        /// </summary>
         AudioSearchResultType ResultType { get; }
 
+        /// <summary>
+        /// Size of this download.
+        /// Any unit can be used for the values returned by this property, but the unit should
+        /// be consistent within all Files/Results from a single IAudioSource
+        /// </summary>
         double DownloadSize { get; }
 
         /// <summary>
@@ -112,6 +192,64 @@ namespace Ares.AudioSource
         AudioDownloadResult Download(string musicTargetDirectory, string soundsTargetDirectory, IProgressMonitor monitor, CancellationToken cancellationToken, double totalSize);
     }
 
+    /// <summary>
+    /// A file to be downloaded from an IAudioSource
+    /// </summary>
+    public interface IFileToBeDownloaded
+    {
+        /// <summary>
+        /// A unique (within the IAudioSource) identifier for the file
+        /// </summary>
+        string Id { get; }
+
+        /// <summary>
+        /// The SoundFileType of this file
+        /// </summary>
+        SoundFileType Type { get; }
+
+        /// <summary>
+        /// The IAudioSource to which this file belongs
+        /// </summary>
+        IAudioSource AudioSource { get; }
+
+        /// <summary>
+        /// Size of this download.
+        /// Any unit can be used for the values returned by this property, but the unit should
+        /// be consistent within all Files/Results from a single IAudioSource
+        /// </summary>
+        double DownloadSize { get; }
+
+        /// <summary>
+        /// Returns the filename under which this download will be saved as determined by the source
+        /// </summary>
+        /// <returns></returns>
+        string GetDownloadFilename();
+
+        /// <summary>
+        /// Download this search result (including anything that is required, i.e. audio files required by an IModeElementSearchResult).
+        /// All audio files will be placed at the given relative path beneath either the sounds or music directory - depending on their type.
+        /// </summary>
+        /// <param name="musicBaseDirectory"></param>
+        /// <param name="soundsBaseDirectory"></param>
+        /// <param name="relativeDownloadPath"></param>
+        /// <param name="monitor"></param>
+        /// <param name="totalSize"></param>
+        /// <returns></returns>
+        AudioDownloadResult Download(string musicTargetDirectory, string soundsTargetDirectory, IProgressMonitor monitor, CancellationToken cancellationToken, double totalSize);
+    }
+
+    /// <summary>
+    /// An ISearchResult comprised of just a single file which can be added to file containers
+    /// within the project
+    /// </summary>
+    public interface IFileSearchResult : ISearchResult, IFileToBeDownloaded
+    {
+
+    }
+
+    /// <summary>
+    /// An ISearchResult that can be added as a child to a ModeElement
+    /// </summary>
     public interface IModeElementSearchResult: ISearchResult
     {
         /// <summary>
@@ -122,15 +260,13 @@ namespace Ares.AudioSource
         /// <param name="relativeDownloadPath"></param>
         /// <returns></returns>
         IModeElement GetModeElementDefinition(string relativeDownloadPath);
-    }
 
-    public interface IFileSearchResult: ISearchResult
-    {
         /// <summary>
-        /// Returns the filename under which this download will be saved as determined by the source
+        /// A list of files required by this mode element
         /// </summary>
         /// <returns></returns>
-        string GetDownloadFilename();
+        IEnumerable<IFileToBeDownloaded> GetRequiredFiles();
+
     }
 
     /// <summary>

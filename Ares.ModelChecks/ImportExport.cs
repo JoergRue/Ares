@@ -24,6 +24,10 @@ using Ares.Data;
 using ICSharpCode.SharpZipLib.Zip;
 using ICSharpCode.SharpZipLib.Core;
 
+#if ANDROID
+using Ares.Settings;
+#endif
+
 namespace Ares.ModelInfo
 {
 
@@ -60,6 +64,11 @@ namespace Ares.ModelInfo
         {
         }
 
+		private ZipFile CreateZipFile(String importFileName)
+		{
+			return new ZipFile(FileHelpers.GetFileContentStream(importFileName));
+		}
+
         private void DoImport(IProgressMonitor monitor, 
 		                      String importFileName, String targetFileName,
                               bool silent, IMessageBoxProvider messageBoxProvider,
@@ -70,10 +79,10 @@ namespace Ares.ModelInfo
             try
             {
                 long overallSize = 0;
-                bool overWrite = false;
+                bool overWrite = true;
                 bool hasAskedForOverwrite = silent;
                 bool hasInnerFile = false;
-                using (ZipFile file = new ZipFile(importFileName))
+                using (ZipFile file = CreateZipFile(importFileName))
                 {
                     for (int i = 0; i < file.Count; ++i)
                     {
@@ -98,7 +107,7 @@ namespace Ares.ModelInfo
                         {
                             overallSize += entry.Size;
                         }
-                        else if (System.IO.File.Exists(fileName))
+						else if (FileHelpers.FileExists(fileName))
                         {
                             if (!hasAskedForOverwrite)
                             {
@@ -176,7 +185,7 @@ namespace Ares.ModelInfo
         {
             ImportData data = (ImportData)e.Argument;
             String tagsDbFile = String.Empty;
-            using (ZipInputStream stream = new ZipInputStream(System.IO.File.OpenRead(data.ImportFile)))
+			using (ZipInputStream stream = new ZipInputStream(new System.IO.BufferedStream(FileHelpers.GetFileContentStream(data.ImportFile))))
             {
                 ZipEntry entry;
                 byte[] buffer = new byte[4096];
@@ -195,16 +204,16 @@ namespace Ares.ModelInfo
                     {
                         tagsDbFile = fileName;
                     }
-                    else if (!data.Overwrite && System.IO.File.Exists(fileName))
+					else if (!data.Overwrite && FileHelpers.FileExists(fileName))
                     {
                         continue;
                     }
-                    String directoryName = System.IO.Path.GetDirectoryName(fileName);
+					String directoryName =	FileHelpers.GetDirectory(fileName);
                     if (directoryName.Length > 0)
                     {
-                        System.IO.Directory.CreateDirectory(directoryName);
+                        FileHelpers.CreateDirectory(directoryName);
                     }
-                    using (System.IO.FileStream fileStream = System.IO.File.Create(fileName))
+					using (var fileStream = FileHelpers.CreateFileOutputStream(fileName))
                     {
                         StreamUtils.Copy(stream, fileStream, buffer, new ProgressHandler((object o, ProgressEventArgs e2) =>
                             {
@@ -258,16 +267,14 @@ namespace Ares.ModelInfo
                 }
                 else
                 {
-                    fileName = fileName.Replace('/', System.IO.Path.DirectorySeparatorChar);
-                    fileName = System.IO.Path.Combine(Settings.Settings.Instance.MusicDirectory, fileName);
+					fileName = FileHelpers.AppendFileName(Settings.Settings.Instance.MusicDirectory, fileName);
                     isTagsDBFile = false;
                 }
             }
             else if (entry.Name.StartsWith(Exporter.SOUND_DIR))
             {
                 fileName = entry.Name.Substring(Exporter.SOUND_DIR.Length + 1);
-                fileName = fileName.Replace('/', System.IO.Path.DirectorySeparatorChar);
-                fileName = System.IO.Path.Combine(Settings.Settings.Instance.SoundDirectory, fileName);
+				fileName = FileHelpers.AppendFileName(Settings.Settings.Instance.SoundDirectory, fileName);
                 isTagsDBFile = false;
             }
             else

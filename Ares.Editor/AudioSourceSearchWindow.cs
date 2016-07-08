@@ -128,16 +128,8 @@ namespace Ares.Editor.AudioSourceSearch
             this.Text = String.Format(StringResources.AudioSourceSearchTitle);
             this.Icon = ImageResources.AudioSourceSearchIcon;
 
-            // If enabled, set up "virtual" mode for the results ListView
-#if VIRTUAL_MODE_SEARCH_RESULTS
-            this.resultsListView.VirtualListSize = 0;
-            this.resultsListView.VirtualMode = true;
-#else
-            // When not in virtual mode, results paging does not work, so we have get everything at once
-            this.m_searchPageSize = 1000;
-#endif
-
             // Define the page size, image lists used for the list view
+            this.m_searchPageSize = 1000;
             this.resultsListView.SmallImageList = sImageList;
             this.resultsListView.LargeImageList = sImageList;
 
@@ -166,13 +158,8 @@ namespace Ares.Editor.AudioSourceSearch
             // Read the search query from the UI
             string query = this.searchBox.Text;
 
-#if VIRTUAL_MODE_SEARCH_RESULTS
-            // Reset the results cache for the new search
-            m_ResultCacheItems = new Dictionary<int, SearchResultListItem>();
-#else
             // Reset to the first page of search results
             m_searchPageIndex = 0;
-#endif
 
             // Run a search for the now current parameters
             ExecuteSearch(query, m_searchPageIndex, m_searchPageSize);
@@ -195,29 +182,6 @@ namespace Ares.Editor.AudioSourceSearch
             CancellationToken token = this.m_cancellationTokenSource.Token;
 
             int? totalNumberOfResults = null;
-
-#if VIRTUAL_MODE_SEARCH_RESULTS
-            // If the query is not the one used before, reset the cache
-            if (this.m_ResultCacheQuery != query)
-            {
-                this.m_ResultCacheItems = null;
-                this.m_ResultCacheQuery = query;
-            }
-            // If there is no cache (initial or reset) create one
-            if (this.m_ResultCacheItems == null)
-            {
-                this.m_ResultCacheItems = new Dictionary<int, SearchResultListItem>();
-            }
-
-            // Put placeholder results into the cache, to be replaced by the actual results later on
-            int resultIndex = pageIndex * pageSize;
-            for (int i = 0; i < pageSize; i++) 
-            {
-                this.m_ResultCacheItems[resultIndex+i] = new SearchResultListItem();
-                resultIndex++;
-            }
-            Console.WriteLine("Putting placeholder results {0}-{1} into cache", pageIndex * pageSize, resultIndex-1);
-#endif
 
             // Start a separate task for executing the search
             Task<IEnumerable<ISearchResult>> task = Task.Factory.StartNew(() =>
@@ -273,39 +237,6 @@ namespace Ares.Editor.AudioSourceSearch
         /// <param name="results"></param>
         private void ProcessSearchResults(IEnumerable<ISearchResult> results, string query, int pageIndex, int pageSize, int? totalNumberOfResults)
         {
-#if VIRTUAL_MODE_SEARCH_RESULTS
-            // When in virtual mode...
-
-            // If the query is not the one used before, reset the cache
-            if (this.m_ResultCacheQuery != query)
-            {
-                this.m_ResultCacheItems = null;
-                this.m_ResultCacheQuery = query;
-            }
-            // If there is no cache (initial or reset) create one
-            if (this.m_ResultCacheItems == null)
-            {
-                this.m_ResultCacheItems = new Dictionary<int, SearchResultListItem>();
-            }
-            
-            // Put the results into the cache, replacing the previous results/placeholders
-            int resultIndex = pageIndex * pageSize;
-            foreach (ISearchResult result in results)
-            {
-                this.m_ResultCacheItems[resultIndex] = new SearchResultListItem(result);
-                resultIndex++;
-            }
-            Console.WriteLine("Putting actual results {0}-{1} into cache", pageIndex * pageSize, resultIndex-1);
-
-            // Pass the result count to the list view
-            this.resultsListView.VirtualListSize = totalNumberOfResults.GetValueOrDefault(0);
-            // Invalidate the list view so it is refreshed
-            // (remember we added placeholder objects for the expected results right when the query was initially executed!)
-            this.resultsListView.Invalidate();
-#else
-            // When not in virtual mode
-
-            // If the list is not in virtual mode actually put the results into the list
             // Clear the results list in the UI
             this.resultsListView.Items.Clear();
             // Go through all search results
@@ -317,7 +248,26 @@ namespace Ares.Editor.AudioSourceSearch
                 );
             }
             this.resultsListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-#endif
+
+            UpdatePagingControls(pageIndex, pageSize, totalNumberOfResults);
+        }
+
+        /// <summary>
+        /// Update the paging controls: current page number, total number of pages, previous/next page buttons
+        /// </summary>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="totalNumberOfResults"></param>
+        private void UpdatePagingControls(int pageIndex, int pageSize, int? totalNumberOfResults)
+        {
+            int? totalNumberOfPages = (int?)null;
+            if (totalNumberOfResults.HasValue) {
+                totalNumberOfPages = (int)Math.Ceiling((decimal)totalNumberOfResults.Value / (decimal)pageSize);
+            }
+
+            nextPageButton.Enabled = totalNumberOfPages == null || (pageIndex + 1) < totalNumberOfPages;
+            prevPageButton.Enabled = pageIndex > 0;
+            pageLabel.Text = (pageIndex + 1) + " / " + (totalNumberOfPages.HasValue ? totalNumberOfPages.Value.ToString() : "?");
         }
 
         /// <summary>
@@ -457,6 +407,7 @@ namespace Ares.Editor.AudioSourceSearch
 
             // Start a drag & drop operation for those project elements
             dragDropResult = StartDragXmlWritables(draggedItems);
+
             return dragDropResult;
         }
 
@@ -710,25 +661,7 @@ namespace Ares.Editor.AudioSourceSearch
 
         public IEnumerable<SearchResultListItem> GetSelectedItems()
         {
-#if VIRTUAL_MODE_SEARCH_RESULTS
-            List<SearchResultListItem> selected = new List<SearchResultListItem>(this.resultsListView.SelectedIndices.Count);
-
-            foreach (int index in this.resultsListView.SelectedIndices)
-            {
-                if (m_ResultCacheItems != null && m_ResultCacheItems.ContainsKey(index))
-                {
-                    selected.Add(m_ResultCacheItems[index]);
-                }
-                else
-                {
-                    // TODO: figure out how to handle un-cached items during GetSelectedItems call...
-                }
-            }
-
-            return selected;
-#else
             return this.resultsListView.SelectedItems.Cast<SearchResultListItem>();
-#endif
         }
 
         #region Event Handlers
@@ -806,66 +739,7 @@ namespace Ares.Editor.AudioSourceSearch
                 ExecuteSearchWithUiQuery();
             }
         }
-
 #endregion
-
-        #region List View item caching
-        private string m_ResultCacheQuery = "";
-        private Dictionary<int,SearchResultListItem> m_ResultCacheItems = null;
-
-        private void resultsListView_CacheVirtualItems(object sender, CacheVirtualItemsEventArgs e)
-        {
-            // Round up the size of the range to the nearest 100
-            double indexRange = e.EndIndex - e.StartIndex;
-            int roundedIndexRange = (int)Math.Ceiling(indexRange / 100.0) * 100;
-
-            // Increase the pageSize if necessary
-            if (m_searchPageSize < roundedIndexRange)
-            {
-                m_searchPageSize = roundedIndexRange;
-            }
-
-            // Determine the page index
-            int pageIndex = e.StartIndex / m_searchPageSize;
-
-            //Console.WriteLine("Caching requested from {0} to {1}", e.StartIndex, e.EndIndex);
-            for (int i = e.StartIndex; i < e.EndIndex; i++)
-            {
-                if (!m_ResultCacheItems.ContainsKey(i))
-                {
-                    //Console.WriteLine("Item {0} is missing, executing search for page {1} of size {2}", i, pageIndex, m_searchPageSize);
-                    // Execute the search
-                    ExecuteSearch(m_ResultCacheQuery, pageIndex, m_searchPageSize);
-                    return;
-                }
-            }
-
-            
-        }
-
-        private void resultsListView_RetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
-        {
-            // Check whether the requested result index is in our current cache
-            if (m_ResultCacheItems != null && m_ResultCacheItems.ContainsKey(e.ItemIndex))
-            {
-                //A cache hit, so get the item from the cache instead of making a new one.
-                e.Item = m_ResultCacheItems[e.ItemIndex];
-            }
-            else
-            {
-                //Console.WriteLine("Looking for item {0} - not found!", e.ItemIndex);
-
-                // Otherwise figure out which page the item is on
-                int pageIndex = e.ItemIndex / m_searchPageSize;
-
-                // Search for & load that page into the cache
-                ExecuteSearch(m_ResultCacheQuery,pageIndex,m_searchPageSize);
-
-                // TODO: figure out how to (in an async way) get the requested item back into the event once the search returns
-                e.Item = new SearchResultListItem();
-            }
-        }
-        #endregion
     }
 
     public class SearchResultListItem : ListViewItem

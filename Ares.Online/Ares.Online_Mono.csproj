@@ -95,6 +95,12 @@
       <LastGenOutput>StringResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Ares.CommonGUI\Ares.CommonGUI_Mono.csproj">
+      <Project>{ED16F93E-23F3-4075-B72D-F64E49D08E2D}</Project>
+      <Name>Ares.CommonGUI_Mono</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

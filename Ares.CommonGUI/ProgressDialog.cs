@@ -24,7 +24,7 @@ using System.Windows.Forms;
 
 namespace Ares.CommonGUI
 {
-    partial class ProgressDialog : Form
+    partial class ProgressDialog : InvokableForm
     {
         public ProgressDialog(String text)
         {

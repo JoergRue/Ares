@@ -93,6 +93,7 @@ namespace Ares.Controllers
 
         void ProjectFilesRetrieved(List<String> files);
         void ConfigurationChanged(Configuration newConfiguration, String fileName);
+        void ImportProgressChanged(int percent, String additionalInfo);
 
         void Disconnect();
         void ConnectionFailed();
@@ -171,12 +172,12 @@ namespace Ares.Controllers
             m_ContinueListen = true;
             m_ListenThread.Start();
             
-            m_PingTimer = new System.Timers.Timer(5000);
+            m_PingTimer = new System.Timers.Timer(10000);
             m_PingTimer.AutoReset = true;
             m_PingTimer.Elapsed += new System.Timers.ElapsedEventHandler(m_PingTimer_Elapsed);
             m_PingTimer.Start();
 
-            m_WatchDogTimer = new System.Timers.Timer(25000);
+            m_WatchDogTimer = new System.Timers.Timer(50000);
             m_WatchDogTimer.AutoReset = false;
             m_WatchDogTimer.Elapsed += new System.Timers.ElapsedEventHandler(m_WatchDogTimer_Elapsed);
             m_WatchDogTimer.Start();
@@ -510,7 +511,7 @@ namespace Ares.Controllers
                                     {
                                         m_CheckedVersion = true;
                                     }
-                                    m_WatchDogTimer = new System.Timers.Timer(7000);
+                                    m_WatchDogTimer = new System.Timers.Timer(50000);
                                     m_WatchDogTimer.AutoReset = false;
                                     m_WatchDogTimer.Elapsed += new System.Timers.ElapsedEventHandler(m_WatchDogTimer_Elapsed);
                                     m_WatchDogTimer.Start();
@@ -689,6 +690,18 @@ namespace Ares.Controllers
                                     if (fadingTime < 0 || fadingTime > 30000)
                                         fadingTime = 0;
                                     m_NetworkClient.MusicFadingChanged(fadingOption, fadingTime);
+                                    break;
+                                }
+                            case 20:
+                                {
+                                    int percent;
+                                    if (!ReadInt32(out percent))
+                                        break;
+                                    count = m_Socket.Receive(buffer, 1, 2);
+                                    if (count < 2)
+                                        break;
+                                    String additionalInfo = ReadString(buffer);
+                                    m_NetworkClient.ImportProgressChanged(percent, additionalInfo);
                                     break;
                                 }
                             default:

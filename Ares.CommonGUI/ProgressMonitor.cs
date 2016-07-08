@@ -29,14 +29,14 @@ namespace Ares.CommonGUI
         private System.Timers.Timer timer;
         private bool closed;
         private ProgressDialog dialog;
-        private System.Windows.Forms.Form parent;
+		private System.Windows.Forms.Form parent;
         private double m_Progress;
 
         private const int DELAY = 500;
 
         protected Object syncObject = new object();
 
-        protected ProgressMonitorBase(System.Windows.Forms.Form parent, String text)
+		protected ProgressMonitorBase(System.Windows.Forms.Form parent, String text)
         {
             dialog = new ProgressDialog(text);
             dialog.Text = text;
@@ -50,7 +50,7 @@ namespace Ares.CommonGUI
 
         private void Start()
         {
-            if (parent.InvokeRequired)
+			if (parent.IsInvokeRequired())
             {
                 parent.Invoke(new Action(() => { Start(); }));
             }
@@ -67,7 +67,7 @@ namespace Ares.CommonGUI
                 if (closed)
                     return;
             }
-            if (parent.InvokeRequired)
+			if (parent.IsInvokeRequired())
             {
                 parent.Invoke(new Action(() => { OpenDialog(); }));
             }
@@ -111,7 +111,7 @@ namespace Ares.CommonGUI
                     timer.Stop();
                 }
             }
-            if (dialog != null && dialog.InvokeRequired)
+			if (dialog != null && dialog.IsInvokeRequired())
             {
                 dialog.Invoke(new Action(() => { DoClose(); }));
             }
@@ -133,7 +133,7 @@ namespace Ares.CommonGUI
 
         public void IncreaseProgress(double percent)
         {
-            if (parent.InvokeRequired)
+			if (parent.IsInvokeRequired())
             {
                 parent.Invoke(new Action(() => { IncreaseProgress(percent); }));
             }
@@ -148,7 +148,7 @@ namespace Ares.CommonGUI
 
         public void IncreaseProgress(double percent, String text)
         {
-            if (parent.InvokeRequired)
+			if (parent.IsInvokeRequired())
             {
                 parent.Invoke(new Action(() => { IncreaseProgress(percent, text); }));
             }
@@ -163,7 +163,7 @@ namespace Ares.CommonGUI
 
         public void SetProgress(int percent, String text)
         {
-            if (parent.InvokeRequired)
+			if (parent.IsInvokeRequired())
             {
                 parent.Invoke(new Action(() => { SetProgress(percent, text); }));
             }
@@ -178,7 +178,7 @@ namespace Ares.CommonGUI
 
         public void SetIndeterminate(String text)
         {
-            if (parent.InvokeRequired)
+			if (parent.IsInvokeRequired())
             {
                 parent.Invoke(new Action(() => { SetIndeterminate(text); }));
             }

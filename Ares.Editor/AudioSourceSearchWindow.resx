@@ -487,6 +487,24 @@
   <data name="$this.Text" xml:space="preserve">
     <value>Online Audio Sources</value>
   </data>
+  <data name="&gt;&gt;prevPageButton.Name" xml:space="preserve">
+    <value>prevPageButton</value>
+  </data>
+  <data name="&gt;&gt;prevPageButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pageLabel.Name" xml:space="preserve">
+    <value>pageLabel</value>
+  </data>
+  <data name="&gt;&gt;pageLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;nextPageButton.Name" xml:space="preserve">
+    <value>nextPageButton</value>
+  </data>
+  <data name="&gt;&gt;nextPageButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;colHeaderTitle.Name" xml:space="preserve">
     <value>colHeaderTitle</value>
   </data>
@@ -529,6 +547,18 @@
   <data name="&gt;&gt;downloadToMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;playButton.Name" xml:space="preserve">
+    <value>playButton</value>
+  </data>
+  <data name="&gt;&gt;playButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;stopButton.Name" xml:space="preserve">
+    <value>stopButton</value>
+  </data>
+  <data name="&gt;&gt;stopButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;audioSourceComboBox.Name" xml:space="preserve">
     <value>audioSourceComboBox</value>
   </data>
@@ -546,36 +576,6 @@
   </data>
   <data name="&gt;&gt;searchButton.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;stopButton.Name" xml:space="preserve">
-    <value>stopButton</value>
-  </data>
-  <data name="&gt;&gt;stopButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;playButton.Name" xml:space="preserve">
-    <value>playButton</value>
-  </data>
-  <data name="&gt;&gt;playButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;prevPageButton.Name" xml:space="preserve">
-    <value>prevPageButton</value>
-  </data>
-  <data name="&gt;&gt;prevPageButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;nextPageButton.Name" xml:space="preserve">
-    <value>nextPageButton</value>
-  </data>
-  <data name="&gt;&gt;nextPageButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;pageLabel.Name" xml:space="preserve">
-    <value>pageLabel</value>
-  </data>
-  <data name="&gt;&gt;pageLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>AudioSourceSearchWindow</value>

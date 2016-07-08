@@ -170,7 +170,7 @@ public class PlayingState implements INetworkClient {
 
 	public void modeChanged(String newMode) {
 		final String m = newMode;
-		handler.post(new Runnable(){
+		handler.post(new Runnable() {
 			public void run() {
 				mode = m;
 				if (!hasClient())
@@ -437,6 +437,18 @@ public class PlayingState implements INetworkClient {
 					return;
 				for (INetworkClient client : clients) 
 					client.configurationChanged(newConfiguration, fileName);
+			}
+		});
+	}
+
+	@Override
+	public void importProgressChanged(final int percent, final String additionalInfo) {
+		handler.post(new Runnable() {
+			public void run() {
+				if (!hasClient())
+					return;
+				for (INetworkClient client : clients)
+					client.importProgressChanged(percent, additionalInfo);
 			}
 		});
 	}
