@@ -331,7 +331,7 @@ public class ControlFragment extends ConnectedFragment implements INetworkClient
     
     private void projectOpened(Configuration config, String fileName) {
     	if (Control.getInstance().getFilePath().startsWith(fileName)) {
-    		getActivity().getPreferences(Activity.MODE_PRIVATE).edit().putString(LAST_PROJECT, Control.getInstance().getFilePath()).commit();
+			getActivity().getPreferences(Activity.MODE_PRIVATE).edit().putString(LAST_PROJECT, Control.getInstance().getFilePath()).commit();
     	}
     	Control.getInstance().setConfiguration(config, fileName);
 		updateProjectTitle();
@@ -353,7 +353,12 @@ public class ControlFragment extends ConnectedFragment implements INetworkClient
     }
     
     public void openProject(String path, Activity activity) {
-    	Control.getInstance().openFile(path);
+		if (Control.getInstance().isConnected()) {
+			Control.getInstance().openFile(path);
+		}
+		else {
+			fileToOpenDelayed = path;
+		}
     }
     
     private void updateProjectTitle() {
@@ -361,6 +366,9 @@ public class ControlFragment extends ConnectedFragment implements INetworkClient
 		if (Control.getInstance().getConfiguration() != null) {
 			String title = Control.getInstance().getConfiguration().getTitle();
 			projectView.setText(title);
+		}
+		else if (Control.getInstance().isConnected()) {
+			projectView.setText("-");
 		}
 		else {
 			projectView.setText(R.string.connectFirst);
@@ -559,6 +567,12 @@ public class ControlFragment extends ConnectedFragment implements INetworkClient
 		forwardButton.setEnabled(true);
 		repeatButton.setEnabled(true);
 		openButton.setEnabled(true);
+		updateProjectTitle();
+		if (fileToOpenDelayed != null) {
+			String path = fileToOpenDelayed;
+			fileToOpenDelayed = null;
+			openProject(path, getActivity());
+		}
 	}
 	
 	protected void onDisconnect(boolean startServerSearch) {
@@ -676,6 +690,16 @@ public class ControlFragment extends ConnectedFragment implements INetworkClient
 	public void configurationChanged(Configuration newConfiguration,
 			String fileName) {
 		projectOpened(newConfiguration, fileName);
+	}
+
+	@Override
+	public void importProgressChanged(int percent, String additionalInfo) {
+		String text = getString(R.string.importing);
+		if (percent >= 0 && percent <= 100) {
+			text += " (" + percent + "%)";
+		}
+		TextView projectView = (TextView)getActivity().findViewById(R.id.projectTextView);
+		projectView.setText(text);
 	}
 
 	@Override

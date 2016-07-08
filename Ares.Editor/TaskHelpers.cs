@@ -43,7 +43,7 @@ namespace Ares.Editor
     {
         private System.Threading.CancellationTokenSource m_TokenSource;
 
-        public TaskProgressMonitor(System.Windows.Forms.Form parent, String text, System.Threading.CancellationTokenSource tokenSource)
+        public TaskProgressMonitor(Form parent, String text, System.Threading.CancellationTokenSource tokenSource)
             : base(parent, text)
         {
             m_TokenSource = tokenSource;

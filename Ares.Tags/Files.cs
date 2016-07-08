@@ -19,10 +19,14 @@
  */
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 using System.Data.Common;
+#if ANDROID
+using Mono.Data.Sqlite;
+#else
+using System.Data.SQLite;
+#endif
 
 namespace Ares.Tags
 {
@@ -108,7 +112,11 @@ namespace Ares.Tags
                 DoCloseDatabase();
             }
             
-            m_Connection = new System.Data.SQLite.SQLiteConnection(String.Format("Data Source={0};Version=3;foreign keys=true;", filePath));
+			#if ANDROID
+			m_Connection = new SqliteConnection(String.Format("Data Source={0};Version=3;foreign keys=true;", filePath));
+			#else
+            m_Connection = new SQLiteConnection(String.Format("Data Source={0};Version=3;foreign keys=true;", filePath));
+			#endif
             
             m_Connection.Open();
         }

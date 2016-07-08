@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:text="@string/player_service"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView1" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout1"
+        android:gravity="center_vertical"
+        android:layout_marginTop="2pt">
+        <TextView
+            android:text="@string/service_status"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/serviceView"
+            android:gravity="center_vertical" />
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/space1" />
+        <Button
+            android:id="@+id/serviceButton"
+            android:text="@string/start"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10pt" />
+        <Button
+            android:text="@string/messages"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/messagesButton" />
+    </LinearLayout>
+    <TextView
+        android:text="@string/controller"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView3"
+        android:layout_marginTop="5pt" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout2"
+        android:layout_marginTop="2pt">
+        <TextView
+            android:text="@string/controller_status"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/controllerVIew"
+            android:gravity="center_vertical" />
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/space2" />
+        <Button
+            android:text="@string/start_controller"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/controllerButton"
+            android:layout_marginLeft="10pt" />
+    </LinearLayout>
+    <TextView
+        android:text="@string/project"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView5"
+        android:layout_marginTop="5pt" />
+    <TextView
+        android:text="@string/no_project"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/projectView"
+        android:layout_marginTop="2pt" />
+</LinearLayout>

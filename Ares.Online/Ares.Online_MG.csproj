@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7A6185CD-7DC5-4583-A946-62C75CC7FFA1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Ares.Online</RootNamespace>
+    <AssemblyName>Ares.Online</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug_MG|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\Debug_MG\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release_MG|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\bin\Release_MG\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>ares.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="HtmlRenderer">
+      <HintPath>..\Libraries\HtmlRenderer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ChangeLogDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChangeLogDialog.Designer.cs">
+      <DependentUpon>ChangeLogDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InvokableForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewsDialog.Designer.cs">
+      <DependentUpon>NewsDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewVersionDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewVersionDialog.Designer.cs">
+      <DependentUpon>NewVersionDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OnlineOperations.cs" />
+    <Compile Include="ProgressDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProgressDialog.Designer.cs">
+      <DependentUpon>ProgressDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StringResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StringResources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ChangeLogDialog.de.resx">
+      <DependentUpon>ChangeLogDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChangeLogDialog.resx">
+      <DependentUpon>ChangeLogDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewsDialog.de.resx">
+      <DependentUpon>NewsDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewsDialog.resx">
+      <DependentUpon>NewsDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewVersionDialog.de.resx">
+      <DependentUpon>NewVersionDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewVersionDialog.resx">
+      <DependentUpon>NewVersionDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProgressDialog.de.resx">
+      <DependentUpon>ProgressDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProgressDialog.resx">
+      <DependentUpon>ProgressDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StringResources.de.resx" />
+    <EmbeddedResource Include="StringResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>StringResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ares.snk" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

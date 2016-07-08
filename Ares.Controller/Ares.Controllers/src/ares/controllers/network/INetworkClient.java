@@ -56,4 +56,6 @@ public interface INetworkClient {
 	void connectionFailed();
 	void musicRepeatChanged(boolean isRepeat);
 	void musicOnAllSpeakersChanged(boolean onAllSpeakers);
+	
+	void importProgressChanged(int percent, String additionalInfo);
 }

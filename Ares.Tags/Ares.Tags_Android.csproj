@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Android_Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{42A8F91D-6E6B-4740-AC3F-99A34074E695}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Ares.Tags</RootNamespace>
+    <AssemblyName>Ares.Tags</AssemblyName>
+    <SignAssembly>false</SignAssembly>
+    <AssemblyOriginatorKeyFile>ares.snk</AssemblyOriginatorKeyFile>
+    <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <AndroidUseLatestPlatformSdk>False</AndroidUseLatestPlatformSdk>
+    <TargetFrameworkVersion>v4.1</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Android_Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\Android_Debug</OutputPath>
+    <DefineConstants>DEBUG;ANDROID</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Android_Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\bin\Android_Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <DefineConstants>ANDROID</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="ServiceStack.Text">
+      <HintPath>..\Libraries_Android\ServiceStack.Text.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Data.Sqlite" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Files.cs" />
+    <Compile Include="ImportExport.cs" />
+    <Compile Include="Interface.cs" />
+    <Compile Include="LanguageReading.cs" />
+    <Compile Include="LanguageWriting.cs" />
+    <Compile Include="Reading.cs" />
+    <Compile Include="SQLiteTagsDB.cs" />
+    <Compile Include="Translations.cs" />
+    <Compile Include="Writing.cs" />
+    <Compile Include="DbUtils.cs" />
+    <Compile Include="Browsing.cs" />
+  </ItemGroup>
+</Project>

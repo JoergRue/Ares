@@ -116,14 +116,14 @@ public final class ControlConnection {
 			}
 		  });
 	    }
-	  }, 5000, 5000);
+	  }, 10000, 10000);
 	  watchDogTimer = new Timer("WatchdogTimer"); //$NON-NLS-1$
 	  watchDogTimer.schedule(new TimerTask() {
 		  public void run() {
 			  Messages.addMessage(MessageType.Warning, Localization.getString("ControlConnection.NoPingFailure")); //$NON-NLS-1$
 			  handleConnectionFailure(false);
 		  }
-	  }, 25000);
+	  }, 50000);
 	  state = State.Connected;
       Messages.addMessage(MessageType.Info, Localization.getString("ControlConnection.ConnectedWith") + address + ":" + port); //$NON-NLS-1$ //$NON-NLS-2$
   }
@@ -377,7 +377,7 @@ public final class ControlConnection {
 								  Messages.addMessage(MessageType.Warning, Localization.getString("ControlConnection.NoPingFailure")); //$NON-NLS-1$
 								  handleConnectionFailure(false);
 							  }
-						}, 7000);
+						}, 50000);
 						break;
 				  }
 				  case 10:
@@ -541,6 +541,15 @@ public final class ControlConnection {
 					  if (fadingTime < 0 || fadingTime > 30000)
 						  fadingTime = 0;
 					  networkClient.musicFadingChanged(fadingOption, fadingTime);
+					  break;
+				  }
+				  case 20:
+				  {
+					  stream.read(); // subcommand, unused
+					  stream.read(); // unused
+					  int percent = readInt32(stream);
+					  String additionalInfo = readString(stream);
+					  networkClient.importProgressChanged(percent, additionalInfo);
 					  break;
 				  }
 				  default:

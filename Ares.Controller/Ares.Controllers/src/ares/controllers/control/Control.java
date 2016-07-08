@@ -66,7 +66,12 @@ public final class Control {
   public static String REMOTE_FILE_TAG = "remote://";
   
   public void openFile(String path) {
-	  this.filePath = path;
+      if (path.endsWith(".apkg")) {
+        this.filePath = path.substring(0, path.length() - 4) + "ares";
+      }
+      else {
+        this.filePath = path;
+      }
 	  if (path.startsWith(REMOTE_FILE_TAG)) {
 		  path = path.substring(REMOTE_FILE_TAG.length());
 	  }

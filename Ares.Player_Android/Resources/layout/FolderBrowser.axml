@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout1">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayout5">
+            <TextView
+                android:text="Large Text"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/currentFolderView"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1.0" />
+            <Button
+                android:text="@string/select"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/selectButton"
+                android:layout_gravity="right" />
+        </LinearLayout>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="?android:attr/listDivider" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/linearLayout2"
+        android:layout_marginTop="15dp">
+        <ListView
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/folderList"
+            android:layout_weight="1.0" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/linearLayout3">
+            <Button
+                android:text="@string/up"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/upButton" />
+            <Button
+                android:text="@string/create"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/createButton" />
+            <Button
+                android:text="@string/folders"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/switchTypeButton" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

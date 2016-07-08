@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="library_name">Ares.ModelInfo_Android</string>
+	<string name="Ares">Ares</string>
+	<string name="FileNotFound">File {0} not found</string>
+	<string name="ImportOverwrite">
+		Some imported files already exist on disk. Overwrite these with the imported ones?
+	</string>
+	<string name="InvalidImportFile">Import file is invalid.</string>
+	<string name="CannotPlayURLS">
+		URLs can\'t be used in playlists. Entry {0} ignored.
+	</string>
+	<string name="ErrorReadingPlaylist">Error reading {0}: {1}</string>
+	<string name="PlaylistNotFound">Playlist {0} not found.</string>
+	<string name="ConditionElementNotFound">Element for condition not found.</string>
+	<string name="AwaitedElementNotFound">Element to wait for not found.</string>
+	<string name="StartedElementNotFound">Element to start not found.</string>
+	<string name="StoppedElementNotFound">Element to stop not found.</string>
+	<string name="ReferencedElementNotFound">Referenced element not found.</string>
+	<string name="TagNotFound">Tag to add / remove not found.</string>
+</resources>

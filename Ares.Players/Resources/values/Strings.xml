@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="library_name">Ares.Players_Android</string>
+<string name="ClientConnected">Connected with client {0}</string>
+<string name="ClientDisconnected">Closed connection with client.</string>
+<string name="ClientLengthReceived">Got length from client:</string>
+<string name="ClientListenError">Error listening for client:</string>
+<string name="ClientSendError">Connection to client lost.</string>
+<string name="CommandReceived">Received command \'{0}\'</string>
+<string name="DisconnectingClient">Disconnecting on client request.</string>
+<string name="InvalidKeyCode">Invalid key code: {0}</string>
+<string name="KeyListenError">Error while listening for keys:</string>
+<string name="KeyReceived">Received key ids: {0} {1}</string>
+<string name="LengthTooHigh">Length is too high.</string>
+<string name="NoClientID">Client didn\'t send ID</string>
+<string name="PingReceived">Received ping.</string>
+<string name="PingTimeout">No Ping received, assuming connection failure.</string>
+<string name="PlayError">At element {0}: {1}</string>
+<string name="StartBroadcast">Starting UDP broadcast</string>
+<string name="StopBroadcast">Stopping UDP broadcast</string>
+<string name="TagsDbError">Error accessing tags database: {0}</string>
+<string name="UDPError">Error sending UDP packet:</string>
+<string name="UDPSending">Sending UDP packet \'{0}\'</string>
+<string name="VolumeCommandReceived">Received volume command: type {0}, volume {1}</string>
+<string name="VolumeOutOfRange">Received out-of-range volume command</string>
+<string name="WrongClientLength">Length is wrong.</string>
+</resources>

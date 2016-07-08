@@ -22,10 +22,10 @@ package ares.controller.android;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
-
 
 public class MainActivity extends ControllerActivity {
 	
@@ -81,6 +81,17 @@ public class MainActivity extends ControllerActivity {
 		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+
+		Intent intent = getIntent();
+		if (intent.hasExtra("UDPPort")) {
+			int newPort = intent.getIntExtra("UDPPort", 0);
+			if (newPort != 0) {
+				Log.d("Ares Controller", "Received new port by intent");
+				SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
+				editor.putString("udp_port", "" + newPort);
+				editor.commit();
+			}
+		}
 		
 		MessageHandler.getInstance().setContext(getApplicationContext());
         setMessageFilter();

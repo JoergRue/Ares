@@ -528,6 +528,12 @@ namespace Ares.Players.Web
         public bool FadeOnlyOnChange { get; set; }
     }
 
+    public class ImportInfo
+    {
+        public int Percent { get; set; }
+        public String AdditionalInfo { get; set; }
+    }
+
     public class EventsSender
     {
         private Object mSyncObject = new object();
@@ -609,7 +615,7 @@ namespace Ares.Players.Web
 				#if MONO
                 mWatchdogTimer.Interval = 5000;
 				#else
-				mWatchdogTimer.Interval = 1000;
+				mWatchdogTimer.Interval = 3000;
 				#endif
                 mWatchdogTimer.Elapsed += OnWatchdogTimer;
                 mSenderThread = new System.Threading.Thread(new System.Threading.ThreadStart(ThreadFunction));
@@ -952,6 +958,11 @@ namespace Ares.Players.Web
         public void InformClientOfFading(int fadeTime, bool fadeOnlyOnChange)
         {
             InformClientOfTagFading(fadeTime, fadeOnlyOnChange);
+        }
+
+        public void InformClientOfImportProgress(int percent, String additionalInfo)
+        {
+            DoNotifyChannel("Control", new ImportInfo { Percent = percent, AdditionalInfo = additionalInfo });
         }
 
         private Data.IMode mActiveMode = null;
@@ -1378,23 +1389,33 @@ namespace Ares.Players.Web
         {
             get
             {
+#if DEBUG_SERVICE_STACK
                 return true;
+#else
+                return false;
+#endif
             }
         }
 
         public void Debug(object message)
         {
+#if DEBUG_SERVICE_STACK
             Messages.AddMessage(MessageType.Debug, message.ToString());
+#endif
         }
 
         public void Debug(object message, Exception exception)
         {
+#if DEBUG_SERVICE_STACK
             Messages.AddMessage(MessageType.Debug, message.ToString());
+#endif
         }
 
         public void DebugFormat(string format, params object[] args)
         {
+#if DEBUG_SERVICE_STACK
             Messages.AddMessage(MessageType.Debug, String.Format(format, args));
+#endif
         }
 
         public void Error(object message)
@@ -1429,32 +1450,44 @@ namespace Ares.Players.Web
 
         public void Info(object message)
         {
+#if DEBUG_SERVICE_STACK
             Messages.AddMessage(MessageType.Info, message.ToString());
+#endif
         }
 
         public void Info(object message, Exception exception)
         {
+#if DEBUG_SERVICE_STACK
             Messages.AddMessage(MessageType.Info, message.ToString());
+#endif
         }
 
         public void InfoFormat(string format, params object[] args)
         {
+#if DEBUG_SERVICE_STACK
             Messages.AddMessage(MessageType.Info, String.Format(format, args));
+#endif
         }
 
         public void Warn(object message)
         {
+#if DEBUG_SERVICE_STACK
             Messages.AddMessage(MessageType.Warning, message.ToString());
+#endif
         }
 
         public void Warn(object message, Exception exception)
         {
+#if DEBUG_SERVICE_STACK
             Messages.AddMessage(MessageType.Warning, message.ToString());
+#endif
         }
 
         public void WarnFormat(string format, params object[] args)
         {
+#if DEBUG_SERVICE_STACK
             Messages.AddMessage(MessageType.Warning, String.Format(format, args));
+#endif
         }
     }
 
@@ -1587,6 +1620,12 @@ namespace Ares.Players.Web
         {
             if (ClientConnected)
                 mAppHost.InfoSender.InformClientOfFading(fadeTime, fadeOnlyOnChange);
+        }
+
+        public void InformClientOfImportProgress(int percent, String additionalInfo)
+        {
+            if (ClientConnected)
+                mAppHost.InfoSender.InformClientOfImportProgress(percent, additionalInfo);
         }
     }
 

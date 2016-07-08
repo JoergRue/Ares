@@ -165,16 +165,19 @@ namespace Ares.TagsImport
 
         private CancellationToken m_Token;
         private AcoustAPI m_AcoustAPI;
+        private MusicBrainzApi m_MusicBrainzAPI;
 
         public MusicIdentificationRetriever(CancellationToken token)
         {
             m_Token = token;
             m_AcoustAPI = new AcoustAPI();
+            m_MusicBrainzAPI = new MusicBrainzApi();
         }
 
         public void Dispose()
         {
             m_AcoustAPI.Dispose();
+            m_MusicBrainzAPI.Dispose();
         }
 
         public void RetrieveFileInfo(String fileName, Ares.Tags.FileIdentification data, Ares.ModelInfo.IProgressMonitor progressMonitor)
@@ -289,8 +292,7 @@ namespace Ares.TagsImport
         private void QueryForMusicInfo(Ares.Tags.FileIdentification data, int query, String musicBrainzId)
         {
             String title, artist, album;
-            MusicBrainzApi musicBrainzApi = new MusicBrainzApi();
-            musicBrainzApi.RetrieveMusicInfos(musicBrainzId, out title, out album, out artist);
+            m_MusicBrainzAPI.RetrieveMusicInfos(musicBrainzId, out title, out album, out artist);
             if (!String.IsNullOrEmpty(title) && ((query & TITLE) != 0))
                 data.Title = title;
             if (!String.IsNullOrEmpty(album) && ((query & ALBUM) != 0))
@@ -491,6 +493,7 @@ namespace Ares.TagsImport
             request.AddParameter("client", apiKey);
             m_RateGate.WaitToProceed();
             var response = client.Execute<T>(request);
+            m_RateGate.ResetTimeToProceed();
             if (response.ErrorException != null)
             {
                 throw response.ErrorException;
@@ -519,52 +522,79 @@ namespace Ares.TagsImport
         }
     }
 
-    class MusicBrainzApi
+    class MusicBrainzApi : IDisposable
     {
         private const String baseURL = "http://musicbrainz.org";
 
+        private RateGate m_RateGate;
+
+        private readonly String m_UserAgent;
+
         public MusicBrainzApi()
         {
+            m_RateGate = new RateGate(1, TimeSpan.FromSeconds(1.5));
+            String assemblyVersion = (new System.Reflection.AssemblyName(System.Reflection.Assembly.GetExecutingAssembly().FullName)).Version.ToString();
+            m_UserAgent = "Ares/" + assemblyVersion + "(http://aresrpg.sourceforge.net)";
+        }
+
+        public void Dispose()
+        {
+            m_RateGate.Dispose();
         }
 
         private String RetrieveMusicInfo(String musicBrainzId)
         {
             var client = new RestSharp.RestClient();
             client.BaseUrl = baseURL;
-            var request = new RestSharp.RestRequest("/ws/2/recording/" + musicBrainzId + "?inc=artists+releases", RestSharp.Method.GET);
+            client.UserAgent = m_UserAgent;
+            var request = new RestSharp.RestRequest("/ws/2/recording/" + musicBrainzId + "?inc=artists+releases&fmt=xml", RestSharp.Method.GET);
+            m_RateGate.WaitToProceed();
             var response = client.Execute(request);
+            m_RateGate.ResetTimeToProceed();
             return (response != null && response.Content != null) ? response.Content : String.Empty;
         }
 
-        public void RetrieveMusicInfos(String musicBrainzId, out String title, out String album, out String artist)
+        public bool RetrieveMusicInfos(String musicBrainzId, out String title, out String album, out String artist)
         {
             title = String.Empty;
             album = String.Empty;
             artist = String.Empty;
 
-            String response = RetrieveMusicInfo(musicBrainzId);
-            if (String.IsNullOrEmpty(response))
-                return;
-
-            XmlDocument doc = new XmlDocument();
-            doc.LoadXml(response);
-            XmlNamespaceManager nsmgr = new XmlNamespaceManager(doc.NameTable);
-            nsmgr.AddNamespace("mb", doc.DocumentElement.NamespaceURI);
-            XmlNode titleNode = doc.SelectSingleNode(@"/mb:metadata/mb:recording/mb:title", nsmgr);
-            if (titleNode != null)
+            const int maxTries = 3;
+            int nrOfTries = 0;
+            while (nrOfTries < maxTries)
             {
-                title = titleNode.InnerText;
+                ++nrOfTries;
+                String response = RetrieveMusicInfo(musicBrainzId);
+                if (String.IsNullOrEmpty(response))
+                    continue;
+                XmlDocument doc = new XmlDocument();
+                doc.LoadXml(response);
+                XmlNamespaceManager nsmgr = new XmlNamespaceManager(doc.NameTable);
+                nsmgr.AddNamespace("mb", doc.DocumentElement.NamespaceURI);
+                XmlNode errorNode = doc.SelectSingleNode(@"/error");
+                if (errorNode != null)
+                {
+                    continue;
+                }
+                XmlNode titleNode = doc.SelectSingleNode(@"/mb:metadata/mb:recording/mb:title", nsmgr);
+                if (titleNode != null)
+                {
+                    title = titleNode.InnerText;
+                }
+                XmlNode artistNode = doc.SelectSingleNode(@"/mb:metadata/mb:recording/mb:artist-credit/mb:name-credit/mb:artist/mb:name", nsmgr);
+                if (artistNode != null)
+                {
+                    artist = artistNode.InnerText;
+                }
+                XmlNode albumNode = doc.SelectSingleNode(@"/mb:metadata/mb:recording/mb:release-list/mb:release/mb:title", nsmgr);
+                if (albumNode != null)
+                {
+                    album = albumNode.InnerText;
+                }
+                return true;
             }
-            XmlNode artistNode = doc.SelectSingleNode(@"/mb:metadata/mb:recording/mb:artist-credit/mb:name-credit/mb:artist/mb:name", nsmgr);
-            if (artistNode != null)
-            {
-                artist = artistNode.InnerText;
-            }
-            XmlNode albumNode = doc.SelectSingleNode(@"/mb:metadata/mb:recording/mb:release-list/mb:release/mb:title", nsmgr);
-            if (albumNode != null)
-            {
-                album = albumNode.InnerText;
-            }
+            return false;
         }
     }
 }

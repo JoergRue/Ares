@@ -23,17 +23,23 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\bin\Mono Debug</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;MONO</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Mono_Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
+    <DebugType></DebugType>
     <Optimize>true</Optimize>
     <OutputPath>..\bin\Mono_Release</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>MONO</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DefineConstants>MONO</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DefineConstants>MONO</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -73,6 +79,7 @@
       <DependentUpon>StringResources.resx</DependentUpon>
     </Compile>
     <Compile Include="KeyChecks.cs" />
+    <Compile Include="InvokableForm.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="AboutDialog.de.resx">

@@ -177,6 +177,11 @@ namespace Ares.MediaPortalPlugin
             InformFading(fadeTime, fadeOnlyOnChange);
         }
 
+        public void InformClientOfImportProgress(int percent, string additionalInfo)
+        {
+            InformImportProgress(percent, additionalInfo);
+        }
+
         public void InformClientOfEverything(int overallVolume, int musicVolume, int soundVolume, String mode, String shortMusic, String longMusic,
             System.Collections.Generic.List<int> elements, Ares.Controllers.Configuration configuration, List<Ares.Controllers.MusicListItem> musicList, bool musicRepeat,
             List<Ares.Controllers.MusicTagCategory> categories, Dictionary<int, List<Ares.Controllers.MusicTag>> tagsPerCategory, 
@@ -298,10 +303,10 @@ namespace Ares.MediaPortalPlugin
             System.Threading.Thread commandThread = new System.Threading.Thread(ListenForCommands);
             commandThread.Start();
             StopUdpBroadcast();
-            m_WatchdogTimer = new System.Timers.Timer(25000);
+            m_WatchdogTimer = new System.Timers.Timer(50000);
             m_WatchdogTimer.Elapsed += new System.Timers.ElapsedEventHandler(watchdogTimer_Elapsed);
             m_WatchdogTimer.Start();
-            m_PingTimer = new System.Timers.Timer(5000);
+            m_PingTimer = new System.Timers.Timer(10000);
             m_PingTimer.Elapsed += new System.Timers.ElapsedEventHandler(pingTimer_Elapsed);
             m_PingTimer.AutoReset = true;
             m_PingTimer.Start();
@@ -475,7 +480,7 @@ namespace Ares.MediaPortalPlugin
                         if (m_WatchdogTimer != null)
                         {
                             m_WatchdogTimer.Stop();
-                            m_WatchdogTimer.Interval = 7000;
+                            m_WatchdogTimer.Interval = 50000;
                             m_WatchdogTimer.Start();
                         }
                     }
@@ -608,7 +613,7 @@ namespace Ares.MediaPortalPlugin
             }
         }
 
-        private static readonly int PLAYER_VERSION = 3;
+        private static readonly int PLAYER_VERSION = 4;
 
         public static readonly String MEDIA_PORTAL = " (MediaPortal)";
 
@@ -1146,6 +1151,14 @@ namespace Ares.MediaPortalPlugin
                 catch (Exception)
                 {
                 }
+            }
+        }
+
+        private void InformImportProgress(int percent, string additionalInfo)
+        {
+            if (ClientConnected)
+            {
+                SendStringAndInt32(20, 0, additionalInfo, percent);
             }
         }
 

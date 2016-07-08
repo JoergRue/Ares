@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="library_name">Ares.Settings_Android</string>
+	<string name="ExpectedAttribute">Attribute {0} expected.</string>
+	<string name="ExpectedInteger">Number expected for attribute {0}.</string>
+</resources>

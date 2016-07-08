@@ -67,6 +67,11 @@
             android:key="player_connection"
             android:title="@string/player_connection"
             android:summary="@string/playerConnectionDesc"></EditTextPreference>
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="start_local_player"
+            android:summary="@string/start_local_player_summary"
+            android:title="@string/start_local_player"></CheckBoxPreference>
     </PreferenceCategory>
 
 

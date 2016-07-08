@@ -290,6 +290,10 @@ public class TagsFragment extends ModeLikeFragment implements INetworkClient {
 	@Override
 	public void projectLoaded() {
 	}
+
+	@Override
+	public void importProgressChanged(int percent, String additionalInfo) {
+	}
 	
 	private boolean m_Listen = true;
 

@@ -547,7 +547,7 @@ namespace Ares.CmdLinePlayer
             }
         }
 
-        class NoProgressMonitor : IProgressMonitor
+        class NetworkProgressMonitor : IProgressMonitor
         {
             public bool Canceled
             {
@@ -556,19 +556,35 @@ namespace Ares.CmdLinePlayer
 
             public void IncreaseProgress(double percent)
             {
+                mProgress += percent;
+                mNetwork.InformClientOfImportProgress((int)mProgress, String.Empty);
             }
 
             public void IncreaseProgress(double percent, string text)
             {
+                mProgress += percent;
+                mNetwork.InformClientOfImportProgress((int)mProgress, text);
             }
 
             public void SetProgress(int percent, string text)
             {
+                mProgress = percent;
+                mNetwork.InformClientOfImportProgress(percent, text);
             }
 
             public void SetIndeterminate(string text)
             {
+                mNetwork.InformClientOfImportProgress(-1, text);
             }
+
+            public NetworkProgressMonitor(INetwork network)
+            {
+                mNetwork = network;
+            }
+
+            private INetwork mNetwork;
+
+            private double mProgress = 0;
         }
 
         private void ImportProject(String fileName, bool controllerRequest)
@@ -581,7 +597,7 @@ namespace Ares.CmdLinePlayer
             defaultProjectName = defaultProjectName + ".ares";
             String projectFileName = defaultProjectName;
 
-            Ares.ModelInfo.Importer.Import(new NoProgressMonitor(), fileName, projectFileName, true, null, (error, cancelled) =>
+            Ares.ModelInfo.Importer.Import(new NetworkProgressMonitor(m_Network), fileName, projectFileName, true, null, (error, cancelled) =>
             {
                 if (error != null)
                 {

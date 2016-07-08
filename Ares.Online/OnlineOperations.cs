@@ -21,6 +21,8 @@ using System;
 using System.Windows.Forms;
 using System.ComponentModel;
 
+using Ares.CommonGUI;
+
 namespace Ares.Online
 {
     public class OnlineOperations
@@ -324,7 +326,7 @@ namespace Ares.Online
 
         private class FileDownloader<T>
         {
-            private Form mParent;
+			private System.Windows.Forms.Form mParent;
             private String mUrl;
             private T mParam;
             private String mText;
@@ -333,7 +335,7 @@ namespace Ares.Online
             private System.Net.WebClient mWebClient;
             private bool mShowDialog;
 
-            public FileDownloader(Form parent, T t, bool showDialog)
+			public FileDownloader(System.Windows.Forms.Form parent, T t, bool showDialog)
             {
                 mParent = parent;
                 mParam = t;
@@ -382,7 +384,7 @@ namespace Ares.Online
             {
                 if (mMonitor != null)
                     mMonitor.Close(new Action(() => { mCompletedFct(e, mParent, mParam); }));
-                else if (mParent.InvokeRequired)
+				else if (mParent.IsInvokeRequired())
                     mParent.Invoke(new Action(() => { mCompletedFct(e, mParent, mParam); }));
                 else
                     mCompletedFct(e, mParent, mParam);
@@ -408,13 +410,13 @@ namespace Ares.Online
             private bool canceled;
             private bool closed;
             private ProgressDialog dialog;
-            private Form parent;
+			private System.Windows.Forms.Form parent;
 
             private const int DELAY = 700;
 
             private Object syncObject = new object();
 
-            public ProgressMonitor(Form parent, String text)
+			public ProgressMonitor(System.Windows.Forms.Form parent, String text)
             {
                 dialog = new ProgressDialog(text);
                 closed = false;
@@ -433,7 +435,7 @@ namespace Ares.Online
                     if (closed)
                         return;
                 }
-                if (parent.InvokeRequired)
+				if (parent.IsInvokeRequired())
                 {
                     parent.Invoke(new Action(() => { OpenDialog(); }));
                 }
@@ -483,7 +485,7 @@ namespace Ares.Online
                         timer.Stop();
                     }
                 }
-                if (dialog != null && dialog.InvokeRequired)
+				if (dialog != null && dialog.IsInvokeRequired())
                 {
                     dialog.Invoke(new Action(() => { Close(action); }));
                 }
@@ -501,7 +503,7 @@ namespace Ares.Online
 
             public void SetProgress(int progress)
             {
-                if (dialog.InvokeRequired)
+				if (dialog.IsInvokeRequired())
                 {
                     dialog.Invoke(new Action(() => { dialog.SetProgress(progress); }));
                 }
