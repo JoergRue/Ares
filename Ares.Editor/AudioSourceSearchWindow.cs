@@ -420,7 +420,6 @@ namespace Ares.Editor.AudioSourceSearch
 
         public void AfterCompleteDrag(IEnumerable<ISearchResult> selectedResults, ITargetDirectoryProvider targetDirectoryProvider)
         {
-            // TODO: actually download all required files (unless already available)
             DeployRequiredFilesForSearchResults(selectedResults,targetDirectoryProvider);
         }
 
@@ -715,7 +714,7 @@ namespace Ares.Editor.AudioSourceSearch
 
         private void ElementChanged(int elementId, Ares.Editor.Actions.ElementChanges.ChangeType changeType)
         {
-            //updateInformationPanel();
+            UpdateInformationPanel();
         }
 
         public void SetProject(Ares.Data.IProject project)
@@ -759,12 +758,12 @@ namespace Ares.Editor.AudioSourceSearch
 
         private void nextPageButton_Click(object sender, EventArgs e)
         {
-
+            // TODO: implement results paging
         }
 
         private void prevPageButton_Click(object sender, EventArgs e)
         {
-
+            // TODO: implement results paging
         }
 
         #endregion
