@@ -21,7 +21,7 @@ namespace Ares.AudioSource.Freesound
             this.m_AudioSource = audioSource;
         }
 
-        internal ICollection<ISearchResult<FreesoundAudioSource>> GetSearchResults(string query, int pageSize, int pageIndex, out int? totalNumberOfResults)
+        internal IEnumerable<ISearchResult> GetSearchResults(string query, int pageSize, int pageIndex, out int? totalNumberOfResults)
         {
             Console.WriteLine("Searching Freesound for \"{0}\" (page index {1} sized {2}", query, pageIndex, pageSize);
 
@@ -51,7 +51,7 @@ namespace Ares.AudioSource.Freesound
             else
             {
                 // Otherwise work with the results and return them
-                ICollection<ISearchResult<FreesoundAudioSource>> searchResults = new List<ISearchResult<FreesoundAudioSource>>();
+                ICollection<ISearchResult> searchResults = new List<ISearchResult>();
                 foreach (SearchResultDtos.Result result in response.Data.results)
                 {
                     FreesoundApiSearchResult searchResult = new FreesoundApiSearchResult(m_AudioSource, result.previews["preview-hq-mp3"]);

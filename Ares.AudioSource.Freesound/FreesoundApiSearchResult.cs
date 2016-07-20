@@ -9,7 +9,7 @@ using Ares.Data;
 
 namespace Ares.AudioSource.Freesound
 {
-    public class FreesoundApiSearchResult : UrlFileSearchResult<FreesoundAudioSource>
+    public class FreesoundApiSearchResult : UrlFileSearchResult
     {
         public FreesoundApiSearchResult(FreesoundAudioSource audioSource, string url) : base(audioSource,SoundFileType.SoundEffect,url)
         {
@@ -19,6 +19,8 @@ namespace Ares.AudioSource.Freesound
         public long FreesoundId { get; set; }
         public Dictionary<string, string> PreviewUrls { get; set; }
         public new string Id { get { return FreesoundId.ToString(); } }
+
+        public new FreesoundAudioSource AudioSource { get; internal set; }
 
         public new string License
         {
@@ -33,6 +35,8 @@ namespace Ares.AudioSource.Freesound
             }
         }
         private string m_License;
+
+        
 
         /*public string Title { get; set; }
         public string Author { get; set; }

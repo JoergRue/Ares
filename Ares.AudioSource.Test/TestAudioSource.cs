@@ -30,9 +30,9 @@ namespace Ares.AudioSource.Test
 
         public string Name { get { return "Test"; } }
 
-        public Task<ICollection<ISearchResult<IAudioSource>>> Search(string query, int pageSize, int pageIndex, IAbsoluteProgressMonitor monitor, out int? totalNumberOfResults)
+        public Task<IEnumerable<ISearchResult>> Search(string query, int pageSize, int pageIndex, IAbsoluteProgressMonitor monitor, out int? totalNumberOfResults)
         {
-            List<ISearchResult<IAudioSource>> results = new List<ISearchResult<IAudioSource>>();
+            List<ISearchResult> results = new List<ISearchResult>();
 
             FileSearchResult soundResult = new FileSearchResult(this, AudioSearchResultType.SoundFile, SOUND_RESOURCE_NAME);
             soundResult.Title = "Sound-Datei (" + query + ")";
@@ -49,8 +49,8 @@ namespace Ares.AudioSource.Test
 
             totalNumberOfResults = results.Count;
 
-            var completionSource = new TaskCompletionSource<ICollection<ISearchResult<IAudioSource>>>();
-            completionSource.SetResult((ICollection<ISearchResult<IAudioSource>>)results);
+            var completionSource = new TaskCompletionSource<IEnumerable<ISearchResult>>();
+            completionSource.SetResult(results);
             return completionSource.Task;
         }
 
@@ -82,7 +82,7 @@ namespace Ares.AudioSource.Test
         }
     }
 
-    public class FileSearchResult : BaseSearchResult<TestAudioSource>, IFileSearchResult<TestAudioSource>
+    public class FileSearchResult : BaseSearchResult, IFileSearchResult
     {
         private string m_ResourceName;
         private AudioSearchResultType m_Type;
@@ -101,6 +101,8 @@ namespace Ares.AudioSource.Test
 
         public string SourceUrl { get; internal set; }
 
+        public new TestAudioSource AudioSource { get; internal set; }
+
         public AudioDownloadResult Download(IAbsoluteProgressMonitor monitor, ITargetDirectoryProvider targetDirectoryProvider)
         {
             AudioSource.ExtractEmbeddedFile(m_ResourceName, targetDirectoryProvider.GetFullPath(this));
@@ -108,7 +110,7 @@ namespace Ares.AudioSource.Test
         }
     }
 
-    public class ModeElementSearchResult : BaseSearchResult<TestAudioSource>, IModeElementSearchResult<TestAudioSource>
+    public class ModeElementSearchResult : BaseSearchResult, IModeElementSearchResult
     {
         private FileSearchResult m_MusicResource;
         private FileSearchResult m_SoundResource;

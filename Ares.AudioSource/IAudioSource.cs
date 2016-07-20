@@ -31,86 +31,6 @@ using System.Threading.Tasks;
 
 namespace Ares.AudioSource
 {
-    /*
-
-    /// <summary>
-    /// This helper class can be used by IAudioSources to download content to temporary files,
-    /// keeping track of what content is already downloaded, deleting temp files when the application 
-    /// exits and deploying the 
-    /// </summary>
-    public class DownloadTempHelper
-    {
-        // Cache of temp files
-        private static Dictionary<string, Task<TempFile>> m_TempFiles = new Dictionary<string, Task<TempFile>>();
-
-        /// <summary>
-        /// Allocate a temporary file and invoke the provided download function
-        /// </summary>
-        /// <param name="url"></param>
-        /// <param name="downloadFunction"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public static Task<TempFile> DownloadFileToTemp(string url, Func<TempFile> downloadFunction, CancellationToken cancellationToken)
-        {
-            lock (m_TempFiles)
-            {
-                if (m_TempFiles.ContainsKey(url))
-                {
-                    return m_TempFiles[url];
-                }
-                else
-                {                    
-                    return new Task<TempFile>(downloadFunction, cancellationToken);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Deploy/copy a temporary file download to a target location
-        /// </summary>
-        /// <param name="tempFile"></param>
-        /// <param name="targetPath"></param>
-        /// <param name="overwrite"></param>
-        /// <returns></returns>
-        public static Task DeployFileFromTemp(Task<TempFile> tempFileDownload, string targetPath, bool overwrite)
-        {
-            // Wait for the temp-file download to complete
-            return tempFileDownload.ContinueWith((task) =>
-            {
-                // And then copy the temp file to the target
-                File.Copy(task.Result.Path, targetPath, overwrite);
-            }, TaskContinuationOptions.ExecuteSynchronously | TaskContinuationOptions.NotOnCanceled | TaskContinuationOptions.NotOnFaulted);
-        }
-
-        public static Task<TempFile> FindTempFile(string url)
-        {
-            if (!m_TempFiles.ContainsKey(url))
-            {
-                return null;
-            }
-
-            return m_TempFiles[url]
-        }
-
-        public class TempFile : IDisposable
-        {
-            public TempFile()
-            {
-                this.m_Path = System.IO.Path.GetTempFileName();
-            }
-
-            public void Dispose()
-            {
-                File.Delete(m_Path);
-            }
-
-            private string m_Path;
-            public string Path { get { return m_Path;  } }
-        }
-
-    }
-
-    */
 
     public interface IAudioSource
     {
@@ -142,11 +62,11 @@ namespace Ares.AudioSource
         ///                       use it to indicate actual progress where possible.</param>
         /// <param name="totalNumberOfResults">An optional output parameter to indicate the total number of results (if known), regardless of the selected page size & index.</param>
         /// <returns></returns>
-        Task<ICollection<ISearchResult<IAudioSource>>> Search(
+        Task<IEnumerable<ISearchResult>> Search(
             string query, 
             int pageSize, 
             int pageIndex, 
-            Ares.ModelInfo.IAbsoluteProgressMonitor monitor, 
+            IAbsoluteProgressMonitor monitor, 
             out int? totalNumberOfResults
         );
     }

@@ -11,7 +11,7 @@ namespace Ares.AudioSource
     /// <summary>
     /// A file provided by an audio source
     /// </summary>
-    public interface IDownloadableAudioFile<out T> where T : IAudioSource
+    public interface IDownloadableAudioFile
     {
         string Filename { get; }
 
@@ -33,7 +33,7 @@ namespace Ares.AudioSource
 
         SoundFileType FileType { get; }
 
-        T AudioSource { get; }
+        IAudioSource AudioSource { get; }
     }
 
     /// <summary>
@@ -49,21 +49,21 @@ namespace Ares.AudioSource
         /// </summary>
         /// <param name="audioFile"></param>
         /// <returns></returns>
-        string GetFolderWithinLibrary<T>(IDownloadableAudioFile<T> audioFile) where T : IAudioSource;
+        string GetFolderWithinLibrary(IDownloadableAudioFile audioFile);
 
         /// <summary>
         /// Return the relative path (filename & folder within the appropriate ARES library) where the given audio file will be placed.
         /// </summary>
         /// <param name="audioFile"></param>
         /// <returns></returns>
-        string GetPathWithinLibrary<T>(IDownloadableAudioFile<T> audioFile) where T : IAudioSource;
+        string GetPathWithinLibrary(IDownloadableAudioFile audioFile);
 
         /// <summary>
         /// Return the absolute path (filename & full path on the filesystem) where the given audio file will be placed.
         /// </summary>
         /// <param name="audioFile"></param>
         /// <returns></returns>
-        string GetFullPath<T>(IDownloadableAudioFile<T> audioFile) where T : IAudioSource;
+        string GetFullPath(IDownloadableAudioFile audioFile);
     }
 
     /// <summary>

@@ -20,7 +20,7 @@ namespace Ares.AudioSource
     /// <summary>
     /// Generic search result
     /// </summary>
-    public interface ISearchResult<out T> where T : IAudioSource
+    public interface ISearchResult
     {
         string Id { get; }
         string Title { get; }
@@ -33,21 +33,21 @@ namespace Ares.AudioSource
 
         List<String> Tags { get; }
 
-        T AudioSource { get; }
+        IAudioSource AudioSource { get; }
 
         /// <summary>
         /// The AudioSearchResultType of the search result
         /// </summary>
         AudioSearchResultType ResultType { get; }
 
-        IEnumerable<IDownloadableAudioFile<T>> FilesToBeDownloaded { get; }
+        IEnumerable<IDownloadableAudioFile> FilesToBeDownloaded { get; }
     }
 
     /// <summary>
     /// An ISearchResult comprised of just a single file which can be added to file containers
     /// within the project
     /// </summary>
-    public interface IFileSearchResult<T> : ISearchResult<T>, IDownloadableAudioFile<T> where T : IAudioSource
+    public interface IFileSearchResult : ISearchResult, IDownloadableAudioFile
     {
 
     }
@@ -55,7 +55,7 @@ namespace Ares.AudioSource
     /// <summary>
     /// An ISearchResult that can be added as a child to a ModeElement
     /// </summary>
-    public interface IModeElementSearchResult<T> : ISearchResult<T> where T : IAudioSource
+    public interface IModeElementSearchResult : ISearchResult
     {
         /// <summary>
         /// Returns the IModeElement definition of this search result.
@@ -67,16 +67,16 @@ namespace Ares.AudioSource
         IModeElement GetModeElementDefinition(ITargetDirectoryProvider targetDirectoryProvider);
     }
 
-    public class BaseSearchResult<T> : ISearchResult<T> where T : IAudioSource
+    public class BaseSearchResult : ISearchResult
     {
-        protected BaseSearchResult(T audioSource, AudioSearchResultType resultType)
+        protected BaseSearchResult(IAudioSource audioSource, AudioSearchResultType resultType)
         {
             this.ResultType = resultType;
             this.AudioSource = audioSource;
-            this.FilesToBeDownloaded = new List<IDownloadableAudioFile<T>>();
+            this.FilesToBeDownloaded = new List<IDownloadableAudioFile>();
         }
 
-        public T AudioSource { get; internal set; }
+        public IAudioSource AudioSource { get; internal set; }
 
         public string Author { get; set; }
         public double AverageRating { get; set; }
@@ -89,9 +89,9 @@ namespace Ares.AudioSource
         public List<string> Tags { get; set; }
         public string Title { get; set; }
 
-        public IList<IDownloadableAudioFile<T>> FilesToBeDownloaded { get; internal set; }
+        public IList<IDownloadableAudioFile> FilesToBeDownloaded { get; internal set; }
 
-        IEnumerable<IDownloadableAudioFile<T>> ISearchResult<T>.FilesToBeDownloaded
+        IEnumerable<IDownloadableAudioFile> ISearchResult.FilesToBeDownloaded
         {
             get
             {
@@ -100,11 +100,11 @@ namespace Ares.AudioSource
         }
     }
 
-    public class UrlFileSearchResult<T> : BaseSearchResult<T>, IFileSearchResult<T> where T : IAudioSource
+    public class UrlFileSearchResult : BaseSearchResult, IFileSearchResult
     {
         static WebClient client = new WebClient();
 
-        public UrlFileSearchResult(T audioSource, SoundFileType fileType, string url): 
+        public UrlFileSearchResult(IAudioSource audioSource, SoundFileType fileType, string url): 
             base(audioSource, fileType == SoundFileType.Music ? AudioSearchResultType.MusicFile : AudioSearchResultType.SoundFile)
         {
             this.FileType = fileType;

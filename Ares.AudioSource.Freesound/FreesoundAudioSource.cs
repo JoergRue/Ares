@@ -25,16 +25,16 @@ namespace Ares.AudioSource.Freesound
         public string Id { get { return AUDIO_SOURCE_ID; } }
         public string Name { get { return StringResources.FreesoundAudioSourceName; } }
 
-        public Task<ICollection<ISearchResult<IAudioSource>>> Search(string query, int pageSize, int pageIndex, IAbsoluteProgressMonitor monitor, out int? totalNumberOfResults)
+        public Task<IEnumerable<ISearchResult>> Search(string query, int pageSize, int pageIndex, IAbsoluteProgressMonitor monitor, out int? totalNumberOfResults)
         {
-            ICollection<ISearchResult<FreesoundAudioSource>> results = new List<ISearchResult<FreesoundAudioSource>>();
+            IEnumerable<ISearchResult> results = new List<ISearchResult>();
 
             // Perform the search
             results = new FreesoundApiSearch(this, this.m_Client, monitor)
                         .GetSearchResults(query, pageSize, pageIndex, out totalNumberOfResults);
 
-            var completionSource = new TaskCompletionSource<ICollection<ISearchResult<IAudioSource>>>();
-            completionSource.SetResult((ICollection<ISearchResult<IAudioSource>>)results);
+            var completionSource = new TaskCompletionSource<IEnumerable<ISearchResult>>();
+            completionSource.SetResult((ICollection<ISearchResult>)results);
             return completionSource.Task;
         }
 

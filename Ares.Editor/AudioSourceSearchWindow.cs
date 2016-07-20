@@ -103,7 +103,6 @@ namespace Ares.Editor.AudioSourceSearch
 
         private PluginManager m_PluginManager;
         private ICollection<IAudioSource> m_AudioSources;
-        private CancellationTokenSource m_cancellationTokenSource = new CancellationTokenSource();
         private Ares.Data.IProject m_Project;
         private IAudioSource m_selectedAudioSource = null;
 
@@ -175,17 +174,26 @@ namespace Ares.Editor.AudioSourceSearch
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public Task<IEnumerable<ISearchResult<IAudioSource>>> SearchAsync(string query, int pageIndex, int pageSize)
+        public Task<IEnumerable<ISearchResult>> SearchAsync(string query, int pageIndex, int pageSize)
         {
-            TaskProgressMonitor baseMonitor = new TaskProgressMonitor(this, StringResources.SearchingForAudio, this.m_cancellationTokenSource);
+            TaskProgressMonitor baseMonitor = new TaskProgressMonitor(this, StringResources.SearchingForAudio, new CancellationTokenSource());
             IAbsoluteProgressMonitor absoluteMonitor = new AbsoluteProgressMonitor(baseMonitor, 1, StringResources.SearchingForAudio);
-            
+
             int? totalNumberOfResults = null;
 
-            absoluteMonitor.SetIndeterminate();
+            Task<IEnumerable<ISearchResult>> task = Task.Factory.StartNew(() =>
+            {
+                absoluteMonitor.SetIndeterminate();
 
-            // Ask the AudioSource for (async) search results
-            Task<ICollection<ISearchResult<IAudioSource>>> task = this.m_selectedAudioSource.Search(query, pageSize, pageIndex, absoluteMonitor, out totalNumberOfResults);
+                // Ask the AudioSource for (async) search results
+                try {
+                    Task<IEnumerable<ISearchResult>> task2 = this.m_selectedAudioSource.Search(query, pageSize, pageIndex, absoluteMonitor, out totalNumberOfResults);
+
+                    return task2.Result;
+                } catch (OperationCanceledException e) {
+                    return new List<ISearchResult>();
+                }
+            });            
 
             // What to do when the search fails
             task.ContinueWith((t) =>
@@ -208,7 +216,7 @@ namespace Ares.Editor.AudioSourceSearch
                 baseMonitor.Close();
 
                 // Retrieve the results
-                IEnumerable<ISearchResult<IAudioSource>> results = task.Result;
+                IEnumerable<ISearchResult> results = task.Result;
                 
                 // Perform an update on the results ListView
                 this.resultsListView.BeginUpdate();
@@ -224,12 +232,12 @@ namespace Ares.Editor.AudioSourceSearch
         /// Process search results.
         /// </summary>
         /// <param name="results"></param>
-        private void ProcessSearchResults(IEnumerable<ISearchResult<IAudioSource>> results, string query, int pageIndex, int pageSize, int? totalNumberOfResults)
+        private void ProcessSearchResults(IEnumerable<ISearchResult> results, string query, int pageIndex, int pageSize, int? totalNumberOfResults)
         {
             // Clear the results list in the UI
             this.resultsListView.Items.Clear();
             // Go through all search results
-            foreach (ISearchResult<IAudioSource> result in results)
+            foreach (ISearchResult result in results)
             {
                 // Wrap them into AudioSourceSearchResultItems and add to UI results list
                 this.resultsListView.Items.Add(
@@ -295,10 +303,10 @@ namespace Ares.Editor.AudioSourceSearch
                 // If the dragged items are Music or Sound files
                 case AudioSearchResultType.MusicFile:
                 case AudioSearchResultType.SoundFile:
-                    IEnumerable<IFileSearchResult<IAudioSource>> selectedFileResults = 
+                    IEnumerable<IFileSearchResult> selectedFileResults = 
                         selectedItems
                         // Extract the IFileSearchResult from the SearchResultListItem
-                        .Select(item => item.SearchResult as IFileSearchResult<IAudioSource>)
+                        .Select(item => item.SearchResult as IFileSearchResult)
                         // Filter out null/incompatible search results
                         .Where(result => result != null);
 
@@ -316,10 +324,10 @@ namespace Ares.Editor.AudioSourceSearch
                     return;
                 // If the dragged items are ModeElements
                 case AudioSearchResultType.ModeElement:
-                    IEnumerable<IModeElementSearchResult<IAudioSource>> selectedModeElementResults =
+                    IEnumerable<IModeElementSearchResult> selectedModeElementResults =
                         selectedItems
                         // Extract the IModeElementSearchResult from the SearchResultListItem
-                        .Select(item => item.SearchResult as IModeElementSearchResult<IAudioSource>)
+                        .Select(item => item.SearchResult as IModeElementSearchResult)
                         // Filter out null/incompatible search results
                         .Where(result => result != null);
 
@@ -370,11 +378,11 @@ namespace Ares.Editor.AudioSourceSearch
         /// </summary>
         /// <param name="selectedItems"></param>
         /// <returns></returns>
-        private DragDropEffects StartDragModeElementSearchResults(IEnumerable<IModeElementSearchResult<IAudioSource>> searchResults, AresTargetDirectoryProvider targetDirectoryProvider)
+        private DragDropEffects StartDragModeElementSearchResults(IEnumerable<IModeElementSearchResult> searchResults, AresTargetDirectoryProvider targetDirectoryProvider)
         {
             List<IXmlWritable> draggedItems = new List<IXmlWritable>();
 
-            foreach (IModeElementSearchResult<IAudioSource> modeElementSearchResult in searchResults)
+            foreach (IModeElementSearchResult modeElementSearchResult in searchResults)
             {
                 // Get the ModeElement definition
                 draggedItems.Add(modeElementSearchResult.GetModeElementDefinition(targetDirectoryProvider));
@@ -393,11 +401,11 @@ namespace Ares.Editor.AudioSourceSearch
         /// <param name="searchResults"></param>
         /// <param name="overallItemAudioType"></param>
         /// <returns></returns>
-        private DragDropEffects StartDragFileSearchResults(IEnumerable<IFileSearchResult<IAudioSource>> searchResults, AudioSearchResultType overallItemAudioType, AresTargetDirectoryProvider targetDirectoryProvider)
+        private DragDropEffects StartDragFileSearchResults(IEnumerable<IFileSearchResult> searchResults, AudioSearchResultType overallItemAudioType, AresTargetDirectoryProvider targetDirectoryProvider)
         {
             List<DraggedItem> draggedFiles = new List<DraggedItem>();
 
-            foreach (IFileSearchResult<IAudioSource> fileSearchResult in searchResults)
+            foreach (IFileSearchResult fileSearchResult in searchResults)
             {
                 // Create a new DraggedItem (dragged file/folder)
                 DraggedItem draggedFile = new DraggedItem();
@@ -419,18 +427,18 @@ namespace Ares.Editor.AudioSourceSearch
             return DoDragDrop(info, DragDropEffects.Copy);
         }
 
-        public void BeforeStartDrag(IEnumerable<ISearchResult<IAudioSource>> selectedResults, ITargetDirectoryProvider targetDirectoryProvider)
+        public void BeforeStartDrag(IEnumerable<ISearchResult> selectedResults, ITargetDirectoryProvider targetDirectoryProvider)
         {
             // TODO: Create stubs for all required files which don't exist yet
         }
 
-        public void AfterCompleteDrag(IEnumerable<ISearchResult<IAudioSource>> selectedResults, ITargetDirectoryProvider targetDirectoryProvider)
+        public void AfterCompleteDrag(IEnumerable<ISearchResult> selectedResults, ITargetDirectoryProvider targetDirectoryProvider)
         {
             // TODO: actually download all required files (unless already available)
             DownloadFilesForSearchResults(selectedResults,targetDirectoryProvider);
         }
 
-        public void AfterCancelDrag(IEnumerable<ISearchResult<IAudioSource>> selectedResults, ITargetDirectoryProvider targetDirectoryProvider)
+        public void AfterCancelDrag(IEnumerable<ISearchResult> selectedResults, ITargetDirectoryProvider targetDirectoryProvider)
         {
             // TODO: remove stubs for all required files which haven't yet been downloaded
         }
@@ -444,20 +452,20 @@ namespace Ares.Editor.AudioSourceSearch
         /// based on their type (sound/music)
         /// </summary>
         /// <param name="results"></param>
-        private void DownloadFilesForSearchResults(IEnumerable<ISearchResult<IAudioSource>> results, ITargetDirectoryProvider targetDirectoryProvider)
+        private void DownloadFilesForSearchResults(IEnumerable<ISearchResult> results, ITargetDirectoryProvider targetDirectoryProvider)
         {
             // Collect download size & action for each result to be executed after a drag completes
             double totalDownloadSize = 0;
             foreach (SearchResultListItem searchResultItem in results)
             {
-                ISearchResult<IAudioSource> searchResult = searchResultItem.SearchResult;
-                foreach (IDownloadableAudioFile<IAudioSource> downloadableFile in searchResult.FilesToBeDownloaded) {
+                ISearchResult searchResult = searchResultItem.SearchResult;
+                foreach (IDownloadableAudioFile downloadableFile in searchResult.FilesToBeDownloaded) {
                     totalDownloadSize += downloadableFile.DownloadSize.GetValueOrDefault(0);
                 }                
             }
 
             // Initialize a task monitor for the download process
-            TaskProgressMonitor baseMonitor = new TaskProgressMonitor(this, StringResources.DownloadingAudio, this.m_cancellationTokenSource);
+            TaskProgressMonitor baseMonitor = new TaskProgressMonitor(this, StringResources.DownloadingAudio, new CancellationTokenSource());
             IAbsoluteProgressMonitor absoluteMonitor = new AbsoluteProgressMonitor(baseMonitor, totalDownloadSize, StringResources.DownloadingAudio);
 
             // Start a separate task for downloading the results
@@ -469,8 +477,8 @@ namespace Ares.Editor.AudioSourceSearch
                 // Go through all results
                 foreach (SearchResultListItem searchResultItem in results)
                 {
-                    ISearchResult<IAudioSource> searchResult = searchResultItem.SearchResult;
-                    foreach (IDownloadableAudioFile<IAudioSource> downloadableFile in searchResult.FilesToBeDownloaded)
+                    ISearchResult searchResult = searchResultItem.SearchResult;
+                    foreach (IDownloadableAudioFile downloadableFile in searchResult.FilesToBeDownloaded)
                     {
                         downloadResults.Add(DownloadFile(downloadableFile, absoluteMonitor, targetDirectoryProvider));
                     }
@@ -499,7 +507,7 @@ namespace Ares.Editor.AudioSourceSearch
             }, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskContinuationOptions.OnlyOnFaulted, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
         }
 
-        private AudioDownloadResult DownloadFile(IDownloadableAudioFile<IAudioSource> downloadableFile, IAbsoluteProgressMonitor absoluteMonitor, ITargetDirectoryProvider targetDirectoryProvider)
+        private AudioDownloadResult DownloadFile(IDownloadableAudioFile downloadableFile, IAbsoluteProgressMonitor absoluteMonitor, ITargetDirectoryProvider targetDirectoryProvider)
         {
             // TODO: possibly add caching / temp-files to avoid duplicate downloads after a preview
             return downloadableFile.Download(absoluteMonitor, targetDirectoryProvider);
@@ -660,7 +668,7 @@ namespace Ares.Editor.AudioSourceSearch
             DownloadFilesForSearchResults(
                 GetSelectedItems()
                 // Extract the IFileSearchResult from the SearchResultListItem
-                .Select(item => item.SearchResult as IFileSearchResult<IAudioSource>)
+                .Select(item => item.SearchResult as IFileSearchResult)
                 // Filter out null/incompatible search results
                 .Where(result => result != null),
                 new AresTargetDirectoryProvider(m_selectedAudioSource)
@@ -688,10 +696,10 @@ namespace Ares.Editor.AudioSourceSearch
     {
 
         private AudioSearchResultType m_ItemAudioType;
-        private ISearchResult<IAudioSource> m_SearchResult;
+        private ISearchResult m_SearchResult;
 
         public AudioSearchResultType ItemAudioType { get { return m_ItemAudioType; } }
-        public ISearchResult<IAudioSource> SearchResult { get { return m_SearchResult; } }
+        public ISearchResult SearchResult { get { return m_SearchResult; } }
 
         public SearchResultListItem() : base()
         {
@@ -704,7 +712,7 @@ namespace Ares.Editor.AudioSourceSearch
         /// Create an AudioSourceSearchResultItem from the given AudioSource SearchResult
         /// </summary>
         /// <param name="result"></param>
-        public SearchResultListItem(ISearchResult<IAudioSource> result): base()
+        public SearchResultListItem(ISearchResult result): base()
         {
             this.Text = result.Title;
             this.SubItems.Add(result.Author);
@@ -741,18 +749,18 @@ namespace Ares.Editor.AudioSourceSearch
             this.m_audioSource = audioSource;
         }
 
-        public string GetFolderWithinLibrary<T>(IDownloadableAudioFile<T> audioFile) where T : IAudioSource
+        public string GetFolderWithinLibrary(IDownloadableAudioFile audioFile)
         {
             string audioSourceId = audioFile.AudioSource.Id;
             return System.IO.Path.Combine("OnlineAudioSources", audioSourceId);
         }
 
-        public string GetPathWithinLibrary<T>(IDownloadableAudioFile<T> audioFile) where T : IAudioSource
+        public string GetPathWithinLibrary(IDownloadableAudioFile audioFile)
         {
             return System.IO.Path.Combine(GetFolderWithinLibrary(audioFile),audioFile.Filename);
         }
 
-        public string GetFullPath<T>(IDownloadableAudioFile<T> audioFile) where T : IAudioSource
+        public string GetFullPath(IDownloadableAudioFile audioFile)
         {
             string basePath = null;
             switch (audioFile.FileType)
