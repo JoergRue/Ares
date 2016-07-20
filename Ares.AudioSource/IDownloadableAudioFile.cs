@@ -11,10 +11,24 @@ namespace Ares.AudioSource
     /// <summary>
     /// A file provided by an audio source
     /// </summary>
-    public interface IDownloadableAudioFile
+    public interface IDeployableAudioFile
     {
         string Filename { get; }
 
+        SoundFileType FileType { get; }
+
+        IAudioSource AudioSource { get; }
+
+        /// <summary>
+        /// Deploy this object (including anything that is required, i.e. audio files required by an IModeElementSearchResult).
+        /// All audio files will be placed at the given relative path beneath either the sounds or music directory - depending on their type.
+        /// </summary>
+        /// <returns></returns>
+        AudioDeploymentResult Deploy(IAbsoluteProgressMonitor monitor, ITargetDirectoryProvider targetDirectoryProvider);
+    }
+
+    public interface IDownloadableAudioFile: IDeployableAudioFile
+    {
         /// <summary>
         /// Size of this download.
         /// Any unit can be used for the values returned by this property, but the unit should
@@ -27,13 +41,9 @@ namespace Ares.AudioSource
         /// All audio files will be placed at the given relative path beneath either the sounds or music directory - depending on their type.
         /// </summary>
         /// <returns></returns>
-        AudioDownloadResult Download(IAbsoluteProgressMonitor monitor, ITargetDirectoryProvider targetDirectoryProvider);
+        AudioDeploymentResult Download(IAbsoluteProgressMonitor monitor, ITargetDirectoryProvider targetDirectoryProvider);
 
         string SourceUrl { get; }
-
-        SoundFileType FileType { get; }
-
-        IAudioSource AudioSource { get; }
     }
 
     /// <summary>
@@ -49,27 +59,27 @@ namespace Ares.AudioSource
         /// </summary>
         /// <param name="audioFile"></param>
         /// <returns></returns>
-        string GetFolderWithinLibrary(IDownloadableAudioFile audioFile);
+        string GetFolderWithinLibrary(IDeployableAudioFile audioFile);
 
         /// <summary>
         /// Return the relative path (filename & folder within the appropriate ARES library) where the given audio file will be placed.
         /// </summary>
         /// <param name="audioFile"></param>
         /// <returns></returns>
-        string GetPathWithinLibrary(IDownloadableAudioFile audioFile);
+        string GetPathWithinLibrary(IDeployableAudioFile audioFile);
 
         /// <summary>
         /// Return the absolute path (filename & full path on the filesystem) where the given audio file will be placed.
         /// </summary>
         /// <param name="audioFile"></param>
         /// <returns></returns>
-        string GetFullPath(IDownloadableAudioFile audioFile);
+        string GetFullPath(IDeployableAudioFile audioFile);
     }
 
     /// <summary>
     /// This class encapsulates information on the outcome of downloading an audio file.
     /// </summary>
-    public class AudioDownloadResult
+    public class AudioDeploymentResult
     {
         private ResultState m_State;
         private string m_Message;
@@ -81,24 +91,24 @@ namespace Ares.AudioSource
             ERROR
         }
 
-        public static AudioDownloadResult SUCCESS = new AudioDownloadResult(ResultState.SUCCESS, null);
-        public static AudioDownloadResult ERROR(string message)
+        public static AudioDeploymentResult SUCCESS = new AudioDeploymentResult(ResultState.SUCCESS, null);
+        public static AudioDeploymentResult ERROR(string message)
         {
-            return new AudioDownloadResult(ResultState.ERROR, message);
+            return new AudioDeploymentResult(ResultState.ERROR, message);
         }
-        public static AudioDownloadResult ERROR(string message, Exception cause)
+        public static AudioDeploymentResult ERROR(string message, Exception cause)
         {
-            return new AudioDownloadResult(ResultState.ERROR, message, cause);
+            return new AudioDeploymentResult(ResultState.ERROR, message, cause);
         }
 
-        private AudioDownloadResult(ResultState state, string message)
+        private AudioDeploymentResult(ResultState state, string message)
         {
             this.m_State = state;
             this.m_Message = message;
             this.m_Cause = null;
         }
 
-        private AudioDownloadResult(ResultState state, string message, Exception cause)
+        private AudioDeploymentResult(ResultState state, string message, Exception cause)
         {
             this.m_State = state;
             this.m_Message = message;

@@ -131,6 +131,15 @@ namespace Ares.Editor.Actions
             return fileElement;
         }
 
+        public Ares.Data.IElement PlayURL(String url, bool isMusic, System.Windows.Forms.Control guiControl, System.Action finishAction)
+        {
+            Ares.Data.IWebRadioElement webRadioElement =
+                Ares.Data.DataModule.ElementFactory.CreateWebRadioElement(url);
+            webRadioElement.Url = url;
+            PlayElement(webRadioElement, guiControl, finishAction);
+            return webRadioElement;
+        }
+
         public void StopAll()
         {
             Ares.Playing.PlayingModule.ElementPlayer.StopAll();

@@ -112,9 +112,9 @@ namespace Ares.Editor.AudioSourceSearch
             // 
             // prevPageButton
             // 
-            this.prevPageButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             resources.ApplyResources(this.prevPageButton, "prevPageButton");
             this.prevPageButton.Name = "prevPageButton";
+            this.prevPageButton.Click += new System.EventHandler(this.prevPageButton_Click);
             // 
             // pageLabel
             // 
@@ -123,9 +123,9 @@ namespace Ares.Editor.AudioSourceSearch
             // 
             // nextPageButton
             // 
-            this.nextPageButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             resources.ApplyResources(this.nextPageButton, "nextPageButton");
             this.nextPageButton.Name = "nextPageButton";
+            this.nextPageButton.Click += new System.EventHandler(this.nextPageButton_Click);
             // 
             // resultsListView
             // 

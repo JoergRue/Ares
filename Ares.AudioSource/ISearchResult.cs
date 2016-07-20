@@ -40,14 +40,14 @@ namespace Ares.AudioSource
         /// </summary>
         AudioSearchResultType ResultType { get; }
 
-        IEnumerable<IDownloadableAudioFile> FilesToBeDownloaded { get; }
+        IEnumerable<IDeployableAudioFile> RequiredFiles { get; }
     }
 
     /// <summary>
     /// An ISearchResult comprised of just a single file which can be added to file containers
     /// within the project
     /// </summary>
-    public interface IFileSearchResult : ISearchResult, IDownloadableAudioFile
+    public interface IFileSearchResult : ISearchResult, IDeployableAudioFile
     {
 
     }
@@ -67,13 +67,31 @@ namespace Ares.AudioSource
         IModeElement GetModeElementDefinition(ITargetDirectoryProvider targetDirectoryProvider);
     }
 
+    /// <summary>
+    /// A specific version of the IModeElementSearchResult that can, in addition to a "normal" IModeElement
+    /// return an IModeElement that uses only content streamed directly from the internet.
+    /// 
+    /// This is relevant for preview/pre-listen mode, where streaming is required so we don't have to download
+    /// all files in advance.
+    /// </summary>
+    public interface IStreamingModeElementSearchResult : IModeElementSearchResult
+    {
+        /// <summary>
+        /// Returns the IModeElement definition of this search result.
+        /// The ITargetDirectoryProvider is responsible for providing the paths within the ARES library where downloaded audio files
+        /// will be placed.
+        /// </summary>
+        /// <returns></returns>
+        IModeElement GetStreamingModeElementDefinition();
+    }
+
     public class BaseSearchResult : ISearchResult
     {
         protected BaseSearchResult(IAudioSource audioSource, AudioSearchResultType resultType)
         {
             this.ResultType = resultType;
             this.AudioSource = audioSource;
-            this.FilesToBeDownloaded = new List<IDownloadableAudioFile>();
+            this.FilesToBeDownloaded = new List<IDeployableAudioFile>();
         }
 
         public IAudioSource AudioSource { get; internal set; }
@@ -89,9 +107,9 @@ namespace Ares.AudioSource
         public List<string> Tags { get; set; }
         public string Title { get; set; }
 
-        public IList<IDownloadableAudioFile> FilesToBeDownloaded { get; internal set; }
+        public IList<IDeployableAudioFile> FilesToBeDownloaded { get; internal set; }
 
-        IEnumerable<IDownloadableAudioFile> ISearchResult.FilesToBeDownloaded
+        IEnumerable<IDeployableAudioFile> ISearchResult.RequiredFiles
         {
             get
             {
@@ -100,7 +118,7 @@ namespace Ares.AudioSource
         }
     }
 
-    public class UrlFileSearchResult : BaseSearchResult, IFileSearchResult
+    public class UrlFileSearchResult : BaseSearchResult, IFileSearchResult, IDownloadableAudioFile
     {
         static WebClient client = new WebClient();
 
@@ -120,7 +138,12 @@ namespace Ares.AudioSource
 
         public string SourceUrl { get; internal set; }
 
-        public AudioDownloadResult Download(IAbsoluteProgressMonitor monitor, ITargetDirectoryProvider targetDirectoryProvider)
+        public AudioDeploymentResult Deploy(IAbsoluteProgressMonitor monitor, ITargetDirectoryProvider targetDirectoryProvider)
+        {
+            return Download(monitor, targetDirectoryProvider);
+        }
+
+        public AudioDeploymentResult Download(IAbsoluteProgressMonitor monitor, ITargetDirectoryProvider targetDirectoryProvider)
         {
             string downloadTargetPath = targetDirectoryProvider.GetFullPath(this);
 
@@ -137,7 +160,7 @@ namespace Ares.AudioSource
             }
             monitor.IncreaseProgress(DownloadSize.GetValueOrDefault(1));
 
-            return AudioDownloadResult.SUCCESS;
+            return AudioDeploymentResult.SUCCESS;
         }
     }
 

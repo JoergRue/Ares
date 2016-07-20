@@ -93,20 +93,16 @@ namespace Ares.AudioSource.Test
             this.m_Type = type;
         }
 
-        public double? DownloadSize { get; internal set; }
-
         public string Filename { get; internal set; }
 
         public SoundFileType FileType { get; internal set; }
-
-        public string SourceUrl { get; internal set; }
-
+        
         public new TestAudioSource AudioSource { get; internal set; }
 
-        public AudioDownloadResult Download(IAbsoluteProgressMonitor monitor, ITargetDirectoryProvider targetDirectoryProvider)
+        public AudioDeploymentResult Deploy(IAbsoluteProgressMonitor monitor, ITargetDirectoryProvider targetDirectoryProvider)
         {
             AudioSource.ExtractEmbeddedFile(m_ResourceName, targetDirectoryProvider.GetFullPath(this));
-            return AudioDownloadResult.SUCCESS;
+            return AudioDeploymentResult.SUCCESS;
         }
     }
 
