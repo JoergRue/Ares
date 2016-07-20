@@ -1,4 +1,5 @@
-﻿using RestSharp;
+﻿using Ares.ModelInfo;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,18 +12,16 @@ namespace Ares.AudioSource.Freesound
     {      
         private FreesoundAudioSource m_AudioSource;
         private IRestClient m_Client;
-        private Ares.ModelInfo.IProgressMonitor m_Monitor;
-        private CancellationToken m_Token;
+        private IAbsoluteProgressMonitor m_Monitor;
 
-        public FreesoundApiSearch(FreesoundAudioSource audioSource, IRestClient client, Ares.ModelInfo.IProgressMonitor monitor, CancellationToken token)
+        public FreesoundApiSearch(FreesoundAudioSource audioSource, IRestClient client, IAbsoluteProgressMonitor monitor)
         {
             this.m_Monitor = monitor;
-            this.m_Token = token;
             this.m_Client = client;
             this.m_AudioSource = audioSource;
         }
 
-        internal ICollection<ISearchResult> GetSearchResults(string query, int pageSize, int pageIndex, out int? totalNumberOfResults)
+        internal ICollection<ISearchResult<FreesoundAudioSource>> GetSearchResults(string query, int pageSize, int pageIndex, out int? totalNumberOfResults)
         {
             Console.WriteLine("Searching Freesound for \"{0}\" (page index {1} sized {2}", query, pageIndex, pageSize);
 
@@ -38,6 +37,7 @@ namespace Ares.AudioSource.Freesound
 
             IRestResponse<SearchResultDtos.RootObject> response = m_Client.Execute<SearchResultDtos.RootObject>(request);
 
+            m_Monitor.ThrowIfCancellationRequested();
             if (response.ErrorException != null)
             {
                 // If an exception occurred during the request, throw it now
@@ -51,10 +51,10 @@ namespace Ares.AudioSource.Freesound
             else
             {
                 // Otherwise work with the results and return them
-                List<ISearchResult> searchResults = new List<ISearchResult>();
+                ICollection<ISearchResult<FreesoundAudioSource>> searchResults = new List<ISearchResult<FreesoundAudioSource>>();
                 foreach (SearchResultDtos.Result result in response.Data.results)
                 {
-                    FreesoundApiSearchResult searchResult = new FreesoundApiSearchResult(m_AudioSource);
+                    FreesoundApiSearchResult searchResult = new FreesoundApiSearchResult(m_AudioSource, result.previews["preview-hq-mp3"]);
                     searchResult.Title = result.name;
                     searchResult.PreviewUrls = result.previews;
                     searchResult.License = result.license;

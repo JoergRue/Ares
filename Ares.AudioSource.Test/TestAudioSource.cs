@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -9,6 +8,7 @@ using Ares.Data;
 using Ares.ModelInfo;
 using System.IO;
 using System.Reflection;
+using System;
 
 namespace Ares.AudioSource.Test
 {
@@ -30,17 +30,17 @@ namespace Ares.AudioSource.Test
 
         public string Name { get { return "Test"; } }
 
-        public ICollection<ISearchResult> GetSearchResults(string query, AudioSearchResultType? type, int pageSize, int pageIndex, IProgressMonitor monitor, CancellationToken token, out int? totalNumberOfResults)
+        public Task<ICollection<ISearchResult<IAudioSource>>> Search(string query, int pageSize, int pageIndex, IAbsoluteProgressMonitor monitor, out int? totalNumberOfResults)
         {
-            List<ISearchResult> results = new List<ISearchResult>();
+            List<ISearchResult<IAudioSource>> results = new List<ISearchResult<IAudioSource>>();
 
             FileSearchResult soundResult = new FileSearchResult(this, AudioSearchResultType.SoundFile, SOUND_RESOURCE_NAME);
             soundResult.Title = "Sound-Datei (" + query + ")";
 
             FileSearchResult musicResult = new FileSearchResult(this, AudioSearchResultType.MusicFile, MUSIC_RESOURCE_NAME);
             musicResult.Title = "Musik-Datei (" + query + ")";
-            
-            ModeElementSearchResult modeResult = new ModeElementSearchResult(this, SOUND_RESOURCE_NAME, MUSIC_RESOURCE_NAME);
+
+            ModeElementSearchResult modeResult = new ModeElementSearchResult(this, soundResult, musicResult);
             modeResult.Title = "Szenario (" + query + ")";
 
             results.Add(soundResult);
@@ -48,7 +48,10 @@ namespace Ares.AudioSource.Test
             results.Add(modeResult);
 
             totalNumberOfResults = results.Count;
-            return results;
+
+            var completionSource = new TaskCompletionSource<ICollection<ISearchResult<IAudioSource>>>();
+            completionSource.SetResult((ICollection<ISearchResult<IAudioSource>>)results);
+            return completionSource.Task;
         }
 
         public bool IsAudioTypeSupported(AudioSearchResultType type)
@@ -56,7 +59,7 @@ namespace Ares.AudioSource.Test
             return true;
         }
 
-        public static void ExtractEmbeddedFile(string resName, string fileName)
+        public void ExtractEmbeddedFile(string resName, string fileName)
         {
             if (File.Exists(fileName)) File.Delete(fileName);
 
@@ -79,83 +82,47 @@ namespace Ares.AudioSource.Test
         }
     }
 
-    public abstract class AbstractSimpleSearchResult : ISearchResult
-    {
-        private TestAudioSource m_AudioSource;
-        private AudioSearchResultType m_Type;
-
-        public AbstractSimpleSearchResult(TestAudioSource audioSource, AudioSearchResultType type)
-        {
-            this.m_AudioSource = audioSource;
-            this.m_Type = type;
-            this.Tags = new List<string>();
-        }
-
-        public IAudioSource AudioSource { get { return m_AudioSource;  } }
-
-        public string Author { get; set; }
-        public double AverageRating { get; set; }
-        public string Description { get; set; }
-        public double DownloadSize { get; set; }
-        public TimeSpan Duration { get; set; }
-        public string Id { get; set; }
-        public string License { get; set; }
-        public int NumberOfRatings { get; set; }
-        public AudioSearchResultType ResultType { get { return m_Type;  } }
-        public List<string> Tags { get; set; }
-        public string Title { get; set; }
-
-        public abstract AudioDownloadResult Download(string musicTargetDirectory, string soundsTargetDirectory, IProgressMonitor monitor, CancellationToken cancellationToken, double totalSize);
-    }
-
-    public class FileSearchResult : AbstractSimpleSearchResult, IFileSearchResult
+    public class FileSearchResult : BaseSearchResult<TestAudioSource>, IFileSearchResult<TestAudioSource>
     {
         private string m_ResourceName;
+        private AudioSearchResultType m_Type;
 
-        public FileSearchResult(TestAudioSource audioSource, AudioSearchResultType type, string resourceName): base(audioSource, type)
+        public FileSearchResult(TestAudioSource audioSource, AudioSearchResultType type, string resourceName) : base(audioSource, type)
         {
             this.m_ResourceName = resourceName;
+            this.m_Type = type;
         }
 
-        public override AudioDownloadResult Download(string musicTargetDirectory, string soundsTargetDirectory, IProgressMonitor monitor, CancellationToken cancellationToken, double totalSize)
+        public double? DownloadSize { get; internal set; }
+
+        public string Filename { get; internal set; }
+
+        public SoundFileType FileType { get; internal set; }
+
+        public string SourceUrl { get; internal set; }
+
+        public AudioDownloadResult Download(IAbsoluteProgressMonitor monitor, ITargetDirectoryProvider targetDirectoryProvider)
         {
-            string targetDirectory = this.ResultType == AudioSearchResultType.MusicFile ? musicTargetDirectory : soundsTargetDirectory;
-            string targetFile = Path.Combine(targetDirectory, GetDownloadFilename());
-
-            if (!File.Exists(targetFile))
-            {
-                TestAudioSource.ExtractEmbeddedFile(m_ResourceName, targetFile);
-            }
-
+            AudioSource.ExtractEmbeddedFile(m_ResourceName, targetDirectoryProvider.GetFullPath(this));
             return AudioDownloadResult.SUCCESS;
-        }
-
-        public string GetDownloadFilename()
-        {
-            return m_ResourceName;
         }
     }
 
-    public class ModeElementSearchResult : AbstractSimpleSearchResult, IModeElementSearchResult
+    public class ModeElementSearchResult : BaseSearchResult<TestAudioSource>, IModeElementSearchResult<TestAudioSource>
     {
-        private string m_MusicResource;
-        private string m_SoundResource;
+        private FileSearchResult m_MusicResource;
+        private FileSearchResult m_SoundResource;
 
-        public ModeElementSearchResult(TestAudioSource audioSource, string soundResource, string musicResource) : base(audioSource, AudioSearchResultType.ModeElement)
+        public ModeElementSearchResult(TestAudioSource audioSource, FileSearchResult soundResource, FileSearchResult musicResource) : base(audioSource, AudioSearchResultType.ModeElement)
         {
             this.m_SoundResource = soundResource;
             this.m_MusicResource = musicResource;
+
+            this.FilesToBeDownloaded.Add(m_MusicResource);
+            this.FilesToBeDownloaded.Add(m_SoundResource);
         }
 
-        public override AudioDownloadResult Download(string musicTargetDirectory, string soundsTargetDirectory, IProgressMonitor monitor, CancellationToken cancellationToken, double totalSize)
-        {
-            TestAudioSource.ExtractEmbeddedFile(m_SoundResource, Path.Combine(soundsTargetDirectory, m_SoundResource));
-            TestAudioSource.ExtractEmbeddedFile(m_MusicResource, Path.Combine(musicTargetDirectory, m_MusicResource));
-
-            return AudioDownloadResult.SUCCESS;
-        }
-
-        public IModeElement GetModeElementDefinition(string relativeDownloadPath)
+        public IModeElement GetModeElementDefinition(ITargetDirectoryProvider targetDirectoryProvider)
         {
             IElementContainer<IParallelElement> container = DataModule.ElementFactory.CreateParallelContainer("Test-Szenario");
             IModeElement modeElement = DataModule.ElementFactory.CreateModeElement("Test-Szenario", container);
@@ -168,8 +135,8 @@ namespace Ares.AudioSource.Test
 
             IBackgroundSoundChoice soundChoice1 = sounds.AddElement("Auswahl 1");
 
-            music.AddElement(DataModule.ElementFactory.CreateFileElement(Path.Combine(relativeDownloadPath,m_MusicResource),SoundFileType.Music));
-            soundChoice1.AddElement(DataModule.ElementFactory.CreateFileElement(Path.Combine(relativeDownloadPath, m_SoundResource), SoundFileType.SoundEffect));
+            music.AddElement(DataModule.ElementFactory.CreateFileElement(targetDirectoryProvider.GetPathWithinLibrary(m_MusicResource), SoundFileType.Music));
+            soundChoice1.AddElement(DataModule.ElementFactory.CreateFileElement(targetDirectoryProvider.GetPathWithinLibrary(m_SoundResource), SoundFileType.SoundEffect));
 
             return modeElement;
         }

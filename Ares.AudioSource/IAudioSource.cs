@@ -24,12 +24,14 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Ares.AudioSource
 {
+    /*
 
     /// <summary>
     /// This helper class can be used by IAudioSources to download content to temporary files,
@@ -39,7 +41,7 @@ namespace Ares.AudioSource
     public class DownloadTempHelper
     {
         // Cache of temp files
-        private Dictionary<string, Task<TempFile>> m_TempFiles = new Dictionary<string, Task<TempFile>>();
+        private static Dictionary<string, Task<TempFile>> m_TempFiles = new Dictionary<string, Task<TempFile>>();
 
         /// <summary>
         /// Allocate a temporary file and invoke the provided download function
@@ -48,7 +50,7 @@ namespace Ares.AudioSource
         /// <param name="downloadFunction"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public Task<TempFile> DownloadFileToTemp(string url, Func<TempFile,null> downloadFunction, CancellationToken cancellationToken)
+        public static Task<TempFile> DownloadFileToTemp(string url, Func<TempFile> downloadFunction, CancellationToken cancellationToken)
         {
             lock (m_TempFiles)
             {
@@ -57,8 +59,7 @@ namespace Ares.AudioSource
                     return m_TempFiles[url];
                 }
                 else
-                {
-                    new Task
+                {                    
                     return new Task<TempFile>(downloadFunction, cancellationToken);
                 }
             }
@@ -71,7 +72,7 @@ namespace Ares.AudioSource
         /// <param name="targetPath"></param>
         /// <param name="overwrite"></param>
         /// <returns></returns>
-        public Task DeployFileFromTemp(Task<TempFile> tempFileDownload, string targetPath, bool overwrite)
+        public static Task DeployFileFromTemp(Task<TempFile> tempFileDownload, string targetPath, bool overwrite)
         {
             // Wait for the temp-file download to complete
             return tempFileDownload.ContinueWith((task) =>
@@ -81,7 +82,17 @@ namespace Ares.AudioSource
             }, TaskContinuationOptions.ExecuteSynchronously | TaskContinuationOptions.NotOnCanceled | TaskContinuationOptions.NotOnFaulted);
         }
 
-        public class TempFile: IDisposable
+        public static Task<TempFile> FindTempFile(string url)
+        {
+            if (!m_TempFiles.ContainsKey(url))
+            {
+                return null;
+            }
+
+            return m_TempFiles[url]
+        }
+
+        public class TempFile : IDisposable
         {
             public TempFile()
             {
@@ -98,6 +109,8 @@ namespace Ares.AudioSource
         }
 
     }
+
+    */
 
     public interface IAudioSource
     {
@@ -117,197 +130,25 @@ namespace Ares.AudioSource
         Bitmap Icon { get; }
 
         /// <summary>
-        /// Check whether an audio type is supported/available for this source.
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns></returns>
-        bool IsAudioTypeSupported(AudioSearchResultType type);
-
-        /// <summary>
         /// Search for audio (music, sounds, ...) through this IAudioSource
         /// </summary>
-        /// <param name = "query" >The actual search query/keywords.</param>
+        /// <param name="type">The requested IAudioSearchResultType. May be either null indicate that any
+        ///                    type of result will be fine.</param>
+        /// <param name="query">The actual search query/keywords.</param>
         /// <param name="pageSize">The page size (number of results per page) to be retrieved.</param>
         /// <param name="pageIndex">The zero-based index of the results page to be retrieved (first page is 0).</param>
-        /// <param name="requestedResultType">The requested IAudioSearchResultType. May be either null indicate that any
-        ///                                   type of result will be fine.</param>
-        /// <param name="monitor">The IProgressMonitor which the audio source should use to give feedback on the search progress.
+        /// <param name="monitor">The IAbsoluteProgressMonitor which the audio source should use to give feedback on the search progress.
         ///                       Initially the monitor will be set to "indeterminate" progress, but the audio source can and should
         ///                       use it to indicate actual progress where possible.</param>
-        /// <param name="token">A CancellationToken which might be used to signal cancellation to the audio source while the search is still running.
-        ///                     During longer search operations the audio source should check the token whenever possible and abort the search if
-        ///                     the token indicates that cancellation was requested.</param>
         /// <param name="totalNumberOfResults">An optional output parameter to indicate the total number of results (if known), regardless of the selected page size & index.</param>
         /// <returns></returns>
-        ICollection<ISearchResult> GetSearchResults(string query, AudioSearchResultType? type, int pageSize, int pageIndex, Ares.ModelInfo.IProgressMonitor monitor, CancellationToken token, out int? totalNumberOfResults);
-    }
-
-    public enum AudioSearchResultType
-    {
-        MusicFile,
-        SoundFile,
-        ModeElement
-}
-
-    /// <summary>
-    /// Generic search result
-    /// </summary>
-    public interface ISearchResult
-    {
-        string Id { get; }
-        string Title { get; }
-        string Author { get; }
-        string License { get; }
-        TimeSpan Duration { get; }
-        string Description { get; }
-        double AverageRating { get; }
-        int NumberOfRatings { get; }
-    
-        List<String> Tags { get; }
-
-        IAudioSource AudioSource { get; }
-
-        /// <summary>
-        /// The AudioSearchResultType of the search result
-        /// </summary>
-        AudioSearchResultType ResultType { get; }
-
-        /// <summary>
-        /// Size of this download.
-        /// Any unit can be used for the values returned by this property, but the unit should
-        /// be consistent within all Files/Results from a single IAudioSource
-        /// </summary>
-        double DownloadSize { get; }
-
-        /// <summary>
-        /// Download this search result (including anything that is required, i.e. audio files required by an IModeElementSearchResult).
-        /// All audio files will be placed at the given relative path beneath either the sounds or music directory - depending on their type.
-        /// </summary>
-        /// <param name="musicBaseDirectory"></param>
-        /// <param name="soundsBaseDirectory"></param>
-        /// <param name="relativeDownloadPath"></param>
-        /// <param name="monitor"></param>
-        /// <param name="totalSize"></param>
-        /// <returns></returns>
-        AudioDownloadResult Download(string musicTargetDirectory, string soundsTargetDirectory, IProgressMonitor monitor, CancellationToken cancellationToken, double totalSize);
-    }
-
-    /// <summary>
-    /// A file to be downloaded from an IAudioSource
-    /// </summary>
-    public interface IFileToBeDownloaded
-    {
-        /// <summary>
-        /// A unique (within the IAudioSource) identifier for the file
-        /// </summary>
-        string Id { get; }
-
-        /// <summary>
-        /// The SoundFileType of this file
-        /// </summary>
-        SoundFileType Type { get; }
-
-        /// <summary>
-        /// The IAudioSource to which this file belongs
-        /// </summary>
-        IAudioSource AudioSource { get; }
-
-        /// <summary>
-        /// Size of this download.
-        /// Any unit can be used for the values returned by this property, but the unit should
-        /// be consistent within all Files/Results from a single IAudioSource
-        /// </summary>
-        double DownloadSize { get; }
-
-        /// <summary>
-        /// Returns the filename under which this download will be saved as determined by the source
-        /// </summary>
-        /// <returns></returns>
-        string GetDownloadFilename();
-
-        /// <summary>
-        /// Download this search result (including anything that is required, i.e. audio files required by an IModeElementSearchResult).
-        /// All audio files will be placed at the given relative path beneath either the sounds or music directory - depending on their type.
-        /// </summary>
-        /// <param name="musicBaseDirectory"></param>
-        /// <param name="soundsBaseDirectory"></param>
-        /// <param name="relativeDownloadPath"></param>
-        /// <param name="monitor"></param>
-        /// <param name="totalSize"></param>
-        /// <returns></returns>
-        AudioDownloadResult Download(string musicTargetDirectory, string soundsTargetDirectory, IProgressMonitor monitor, CancellationToken cancellationToken, double totalSize);
-    }
-
-    /// <summary>
-    /// An ISearchResult comprised of just a single file which can be added to file containers
-    /// within the project
-    /// </summary>
-    public interface IFileSearchResult : ISearchResult, IFileToBeDownloaded
-    {
-
-    }
-
-    /// <summary>
-    /// An ISearchResult that can be added as a child to a ModeElement
-    /// </summary>
-    public interface IModeElementSearchResult: ISearchResult
-    {
-        /// <summary>
-        /// Returns the IModeElement definition of this search result.
-        /// The assumption is, that all required audio files will be placed at the given relative path beneath
-        /// the sounds/music directories when downloaded.
-        /// </summary>
-        /// <param name="relativeDownloadPath"></param>
-        /// <returns></returns>
-        IModeElement GetModeElementDefinition(string relativeDownloadPath);
-
-        /// <summary>
-        /// A list of files required by this mode element
-        /// </summary>
-        /// <returns></returns>
-        IEnumerable<IFileToBeDownloaded> GetRequiredFiles();
-
-    }
-
-    /// <summary>
-    /// This class encapsulates information on the outcome of downloading an audio file.
-    /// </summary>
-    public class AudioDownloadResult
-    {
-        private ResultState m_State;
-        private string m_Message;
-        private Exception m_Cause;
-
-        enum ResultState
-        {
-            SUCCESS,
-            ERROR
-        }
-
-        public static AudioDownloadResult SUCCESS = new AudioDownloadResult(ResultState.SUCCESS, null);
-        public static AudioDownloadResult ERROR(string message)
-        {
-            return new AudioDownloadResult(ResultState.ERROR, message);
-        }
-        public static AudioDownloadResult ERROR(string message, Exception cause)
-        {
-            return new AudioDownloadResult(ResultState.ERROR, message, cause);
-        }
-
-        private AudioDownloadResult(ResultState state, string message)
-        {
-            this.m_State = state;
-            this.m_Message = message;
-            this.m_Cause = null;
-        }
-
-        private AudioDownloadResult(ResultState state, string message, Exception cause)
-        {
-            this.m_State = state;
-            this.m_Message = message;
-            this.m_Cause = cause;
-        }
-
+        Task<ICollection<ISearchResult<IAudioSource>>> Search(
+            string query, 
+            int pageSize, 
+            int pageIndex, 
+            Ares.ModelInfo.IAbsoluteProgressMonitor monitor, 
+            out int? totalNumberOfResults
+        );
     }
 
     [Serializable]
