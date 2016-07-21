@@ -10,29 +10,72 @@ using System.Threading;
 
 namespace Ares.AudioSource
 {
+    /// <summary>
+    /// Available types of search results
+    /// </summary>
     public enum AudioSearchResultType
     {
+        /// <summary>
+        /// Audio files containing music
+        /// </summary>
         MusicFile,
+        /// <summary>
+        /// Audio files containing sound effects
+        /// </summary>
         SoundFile,
+        /// <summary>
+        /// Complete arrangements of audio files (IModeElements)
+        /// </summary>
         ModeElement
     }
 
     /// <summary>
-    /// Generic search result
+    /// Generic search result interface
     /// </summary>
     public interface ISearchResult
     {
+        /// <summary>
+        /// Identifier of this search result entry (unique within the IAudioSource)
+        /// </summary>
         string Id { get; }
+        /// <summary>
+        /// Title of this search result entry
+        /// </summary>
         string Title { get; }
+        /// <summary>
+        /// Author of the search result entry
+        /// </summary>
         string Author { get; }
+        /// <summary>
+        /// Licensing information for this search result entry
+        /// </summary>
         string License { get; }
+        /// <summary>
+        /// Duration of this search result entry, if available
+        /// </summary>
         TimeSpan Duration { get; }
+        /// <summary>
+        /// More elaborate description of this search result entry
+        /// </summary>
         string Description { get; }
-        double AverageRating { get; }
+
+        /// <summary>
+        /// Average rating of this search result entry - may be absent if it hasn't been rated yet.
+        /// </summary>
+        double? AverageRating { get; }
+        /// <summary>
+        /// Average rating of this search result entry
+        /// </summary>
         int NumberOfRatings { get; }
 
+        /// <summary>
+        /// List of tags associated with this search result entry
+        /// </summary>
         List<String> Tags { get; }
 
+        /// <summary>
+        /// The IAudioSource that returned this search result
+        /// </summary>
         IAudioSource AudioSource { get; }
 
         /// <summary>
@@ -40,6 +83,11 @@ namespace Ares.AudioSource
         /// </summary>
         AudioSearchResultType ResultType { get; }
 
+        /// <summary>
+        /// List of actual audio files required by this search result.
+        /// Normally this might contain only one entry (the file itself), but results of 
+        /// type ModeElement may require multiple files.
+        /// </summary>
         IEnumerable<IDeployableAudioFile> RequiredFiles { get; }
     }
 
@@ -68,8 +116,8 @@ namespace Ares.AudioSource
     }
 
     /// <summary>
-    /// A specific version of the IModeElementSearchResult that can, in addition to a "normal" IModeElement
-    /// return an IModeElement that uses only content streamed directly from the internet.
+    /// A specific version of the IModeElementSearchResult that can, in addition to a "normal" IModeElement definition
+    /// return an IModeElement definition which uses only content streamed directly from the internet.
     /// 
     /// This is relevant for preview/pre-listen mode, where streaming is required so we don't have to download
     /// all files in advance.
@@ -85,6 +133,15 @@ namespace Ares.AudioSource
         IModeElement GetStreamingModeElementDefinition();
     }
 
+    //#####################################################################################################
+    //#
+    //# Basic implementations of the above interfaces
+    //#
+    //#####################################################################################################
+
+    /// <summary>
+    /// Basic implementation of ISearchResult
+    /// </summary>
     public class BaseSearchResult : ISearchResult
     {
         protected BaseSearchResult(IAudioSource audioSource, AudioSearchResultType resultType)
@@ -97,7 +154,7 @@ namespace Ares.AudioSource
         public IAudioSource AudioSource { get; internal set; }
 
         public string Author { get; set; }
-        public double AverageRating { get; set; }
+        public double? AverageRating { get; set; }
         public string Description { get; set; }
         public TimeSpan Duration { get; set; }
         public string Id { get; set; }
@@ -118,6 +175,9 @@ namespace Ares.AudioSource
         }
     }
 
+    /// <summary>
+    /// Basic implementation of an IFileSearchResult downloaded from the internet
+    /// </summary>
     public class UrlFileSearchResult : BaseSearchResult, IFileSearchResult, IDownloadableAudioFile
     {
         static WebClient client = new WebClient();
@@ -131,6 +191,8 @@ namespace Ares.AudioSource
         }
 
         public double? DownloadSize { get; set; }
+
+        public double? DeploymentCost { get { return DownloadSize; } }
 
         public string Filename { get; set;  }
 

@@ -99,6 +99,8 @@ namespace Ares.AudioSource.Test
         
         public new TestAudioSource AudioSource { get; internal set; }
 
+        public double? DeploymentCost { get { return null; } }
+
         public AudioDeploymentResult Deploy(IAbsoluteProgressMonitor monitor, ITargetDirectoryProvider targetDirectoryProvider)
         {
             AudioSource.ExtractEmbeddedFile(m_ResourceName, targetDirectoryProvider.GetFullPath(this));

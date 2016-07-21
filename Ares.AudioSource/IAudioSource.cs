@@ -32,6 +32,13 @@ using System.Threading.Tasks;
 namespace Ares.AudioSource
 {
 
+    /// <summary>
+    /// An AudioSource is an online or offline source which can be searched to provide
+    ///  - audio files (either sound effects or music)
+    ///  - complete ambiences/mixes/sound settings (IModeElements)
+    /// 
+    /// The search results are returned as an enumeration of ISearchResult objects.
+    /// </summary>
     public interface IAudioSource
     {
         /// <summary>

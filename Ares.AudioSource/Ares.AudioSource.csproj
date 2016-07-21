@@ -43,7 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IAudioSource.cs" />
-    <Compile Include="IDownloadableAudioFile.cs" />
+    <Compile Include="IDeployableAudioFile.cs" />
     <Compile Include="ISearchResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
