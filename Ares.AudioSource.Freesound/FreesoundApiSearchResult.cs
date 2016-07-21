@@ -16,6 +16,7 @@ namespace Ares.AudioSource.Freesound
     {
         public FreesoundApiSearchResult(FreesoundAudioSource audioSource, string url) : base(audioSource,SoundFileType.SoundEffect,url)
         {
+            this.AudioSource = audioSource;
         }
 
         public long FreesoundId { get; set; }

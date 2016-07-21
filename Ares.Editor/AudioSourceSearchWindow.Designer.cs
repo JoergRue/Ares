@@ -140,6 +140,7 @@ namespace Ares.Editor.AudioSourceSearch
             this.resultsListView.View = System.Windows.Forms.View.Details;
             this.resultsListView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.resultsListView_ItemDrag);
             this.resultsListView.SelectedIndexChanged += new System.EventHandler(this.resultsListView_SelectedIndexChanged);
+            this.resultsListView.DoubleClick += new System.EventHandler(this.resultsListView_DoubleClick);
             // 
             // colHeaderTitle
             // 

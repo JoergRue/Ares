@@ -21,8 +21,8 @@ namespace Ares.AudioSource.Test
     /// </summary>
     public class TestAudioSource : IAudioSource
     {
-        public const string SOUND_RESOURCE_NAME = "sound.mp3";
-        public const string MUSIC_RESOURCE_NAME = "music.mp3";
+        public const string SOUND_RESOURCE_NAME = "Ares.AudioSource.Test.Resources.sound.mp3";
+        public const string MUSIC_RESOURCE_NAME = "Ares.AudioSource.Test.Resources.music.mp3";
 
         public Bitmap Icon { get { return ImageResources.aressmall; } }
 
@@ -61,13 +61,13 @@ namespace Ares.AudioSource.Test
 
         public void ExtractEmbeddedFile(string resName, string fileName)
         {
-            if (File.Exists(fileName)) File.Delete(fileName);
+            Thread.Sleep(1500);
 
             System.IO.Directory.CreateDirectory(System.IO.Path.GetDirectoryName(fileName));
             Assembly assembly = Assembly.GetExecutingAssembly();
 
             using (var input = assembly.GetManifestResourceStream(resName))
-            using (var output = File.Open(fileName, FileMode.CreateNew))
+            using (var output = File.Open(fileName, FileMode.OpenOrCreate))
             {
                 if (input == null) throw new FileNotFoundException(resName + ": Embedded resoure file not found");
 
@@ -89,11 +89,13 @@ namespace Ares.AudioSource.Test
 
         public FileSearchResult(TestAudioSource audioSource, AudioSearchResultType type, string resourceName) : base(audioSource, type)
         {
+            this.AudioSource = audioSource;
             this.m_ResourceName = resourceName;
             this.m_Type = type;
+            this.FileType = type == AudioSearchResultType.MusicFile ? SoundFileType.Music : SoundFileType.SoundEffect;
         }
 
-        public string Filename { get; internal set; }
+        public string Filename { get { return m_ResourceName;  } }
 
         public SoundFileType FileType { get; internal set; }
         

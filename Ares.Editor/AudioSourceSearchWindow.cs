@@ -28,6 +28,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -44,12 +45,6 @@ namespace Ares.Editor.AudioSourceSearch
     /// A note on downlading the actual audio files:
     /// The target path for each audio file to be downloaded is determined when the drag & drop operation is started.
     /// The actual download only occurs when (and if) the drag & drop operation completes.
-    /// 
-    /// TODO: Find a way to delay the ARES missing-file-detection.
-    ///       Since the actual download only occurs after the drag & drop is completed, ARES comes to think that the
-    ///       files don't exist (the check occurs "on drop", the actual download only after the drag & drop is completed)
-    ///       One solution might be to touch the files (create empty placeholders) when the drag & drop starts and either
-    ///       replace or remove them upon completion, depending on whether the drag & drop was completed or cancelled.
     /// 
     /// TODO: Add "Download as" functionality so the user can download a search result to a specific folder & filename
     ///
@@ -305,6 +300,7 @@ namespace Ares.Editor.AudioSourceSearch
 
             // Decide depending on the overall AudioType of the selected items
             DragDropEffects dragDropResult = DragDropEffects.None;
+            List<string> stubFiles = null;
             switch (overallItemAudioType)
             {
                 // If the dragged items are Music or Sound files
@@ -317,7 +313,7 @@ namespace Ares.Editor.AudioSourceSearch
                         // Filter out null/incompatible search results
                         .Where(result => result != null);
 
-                    BeforeStartDrag(selectedFileResults, targetDirectoryProvider);
+                    BeforeStartDrag(selectedFileResults, targetDirectoryProvider, out stubFiles);
                     dragDropResult = StartDragFileSearchResults(selectedFileResults, overallItemAudioType, targetDirectoryProvider);
 
                     if (dragDropResult == DragDropEffects.Copy)
@@ -326,7 +322,7 @@ namespace Ares.Editor.AudioSourceSearch
                     }
                     else
                     {
-                        AfterCancelDrag(selectedFileResults, targetDirectoryProvider);
+                        AfterCancelDrag(selectedFileResults, targetDirectoryProvider, stubFiles);
                     }
                     return;
                 // If the dragged items are ModeElements
@@ -338,16 +334,16 @@ namespace Ares.Editor.AudioSourceSearch
                         // Filter out null/incompatible search results
                         .Where(result => result != null);
 
-                    BeforeStartDrag(selectedModeElementResults, targetDirectoryProvider);
+                    BeforeStartDrag(selectedModeElementResults, targetDirectoryProvider, out stubFiles);
                     dragDropResult = StartDragModeElementSearchResults(selectedModeElementResults, targetDirectoryProvider);
 
-                    if (dragDropResult == DragDropEffects.Copy)
+                    if (dragDropResult == DragDropEffects.Move)
                     {
                         AfterCompleteDrag(selectedModeElementResults, targetDirectoryProvider);
                     }
                     else
                     {
-                        AfterCancelDrag(selectedModeElementResults, targetDirectoryProvider);
+                        AfterCancelDrag(selectedModeElementResults, targetDirectoryProvider, stubFiles);
                     }
                     return;
             }
@@ -434,19 +430,55 @@ namespace Ares.Editor.AudioSourceSearch
             return DoDragDrop(info, DragDropEffects.Copy);
         }
 
-        public void BeforeStartDrag(IEnumerable<ISearchResult> selectedResults, ITargetDirectoryProvider targetDirectoryProvider)
+        public void BeforeStartDrag(IEnumerable<ISearchResult> selectedResults, ITargetDirectoryProvider targetDirectoryProvider, out List<string> createdStubFiles)
         {
-            // TODO: Create stubs for all required files which don't exist yet
+            List<string> files = new List<string>();
+
+            // Define an action to create a stub for an IDeployableAudioFile
+            Action<IDeployableAudioFile> createStub = (IDeployableAudioFile file) =>
+            {
+                string filePath = targetDirectoryProvider.GetFullPath(file);
+                // Only create stubs for files which don't exist yet
+                if (!System.IO.File.Exists(filePath))
+                {
+                    System.IO.Directory.CreateDirectory(System.IO.Path.GetDirectoryName(filePath));
+                    FileStream s = System.IO.File.Create(filePath);
+                    s.Close();
+                    files.Add(filePath);
+                }
+            };
+
+            // Go through all IDeployableAudioFiles required by the selected ISearchResults and create a stub for each one
+            foreach (ISearchResult result in selectedResults)
+            {
+                if (result is IDeployableAudioFile)
+                {
+                    createStub(result as IDeployableAudioFile);
+                }
+
+                foreach (IDeployableAudioFile file in result.RequiredFiles)
+                {
+                    createStub(file);
+                }
+            }
+
+            // Return a list of stub files that have been created
+            createdStubFiles = files;
         }
 
         public void AfterCompleteDrag(IEnumerable<ISearchResult> selectedResults, ITargetDirectoryProvider targetDirectoryProvider)
         {
+            // Deploy all required files once a drag operation has been completed
             DeployRequiredFilesForSearchResults(selectedResults,targetDirectoryProvider);
         }
 
-        public void AfterCancelDrag(IEnumerable<ISearchResult> selectedResults, ITargetDirectoryProvider targetDirectoryProvider)
+        public void AfterCancelDrag(IEnumerable<ISearchResult> selectedResults, ITargetDirectoryProvider targetDirectoryProvider, List<string> stubFilesToDelete)
         {
-            // TODO: remove stubs for all required files which haven't yet been downloaded
+            // Delete all stubs when a drag operation has been cancelled
+            foreach (string filePath in stubFilesToDelete)
+            {
+                System.IO.File.Delete(filePath);
+            }
         }
 
         #endregion
@@ -462,10 +494,8 @@ namespace Ares.Editor.AudioSourceSearch
         {
             // Collect the list of files to be deployed
             List<IDeployableAudioFile> filesToBeDeployed = new List<IDeployableAudioFile>();
-            foreach (SearchResultListItem searchResultItem in results)
+            foreach (ISearchResult searchResult in results)
             {
-                ISearchResult searchResult = searchResultItem.SearchResult;
-
                 // Queue the ISearchResult itself for deployment if it's an IDeployableAudioFile in it's own right
                 if (searchResult is IDeployableAudioFile)
                 {
@@ -568,8 +598,10 @@ namespace Ares.Editor.AudioSourceSearch
 
         public void PlaySelectedElement()
         {
-            // IDownloadableAudioFiles can be played directly from the source URL
-            if (GetSelectedPlaybackCandidate() is IDownloadableAudioFile) {
+            if (GetSelectedPlaybackCandidate() is IDownloadableAudioFile)
+            {
+                // IDownloadableAudioFiles can be played directly from the source URL
+
                 IDownloadableAudioFile result = GetSelectedPlaybackCandidate() as IDownloadableAudioFile;
                 this.m_PlayedElement =
                     Actions.Playing.Instance.PlayURL(result.SourceUrl, result.FileType == SoundFileType.Music, this, () =>
@@ -579,24 +611,28 @@ namespace Ares.Editor.AudioSourceSearch
                 });
                 UpdateButtonsForSelection();
             }
-
-            // IStreamingModeElementSearchResult support the GetStreamingModeElementDefinition method which returns a "streaming" 
-            // version of the IModeElement.
-            if (GetSelectedPlaybackCandidate() is IStreamingModeElementSearchResult)
+            else if (GetSelectedPlaybackCandidate() is IStreamingModeElementSearchResult)
             {
+                // IStreamingModeElementSearchResult support the GetStreamingModeElementDefinition method which returns a "streaming" 
+                // version of the IModeElement.
+
                 IStreamingModeElementSearchResult result = GetSelectedPlaybackCandidate() as IStreamingModeElementSearchResult;
                 IElement modeElement = result.GetStreamingModeElementDefinition();
                 this.m_PlayedElement = modeElement;
-                Actions.Playing.Instance.PlayElement(modeElement, this, () => {
+                Actions.Playing.Instance.PlayElement(modeElement, this, () =>
+                {
                     this.m_PlayedElement = null;
                     UpdateButtonsForSelection();
                 });
                 UpdateButtonsForSelection();
+                return;
             }
-
-            // Preview is currently only available for the above special cases.
-            // Generic preview functionality requires additional work, which is outlined in the class comments.
-            throw new ArgumentException("Playback/Preview of the selected entry is not supported. Please download the entry to listen to it.");
+            else
+            {
+                // Preview is currently only available for the above special cases.
+                // Generic preview functionality requires additional work, which is outlined in the class comments.
+                throw new ArgumentException("Playback/Preview of the selected entry is not supported. Please download the entry to listen to it.");
+            }
         }
 
         public void StopPlayingElement()
@@ -800,6 +836,17 @@ namespace Ares.Editor.AudioSourceSearch
 
         #endregion
 
+        private void resultsListView_DoubleClick(object sender, EventArgs e)
+        {
+            bool selectionIsNotEmpty = GetSelectedPlaybackCandidate() != null;
+            bool isCurrentlyPlaying = this.m_PlayedElement != null;
+            bool isPlaybackAllowed = CanPlaySelectedElement();
+
+            if (selectionIsNotEmpty && !isCurrentlyPlaying && isPlaybackAllowed)
+            {
+                PlaySelectedElement();
+            }
+        }
     }
 
     public class SearchResultListItem : ListViewItem
