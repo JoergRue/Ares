@@ -151,20 +151,20 @@ namespace Ares.AudioSource
             this.FilesToBeDownloaded = new List<IDeployableAudioFile>();
         }
 
-        public IAudioSource AudioSource { get; internal set; }
+        public virtual IAudioSource AudioSource { get; internal set; }
 
-        public string Author { get; set; }
-        public double? AverageRating { get; set; }
-        public string Description { get; set; }
-        public TimeSpan Duration { get; set; }
-        public string Id { get; set; }
-        public string License { get; set; }
-        public int NumberOfRatings { get; set; }
-        public AudioSearchResultType ResultType { get; set; }
-        public List<string> Tags { get; set; }
-        public string Title { get; set; }
+        public virtual string Author { get; set; }
+        public virtual double? AverageRating { get; set; }
+        public virtual string Description { get; set; }
+        public virtual TimeSpan Duration { get; set; }
+        public virtual string Id { get; set; }
+        public virtual string License { get; set; }
+        public virtual int NumberOfRatings { get; set; }
+        public virtual AudioSearchResultType ResultType { get; set; }
+        public virtual List<string> Tags { get; set; }
+        public virtual string Title { get; set; }
 
-        public IList<IDeployableAudioFile> FilesToBeDownloaded { get; internal set; }
+        public virtual IList<IDeployableAudioFile> FilesToBeDownloaded { get; internal set; }
 
         IEnumerable<IDeployableAudioFile> ISearchResult.RequiredFiles
         {
@@ -182,23 +182,23 @@ namespace Ares.AudioSource
     {
         static WebClient client = new WebClient();
 
-        public UrlFileSearchResult(IAudioSource audioSource, SoundFileType fileType, string url): 
+        public UrlFileSearchResult(IAudioSource audioSource, SoundFileType fileType, string url, string filename): 
             base(audioSource, fileType == SoundFileType.Music ? AudioSearchResultType.MusicFile : AudioSearchResultType.SoundFile)
         {
             this.FileType = fileType;
             this.SourceUrl = url;
-            this.FilesToBeDownloaded.Add(this);
+            this.Filename = filename;
         }
 
-        public double? DownloadSize { get; set; }
+        public virtual double? DownloadSize { get; set; }
 
-        public double? DeploymentCost { get { return DownloadSize; } }
+        public virtual double? DeploymentCost { get { return DownloadSize; } }
 
-        public string Filename { get; set;  }
+        public virtual string Filename { get; set;  }
 
-        public SoundFileType FileType { get; internal set; }
+        public virtual SoundFileType FileType { get; internal set; }
 
-        public string SourceUrl { get; internal set; }
+        public virtual string SourceUrl { get; internal set; }
 
         public AudioDeploymentResult Deploy(IAbsoluteProgressMonitor monitor, ITargetDirectoryProvider targetDirectoryProvider)
         {
@@ -212,8 +212,8 @@ namespace Ares.AudioSource
             // Make sure the target directory exists
             System.IO.Directory.CreateDirectory(System.IO.Path.GetDirectoryName(downloadTargetPath));
 
-            // Only download if the target file doesn't exist
-            if (!System.IO.File.Exists(downloadTargetPath))
+            // Only download if the target file doesn't exist (or is empty, that is, a stub)
+            if (!System.IO.File.Exists(downloadTargetPath) || new System.IO.FileInfo(downloadTargetPath).Length == 0)
             {
                 // Download the file (synchronously)
                 client.DownloadFile(new Uri(SourceUrl), downloadTargetPath);

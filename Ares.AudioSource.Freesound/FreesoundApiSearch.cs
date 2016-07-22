@@ -54,7 +54,7 @@ namespace Ares.AudioSource.Freesound
                 ICollection<ISearchResult> searchResults = new List<ISearchResult>();
                 foreach (SearchResultDtos.Result result in response.Data.results)
                 {
-                    FreesoundApiSearchResult searchResult = new FreesoundApiSearchResult(m_AudioSource, result.previews["preview-hq-mp3"]);
+                    FreesoundApiSearchResult searchResult = new FreesoundApiSearchResult(m_AudioSource, result.previews["preview-hq-mp3"],result.name);
                     searchResult.Title = result.name;
                     searchResult.PreviewUrls = result.previews;
                     searchResult.License = result.license;

@@ -87,9 +87,9 @@ namespace Ares.AudioSource.Test
         private string m_ResourceName;
         private AudioSearchResultType m_Type;
 
-        public FileSearchResult(TestAudioSource audioSource, AudioSearchResultType type, string resourceName) : base(audioSource, type)
+        public FileSearchResult(TestAudioSource audioSource, AudioSearchResultType type, string resourceName)
+            : base(audioSource, type)
         {
-            this.AudioSource = audioSource;
             this.m_ResourceName = resourceName;
             this.m_Type = type;
             this.FileType = type == AudioSearchResultType.MusicFile ? SoundFileType.Music : SoundFileType.SoundEffect;
@@ -98,14 +98,12 @@ namespace Ares.AudioSource.Test
         public string Filename { get { return m_ResourceName;  } }
 
         public SoundFileType FileType { get; internal set; }
-        
-        public new TestAudioSource AudioSource { get; internal set; }
 
         public double? DeploymentCost { get { return null; } }
 
         public AudioDeploymentResult Deploy(IAbsoluteProgressMonitor monitor, ITargetDirectoryProvider targetDirectoryProvider)
         {
-            AudioSource.ExtractEmbeddedFile(m_ResourceName, targetDirectoryProvider.GetFullPath(this));
+            ((TestAudioSource)AudioSource).ExtractEmbeddedFile(m_ResourceName, targetDirectoryProvider.GetFullPath(this));
             return AudioDeploymentResult.SUCCESS;
         }
     }
@@ -115,7 +113,8 @@ namespace Ares.AudioSource.Test
         private FileSearchResult m_MusicResource;
         private FileSearchResult m_SoundResource;
 
-        public ModeElementSearchResult(TestAudioSource audioSource, FileSearchResult soundResource, FileSearchResult musicResource) : base(audioSource, AudioSearchResultType.ModeElement)
+        public ModeElementSearchResult(TestAudioSource audioSource, FileSearchResult soundResource, FileSearchResult musicResource)
+            : base(audioSource, AudioSearchResultType.ModeElement)
         {
             this.m_SoundResource = soundResource;
             this.m_MusicResource = musicResource;

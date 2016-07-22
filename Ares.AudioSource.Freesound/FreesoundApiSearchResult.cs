@@ -14,18 +14,16 @@ namespace Ares.AudioSource.Freesound
     /// </summary>
     public class FreesoundApiSearchResult : UrlFileSearchResult
     {
-        public FreesoundApiSearchResult(FreesoundAudioSource audioSource, string url) : base(audioSource,SoundFileType.SoundEffect,url)
+        public FreesoundApiSearchResult(FreesoundAudioSource audioSource, string url, string filename) : base(audioSource,SoundFileType.SoundEffect,url,filename)
         {
-            this.AudioSource = audioSource;
         }
 
         public long FreesoundId { get; set; }
         public Dictionary<string, string> PreviewUrls { get; set; }
-        public new string Id { get { return FreesoundId.ToString(); } }
 
-        public new FreesoundAudioSource AudioSource { get; internal set; }
+        public override string Id { get { return FreesoundId.ToString(); } }
 
-        public new string License
+        public override string License
         {
             get
             {
