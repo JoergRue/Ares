@@ -873,7 +873,9 @@ namespace Ares.Editor.AudioSourceSearch
         {
             this.Text = result.Title;
             this.SubItems.Add(result.Author);
-            this.SubItems.Add(result.Duration.ToString(@"mm\:ss\:fff"));
+            this.SubItems.Add(
+                 (DateTime.Today + result.Duration).ToString("HH::mm::ss.fff")
+            );
             this.m_ItemAudioType = result.ResultType;
             this.m_SearchResult = result;
 
