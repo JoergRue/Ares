@@ -135,6 +135,11 @@ namespace Ares.Editor.AudioSourceSearch
             this.UpdatePagingControls(0, 0, null);
         }
 
+        protected override String GetPersistString()
+        {
+            return "AudioSourceSearch";
+        }
+
         #region Search 
 
         /// <summary>
@@ -177,7 +182,7 @@ namespace Ares.Editor.AudioSourceSearch
                     Task<IEnumerable<ISearchResult>> searchSubtask = this.m_selectedAudioSource.Search(query, pageSize, pageIndex, absoluteMonitor, out totalNumberOfResults);
 
                     return searchSubtask.Result;
-                } catch (OperationCanceledException e) {
+                } catch (OperationCanceledException) {
                     this.m_searchQuery = "";
                     //this.searchBox.Text = this.m_searchQuery;
                     this.m_searchPageIndex = 0;
@@ -420,6 +425,7 @@ namespace Ares.Editor.AudioSourceSearch
                 // Determine the relative path where the downloaded file will be placed
                 string relativeDownloadPath = targetDirectoryProvider.GetFolderWithinLibrary(fileSearchResult);
                 draggedFile.RelativePath = System.IO.Path.Combine(relativeDownloadPath, fileSearchResult.Filename);
+                draggedFile.Title = fileSearchResult.Title;
                 draggedFiles.Add(draggedFile);
             }
 
@@ -796,6 +802,11 @@ namespace Ares.Editor.AudioSourceSearch
             PlaySelectedElement();
         }
 
+        private void stopToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            StopPlayingElement();
+        }
+
         private void downloadMenuItem_Click(object sender, EventArgs e)
         {
             // Download the selected files to their default target path
@@ -847,6 +858,7 @@ namespace Ares.Editor.AudioSourceSearch
                 PlaySelectedElement();
             }
         }
+
     }
 
     public class SearchResultListItem : ListViewItem

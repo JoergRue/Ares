@@ -152,9 +152,13 @@ namespace Ares.Editor
             {
                 element.Title = tag.title;
             }
-            if (String.IsNullOrEmpty(element.Title))
+            else if (String.IsNullOrEmpty(item.Title))
             {
                 element.Title = System.IO.Path.GetFileNameWithoutExtension(path);
+            }
+            else
+            {
+                element.Title = item.Title;
             }
             return element;
         }

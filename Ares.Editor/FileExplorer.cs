@@ -1100,6 +1100,7 @@ namespace Ares.Editor
         public DraggedItemType NodeType { get; set; }
         public FileType ItemType { get; set; }
         public String RelativePath { get; set; }
+        public String Title { get; set; }
     }
 
     public enum TagsFilterMode
