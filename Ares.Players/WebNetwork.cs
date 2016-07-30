@@ -31,6 +31,7 @@ using System.Collections.Generic;
 using Ares.Data;
 using Ares.Playing;
 using Ares.Settings;
+using System.Web;
 
 namespace Ares.Players.Web
 {
@@ -550,7 +551,8 @@ namespace Ares.Players.Web
 
         private void CancelWatchdog()
         {
-            mWatchdogTimer.Stop();
+            if (mWatchdogTimer != null)
+                mWatchdogTimer.Stop();
         }
 
         private void OnWatchdogTimer(object sender, System.Timers.ElapsedEventArgs args)
@@ -1270,7 +1272,6 @@ namespace Ares.Players.Web
 
         private Funq.Container mContainer;
 
-
         public override void Configure(Funq.Container container)
         {
             mContainer = container;
@@ -1303,6 +1304,14 @@ namespace Ares.Players.Web
                     }
                     httpReq.SetItem("Culture", auths.Culture);
                 }
+            });
+
+            CatchAllHandlers.Add((httpmethod, pathInfo, filepath) => {
+
+                if (pathInfo == "/favicon.ico")
+                    return new ServiceStack.Host.Handlers.NotFoundHttpHandler();
+
+                return null; //continue processing request
             });
 
             var userRep = new InMemoryAuthRepository();
@@ -1420,17 +1429,23 @@ namespace Ares.Players.Web
 
         public void Error(object message)
         {
+#if DEBUG_SERVICE_STACK
             Messages.AddMessage(MessageType.Error, message.ToString());
+#endif
         }
 
         public void Error(object message, Exception exception)
         {
+#if DEBUG_SERVICE_STACK
             Messages.AddMessage(MessageType.Error, message.ToString());
+#endif
         }
 
         public void ErrorFormat(string format, params object[] args)
         {
+#if DEBUG_SERVICE_STACK
             Messages.AddMessage(MessageType.Error, String.Format(format, args));
+#endif
         }
 
         public void Fatal(object message)

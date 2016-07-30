@@ -1266,6 +1266,8 @@ namespace Ares.Player
         {
             if (listenAgainAfterDisconnect)
                 m_Network.StartUdpBroadcast();
+            if (this.IsDisposed)
+                return;
             this.Invoke(new MethodInvoker(UpdateClientData));
         }
 
