@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Ares.AudioSource.Freesound</RootNamespace>
     <AssemblyName>Ares.AudioSource.Freesound</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -35,6 +36,7 @@
   <ItemGroup>
     <Reference Include="RestSharp">
       <HintPath>..\Libraries\RestSharp.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -78,14 +80,17 @@
     <ProjectReference Include="..\Ares.AudioSource\Ares.AudioSource.csproj">
       <Project>{505bf261-dd7f-4201-b0e3-471e464b39af}</Project>
       <Name>Ares.AudioSource</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\Ares.Data\Ares.Data.csproj">
       <Project>{f64d6af3-3543-47f0-a7b8-0336750b09c3}</Project>
       <Name>Ares.Data</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\Ares.ModelChecks\Ares.ModelInfo.csproj">
       <Project>{50ea19ee-5337-499c-8b7b-1b22ea9e24a6}</Project>
       <Name>Ares.ModelInfo</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
