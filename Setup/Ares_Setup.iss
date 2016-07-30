@@ -69,8 +69,12 @@ Source: "..\build\Ares\Player_Editor\de\Ares.Editor.Actions.resources.dll"; Dest
 Source: "..\build\Ares\Player_Editor\de\Ares.Editor.Controls.resources.dll"; DestDir: "{app}\Player_Editor\de\"; Flags: ignoreversion; Components: Editor
 Source: "..\build\Ares\Player_Editor\de\Ares.Editor.resources.dll"; DestDir: "{app}\Player_Editor\de\"; Flags: ignoreversion; Components: Editor
 Source: "..\build\Ares\Player_Editor\de\Ares.TagsImport.resources.dll"; DestDir: "{app}\Player_Editor\de\"; Flags: ignoreversion; Components: Editor
+Source: "..\build\Ares\Player_Editor\plugins\Ares.AudioSource.Freesound.dll"; DestDir: "{app}\Player_Editor\plugins\"; Flags: ignoreversion; Components: Editor
+Source: "..\build\Ares\Player_Editor\plugins\Ares.AudioSource.Freesound.dll.config"; DestDir: "{app}\Player_Editor\plugins\"; Flags: ignoreversion; Components: Editor
+Source: "..\build\Ares\Player_Editor\plugins\de\Ares.AudioSource.Freesound.resources.dll"; DestDir: "{app}\Player_Editor\plugins\de\"; Flags: ignoreversion; Components: Editor
 Source: "..\build\Ares\Player_Editor\Ares.Editor.Actions.dll"; DestDir: "{app}\Player_Editor\"; Flags: ignoreversion; Components: Editor
 Source: "..\build\Ares\Player_Editor\Ares.Editor.Controls.dll"; DestDir: "{app}\Player_Editor\"; Flags: ignoreversion; Components: Editor
+Source: "..\build\Ares\Player_Editor\Ares.Editor.AudioSource.dll"; DestDir: "{app}\Player_Editor\"; Flags: ignoreversion; Components: Editor
 Source: "..\build\Ares\Player_Editor\Ares.Editor.exe.config"; DestDir: "{app}\Player_Editor\"; Flags: ignoreversion; Components: Editor
 Source: "..\build\Ares\Player_Editor\Ares.TagsImport.dll"; DestDir: "{app}\Player_Editor\"; Flags: ignoreversion; Components: Editor
 Source: "..\build\Ares\Player_Editor\Ares.TagsImport.dll.config"; DestDir: "{app}\Player_Editor\"; Flags: ignoreversion; Components: Editor
@@ -172,8 +176,10 @@ english.compPlayerDesc=Player
 german.compPlayerDesc=Player
 english.compControllerDesc=Controller
 german.compControllerDesc=Controller
-english.needsNet4=The Ares Editor and the Ares Player need the .NET Framework 4 (full) or higher.%n%nPlease download and install it and then re-run the Ares setup program.
-german.needsNet4=Der Ares Editor und der Ares Player benötigen das .NET Framework 4 (full) oder höher.%n%nBitte installieren Sie das .NET Framework und starten Sie das Ares Setup dann erneut.
+english.needsNet45=The Ares Editor needs the .NET Framework 4.5 (full) or higher.%n%nPlease download and install it and then re-run the Ares setup program.
+german.needsNet45=Der Ares Editor benötigt das .NET Framework 4.5 (full) oder höher.%n%nBitte installieren Sie das .NET Framework und starten Sie das Ares Setup dann erneut.
+english.needsNet4=The Ares Player needs the .NET Framework 4 (full) or higher.%n%nPlease download and install it and then re-run the Ares setup program.
+german.needsNet4=Der Ares Player benötigt das .NET Framework 4 (full) oder höher.%n%nBitte installieren Sie das .NET Framework und starten Sie das Ares Setup dann erneut.
 english.needsJava=The Ares Controller needs Java 6 or higher.%n%nPlease download and install it from http://www.java.com/getjava/ and then re-run the Ares setup program.
 german.needsJava=Der Ares Controller benötigt Java 6 oder höher.%n%nBitte installieren Sie Java von http://www.java.com/getjava/ und starten Sie das Ares Setup dann erneut.
 english.openFirewall=Configure firewall to allow Web Controller access
@@ -352,7 +358,15 @@ begin
   Result := '';
   allOK := True;
   MySetupType := WizardSetupType(False);
-  if (IsComponentSelected('Player')) then
+  if (IsComponentSelected('Editor')) then
+  begin
+    if not IsDotNetDetected('v4.5', 0) then
+    begin
+      Result := CustomMessage('needsNet45');
+      allOK := False;
+    end;
+  end;    
+  if (allOK and IsComponentSelected('Player')) then
   begin
     if not IsDotNetDetected('v4\Full', 0) then
     begin

@@ -1,6 +1,9 @@
 Version 3.1.0
 ----------------------------------------------------------------------------------
 - General: increased ping interval between Players and Controllers
+- Editor: search for sounds online at FreeSound.org (many thanks for idea and
+  patch to Martin Ried)
+- Editor: now needs .NET Framework 4.5+
 - Editor: more robust communication with MusicBrainz.org to retrieve tags
 - Player/Linux: enabled streaming through icecast server
 - Player/Linux: workaround for bug in some Mono versions

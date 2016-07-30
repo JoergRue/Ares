@@ -40,14 +40,16 @@
 		  -->
 		  
         <exec program="${framework::get-framework-directory(framework::get-target-framework())}\msbuild.exe"         
-			        commandline="${solutionFile} /t:Build /p:Configuration=${configuration} /v:q" workingdir="." 
+			        commandline="${solutionFile} /t:Build /p:Configuration=${configuration} /v:m" workingdir="." 
 			        />
 					
 		<property name="expected.output" value="bin/${configuration}" />
         <property name="Ares.Player" value="${expected.output}/Ares.Player.exe" />
         <property name="Ares.Editor" value="${expected.output}/Ares.Editor.exe" />
+		<property name="Ares.CmdLinePlayer" value="${expected.output}/Ares.CmdLinePlayer.exe" />
         <fail unless="${file::exists(Ares.Player)}">Output file doesn't exist in ${expected.output}</fail>
         <fail unless="${file::exists(Ares.Editor)}">Output file doesn't exist in ${expected.output}</fail>
+		<fail unless="${file::exists(Ares.CmdLinePlayer)}">Output file doesn't exist in ${expected.output}</fail>
 		
         <exec program="${framework::get-framework-directory(framework4)}\msbuild.exe"         
 			        commandline="${mgSolutionFile} /t:Build /p:Configuration=${configuration} /v:q" workingdir="." 

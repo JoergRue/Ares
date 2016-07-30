@@ -1,6 +1,8 @@
 Version 3.1.0
 ----------------------------------------------------------------------------------
 - Allgemein: Ping-Intervall zwischen Playern und Controllern erhöht
+- Editor: Suche nach Geräuschen online bei FreeSound.org (vielen Dank für Idee und
+  Patch an Martin Ried)
 - Editor: robustere Kommunikation mit MusicBrainz.org um Tags abzufragen
 - Player/Linux: Streaming über Icecast ermöglicht
 - Player/Linux: Workaround für Bug in manchen Mono-Versionen
