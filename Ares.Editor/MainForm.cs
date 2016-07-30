@@ -25,6 +25,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Ares.Settings;
+using Ares.Editor.Plugins;
+using Ares.Editor.AudioSourceSearch;
 
 namespace Ares.Editor
 {
@@ -32,7 +34,9 @@ namespace Ares.Editor
     {
 		#if !MONO
         private Ares.Ipc.ApplicationInstance m_Instance;
-		#endif
+#endif
+
+        private PluginManager m_PluginManager;
 
         public MainForm()
         {
@@ -54,7 +58,9 @@ namespace Ares.Editor
             {
                 throw new Ares.Ipc.ApplicationAlreadyStartedException();
             }
-			#endif
+            #endif
+
+            m_PluginManager = new Plugins.PluginManager();
 
             PrepareModelChecks();
             InitializeComponent();
@@ -136,6 +142,11 @@ namespace Ares.Editor
                     return null;
                 m_FileExplorers[index] = new FileExplorer((FileType)index, this);
                 return m_FileExplorers[index];
+            }
+            else if (persistString == "AudioSourceSearch")
+            {
+                m_AudioSourceSearch = new AudioSourceSearchWindow(m_PluginManager);
+                return m_AudioSourceSearch;
             }
             else if (persistString == "ProjectExplorer")
             {
@@ -334,7 +345,26 @@ namespace Ares.Editor
             ShowFileExplorer(FileType.Music);
         }
 
+        private void audioSourceSearchToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowAudioSourceSearch();
+        }
+
         private FileExplorer[] m_FileExplorers = new FileExplorer[2];
+        private AudioSourceSearchWindow m_AudioSourceSearch;
+
+        private void ShowAudioSourceSearch()
+        {
+            if (m_AudioSourceSearch == null)
+            {
+                m_AudioSourceSearch = new AudioSourceSearchWindow(m_PluginManager);
+                m_AudioSourceSearch.SetProject(m_CurrentProject);
+                m_AudioSourceSearch.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockRight;
+                m_AudioSourceSearch.Show(dockPanel);
+            }
+            else UpdateWindowState(m_AudioSourceSearch);
+            ActivateWindow(m_AudioSourceSearch);
+        }
 
         private void ShowFileExplorer(FileType fileType)
         {
@@ -418,6 +448,10 @@ namespace Ares.Editor
                 {
                     m_FileExplorers[i].SetProject(m_CurrentProject);
                 }
+            }
+            if (m_AudioSourceSearch != null)
+            {
+                m_AudioSourceSearch.SetProject(m_CurrentProject);
             }
 
             if (m_ProjectExplorer.IsHidden)
@@ -626,6 +660,11 @@ namespace Ares.Editor
                     m_FileExplorers[i].SetProject(m_CurrentProject);
                 }
             }
+            if (m_AudioSourceSearch != null)
+            {
+                m_AudioSourceSearch.SetProject(m_CurrentProject);
+            }
+
             DoModelChecks();
             Ares.ModelInfo.ModelChecks.Instance.AdaptHiddenTags(m_CurrentProject);
 			#if !MONO
@@ -709,6 +748,7 @@ namespace Ares.Editor
             projectExplorerToolStripMenuItem.Checked = m_ProjectExplorer != null && !m_ProjectExplorer.IsHidden;
             fileExplorerToolStripMenuItem.Checked =  m_FileExplorers[0] != null && !m_FileExplorers[0].IsHidden;
             soundFileExplorerToolStripMenuItem.Checked = m_FileExplorers[1] != null && !m_FileExplorers[1].IsHidden;
+            audioSourceSearchToolStripMenuItem.Checked = m_AudioSourceSearch != null && !m_AudioSourceSearch.IsHidden;
             volumesToolStripMenuItem.Checked = m_VolumeWindow != null && !m_VolumeWindow.IsHidden;
             projectErrorsToolStripMenuItem.Checked = m_ErrorWindow != null && !m_ErrorWindow.IsHidden;
             tagsMenuItem.Checked = m_TagsEditor != null && !m_TagsEditor.IsHidden;
@@ -833,6 +873,7 @@ namespace Ares.Editor
                 ShowProjectExplorer();
                 ShowFileExplorer(FileType.Music);
                 ShowFileExplorer(FileType.Sound);
+                ShowAudioSourceSearch();
             }
             else if (!String.IsNullOrEmpty(Ares.Settings.Settings.Instance.WindowLayout))
             {
@@ -852,6 +893,7 @@ namespace Ares.Editor
                 ShowVolumeWindow();
                 ShowFileExplorer(FileType.Music);
                 ShowFileExplorer(FileType.Sound);
+                ShowAudioSourceSearch();
             }
             if (m_FileExplorers[0] == null)
             {
@@ -860,6 +902,10 @@ namespace Ares.Editor
             if (m_FileExplorers[1] == null)
             {
                 ShowFileExplorer(FileType.Sound);
+            }
+            if (m_AudioSourceSearch == null)
+            {
+                ShowAudioSourceSearch();
             }
             if (m_ProjectExplorer == null)
             {
@@ -874,6 +920,7 @@ namespace Ares.Editor
 			#endif
             fileExplorerToolStripMenuItem.Checked = !m_FileExplorers[0].IsHidden;
             soundFileExplorerToolStripMenuItem.Checked = !m_FileExplorers[1].IsHidden;
+            audioSourceSearchToolStripMenuItem.Checked = !m_AudioSourceSearch.IsHidden;
             projectExplorerToolStripMenuItem.Checked = !m_ProjectExplorer.IsHidden;
             volumesToolStripMenuItem.Checked = m_VolumeWindow != null && !m_VolumeWindow.IsHidden;
             projectErrorsToolStripMenuItem.Checked = m_ErrorWindow != null && !m_ErrorWindow.IsHidden;
@@ -953,6 +1000,10 @@ namespace Ares.Editor
             else if (e.KeyCode == Keys.F10)
             {
                 ShowErrorWindow();
+            }
+            else if (e.KeyCode == Keys.F11)
+            {
+                ShowAudioSourceSearch();
             }
         }
 

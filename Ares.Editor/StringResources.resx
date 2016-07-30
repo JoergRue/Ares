@@ -503,4 +503,22 @@ You should adapt some settings first.</value>
   <data name="NewWebRadio" xml:space="preserve">
     <value>New Web Radio</value>
   </data>
+  <data name="AudioSourceSearchTitle" xml:space="preserve">
+    <value>Online Audio Sources</value>
+  </data>
+  <data name="DownloadingAudio" xml:space="preserve">
+    <value>Downloading Audio from online sources ...</value>
+  </data>
+  <data name="SearchingForAudio" xml:space="preserve">
+    <value>Searching for Audio...</value>
+  </data>
+  <data name="SearchError" xml:space="preserve">
+    <value>Error searching for audio: {0}</value>
+  </data>
+  <data name="PleaseSelectASingleItemToSeeMoreInfo" xml:space="preserve">
+    <value>Please select a single item to see more information.</value>
+  </data>
+  <data name="PleaseSelectOnlyEntriesOfTheSameType" xml:space="preserve">
+    <value>Please select only entries of the same type!</value>
+  </data>
 </root>
