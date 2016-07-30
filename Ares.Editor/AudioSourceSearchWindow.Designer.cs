@@ -93,11 +93,13 @@ namespace Ares.Editor.AudioSourceSearch
             // 
             // splitContainer1.Panel1
             // 
+            resources.ApplyResources(this.splitContainer1.Panel1, "splitContainer1.Panel1");
             this.splitContainer1.Panel1.Controls.Add(this.toolStrip2);
             this.splitContainer1.Panel1.Controls.Add(this.resultsListView);
             // 
             // splitContainer1.Panel2
             // 
+            resources.ApplyResources(this.splitContainer1.Panel2, "splitContainer1.Panel2");
             this.splitContainer1.Panel2.Controls.Add(this.informationBox);
             this.splitContainer1.Panel2.Controls.Add(this.label1);
             // 
@@ -118,8 +120,8 @@ namespace Ares.Editor.AudioSourceSearch
             // 
             // pageLabel
             // 
-            this.pageLabel.Name = "pageLabel";
             resources.ApplyResources(this.pageLabel, "pageLabel");
+            this.pageLabel.Name = "pageLabel";
             // 
             // nextPageButton
             // 
@@ -156,35 +158,36 @@ namespace Ares.Editor.AudioSourceSearch
             // 
             // searchResultContextMenu
             // 
+            resources.ApplyResources(this.searchResultContextMenu, "searchResultContextMenu");
             this.searchResultContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.playToolStripMenuItem,
             this.stopToolStripMenuItem,
             this.downloadMenuItem,
             this.downloadToMenuItem});
             this.searchResultContextMenu.Name = "contextMenuStrip1";
-            resources.ApplyResources(this.searchResultContextMenu, "searchResultContextMenu");
             // 
             // playToolStripMenuItem
             // 
-            this.playToolStripMenuItem.Name = "playToolStripMenuItem";
             resources.ApplyResources(this.playToolStripMenuItem, "playToolStripMenuItem");
+            this.playToolStripMenuItem.Name = "playToolStripMenuItem";
             this.playToolStripMenuItem.Click += new System.EventHandler(this.playToolStripMenuItem_Click);
             // 
             // stopToolStripMenuItem
             // 
-            this.stopToolStripMenuItem.Name = "stopToolStripMenuItem";
             resources.ApplyResources(this.stopToolStripMenuItem, "stopToolStripMenuItem");
+            this.stopToolStripMenuItem.Name = "stopToolStripMenuItem";
+            this.stopToolStripMenuItem.Click += new System.EventHandler(this.stopToolStripMenuItem_Click);
             // 
             // downloadMenuItem
             // 
-            this.downloadMenuItem.Name = "downloadMenuItem";
             resources.ApplyResources(this.downloadMenuItem, "downloadMenuItem");
+            this.downloadMenuItem.Name = "downloadMenuItem";
             this.downloadMenuItem.Click += new System.EventHandler(this.downloadMenuItem_Click);
             // 
             // downloadToMenuItem
             // 
-            this.downloadToMenuItem.Name = "downloadToMenuItem";
             resources.ApplyResources(this.downloadToMenuItem, "downloadToMenuItem");
+            this.downloadToMenuItem.Name = "downloadToMenuItem";
             this.downloadToMenuItem.Click += new System.EventHandler(this.downloadToMenuItem_Click);
             // 
             // informationBox
@@ -200,48 +203,48 @@ namespace Ares.Editor.AudioSourceSearch
             // 
             // toolStrip1
             // 
+            resources.ApplyResources(this.toolStrip1, "toolStrip1");
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.playButton,
             this.stopButton,
             this.audioSourceComboBox,
             this.searchBox,
             this.searchButton});
-            resources.ApplyResources(this.toolStrip1, "toolStrip1");
             this.toolStrip1.Name = "toolStrip1";
             // 
             // playButton
             // 
-            this.playButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             resources.ApplyResources(this.playButton, "playButton");
+            this.playButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.playButton.Image = global::Ares.Editor.ImageResources.RunSmall;
             this.playButton.Name = "playButton";
             this.playButton.Click += new System.EventHandler(this.playButton_Click);
             // 
             // stopButton
             // 
-            this.stopButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             resources.ApplyResources(this.stopButton, "stopButton");
+            this.stopButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.stopButton.Image = global::Ares.Editor.ImageResources.StopSmall;
             this.stopButton.Name = "stopButton";
             this.stopButton.Click += new System.EventHandler(this.stopButton_Click);
             // 
             // audioSourceComboBox
             // 
+            resources.ApplyResources(this.audioSourceComboBox, "audioSourceComboBox");
             this.audioSourceComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.audioSourceComboBox.Name = "audioSourceComboBox";
-            resources.ApplyResources(this.audioSourceComboBox, "audioSourceComboBox");
             this.audioSourceComboBox.SelectedIndexChanged += new System.EventHandler(this.audioSourceComboBox_SelectedIndexChanged);
             // 
             // searchBox
             // 
-            this.searchBox.Name = "searchBox";
             resources.ApplyResources(this.searchBox, "searchBox");
+            this.searchBox.Name = "searchBox";
             this.searchBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.searchBox_KeyPress);
             // 
             // searchButton
             // 
-            this.searchButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             resources.ApplyResources(this.searchButton, "searchButton");
+            this.searchButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.searchButton.Name = "searchButton";
             this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
             // 

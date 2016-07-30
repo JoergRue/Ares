@@ -507,4 +507,13 @@ Soll es jetzt gespeichert werden?</value>
   <data name="AudioSourceSearchTitle" xml:space="preserve">
     <value>Online Audio-Quellen</value>
   </data>
+  <data name="SearchError" xml:space="preserve">
+    <value>Fehler bei der Audio-Suche: {0}</value>
+  </data>
+  <data name="SearchingForAudio" xml:space="preserve">
+    <value>Suche nach Audio-Dateien ...</value>
+  </data>
+  <data name="DownloadingAudio" xml:space="preserve">
+    <value>Lade Audio-Daten herunter ...</value>
+  </data>
 </root>

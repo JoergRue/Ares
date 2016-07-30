@@ -507,10 +507,10 @@ You should adapt some settings first.</value>
     <value>Online Audio Sources</value>
   </data>
   <data name="DownloadingAudio" xml:space="preserve">
-    <value>Downloading Audio from online sources ...</value>
+    <value>Downloading audio files ...</value>
   </data>
   <data name="SearchingForAudio" xml:space="preserve">
-    <value>Searching for Audio...</value>
+    <value>Searching for audio files...</value>
   </data>
   <data name="SearchError" xml:space="preserve">
     <value>Error searching for audio: {0}</value>

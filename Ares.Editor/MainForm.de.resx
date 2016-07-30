@@ -112,65 +112,65 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="newToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>169, 22</value>
+    <value>187, 22</value>
   </data>
   <data name="newToolStripMenuItem.Text" xml:space="preserve">
     <value>Neu ...</value>
   </data>
   <data name="openToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>169, 22</value>
+    <value>187, 22</value>
   </data>
   <data name="openToolStripMenuItem.Text" xml:space="preserve">
     <value>Öffnen ...</value>
   </data>
   <data name="importToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>169, 22</value>
+    <value>187, 22</value>
   </data>
   <data name="importToolStripMenuItem.Text" xml:space="preserve">
     <value>Importieren ...</value>
   </data>
   <data name="toolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>166, 6</value>
+    <value>184, 6</value>
   </data>
   <data name="saveToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>169, 22</value>
+    <value>187, 22</value>
   </data>
   <data name="saveToolStripMenuItem.Text" xml:space="preserve">
     <value>Speichern</value>
   </data>
   <data name="saveAsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>169, 22</value>
+    <value>187, 22</value>
   </data>
   <data name="saveAsToolStripMenuItem.Text" xml:space="preserve">
     <value>Speichern unter ...</value>
   </data>
   <data name="exportToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>169, 22</value>
+    <value>187, 22</value>
   </data>
   <data name="exportToolStripMenuItem.Text" xml:space="preserve">
     <value>Exportieren ...</value>
   </data>
   <data name="toolStripSeparator2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>166, 6</value>
+    <value>184, 6</value>
   </data>
   <data name="recentMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>169, 22</value>
+    <value>187, 22</value>
   </data>
   <data name="recentMenuItem.Text" xml:space="preserve">
     <value>Zuletzt benutzt</value>
   </data>
   <data name="toolStripSeparator5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>166, 6</value>
+    <value>184, 6</value>
   </data>
   <data name="exitToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>169, 22</value>
+    <value>187, 22</value>
   </data>
   <data name="exitToolStripMenuItem.Text" xml:space="preserve">
     <value>Beenden</value>
@@ -179,13 +179,13 @@
     <value>Projekt</value>
   </data>
   <data name="undoToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>184, 22</value>
+    <value>203, 22</value>
   </data>
   <data name="undoToolStripMenuItem.Text" xml:space="preserve">
     <value>Rückgängig</value>
   </data>
   <data name="redoToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>184, 22</value>
+    <value>203, 22</value>
   </data>
   <data name="redoToolStripMenuItem.Text" xml:space="preserve">
     <value>Wiederholen</value>
@@ -197,49 +197,55 @@
     <value>Bearbeiten</value>
   </data>
   <data name="projectExplorerToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>187, 22</value>
+    <value>215, 22</value>
   </data>
   <data name="projectExplorerToolStripMenuItem.Text" xml:space="preserve">
     <value>Projekt Explorer</value>
   </data>
   <data name="fileExplorerToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>187, 22</value>
+    <value>215, 22</value>
   </data>
   <data name="fileExplorerToolStripMenuItem.Text" xml:space="preserve">
     <value>Musik Explorer</value>
   </data>
   <data name="soundFileExplorerToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>187, 22</value>
+    <value>215, 22</value>
   </data>
   <data name="soundFileExplorerToolStripMenuItem.Text" xml:space="preserve">
     <value>Geräusch Explorer</value>
   </data>
   <data name="volumesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>187, 22</value>
+    <value>215, 22</value>
   </data>
   <data name="volumesToolStripMenuItem.Text" xml:space="preserve">
     <value>Lautstärken</value>
   </data>
   <data name="projectErrorsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>187, 22</value>
+    <value>215, 22</value>
   </data>
   <data name="projectErrorsToolStripMenuItem.Text" xml:space="preserve">
     <value>Projektfehler</value>
   </data>
+  <data name="audioSourceSearchToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>215, 22</value>
+  </data>
+  <data name="audioSourceSearchToolStripMenuItem.Text" xml:space="preserve">
+    <value>Online Audio-Quellen</value>
+  </data>
   <data name="tagsMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>187, 22</value>
+    <value>215, 22</value>
   </data>
   <data name="toolStripSeparator9.Size" type="System.Drawing.Size, System.Drawing">
-    <value>184, 6</value>
+    <value>212, 6</value>
   </data>
   <data name="usedKeysToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>187, 22</value>
+    <value>215, 22</value>
   </data>
   <data name="usedKeysToolStripMenuItem.Text" xml:space="preserve">
     <value>Benutzte Tasten ...</value>
   </data>
   <data name="usedFilesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>187, 22</value>
+    <value>215, 22</value>
   </data>
   <data name="usedFilesToolStripMenuItem.Text" xml:space="preserve">
     <value>Benutzte Dateien ...</value>
@@ -304,14 +310,14 @@
   <data name="newButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGkSURBVDhPjZFLSwJRFMcvQato1TboA7RqUZuofY9N65b1
-        JYSgD1CbioKyIqygBwg9IBR6UUEWIeEDK0vEcjCflabOjPPv3Jk7akSDfzicyzn3979zzjBTqdRoSVFG
-        QrAzwMegKEMRSRqWRdtalVDLvmwjEPPAIeWgcdZr+b4dce1/qaGWuyqwRrHHjDPVcg+9cJ74se3yYuPA
-        g/UDz5TAapKn6fI8xQyHuLaML1mi2DJrwPLuGXoGx/+aSEGmSN42DbN0mebHSzNwSrnUBcTaBU5vbLjg
-        vvLrJo7962mB0wjq8G11BP4ivV7dCSZ1mGvOcaTDZgicDPL951VghXK4ST8btUXO6lLUim5iGgnckJbq
-        nKg8tS7ASdBrB5C20R+wCxTQNA2FooxEuqAbdA+M/TYwteq8EMhvlWUVmY8iotKHtcHS9olAalIrGj4L
-        ZcSTeTxGM9YGC5tugdVULClIZr8RecvB95S0NuDNevHF5b5KiCU+EYqkcRuQGjeoX1w4lsX9wzsuva+N
-        G9QvLvCcgscXx/FNtDEDnq3C0oA3GwnGGPsBoZc3ax8Qz5gAAAAASUVORK5CYII=
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGlSURBVDhPjZFLSwJRFMcvQStp1TboA7RqUZuofeWmdcv6
+        EkHQB6hNhUJZET2gBwg9IBR6UUEWJWGJpiViTZSPrDR1Zpx/587cUSMa/MPhXM65v/+dc4aZSqUGi4oy
+        EIKLAQEGRemPSZJdFm1rlUO2bXmEQDiAXcpB46zXct0b4tr/UkO2qwqwSLHFjDPVsuEuuA9use7xY2XH
+        h+Ud37jAqpIn6LKDYpJDXGvGl8xSrJk1YG7zCJ19w39NpCBTpOtmDVN0mebHYyNwSLnYDiRaBE5vrHjg
+        PbvVTZa2zycETiOo9svKCPxFer2yE4zpMNf00p4OmyFwMsj1HFeAecrRBv1s1GY4q0tRy7qJaSRwQ1qq
+        bbQcaXLCTdBTK5AeoT/gEiigaRryBRmv6bxu0NE79NvA1IL7RCC/VZJVZD4KiL98WBvMrh8IpCq1rOEz
+        X4KUzOE+nrE2cK56BVZVoagg+f6N2HMWgUjS2oA3a8UXl/0qIvH6iVAsjcu7l/oNahcXTbzjJvyGU/9T
+        /Qa1i7t7SMEXkLB/Ea/PgGersDTgzXqCMcZ+AJCmN2aJxvetAAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="newButton.Text" xml:space="preserve">
