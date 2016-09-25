@@ -615,8 +615,11 @@ namespace Ares.Players
                 }
                 Ares.Playing.PlayingModule.RemoveCallbacks(this);
             }
-            ClientConnected = false;
-            Messages.AddMessage(MessageType.Info, StringResources.ClientDisconnected);
+            if (ClientConnected)
+            {
+                ClientConnected = false;
+                Messages.AddMessage(MessageType.Info, StringResources.ClientDisconnected);
+            }
             networkClient.ClientDataChanged(listenAgain);
             if (listenAgain)
             {
@@ -1014,6 +1017,11 @@ namespace Ares.Players
                 catch (InvalidOperationException)
                 {
                     Messages.AddMessage(MessageType.Error, StringResources.ClientSendError);
+                    DoDisconnect(true);
+                }
+                catch (System.IO.IOException)
+                {
+                    Messages.AddMessage(MessageType.Debug, "Socket closed during write.");
                     DoDisconnect(true);
                 }
             }
