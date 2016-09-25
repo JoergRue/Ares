@@ -1,0 +1,6 @@
+# This improves obfuscation and moves non-public classes to their own namespace.
+-repackageclasses 'de.joerg_ruedenauer.ares.locale.controllerplugin'
+
+# Ensure that stacktraces are reversible.
+-renamesourcefileattribute SourceFile
+-keepattributes SourceFile,LineNumberTable

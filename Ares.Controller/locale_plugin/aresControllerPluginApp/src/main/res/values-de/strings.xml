@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Ares Controller Plug-in für Locale</string>
+    <string name="menu_discard_changes">Änderungen verwerfen</string>
+    <string name="plugin_name">Ares Controller</string>
+    <string name="playerPort">UDP Port:</string>
+    <string name="playerName">Player:</string>
+    <string name="project">Projekt:</string>
+    <string name="mode">Mode:</string>
+    <string name="element">Element:</string>
+    <string name="specialMode">&lt;Speziell&gt;</string>
+    <string name="stop">Stopp</string>
+    <string name="forward">Nächstes Musikstück</string>
+    <string name="backward">Voriges Musikstück</string>
+    <string name="repeat">Musik-Wiederholung umschalten</string>
+    <string name="disconnect">Trennen</string>
+    <string name="disconnectHint">(deaktivieren, um direkt danach einen weiteren Befehl an den gleichen Player zu senden)</string>
+    <string name="synchronous">Synchronous</string>
+    <string name="syncHint">(aktivieren, damit der Task wartet bis der Befehl ausgeführt wurde)</string>
+</resources>

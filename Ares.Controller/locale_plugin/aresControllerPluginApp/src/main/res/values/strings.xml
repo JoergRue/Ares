@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- App name -->
+    <string name="app_name">Ares Controller Plug-in for Locale</string>
+
+    <!-- Name of the plug-in that appears in Locale -->
+    <string name="plugin_name">Ares Controller</string>
+
+    <!-- Discard menu item -->
+    <string name="menu_discard_changes">Discard changes</string>
+    <string name="playerPort">UDP Port:</string>
+    <string name="playerName">Player:</string>
+    <string name="project">Project:</string>
+    <string name="mode">Mode:</string>
+    <string name="element">Element:</string>
+    <string name="specialMode">&lt;special&gt;</string>
+    <string name="stop">Stop</string>
+    <string name="forward">Next Music Title</string>
+    <string name="backward">Previous Music Title</string>
+    <string name="repeat">Toggle Music Repeat</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="disconnectHint">(uncheck to immediately issue another command to the same player)</string>
+    <string name="synchronous">Synchronous</string>
+    <string name="syncHint">(check to let the task wait until the command has executed)</string>
+
+</resources>
