@@ -479,16 +479,21 @@ namespace Ares.Editor
                 return;
             if (e.Node.Tag == m_Project)
             {
-                if (e.Label != null)
+                if (!String.IsNullOrWhiteSpace(e.Label))
                 {
                     Actions.Actions.Instance.AddNew(new RenameProjectAction(e.Node, text), m_Project);
+                }
+                else
+                {
+                    e.CancelEdit = true;
                 }
             }
             else if (e.Node.Tag is IMode)
             {
-                if (e.Label == null)
+                if (String.IsNullOrWhiteSpace(e.Label))
                 {
                     e.Node.Text = (e.Node.Tag as IMode).GetNodeTitle();
+                    e.CancelEdit = true;
                 }
                 else
                 {
@@ -500,9 +505,10 @@ namespace Ares.Editor
             }
             else if (e.Node.Tag is IModeElement)
             {
-                if (e.Label == null)
+                if (String.IsNullOrWhiteSpace(e.Label))
                 {
                     e.Node.Text = (e.Node.Tag as IModeElement).GetNodeTitle();
+                    e.CancelEdit = true;
                 }
                 else
                 {
@@ -513,10 +519,14 @@ namespace Ares.Editor
             }
             else
             {
-                if (e.Label != null)
+                if (!String.IsNullOrWhiteSpace(e.Label))
                 {
                     IElement element = e.Node.Tag as IElement;
                     Actions.Actions.Instance.AddNew(new RenameElementAction(e.Node, text), m_Project);
+                }
+                else
+                {
+                    e.CancelEdit = true;
                 }
             }
             projectTree.LabelEdit = false;
