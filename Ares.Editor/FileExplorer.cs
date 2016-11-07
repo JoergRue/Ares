@@ -735,6 +735,11 @@ namespace Ares.Editor
             // check whether move is possible (no move of parent into child)
             foreach (String file in uniqueElements.Keys)
             {
+                if (targetPath.Equals(file, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    // special case didn't really move (source == target)
+                    return;
+                }
                 if (targetPath.StartsWith(file, StringComparison.InvariantCultureIgnoreCase))
                 {
                     MessageBox.Show(this, StringResources.CopyOrMoveParentIntoChild, StringResources.Ares, MessageBoxButtons.OK, MessageBoxIcon.Error);
