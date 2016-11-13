@@ -44,6 +44,7 @@ import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -53,6 +54,7 @@ import android.util.Log;
 import android.util.Pair;
 import android.widget.Toast;
 
+import java.net.InetAddress;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Semaphore;
@@ -205,6 +207,11 @@ public final class FireReceiver extends BroadcastReceiver
 
         mPlayerName = PluginBundleValues.getPlayer(bundle);
         int port = PluginBundleValues.getPlayerPort(bundle);
+
+        boolean fixedAddress = PluginBundleValues.isAddressFixed(bundle);
+        String playerAddress = PluginBundleValues.getPlayerAddress(bundle);
+        int playerTcpPort = PluginBundleValues.getPlayerTcpPort(bundle);
+
         String projectFile = PluginBundleValues.getProject(bundle);
         CommandType command = PluginBundleValues.getCommand(bundle);
         int elementId = PluginBundleValues.getElement(bundle);
@@ -215,6 +222,22 @@ public final class FireReceiver extends BroadcastReceiver
         mIsMusicRepeat = false;
 
         mEvent = new AutoResetEvent(false);
+
+        WifiManager wifiMgr = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        if (wifiMgr == null) {
+            Messages.addMessage(Message.MessageType.Error, "Wifi Mgr not available");
+            Messages.getInstance().removeObserver(this);
+            return TaskerPlugin.Setting.RESULT_CODE_FAILED;
+        }
+        if (!wifiMgr.isWifiEnabled()) {
+            Messages.addMessage(Message.MessageType.Error, "Wifi not available");
+            Messages.getInstance().removeObserver(this);
+            return TaskerPlugin.Setting.RESULT_CODE_FAILED;
+        }
+        final WifiManager.WifiLock wifiLock = wifiMgr.createWifiLock("Ares Controller Locale Plugin");
+        wifiLock.acquire();
+        final WifiManager.MulticastLock multicastLock = wifiMgr.createMulticastLock("Ares Controller Locale Plugin");
+        multicastLock.acquire();
 
         boolean needsConnect = true;
         if (Control.getInstance().isConnected())
@@ -230,24 +253,44 @@ public final class FireReceiver extends BroadcastReceiver
         }
 
         if (needsConnect) {
-            mFoundServer = null;
-            ServerSearch serverSearch = new ServerSearch(this, port);
-            Messages.addMessage(Message.MessageType.Debug, "Starting server search");
-            serverSearch.startSearch();
-            mEvent.waitOne(4000);
-            serverSearch.stopSearch();
-            serverSearch.dispose();
-            if (mFoundServer == null) {
-                Messages.addMessage(Message.MessageType.Error, "Player " + mPlayerName + " not found in network."); // $NON-NLS-1$ $NON-NLS-2$
-                Messages.getInstance().removeObserver(this);
-                return TaskerPlugin.Setting.RESULT_CODE_FAILED;
+            if (!fixedAddress) {
+                mFoundServer = null;
+                ServerSearch serverSearch = new ServerSearch(this, port);
+                Messages.addMessage(Message.MessageType.Debug, "Starting server search");
+                serverSearch.startSearch();
+                mEvent.waitOne(4000);
+                serverSearch.stopSearch();
+                serverSearch.dispose();
+                if (mFoundServer == null) {
+                    Messages.addMessage(Message.MessageType.Error, "Player " + mPlayerName + " not found in network."); // $NON-NLS-1$ $NON-NLS-2$
+                    Messages.getInstance().removeObserver(this);
+                    multicastLock.release();
+                    wifiLock.release();
+                    return TaskerPlugin.Setting.RESULT_CODE_FAILED;
+                }
+                Messages.addMessage(Message.MessageType.Debug, "Player found, connecting ...");
             }
-            Messages.addMessage(Message.MessageType.Debug, "Player found, connecting ...");
+            else {
+                try {
+                    InetAddress address = InetAddress.getByName(playerAddress);
+                    mFoundServer = new ServerInfo(address, true, playerTcpPort, false, 0, mPlayerName);
+                    Messages.addMessage(Message.MessageType.Debug, "Connecting to fixed address ...");
+                }
+                catch (java.net.UnknownHostException ex) {
+                    Messages.addMessage(Message.MessageType.Error, "Invalid fixed address: " + playerAddress);
+                    Messages.getInstance().removeObserver(this);
+                    multicastLock.release();
+                    wifiLock.release();
+                    return TaskerPlugin.Setting.RESULT_CODE_FAILED;
+                }
+            }
 
             Control.getInstance().connect(mFoundServer, this, false);
             if (!Control.getInstance().isConnected()) {
                 Messages.addMessage(Message.MessageType.Error, "Could not connect to player  " + mPlayerName + "."); // $NON-NLS-1$ $NON-NLS-2$
                 Messages.getInstance().removeObserver(this);
+                multicastLock.release();
+                wifiLock.release();
                 return TaskerPlugin.Setting.RESULT_CODE_FAILED;
             }
         }
@@ -281,6 +324,8 @@ public final class FireReceiver extends BroadcastReceiver
                 Messages.addMessage(Message.MessageType.Error, "Could not load project '" + projectFile + "'; loaded project is '" + playerProject + "'."); // $NON-NLS-1$ $NON-NLS-2$
                 Control.getInstance().disconnect(true);
                 Messages.getInstance().removeObserver(this);
+                multicastLock.release();
+                wifiLock.release();
                 return TaskerPlugin.Setting.RESULT_CODE_FAILED;
             }
         }
@@ -326,6 +371,8 @@ public final class FireReceiver extends BroadcastReceiver
             Control.getInstance().disconnect(true);
         }
         Messages.getInstance().removeObserver(this);
+        multicastLock.release();
+        wifiLock.release();
 
         return TaskerPlugin.Setting.RESULT_CODE_OK;
     }

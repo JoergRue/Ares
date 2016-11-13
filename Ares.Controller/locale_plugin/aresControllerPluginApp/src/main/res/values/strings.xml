@@ -23,5 +23,7 @@
     <string name="disconnectHint">(uncheck to immediately issue another command to the same player)</string>
     <string name="synchronous">Synchronous</string>
     <string name="syncHint">(check to let the task wait until the command has executed)</string>
+    <string name="fixedAddress">Fixed IP/Port</string>
+    <string name="fixedAddrDesc">(use if Player can\'t be found when display is turned off)</string>
 
 </resources>

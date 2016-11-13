@@ -78,6 +78,7 @@ public final class EditActivity extends AbstractAppCompatPluginActivity
     private Spinner projectSpinner;
     private Spinner modeSpinner;
     private Spinner elementSpinner;
+    private CheckBox fixedAddressBox;
     private CheckBox disconnectBox;
     private CheckBox syncBox;
 
@@ -112,6 +113,7 @@ public final class EditActivity extends AbstractAppCompatPluginActivity
         projectSpinner = (Spinner)findViewById(R.id.projectSpinner);
         modeSpinner = (Spinner)findViewById(R.id.modeSpinner);
         elementSpinner = (Spinner)findViewById(R.id.elementSpinner);
+        fixedAddressBox = (CheckBox)findViewById(R.id.fixedAddressBox);
         disconnectBox = (CheckBox)findViewById(R.id.disconnectBox);
         syncBox = (CheckBox)findViewById(R.id.syncBox);
 
@@ -132,6 +134,12 @@ public final class EditActivity extends AbstractAppCompatPluginActivity
                 elementSpinner.setEnabled(false);
                 if (i > 0) --i;
                 connectWithPlayer(mServers.get(i));
+                mPlayerAddress = mServers.get(i).getAddress().getHostAddress();
+                mPlayerTcpPort = mServers.get(i).getTcpPort();
+                if (mPlayer.equals(PluginBundleValues.PLAYER_AUTO)) {
+                    fixedAddressBox.setChecked(false);
+                }
+                fixedAddressBox.setEnabled(!mPlayer.equals(PluginBundleValues.PLAYER_AUTO));
             }
 
             @Override
@@ -171,6 +179,12 @@ public final class EditActivity extends AbstractAppCompatPluginActivity
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
+        fixedAddressBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                mFixedAddress = b;
             }
         });
         disconnectBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -230,9 +244,12 @@ public final class EditActivity extends AbstractAppCompatPluginActivity
 
     private int mUdpPort = 8009;
     private String mPlayer = PluginBundleValues.PLAYER_AUTO;
+    private String mPlayerAddress = "";
+    private int mPlayerTcpPort = 11112;
     private String mProject = "";
     private CommandType mCommandType = CommandType.None;
     private int mElement = 0;
+    private boolean mFixedAddress = false;
     private boolean mDisconnect = true;
     private boolean mSynchronous = false;
 
@@ -248,9 +265,12 @@ public final class EditActivity extends AbstractAppCompatPluginActivity
 
         mUdpPort = PluginBundleValues.getPlayerPort(previousBundle);
         mPlayer = PluginBundleValues.getPlayer(previousBundle);
+        mPlayerAddress = PluginBundleValues.getPlayerAddress(previousBundle);
+        mPlayerTcpPort = PluginBundleValues.getPlayerTcpPort(previousBundle);
         mProject = PluginBundleValues.getProject(previousBundle);
         mCommandType = PluginBundleValues.getCommand(previousBundle);
         mElement = PluginBundleValues.getElement(previousBundle);
+        mFixedAddress = PluginBundleValues.isAddressFixed(previousBundle);
         mDisconnect = PluginBundleValues.getDisconnect(previousBundle);
         mSynchronous = PluginBundleValues.getSynchronous(previousBundle);
 
@@ -267,6 +287,8 @@ public final class EditActivity extends AbstractAppCompatPluginActivity
         disconnectBox.setChecked(mDisconnect);
         syncBox.setChecked(mSynchronous);
         syncBox.setEnabled(mDisconnect);
+        fixedAddressBox.setChecked(mFixedAddress);
+        fixedAddressBox.setEnabled(!mPlayer.equals(PluginBundleValues.PLAYER_AUTO));
 
         mServers.clear();
 
@@ -423,7 +445,7 @@ public final class EditActivity extends AbstractAppCompatPluginActivity
     @Override
     public Bundle getResultBundle() {
         return PluginBundleValues.generateBundle(getApplicationContext(),
-                mUdpPort, mPlayer, mProject, mCommandType, mElement, mDisconnect, mSynchronous);
+                mUdpPort, mPlayer, mFixedAddress, mPlayerAddress, mPlayerTcpPort, mProject, mCommandType, mElement, mDisconnect, mSynchronous);
     }
 
     @NonNull

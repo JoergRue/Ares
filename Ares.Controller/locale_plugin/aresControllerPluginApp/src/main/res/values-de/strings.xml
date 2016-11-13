@@ -17,4 +17,6 @@
     <string name="disconnectHint">(deaktivieren, um direkt danach einen weiteren Befehl an den gleichen Player zu senden)</string>
     <string name="synchronous">Synchronous</string>
     <string name="syncHint">(aktivieren, damit der Task wartet bis der Befehl ausgeführt wurde)</string>
+    <string name="fixedAddress">Fixe IP/Port</string>
+    <string name="fixedAddrDesc">(falls Player nicht gefunden wird wenn das Display ausgeschaltet ist)</string>
 </resources>

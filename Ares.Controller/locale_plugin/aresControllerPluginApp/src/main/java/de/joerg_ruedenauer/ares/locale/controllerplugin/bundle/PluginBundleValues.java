@@ -63,6 +63,33 @@ public final class PluginBundleValues {
             = "de.joerg_ruedenauer.ares.locale.controllerplugin.extra.STRING_PLAYER"; //$NON-NLS-1$
 
     /**
+     * Type: {@code boolean}.
+     * <p>
+     * Whether the player IP address and TCP port are fixed
+     */
+    @NonNull
+    public static final String BUNDLE_EXTRA_BOOL_FIXED_ADDRESS
+            = "de.joerg_ruedenauer.ares.locale.controllerplugin.extra.BOOL_FIXED_ADDRESS"; //$NON-NLS-1$
+
+    /**
+     * Type: {@code int}.
+     * <p>
+     * Player TCP port if port is fixed
+     */
+    @NonNull
+    public static final String BUNDLE_EXTRA_INT_PLAYER_TCP_PORT
+            = "de.joerg_ruedenauer.ares.locale.controllerplugin.extra.INT_PLAYER_TCP_PORT"; //$NON-NLS-1$
+
+    /**
+     * Type: {@code String}.
+     * <p>
+     * Player IP address if address is fixed
+     */
+    @NonNull
+    public static final String BUNDLE_EXTRA_STRING_PLAYER_IP_ADDRESS
+            = "de.joerg_ruedenauer.ares.locale.controllerplugin.extra.STRING_PLAYER_IP_ADDRESS"; //$NON-NLS-1$
+
+    /**
      * Type: {@code String}.
      * <p>
      * Project file name.
@@ -160,16 +187,22 @@ public final class PluginBundleValues {
      */
     @NonNull
     public static Bundle generateBundle(@NonNull final Context context, final int playerPort,
-            @NonNull final String player, final String projectFile, final CommandType commandType,
+            @NonNull final String player, final boolean fixedAddress, @NonNull final String ipAddress,
+                                        final int tcpPort,
+                                        final String projectFile, final CommandType commandType,
                                         final int elementId, final boolean disconnect,
                                         final boolean synchronous) {
         assertNotNull(context, "context"); //$NON-NLS-1$
         assertNotEmpty(player, "player"); //$NON-NLS-1$
+        assertNotEmpty(ipAddress, "ipaAddress");
 
         final Bundle result = new Bundle();
         result.putInt(BUNDLE_EXTRA_INT_VERSION_CODE, AppBuildInfo.getVersionCode(context));
         result.putInt(BUNDLE_EXTRA_INT_PLAYER_PORT, playerPort);
         result.putString(BUNDLE_EXTRA_STRING_PLAYER, player);
+        result.putBoolean(BUNDLE_EXTRA_BOOL_FIXED_ADDRESS, fixedAddress);
+        result.putString(BUNDLE_EXTRA_STRING_PLAYER_IP_ADDRESS, ipAddress);
+        result.putInt(BUNDLE_EXTRA_INT_PLAYER_TCP_PORT, tcpPort);
         result.putString(BUNDLE_EXTRA_STRING_PROJECT_FILE, projectFile);
         result.putInt(BUNDLE_EXTRA_INT_COMMAND_TYPE, commandType.ordinal());
         result.putInt(BUNDLE_EXTRA_INT_ELEMENT_ID, elementId);
@@ -187,6 +220,49 @@ public final class PluginBundleValues {
     public static String getPlayer(@NonNull final Bundle bundle) {
         String val = bundle.getString(BUNDLE_EXTRA_STRING_PLAYER);
         return val != null ? val : PLAYER_AUTO;
+    }
+
+    /**
+     * @param bundle A valid plug-in bundle.
+     * @return Whether the player address is fixed
+     */
+    public static boolean isAddressFixed(@NonNull final Bundle bundle) {
+        if (bundle.containsKey(BUNDLE_EXTRA_BOOL_FIXED_ADDRESS)) {
+            boolean val = bundle.getBoolean(BUNDLE_EXTRA_BOOL_FIXED_ADDRESS, false);
+            return val;
+        }
+        else {
+            return false;
+        }
+    }
+
+    /**
+     * @param bundle A valid plug-in bundle.
+     * @return The player address
+     */
+    @NonNull
+    public static String getPlayerAddress(@NonNull final Bundle bundle) {
+        if (bundle.containsKey(BUNDLE_EXTRA_STRING_PLAYER_IP_ADDRESS)) {
+            String val = bundle.getString(BUNDLE_EXTRA_STRING_PLAYER_IP_ADDRESS);
+            return val != null ? val : "";
+        }
+        else {
+            return "";
+        }
+    }
+
+    /**
+     * @param bundle A valid plug-in bundle.
+     * @return The player tcp port
+     */
+    public static int getPlayerTcpPort(@NonNull final Bundle bundle) {
+        if (bundle.containsKey(BUNDLE_EXTRA_INT_PLAYER_TCP_PORT)) {
+            int val = bundle.getInt(BUNDLE_EXTRA_INT_PLAYER_TCP_PORT, 11112);
+            return val;
+        }
+        else {
+            return 11112;
+        }
     }
 
     /**
