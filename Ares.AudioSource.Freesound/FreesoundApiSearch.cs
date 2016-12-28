@@ -35,6 +35,8 @@ namespace Ares.AudioSource.Freesound
             request.AddParameter("query", query);
             request.AddParameter("token", Freesound.ApiKey.Key);
 
+            request.RequestFormat = DataFormat.Json;
+
             IRestResponse<SearchResultDtos.RootObject> response = m_Client.Execute<SearchResultDtos.RootObject>(request);
 
             m_Monitor.ThrowIfCancellationRequested();
@@ -48,7 +50,7 @@ namespace Ares.AudioSource.Freesound
                 // If there is an error message without exception, throw a new exception with that message
                 throw new Exception(response.ErrorMessage);
             }
-            else
+            else if (response.Data.count > 0)
             {
                 // Otherwise work with the results and return them
                 ICollection<ISearchResult> searchResults = new List<ISearchResult>();
@@ -81,6 +83,11 @@ namespace Ares.AudioSource.Freesound
 
                 totalNumberOfResults = response.Data.count;
                 return searchResults;
+            }
+            else
+            {
+                totalNumberOfResults = 0;
+                return new List<ISearchResult>();
             }
         }
     }

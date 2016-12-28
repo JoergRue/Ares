@@ -77,6 +77,7 @@ namespace Ares.Editor.AudioSourceSearch
             this.audioSourceComboBox = new System.Windows.Forms.ToolStripComboBox();
             this.searchBox = new System.Windows.Forms.ToolStripTextBox();
             this.searchButton = new System.Windows.Forms.ToolStripButton();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -93,19 +94,18 @@ namespace Ares.Editor.AudioSourceSearch
             // 
             // splitContainer1.Panel1
             // 
-            resources.ApplyResources(this.splitContainer1.Panel1, "splitContainer1.Panel1");
             this.splitContainer1.Panel1.Controls.Add(this.toolStrip2);
             this.splitContainer1.Panel1.Controls.Add(this.resultsListView);
             // 
             // splitContainer1.Panel2
             // 
-            resources.ApplyResources(this.splitContainer1.Panel2, "splitContainer1.Panel2");
             this.splitContainer1.Panel2.Controls.Add(this.informationBox);
             this.splitContainer1.Panel2.Controls.Add(this.label1);
             // 
             // toolStrip2
             // 
             resources.ApplyResources(this.toolStrip2, "toolStrip2");
+            this.toolStrip2.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.prevPageButton,
             this.pageLabel,
@@ -120,8 +120,8 @@ namespace Ares.Editor.AudioSourceSearch
             // 
             // pageLabel
             // 
-            resources.ApplyResources(this.pageLabel, "pageLabel");
             this.pageLabel.Name = "pageLabel";
+            resources.ApplyResources(this.pageLabel, "pageLabel");
             // 
             // nextPageButton
             // 
@@ -158,36 +158,37 @@ namespace Ares.Editor.AudioSourceSearch
             // 
             // searchResultContextMenu
             // 
-            resources.ApplyResources(this.searchResultContextMenu, "searchResultContextMenu");
+            this.searchResultContextMenu.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.searchResultContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.playToolStripMenuItem,
             this.stopToolStripMenuItem,
             this.downloadMenuItem,
             this.downloadToMenuItem});
             this.searchResultContextMenu.Name = "contextMenuStrip1";
+            resources.ApplyResources(this.searchResultContextMenu, "searchResultContextMenu");
             // 
             // playToolStripMenuItem
             // 
-            resources.ApplyResources(this.playToolStripMenuItem, "playToolStripMenuItem");
             this.playToolStripMenuItem.Name = "playToolStripMenuItem";
+            resources.ApplyResources(this.playToolStripMenuItem, "playToolStripMenuItem");
             this.playToolStripMenuItem.Click += new System.EventHandler(this.playToolStripMenuItem_Click);
             // 
             // stopToolStripMenuItem
             // 
-            resources.ApplyResources(this.stopToolStripMenuItem, "stopToolStripMenuItem");
             this.stopToolStripMenuItem.Name = "stopToolStripMenuItem";
+            resources.ApplyResources(this.stopToolStripMenuItem, "stopToolStripMenuItem");
             this.stopToolStripMenuItem.Click += new System.EventHandler(this.stopToolStripMenuItem_Click);
             // 
             // downloadMenuItem
             // 
-            resources.ApplyResources(this.downloadMenuItem, "downloadMenuItem");
             this.downloadMenuItem.Name = "downloadMenuItem";
+            resources.ApplyResources(this.downloadMenuItem, "downloadMenuItem");
             this.downloadMenuItem.Click += new System.EventHandler(this.downloadMenuItem_Click);
             // 
             // downloadToMenuItem
             // 
-            resources.ApplyResources(this.downloadToMenuItem, "downloadToMenuItem");
             this.downloadToMenuItem.Name = "downloadToMenuItem";
+            resources.ApplyResources(this.downloadToMenuItem, "downloadToMenuItem");
             this.downloadToMenuItem.Click += new System.EventHandler(this.downloadToMenuItem_Click);
             // 
             // informationBox
@@ -203,48 +204,49 @@ namespace Ares.Editor.AudioSourceSearch
             // 
             // toolStrip1
             // 
-            resources.ApplyResources(this.toolStrip1, "toolStrip1");
+            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.playButton,
             this.stopButton,
             this.audioSourceComboBox,
             this.searchBox,
             this.searchButton});
+            resources.ApplyResources(this.toolStrip1, "toolStrip1");
             this.toolStrip1.Name = "toolStrip1";
             // 
             // playButton
             // 
-            resources.ApplyResources(this.playButton, "playButton");
             this.playButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.playButton, "playButton");
             this.playButton.Image = global::Ares.Editor.ImageResources.RunSmall;
             this.playButton.Name = "playButton";
             this.playButton.Click += new System.EventHandler(this.playButton_Click);
             // 
             // stopButton
             // 
-            resources.ApplyResources(this.stopButton, "stopButton");
             this.stopButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.stopButton, "stopButton");
             this.stopButton.Image = global::Ares.Editor.ImageResources.StopSmall;
             this.stopButton.Name = "stopButton";
             this.stopButton.Click += new System.EventHandler(this.stopButton_Click);
             // 
             // audioSourceComboBox
             // 
-            resources.ApplyResources(this.audioSourceComboBox, "audioSourceComboBox");
             this.audioSourceComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.audioSourceComboBox.Name = "audioSourceComboBox";
+            resources.ApplyResources(this.audioSourceComboBox, "audioSourceComboBox");
             this.audioSourceComboBox.SelectedIndexChanged += new System.EventHandler(this.audioSourceComboBox_SelectedIndexChanged);
             // 
             // searchBox
             // 
-            resources.ApplyResources(this.searchBox, "searchBox");
             this.searchBox.Name = "searchBox";
+            resources.ApplyResources(this.searchBox, "searchBox");
             this.searchBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.searchBox_KeyPress);
             // 
             // searchButton
             // 
-            resources.ApplyResources(this.searchButton, "searchButton");
             this.searchButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.searchButton, "searchButton");
             this.searchButton.Name = "searchButton";
             this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
             // 
@@ -295,5 +297,6 @@ namespace Ares.Editor.AudioSourceSearch
         private System.Windows.Forms.ToolStripButton prevPageButton;
         private System.Windows.Forms.ToolStripLabel pageLabel;
         private System.Windows.Forms.ToolStripButton nextPageButton;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
     }
 }

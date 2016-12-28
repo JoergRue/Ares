@@ -46,8 +46,6 @@ namespace Ares.Editor.AudioSourceSearch
     /// The target path for each audio file to be downloaded is determined when the drag & drop operation is started.
     /// The actual download only occurs when (and if) the drag & drop operation completes.
     /// 
-    /// TODO: Add "Download as" functionality so the user can download a search result to a specific folder & filename
-    ///
     /// TODO: Possibly add additional preview functionality so that any ISearchResult can be previewed. How?
     ///       - extend CanPlaySelectedElement() to allow preview for all ISearchResults
     ///       - extend PlaySelectedElement() to temporarily download required files for ISearchResults which don't have
@@ -300,7 +298,7 @@ namespace Ares.Editor.AudioSourceSearch
 
             IEnumerable<SearchResultListItem> selectedItems = GetSelectedItems();
 
-            AresTargetDirectoryProvider targetDirectoryProvider = new AresTargetDirectoryProvider(m_selectedAudioSource);
+            AresTargetDirectoryProvider targetDirectoryProvider = new AresTargetDirectoryProvider(m_selectedAudioSource, String.Empty);
             AudioSearchResultType overallItemAudioType = FindAndVerifySelectedAudioType(selectedItems);
 
             // Decide depending on the overall AudioType of the selected items
@@ -722,8 +720,7 @@ namespace Ares.Editor.AudioSourceSearch
                 
 
                 downloadMenuItem.Enabled = selectionIsNotEmpty;
-                //downloadToMenuItem.Enabled = selectionIsNotEmpty;
-                downloadToMenuItem.Enabled = false;
+                downloadToMenuItem.Enabled = selectionIsNotEmpty;
                 
                 playButton.Enabled = selectionIsNotEmpty && !isCurrentlyPlaying && isPlaybackAllowed;
                 playToolStripMenuItem.Enabled = selectionIsNotEmpty && !isCurrentlyPlaying && isPlaybackAllowed;
@@ -816,13 +813,40 @@ namespace Ares.Editor.AudioSourceSearch
                 .Select(item => item.SearchResult as IFileSearchResult)
                 // Filter out null/incompatible search results
                 .Where(result => result != null),
-                new AresTargetDirectoryProvider(m_selectedAudioSource)
+                new AresTargetDirectoryProvider(m_selectedAudioSource, String.Empty)
             );
         }
 
         private void downloadToMenuItem_Click(object sender, EventArgs e)
         {
-            // "Download to" functionality would go here, see TODO entry in the class comments
+            String location = Ares.Settings.Settings.Instance.LastDownloadLocation;
+            if (String.IsNullOrEmpty(location))
+            {
+                location = Ares.Settings.Settings.Instance.SoundDirectory;
+            }
+            if (location == Ares.Settings.Settings.Instance.SoundDirectory)
+            {
+                String subPath = System.IO.Path.Combine(location, "OnlineAudioSources");
+                if (System.IO.Directory.Exists(subPath))
+                {
+                    location = subPath;
+                }
+            }
+            folderBrowserDialog1.SelectedPath = location;
+            if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
+            {
+                location = folderBrowserDialog1.SelectedPath;
+                Ares.Settings.Settings.Instance.LastDownloadLocation = location;
+                // Download the selected files to the selected target path
+                DeployRequiredFilesForSearchResults(
+                    GetSelectedItems()
+                    // Extract the IFileSearchResult from the SearchResultListItem
+                    .Select(item => item.SearchResult as IFileSearchResult)
+                    // Filter out null/incompatible search results
+                    .Where(result => result != null),
+                    new AresTargetDirectoryProvider(m_selectedAudioSource, location)
+                );
+            }
         }
 
         private void audioSourceComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -914,10 +938,12 @@ namespace Ares.Editor.AudioSourceSearch
     class AresTargetDirectoryProvider: ITargetDirectoryProvider
     {
         private IAudioSource m_audioSource;
+        private String m_location;
 
-        public AresTargetDirectoryProvider(IAudioSource audioSource)
+        public AresTargetDirectoryProvider(IAudioSource audioSource, String location)
         {
             this.m_audioSource = audioSource;
+            m_location = location;
         }
 
         public string GetFolderWithinLibrary(IDeployableAudioFile audioFile)
@@ -933,17 +959,24 @@ namespace Ares.Editor.AudioSourceSearch
 
         public string GetFullPath(IDeployableAudioFile audioFile)
         {
-            string basePath = null;
-            switch (audioFile.FileType)
+            if (String.IsNullOrEmpty(m_location))
             {
-                case SoundFileType.Music:
-                    basePath = Ares.Settings.Settings.Instance.MusicDirectory;
-                    break;
-                case SoundFileType.SoundEffect:
-                    basePath = Ares.Settings.Settings.Instance.SoundDirectory;
-                    break;
+                string basePath = null;
+                switch (audioFile.FileType)
+                {
+                    case SoundFileType.Music:
+                        basePath = Ares.Settings.Settings.Instance.MusicDirectory;
+                        break;
+                    case SoundFileType.SoundEffect:
+                        basePath = Ares.Settings.Settings.Instance.SoundDirectory;
+                        break;
+                }
+                return System.IO.Path.Combine(basePath, GetPathWithinLibrary(audioFile));
             }
-            return System.IO.Path.Combine(basePath, GetPathWithinLibrary(audioFile));
+            else
+            {
+                return System.IO.Path.Combine(m_location, audioFile.Filename);
+            }
         }
 
     }

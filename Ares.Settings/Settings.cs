@@ -30,6 +30,8 @@ namespace Ares.Settings
         public String MusicDirectory { get; set; }
         public String SoundDirectory { get; set; }
 
+        public String LastDownloadLocation { get; set; }
+
         public String WindowLayout { get; set; }
 
         public RecentFiles RecentFiles { get; set; }
@@ -110,6 +112,8 @@ namespace Ares.Settings
 		public String MusicDirectory { get { return Data.MusicDirectory; } private set { Data.MusicDirectory = value; } }
 		public String SoundDirectory { get { return Data.SoundDirectory; } private set { Data.SoundDirectory = value; } }
 		#endif
+
+        public String LastDownloadLocation { get { return Data.LastDownloadLocation; } set { Data.LastDownloadLocation = value; } }
 
         public String WindowLayout { get { return Data.WindowLayout; } set { Data.WindowLayout = value; } }
 
@@ -435,6 +439,7 @@ namespace Ares.Settings
 			MusicFolder = GetDefaultMusicDirectory();
 			SoundFolder = GetDefaultSoundDirectory();
 			#endif
+            LastDownloadLocation = SoundDirectory;
             GlobalVolume = MusicVolume = SoundVolume = 100;
             TcpPort = 11112;
             WebTcpPort = 11113;
@@ -489,6 +494,7 @@ namespace Ares.Settings
             writer.WriteAttributeString("Version", 1.ToString(System.Globalization.CultureInfo.InvariantCulture));
             writer.WriteElementString("MusicDirectory", MusicDirectory);
             writer.WriteElementString("SoundsDirectory", SoundDirectory);
+            writer.WriteElementString("LastDownloadLocation", LastDownloadLocation);
             writer.WriteStartElement("WindowLayout");
             writer.WriteRaw(WindowLayout);
             writer.WriteEndElement();
@@ -559,6 +565,7 @@ namespace Ares.Settings
                 throw new XmlException("Expected Settings element");
             }
             Version = reader.GetIntegerAttributeOrDefault("Version", 0);
+            LastDownloadLocation = String.Empty;
             reader.Read();
             while (reader.IsStartElement())
             {
@@ -569,6 +576,10 @@ namespace Ares.Settings
                 else if (reader.IsStartElement("SoundsDirectory"))
                 {
                     SoundDirectory = reader.ReadElementString();
+                }
+                else if (reader.IsStartElement("LastDownloadLocation"))
+                {
+                    LastDownloadLocation = reader.ReadElementString();
                 }
                 else if (reader.IsStartElement("WindowLayout"))
                 {
@@ -755,6 +766,10 @@ namespace Ares.Settings
                 }
             }
             reader.ReadEndElement();
+            if (LastDownloadLocation == String.Empty)
+            {
+                LastDownloadLocation = SoundDirectory;
+            }
         }
 		#endif
 

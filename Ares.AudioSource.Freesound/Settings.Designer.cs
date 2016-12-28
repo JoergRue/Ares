@@ -34,7 +34,7 @@ namespace Ares.AudioSource.Freesound {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("search/text/")]
+        [global::System.Configuration.DefaultSettingValueAttribute("search/text//")]
         public string TextSearchPath {
             get {
                 return ((string)(this["TextSearchPath"]));
