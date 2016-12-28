@@ -118,28 +118,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="splitContainer1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 33</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="splitContainer1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>5, 5, 5, 5</value>
-  </data>
-  <data name="prevPageButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>28, 29</value>
-  </data>
-  <data name="pageLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>49, 29</value>
-  </data>
-  <data name="nextPageButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>28, 29</value>
-  </data>
-  <data name="toolStrip2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 147</value>
-  </data>
-  <data name="toolStrip2.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 2, 0</value>
-  </data>
   <data name="toolStrip2.Size" type="System.Drawing.Size, System.Drawing">
     <value>437, 32</value>
   </data>
@@ -173,94 +151,54 @@
   <data name="downloadToMenuItem.Text" xml:space="preserve">
     <value>Download nach ...</value>
   </data>
-  <data name="searchResultContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>239, 124</value>
+  <data name="searchSimilarItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>238, 30</value>
   </data>
-  <data name="resultsListView.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>5, 5, 5, 5</value>
+  <data name="searchSimilarItem.Text" xml:space="preserve">
+    <value>Suche Ähnliches </value>
+  </data>
+  <data name="searchResultContextMenu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>239, 154</value>
   </data>
   <data name="resultsListView.Size" type="System.Drawing.Size, System.Drawing">
     <value>437, 179</value>
   </data>
-  <data name="informationBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>20, 45</value>
-  </data>
-  <data name="informationBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>8, 8, 8, 8</value>
-  </data>
   <data name="informationBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>394, 127</value>
-  </data>
-  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>20, 15</value>
-  </data>
-  <data name="label1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>5, 0, 5, 0</value>
-  </data>
-  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>119, 25</value>
   </data>
   <data name="splitContainer1.Size" type="System.Drawing.Size, System.Drawing">
     <value>437, 373</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="splitContainer1.SplitterDistance" type="System.Int32, mscorlib">
-    <value>179</value>
-  </data>
-  <data name="splitContainer1.SplitterWidth" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="playButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>28, 30</value>
-  </data>
   <data name="playButton.Text" xml:space="preserve">
     <value>Abspielen</value>
-  </data>
-  <data name="stopButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>28, 30</value>
   </data>
   <data name="stopButton.Text" xml:space="preserve">
     <value>Stoppen</value>
   </data>
-  <data name="audioSourceComboBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>199, 33</value>
-  </data>
-  <data name="searchBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 33</value>
-  </data>
   <data name="searchButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAAFiUAABYlAUlSJPAAAALuSURBVEhL3VPrS5NRHBbKLh/qL+ijKUiFZdZSwSJjfukG
-        zvBDlBkR0ZiJJUvx1WEfMjPvphhaM2+bOedtXmIYpimsiRXLrawIZ95Z5tyme5/OmYeoqHxF+1APHA7n
-        fc/veX7P73lfr/8TpZruLZW6/tuV7X2W/A69s0rXj/vKbkdhdedQVmljOseVbWJXV47qtv4d1Z3PTc09
-        JnRbrBiYtMM4y6Pr0xzUxmHklykXbuTV9ibfVPqxEuGgnVPyrsH3GHPyGHMBI2S9nQcMs0D7BKCb4cHV
-        a11JGQ/6JBy3gZUKQzUZS1OvCVYHD9sCYHfDs1uJyGs70DwCaMeAhkkeKVk107KUoiRWKgyqjj7LE/OI
-        p3NKTkF3ejYTF3rioM5KBKaAXOUzh1Re8JKVCoP6sd5pJDOnY7EtMgdkH3ECJuKg5zNQNUxcTAMPzVO4
-        LLszz0qFQdVh8AT6xrE0e9o5HQ/NYGCOZDBOiIeIExtxMuHGpWt5YKXCoCS29dYvnkBpx2ay6E7JnxJS
-        1TugkeQwSM4VpknEJmTbWakw3FPph9SGYU+nLYSIzpyOhZ4peZUFMJIzFbil1rtjpJkGVioM+RWt6dwj
-        rUs35UYrIdeMArVk5nQsLSTcAeLsI8lDP+2GlFMsFmQqEBgY6M3Kl0dOTsvGjLv1vZxG62qY4D1hNs8s
-        uTCRHF6Qzil5Yq4WV+JTMd50CrVFSZD4+wv/HxSFNX5cdlUPV9LgKmgzopJ8LTTQCtMEMjW9iOMU/EUZ
-        x/fID2G0XPxNJCwsbD2jWB4Xiou9E9JL0+LSSl7JyKcolXN87NUc+7n4TGN0TGJ5dMTRD8mRYhjlB34Q
-        kUgk6xjF6iAOCYoSB+/Fr0RWlMmfEBq08/BfFxEF+IT9TiRiX8RWdm11EAVsD/9ZxFBy0nbiYPBxdmX1
-        2B/gc+R7kbpUMSThouvs9doghInQdSbyGOLORp9nr9YOobt9d4Xs8Y2KOR0VLhJt28we/9Pw8voKkIts
-        PfbU8zgAAAAASUVORK5CYII=
+        YQUAAAAJcEhZcwAAFiUAABYlAUlSJPAAAALuSURBVEhL3VPtS1NRHBbKXj7UX9BHU5AKy6ylwoqM+aU3
+        cIYfosyIiIYmlpjidWIfsmW+m2Jozpy6mTpfmi8xDNMU1sSK5VZWxGa+s8w5p7tP58xDVFRe0T7UA4fD
+        uff8nuf3/J57vf5PlDZ0b6nS9d+uau+z5Hfo51W6ftxXdjsLqzuHskqbMjiubBO7unJUt/XvqO58bmrp
+        MaHbYsPAhAPGGR5dn2ahMQ4jv6xi4UZebW/KTaUfKxEO2jkl7xp8j9F5HqMuwErW2znAMAO0jwO6aR5c
+        vdaVnFnRJ+W4DaxUGKrJWJp7TbA5edgXAIcbnt1GRF47gBYroB0FGid4pGbVTMWmFiWzUmFQd/RZnpit
+        ns4pOQXd6dlMXOiJgzobEZgEcpXPnLKkgpesVBg0j/XzRjJzOhb7InNAdus8YCIOej4DqmHiYgp4YJ7E
+        5dg7c6xUGNQdBk+gb5xLs6ed0/HQDAZmSQZjhHiIOLETJ+NuXLqWB1YqDEpiW2/74gmUdmwmi+6U/Ckh
+        Vb8DmkgOg+RcaZpATEK2g5UKwz21fkhjGPZ02kqI6MzpWOiZkqssgJGcqcAtjd4dLVMYWKkw5Fc+yuAe
+        al26STceEfKGEaCWzJyOpZWEO0CcfSR56KfckHHyxQJFOgIDA71Z+fLIyWndmHm3vpdr0Loax3lPmC3T
+        Sy5MJIcXpHNKnpirxZX4NIw1n0JtUTKk/v7C/4f0who/LlvVw5U0ugrajKgiXwsNtNI0DkVDL+I4OX8x
+        luN7kg5hpFzyTUQsFq9nFMvjQnGxd0JGqTxOXvIqlnyKsiSOj7ma4zgXrzBGRSeWR4Uf/ZASIYEx6cAP
+        IlKpdB2jWB0kIUGRkuC9+JXIijL5E0KDdh7+6yKiAB/x70TC94VvZddWB1HA9rCfRQwlJ+0nDgYfZ1dW
+        j/0BPke+F6lLk0AaJrrOXq8NQpgIXWcijiHubNR59mrtELrbd1fIHt/I6NORYSLRts3s8T8NL6+vgB9s
+        OtJGxaAAAAAASUVORK5CYII=
 </value>
-  </data>
-  <data name="searchButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>28, 30</value>
   </data>
   <data name="searchButton.Text" xml:space="preserve">
     <value>Suche</value>
   </data>
-  <data name="toolStrip1.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 2, 0</value>
-  </data>
   <data name="toolStrip1.Size" type="System.Drawing.Size, System.Drawing">
     <value>437, 33</value>
-  </data>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>10, 20</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>437, 406</value>

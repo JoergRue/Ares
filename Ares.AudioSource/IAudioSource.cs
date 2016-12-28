@@ -59,8 +59,6 @@ namespace Ares.AudioSource
         /// <summary>
         /// Search for audio (music, sounds, ...) through this IAudioSource
         /// </summary>
-        /// <param name="type">The requested IAudioSearchResultType. May be either null indicate that any
-        ///                    type of result will be fine.</param>
         /// <param name="query">The actual search query/keywords.</param>
         /// <param name="pageSize">The page size (number of results per page) to be retrieved.</param>
         /// <param name="pageIndex">The zero-based index of the results page to be retrieved (first page is 0).</param>
@@ -74,6 +72,25 @@ namespace Ares.AudioSource
             int pageSize, 
             int pageIndex, 
             IAbsoluteProgressMonitor monitor, 
+            out int? totalNumberOfResults
+        );
+
+        /// <summary>
+        /// Search for similar audio (music, sounds, ...) through this IAudioSource
+        /// </summary>
+        /// <param name="id">The id of a search result from this audio source for which similar audio shall be searched.</param>
+        /// <param name="pageSize">The page size (number of results per page) to be retrieved.</param>
+        /// <param name="pageIndex">The zero-based index of the results page to be retrieved (first page is 0).</param>
+        /// <param name="monitor">The IAbsoluteProgressMonitor which the audio source should use to give feedback on the search progress.
+        ///                       Initially the monitor will be set to "indeterminate" progress, but the audio source can and should
+        ///                       use it to indicate actual progress where possible.</param>
+        /// <param name="totalNumberOfResults">An optional output parameter to indicate the total number of results (if known), regardless of the selected page size & index.</param>
+        /// <returns></returns>
+        Task<IEnumerable<ISearchResult>> SearchSimilar(
+            string id,
+            int pageSize,
+            int pageIndex,
+            IAbsoluteProgressMonitor monitor,
             out int? totalNumberOfResults
         );
     }

@@ -69,6 +69,7 @@ namespace Ares.Editor.AudioSourceSearch
             this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.downloadMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.downloadToMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.searchSimilarItem = new System.Windows.Forms.ToolStripMenuItem();
             this.informationBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
@@ -163,7 +164,8 @@ namespace Ares.Editor.AudioSourceSearch
             this.playToolStripMenuItem,
             this.stopToolStripMenuItem,
             this.downloadMenuItem,
-            this.downloadToMenuItem});
+            this.downloadToMenuItem,
+            this.searchSimilarItem});
             this.searchResultContextMenu.Name = "contextMenuStrip1";
             resources.ApplyResources(this.searchResultContextMenu, "searchResultContextMenu");
             // 
@@ -190,6 +192,12 @@ namespace Ares.Editor.AudioSourceSearch
             this.downloadToMenuItem.Name = "downloadToMenuItem";
             resources.ApplyResources(this.downloadToMenuItem, "downloadToMenuItem");
             this.downloadToMenuItem.Click += new System.EventHandler(this.downloadToMenuItem_Click);
+            // 
+            // searchSimilarItem
+            // 
+            this.searchSimilarItem.Name = "searchSimilarItem";
+            resources.ApplyResources(this.searchSimilarItem, "searchSimilarItem");
+            this.searchSimilarItem.Click += new System.EventHandler(this.searchSimilarItem_Click);
             // 
             // informationBox
             // 
@@ -298,5 +306,6 @@ namespace Ares.Editor.AudioSourceSearch
         private System.Windows.Forms.ToolStripLabel pageLabel;
         private System.Windows.Forms.ToolStripButton nextPageButton;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
+        private System.Windows.Forms.ToolStripMenuItem searchSimilarItem;
     }
 }

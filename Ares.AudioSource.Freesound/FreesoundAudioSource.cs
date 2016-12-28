@@ -38,6 +38,18 @@ namespace Ares.AudioSource.Freesound
             return completionSource.Task;
         }
 
+        public Task<IEnumerable<ISearchResult>> SearchSimilar(string id, int pageSize, int pageIndex, IAbsoluteProgressMonitor monitor, out int? totalNumberOfResults)
+        {
+            IEnumerable<ISearchResult> results = new List<ISearchResult>();
+
+            // Perform the search
+            results = new FreesoundApiSearch(this, this.m_Client, monitor)
+                        .GetSimilarSearchResults(id, pageSize, pageIndex, out totalNumberOfResults);
+
+            var completionSource = new TaskCompletionSource<IEnumerable<ISearchResult>>();
+            completionSource.SetResult((ICollection<ISearchResult>)results);
+            return completionSource.Task;
+        }
         #endregion
     }
 }

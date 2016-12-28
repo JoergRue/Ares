@@ -211,31 +211,37 @@
     <value>122, 17</value>
   </metadata>
   <data name="playToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>218, 30</value>
+    <value>268, 30</value>
   </data>
   <data name="playToolStripMenuItem.Text" xml:space="preserve">
     <value>Play</value>
   </data>
   <data name="stopToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>218, 30</value>
+    <value>268, 30</value>
   </data>
   <data name="stopToolStripMenuItem.Text" xml:space="preserve">
     <value>Stop</value>
   </data>
   <data name="downloadMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>218, 30</value>
+    <value>268, 30</value>
   </data>
   <data name="downloadMenuItem.Text" xml:space="preserve">
     <value>Download</value>
   </data>
   <data name="downloadToMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>218, 30</value>
+    <value>268, 30</value>
   </data>
   <data name="downloadToMenuItem.Text" xml:space="preserve">
     <value>Download to ...</value>
   </data>
+  <data name="searchSimilarItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>268, 30</value>
+  </data>
+  <data name="searchSimilarItem.Text" xml:space="preserve">
+    <value>Search similar sounds</value>
+  </data>
   <data name="searchResultContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>219, 124</value>
+    <value>269, 187</value>
   </data>
   <data name="&gt;&gt;searchResultContextMenu.Name" xml:space="preserve">
     <value>searchResultContextMenu</value>
@@ -548,6 +554,12 @@
     <value>downloadToMenuItem</value>
   </data>
   <data name="&gt;&gt;downloadToMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;searchSimilarItem.Name" xml:space="preserve">
+    <value>searchSimilarItem</value>
+  </data>
+  <data name="&gt;&gt;searchSimilarItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;playButton.Name" xml:space="preserve">

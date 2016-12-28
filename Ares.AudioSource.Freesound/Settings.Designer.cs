@@ -40,5 +40,17 @@ namespace Ares.AudioSource.Freesound {
                 return ((string)(this["TextSearchPath"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("search/content//")]
+        public string SimilarSearchPath {
+            get {
+                return ((string)(this["SimilarSearchPath"]));
+            }
+            set {
+                this["SimilarSearchPath"] = value;
+            }
+        }
     }
 }

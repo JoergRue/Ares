@@ -54,7 +54,36 @@ namespace Ares.AudioSource.Test
             return completionSource.Task;
         }
 
+        public Task<IEnumerable<ISearchResult>> SearchSimilar(string id, int pageSize, int pageIndex, IAbsoluteProgressMonitor monitor, out int? totalNumberOfResults)
+        {
+            List<ISearchResult> results = new List<ISearchResult>();
+
+            FileSearchResult soundResult = new FileSearchResult(this, AudioSearchResultType.SoundFile, SOUND_RESOURCE_NAME);
+            soundResult.Title = "Sound-Datei (" + id + ")";
+
+            FileSearchResult musicResult = new FileSearchResult(this, AudioSearchResultType.MusicFile, MUSIC_RESOURCE_NAME);
+            musicResult.Title = "Musik-Datei (" + id + ")";
+
+            ModeElementSearchResult modeResult = new ModeElementSearchResult(this, soundResult, musicResult);
+            modeResult.Title = "Szenario (" + id + ")";
+
+            results.Add(soundResult);
+            results.Add(musicResult);
+            results.Add(modeResult);
+
+            totalNumberOfResults = results.Count;
+
+            var completionSource = new TaskCompletionSource<IEnumerable<ISearchResult>>();
+            completionSource.SetResult(results);
+            return completionSource.Task;
+        }
+
         public bool IsAudioTypeSupported(AudioSearchResultType type)
+        {
+            return true;
+        }
+
+        public bool IsSimilarSearchSupported()
         {
             return true;
         }

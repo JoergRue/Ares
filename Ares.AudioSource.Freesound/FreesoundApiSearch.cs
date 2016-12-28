@@ -23,7 +23,7 @@ namespace Ares.AudioSource.Freesound
 
         internal IEnumerable<ISearchResult> GetSearchResults(string query, int pageSize, int pageIndex, out int? totalNumberOfResults)
         {
-            Console.WriteLine("Searching Freesound for \"{0}\" (page index {1} sized {2}", query, pageIndex, pageSize);
+            // Console.WriteLine("Searching Freesound for \"{0}\" (page index {1} sized {2}", query, pageIndex, pageSize);
 
             //var proxy = System.Net.WebRequest.GetSystemWebProxy(); // Unused!
             var request = new RestSharp.RestRequest(Settings.Default.TextSearchPath, RestSharp.Method.GET);
@@ -37,6 +37,30 @@ namespace Ares.AudioSource.Freesound
 
             request.RequestFormat = DataFormat.Json;
 
+            return ExecuteSearch(request, out totalNumberOfResults);
+        }
+
+        internal IEnumerable<ISearchResult> GetSimilarSearchResults(string id, int pageSize, int pageIndex, out int? totalNumberOfResults)
+        {
+            // Console.WriteLine("Searching Freesound for \"{0}\" (page index {1} sized {2}", query, pageIndex, pageSize);
+
+            //var proxy = System.Net.WebRequest.GetSystemWebProxy(); // Unused!
+            var request = new RestSharp.RestRequest(Settings.Default.SimilarSearchPath, RestSharp.Method.GET);
+
+            request.AddParameter("page", pageIndex + 1);
+            request.AddParameter("page_size", pageSize);
+            request.AddParameter("fields", "id,url,name,tags,images,description,license,duration,username,previews,num_downloads,avg_rating,num_ratings");
+
+            request.AddParameter("target", id);
+            request.AddParameter("token", Freesound.ApiKey.Key);
+
+            request.RequestFormat = DataFormat.Json;
+
+            return ExecuteSearch(request, out totalNumberOfResults);
+        }
+
+        private IEnumerable<ISearchResult> ExecuteSearch(RestSharp.RestRequest request, out int? totalNumberOfResults)
+        { 
             IRestResponse<SearchResultDtos.RootObject> response = m_Client.Execute<SearchResultDtos.RootObject>(request);
 
             m_Monitor.ThrowIfCancellationRequested();

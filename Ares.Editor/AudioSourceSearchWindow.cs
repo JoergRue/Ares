@@ -84,6 +84,7 @@ namespace Ares.Editor.AudioSourceSearch
         private int m_searchPageSize = 50;
         private int m_searchPageIndex = 0;
         private string m_searchQuery = null;
+        private string m_searchId = String.Empty;
 
         private PluginManager m_PluginManager;
         private ICollection<IAudioSource> m_AudioSources;
@@ -153,7 +154,13 @@ namespace Ares.Editor.AudioSourceSearch
             m_searchPageIndex = 0;
 
             // Run a search for the now current parameters
-            SearchAsync(query, m_searchPageIndex, m_searchPageSize);
+            SearchAsync(query, String.Empty, m_searchPageIndex, m_searchPageSize);
+        }
+
+        private void SearchSimilarAsync()
+        {
+            String id = GetSelectedItems().First().SearchResult.Id;
+            SearchAsync(String.Empty, id, m_searchPageIndex, m_searchPageSize);
         }
 
         /// <summary>
@@ -164,7 +171,7 @@ namespace Ares.Editor.AudioSourceSearch
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public Task<IEnumerable<ISearchResult>> SearchAsync(string query, int pageIndex, int pageSize)
+        public Task<IEnumerable<ISearchResult>> SearchAsync(string query, string id, int pageIndex, int pageSize)
         {
             TaskProgressMonitor baseMonitor = new TaskProgressMonitor(this, StringResources.SearchingForAudio, new CancellationTokenSource());
             IAbsoluteProgressMonitor absoluteMonitor = new AbsoluteProgressMonitor(baseMonitor, 1, StringResources.SearchingForAudio);
@@ -177,16 +184,29 @@ namespace Ares.Editor.AudioSourceSearch
 
                 // Ask the AudioSource for (async) search results
                 try {
-                    Task<IEnumerable<ISearchResult>> searchSubtask = this.m_selectedAudioSource.Search(query, pageSize, pageIndex, absoluteMonitor, out totalNumberOfResults);
+                    if (!String.IsNullOrEmpty(query))
+                    {
+                        Task<IEnumerable<ISearchResult>> searchSubtask = this.m_selectedAudioSource.Search(query, pageSize, pageIndex, absoluteMonitor, out totalNumberOfResults);
 
-                    return searchSubtask.Result;
+                        return searchSubtask.Result;
+                    }
+                    else if (!String.IsNullOrEmpty(id))
+                    {
+                        var searchSubtask = this.m_selectedAudioSource.SearchSimilar(id, pageSize, pageIndex, absoluteMonitor, out totalNumberOfResults);
+                        return searchSubtask.Result;
+                    }
+                    else
+                    {
+                        return Enumerable.Empty<ISearchResult>();
+                    }
                 } catch (OperationCanceledException) {
-                    this.m_searchQuery = "";
+                    this.m_searchQuery = String.Empty;
+                    this.m_searchId = String.Empty;
                     //this.searchBox.Text = this.m_searchQuery;
                     this.m_searchPageIndex = 0;
                     this.m_searchPageSize = pageSize;
 
-                    return new List<ISearchResult>();
+                    return Enumerable.Empty<ISearchResult>();
                 }
             });            
 
@@ -203,7 +223,8 @@ namespace Ares.Editor.AudioSourceSearch
                     TaskHelpers.HandleTaskException(this, t.Exception, StringResources.SearchError);
                 }
 
-                this.m_searchQuery = "";
+                this.m_searchQuery = String.Empty;
+                this.m_searchId = String.Empty;
                 //this.searchBox.Text = this.m_searchQuery;
                 this.m_searchPageIndex = 0;
                 this.m_searchPageSize = pageSize;
@@ -225,6 +246,7 @@ namespace Ares.Editor.AudioSourceSearch
                 this.resultsListView.EndUpdate();
 
                 this.m_searchQuery = query;
+                this.m_searchId = id;
                 //this.searchBox.Text = this.m_searchQuery;
                 this.m_searchPageIndex = pageIndex;
                 this.m_searchPageSize = pageSize;
@@ -725,6 +747,7 @@ namespace Ares.Editor.AudioSourceSearch
 
                 downloadMenuItem.Enabled = selectionIsNotEmpty;
                 downloadToMenuItem.Enabled = selectionIsNotEmpty;
+                searchSimilarItem.Enabled = selectionIsNotEmpty;
                 
                 playButton.Enabled = selectionIsNotEmpty && !isCurrentlyPlaying && isPlaybackAllowed;
                 playToolStripMenuItem.Enabled = selectionIsNotEmpty && !isCurrentlyPlaying && isPlaybackAllowed;
@@ -865,12 +888,12 @@ namespace Ares.Editor.AudioSourceSearch
 
         private void nextPageButton_Click(object sender, EventArgs e)
         {
-            SearchAsync(m_searchQuery, ++m_searchPageIndex, m_searchPageSize);
+            SearchAsync(m_searchQuery, m_searchId, ++m_searchPageIndex, m_searchPageSize);
         }
 
         private void prevPageButton_Click(object sender, EventArgs e)
         {
-            SearchAsync(m_searchQuery, --m_searchPageIndex, m_searchPageSize);
+            SearchAsync(m_searchQuery, m_searchId, --m_searchPageIndex, m_searchPageSize);
         }
 
         #endregion
@@ -887,6 +910,10 @@ namespace Ares.Editor.AudioSourceSearch
             }
         }
 
+        private void searchSimilarItem_Click(object sender, EventArgs e)
+        {
+            SearchSimilarAsync();
+        }
     }
 
     public class SearchResultListItem : ListViewItem
