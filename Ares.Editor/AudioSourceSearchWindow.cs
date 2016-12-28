@@ -299,6 +299,7 @@ namespace Ares.Editor.AudioSourceSearch
             IEnumerable<SearchResultListItem> selectedItems = GetSelectedItems();
 
             AresTargetDirectoryProvider targetDirectoryProvider = new AresTargetDirectoryProvider(m_selectedAudioSource, String.Empty);
+            TargetDirectoryProvider.Current = targetDirectoryProvider;
             AudioSearchResultType overallItemAudioType = FindAndVerifySelectedAudioType(selectedItems);
 
             // Decide depending on the overall AudioType of the selected items
@@ -327,6 +328,7 @@ namespace Ares.Editor.AudioSourceSearch
                     {
                         AfterCancelDrag(selectedFileResults, targetDirectoryProvider, stubFiles);
                     }
+                    TargetDirectoryProvider.Current = null;
                     return;
                 // If the dragged items are ModeElements
                 case AudioSearchResultType.ModeElement:
@@ -348,6 +350,7 @@ namespace Ares.Editor.AudioSourceSearch
                     {
                         AfterCancelDrag(selectedModeElementResults, targetDirectoryProvider, stubFiles);
                     }
+                    TargetDirectoryProvider.Current = null;
                     return;
             }
         }
@@ -429,6 +432,7 @@ namespace Ares.Editor.AudioSourceSearch
 
             // Start a file/folder drag & drop operation for those files
             FileDragInfo info = new FileDragInfo();
+            info.Source = FileSource.Online;
             info.DraggedItems = draggedFiles;
             info.TagsFilter = new TagsFilter();
             return DoDragDrop(info, DragDropEffects.Copy);
@@ -979,6 +983,10 @@ namespace Ares.Editor.AudioSourceSearch
             }
         }
 
+        public void SetBaseTargetDirectory(String directory)
+        {
+            m_location = directory;
+        }
     }
 
 }

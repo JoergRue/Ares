@@ -79,6 +79,20 @@ namespace Ares.AudioSource
         /// <param name="audioFile"></param>
         /// <returns></returns>
         string GetFullPath(IDeployableAudioFile audioFile);
+
+        /// <summary>
+        /// Set the base target directory for the download. If not set, GetPathWithinLibrary is used by GetFullPath.
+        /// </summary>
+        void SetBaseTargetDirectory(String directory);
+    }
+
+    /// <summary>
+    /// Access to the currently used target directory provider. For use in drag & drop.
+    /// </summary>
+    public static class TargetDirectoryProvider
+    {
+        /// The currently used provider. May be null!
+        public static ITargetDirectoryProvider Current { get; set; }
     }
 
     /// <summary>

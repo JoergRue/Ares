@@ -236,6 +236,7 @@ namespace Ares.Editor
                 List<DraggedItem> items = new List<DraggedItem>();
                 treeView1.SelectedNodes.ForEach(node => items.Add((DraggedItem)node.Tag));
                 FileDragInfo info = new FileDragInfo();
+                info.Source = FileSource.LocalFileSystem;
                 info.DraggedItems = items;
                 info.TagsFilter = m_TagsFilter;
                 DoDragDrop(info, DragDropEffects.Copy | DragDropEffects.Move);
@@ -648,6 +649,10 @@ namespace Ares.Editor
                 {
                     e.Effect = DragDropEffects.Move;
                 }
+                else if (e.Data.GetDataPresent(typeof(FileDragInfo)) && ((FileDragInfo)e.Data.GetData(typeof(FileDragInfo))).Source == FileSource.Online && ((e.AllowedEffect & DragDropEffects.Copy) == DragDropEffects.Copy))
+                {
+                    e.Effect = DragDropEffects.Copy;
+                }
                 else
                 {
                     e.Effect = DragDropEffects.None;
@@ -679,10 +684,16 @@ namespace Ares.Editor
             {
                 move = true;
             }
+            else if (e.Data.GetDataPresent(typeof(FileDragInfo)) && ((FileDragInfo)e.Data.GetData(typeof(FileDragInfo))).Source == FileSource.Online && ((e.AllowedEffect & DragDropEffects.Copy) == DragDropEffects.Copy))
+            {
+                move = false;
+            }
             else
             {
                 return;
             }
+
+            bool onlineSource = false;
 
             List<String> files = new List<String>();
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
@@ -696,15 +707,23 @@ namespace Ares.Editor
             }
             else if (e.Data.GetDataPresent(typeof(FileDragInfo)))
             {
-                List<DraggedItem> items = ((FileDragInfo)e.Data.GetData(typeof(FileDragInfo))).DraggedItems;
-                if (items != null)
+                var fileDragInfo = ((FileDragInfo)e.Data.GetData(typeof(FileDragInfo)));
+                if (fileDragInfo.Source == FileSource.LocalFileSystem)
                 {
-                    for (int i = 0; i < items.Count; ++i)
+                    List<DraggedItem> items = fileDragInfo.DraggedItems;
+                    if (items != null)
                     {
-                        String dir = items[i].ItemType == FileType.Music ? Settings.Settings.Instance.MusicDirectory : Settings.Settings.Instance.SoundDirectory;
-                        String path = System.IO.Path.Combine(dir, items[i].RelativePath);
-                        files.Add(path);
+                        for (int i = 0; i < items.Count; ++i)
+                        {
+                            String dir = items[i].ItemType == FileType.Music ? Settings.Settings.Instance.MusicDirectory : Settings.Settings.Instance.SoundDirectory;
+                            String path = System.IO.Path.Combine(dir, items[i].RelativePath);
+                            files.Add(path);
+                        }
                     }
+                }
+                else
+                {
+                    onlineSource = true;
                 }
             }
             else
@@ -713,8 +732,29 @@ namespace Ares.Editor
             TreeNode node = treeView1.GetNodeAt(treeView1.PointToClient(new Point(e.X, e.Y)));
             if (node == null)
                 node = m_Root;
-            this.Invoke(new Action(() => DropFiles(files, move, node)));
-            this.Activate();
+            if (onlineSource)
+            {
+                if (Ares.AudioSource.TargetDirectoryProvider.Current == null)
+                {
+                    return;
+                }
+                String targetDir = m_FileType == FileType.Music ? Settings.Settings.Instance.MusicDirectory : Settings.Settings.Instance.SoundDirectory;
+                String targetPath = System.IO.Path.Combine(targetDir, ((DraggedItem)node.Tag).RelativePath);
+                if (!System.IO.Directory.Exists(targetPath))
+                {
+                    targetPath = System.IO.Directory.GetParent(targetPath).FullName;
+                }
+                if (!System.IO.Directory.Exists(targetPath))
+                {
+                    return;
+                }
+                Ares.AudioSource.TargetDirectoryProvider.Current.SetBaseTargetDirectory(targetPath);
+            }
+            else
+            {
+                this.Invoke(new Action(() => DropFiles(files, move, node)));
+                this.Activate();
+            }
         }
 
         private void DropFiles(List<String> files, bool move, TreeNode targetNode)
@@ -1130,8 +1170,15 @@ namespace Ares.Editor
         }
     }
 
+    public enum FileSource
+    {
+        Online,
+        LocalFileSystem
+    }
+
     public class FileDragInfo
     {
+        public FileSource Source;
         public List<DraggedItem> DraggedItems { get; set; }
         public TagsFilter TagsFilter { get; set; }
     }
