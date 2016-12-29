@@ -1,3 +1,15 @@
+Version 3.2.0
+----------------------------------------------------------------------------------
+- Allgemein: Tasker-Plugin zur Steuerung des Players hinzugefügt
+- Editor: Drag & Drop von Dateien von der Online-Suche zum Geräusche- und 
+  Musik-Explorer ermöglicht
+- Editor: "Download nach" zur Online-Suche hinzugefügt
+- Editor: "Suche Ähnliche" zur Online-Suche hinzugefügt
+- Editor: Leere Namen für Projekte / Modi / Elemente verhindert
+- Editor: Fehlermeldung beim unbeabsichtigten "Verschieben" einer Datei / eines
+  Verzeichnisses verhindert
+- Player: Fix für seltenen Bug beim Trennen der Verbindung mit dem Controller
+
 Version 3.1.0
 ----------------------------------------------------------------------------------
 - Allgemein: Ping-Intervall zwischen Playern und Controllern erhöht

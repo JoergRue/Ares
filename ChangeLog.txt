@@ -1,3 +1,14 @@
+Version 3.2.0
+----------------------------------------------------------------------------------
+- General: Added Tasker plugin to control the Player
+- Editor: Enabled drag & drop of sounds from online audio search to sound and
+  music explorer windows
+- Editor: Added "download to" for online audio search
+- Editor: Added "search similar sounds" to online audio search
+- Editor: Disallow empty names for projects / modes / elements
+- Editor: Prevent error message on involuntary 'move' of file / directory
+- Player: Fix for rare bug occuring during Controller disconnect
+
 Version 3.1.0
 ----------------------------------------------------------------------------------
 - General: increased ping interval between Players and Controllers
