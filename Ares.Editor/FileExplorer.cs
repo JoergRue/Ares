@@ -373,7 +373,7 @@ namespace Ares.Editor
                     {
                         try
                         {
-                            int languageId = m_Project.TagLanguageId;
+                            int languageId = m_Project?.TagLanguageId ?? -1;
                             if (languageId == -1)
                                 languageId = Ares.Tags.TagsModule.GetTagsDB().TranslationsInterface.GetIdOfCurrentUILanguage();
                             var tags = Ares.Tags.TagsModule.GetTagsDB().GetReadInterfaceByLanguage(languageId).GetTagsForFile(item.RelativePath);
