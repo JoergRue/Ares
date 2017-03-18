@@ -1201,7 +1201,7 @@ namespace Ares.Editor
                 String ending = pattern.Substring(2); // necessary because searching for *.wav also returns xy.wav_old etc.
                 foreach (String file in System.IO.Directory.GetFiles(directory, pattern))
                 {
-                    if (file.EndsWith(ending))
+                    if (file.EndsWith(ending, StringComparison.CurrentCultureIgnoreCase))
                     {
                         yield return file;
                     }

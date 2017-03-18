@@ -9,3 +9,5 @@ Ares.AudioSource.Freesound/Visual Studio 2015/
 /Ares.Controller/Android/gen/ares/controller/android
 Ares.AudioSource.Test/Resources/music.mp3
 Ares.AudioSource.Test/Resources/sound.mp3
+/build
+/packages
