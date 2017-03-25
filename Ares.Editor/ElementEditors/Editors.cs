@@ -81,7 +81,7 @@ namespace Ares.Editor.ElementEditors
                 else if (element is Ares.Data.IElementContainer<Ares.Data.IChoiceElement>)
                 {
                     ChoiceContainerEditor editor = new ChoiceContainerEditor();
-                    editor.SetContainer(element as Ares.Data.IElementContainer<Ares.Data.IChoiceElement>, project);
+                    editor.SetContainer(element as Ares.Data.IElementContainer<Ares.Data.IChoiceElement>, project, false);
                     ShowEditor(editor, parent);
                 }
                 else if (element is Ares.Data.ISequentialContainer)

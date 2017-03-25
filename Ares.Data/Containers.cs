@@ -332,6 +332,7 @@ namespace Ares.Data
             {
                 XmlHelpers.ThrowException(StringResources.ExpectedContent, reader);
             }
+            ReadSubclassAttributes(reader);
             reader.Read();
             while (reader.IsStartElement())
             {
@@ -355,6 +356,8 @@ namespace Ares.Data
             }
             reader.ReadEndElement();
         }
+
+        protected abstract void ReadSubclassAttributes(System.Xml.XmlReader reader);
 
         protected abstract T ReadContainerElement(System.Xml.XmlReader reader);
 
@@ -418,6 +421,12 @@ namespace Ares.Data
         {
         }
 
+        protected override void ReadSubclassAttributes(System.Xml.XmlReader reader)
+        {
+            ShowAlbumColumn = reader.GetBooleanAttributeOrDefault("ShowAlbumColumn", false);
+            ShowArtistColumn = reader.GetBooleanAttributeOrDefault("ShowArtistColumn", false);
+        }
+
         public void MoveElements(int startIndex, int endIndex, int offset)
         {
             List<SequentialElement> elements = m_Elements.GetRange(startIndex, endIndex - startIndex + 1);
@@ -428,6 +437,14 @@ namespace Ares.Data
         public override void WriteToXml(System.Xml.XmlWriter writer)
         {
             writer.WriteStartElement("SequentialContainer");
+            if (ShowAlbumColumn)
+            {
+                writer.WriteAttributeString("ShowAlbumColumn", "true");
+            }
+            if (ShowArtistColumn)
+            {
+                writer.WriteAttributeString("ShowArtistColumn", "true");
+            }
             DoWriteToXml(writer);
             writer.WriteEndElement();
         }
@@ -440,6 +457,10 @@ namespace Ares.Data
             }
             return new SequentialElement(reader);
         }
+
+        public bool ShowArtistColumn { get; set; }
+
+        public bool ShowAlbumColumn { get; set; }
     }
 
     [Serializable]
@@ -494,9 +515,23 @@ namespace Ares.Data
         {
         }
 
+        protected override void ReadSubclassAttributes(System.Xml.XmlReader reader)
+        {
+            ShowAlbumColumn = reader.GetBooleanAttributeOrDefault("ShowAlbumColumn", false);
+            ShowArtistColumn = reader.GetBooleanAttributeOrDefault("ShowArtistColumn", false);
+        }
+
         public override void WriteToXml(System.Xml.XmlWriter writer)
         {
             writer.WriteStartElement("ChoiceContainer");
+            if (ShowAlbumColumn)
+            {
+                writer.WriteAttributeString("ShowAlbumColumn", "true");
+            }
+            if (ShowArtistColumn)
+            {
+                writer.WriteAttributeString("ShowArtistColumn", "true");
+            }
             DoWriteToXml(writer);
             writer.WriteEndElement();
         }
@@ -509,6 +544,10 @@ namespace Ares.Data
             }
             return new ChoiceElement(reader);
         }
+
+        public bool ShowArtistColumn { get; set; }
+
+        public bool ShowAlbumColumn { get; set; }
     }
 
     [Serializable]
@@ -584,9 +623,23 @@ namespace Ares.Data
         {
         }
 
+        protected override void ReadSubclassAttributes(System.Xml.XmlReader reader)
+        {
+            ShowAlbumColumn = reader.GetBooleanAttributeOrDefault("ShowAlbumColumn", false);
+            ShowArtistColumn = reader.GetBooleanAttributeOrDefault("ShowArtistColumn", false);
+        }
+
         public override void WriteToXml(System.Xml.XmlWriter writer)
         {
             writer.WriteStartElement("ParallelContainer");
+            if (ShowAlbumColumn)
+            {
+                writer.WriteAttributeString("ShowAlbumColumn", "true");
+            }
+            if (ShowArtistColumn)
+            {
+                writer.WriteAttributeString("ShowArtistColumn", "true");
+            }
             DoWriteToXml(writer);
             writer.WriteEndElement();
         }
@@ -599,6 +652,10 @@ namespace Ares.Data
             }
             return new ParallelElement(reader);
         }
+
+        public bool ShowArtistColumn { get; set; }
+
+        public bool ShowAlbumColumn { get; set; }
     }
 
 }

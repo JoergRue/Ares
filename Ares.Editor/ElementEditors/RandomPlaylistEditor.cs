@@ -60,7 +60,7 @@ namespace Ares.Editor.ElementEditors
             m_Element = playList;
             delayableControl.SetElement(playList, project);
             repeatableControl.SetElement(playList, project);
-            choiceContainerControl.SetContainer(playList, project);
+            choiceContainerControl.SetContainer(playList, project, true);
             volumeControl.SetElement(playList, project);
             label1.Text = String.Format(label1.Text, String.Format(StringResources.FileExplorerTitle, StringResources.Music));
             ElementSet(project);
@@ -72,7 +72,7 @@ namespace Ares.Editor.ElementEditors
             m_Element = bgSoundChoice;
             delayableControl.SetElement(bgSoundChoice, project);
             repeatableControl.SetElement(bgSoundChoice, project);
-            choiceContainerControl.SetContainer(bgSoundChoice, project);
+            choiceContainerControl.SetContainer(bgSoundChoice, project, false);
             volumeControl.SetElement(bgSoundChoice, project);
             label1.Text = String.Format(label1.Text, String.Format(StringResources.FileExplorerTitle, StringResources.Sounds));
             ElementSet(project);

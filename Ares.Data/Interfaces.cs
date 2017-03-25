@@ -520,6 +520,16 @@ namespace Ares.Data
         /// Returns the element with the specified Id.
         /// </summary>
         T GetElement(int id);
+
+        /// <summary>
+        /// Whether to show the artist column in the GUI for the container.
+        /// </summary>
+        bool ShowArtistColumn { get; set; }
+
+        /// <summary>
+        /// Whether to show the album column in the GUI for the container.
+        /// </summary>
+        bool ShowAlbumColumn { get; set; }
     }
 
 

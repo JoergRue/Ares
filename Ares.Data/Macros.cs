@@ -530,6 +530,11 @@ namespace Ares.Data
             }
         }
 
+        protected override void ReadSubclassAttributes(System.Xml.XmlReader reader)
+        {
+        }
+
+
         public override void Visit(IElementVisitor visitor)
         {
             visitor.VisitMacro(this);
@@ -558,6 +563,10 @@ namespace Ares.Data
                     command.VisitMacroCommand(commandVisitor);
             }
         }
+
+        public bool ShowArtistColumn { get { return false; } set { } }
+
+        public bool ShowAlbumColumn { get { return false; } set { } }
     }
 
     class MacroFactory : IMacroFactory

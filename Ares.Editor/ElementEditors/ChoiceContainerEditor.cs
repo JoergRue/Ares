@@ -52,11 +52,11 @@ namespace Ares.Editor.ElementEditors
             }
         }
 
-        public void SetContainer(Ares.Data.IElementContainer<Ares.Data.IChoiceElement> container, Ares.Data.IProject project)
+        public void SetContainer(Ares.Data.IElementContainer<Ares.Data.IChoiceElement> container, Ares.Data.IProject project, bool hasMusicColumns)
         {
             ElementId = container.Id;
             m_Element = container;
-            choiceContainerControl.SetContainer(container, project);
+            choiceContainerControl.SetContainer(container, project, hasMusicColumns);
             volumeControl.SetElement(container, project);
             label1.Text = String.Format(label1.Text, String.Format(StringResources.FileExplorerTitle, StringResources.Music));
             ElementSet(project);

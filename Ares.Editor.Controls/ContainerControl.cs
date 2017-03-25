@@ -24,6 +24,8 @@ using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
 using Ares.Data;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace Ares.Editor.Controls
 {
@@ -75,6 +77,7 @@ namespace Ares.Editor.Controls
         {
             if (disposing)
             {
+                CancelRefillTask();
                 foreach (int key in m_ElementsToRows.Keys)
                 {
                     Actions.ElementChanges.Instance.RemoveListener(key, Update);
@@ -118,7 +121,17 @@ namespace Ares.Editor.Controls
             Grid.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Grid_MouseMove);
             Grid.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Grid_MouseUp);
             Grid.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.Grid_RowsRemoved);
-            Grid.ContextMenuStrip = gridContextMenu;
+            //Grid.ContextMenuStrip = gridContextMenu;
+            Grid.CellMouseClick += Grid_CellMouseClick;
+        }
+
+        private void Grid_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                var rect = Grid.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, false);
+                gridContextMenu.Show(Grid, rect.X + e.X, rect.Y + e.Y);
+            }
         }
 
         protected Ares.Data.IProject m_Project;
@@ -208,6 +221,7 @@ namespace Ares.Editor.Controls
         {
             if (!listen)
                 return;
+            bool c = CancelRefillTask();
             listen = false;
             List<IElement> elements = new List<IElement>();
             IList<IContainerElement> containerElements = ElementsContainer.GetGeneralElements();
@@ -218,10 +232,83 @@ namespace Ares.Editor.Controls
             Actions.Actions.Instance.AddNew(new Actions.RemoveContainerElementsAction(ElementsContainer, elements, 
                 GetElementIndex(Grid.Rows[e.RowIndex])), m_Project);
             listen = true;
+            if (c) StartRefillTask();
         }
 
-        protected void RefillGrid() 
+
+        private Task<List<Object>> refillGridTask;
+        private CancellationTokenSource tokenSource;
+
+        protected bool CancelRefillTask()
         {
+            if (refillGridTask != null)
+            {
+                tokenSource.Cancel();
+                try
+                { 
+                    refillGridTask.Wait();
+                }
+                    catch (AggregateException)
+                { }
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        protected void WaitForRefillTask()
+        {
+            if (refillGridTask != null)
+            {
+                try
+                {
+                    refillGridTask.Wait();
+                }
+                catch (AggregateException)
+                { }
+            }
+        }
+
+        protected void StartRefillTask()
+        {
+            if (HasAdditionalElementData())
+            {
+                tokenSource = new CancellationTokenSource();
+                var token = tokenSource.Token;
+                refillGridTask = Task.Factory.StartNew(() =>
+                {
+                    List<Object> ret = new List<object>();
+                    foreach (IContainerElement element in ElementsContainer.GetGeneralElements())
+                    {
+                        token.ThrowIfCancellationRequested();
+                        ret.Add(GetElementData(element));
+                    }
+                    return ret;
+                });
+                refillGridTask.ContinueWith((result) =>
+                {
+                    if (result.Status == TaskStatus.RanToCompletion)
+                    {
+                        bool cancel = tokenSource.IsCancellationRequested;
+                        refillGridTask = null;
+                        tokenSource.Dispose();
+                        tokenSource = null;
+                        if (!cancel)
+                        {
+                            SetAdditionalGridData(result.Result);
+                        }
+                    }
+                }, TaskScheduler.FromCurrentSynchronizationContext());
+            }
+        }
+
+        protected void RefillGrid()
+        {
+            CancelRefillTask();
+            StartRefillTask();
+
             Grid.SuspendLayout();
             Grid.Rows.Clear();
             foreach (int key in m_ElementsToRows.Keys)
@@ -246,6 +333,14 @@ namespace Ares.Editor.Controls
                 ++row;
             }
             Grid.ResumeLayout();
+        }
+
+        private void SetAdditionalGridData(List<object> data)
+        {
+            for (int row = 0; row < data.Count; ++row)
+            {
+                SetAdditionalElementData(row, data[row]);
+            }
         }
 
         protected virtual IEnumerable<int> GetInterestingElementIds(IContainerElement element)
@@ -335,8 +430,10 @@ namespace Ares.Editor.Controls
             {
                 if (e.Effect == DragDropEffects.Move)
                 {
+                    bool c = CancelRefillTask();
                     MoveRows(((GridDataExchangeData)e.Data.GetData(typeof(GridDataExchangeData))).SelectedRows, GetElementIndex(Grid.Rows[targetRow]));
                     dragStoppedHere = true;
+                    if (c) StartRefillTask();
                     return true;
                 }
                 else
@@ -346,8 +443,10 @@ namespace Ares.Editor.Controls
             }
             else
             {
+                bool c = CancelRefillTask();
                 String serializedData = ((GridDataExchangeData)e.Data.GetData(typeof(GridDataExchangeData))).SerializedData;
                 FireElementsImported(serializedData, targetRow);
+                StartRefillTask();
                 return true;
             }
         }
@@ -356,6 +455,7 @@ namespace Ares.Editor.Controls
         {
             if (Grid.SelectedRows.Count == 0)
                 return String.Empty;
+            WaitForRefillTask();
             List<IXmlWritable> elements = new List<IXmlWritable>();
             IList<IContainerElement> containerElements = ElementsContainer.GetGeneralElements();
             List<int> selectedIndices = new List<int>();
@@ -377,6 +477,7 @@ namespace Ares.Editor.Controls
         {
             if (Grid.SelectedRows.Count == 0)
                 return;
+            WaitForRefillTask();
             bool oldListen = listen;
             listen = false;
             List<DataGridViewRow> rows = new List<DataGridViewRow>();
@@ -405,6 +506,7 @@ namespace Ares.Editor.Controls
         {
             bool oldListen = listen;
             listen = false;
+            WaitForRefillTask();
             rows.Sort();
             Actions.Actions.Instance.AddNew(new Actions.ReorderContainerElementsAction(ElementsContainer, rows, targetIndex), m_Project);
             RefillGrid();
@@ -416,6 +518,7 @@ namespace Ares.Editor.Controls
             if (!listen)
                 return;
             listen = false;
+            CancelRefillTask();
             if (elementID == ElementsContainer.Id && changeType == Actions.ElementChanges.ChangeType.Changed)
             {
                 RefillGrid();
@@ -447,6 +550,7 @@ namespace Ares.Editor.Controls
 
         private void editMenuItem_Click(object sender, EventArgs e)
         {
+            WaitForRefillTask();
             if (Grid.SelectedRows.Count > 0)
             {
                 FireElementDoubleClick(ElementsContainer.GetGeneralElements()[GetElementIndex(Grid.SelectedRows[0])]);
@@ -455,23 +559,28 @@ namespace Ares.Editor.Controls
 
         private void deleteMenuItem_Click(object sender, EventArgs e)
         {
+            WaitForRefillTask();
             RemoveSelectedRows();
         }
 
         private void pasteMenuItem_Click(object sender, EventArgs e)
         {
+            bool c = CancelRefillTask();
             String serializedData = (String)Clipboard.GetData(DataFormats.GetFormat(formatName).Name);
             FireElementsImported(serializedData, Grid.RowCount);
+            if (c) StartRefillTask();
         }
 
         private void cutMenuItem_Click(object sender, EventArgs e)
         {
+            WaitForRefillTask();
             CopyRowsToClipboard();
             RemoveSelectedRows();
         }
 
         private void copyMenuItem_Click(object sender, EventArgs e)
         {
+            WaitForRefillTask();
             CopyRowsToClipboard();
         }
 
@@ -505,6 +614,20 @@ namespace Ares.Editor.Controls
 
         protected virtual void AddElementToGrid(IContainerElement element)
         {
+        }
+
+        protected virtual bool HasAdditionalElementData()
+        {
+            return false;
+        }
+
+        protected virtual void SetAdditionalElementData(int row, Object data)
+        {
+        }
+
+        protected virtual object GetElementData(IContainerElement element)
+        {
+            return null;
         }
 
         protected virtual void ChangeElementDataInGrid(int elementID, int row)

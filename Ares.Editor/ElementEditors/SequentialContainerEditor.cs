@@ -56,7 +56,7 @@ namespace Ares.Editor.ElementEditors
         {
             ElementId = container.Id;
             m_Element = container;
-            sequentialContainerControl.SetContainer(container, project);
+            sequentialContainerControl.SetContainer(container, project, false);
             volumeControl.SetElement(container, project);
             label1.Text = String.Format(label1.Text, String.Format(StringResources.FileExplorerTitle, StringResources.Music));
             ElementSet(project);

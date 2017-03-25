@@ -87,6 +87,10 @@ namespace Ares.Data
             return m_Container.GetElement(ID);
         }
 
+        public bool ShowArtistColumn {  get { return false; } set { } }
+
+        public bool ShowAlbumColumn {  get { return false; } set { } }
+
         #endregion
 
         #region IDelayableElement Members
@@ -293,6 +297,10 @@ namespace Ares.Data
         {
             return m_Elements.Find(e => e.Id == ID);
         }
+
+        public bool ShowArtistColumn { get { return false; } set { } }
+
+        public bool ShowAlbumColumn { get { return false; } set { } }
 
         #endregion
 
@@ -553,6 +561,10 @@ namespace Ares.Data
                     throw new NotImplementedException();
                 }
             }
+
+            public bool ShowArtistColumn { get { return false; } set { } }
+
+            public bool ShowAlbumColumn { get { return false; } set { } }
 
             #endregion
         }

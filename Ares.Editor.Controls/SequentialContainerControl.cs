@@ -26,20 +26,29 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Ares.Data;
+using Ares.ModelInfo;
 
 namespace Ares.Editor.Controls
 {
     public partial class SequentialContainerControl : ContainerControl
     {
+        private bool mHasMusicColumns = false;
+
         public SequentialContainerControl()
         {
             InitializeComponent();
             AttachGridEvents();
         }
 
-        public void SetContainer(ISequentialContainer container, Ares.Data.IProject project)
+        public void SetContainer(ISequentialContainer container, Ares.Data.IProject project, bool hasMusicColumns)
         {
             m_Container = container;
+            mHasMusicColumns = hasMusicColumns;
+            if (mHasMusicColumns)
+            {
+                artistColumn.Visible = container.ShowArtistColumn;
+                albumColumn.Visible = container.ShowAlbumColumn;
+            }
             ContainerSet(project);
             EnableUpDownButtons();
         }
@@ -47,16 +56,42 @@ namespace Ares.Editor.Controls
         protected override void AddElementToGrid(IContainerElement element)
         {
             ISequentialElement e = (ISequentialElement)element;
-            elementsGrid.Rows.Add(new object[] { e.Title, e.FixedStartDelay.TotalMilliseconds, e.MaximumRandomStartDelay.TotalMilliseconds });
+            elementsGrid.Rows.Add(new object[] { e.Title, string.Empty, string.Empty, e.FixedStartDelay.TotalMilliseconds, e.MaximumRandomStartDelay.TotalMilliseconds });
+        }
+
+        protected override bool HasAdditionalElementData()
+        {
+            return mHasMusicColumns;
+        }
+
+        protected override void SetAdditionalElementData(int row, object data)
+        {
+            var musicFileInfo = (MusicFileInfo)data;
+            if (musicFileInfo != null)
+            {
+                elementsGrid.Rows[row].Cells[1].Value = musicFileInfo.Artist;
+                elementsGrid.Rows[row].Cells[2].Value = musicFileInfo.Album;
+            }
+        }
+
+        protected override object GetElementData(IContainerElement element)
+        {
+            return mHasMusicColumns ? element.GetMusicFileInfo() : null;
         }
 
         protected override void ChangeElementDataInGrid(int elementID, int row)
         {
-            elementsGrid.Rows[row].Cells[0].Value =
-                Ares.Data.DataModule.ElementRepository.GetElement(elementID).Title;
-            elementsGrid.Rows[row].Cells[1].Value =
+            var element = Ares.Data.DataModule.ElementRepository.GetElement(elementID);
+            elementsGrid.Rows[row].Cells[0].Value = element.Title;
+            if (mHasMusicColumns)
+            {
+                var musicFileInfo = element.GetMusicFileInfo();
+                elementsGrid.Rows[row].Cells[1].Value = musicFileInfo?.Artist ?? string.Empty;
+                elementsGrid.Rows[row].Cells[2].Value = musicFileInfo?.Album ?? string.Empty;
+            }
+            elementsGrid.Rows[row].Cells[3].Value =
                 (m_Container.GetElement(elementID)).FixedStartDelay.TotalMilliseconds;
-            elementsGrid.Rows[row].Cells[2].Value =
+            elementsGrid.Rows[row].Cells[4].Value =
                 (m_Container.GetElement(elementID)).MaximumRandomStartDelay.TotalMilliseconds;
         }
 
@@ -95,6 +130,7 @@ namespace Ares.Editor.Controls
 
         private void upButton_Click(object sender, EventArgs e)
         {
+            WaitForRefillTask();
             List<int> indices = new List<int>();
             for (int i = 0; i < elementsGrid.SelectedRows.Count; ++i)
             {
@@ -111,6 +147,7 @@ namespace Ares.Editor.Controls
 
         private void downButton_Click(object sender, EventArgs e)
         {
+            WaitForRefillTask();
             List<int> indices = new List<int>();
             for (int i = 0; i < elementsGrid.SelectedRows.Count; ++i)
             {
@@ -138,7 +175,42 @@ namespace Ares.Editor.Controls
 
         private void elementsGrid_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            WaitForRefillTask();
             FireElementDoubleClick(m_Container.GetElements()[GetElementIndex(elementsGrid.Rows[e.RowIndex])]);
+        }
+
+        private void elementsGrid_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (mHasMusicColumns && e.Button == MouseButtons.Right)
+            {
+                albumToolStripMenuItem.Checked = albumColumn.Visible;
+                artistToolStripMenuItem.Checked = artistColumn.Visible;
+                var rect = elementsGrid.GetCellDisplayRectangle(e.ColumnIndex, -1, false);
+                columnMenu.Show(elementsGrid, rect.X + e.X, rect.Y + e.Y);
+            }
+        }
+
+        private void albumToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ToggleColumn(albumColumn, albumToolStripMenuItem.Checked);
+            if (m_Container != null)
+                m_Container.ShowAlbumColumn = albumToolStripMenuItem.Checked;
+            if (m_Project != null)
+                m_Project.Changed = true;
+        }
+
+        private void artistToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ToggleColumn(artistColumn, artistToolStripMenuItem.Checked);
+            if (m_Container != null)
+                m_Container.ShowArtistColumn = artistToolStripMenuItem.Checked;
+            if (m_Project != null)
+                m_Project.Changed = true;
+        }
+
+        private void ToggleColumn(DataGridViewTextBoxColumn column, bool @checked)
+        {
+            column.Visible = @checked;
         }
     }
 }

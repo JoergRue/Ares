@@ -112,37 +112,64 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="NameColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="NameColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
   <data name="NameColumn.HeaderText" xml:space="preserve">
     <value>Name</value>
   </data>
-  <metadata name="ChanceColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="artistColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="artistColumn.HeaderText" xml:space="preserve">
+    <value>Artist</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="artistColumn.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="artistColumn.Width" type="System.Int32, mscorlib">
+    <value>87</value>
+  </data>
+  <metadata name="albumColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="albumColumn.HeaderText" xml:space="preserve">
+    <value>Album</value>
+  </data>
+  <data name="albumColumn.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="albumColumn.Width" type="System.Int32, mscorlib">
+    <value>95</value>
+  </data>
+  <metadata name="ChanceColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
   <data name="ChanceColumn.HeaderText" xml:space="preserve">
     <value>Chance</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="ChanceColumn.Width" type="System.Int32, mscorlib">
-    <value>74</value>
+    <value>105</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="elementsGrid.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="elementsGrid.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 16</value>
+    <value>14, 24</value>
+  </data>
+  <data name="elementsGrid.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
   </data>
   <data name="elementsGrid.Size" type="System.Drawing.Size, System.Drawing">
-    <value>550, 299</value>
+    <value>824, 460</value>
   </data>
   <data name="elementsGrid.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -151,7 +178,7 @@
     <value>elementsGrid</value>
   </data>
   <data name="&gt;&gt;elementsGrid.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;elementsGrid.Parent" xml:space="preserve">
     <value>groupBox1</value>
@@ -165,11 +192,14 @@
   <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
+  <data name="groupBox1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
   <data name="groupBox1.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>9, 3, 9, 3</value>
+    <value>14, 5, 14, 5</value>
   </data>
   <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>568, 318</value>
+    <value>852, 489</value>
   </data>
   <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -181,57 +211,138 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;groupBox1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;groupBox1.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
   <data name="&gt;&gt;groupBox1.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="dataGridViewTextBoxColumn1.HeaderText" xml:space="preserve">
-    <value>Name</value>
+    <value>1</value>
   </data>
   <data name="dataGridViewNumericUpDownColumn1.HeaderText" xml:space="preserve">
     <value>Chance</value>
   </data>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <data name="dataGridViewTextBoxColumn1.HeaderText" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <metadata name="columnMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <data name="nameToolStripMenuItem.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="nameToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>211, 30</value>
+  </data>
+  <data name="nameToolStripMenuItem.Text" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="artistToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>211, 30</value>
+  </data>
+  <data name="artistToolStripMenuItem.Text" xml:space="preserve">
+    <value>Artist</value>
+  </data>
+  <data name="albumToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>211, 30</value>
+  </data>
+  <data name="albumToolStripMenuItem.Text" xml:space="preserve">
+    <value>Album</value>
+  </data>
+  <data name="chanceToolStripMenuItem.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="chanceToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>211, 30</value>
+  </data>
+  <data name="chanceToolStripMenuItem.Text" xml:space="preserve">
+    <value>Chance</value>
+  </data>
+  <data name="columnMenu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>212, 157</value>
+  </data>
+  <data name="&gt;&gt;columnMenu.Name" xml:space="preserve">
+    <value>columnMenu</value>
+  </data>
+  <data name="&gt;&gt;columnMenu.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 13</value>
+    <value>9, 20</value>
+  </data>
+  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
   </data>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>568, 318</value>
-  </data>
-  <data name="&gt;&gt;NameColumn.Name" xml:space="preserve">
-    <value>NameColumn</value>
-  </data>
-  <data name="&gt;&gt;NameColumn.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;ChanceColumn.Name" xml:space="preserve">
-    <value>ChanceColumn</value>
-  </data>
-  <data name="&gt;&gt;ChanceColumn.Type" xml:space="preserve">
-    <value>DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn, Ares.Editor.Controls, Version=0.6.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
-  </data>
-  <data name="&gt;&gt;dataGridViewTextBoxColumn1.Name" xml:space="preserve">
-    <value>dataGridViewTextBoxColumn1</value>
-  </data>
-  <data name="&gt;&gt;dataGridViewTextBoxColumn1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>852, 489</value>
   </data>
   <data name="&gt;&gt;dataGridViewNumericUpDownColumn1.Name" xml:space="preserve">
     <value>dataGridViewNumericUpDownColumn1</value>
   </data>
   <data name="&gt;&gt;dataGridViewNumericUpDownColumn1.Type" xml:space="preserve">
-    <value>DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn, Ares.Editor.Controls, Version=0.6.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
+    <value>DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn, Ares.Editor.Controls, Version=3.2.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewTextBoxColumn1.Name" xml:space="preserve">
+    <value>dataGridViewTextBoxColumn1</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewTextBoxColumn1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;NameColumn.Name" xml:space="preserve">
+    <value>NameColumn</value>
+  </data>
+  <data name="&gt;&gt;NameColumn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;artistColumn.Name" xml:space="preserve">
+    <value>artistColumn</value>
+  </data>
+  <data name="&gt;&gt;artistColumn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;albumColumn.Name" xml:space="preserve">
+    <value>albumColumn</value>
+  </data>
+  <data name="&gt;&gt;albumColumn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ChanceColumn.Name" xml:space="preserve">
+    <value>ChanceColumn</value>
+  </data>
+  <data name="&gt;&gt;ChanceColumn.Type" xml:space="preserve">
+    <value>DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn, Ares.Editor.Controls, Version=3.2.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;nameToolStripMenuItem.Name" xml:space="preserve">
+    <value>nameToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;nameToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;artistToolStripMenuItem.Name" xml:space="preserve">
+    <value>artistToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;artistToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;albumToolStripMenuItem.Name" xml:space="preserve">
+    <value>albumToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;albumToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chanceToolStripMenuItem.Name" xml:space="preserve">
+    <value>chanceToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;chanceToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>ChoiceContainerControl</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>Ares.Editor.Controls.ContainerControl, Ares.Editor.Controls, Version=0.6.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09</value>
+    <value>Ares.Editor.Controls.ContainerControl, Ares.Editor.Controls, Version=3.2.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
 </root>

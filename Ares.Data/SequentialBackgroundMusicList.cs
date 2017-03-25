@@ -131,6 +131,10 @@ namespace Ares.Data
             m_SecondContainer.MoveElements(startIndex, endIndex, offset);
         }
 
+        public bool ShowArtistColumn { get { return m_FirstContainer.ShowArtistColumn; } set { m_FirstContainer.ShowArtistColumn = value; } }
+
+        public bool ShowAlbumColumn { get { return m_FirstContainer.ShowAlbumColumn; } set { m_FirstContainer.ShowAlbumColumn = value; } }
+
         #endregion
 
         public override void Visit(IElementVisitor visitor)

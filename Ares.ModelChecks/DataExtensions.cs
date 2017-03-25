@@ -17,11 +17,10 @@
  along with Ares; if not, write to the Free Software
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Ares.Data;
+using System.Linq;
+using System;
 
 namespace Ares.ModelInfo
 {
@@ -120,5 +119,65 @@ namespace Ares.ModelInfo
                 return true;
             return false;
         }
+
+        private static IFileElement GetFileElement(this IElement element)
+        {
+            if (element == null) return null;
+            switch (element)
+            {
+                case IFileElement fe: return fe;
+                case IContainerElement ce: return ce.InnerElement.GetFileElement();
+                case IReferenceElement re:
+                    {
+                        var referencedElement = Ares.Data.DataModule.ElementRepository.GetElement(re.ReferencedId);
+                        return referencedElement.GetFileElement();
+                    }
+                default:
+                    return null;
+            }
+        }
+
+#if !MONO
+        public static MusicFileInfo GetMusicFileInfo(this IElement element)
+        {
+            MusicFileInfo result = new MusicFileInfo();
+            var fileElement = element.GetFileElement();
+            if (fileElement != null)
+            {
+                String path = fileElement.FilePath;
+                try
+                {
+                    var dbInfo = Ares.Tags.TagsModule.GetTagsDB().ReadInterface.GetIdentificationForFiles(new[] { path }.ToList());
+                    if (dbInfo != null && dbInfo.Count > 0)
+                    {
+                        result.Artist = dbInfo[0].Artist;
+                        result.Album = dbInfo[0].Album;
+                    }
+                }
+                catch (Ares.Tags.TagsDbException)
+                { }
+                if (String.IsNullOrEmpty(result.Artist) || String.IsNullOrEmpty(result.Album))
+                {
+                    String basePath = Settings.Settings.Instance.MusicDirectory;
+                    String completePath = System.IO.Path.Combine(basePath, path);
+                    Un4seen.Bass.AddOn.Tags.TAG_INFO tag = Un4seen.Bass.AddOn.Tags.BassTags.BASS_TAG_GetFromFile(completePath, true, true);
+                    if (tag != null)
+                    {
+                        if (string.IsNullOrEmpty(result.Album))
+                            result.Album = tag.album;
+                        if (string.IsNullOrEmpty(result.Artist))
+                            result.Artist = tag.artist;
+                    }
+                }
+            }
+            return result;
+        }
+#endif
+    }
+
+    public class MusicFileInfo
+    {
+        public string Artist { get; set; }
+        public string Album { get; set; }
     }
 }
