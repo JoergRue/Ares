@@ -20,6 +20,7 @@
 using System;
 using System.Collections.Generic;
 using Ares.Data;
+using System.Threading;
 
 namespace Ares.ModelInfo
 {
@@ -33,7 +34,7 @@ namespace Ares.ModelInfo
         private IModelErrors m_ModelErrors;
         private int m_TagLanguage = -1;
 
-        public override void DoChecks(IProject project, IModelErrors errors)
+        public override void DoChecks(IProject project, IModelErrors errors, CancellationToken ct)
         {
             m_ModelErrors = errors;
             m_TagLanguage = project.TagLanguageId;
@@ -42,6 +43,7 @@ namespace Ares.ModelInfo
                 foreach (IModeElement element in mode.GetElements())
                 {
                     element.Visit(this);
+                    ct.ThrowIfCancellationRequested();
                 }
             }
         }

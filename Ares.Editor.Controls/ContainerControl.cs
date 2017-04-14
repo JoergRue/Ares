@@ -29,7 +29,7 @@ using System.Threading;
 
 namespace Ares.Editor.Controls
 {
-    public class ContainerControl : UserControl
+    public class ContainerControl : UserControl, Actions.IContainerDisplay
     {
         public event EventHandler<ElementDoubleClickEventArgs> ElementDoubleClick;
 
@@ -40,7 +40,7 @@ namespace Ares.Editor.Controls
             bool oldListen = listen;
             listen = false;
             int index = ElementsContainer.GetGeneralElements().Count;
-            Actions.Actions.Instance.AddNew(new Actions.AddContainerElementsAction(ElementsContainer, elements, insertionRow), m_Project);
+            Actions.Actions.Instance.AddNew(new Actions.AddContainerElementsAction(mMassOperationControl, ElementsContainer, elements, insertionRow), m_Project);
             RefillGrid();
             if (Grid.Rows.Count > 0)
             {
@@ -59,7 +59,7 @@ namespace Ares.Editor.Controls
             bool oldListen = listen;
             listen = false;
             int index = insertionRow;
-            Actions.Actions.Instance.AddNew(new Actions.AddImportedContainerElementsAction(ElementsContainer, elements, insertionRow), m_Project);
+            Actions.Actions.Instance.AddNew(new Actions.AddImportedContainerElementsAction(mMassOperationControl, ElementsContainer, elements, insertionRow), m_Project);
             RefillGrid();
             if (Grid.Rows.Count > 0)
             {
@@ -78,6 +78,7 @@ namespace Ares.Editor.Controls
             if (disposing)
             {
                 CancelRefillTask();
+                mMassOperationControl.ControlDisposed();
                 foreach (int key in m_ElementsToRows.Keys)
                 {
                     Actions.ElementChanges.Instance.RemoveListener(key, Update);
@@ -109,8 +110,36 @@ namespace Ares.Editor.Controls
 
         protected bool listen = true;
 
+        private class MassOperationControl : Actions.IContainerDisplay
+        {
+            private ContainerControl mControl;
+
+            public MassOperationControl(ContainerControl control)
+            {
+                mControl = control;
+            }
+
+            public void ControlDisposed()
+            {
+                mControl = null;
+            }
+
+            public bool BeginMassAction()
+            {
+                if (mControl != null) return mControl.BeginMassAction(); else return false;
+            }
+
+            public void EndMassAction(bool oldVal)
+            {
+                if (mControl != null) mControl.EndMassAction(oldVal);
+            }
+        }
+
+        private MassOperationControl mMassOperationControl;
+
         protected ContainerControl()
         {
+            mMassOperationControl = new MassOperationControl(this);
             Actions.FilesWatcher.Instance.AnyDirChanges += new EventHandler<EventArgs>(FileDirChanges);
             InitializeComponent();
         }
@@ -229,7 +258,7 @@ namespace Ares.Editor.Controls
             {
                 elements.Add(containerElements[GetElementIndex(Grid.Rows[e.RowIndex]) + i]);
             }
-            Actions.Actions.Instance.AddNew(new Actions.RemoveContainerElementsAction(ElementsContainer, elements, 
+            Actions.Actions.Instance.AddNew(new Actions.RemoveContainerElementsAction(mMassOperationControl, ElementsContainer, elements, 
                 GetElementIndex(Grid.Rows[e.RowIndex])), m_Project);
             listen = true;
             if (c) StartRefillTask();
@@ -243,13 +272,22 @@ namespace Ares.Editor.Controls
         {
             if (refillGridTask != null)
             {
-                tokenSource.Cancel();
+                if (tokenSource != null)
+                {
+                    tokenSource.Cancel();
+                }
                 try
                 { 
                     refillGridTask.Wait();
                 }
                     catch (AggregateException)
                 { }
+                if (tokenSource != null)
+                {
+                    tokenSource.Dispose();
+                    tokenSource = null;
+                }
+                refillGridTask = null;
                 return true;
             }
             else
@@ -497,7 +535,7 @@ namespace Ares.Editor.Controls
                 elements.Add(containerElements[GetElementIndex(row)]);
                 rows.Add(row);
             }
-            Actions.Actions.Instance.AddNew(new Actions.RemoveContainerElementsAction(ElementsContainer, elements, minIndex), m_Project);
+            Actions.Actions.Instance.AddNew(new Actions.RemoveContainerElementsAction(mMassOperationControl, ElementsContainer, elements, minIndex), m_Project);
             RefillGrid();
             listen = oldListen;
         }
@@ -513,10 +551,32 @@ namespace Ares.Editor.Controls
             listen = oldListen;
         }
 
+        public bool BeginMassAction()
+        {
+            bool oldVal = listen;
+            listen = false;
+            return oldVal;
+        }
+
+        public void EndMassAction(bool oldVal)
+        {
+            listen = oldVal;
+        }
+
         private void Update(int elementID, Actions.ElementChanges.ChangeType changeType)
         {
             if (!listen)
                 return;
+            if (elementID == ElementsContainer.Id && changeType == Actions.ElementChanges.ChangeType.PreRemoved)
+            {
+                listen = false;
+                return;
+            }
+            else if (elementID == ElementsContainer.Id && changeType == Actions.ElementChanges.ChangeType.Removed)
+            {
+                listen = true;
+                return;
+            }
             listen = false;
             CancelRefillTask();
             if (elementID == ElementsContainer.Id && changeType == Actions.ElementChanges.ChangeType.Changed)

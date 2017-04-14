@@ -71,6 +71,7 @@ namespace Ares.Editor.Actions
                 return;
             if (element is IGeneralElementContainer)
             {
+                ElementChanges.Instance.PreElementRemoved(element.Id);
                 foreach (IContainerElement subElement in (element as IGeneralElementContainer).GetGeneralElements())
                 {
                     NotifyRemoval(subElement.InnerElement);

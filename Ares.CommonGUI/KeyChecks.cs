@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Ares.Data;
+using System.Threading;
 
 namespace Ares.CommonGUI
 {
@@ -81,7 +82,7 @@ namespace Ares.CommonGUI
             return String.Empty;
         }
 
-        public override void DoChecks(Data.IProject project, Ares.ModelInfo.IModelErrors errors)
+        public override void DoChecks(Data.IProject project, Ares.ModelInfo.IModelErrors errors, CancellationToken ct)
         {
             System.Windows.Forms.KeysConverter converter = new System.Windows.Forms.KeysConverter();
             for (int i = 0; i < project.GetModes().Count; ++i)
@@ -177,7 +178,8 @@ namespace Ares.CommonGUI
                                 }
                             }
                         }
-                    }                    
+                    }
+                    ct.ThrowIfCancellationRequested();
                 }
             }
         }

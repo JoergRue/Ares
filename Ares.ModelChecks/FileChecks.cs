@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Ares.Data;
+using System.Threading;
 #if ANDROID
 using Ares.Settings;
 #endif
@@ -36,15 +37,18 @@ namespace Ares.ModelInfo
         }
 
         private IModelErrors m_ModelErrors;
+        private CancellationToken m_Ct;
 
-        public override void DoChecks(Data.IProject project, IModelErrors errors)
+        public override void DoChecks(Data.IProject project, IModelErrors errors, CancellationToken ct)
         {
             m_ModelErrors = errors;
+            m_Ct = ct;
             foreach (IMode mode in project.GetModes())
             {
                 foreach (IModeElement element in mode.GetElements())
                 {
                     element.Visit(this);
+                    m_Ct.ThrowIfCancellationRequested();
                 }
             }
         }
@@ -85,6 +89,7 @@ namespace Ares.ModelInfo
                 AddError(m_ModelErrors, ModelError.ErrorSeverity.Error,
                     String.Format(StringResources.FileNotFound, fullPath), fileElement);
             }
+            m_Ct.ThrowIfCancellationRequested();
         }
 
         public void VisitWebRadioElement(IWebRadioElement webRadio)

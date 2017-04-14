@@ -120,6 +120,7 @@ namespace Ares.ModelInfo
             return false;
         }
 
+#if !MONO
         private static IFileElement GetFileElement(this IElement element)
         {
             if (element == null) return null;
@@ -137,7 +138,6 @@ namespace Ares.ModelInfo
             }
         }
 
-#if !MONO
         public static MusicFileInfo GetMusicFileInfo(this IElement element)
         {
             MusicFileInfo result = new MusicFileInfo();

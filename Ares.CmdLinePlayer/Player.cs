@@ -619,7 +619,7 @@ namespace Ares.CmdLinePlayer
 
         private void DoModelChecks()
         {
-            Ares.ModelInfo.ModelChecks.Instance.CheckAll(m_Project);
+            Ares.ModelInfo.ModelChecks.Instance.CheckSynchronously(m_Project);
             foreach (Ares.ModelInfo.ModelError error in Ares.ModelInfo.ModelChecks.Instance.GetAllErrors())
             {
                 Messages.AddMessage(error.Severity == ModelInfo.ModelError.ErrorSeverity.Error ? MessageType.Error : MessageType.Warning,

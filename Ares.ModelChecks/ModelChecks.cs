@@ -22,196 +22,315 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Ares.Data;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace Ares.ModelInfo
 {
-    public enum CheckType
-    {
-        File,
-        Key,
-        Logic,
-        Reference
-    }
+	public enum CheckType
+	{
+		File,
+		Key,
+		Logic,
+		Reference
+	}
 
-    public class ModelError
-    {
-        public enum ErrorSeverity { Warning, Error }
+	public class ModelError
+	{
+		public enum ErrorSeverity { Warning, Error }
 
-        public Object Element { get; internal set; }
-        public String Message { get; internal set; }
-        public ErrorSeverity Severity { get; internal set; }
+		public Object Element { get; internal set; }
+		public String Message { get; internal set; }
+		public ErrorSeverity Severity { get; internal set; }
 
-        internal ModelError(ErrorSeverity severity, String message, Object element)
-        {
-            Element = element;
-            Message = message;
-            Severity = severity;
-        }
-    }
+		internal ModelError (ErrorSeverity severity, String message, Object element)
+		{
+			Element = element;
+			Message = message;
+			Severity = severity;
+		}
+	}
 
-    public interface IModelErrors
-    {
-        void AddError(CheckType checkType, ModelError error);
-    }
+	public interface IModelErrors
+	{
+		void AddError (CheckType checkType, ModelError error);
+	}
 
-    public interface IModelCheck
-    {
-        CheckType CheckType { get; }
-        void DoChecks(IProject project, IModelErrors errors);
-    }
+	public interface IModelCheck
+	{
+		CheckType CheckType { get; }
+		void DoChecks (IProject project, IModelErrors errors, CancellationToken ct);
+	}
 
-    public abstract class ModelCheck : IModelCheck
-    {
-        public CheckType CheckType { get; private set; }
+	public abstract class ModelCheck : IModelCheck
+	{
+		public CheckType CheckType { get; private set; }
 
-        public abstract void DoChecks(IProject project, IModelErrors errors);
+		public abstract void DoChecks (IProject project, IModelErrors errors, CancellationToken ct);
 
-        protected ModelCheck(CheckType checkType)
-        {
-            CheckType = checkType;
-        }
+		protected ModelCheck (CheckType checkType)
+		{
+			CheckType = checkType;
+		}
 
-        protected void AddError(IModelErrors errors, ModelError.ErrorSeverity severity, String message, Object element)
-        {
-            errors.AddError(CheckType, new ModelError(severity, message, element));
-        }
-    }
+		protected void AddError (IModelErrors errors, ModelError.ErrorSeverity severity, String message, Object element)
+		{
+			errors.AddError (CheckType, new ModelError (severity, message, element));
+		}
+	}
 
-    public class ModelChecks : IModelErrors
-    {
-        public static ModelChecks Instance
-        {
-            get
-            {
-                if (sInstance == null)
+	public class ModelChecks : IModelErrors
+	{
+		public static ModelChecks Instance {
+			get {
+				if (sInstance == null) {
+					sInstance = new ModelChecks ();
+				}
+				return sInstance;
+			}
+		}
+
+		private static ModelChecks sInstance;
+
+		private Object m_LockObject = new Object ();
+
+		private ModelChecks ()
+		{
+			m_Errors = new Dictionary<CheckType, List<ModelError>> ();
+			m_ErrorsByElement = new Dictionary<Object, List<ModelError>> ();
+			m_ModelChecks = new Dictionary<CheckType, IModelCheck> ();
+
+			AddCheck (new FileChecks ());
+			AddCheck (new ReferenceChecks ());
+		}
+
+		public event EventHandler<EventArgs> ErrorsUpdated;
+
+		private Dictionary<CheckType, List<ModelError>> m_Errors;
+		private Dictionary<Object, List<ModelError>> m_ErrorsByElement;
+		private Dictionary<CheckType, IModelCheck> m_ModelChecks;
+
+		public void AddError (CheckType checkType, ModelError error)
+		{
+			lock (m_LockObject) {
+				m_Errors [checkType].Add (error);
+				if (!m_ErrorsByElement.ContainsKey (error.Element)) {
+					m_ErrorsByElement [error.Element] = new List<ModelError> ();
+				}
+				m_ErrorsByElement [error.Element].Add (error);
+			}
+		}
+
+		private void RemoveError (ModelError error)
+		{
+			lock (m_LockObject) {
+				m_ErrorsByElement [error.Element].Remove (error);
+				if (m_ErrorsByElement [error.Element].Count == 0) {
+					m_ErrorsByElement.Remove (error.Element);
+				}
+			}
+		}
+
+		public void AddCheck (IModelCheck check)
+		{
+			m_ModelChecks [check.CheckType] = check;
+		}
+
+		public IList<ModelError> GetErrorsForElement (Object element)
+		{
+			List<ModelError> result = new List<ModelError> ();
+			lock (m_LockObject) {
+				if (m_ErrorsByElement.ContainsKey (element))
+					result.AddRange (m_ErrorsByElement [element]);
+			}
+			return result;
+		}
+
+		public IList<ModelError> GetAllErrors ()
+		{
+			List<ModelError> result = new List<ModelError> ();
+			lock (m_LockObject) {
+				foreach (List<ModelError> errors in m_Errors.Values)
+					result.AddRange (errors);
+			}
+			return result;
+		}
+
+		public int GetErrorCount ()
+		{
+			int result = 0;
+			lock (m_LockObject) {
+				foreach (List<ModelError> errors in m_Errors.Values)
+					result += errors.Count;
+			}
+			return result;
+		}
+
+		private class TaskInfo
+		{
+			public Task Task { get; set; }
+			public CancellationTokenSource TokenSource { get; set; }
+			public int ID { get; set; }
+		}
+
+		private Dictionary<CheckType, TaskInfo> mCheckTasks = new Dictionary<CheckType, TaskInfo> ();
+		private int mNextId = 1;
+
+		private void HandleAggregate (AggregateException ex)
+		{
+			foreach (Exception inner in ex.InnerExceptions) {
+#if !MONO
+				switch (inner)
                 {
-                    sInstance = new ModelChecks();
+                    case AggregateException agg: HandleAggregate(agg); break;
+                    case TaskCanceledException tce: break;
+                    case OperationCanceledException oce: break;
+                    default: throw inner;
                 }
-                return sInstance;
+#else
+				if (inner is AggregateException) HandleAggregate ((AggregateException)inner);
+				else if (inner is TaskCanceledException) { } 
+				else if (inner is OperationCanceledException) { } 
+				else throw inner;
+#endif
+			}
+        }
+
+        public void CheckSynchronously(IProject project)
+        {
+            CancelChecks();
+            if (project == null) return;
+            Task[] tasks = new Task[m_ModelChecks.Keys.Count];
+            int i = 0;
+            foreach (CheckType type in m_ModelChecks.Keys)
+            {
+                tasks[i++] = DoCheck(type, project);
+            }
+            try
+            {
+                Task.WaitAll(tasks);
+            }
+            catch (AggregateException ex)
+            {
+                HandleAggregate(ex);
             }
         }
 
-        private static ModelChecks sInstance;
-
-        private Object m_LockObject = new Object();
-
-        private ModelChecks()
+        public void CancelChecks()
         {
-            m_Errors = new Dictionary<CheckType, List<ModelError>>();
-            m_ErrorsByElement = new Dictionary<Object, List<ModelError>>();
-            m_ModelChecks = new Dictionary<CheckType, IModelCheck>();
-			
-            AddCheck(new FileChecks());
-            AddCheck(new ReferenceChecks());
-        }
-
-        public event EventHandler<EventArgs> ErrorsUpdated;
-
-        private Dictionary<CheckType, List<ModelError>> m_Errors;
-        private Dictionary<Object, List<ModelError>> m_ErrorsByElement;
-        private Dictionary<CheckType, IModelCheck> m_ModelChecks;
-
-        public void AddError(CheckType checkType, ModelError error)
-        {
-            lock (m_LockObject)
+            List<Task> tasks = new List<Task>();
+            foreach (TaskInfo t in mCheckTasks.Values)
             {
-                m_Errors[checkType].Add(error);
-                if (!m_ErrorsByElement.ContainsKey(error.Element))
+                tasks.Add(t.Task);
+                t.TokenSource.Cancel();
+            }
+            try
+            {
+                Task.WaitAll(tasks.ToArray());
+            }
+            catch (AggregateException ex)
+            {
+                HandleAggregate(ex);
+            }
+            finally
+            {
+                foreach (TaskInfo t in mCheckTasks.Values)
                 {
-                    m_ErrorsByElement[error.Element] = new List<ModelError>();
+                    t.TokenSource.Dispose();
                 }
-                m_ErrorsByElement[error.Element].Add(error);
+                mCheckTasks.Clear();
             }
-        }
-
-        private void RemoveError(ModelError error)
-        {
-            lock (m_LockObject)
-            {
-                m_ErrorsByElement[error.Element].Remove(error);
-                if (m_ErrorsByElement[error.Element].Count == 0)
-                {
-                    m_ErrorsByElement.Remove(error.Element);
-                }
-            }
-        }
-
-        public void AddCheck(IModelCheck check)
-        {
-            m_ModelChecks[check.CheckType] = check;
-        }
-
-        public IList<ModelError> GetErrorsForElement(Object element)
-        {
-            List<ModelError> result = new List<ModelError>();
-            lock (m_LockObject)
-            {
-                if (m_ErrorsByElement.ContainsKey(element))
-                    result.AddRange(m_ErrorsByElement[element]);
-            }
-            return result;
-        }
-
-        public IList<ModelError> GetAllErrors()
-        {
-            List<ModelError> result = new List<ModelError>();
-            lock (m_LockObject)
-            {
-                foreach (List<ModelError> errors in m_Errors.Values)
-                    result.AddRange(errors);
-            }
-            return result;
-        }
-
-        public int GetErrorCount()
-        {
-            int result = 0;
-            lock (m_LockObject)
-            {
-                foreach (List<ModelError> errors in m_Errors.Values)
-                    result += errors.Count;
-            }
-            return result;
         }
 
         public void CheckAll(IProject project)
         {
+            if (project == null) return;
+            CancelChecks();
+            Task[] tasks = new Task[m_ModelChecks.Keys.Count];
+            int i = 0;
             foreach (CheckType type in m_ModelChecks.Keys)
             {
-                DoCheck(type, project);
+                tasks[i++] = DoCheck(type, project);
             }
-            if (ErrorsUpdated != null)
-                ErrorsUpdated(this, new EventArgs());
+            Task.Factory.ContinueWhenAll(tasks, (t) =>
+            {
+                if (t.All(t2 => t2.IsCompleted) && ErrorsUpdated != null)
+                {
+                    ErrorsUpdated(this, new EventArgs());
+                }
+            }, CancellationToken.None, TaskContinuationOptions.None, TaskScheduler.FromCurrentSynchronizationContext());
+
         }
 
         public void Check(CheckType checkType, IProject project)
         {
-            DoCheck(checkType, project);
-            if (ErrorsUpdated != null)
-                ErrorsUpdated(this, new EventArgs());
+            if (project == null || !m_ModelChecks.ContainsKey(checkType))
+                return;
+            Task task = DoCheck(checkType, project);
+            task.ContinueWith((t) =>
+            {
+                if (ErrorsUpdated != null)
+                    ErrorsUpdated(this, new EventArgs());
+            }, CancellationToken.None, TaskContinuationOptions.OnlyOnRanToCompletion, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
-        private void DoCheck(CheckType checkType, IProject project)
+        private Task DoCheck(CheckType checkType, IProject project)
         {
-            if (!m_ModelChecks.ContainsKey(checkType))
-                return;
-            lock (m_LockObject)
+            if (mCheckTasks.ContainsKey(checkType))
             {
-                if (!m_Errors.ContainsKey(checkType))
-                    m_Errors[checkType] = new List<ModelError>();
+                TaskInfo ti = mCheckTasks[checkType];
+                ti.TokenSource.Cancel();
+                try
+                {
+                    ti.Task.Wait();
+                }
+                catch (AggregateException ex)
+                {
+                    HandleAggregate(ex);
+                }
+                ti.TokenSource.Dispose();
+                mCheckTasks.Remove(checkType);
             }
-            foreach (ModelError error in m_Errors[checkType])
+
+            CancellationTokenSource cts = new CancellationTokenSource();
+            CancellationToken ct = cts.Token;
+            Task checkTask = Task.Factory.StartNew(() =>
             {
-                RemoveError(error);
-            }
-            lock (m_LockObject)
+                lock (m_LockObject)
+                {
+                    if (!m_Errors.ContainsKey(checkType))
+                        m_Errors[checkType] = new List<ModelError>();
+                }
+                if (ct.IsCancellationRequested) return;
+                foreach (ModelError error in m_Errors[checkType])
+                {
+                    RemoveError(error);
+                    if (ct.IsCancellationRequested) return;
+                }
+                lock (m_LockObject)
+                {
+                    m_Errors[checkType].Clear();
+                }
+                if (project != null)
+                {
+                    m_ModelChecks[checkType].DoChecks(project, this, ct);
+                }
+            });
+            int id = mNextId++;
+            checkTask.ContinueWith((t) =>
             {
-                m_Errors[checkType].Clear();
-            }
-            if (project != null)
-            {
-                m_ModelChecks[checkType].DoChecks(project, this);
-            }
+                if (mCheckTasks.ContainsKey(checkType))
+                {
+                    var ti = mCheckTasks[checkType];
+                    if (ti.ID == id) // no other code (e.g. restart, cancel) has removed / replaced it
+                    {
+                        ti.TokenSource.Dispose();
+                        mCheckTasks.Remove(checkType);
+                    }
+                }
+            }, TaskScheduler.FromCurrentSynchronizationContext());
+            mCheckTasks[checkType] = new TaskInfo { ID = id, Task = checkTask, TokenSource = cts };
+            return checkTask;
         }
 
         public void AdaptHiddenTags(IProject project)

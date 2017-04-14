@@ -389,7 +389,7 @@ namespace Ares.Editor
 
         private void DoModelChecks()
         {
-            Ares.ModelInfo.ModelChecks.Instance.CheckAll(m_CurrentProject);
+            Ares.ModelInfo.ModelChecks.Instance.CheckSynchronously(m_CurrentProject);
             if (Ares.ModelInfo.ModelChecks.Instance.GetErrorCount() > 0)
             {
                 if (m_ErrorWindow == null)
@@ -494,6 +494,7 @@ namespace Ares.Editor
                         (document as Form).Close();
                     }
                 }
+                Ares.ModelInfo.ModelChecks.Instance.CancelChecks();
                 Ares.Data.DataModule.ProjectManager.UnloadProject(m_CurrentProject);
                 m_CurrentProject = null;
                 DoModelChecks();

@@ -97,6 +97,7 @@ namespace Ares.Editor.ElementEditors
         {
             if (String.IsNullOrEmpty(e.SerializedData))
                 return;
+            Ares.ModelInfo.ModelChecks.Instance.CancelChecks();
             IList<Ares.Data.IXmlWritable> elements = Ares.Data.DataModule.ProjectManager.ImportElementsFromString(e.SerializedData);
             ContainerControl.AddImportedElements(elements, e.InsertionRow);
         }

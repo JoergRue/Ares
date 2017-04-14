@@ -50,6 +50,7 @@ namespace Ares.Editor.Actions
             }
             m_Actions.Add(action);
             m_Index++;
+            Ares.ModelInfo.ModelChecks.Instance.CancelChecks();
             action.Do(project);
             if (UpdateGUI != null) UpdateGUI();
         }
@@ -79,6 +80,7 @@ namespace Ares.Editor.Actions
         {
             if (CanUndo)
             {
+                Ares.ModelInfo.ModelChecks.Instance.CancelChecks();
                 m_Actions[--m_Index].Undo(project);
                 if (UpdateGUI != null) UpdateGUI();
             }
@@ -96,6 +98,7 @@ namespace Ares.Editor.Actions
         {
             if (CanRedo)
             {
+                Ares.ModelInfo.ModelChecks.Instance.CancelChecks();
                 m_Actions[m_Index++].Do(project);
                 if (UpdateGUI != null) UpdateGUI();
             }

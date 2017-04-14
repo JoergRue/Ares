@@ -584,9 +584,26 @@ namespace Ares.Editor.Actions
         private TimeSpan m_NewRandom;
     }
 
-    public class AddContainerElementsAction : Action
+    public interface IContainerDisplay
     {
-        public AddContainerElementsAction(IGeneralElementContainer container, IList<IElement> elements, int insertionIndex)
+        bool BeginMassAction();
+        void EndMassAction(bool oldVal);
+    }
+
+    public abstract class ContainerElementsAction : Action
+    {
+        protected ContainerElementsAction(IContainerDisplay display)
+        {
+            mDisplay = display;
+        }
+
+        protected IContainerDisplay mDisplay;
+    }
+
+    public class AddContainerElementsAction : ContainerElementsAction
+    {
+        public AddContainerElementsAction(IContainerDisplay display, IGeneralElementContainer container, IList<IElement> elements, int insertionIndex)
+            : base(display)
         {
             m_Container = container;
             m_InsertionIndex = insertionIndex;
@@ -602,6 +619,7 @@ namespace Ares.Editor.Actions
 
         public override void Do(Ares.Data.IProject project)
         {
+            bool val = mDisplay != null ? mDisplay.BeginMassAction() : false;
             int index = m_InsertionIndex;
             foreach (IElement element in m_Elements)
             {
@@ -610,18 +628,21 @@ namespace Ares.Editor.Actions
                 ElementRemoval.NotifyUndo(element);
                 ++index;
             }
+            mDisplay?.EndMassAction(val);
             ElementChanges.Instance.ElementChanged(m_Container.Id);
             Ares.ModelInfo.ModelChecks.Instance.CheckAll(project);
         }
 
         public override void Undo(Ares.Data.IProject project)
         {
+            bool val = mDisplay != null ? mDisplay.BeginMassAction() : false;
             foreach (IElement element in m_Elements)
             {
                 m_Container.RemoveElement(element.Id);
                 Data.DataModule.ElementRepository.DeleteElement(element.Id);
                 ElementRemoval.NotifyRemoval(element);
             }
+            mDisplay?.EndMassAction(val);
             ElementChanges.Instance.ElementChanged(m_Container.Id);
             Ares.ModelInfo.ModelChecks.Instance.CheckAll(project);
         }
@@ -631,9 +652,10 @@ namespace Ares.Editor.Actions
         private int m_InsertionIndex;
     }
 
-    public class AddImportedContainerElementsAction : Action
+    public class AddImportedContainerElementsAction : ContainerElementsAction
     {
-        public AddImportedContainerElementsAction(IGeneralElementContainer container, IList<IXmlWritable> elements, int insertionIndex)
+        public AddImportedContainerElementsAction(IContainerDisplay display, IGeneralElementContainer container, IList<IXmlWritable> elements, int insertionIndex)
+            : base(display)
         {
             m_Container = container;
             m_InsertionIndex = insertionIndex;
@@ -652,28 +674,32 @@ namespace Ares.Editor.Actions
 
         public override void Do(Ares.Data.IProject project)
         {
+            bool val = mDisplay != null ? mDisplay.BeginMassAction() : false;
             int index = m_InsertionIndex;
             foreach (IElement element in m_Elements)
             {
                 m_Container.InsertGeneralElement(index, element);
                 Data.DataModule.ElementRepository.AddElement(element);
-                Ares.ModelInfo.ModelChecks.Instance.CheckAll(project);
                 ElementRemoval.NotifyUndo(element);
                 ++index;
             }
+            mDisplay?.EndMassAction(val);
             ElementChanges.Instance.ElementChanged(m_Container.Id);
+            Ares.ModelInfo.ModelChecks.Instance.CheckAll(project);
         }
 
         public override void Undo(Ares.Data.IProject project)
         {
+            bool val = mDisplay != null ? mDisplay.BeginMassAction() : false;
             foreach (IElement element in m_Elements)
             {
                 m_Container.RemoveElement(element.Id);
                 Data.DataModule.ElementRepository.DeleteElement(element.Id);
-                Ares.ModelInfo.ModelChecks.Instance.CheckAll(project);
                 ElementRemoval.NotifyRemoval(element);
             }
+            mDisplay?.EndMassAction(val);
             ElementChanges.Instance.ElementChanged(m_Container.Id);
+            Ares.ModelInfo.ModelChecks.Instance.CheckAll(project);
         }
 
         private IGeneralElementContainer m_Container;
@@ -681,9 +707,10 @@ namespace Ares.Editor.Actions
         private int m_InsertionIndex;
     }
     
-    public class RemoveContainerElementsAction : Action
+    public class RemoveContainerElementsAction : ContainerElementsAction
     {
-        public RemoveContainerElementsAction(IGeneralElementContainer container, IList<IElement> elements, int index)
+        public RemoveContainerElementsAction(IContainerDisplay display, IGeneralElementContainer container, IList<IElement> elements, int index)
+            : base(display)
         {
             m_Container = container;
             m_Elements = elements;
@@ -692,28 +719,32 @@ namespace Ares.Editor.Actions
 
         public override void Do(Ares.Data.IProject project)
         {
+            bool val = mDisplay != null ? mDisplay.BeginMassAction() : false;
             foreach (IElement element in m_Elements)
             {
                 m_Container.RemoveElement(element.Id);
                 Data.DataModule.ElementRepository.DeleteElement(element.Id);
-                Ares.ModelInfo.ModelChecks.Instance.CheckAll(project);
                 ElementRemoval.NotifyRemoval(element);
             }
+            mDisplay?.EndMassAction(val);
             ElementChanges.Instance.ElementChanged(m_Container.Id);
+            Ares.ModelInfo.ModelChecks.Instance.CheckAll(project);
         }
 
         public override void Undo(Ares.Data.IProject project)
         {
+            bool val = mDisplay != null ? mDisplay.BeginMassAction() : false;
             int index = m_Index;
             foreach (IElement element in m_Elements)
             {
                 m_Container.InsertGeneralElement(index, element);
                 Data.DataModule.ElementRepository.AddElement(element);
-                Ares.ModelInfo.ModelChecks.Instance.CheckAll(project);
                 ElementRemoval.NotifyUndo(element);
                 ++index;
             }
+            mDisplay?.EndMassAction(val);
             ElementChanges.Instance.ElementChanged(m_Container.Id);
+            Ares.ModelInfo.ModelChecks.Instance.CheckAll(project);
         }
 
         private IGeneralElementContainer m_Container;

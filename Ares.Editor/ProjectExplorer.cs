@@ -880,6 +880,7 @@ namespace Ares.Editor
 
         private void DeleteElements()
         {
+            Ares.ModelInfo.ModelChecks.Instance.CancelChecks();
             // find for each node the topmost root which is also selected
             // only those nodes will be deleted
             WithSelectedRoots((TreeNode rootElement) =>
@@ -1594,6 +1595,7 @@ namespace Ares.Editor
                 return;
             String serializedForm = cpElements.SerializedForm;
 
+            Ares.ModelInfo.ModelChecks.Instance.CancelChecks();
             IList<IXmlWritable> elements = Data.DataModule.ProjectManager.ImportElementsFromString(serializedForm);
             TreeNode parentNode = SelectedNode;
             bool hasEnabledElements = false;
@@ -1631,6 +1633,7 @@ namespace Ares.Editor
             {
                 return;
             }
+            Ares.ModelInfo.ModelChecks.Instance.CancelChecks();
             TreeNode parentNode = SelectedNode;
             List<IXmlWritable> roots = m_ExportItems;
             foreach (IXmlWritable element in roots)
@@ -1944,6 +1947,7 @@ namespace Ares.Editor
         {
             try 
             {
+                Ares.ModelInfo.ModelChecks.Instance.CancelChecks();
                 IList<IXmlWritable> elements = Data.DataModule.ProjectManager.ImportElements(fileName);
                 TreeNode parentNode = SelectedNode;
                 List<Dialogs.ImportElement> importElements = new List<Dialogs.ImportElement>();
@@ -2222,6 +2226,7 @@ namespace Ares.Editor
                     return;
                 String serializedForm = cpElements.SerializedForm;
 
+                Ares.ModelInfo.ModelChecks.Instance.CancelChecks();
                 IList<IXmlWritable> elements = Data.DataModule.ProjectManager.ImportElementsFromString(serializedForm);
                 TreeNode parentNode = node;
                 bool hasEnabledElements = false;
