@@ -41,9 +41,29 @@ namespace Ares.Editor
             sImageList.Images.Add(ImageResources.eventlogError);
         }
 
+        private bool updatePending = false;
+
         private void ElementChanged(int elementId, Ares.Editor.Actions.ElementChanges.ChangeType changeType)
         {
-            updateInformationPanel();
+            if (updatePending) return;
+            updatePending = true;
+            BeginInvoke(new Action(() =>
+            {
+                updatePending = false;
+                updateInformationPanel();
+                if (m_ProjectUseFilter.FilterMode != ProjectUseFilterMode.NoFilter && m_ProjectUseFilter.AutoUpdate)
+                {
+                    switch (changeType)
+                    {
+                        case Actions.ElementChanges.ChangeType.Changed:
+                        case Actions.ElementChanges.ChangeType.Removed:
+                            ReFillTree();
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }));
         }
 
         private IFileExplorerParent m_Parent;
@@ -123,24 +143,35 @@ namespace Ares.Editor
             if (m_TreeLocked)
                 return;
 
-            Dictionary<String, bool> states = new Dictionary<string, bool>();
-            GetTreeStates(m_Root, states);
-
-            treeView1.BeginUpdate();
-            treeView1.Nodes.Clear();
-            m_Root = new TreeNode(m_FileType == FileType.Music ? StringResources.Music : StringResources.Sounds);
-            m_Root.SelectedImageIndex = m_Root.ImageIndex = 0;
-            m_Root.Tag = new DraggedItem { NodeType = DraggedItemType.Directory, ItemType = m_FileType, RelativePath = String.Empty };
-            m_Root.ContextMenuStrip = fileNodeContextMenu;
-            String directory = m_FileType == FileType.Music ? Ares.Settings.Settings.Instance.MusicDirectory : Ares.Settings.Settings.Instance.SoundDirectory;
-            FillTreeNode(m_Root, directory, directory, m_FileType, states);
-            treeView1.Nodes.Add(m_Root);
-            m_Root.Expand();
-            treeView1.SelectedNode = m_Root;
-            treeView1.EndUpdate();
-            if (m_FileType == FileType.Music)
+            Application.UseWaitCursor = true;
+            this.UseWaitCursor = true;
+            Application.DoEvents();
+            try
             {
-                m_Parent.SetSelectedFiles(GetSelectedFiles());
+                Dictionary<String, bool> states = new Dictionary<string, bool>();
+                GetTreeStates(m_Root, states);
+
+                treeView1.BeginUpdate();
+                treeView1.Nodes.Clear();
+                m_Root = new TreeNode(m_FileType == FileType.Music ? StringResources.Music : StringResources.Sounds);
+                m_Root.SelectedImageIndex = m_Root.ImageIndex = 0;
+                m_Root.Tag = new DraggedItem { NodeType = DraggedItemType.Directory, ItemType = m_FileType, RelativePath = String.Empty };
+                m_Root.ContextMenuStrip = fileNodeContextMenu;
+                String directory = m_FileType == FileType.Music ? Ares.Settings.Settings.Instance.MusicDirectory : Ares.Settings.Settings.Instance.SoundDirectory;
+                FillTreeNode(m_Root, directory, directory, m_FileType, states, new ModelInfo.FileSearch());
+                treeView1.Nodes.Add(m_Root);
+                m_Root.Expand();
+                treeView1.SelectedNode = m_Root;
+                treeView1.EndUpdate();
+                if (m_FileType == FileType.Music)
+                {
+                    m_Parent.SetSelectedFiles(GetSelectedFiles());
+                }
+            }
+            finally
+            {
+                this.UseWaitCursor = false;
+                Application.UseWaitCursor = false;
             }
         }
 
@@ -154,7 +185,7 @@ namespace Ares.Editor
                 GetTreeStates(child, states);
         }
 
-        private void FillTreeNode(TreeNode node, String directory, String root, FileType dirType, Dictionary<String, bool> states)
+        private void FillTreeNode(TreeNode node, String directory, String root, FileType dirType, Dictionary<String, bool> states, Ares.ModelInfo.FileSearch fileSearch)
         {
             try
             {
@@ -168,7 +199,7 @@ namespace Ares.Editor
                     subNode.ImageIndex = subNode.SelectedImageIndex = 0;
                     String relativeDir = subDir.Substring(rootLength);
                     subNode.Tag = new DraggedItem { NodeType = DraggedItemType.Directory, ItemType = dirType, RelativePath = relativeDir };
-                    FillTreeNode(subNode, subDir, root, dirType, states);
+                    FillTreeNode(subNode, subDir, root, dirType, states, fileSearch);
                     if (m_TagsFilter.FilterMode == TagsFilterMode.NoFilter || subNode.Nodes.Count > 0)
                     {
                         subNode.ContextMenuStrip = fileNodeContextMenu;
@@ -189,6 +220,20 @@ namespace Ares.Editor
                         continue;
                     else if (m_TagsFilter.FilterMode == TagsFilterMode.UntaggedFiles && m_FilteredFiles.Contains(relativeDir))
                         continue;
+
+                    switch (m_ProjectUseFilter.FilterMode)
+                    {
+                        case ProjectUseFilterMode.UnusedFilter:
+                        case ProjectUseFilterMode.UsedFilter:
+                            List<KeyValuePair<Ares.Data.IMode, List<Ares.Data.IModeElement>>> modeElements = fileSearch.GetRootElements(m_Project, relativeDir, 
+                                dirType == FileType.Music ? Data.SoundFileType.Music : Data.SoundFileType.SoundEffect);
+                            if (m_ProjectUseFilter.FilterMode == ProjectUseFilterMode.UnusedFilter && modeElements.Count > 0) continue;
+                            else if (m_ProjectUseFilter.FilterMode == ProjectUseFilterMode.UsedFilter && modeElements.Count == 0) continue;
+                            break;
+                        case ProjectUseFilterMode.NoFilter:
+                        default:
+                            break;
+                    }
 
                     TreeNode subNode = new TreeNode(file.Substring(subLength));
                     subNode.ImageIndex = subNode.SelectedImageIndex = (dirType == FileType.Sound ? 1 : 2);
@@ -1019,6 +1064,7 @@ namespace Ares.Editor
 
         private HashSet<String> m_FilteredFiles = new HashSet<string>(StringComparer.CurrentCultureIgnoreCase);
         private TagsFilter m_TagsFilter = new TagsFilter();
+        private ProjectUseFilter m_ProjectUseFilter = new ProjectUseFilter();
 
         private void RetrieveFilteredFiles()
         {
@@ -1128,6 +1174,19 @@ namespace Ares.Editor
             SetTags();
         }
 
+        private void projectFilterButton_Click(object sender, EventArgs e)
+        {
+            Dialogs.ProjectFilterDialog dialog = new Dialogs.ProjectFilterDialog();
+            dialog.AutoUpdateTree = m_ProjectUseFilter.AutoUpdate;
+            dialog.FilterMode = m_ProjectUseFilter.FilterMode;
+            if (dialog.ShowDialog(this) == DialogResult.OK)
+            {
+                m_ProjectUseFilter.FilterMode = dialog.FilterMode;
+                m_ProjectUseFilter.AutoUpdate = dialog.AutoUpdateTree;
+                projectFilterButton.Checked = m_ProjectUseFilter.FilterMode != ProjectUseFilterMode.NoFilter;
+                ReFillTree();
+            }
+        }
     }
 
     public enum DraggedItemType
@@ -1167,6 +1226,25 @@ namespace Ares.Editor
         {
             FilterMode = TagsFilterMode.NoFilter;
             TagCategoryCombination = Data.TagCategoryCombination.UseAnyTag;
+        }
+    }
+
+    public enum ProjectUseFilterMode
+    {
+        NoFilter,
+        UsedFilter,
+        UnusedFilter
+    }
+
+    public class ProjectUseFilter
+    {
+        public ProjectUseFilterMode FilterMode { get; set; }
+        public bool AutoUpdate { get; set; }
+
+        public ProjectUseFilter()
+        {
+            FilterMode = ProjectUseFilterMode.NoFilter;
+            AutoUpdate = false;
         }
     }
 

@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="autoUpdateBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>425, 24</value>
+  </data>
+  <data name="autoUpdateBox.Text" xml:space="preserve">
+    <value>Baum bei Projektänderungen automatisch aktualisieren</value>
+  </data>
+  <data name="cancelButton.Text" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
+  <data name="noFilterButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>296, 24</value>
+  </data>
+  <data name="noFilterButton.Text" xml:space="preserve">
+    <value>Zeige alle Dateien (schalte Filter aus)</value>
+  </data>
+  <data name="onlyUsedFilesButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>320, 24</value>
+  </data>
+  <data name="onlyUsedFilesButton.Text" xml:space="preserve">
+    <value>Zeige nur im Projekt verwendete Dateien</value>
+  </data>
+  <data name="showNotUsedButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>372, 24</value>
+  </data>
+  <data name="showNotUsedButton.Text" xml:space="preserve">
+    <value>Zeige nur im Projekt NICHT verwendete Dateien</value>
+  </data>
+  <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        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
+        AP//gAD//8AB///gA///+Af/
+</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Nach Verwendung im Projekt filtern</value>
+  </data>
+</root>

@@ -77,6 +77,7 @@ namespace Ares.Editor
             this.showInfoButton = new System.Windows.Forms.ToolStripButton();
             this.tagButton = new System.Windows.Forms.ToolStripButton();
             this.tagFilterButton = new System.Windows.Forms.ToolStripButton();
+            this.projectFilterButton = new System.Windows.Forms.ToolStripButton();
             this.fileNodeContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.playToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -87,6 +88,7 @@ namespace Ares.Editor
             this.copyToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -138,6 +140,7 @@ namespace Ares.Editor
             // 
             // toolStrip1
             // 
+            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.playButton,
             this.stopButton,
@@ -146,7 +149,8 @@ namespace Ares.Editor
             this.searchButton,
             this.showInfoButton,
             this.tagButton,
-            this.tagFilterButton});
+            this.tagFilterButton,
+            this.projectFilterButton});
             resources.ApplyResources(this.toolStrip1, "toolStrip1");
             this.toolStrip1.Name = "toolStrip1";
             // 
@@ -209,8 +213,17 @@ namespace Ares.Editor
             this.tagFilterButton.Name = "tagFilterButton";
             this.tagFilterButton.Click += new System.EventHandler(this.tagFilterButton_Click);
             // 
+            // projectFilterButton
+            // 
+            this.projectFilterButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.projectFilterButton.Image = global::Ares.Editor.Properties.Resources.project_filter;
+            resources.ApplyResources(this.projectFilterButton, "projectFilterButton");
+            this.projectFilterButton.Name = "projectFilterButton";
+            this.projectFilterButton.Click += new System.EventHandler(this.projectFilterButton_Click);
+            // 
             // fileNodeContextMenu
             // 
+            this.fileNodeContextMenu.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.fileNodeContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.playToolStripMenuItem,
             this.stopToolStripMenuItem,
@@ -288,6 +301,7 @@ namespace Ares.Editor
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
@@ -322,5 +336,6 @@ namespace Ares.Editor
         private System.Windows.Forms.ToolStripButton tagFilterButton;
         private System.Windows.Forms.ToolStripMenuItem editTagsMenuItem;
         private System.Windows.Forms.ToolStripButton tagButton;
+        private System.Windows.Forms.ToolStripButton projectFilterButton;
     }
 }
