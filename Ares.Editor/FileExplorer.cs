@@ -1153,7 +1153,10 @@ namespace Ares.Editor
             dialog.AutoUpdateTree = mUpdateTreeOnTagChange;
             if (dialog.ShowDialog(this) == DialogResult.OK)
             {
-                m_Project.TagLanguageId = dialog.LanguageId;
+                if (m_Project != null)
+                {
+                    m_Project.TagLanguageId = dialog.LanguageId;
+                }
                 m_TagsFilter.TagCategoryCombination = dialog.TagCategoryCombination;
                 m_TagsFilter.TagsByCategories = dialog.TagsByCategory;
                 m_TagsFilter.FilterMode = dialog.FilterMode;
