@@ -117,13 +117,13 @@ namespace Ares.Player
             // 
             // encodingBox
             // 
-            resources.ApplyResources(this.encodingBox, "encodingBox");
             this.encodingBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.encodingBox.FormattingEnabled = true;
             this.encodingBox.Items.AddRange(new object[] {
             resources.GetString("encodingBox.Items"),
             resources.GetString("encodingBox.Items1"),
             resources.GetString("encodingBox.Items2")});
+            resources.ApplyResources(this.encodingBox, "encodingBox");
             this.encodingBox.Name = "encodingBox";
             this.encodingBox.SelectedIndexChanged += new System.EventHandler(this.encodingBox_SelectedIndexChanged);
             // 
@@ -159,9 +159,9 @@ namespace Ares.Player
             // 
             // outputDeviceCombo
             // 
-            resources.ApplyResources(this.outputDeviceCombo, "outputDeviceCombo");
             this.outputDeviceCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.outputDeviceCombo.FormattingEnabled = true;
+            resources.ApplyResources(this.outputDeviceCombo, "outputDeviceCombo");
             this.outputDeviceCombo.Name = "outputDeviceCombo";
             // 
             // label9
@@ -192,7 +192,6 @@ namespace Ares.Player
             // 
             // bitrateBox
             // 
-            resources.ApplyResources(this.bitrateBox, "bitrateBox");
             this.bitrateBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.bitrateBox.FormattingEnabled = true;
             this.bitrateBox.Items.AddRange(new object[] {
@@ -203,6 +202,7 @@ namespace Ares.Player
             resources.GetString("bitrateBox.Items4"),
             resources.GetString("bitrateBox.Items5"),
             resources.GetString("bitrateBox.Items6")});
+            resources.ApplyResources(this.bitrateBox, "bitrateBox");
             this.bitrateBox.Name = "bitrateBox";
             // 
             // label6

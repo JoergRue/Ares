@@ -44,7 +44,6 @@
             // 
             // groupBox1
             // 
-            resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.crossFadeButton);
@@ -53,6 +52,7 @@
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.crossFadingUpDown);
             this.groupBox1.Controls.Add(this.allChannelsCheckBox);
+            resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
             // 
@@ -97,12 +97,12 @@
             // 
             // crossFadingUpDown
             // 
-            resources.ApplyResources(this.crossFadingUpDown, "crossFadingUpDown");
             this.crossFadingUpDown.Increment = new decimal(new int[] {
             100,
             0,
             0,
             0});
+            resources.ApplyResources(this.crossFadingUpDown, "crossFadingUpDown");
             this.crossFadingUpDown.Maximum = new decimal(new int[] {
             30000,
             0,
