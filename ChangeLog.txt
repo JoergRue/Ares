@@ -1,3 +1,16 @@
+Version 3.3.0
+----------------------------------------------------------------------------------
+- Editor: Music lists can show artist and album columns (use context menu on 
+  table headers to activate)
+- Editor: Files in Music / Sound Explorer can be filtered regarding their use in
+  the project
+- Editor: improvements to performance and responsiveness regarding project checks 
+  and large operations on lists
+- Editor: Bugfixes for working without any open project (also thanks to Matthias)
+- Editor: Allow files with extensions in different cases (e.g. MP3)
+- Player: fixed tab order in settings dialog
+- Controller/Android: support for split screen in Android 7+
+
 Version 3.2.0
 ----------------------------------------------------------------------------------
 - General: Added Tasker plugin to control the Player

@@ -1,3 +1,17 @@
+Version 3.3.0
+----------------------------------------------------------------------------------
+- Editor: Musiklisten können Artist- und Album-Spalten anzeigen (per Kontextmenü
+  auf den Spaltenüberschriften einblendbar)
+- Editor: Dateien im Musik- / Geräusche-Explorer können danach gefiltert werden,
+  ob sie derzeit im Projekt verwendet werden
+- Editor: Geschwindigkeits- und Reaktions-Verbesserungen bezüglich Projekt-
+  Prüfungen und großen Operationen auf Listen
+- Editor: Fixes bezüglich Arbeiten ohne offenes Projekt (Dank auch an Matthias)
+- Editor: erlaube Dateien mit Endungen in unterschiedlicher Groß- 
+  / Kleinschreibung (z.B. MP3)
+- Player: Tab-Reihenfolge im Einstellungs-Dialog korrigiert
+- Controller/Android: Unterstützung von geteiltem Bildschirm in Android 7+
+
 Version 3.2.0
 ----------------------------------------------------------------------------------
 - Allgemein: Tasker-Plugin zur Steuerung des Players hinzugefügt
