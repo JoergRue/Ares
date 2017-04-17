@@ -179,20 +179,10 @@ namespace Ares.ModelInfo
 		private void HandleAggregate (AggregateException ex)
 		{
 			foreach (Exception inner in ex.InnerExceptions) {
-#if !MONO
-				switch (inner)
-                {
-                    case AggregateException agg: HandleAggregate(agg); break;
-                    case TaskCanceledException tce: break;
-                    case OperationCanceledException oce: break;
-                    default: throw inner;
-                }
-#else
 				if (inner is AggregateException) HandleAggregate ((AggregateException)inner);
 				else if (inner is TaskCanceledException) { } 
 				else if (inner is OperationCanceledException) { } 
 				else throw inner;
-#endif
 			}
         }
 

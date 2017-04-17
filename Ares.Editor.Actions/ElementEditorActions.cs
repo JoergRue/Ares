@@ -628,7 +628,7 @@ namespace Ares.Editor.Actions
                 ElementRemoval.NotifyUndo(element);
                 ++index;
             }
-            mDisplay?.EndMassAction(val);
+            if (mDisplay != null) mDisplay.EndMassAction(val);
             ElementChanges.Instance.ElementChanged(m_Container.Id);
             Ares.ModelInfo.ModelChecks.Instance.CheckAll(project);
         }
@@ -642,7 +642,7 @@ namespace Ares.Editor.Actions
                 Data.DataModule.ElementRepository.DeleteElement(element.Id);
                 ElementRemoval.NotifyRemoval(element);
             }
-            mDisplay?.EndMassAction(val);
+            if (mDisplay != null) mDisplay.EndMassAction(val);
             ElementChanges.Instance.ElementChanged(m_Container.Id);
             Ares.ModelInfo.ModelChecks.Instance.CheckAll(project);
         }
@@ -683,7 +683,7 @@ namespace Ares.Editor.Actions
                 ElementRemoval.NotifyUndo(element);
                 ++index;
             }
-            mDisplay?.EndMassAction(val);
+            if (mDisplay != null) mDisplay.EndMassAction(val);
             ElementChanges.Instance.ElementChanged(m_Container.Id);
             Ares.ModelInfo.ModelChecks.Instance.CheckAll(project);
         }
@@ -697,7 +697,7 @@ namespace Ares.Editor.Actions
                 Data.DataModule.ElementRepository.DeleteElement(element.Id);
                 ElementRemoval.NotifyRemoval(element);
             }
-            mDisplay?.EndMassAction(val);
+            if (mDisplay != null) mDisplay.EndMassAction(val);
             ElementChanges.Instance.ElementChanged(m_Container.Id);
             Ares.ModelInfo.ModelChecks.Instance.CheckAll(project);
         }
@@ -726,7 +726,7 @@ namespace Ares.Editor.Actions
                 Data.DataModule.ElementRepository.DeleteElement(element.Id);
                 ElementRemoval.NotifyRemoval(element);
             }
-            mDisplay?.EndMassAction(val);
+            if (mDisplay != null) mDisplay.EndMassAction(val);
             ElementChanges.Instance.ElementChanged(m_Container.Id);
             Ares.ModelInfo.ModelChecks.Instance.CheckAll(project);
         }
@@ -742,7 +742,7 @@ namespace Ares.Editor.Actions
                 ElementRemoval.NotifyUndo(element);
                 ++index;
             }
-            mDisplay?.EndMassAction(val);
+            if (mDisplay != null) mDisplay.EndMassAction(val);
             ElementChanges.Instance.ElementChanged(m_Container.Id);
             Ares.ModelInfo.ModelChecks.Instance.CheckAll(project);
         }

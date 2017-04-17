@@ -124,18 +124,14 @@ namespace Ares.ModelInfo
         private static IFileElement GetFileElement(this IElement element)
         {
             if (element == null) return null;
-            switch (element)
+            if (element is IFileElement) return (IFileElement)element;
+            else if (element is IContainerElement) return ((IContainerElement)element).InnerElement.GetFileElement();
+            else if (element is IReferenceElement)
             {
-                case IFileElement fe: return fe;
-                case IContainerElement ce: return ce.InnerElement.GetFileElement();
-                case IReferenceElement re:
-                    {
-                        var referencedElement = Ares.Data.DataModule.ElementRepository.GetElement(re.ReferencedId);
-                        return referencedElement.GetFileElement();
-                    }
-                default:
-                    return null;
+                var referencedElement = Ares.Data.DataModule.ElementRepository.GetElement(((IReferenceElement)element).ReferencedId);
+                return referencedElement.GetFileElement();
             }
+            else return null;
         }
 
         public static MusicFileInfo GetMusicFileInfo(this IElement element)

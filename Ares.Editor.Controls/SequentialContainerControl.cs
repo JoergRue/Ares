@@ -86,8 +86,8 @@ namespace Ares.Editor.Controls
             if (mHasMusicColumns)
             {
                 var musicFileInfo = element.GetMusicFileInfo();
-                elementsGrid.Rows[row].Cells[1].Value = musicFileInfo?.Artist ?? string.Empty;
-                elementsGrid.Rows[row].Cells[2].Value = musicFileInfo?.Album ?? string.Empty;
+                elementsGrid.Rows[row].Cells[1].Value = musicFileInfo != null ? (musicFileInfo.Artist != null ? musicFileInfo.Artist : string.Empty) : string.Empty;
+                elementsGrid.Rows[row].Cells[2].Value = musicFileInfo != null ? (musicFileInfo.Album != null ? musicFileInfo.Album : string.Empty) : string.Empty;
             }
             elementsGrid.Rows[row].Cells[3].Value =
                 (m_Container.GetElement(elementID)).FixedStartDelay.TotalMilliseconds;
