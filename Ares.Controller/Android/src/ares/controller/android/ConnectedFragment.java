@@ -47,28 +47,32 @@ public abstract class ConnectedFragment extends Fragment implements IServerListe
 
 	private ServerSearch serverSearch = null;
 	
-	private static Boolean sOnTablet = null;
+	private static Field sLayoutField = null;
 	
 	protected boolean isOnTablet() 
 	{
-		if (sOnTablet == null) {
-		     Configuration conf = getResources().getConfiguration();
-		     int screenLayout = 1; // application default behavior
+        Configuration conf = getResources().getConfiguration();
+        int screenLayout = 1; // application default behavior
+		if (sLayoutField == null) {
 		     try {
-		         Field field = conf.getClass().getDeclaredField("screenLayout");
-		         screenLayout = field.getInt(conf);
-			     // Configuration.SCREENLAYOUT_SIZE_MASK == 15
-			     int screenType = screenLayout & 15;
-			     // Configuration.SCREENLAYOUT_SIZE_XLARGE == 4
-			     // Configuration.SCREENLAYOUT_SIZE_LARGE == 3
-		         sOnTablet = (screenType == 4) || (screenType == 3); 
-		     } 
+		         sLayoutField = conf.getClass().getDeclaredField("screenLayout");
+		     }
 		     catch (Exception e) {
 		         // NoSuchFieldException or related stuff
-		    	 sOnTablet = false;
+		    	 return false;
 		     }
 		}
-		return sOnTablet;
+		try {
+            screenLayout = sLayoutField.getInt(conf);
+            // Configuration.SCREENLAYOUT_SIZE_MASK == 15
+            int screenType = screenLayout & 15;
+            // Configuration.SCREENLAYOUT_SIZE_XLARGE == 4
+            // Configuration.SCREENLAYOUT_SIZE_LARGE == 3
+            return (screenType == 4) || (screenType == 3);
+        }
+        catch (Exception e) {
+            return false;
+        }
 	}
 	
 	protected boolean isControlFragment() {
@@ -142,6 +146,7 @@ public abstract class ConnectedFragment extends Fragment implements IServerListe
 	private boolean setPlayerPreferencesOnConnect = false;
 	
 	protected void onPrefsChanged() {
+		if (getActivity() == null) return; // safety for strange situations
 		if (!Control.getInstance().isConnected())
 		{
     		Log.d("ConnectedFragment", "Stopping server search");
@@ -341,6 +346,7 @@ public abstract class ConnectedFragment extends Fragment implements IServerListe
 	}
 
 	private int getServerSearchPort() {
+		if (getActivity() == null) return 8009;
         String portString = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext()).getString("udp_port", "8009");
         int port = 8009;
         try {

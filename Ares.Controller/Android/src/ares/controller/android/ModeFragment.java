@@ -77,11 +77,20 @@ public class ModeFragment extends ModeLikeFragment {
     
     private void initializeViews() {
     	GridView buttonGrid = (GridView)getActivity().findViewById(R.id.modeButtonGrid);
+        if (buttonGrid == null) return;
     	mAdapter = new ButtonAdapter(getActivity(), getMode());
     	buttonGrid.setAdapter(mAdapter);
         TextView title = ((TextView)getActivity().findViewById(R.id.modeTitle));
         if (Control.getInstance().getConfiguration() != null) {
-        	title.setText(Control.getInstance().getConfiguration().getModes().get(getMode()).getTitle());
+            List<Mode> modes = Control.getInstance().getConfiguration().getModes();
+            if (modes.size() > getMode())
+            {
+                title.setText(modes.get(getMode()).getTitle());
+            }
+            else
+            {
+                title.setText(R.string.no_mode);
+            }
         }
         else {
         	title.setText(R.string.no_mode);

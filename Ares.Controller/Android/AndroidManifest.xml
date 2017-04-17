@@ -1,26 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="ares.controller.android"
-      android:versionName="3.2" android:versionCode="12">
+      android:versionName="3.3" android:versionCode="13">
     <uses-sdk android:minSdkVersion="7" android:targetSdkVersion="14"/>
     <supports-screens android:xlargeScreens="true" />
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
 
     <application android:icon="@drawable/icon" android:label="@string/app_name" android:name="Main">
         <activity android:name=".MainActivity"
-                  android:label="@string/app_name" android:icon="@drawable/icon">
+                  android:label="@string/app_name" android:icon="@drawable/icon"
+                  android:resizeableActivity="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="FileDialog"></activity>
-        <activity android:name="ModesActivity"></activity>
-        <activity android:name="ModeActivity"></activity>
-        <activity android:name="PrefsActivity"></activity>
-        <activity android:name="MusicListActivity"></activity>
+        <activity android:name="FileDialog" android:resizeableActivity="true"></activity>
+        <activity android:name="ModesActivity" android:resizeableActivity="true"></activity>
+        <activity android:name="ModeActivity" android:resizeableActivity="true"></activity>
+        <activity android:name="PrefsActivity" android:resizeableActivity="true"></activity>
+        <activity android:name="MusicListActivity" android:resizeableActivity="true"></activity>
 
-    <activity android:name="TagsActivity"></activity>
+    <activity android:name="TagsActivity" android:resizeableActivity="true"></activity>
     
     </application>
 </manifest>

@@ -86,6 +86,7 @@ public abstract class ModeLikeFragment extends ConnectedFragment {
 		final GestureLibrary gesturelib = GestureLibraries.fromRawResource(getActivity(), R.raw.gestures);
 		gesturelib.load();
 		LinearLayout layout = (LinearLayout) getActivity().findViewById(rootId);
+        if (layout == null) return;
 		GestureOverlayView gestureOverlay = new GestureOverlayView(getActivity());
 		gestureOverlay.setUncertainGestureColor(Color.TRANSPARENT);
 		gestureOverlay.setGestureColor(Color.TRANSPARENT);
