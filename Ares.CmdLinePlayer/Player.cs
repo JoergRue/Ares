@@ -27,6 +27,7 @@ using Ares.Settings;
 using Ares.ModelInfo;
 using System.IO;
 using System.Diagnostics;
+using System.Threading;
 
 namespace Ares.CmdLinePlayer
 {
@@ -150,6 +151,7 @@ namespace Ares.CmdLinePlayer
 
         public int Run(PlayerOptions options)
         {
+            SynchronizationContext.SetSynchronizationContext(new SynchronizationContext());
             int res = Initialize(options);
             if (res != 0)
                 return res;

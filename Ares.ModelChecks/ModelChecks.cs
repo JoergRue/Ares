@@ -266,6 +266,10 @@ namespace Ares.ModelInfo
 
         private Task DoCheck(CheckType checkType, IProject project)
         {
+            if (SynchronizationContext.Current == null)
+            {
+                SynchronizationContext.SetSynchronizationContext(new SynchronizationContext());
+            }
             if (mCheckTasks.ContainsKey(checkType))
             {
                 TaskInfo ti = mCheckTasks[checkType];

@@ -159,52 +159,59 @@ namespace Ares.Playing
 			encoder.InputFile = null;
             encoder.OutputFile = null;
             Un4seen.Bass.Misc.IStreamingServer server = null;
-            switch (parameters.Streamer)
+            try
             {
-                case StreamerType.Icecast:
-                    {
-                        Un4seen.Bass.Misc.ICEcast iceCast = new Un4seen.Bass.Misc.ICEcast(encoder, true);
-                        iceCast.Username = parameters.Username;
-                        iceCast.Password = parameters.Password;
-                        iceCast.ServerAddress = parameters.ServerAddress;
-                        iceCast.ServerPort = parameters.ServerPort;
-                        iceCast.StreamName = parameters.StreamName;
-                        iceCast.PublicFlag = false;
-                        iceCast.MountPoint = parameters.Encoding == StreamEncoding.Ogg ? "/" + parameters.StreamName + ".ogg" : 
-                            (parameters.Encoding == StreamEncoding.Opus ? "/" + parameters.StreamName + ".opus" : "/" + parameters.StreamName);
-                        server = iceCast;
-                        break;
-                    }
-                case StreamerType.Shoutcast:
-                    {
-                        Un4seen.Bass.Misc.SHOUTcast shoutCast = new Un4seen.Bass.Misc.SHOUTcast(encoder, true);
+                switch (parameters.Streamer)
+                {
+                    case StreamerType.Icecast:
+                        {
+                            Un4seen.Bass.Misc.ICEcast iceCast = new Un4seen.Bass.Misc.ICEcast(encoder, true);
+                            iceCast.Username = parameters.Username;
+                            iceCast.Password = parameters.Password;
+                            iceCast.ServerAddress = parameters.ServerAddress;
+                            iceCast.ServerPort = parameters.ServerPort;
+                            iceCast.StreamName = parameters.StreamName;
+                            iceCast.PublicFlag = false;
+                            iceCast.MountPoint = parameters.Encoding == StreamEncoding.Ogg ? "/" + parameters.StreamName + ".ogg" :
+                                (parameters.Encoding == StreamEncoding.Opus ? "/" + parameters.StreamName + ".opus" : "/" + parameters.StreamName);
+                            server = iceCast;
+                            break;
+                        }
+                    case StreamerType.Shoutcast:
+                        {
+                            Un4seen.Bass.Misc.SHOUTcast shoutCast = new Un4seen.Bass.Misc.SHOUTcast(encoder, true);
 #if !MEDIA_PORTAL
-                        shoutCast.Username = parameters.Username;
+                            shoutCast.Username = parameters.Username;
 #endif
-                        shoutCast.Password = parameters.Password;
-                        shoutCast.ServerAddress = parameters.ServerAddress;
-                        shoutCast.ServerPort = parameters.ServerPort;
-                        shoutCast.StationName = parameters.StreamName;
-                        shoutCast.PublicFlag = false;
-                        server = shoutCast;
-                        break;
-                    }
-                default:
-                    Un4seen.Bass.Bass.BASS_StreamFree(m_MixerChannel);
-                    m_MixerChannel = 0;
-                    return;
+                            shoutCast.Password = parameters.Password;
+                            shoutCast.ServerAddress = parameters.ServerAddress;
+                            shoutCast.ServerPort = parameters.ServerPort;
+                            shoutCast.StationName = parameters.StreamName;
+                            shoutCast.PublicFlag = false;
+                            server = shoutCast;
+                            break;
+                        }
+                    default:
+                        Un4seen.Bass.Bass.BASS_StreamFree(m_MixerChannel);
+                        m_MixerChannel = 0;
+                        return;
+                }
+                m_BroadCast = new Un4seen.Bass.Misc.BroadCast(server);
+                m_BroadCast.AutoReconnect = true;
+                m_BroadCast.Notification += new Un4seen.Bass.Misc.BroadCastEventHandler(m_BroadCast_Notification);
+                m_BroadCast.AutoConnect();
+                if (!Un4seen.Bass.Bass.BASS_ChannelPlay(m_MixerChannel, false))
+                {
+                    HandleBassError();
+                }
+                else
+                {
+                    IsStreaming = true;
+                }
             }
-            m_BroadCast = new Un4seen.Bass.Misc.BroadCast(server);
-            m_BroadCast.AutoReconnect = true;
-            m_BroadCast.Notification += new Un4seen.Bass.Misc.BroadCastEventHandler(m_BroadCast_Notification);
-            m_BroadCast.AutoConnect();
-            if (!Un4seen.Bass.Bass.BASS_ChannelPlay(m_MixerChannel, false))
+            catch (ArgumentException ex)
             {
-                HandleBassError();
-            }
-            else
-            {
-                IsStreaming = true;
+                ErrorHandling.ErrorOccurred(-1, String.Format(StringResources.StreamingError, ex.Message));
             }
 #endif
         }
