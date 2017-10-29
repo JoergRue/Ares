@@ -20,6 +20,8 @@
 using System;
 using Ares.Data;
 using System.Windows.Forms;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Ares.Editor.Actions
 {
@@ -252,6 +254,80 @@ namespace Ares.Editor.Actions
         private System.Action m_AdaptButtons;
     }
 
+    public enum SortType
+    {
+        NameAsc,
+        NameDesc,
+        KeyAsc,
+        KeyDesc
+    }
+
+    public class ModesSortAction : Action
+    {
+        public ModesSortAction(SortType sortType, TreeNode rootNode, System.Action adaptButtons)
+        {
+            m_SortType = sortType;
+            m_RootNode = rootNode;
+            m_AdaptButtons = adaptButtons;
+            var project = rootNode.Tag as IProject;
+            m_OldOrder.AddRange(project.GetModes());
+        }
+
+        public override void Do(IProject project)
+        {
+            List<Ares.Data.IMode> newOrder;
+            switch (m_SortType)
+            {
+                case SortType.NameAsc:
+                default:
+                    newOrder = m_OldOrder.OrderBy(mode => mode.Title).ToList();
+                    break;
+                case SortType.NameDesc:
+                    newOrder = m_OldOrder.OrderByDescending(mode => mode.Title).ToList();
+                    break;
+                case SortType.KeyAsc:
+                    newOrder = m_OldOrder.OrderBy(mode => mode.KeyCode).ToList();
+                    break;
+                case SortType.KeyDesc:
+                    newOrder = m_OldOrder.OrderByDescending(mode => mode.KeyCode).ToList();
+                    break;
+            }
+            SetNewOrder(project, newOrder);
+        }
+
+        public override void Undo(IProject project)
+        {
+            SetNewOrder(project, m_OldOrder);
+        }
+
+        private void SetNewOrder(IProject project, IEnumerable<Ares.Data.IMode> newOrder)
+        {
+            m_RootNode.TreeView.BeginUpdate();
+            var nodes = new Dictionary<Ares.Data.IMode, TreeNode>();
+            foreach (TreeNode node in m_RootNode.Nodes)
+            {
+                nodes[node.Tag as Ares.Data.IMode] = node;
+            }
+            while (project.GetModes().Count > 0)
+            {
+                project.RemoveMode(project.GetModes()[0]);
+                m_RootNode.Nodes.RemoveAt(0);
+            }
+            foreach (var mode in newOrder.Reverse())
+            {
+                project.InsertMode(0, mode);
+                m_RootNode.Nodes.Insert(0, nodes[mode]);
+            }
+            m_RootNode.TreeView.EndUpdate();
+            m_AdaptButtons();
+        }
+
+        private TreeNode m_RootNode;
+        private SortType m_SortType;
+        private List<Ares.Data.IMode> m_OldOrder = new List<Ares.Data.IMode>();
+        private System.Action m_AdaptButtons;
+    }
+
     public class ModeElementMoveAction : Action
     {
         public ModeElementMoveAction(Ares.Data.IMode mode, int oldIndex, int newIndex, TreeNode parentNode, System.Action adaptButtons)
@@ -289,6 +365,75 @@ namespace Ares.Editor.Actions
         private Ares.Data.IModeElement m_Element;
         private int m_OldIndex;
         private int m_NewIndex;
+        private System.Action m_AdaptButtons;
+    }
+
+    public class ModeElementsSortAction : Action
+    {
+        public ModeElementsSortAction(SortType sortType, TreeNode modeNode, System.Action adaptButtonsAction)
+        {
+            m_SortType = sortType;
+            m_ModeNode = modeNode;
+            m_AdaptButtons = adaptButtonsAction;
+            m_OldOrder.AddRange(modeNode.Nodes.OfType<TreeNode>());
+        }
+
+        public override void Do(IProject project)
+        {
+            List<TreeNode> newOrder;
+            switch (m_SortType)
+            {
+                case SortType.NameAsc:
+                default:
+                    newOrder = m_OldOrder.OrderBy(node => (node.Tag as IModeElement).Title).ToList();
+                    break;
+                case SortType.NameDesc:
+                    newOrder = m_OldOrder.OrderByDescending(node => (node.Tag as IModeElement).Title).ToList();
+                    break;
+                case SortType.KeyAsc:
+                    newOrder = m_OldOrder.OrderBy(node => GetKeyCode(node)).ToList();
+                    break;
+                case SortType.KeyDesc:
+                    newOrder = m_OldOrder.OrderByDescending(node => GetKeyCode(node)).ToList();
+                    break;
+            }
+            SetNewOrder(newOrder);
+        }
+
+        public override void Undo(IProject project)
+        {
+            SetNewOrder(m_OldOrder);
+        }
+
+        private void SetNewOrder(IEnumerable<TreeNode> newOrder)
+        {
+            m_ModeNode.TreeView.BeginUpdate();
+            var mode = m_ModeNode.Tag as IMode;
+            while (mode.GetElements().Count > 0)
+            {
+                mode.RemoveElement(mode.GetElements()[0]);
+                m_ModeNode.Nodes.RemoveAt(0);
+            }
+            foreach (var node in newOrder.Reverse())
+            {
+                mode.InsertElement(0, node.Tag as IModeElement);
+                m_ModeNode.Nodes.Insert(0, node);
+            }
+            m_ModeNode.TreeView.EndUpdate();
+            m_AdaptButtons();
+        }
+
+        private int GetKeyCode(TreeNode node)
+        {
+            var trigger = (node.Tag as IModeElement).Trigger;
+            if (trigger == null) return 0;
+            if (!(trigger is IKeyTrigger)) return 0;
+            return ((IKeyTrigger)trigger).KeyCode;
+        }
+
+        private TreeNode m_ModeNode;
+        private List<TreeNode> m_OldOrder = new List<TreeNode>();
+        private SortType m_SortType;
         private System.Action m_AdaptButtons;
     }
 }

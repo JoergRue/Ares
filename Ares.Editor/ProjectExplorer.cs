@@ -2472,5 +2472,55 @@ namespace Ares.Editor
         {
             AddWebRadio();
         }
+
+        private void SortModes(Ares.Editor.Actions.SortType sortType)
+        {
+            Actions.Actions.Instance.AddNew(new Actions.ModesSortAction(sortType, SelectedNode, () => AdaptMoveButtons()), m_Project);
+        }
+
+        private void sortModesByNameAsc_Clicked(object sender, EventArgs e)
+        {
+            SortModes(Ares.Editor.Actions.SortType.NameAsc);
+        }
+
+        private void sortModesByNameDescMenuItem_Click(object sender, EventArgs e)
+        {
+            SortModes(Ares.Editor.Actions.SortType.NameDesc);
+        }
+
+        private void sortModesByKeyAscMenuItem_Click(object sender, EventArgs e)
+        {
+            SortModes(Actions.SortType.KeyAsc);
+        }
+
+        private void sortModesByKeyDescMenuItem_Click(object sender, EventArgs e)
+        {
+            SortModes(Actions.SortType.KeyDesc);
+        }
+
+        private void SortElements(Actions.SortType sortType)
+        {
+            Actions.Actions.Instance.AddNew(new Actions.ModeElementsSortAction(sortType, SelectedNode, () => AdaptMoveButtons()), m_Project);
+        }
+
+        private void sortElementsByNameAscMenuItem_Click(object sender, EventArgs e)
+        {
+            SortElements(SortType.NameAsc);
+        }
+
+        private void sortElementsByNameDescMenuItem_Click(object sender, EventArgs e)
+        {
+            SortElements(SortType.NameDesc);
+        }
+
+        private void sortElementsByKeyAscMenuItem_Click(object sender, EventArgs e)
+        {
+            SortElements(SortType.KeyAsc);
+        }
+
+        private void sortElementsByKeyDescMenuItem_Click(object sender, EventArgs e)
+        {
+            SortElements(SortType.KeyDesc);
+        }
     }
 }
