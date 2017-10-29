@@ -66,6 +66,8 @@ namespace Ares.Editor
             m_ErrorElements.Clear();
             messagesGrid.SuspendLayout();
             messagesGrid.Rows.Clear();
+            int count = 0;
+            int maxCount = 500;
             foreach (Ares.ModelInfo.ModelError error in Ares.ModelInfo.ModelChecks.Instance.GetAllErrors())
             {
                 if (error.Severity == ModelInfo.ModelError.ErrorSeverity.Error)
@@ -77,6 +79,10 @@ namespace Ares.Editor
                     messagesGrid.Rows.Add(ImageResources.eventlogWarn, error.Message);
                 }
                 m_ErrorElements.Add(error.Element);
+                if (++count == maxCount)
+                {
+                    break;
+                }
             }
             messagesGrid.ResumeLayout();
         }
