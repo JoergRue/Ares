@@ -1269,9 +1269,9 @@ namespace Ares.Editor
         private static String[] GetPatterns(FileType dirType)
         {
             if (dirType == FileType.Music)
-                return new String[] { "*.wav", "*.mp3", "*.m4a", "*.ogg", "*.opus", "*.pls", "*.m3u", "*.m3u8" };
+                return new String[] { "*.wav", "*.mp3", "*.m4a", "*.ogg", "*.opus", "*.pls", "*.m3u", "*.m3u8", "*.flac" };
             else
-                return new String[] { "*.wav", "*.mp3", "*.m4a", "*.ogg", "*.opus" };
+                return new String[] { "*.wav", "*.mp3", "*.m4a", "*.ogg", "*.opus", "*.flac" };
         }
 
         public static IEnumerable<string> GetFilesInDirectory(FileType dirType, String directory, bool descendToSubDirs)
