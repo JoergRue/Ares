@@ -148,7 +148,7 @@ namespace Ares.Editor
             String dir = item.ItemType == FileType.Music ? musicDirectory : soundDirectory;
             String path = System.IO.Path.Combine(dir, item.RelativePath);
             Un4seen.Bass.AddOn.Tags.TAG_INFO tag = Un4seen.Bass.AddOn.Tags.BassTags.BASS_TAG_GetFromFile(path, true, true);
-            if (!String.IsNullOrEmpty(tag?.title))
+            if (!String.IsNullOrEmpty(tag != null ? tag.title : String.Empty))
             {
                 element.Title = tag.title;
             }

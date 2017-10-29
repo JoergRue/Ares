@@ -1,3 +1,15 @@
+Version 3.4.0
+----------------------------------------------------------------------------------
+- Allgemein: Unterstützung für FLAC-Audioformat hinzugefügt
+- Editor: Kontextmenü-Einträge um Modi oder ihre Elemente nach Name oder Taste zu
+  sortieren
+- Editor: Bugfix: Anzahl Nachrichten im Fehlerfenster begrenzt, um Absturz durch
+  begrenzte Handle-Zahl zu vermeiden
+- Editor: Bugfix: Problem durch leeren Titel in Metadaten von Musikdateien 
+  behoben (Dank an Matthias)
+- Player/Android: Bugfix: Benachrichtigungs-Icon geändert, um Absturz auf manchen
+  Geräten zu verhindern, die Probleme mit dem alten Format haben
+
 Version 3.3.0
 ----------------------------------------------------------------------------------
 - Editor: Musiklisten können Artist- und Album-Spalten anzeigen (per Kontextmenü

@@ -1,3 +1,14 @@
+Version 3.4.0
+----------------------------------------------------------------------------------
+- General: Added support for FLAC audio format
+- Editor: Context menu entries to sort modes or mode elements by name or key
+- Editor: Bugfix: limit number of messages in Error Window, preventing crash due
+  to limited image handles
+- Editor: Bugfix: problem with empty title in music file meta data fixed (thanks
+  to Matthias)
+- Player/Android: Bugfix: changed notification icon to prevent crash on some
+  devices which seem to have problems with the old image format
+
 Version 3.3.0
 ----------------------------------------------------------------------------------
 - Editor: Music lists can show artist and album columns (use context menu on 
