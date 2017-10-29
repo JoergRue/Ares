@@ -83,7 +83,7 @@ namespace Ares.Player_Android
 			if (mNotificationBuilder == null)
 			{
 				mNotificationBuilder = new Notification.Builder(this);
-				mNotificationBuilder.SetSmallIcon(Resource.Drawable.Ares);
+				mNotificationBuilder.SetSmallIcon(Resource.Drawable.Ares2);
 				mNotificationBuilder.SetOngoing(true);
 				TaskStackBuilder stackBuilder = TaskStackBuilder.Create(this);
 				stackBuilder.AddParentStack(Java.Lang.Class.FromType(typeof(MainActivity)));

@@ -272,7 +272,10 @@ namespace Ares.Player_Android
 			public const int Ares = 2130837504;
 			
 			// aapt resource value: 0x7f020001
-			public const int eventlogError = 2130837505;
+			public const int Ares2 = 2130837505;
+			
+			// aapt resource value: 0x7f020002
+			public const int eventlogError = 2130837506;
 			
 			static Drawable()
 			{

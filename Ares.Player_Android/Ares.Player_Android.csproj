@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Android_Debug</Configuration>
@@ -14,11 +14,11 @@
     <AndroidResgenClass>Resource</AndroidResgenClass>
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
-    <AndroidUseLatestPlatformSdk>False</AndroidUseLatestPlatformSdk>
+    <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
     <AssemblyName>Ares.Player_Android</AssemblyName>
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <XamarinInsightsApiKey>37524bc2b17275457bf49fbb984cb391113fe8f3</XamarinInsightsApiKey>
-    <TargetFrameworkVersion>v4.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v6.0</TargetFrameworkVersion>
     <AndroidSupportedAbis>armeabi;armeabi-v7a;x86</AndroidSupportedAbis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Android_Debug|AnyCPU' ">
@@ -46,7 +46,8 @@
     <AndroidSigningStorePass>ares_player</AndroidSigningStorePass>
     <AndroidSigningKeyAlias>ares</AndroidSigningKeyAlias>
     <AndroidSigningKeyPass>ares_player</AndroidSigningKeyPass>
-    <DebugType></DebugType>
+    <DebugType>
+    </DebugType>
     <MandroidI18n>west</MandroidI18n>
   </PropertyGroup>
   <ItemGroup>
@@ -89,7 +90,6 @@
     <AndroidResource Include="Resources\mipmap-xhdpi\Icon.png" />
     <AndroidResource Include="Resources\mipmap-xxhdpi\Icon.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\Icon.png" />
-    <AndroidResource Include="Resources\drawable\Ares.ico" />
     <AndroidResource Include="Resources\layout\ServiceFragment.axml" />
     <AndroidResource Include="Resources\layout\Main.axml" />
     <AndroidResource Include="Resources\layout\MessagesFragment.axml" />
@@ -111,11 +111,7 @@
     <AndroidResource Include="Resources\layout\SmbAuth.axml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\drawable\" />
-    <Folder Include="FolderBrowser\" />
-    <Folder Include="Resources\xml\" />
-    <Folder Include="Resources\menu\" />
-    <Folder Include="Resources\values-de\" />
+    <AndroidResource Include="Resources\drawable\Ares.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Insights.1.12.3\build\MonoAndroid10\Xamarin.Insights.targets" Condition="Exists('..\packages\Xamarin.Insights.1.12.3\build\MonoAndroid10\Xamarin.Insights.targets')" />
@@ -144,5 +140,17 @@
       <Project>{42A8F91D-6E6B-4740-AC3F-99A34074E695}</Project>
       <Name>Ares.Tags_Android</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi-v11\Ares2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-hdpi-v11\Ares2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-mdpi-v11\Ares2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-ldpi-v11\Ares2.png" />
   </ItemGroup>
 </Project>
