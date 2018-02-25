@@ -171,4 +171,13 @@ namespace Ares.Data
         /// </summary>
         int FadeTime { get; set; }
     }
+
+    /// <summary>
+    /// Light Effects
+    /// </summary>
+    public interface ILightEffects : IElement
+    {
+        bool SetsMasterBrightness { get; set; }
+    }
+
 }

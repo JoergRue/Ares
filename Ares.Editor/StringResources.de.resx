@@ -516,4 +516,7 @@ Soll es jetzt gespeichert werden?</value>
   <data name="DownloadingAudio" xml:space="preserve">
     <value>Lade Audio-Daten herunter ...</value>
   </data>
+  <data name="NewLightEffects" xml:space="preserve">
+    <value>Neue Lichteffekte</value>
+  </data>
 </root>

@@ -241,6 +241,8 @@ namespace Ares.Playing
 
         public virtual void VisitMusicByTags(IMusicByTags musicByTags) { }
 
+        public virtual void VisitLightEffects(ILightEffects lightEffects) { throw new NotImplementedException(); }
+
         public abstract bool StopMusic(int crossFadeMusicTime);
         public abstract bool StopSounds(int fadeTime);
         public abstract void SetSoundVolume(int volume);

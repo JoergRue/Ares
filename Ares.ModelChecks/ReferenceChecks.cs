@@ -125,6 +125,9 @@ namespace Ares.ModelInfo
             */
         }
 
+        public void VisitLightEffects(ILightEffects lightEffects)
+        { }
+
         private void CheckCondition(IMacroCommand command)
         {
             switch (command.Condition.ConditionType)

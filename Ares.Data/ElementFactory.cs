@@ -101,6 +101,11 @@ namespace Ares.Data
         /// Creates a music by tags element
         /// </summary>
         IMusicByTags CreateMusicByTags(String title);
+
+        /// <summary>
+        /// Creates a light effects element
+        /// </summary>
+        ILightEffects CreateLightEffects(String title);
     }
 
     class ElementFactory : IElementFactory
@@ -184,6 +189,11 @@ namespace Ares.Data
         public IMusicByTags CreateMusicByTags(String title)
         {
             return new MusicByTags(GetNextID(), title);
+        }
+
+        public ILightEffects CreateLightEffects(String title)
+        {
+            return new LightEffects(GetNextID(), title);
         }
 
         internal ElementFactory()

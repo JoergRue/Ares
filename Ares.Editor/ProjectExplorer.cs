@@ -327,6 +327,8 @@ namespace Ares.Editor
             {
                 return elementContextMenu;
             }
+            else if (element is ILightEffects)
+                return elementContextMenu;
             else
                 return null;
         }
@@ -383,6 +385,11 @@ namespace Ares.Editor
                     return GetNodeImageIndex(referencedElement) + 13;
                 else
                     return 10;
+            }
+            else if (element is ILightEffects)
+            {
+#warning Light Effects need image
+                return 12;
             }
             else
                 return 0;
@@ -676,6 +683,26 @@ namespace Ares.Editor
                     m_AfterEditAction = null;
                     EditElement(SelectedNode.Tag as IElement);
                 };
+            RenameElement();
+        }
+
+        private void AddLightEffects()
+        {
+            String name = StringResources.NewLightEffects;
+            ILightEffects element = DataModule.ElementFactory.CreateLightEffects(name);
+            if (SelectedNode.Tag is IMode)
+            {
+                AddModeElement(element, name);
+            }
+            else
+            {
+                AddContainerElement(element);
+            }
+            m_AfterEditAction = () =>
+            {
+                m_AfterEditAction = null;
+                EditElement(SelectedNode.Tag as IElement);
+            };
             RenameElement();
         }
 
@@ -2521,6 +2548,16 @@ namespace Ares.Editor
         private void sortElementsByKeyDescMenuItem_Click(object sender, EventArgs e)
         {
             SortElements(SortType.KeyDesc);
+        }
+
+        private void addLightEffectsToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            AddLightEffects();
+        }
+
+        private void addLightEffectsToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            AddLightEffects();
         }
     }
 }

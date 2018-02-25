@@ -214,5 +214,8 @@ namespace Ares.ModelInfo
                 element.Visit(this);
             }
         }
+
+        public void VisitLightEffects(ILightEffects lightEffects)
+        { throw new NotImplementedException(); }
     }
 }

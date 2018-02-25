@@ -214,6 +214,12 @@
     <Compile Include="ElementEditors\FileTagsEditor.Designer.cs">
       <DependentUpon>FileTagsEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="ElementEditors\LightEffectsEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ElementEditors\LightEffectsEditor.Designer.cs">
+      <DependentUpon>LightEffectsEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="ElementEditors\MacroEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -441,6 +447,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ElementEditors\FileTagsEditor.resx">
       <DependentUpon>FileTagsEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ElementEditors\LightEffectsEditor.resx">
+      <DependentUpon>LightEffectsEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ElementEditors\MacroEditor.resx">
       <DependentUpon>MacroEditor.cs</DependentUpon>

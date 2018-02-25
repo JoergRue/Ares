@@ -223,6 +223,12 @@ namespace Ares.Data
             // needs not be considered here, because the File Element Searcher is only used
             // by the background sounds element, which can't contain a MusicByTags element
         }
+
+        public void VisitLightEffects(ILightEffects lightEffects)
+        {
+            // needs not be considered here, because the File Element Searcher is only used
+            // by the background sounds element, which can't contain a LightEffects element
+        }
     }
 
     [Serializable]

@@ -175,6 +175,9 @@ namespace Ares.ModelInfo
                 }
             }
         }
+
+        public void VisitLightEffects(ILightEffects lightEffects)
+        { throw new NotImplementedException(); }
     }
 
     public static class MusicByTagsExtensions

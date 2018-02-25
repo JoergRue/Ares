@@ -154,5 +154,9 @@ namespace Ares.ModelInfo
         {
             // don't need to check, files are determined dynamically
         }
+
+        public void VisitLightEffects(ILightEffects lightEffects)
+        {
+        }
     }
 }

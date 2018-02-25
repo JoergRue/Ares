@@ -102,6 +102,12 @@ namespace Ares.Editor.ElementEditors
                     editor.SetElement(element as Ares.Data.IMusicByTags, project);
                     ShowEditor(editor, parent);
                 }
+                else if (element is Ares.Data.ILightEffects)
+                {
+                    LightEffectsEditor editor = new LightEffectsEditor();
+                    editor.SetElement(element as Ares.Data.ILightEffects, project);
+                    ShowEditor(editor, parent);
+                }
                 else if (element is Ares.Data.IReferenceElement)
                 {
                     Ares.Data.IElement referencedElement = Ares.Data.DataModule.ElementRepository.GetElement((element as Ares.Data.IReferenceElement).ReferencedId);
