@@ -28,12 +28,12 @@ namespace Ares.Editor.ElementEditors
             m_Project = project;
             if (m_Element != null)
             {
-                Ares.Editor.Actions.ElementChanges.Instance.RemoveListener(m_Element.Id, Update);
+                Actions.ElementChanges.Instance.RemoveListener(m_Element.Id, Update);
             }
             m_Element = element;
             if (m_Element != null)
             {
-                Ares.Editor.Actions.ElementChanges.Instance.AddListener(m_Element.Id, Update);
+                Actions.ElementChanges.Instance.AddListener(m_Element.Id, Update);
                 this.Text = m_Element.Title;
             }
             UpdateControls();
@@ -62,20 +62,95 @@ namespace Ares.Editor.ElementEditors
         private void UpdateControls()
         {
             m_Listen = false;
+            try
+            {
+                // update stuff
+                checkBoxChangeMaster.Checked = m_Element.SetsMasterBrightness;
+                checkBoxChangeLRMix.Checked = m_Element.SetsLeftRightMix;
+                checkBoxChangeLeftScene.Checked = m_Element.SetsLeftScene;
+                checkBoxChangeRightScene.Checked = m_Element.SetsRightScene;
 
-            // update stuff
+                trackBarMaster.Value = m_Element.MasterBrightness;
+                trackBarLRMix.Value = m_Element.LeftRightMix;
+                numericUpDownLeftScene.Value = m_Element.LeftScene;
+                numericUpDownRightScene.Value = m_Element.RightScene;
+            }
+            finally
+            {
+                m_Listen = true;
+            }
+        }
 
-            m_Listen = true;
+        private void Commit<T, V>(V val)
+            where T : Actions.LightEffectsValueAction<V>
+        {
+            if (!m_Listen)
+                return;
+            m_Listen = false;
+            try
+            {
+                Actions.Action action = Actions.Actions.Instance.LastAction;
+                if (action != null && action is T)
+                {
+                    T ac = action as T;
+                    ac.SetData(val);
+                    ac.Do(m_Project);
+                    return;
+                }
+                Actions.Actions.Instance.AddNew(
+                    (T)Activator.CreateInstance(typeof(T), m_Element, val),
+                    m_Project);
+            }
+            finally
+            {
+                m_Listen = true;
+            }
         }
 
         private void buttonCenterLRMix_Click(object sender, EventArgs e)
         {
-            trackBarLRMix.Value = 127;
+            if (trackBarLRMix.Value != 127)
+                trackBarLRMix.Value = 127;
         }
 
         private void checkBoxChangeMaster_CheckedChanged(object sender, EventArgs e)
         {
-            m_Element.SetsMasterBrightness=checkBoxChangeMaster.Checked;
+            Commit<Actions.LightEffectsSetsMasterBrightnessAction, bool>(checkBoxChangeMaster.Checked);
+        }
+
+        private void checkBoxChangeLRMix_CheckedChanged(object sender, EventArgs e)
+        {
+            Commit<Actions.LightEffectsSetsLeftRightMixAction, bool>(checkBoxChangeLRMix.Checked);
+        }
+
+        private void checkBoxChangeLeftScene_CheckedChanged(object sender, EventArgs e)
+        {
+            Commit<Actions.LightEffectsSetsLeftSceneAction, bool>(checkBoxChangeLeftScene.Checked);
+        }
+
+        private void checkBoxChangeRightScene_CheckedChanged(object sender, EventArgs e)
+        {
+            Commit<Actions.LightEffectsSetsRightSceneAction, bool>(checkBoxChangeRightScene.Checked);
+        }
+
+        private void trackBarMaster_ValueChanged(object sender, EventArgs e)
+        {
+            Commit<Actions.LightEffectsMasterBrightnessAction, int>(trackBarMaster.Value);
+        }
+
+        private void trackBarLRMix_ValueChanged(object sender, EventArgs e)
+        {
+            Commit<Actions.LightEffectsLeftRightMixAction, int>(trackBarLRMix.Value);
+        }
+
+        private void numericUpDownLeftScene_ValueChanged(object sender, EventArgs e)
+        {
+            Commit<Actions.LightEffectsLeftSceneAction, int>((int)numericUpDownLeftScene.Value);
+        }
+
+        private void numericUpDownRightScene_ValueChanged(object sender, EventArgs e)
+        {
+            Commit<Actions.LightEffectsRightSceneAction, int>((int)numericUpDownRightScene.Value);
         }
     }
 }

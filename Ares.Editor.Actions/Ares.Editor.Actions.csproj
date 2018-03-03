@@ -80,6 +80,7 @@
     <Compile Include="ElementChanges.cs" />
     <Compile Include="ElementEditorActions.cs" />
     <Compile Include="FilesWatcher.cs" />
+    <Compile Include="LightEffectsActions.cs" />
     <Compile Include="MacroActions.cs" />
     <Compile Include="ModeActions.cs" />
     <Compile Include="MusicByTagsActions.cs" />

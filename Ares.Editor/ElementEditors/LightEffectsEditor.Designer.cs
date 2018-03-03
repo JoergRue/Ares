@@ -40,8 +40,8 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.numericUpDownLeftScene = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownRightScene = new System.Windows.Forms.NumericUpDown();
-            this.checkBoxRightScene = new System.Windows.Forms.CheckBox();
-            this.checkBoxLeftScene = new System.Windows.Forms.CheckBox();
+            this.checkBoxChangeRightScene = new System.Windows.Forms.CheckBox();
+            this.checkBoxChangeLeftScene = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarLRMix)).BeginInit();
@@ -112,6 +112,7 @@
             this.trackBarLRMix.Size = new System.Drawing.Size(327, 45);
             this.trackBarLRMix.TabIndex = 3;
             this.trackBarLRMix.TickFrequency = 127;
+            this.trackBarLRMix.ValueChanged += new System.EventHandler(this.trackBarLRMix_ValueChanged);
             // 
             // checkBoxChangeLRMix
             // 
@@ -122,6 +123,7 @@
             this.checkBoxChangeLRMix.TabIndex = 2;
             this.checkBoxChangeLRMix.Text = "Change L/R Mix";
             this.checkBoxChangeLRMix.UseVisualStyleBackColor = true;
+            this.checkBoxChangeLRMix.CheckedChanged += new System.EventHandler(this.checkBoxChangeLRMix_CheckedChanged);
             // 
             // trackBarMaster
             // 
@@ -131,6 +133,7 @@
             this.trackBarMaster.Size = new System.Drawing.Size(328, 45);
             this.trackBarMaster.TabIndex = 1;
             this.trackBarMaster.TickFrequency = 16;
+            this.trackBarMaster.ValueChanged += new System.EventHandler(this.trackBarMaster_ValueChanged);
             // 
             // checkBoxChangeMaster
             // 
@@ -147,8 +150,8 @@
             // 
             this.groupBox3.Controls.Add(this.numericUpDownLeftScene);
             this.groupBox3.Controls.Add(this.numericUpDownRightScene);
-            this.groupBox3.Controls.Add(this.checkBoxRightScene);
-            this.groupBox3.Controls.Add(this.checkBoxLeftScene);
+            this.groupBox3.Controls.Add(this.checkBoxChangeRightScene);
+            this.groupBox3.Controls.Add(this.checkBoxChangeLeftScene);
             this.groupBox3.Location = new System.Drawing.Point(13, 122);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(604, 76);
@@ -177,6 +180,7 @@
             0,
             0,
             0});
+            this.numericUpDownLeftScene.ValueChanged += new System.EventHandler(this.numericUpDownLeftScene_ValueChanged);
             // 
             // numericUpDownRightScene
             // 
@@ -199,26 +203,29 @@
             0,
             0,
             0});
+            this.numericUpDownRightScene.ValueChanged += new System.EventHandler(this.numericUpDownRightScene_ValueChanged);
             // 
-            // checkBoxRightScene
+            // checkBoxChangeRightScene
             // 
-            this.checkBoxRightScene.AutoSize = true;
-            this.checkBoxRightScene.Location = new System.Drawing.Point(7, 44);
-            this.checkBoxRightScene.Name = "checkBoxRightScene";
-            this.checkBoxRightScene.Size = new System.Drawing.Size(125, 17);
-            this.checkBoxRightScene.TabIndex = 1;
-            this.checkBoxRightScene.Text = "Change Right Scene";
-            this.checkBoxRightScene.UseVisualStyleBackColor = true;
+            this.checkBoxChangeRightScene.AutoSize = true;
+            this.checkBoxChangeRightScene.Location = new System.Drawing.Point(7, 44);
+            this.checkBoxChangeRightScene.Name = "checkBoxChangeRightScene";
+            this.checkBoxChangeRightScene.Size = new System.Drawing.Size(125, 17);
+            this.checkBoxChangeRightScene.TabIndex = 1;
+            this.checkBoxChangeRightScene.Text = "Change Right Scene";
+            this.checkBoxChangeRightScene.UseVisualStyleBackColor = true;
+            this.checkBoxChangeRightScene.CheckedChanged += new System.EventHandler(this.checkBoxChangeRightScene_CheckedChanged);
             // 
-            // checkBoxLeftScene
+            // checkBoxChangeLeftScene
             // 
-            this.checkBoxLeftScene.AutoSize = true;
-            this.checkBoxLeftScene.Location = new System.Drawing.Point(7, 20);
-            this.checkBoxLeftScene.Name = "checkBoxLeftScene";
-            this.checkBoxLeftScene.Size = new System.Drawing.Size(118, 17);
-            this.checkBoxLeftScene.TabIndex = 0;
-            this.checkBoxLeftScene.Text = "Change Left Scene";
-            this.checkBoxLeftScene.UseVisualStyleBackColor = true;
+            this.checkBoxChangeLeftScene.AutoSize = true;
+            this.checkBoxChangeLeftScene.Location = new System.Drawing.Point(7, 20);
+            this.checkBoxChangeLeftScene.Name = "checkBoxChangeLeftScene";
+            this.checkBoxChangeLeftScene.Size = new System.Drawing.Size(118, 17);
+            this.checkBoxChangeLeftScene.TabIndex = 0;
+            this.checkBoxChangeLeftScene.Text = "Change Left Scene";
+            this.checkBoxChangeLeftScene.UseVisualStyleBackColor = true;
+            this.checkBoxChangeLeftScene.CheckedChanged += new System.EventHandler(this.checkBoxChangeLeftScene_CheckedChanged);
             // 
             // LightEffectsEditor
             // 
@@ -258,7 +265,7 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.NumericUpDown numericUpDownLeftScene;
         private System.Windows.Forms.NumericUpDown numericUpDownRightScene;
-        private System.Windows.Forms.CheckBox checkBoxRightScene;
-        private System.Windows.Forms.CheckBox checkBoxLeftScene;
+        private System.Windows.Forms.CheckBox checkBoxChangeRightScene;
+        private System.Windows.Forms.CheckBox checkBoxChangeLeftScene;
     }
 }

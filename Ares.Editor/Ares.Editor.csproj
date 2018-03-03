@@ -597,9 +597,8 @@
       <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\Ares.Editor.Actions\Ares.Editor.Actions.csproj">
-      <Project>{7799985C-64E9-4414-ACA8-01184B704032}</Project>
+      <Project>{7799985c-64e9-4414-aca8-01184b704032}</Project>
       <Name>Ares.Editor.Actions</Name>
-      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\Ares.Editor.Controls\Ares.Editor.Controls.csproj">
       <Project>{E9189223-5024-4284-B02A-9F22C83DAE88}</Project>

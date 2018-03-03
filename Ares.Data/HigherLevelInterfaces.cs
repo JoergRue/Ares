@@ -178,6 +178,16 @@ namespace Ares.Data
     public interface ILightEffects : IElement
     {
         bool SetsMasterBrightness { get; set; }
+        int MasterBrightness { get; set; }
+
+        bool SetsLeftRightMix { get; set; }
+        int LeftRightMix { get; set; }
+
+        bool SetsLeftScene { get; set; }
+        int LeftScene { get; set; }
+
+        bool SetsRightScene { get; set; }
+        int RightScene { get; set; }
     }
 
 }
