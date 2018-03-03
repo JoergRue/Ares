@@ -80,6 +80,7 @@
     <Compile Include="BassStreamer.cs" />
     <Compile Include="FilePlayer.cs" />
     <Compile Include="Interfaces.cs" />
+    <Compile Include="LightEffectsPlayer.cs" />
     <Compile Include="MacroPlayer.cs" />
     <Compile Include="MusicPlayer.cs" />
     <Compile Include="Player.cs" />

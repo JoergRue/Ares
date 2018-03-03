@@ -241,7 +241,10 @@ namespace Ares.Playing
 
         public virtual void VisitMusicByTags(IMusicByTags musicByTags) { }
 
-        public virtual void VisitLightEffects(ILightEffects lightEffects) { throw new NotImplementedException(); }
+        public virtual void VisitLightEffects(ILightEffects lightEffects)
+        {
+            Playing.LightEffectsPlayer.Instance.PlayLightEffects(lightEffects);
+        }
 
         public abstract bool StopMusic(int crossFadeMusicTime);
         public abstract bool StopSounds(int fadeTime);

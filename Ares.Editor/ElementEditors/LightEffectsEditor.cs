@@ -152,5 +152,45 @@ namespace Ares.Editor.ElementEditors
         {
             Commit<Actions.LightEffectsRightSceneAction, int>((int)numericUpDownRightScene.Value);
         }
+
+
+        private void DisableControls()
+        {
+            playButton.Enabled = false;
+            checkBoxChangeMaster.Enabled = false;
+            checkBoxChangeLRMix.Enabled = false;
+            checkBoxChangeLeftScene.Enabled = false;
+            checkBoxChangeRightScene.Enabled = false;
+            trackBarMaster.Enabled = false;
+            trackBarLRMix.Enabled = false;
+            numericUpDownLeftScene.Enabled = false;
+            numericUpDownRightScene.Enabled = false;
+        }
+
+        private void EnableControls()
+        {
+            playButton.Enabled = true;
+            checkBoxChangeMaster.Enabled = true;
+            checkBoxChangeLRMix.Enabled = true;
+            checkBoxChangeLeftScene.Enabled = true;
+            checkBoxChangeRightScene.Enabled = true;
+            trackBarMaster.Enabled = true;
+            trackBarLRMix.Enabled = true;
+            numericUpDownLeftScene.Enabled = true;
+            numericUpDownRightScene.Enabled = true;
+        }
+
+        private void playButton_Click(object sender, EventArgs e)
+        {
+            if (m_Element != null)
+            {
+                m_Listen = false;
+                DisableControls();
+                Actions.Playing.Instance.PlayElement(m_Element, Parent, () => { });
+                EnableControls();
+                m_Listen = true;
+            }
+        }
+
     }
 }

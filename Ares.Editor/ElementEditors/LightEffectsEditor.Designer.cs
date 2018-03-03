@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.stopButton = new System.Windows.Forms.Button();
             this.playButton = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.buttonCenterLRMix = new System.Windows.Forms.Button();
@@ -53,23 +52,13 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.stopButton);
             this.groupBox1.Controls.Add(this.playButton);
             this.groupBox1.Location = new System.Drawing.Point(13, 13);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(80, 57);
+            this.groupBox1.Size = new System.Drawing.Size(45, 57);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Test";
-            // 
-            // stopButton
-            // 
-            this.stopButton.Image = global::Ares.Editor.ImageResources.StopSmall;
-            this.stopButton.Location = new System.Drawing.Point(43, 19);
-            this.stopButton.Name = "stopButton";
-            this.stopButton.Size = new System.Drawing.Size(31, 23);
-            this.stopButton.TabIndex = 1;
-            this.stopButton.UseVisualStyleBackColor = true;
             // 
             // playButton
             // 
@@ -79,6 +68,7 @@
             this.playButton.Size = new System.Drawing.Size(31, 23);
             this.playButton.TabIndex = 0;
             this.playButton.UseVisualStyleBackColor = true;
+            this.playButton.Click += new System.EventHandler(this.playButton_Click);
             // 
             // groupBox2
             // 
@@ -87,16 +77,16 @@
             this.groupBox2.Controls.Add(this.checkBoxChangeLRMix);
             this.groupBox2.Controls.Add(this.trackBarMaster);
             this.groupBox2.Controls.Add(this.checkBoxChangeMaster);
-            this.groupBox2.Location = new System.Drawing.Point(100, 13);
+            this.groupBox2.Location = new System.Drawing.Point(64, 13);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(517, 103);
+            this.groupBox2.Size = new System.Drawing.Size(553, 103);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Slider";
             // 
             // buttonCenterLRMix
             // 
-            this.buttonCenterLRMix.Location = new System.Drawing.Point(456, 48);
+            this.buttonCenterLRMix.Location = new System.Drawing.Point(492, 48);
             this.buttonCenterLRMix.Name = "buttonCenterLRMix";
             this.buttonCenterLRMix.Size = new System.Drawing.Size(55, 23);
             this.buttonCenterLRMix.TabIndex = 4;
@@ -109,7 +99,7 @@
             this.trackBarLRMix.Location = new System.Drawing.Point(122, 48);
             this.trackBarLRMix.Maximum = 255;
             this.trackBarLRMix.Name = "trackBarLRMix";
-            this.trackBarLRMix.Size = new System.Drawing.Size(327, 45);
+            this.trackBarLRMix.Size = new System.Drawing.Size(364, 45);
             this.trackBarLRMix.TabIndex = 3;
             this.trackBarLRMix.TickFrequency = 127;
             this.trackBarLRMix.ValueChanged += new System.EventHandler(this.trackBarLRMix_ValueChanged);
@@ -130,7 +120,7 @@
             this.trackBarMaster.Location = new System.Drawing.Point(121, 19);
             this.trackBarMaster.Maximum = 255;
             this.trackBarMaster.Name = "trackBarMaster";
-            this.trackBarMaster.Size = new System.Drawing.Size(328, 45);
+            this.trackBarMaster.Size = new System.Drawing.Size(365, 45);
             this.trackBarMaster.TabIndex = 1;
             this.trackBarMaster.TickFrequency = 16;
             this.trackBarMaster.ValueChanged += new System.EventHandler(this.trackBarMaster_ValueChanged);
@@ -255,7 +245,6 @@
 
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button playButton;
-        private System.Windows.Forms.Button stopButton;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.CheckBox checkBoxChangeMaster;
         private System.Windows.Forms.Button buttonCenterLRMix;

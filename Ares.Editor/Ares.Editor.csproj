@@ -618,9 +618,8 @@
       <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\Ares.Playing\Ares.Playing.csproj">
-      <Project>{6C55F933-0F49-489C-AFF4-E0E0A8581E42}</Project>
+      <Project>{6c55f933-0f49-489c-aff4-e0e0a8581e42}</Project>
       <Name>Ares.Playing</Name>
-      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\Ares.Settings\Ares.Settings.csproj">
       <Project>{E99E229E-2D6A-4C49-8E6F-C06E3F346606}</Project>
