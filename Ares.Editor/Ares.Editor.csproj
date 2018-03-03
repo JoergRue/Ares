@@ -592,23 +592,20 @@
       <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\Ares.Data\Ares.Data.csproj">
-      <Project>{F64D6AF3-3543-47F0-A7B8-0336750B09C3}</Project>
+      <Project>{f64d6af3-3543-47f0-a7b8-0336750b09c3}</Project>
       <Name>Ares.Data</Name>
-      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\Ares.Editor.Actions\Ares.Editor.Actions.csproj">
       <Project>{7799985c-64e9-4414-aca8-01184b704032}</Project>
       <Name>Ares.Editor.Actions</Name>
     </ProjectReference>
     <ProjectReference Include="..\Ares.Editor.Controls\Ares.Editor.Controls.csproj">
-      <Project>{E9189223-5024-4284-B02A-9F22C83DAE88}</Project>
+      <Project>{e9189223-5024-4284-b02a-9f22c83dae88}</Project>
       <Name>Ares.Editor.Controls</Name>
-      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\Ares.Ipc\Ares.Ipc.csproj">
-      <Project>{07BE1372-C1D2-4E2A-9678-DC27BE0D9FF0}</Project>
+      <Project>{07be1372-c1d2-4e2a-9678-dc27be0d9ff0}</Project>
       <Name>Ares.Ipc</Name>
-      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\Ares.ModelChecks\Ares.ModelInfo.csproj">
       <Project>{50EA19EE-5337-499C-8B7B-1B22EA9E24A6}</Project>

@@ -271,6 +271,15 @@ namespace Ares.Data
             return new MusicByTags(reader);
         }
 
+        internal ILightEffects CreateLightEffects(System.Xml.XmlReader reader)
+        {
+            if (!reader.IsStartElement("LightEffects"))
+            {
+                XmlHelpers.ThrowException(String.Format(StringResources.ExpectedElement, "LightEffects"), reader);
+            }
+            return new LightEffects(reader);
+        }
+
         internal IElement CreateElement(System.Xml.XmlReader reader)
         {
             if (reader.IsStartElement("SequentialMusicList"))
@@ -339,6 +348,10 @@ namespace Ares.Data
             else if (reader.IsStartElement("MusicByTags"))
             {
                 return new MusicByTags(reader);
+            }
+            else if (reader.IsStartElement("LightEffects"))
+            {
+                return new LightEffects(reader);
             }
             else
             {

@@ -216,6 +216,8 @@ namespace Ares.ModelInfo
         }
 
         public void VisitLightEffects(ILightEffects lightEffects)
-        { throw new NotImplementedException(); }
+        {
+            // Light Effects do not use audio files, no handling required here.
+        }
     }
 }

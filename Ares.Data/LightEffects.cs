@@ -34,7 +34,17 @@ namespace Ares.Data
         }
         public override void WriteToXml(XmlWriter writer)
         {
-            throw new NotImplementedException();
+            writer.WriteStartElement("LightEffects");
+            DoWriteToXml(writer);
+            writer.WriteAttributeString("SetsMasterBrightness", m_SetsMasterBrightness ? "true" : "false");
+            writer.WriteAttributeString("MasterBrightness", m_MasterBrightness.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            writer.WriteAttributeString("SetsLeftRightMix", m_SetsLeftRightMix ? "true" : "false");
+            writer.WriteAttributeString("LeftRightMix", m_LeftRightMix.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            writer.WriteAttributeString("SetsLeftScene", m_SetsLeftScene ? "true" : "false");
+            writer.WriteAttributeString("LeftScene", m_LeftScene.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            writer.WriteAttributeString("SetsRightScene", m_SetsRightScene ? "true" : "false");
+            writer.WriteAttributeString("RightScene", m_RightScene.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            writer.WriteEndElement();
         }
         public override void Visit(IElementVisitor visitor)
         {
@@ -43,7 +53,15 @@ namespace Ares.Data
         internal LightEffects(System.Xml.XmlReader reader)
             : base(reader)
         {
-
+            m_SetsMasterBrightness = reader.GetBooleanAttributeOrDefault("SetsMasterBrightness", false);
+            m_MasterBrightness = reader.GetIntegerAttributeOrDefault("MasterBrightness", 255);
+            m_SetsLeftRightMix = reader.GetBooleanAttributeOrDefault("SetsLeftRightMix", false);
+            m_LeftRightMix = reader.GetIntegerAttributeOrDefault("LeftRightMix", 127);
+            m_SetsLeftScene = reader.GetBooleanAttributeOrDefault("SetsLeftScene", false);
+            m_LeftScene = reader.GetIntegerAttributeOrDefault("LeftScene", 1);
+            m_SetsRightScene = reader.GetBooleanAttributeOrDefault("SetsRightScene", false);
+            m_RightScene = reader.GetIntegerAttributeOrDefault("RightScene", 1);
+            reader.Read();
         }
 
         private bool m_SetsMasterBrightness = false;

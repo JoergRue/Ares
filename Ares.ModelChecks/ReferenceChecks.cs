@@ -126,7 +126,9 @@ namespace Ares.ModelInfo
         }
 
         public void VisitLightEffects(ILightEffects lightEffects)
-        { }
+        {
+            // not needed? Light Effects don't use references... nothing to check
+        }
 
         private void CheckCondition(IMacroCommand command)
         {

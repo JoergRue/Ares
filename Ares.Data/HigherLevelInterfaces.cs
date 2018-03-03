@@ -173,20 +173,44 @@ namespace Ares.Data
     }
 
     /// <summary>
-    /// Light Effects
+    /// Light Effects to be sent via tpm2.net
     /// </summary>
     public interface ILightEffects : IElement
     {
+        /// <summary>
+        /// Whether to set Master Brightness value in the tpm2.net command
+        /// </summary>
         bool SetsMasterBrightness { get; set; }
+        /// <summary>
+        /// Master Brightness value of this element
+        /// </summary>
         int MasterBrightness { get; set; }
 
+        /// <summary>
+        /// Whether to change left/right mix in the tpm2.net command
+        /// </summary>
         bool SetsLeftRightMix { get; set; }
+        /// <summary>
+        /// Left/Right mix value of this element
+        /// </summary>
         int LeftRightMix { get; set; }
 
+        /// <summary>
+        /// Whether to change left scene in the tpm2.net command
+        /// </summary>
         bool SetsLeftScene { get; set; }
+        /// <summary>
+        /// Left Scene numeric value of this element
+        /// </summary>
         int LeftScene { get; set; }
 
+        /// <summary>
+        /// Whether to change right scene in the tpm2.net command
+        /// </summary>
         bool SetsRightScene { get; set; }
+        /// <summary>
+        /// Right Scene numeric value of this element
+        /// </summary>
         int RightScene { get; set; }
     }
 
