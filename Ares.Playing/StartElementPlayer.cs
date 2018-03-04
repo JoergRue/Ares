@@ -62,14 +62,14 @@ namespace Ares.Playing
             SoundFile soundFile = new SoundFile(webRadioElement, m_PlayMusicOnAllSpeakers);
             FileStarted(webRadioElement);
             int handle = PlayingModule.FilePlayer.PlayFile(soundFile, fadeInTime, (id, handle2) =>
-            {
-                FileFinished(id, Data.SoundFileType.Music);
-                lock (syncObject)
                 {
-                    m_CurrentFiles.Remove(handle2);
-                }
-                afterPlayed(true);
-            }, false);
+                    FileFinished(id, Data.SoundFileType.Music);
+                    lock (syncObject)
+                    {
+                        m_CurrentFiles.Remove(handle2);
+                    }
+                    afterPlayed(true);
+                }, false);
             if (handle != 0)
             {
                 lock (syncObject)
@@ -83,6 +83,12 @@ namespace Ares.Playing
                 afterPlayed(false);
             }
             return handle;
+        }
+
+        public void PlayLightEffects(ILightEffects lightEffectsElement, Action afterPlayed)
+        {
+            PlayingModule.LightEffectsPlayer.PlayLightEffects(lightEffectsElement);
+            afterPlayed();
         }
 
         public bool Stopped

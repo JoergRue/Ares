@@ -122,6 +122,11 @@ namespace Ares.Playing
             PlayingModule.ThePlayer.ActiveMusicPlayer = this;
         }
 
+        public override void VisitLightEffects(ILightEffects lightEffects)
+        {
+            throw new NotImplementedException();
+        }
+
         private System.Timers.Timer m_PlayAfterErrorTimer;
 
         private void playAfterErrorTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)

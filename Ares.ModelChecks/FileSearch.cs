@@ -177,7 +177,8 @@ namespace Ares.ModelInfo
         }
 
         public void VisitLightEffects(ILightEffects lightEffects)
-        { throw new NotImplementedException(); }
+        { // Not needed, LightEffects don't use files
+        }
     }
 
     public static class MusicByTagsExtensions

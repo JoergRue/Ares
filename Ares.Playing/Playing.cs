@@ -388,9 +388,15 @@ namespace Ares.Playing
             get { return sRandom; }
         }
 
+        internal static LightEffectsPlayer LightEffectsPlayer
+        {
+            get { return sLightEffectsPlayer; }
+        }
+
         private static Player sPlayer = new Player();
         private static FilePlayer sFilePlayer = new FilePlayer();
         private static Random sRandom = new Random();
+        private static LightEffectsPlayer sLightEffectsPlayer = new LightEffectsPlayer();
         
    }
 }
