@@ -33,6 +33,7 @@ namespace Ares.Editor.ElementEditors
             m_Element = element;
             if (m_Element != null)
             {
+                ElementId = m_Element.Id;
                 Actions.ElementChanges.Instance.AddListener(m_Element.Id, Update);
                 this.Text = m_Element.Title;
             }
