@@ -458,6 +458,15 @@ namespace Ares.Editor {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Light Effects ähnelt.
+        /// </summary>
+        internal static string LightEffects {
+            get {
+                return ResourceManager.GetString("LightEffects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Error opening the project: {0} ähnelt.
         /// </summary>
         internal static string LoadError {

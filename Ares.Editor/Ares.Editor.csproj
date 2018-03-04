@@ -148,6 +148,12 @@
     <Compile Include="Dialogs\KeyDialog.Designer.cs">
       <DependentUpon>KeyDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\LightEffectsPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Dialogs\LightEffectsPage.Designer.cs">
+      <DependentUpon>LightEffectsPage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\MacroCommandDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -386,6 +392,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\KeyDialog.resx">
       <DependentUpon>KeyDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\LightEffectsPage.resx">
+      <DependentUpon>LightEffectsPage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\MacroCommandDialog.de.resx">
       <DependentUpon>MacroCommandDialog.cs</DependentUpon>
@@ -783,6 +792,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\project_filter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Image1.png" />
+    <None Include="Resources\LightEffects.png" />
+    <None Include="Resources\LightEffects_ref.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

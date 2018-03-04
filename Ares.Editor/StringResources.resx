@@ -524,4 +524,7 @@ You should adapt some settings first.</value>
   <data name="NewLightEffects" xml:space="preserve">
     <value>New Light Effects</value>
   </data>
+  <data name="LightEffects" xml:space="preserve">
+    <value>Light Effects</value>
+  </data>
 </root>

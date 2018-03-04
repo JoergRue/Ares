@@ -5,6 +5,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using Ares.Data;
+using Ares.Settings;
 
 namespace Ares.Playing
 {
@@ -146,9 +147,12 @@ namespace Ares.Playing
 
         private void SendPacket(Tpm2JinxPacket packet)
         {
-            using (UdpClient c = new UdpClient())
-                c.Send(packet.Data, packet.Data.Length, "192.168.0.127", 65506);
-            // mal sehen...
+            try
+            {
+                using (UdpClient c = new UdpClient())
+                    c.Send(packet.Data, packet.Data.Length, Settings.Settings.Instance.Tpm2NetTargetHost, Settings.Settings.Instance.Tpm2NetTargetPort);
+            }
+            catch(Exception) { }
         }
 
         private void SendCurrentStateWithoutScenes()

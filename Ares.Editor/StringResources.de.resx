@@ -519,4 +519,7 @@ Soll es jetzt gespeichert werden?</value>
   <data name="NewLightEffects" xml:space="preserve">
     <value>Neue Lichteffekte</value>
   </data>
+  <data name="LightEffects" xml:space="preserve">
+    <value>Lichteffekte</value>
+  </data>
 </root>

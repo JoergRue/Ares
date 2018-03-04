@@ -105,6 +105,10 @@
       <Name>Ares.ModelInfo</Name>
       <Private>False</Private>
     </ProjectReference>
+    <ProjectReference Include="..\Ares.Settings\Ares.Settings.csproj">
+      <Project>{e99e229e-2d6a-4c49-8e6f-c06e3f346606}</Project>
+      <Name>Ares.Settings</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Ares.Tags\Ares.Tags.csproj">
       <Project>{ED78886A-8674-499F-B0F9-98EB25322EBB}</Project>
       <Name>Ares.Tags</Name>
