@@ -252,14 +252,15 @@ namespace Ares.Editor.Controls
                 return;
             bool c = CancelRefillTask();
             listen = false;
-            List<IElement> elements = new List<IElement>();
+            List<IElement> remaining = new List<IElement>();
             IList<IContainerElement> containerElements = ElementsContainer.GetGeneralElements();
-            for (int i = 0; i < e.RowCount; ++i)
+            foreach (DataGridViewRow row in Grid.Rows)
             {
-                elements.Add(containerElements[GetElementIndex(Grid.Rows[e.RowIndex]) + i]);
+                remaining.Add(containerElements[GetElementIndex(row)]);
             }
-            Actions.Actions.Instance.AddNew(new Actions.RemoveContainerElementsAction(mMassOperationControl, ElementsContainer, elements, 
-                GetElementIndex(Grid.Rows[e.RowIndex])), m_Project);
+            List<IElement> elements = (new List<IElement>(containerElements)).Except(remaining).ToList();
+            Actions.Actions.Instance.AddNew(new Actions.RemoveContainerElementsAction(mMassOperationControl, ElementsContainer, elements,
+                            containerElements.IndexOf(elements[0] as IContainerElement)), m_Project);
             listen = true;
             if (c) StartRefillTask();
         }

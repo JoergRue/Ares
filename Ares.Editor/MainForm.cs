@@ -189,6 +189,7 @@ namespace Ares.Editor
             CommonGUI.SettingsDialog dialog = new CommonGUI.SettingsDialog(Ares.Settings.Settings.Instance, m_BasicSettings);
             dialog.AddPage(new Dialogs.ToolsPageHost());
             dialog.AddPage(new Dialogs.OnlineDbPageHost());
+            dialog.AddPage(new Dialogs.LightEffectsPageHost());
             dialog.SetVisiblePage(pageIndex);
             if (dialog.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
             {

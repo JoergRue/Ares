@@ -175,6 +175,10 @@ namespace Ares.ModelInfo
                 }
             }
         }
+
+        public void VisitLightEffects(ILightEffects lightEffects)
+        { // Not needed, LightEffects don't use files
+        }
     }
 
     public static class MusicByTagsExtensions

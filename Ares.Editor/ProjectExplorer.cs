@@ -42,6 +42,7 @@ namespace Ares.Editor
         }
 
         private static ImageList sImageList = null;
+        private static int sImageRefOffset = 0;
 
         static ProjectExplorer()
         {
@@ -59,6 +60,9 @@ namespace Ares.Editor
             sImageList.Images.Add(ImageResources.SeriousWarning);
             sImageList.Images.Add(ImageResources.musicbytags);
             sImageList.Images.Add(ImageResources.WebRadio);
+            sImageList.Images.Add(ImageResources.LightEffects);
+
+            sImageRefOffset = sImageList.Images.Count;
 
             sImageList.Images.Add(ImageResources.random_music_list_ref);
             sImageList.Images.Add(ImageResources.sequential_music_list_ref);
@@ -73,6 +77,7 @@ namespace Ares.Editor
             sImageList.Images.Add(ImageResources.SeriousWarning_ref);
             sImageList.Images.Add(ImageResources.musicbytags_ref);
             sImageList.Images.Add(ImageResources.WebRadio_Ref);
+            sImageList.Images.Add(ImageResources.LightEffects_ref);
         }
 
         public ProjectExplorer()
@@ -327,6 +332,8 @@ namespace Ares.Editor
             {
                 return elementContextMenu;
             }
+            else if (element is ILightEffects)
+                return elementContextMenu;
             else
                 return null;
         }
@@ -380,9 +387,13 @@ namespace Ares.Editor
             {
                 IElement referencedElement = Data.DataModule.ElementRepository.GetElement((element as IReferenceElement).ReferencedId);
                 if (referencedElement != null)
-                    return GetNodeImageIndex(referencedElement) + 13;
+                    return GetNodeImageIndex(referencedElement) + sImageRefOffset;
                 else
                     return 10;
+            }
+            else if (element is ILightEffects)
+            {
+                return 13;
             }
             else
                 return 0;
@@ -676,6 +687,26 @@ namespace Ares.Editor
                     m_AfterEditAction = null;
                     EditElement(SelectedNode.Tag as IElement);
                 };
+            RenameElement();
+        }
+
+        private void AddLightEffects()
+        {
+            String name = StringResources.NewLightEffects;
+            ILightEffects element = DataModule.ElementFactory.CreateLightEffects(name);
+            if (SelectedNode.Tag is IMode)
+            {
+                AddModeElement(element, name);
+            }
+            else
+            {
+                AddContainerElement(element);
+            }
+            m_AfterEditAction = () =>
+            {
+                m_AfterEditAction = null;
+                EditElement(SelectedNode.Tag as IElement);
+            };
             RenameElement();
         }
 
@@ -2521,6 +2552,16 @@ namespace Ares.Editor
         private void sortElementsByKeyDescMenuItem_Click(object sender, EventArgs e)
         {
             SortElements(SortType.KeyDesc);
+        }
+
+        private void addLightEffectsToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            AddLightEffects();
+        }
+
+        private void addLightEffectsToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            AddLightEffects();
         }
     }
 }

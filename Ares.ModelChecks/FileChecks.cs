@@ -154,5 +154,10 @@ namespace Ares.ModelInfo
         {
             // don't need to check, files are determined dynamically
         }
+
+        public void VisitLightEffects(ILightEffects lightEffects)
+        {
+            // Light Effects do not use audio files, no handling required here.
+        }
     }
 }

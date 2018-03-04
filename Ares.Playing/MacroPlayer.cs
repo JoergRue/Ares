@@ -377,6 +377,11 @@ namespace Ares.Playing
         {
         }
 
+        public override void VisitLightEffects(ILightEffects lightEffects)
+        {
+            throw new NotImplementedException();
+        }
+
         public override bool StopMusic(int crossFadeMusicTime)
         {
             return false;

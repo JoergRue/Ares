@@ -118,10 +118,10 @@ namespace Ares.Editor.Controls
         {
             bool oldListen = listen;
             listen = false;
-            if (e.ColumnIndex == 1 || e.ColumnIndex == 2)
+            if (e.ColumnIndex == 3 || e.ColumnIndex == 4)
             {
-                int fixedDelay = Convert.ToInt32(elementsGrid.Rows[e.RowIndex].Cells[1].Value);
-                int randomDelay = Convert.ToInt32(elementsGrid.Rows[e.RowIndex].Cells[2].Value);
+                int fixedDelay = Convert.ToInt32(elementsGrid.Rows[e.RowIndex].Cells[3].Value);
+                int randomDelay = Convert.ToInt32(elementsGrid.Rows[e.RowIndex].Cells[4].Value);
                 Actions.Actions.Instance.AddNew(new Actions.SequentialElementChangeAction(
                     m_Container.GetElements()[GetElementIndex(elementsGrid.Rows[e.RowIndex])], fixedDelay, randomDelay), m_Project);
             }

@@ -201,6 +201,7 @@ namespace Ares.Player
             dialog.AddPage(new NetworkPageHost());
             dialog.AddPage(new StreamingPageHost());
             dialog.AddPage(new MusicPageHost());
+            dialog.AddPage(new LightEffectsPageHost());
             dialog.SetVisiblePage(pageIndex);
             if (dialog.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
             {

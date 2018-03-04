@@ -117,93 +117,21 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="&gt;&gt;downButton.Name" xml:space="preserve">
-    <value>downButton</value>
-  </data>
-  <data name="&gt;&gt;downButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;downButton.Parent" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="&gt;&gt;downButton.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;upButton.Name" xml:space="preserve">
-    <value>upButton</value>
-  </data>
-  <data name="&gt;&gt;upButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;upButton.Parent" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="&gt;&gt;upButton.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;elementsGrid.Name" xml:space="preserve">
-    <value>elementsGrid</value>
-  </data>
-  <data name="&gt;&gt;elementsGrid.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;elementsGrid.Parent" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="&gt;&gt;elementsGrid.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="groupBox1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="groupBox1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 5, 4, 5</value>
-  </data>
-  <data name="groupBox1.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 5, 4, 5</value>
-  </data>
-  <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>890, 615</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="groupBox1.Text" xml:space="preserve">
-    <value>Elements</value>
-  </data>
-  <data name="&gt;&gt;groupBox1.Name" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="&gt;&gt;groupBox1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;groupBox1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;groupBox1.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
   <data name="downButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
   <data name="downButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="downButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>816, 69</value>
-  </data>
-  <data name="downButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 5, 4, 5</value>
+    <value>544, 45</value>
   </data>
   <data name="downButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>64, 35</value>
+    <value>43, 23</value>
   </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="downButton.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
@@ -223,13 +151,10 @@
     <value>Top, Right</value>
   </data>
   <data name="upButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>816, 25</value>
-  </data>
-  <data name="upButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 5, 4, 5</value>
+    <value>544, 16</value>
   </data>
   <data name="upButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>64, 35</value>
+    <value>43, 23</value>
   </data>
   <data name="upButton.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -264,9 +189,6 @@
   <data name="artistColumn.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <data name="artistColumn.Width" type="System.Int32, mscorlib">
-    <value>82</value>
-  </data>
   <metadata name="albumColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -276,9 +198,6 @@
   <data name="albumColumn.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <data name="albumColumn.Width" type="System.Int32, mscorlib">
-    <value>90</value>
-  </data>
   <metadata name="fixedDelayCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -286,7 +205,7 @@
     <value>Fixed Delay</value>
   </data>
   <data name="fixedDelayCol.Width" type="System.Int32, mscorlib">
-    <value>97</value>
+    <value>68</value>
   </data>
   <metadata name="randomDelayCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -295,16 +214,13 @@
     <value>Random Delay</value>
   </data>
   <data name="randomDelayCol.Width" type="System.Int32, mscorlib">
-    <value>120</value>
+    <value>83</value>
   </data>
   <data name="elementsGrid.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 25</value>
-  </data>
-  <data name="elementsGrid.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 5, 4, 5</value>
+    <value>3, 16</value>
   </data>
   <data name="elementsGrid.Size" type="System.Drawing.Size, System.Drawing">
-    <value>802, 586</value>
+    <value>535, 381</value>
   </data>
   <data name="elementsGrid.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -320,6 +236,33 @@
   </data>
   <data name="&gt;&gt;elementsGrid.ZOrder" xml:space="preserve">
     <value>2</value>
+  </data>
+  <data name="groupBox1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>593, 400</value>
+  </data>
+  <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="groupBox1.Text" xml:space="preserve">
+    <value>Elements</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.Name" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <data name="dataGridViewTextBoxColumn1.HeaderText" xml:space="preserve">
     <value>Name</value>
@@ -337,19 +280,19 @@
     <value>False</value>
   </data>
   <data name="nameToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>214, 30</value>
+    <value>151, 22</value>
   </data>
   <data name="nameToolStripMenuItem.Text" xml:space="preserve">
     <value>Name</value>
   </data>
   <data name="artistToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>214, 30</value>
+    <value>151, 22</value>
   </data>
   <data name="artistToolStripMenuItem.Text" xml:space="preserve">
     <value>Artist</value>
   </data>
   <data name="albumToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>214, 30</value>
+    <value>151, 22</value>
   </data>
   <data name="albumToolStripMenuItem.Text" xml:space="preserve">
     <value>Album</value>
@@ -358,7 +301,7 @@
     <value>False</value>
   </data>
   <data name="fixedDelayToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>214, 30</value>
+    <value>151, 22</value>
   </data>
   <data name="fixedDelayToolStripMenuItem.Text" xml:space="preserve">
     <value>Fixed Delay</value>
@@ -367,13 +310,13 @@
     <value>False</value>
   </data>
   <data name="randomDelayToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>214, 30</value>
+    <value>151, 22</value>
   </data>
   <data name="randomDelayToolStripMenuItem.Text" xml:space="preserve">
     <value>Random Delay</value>
   </data>
   <data name="columnMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>215, 187</value>
+    <value>152, 114</value>
   </data>
   <data name="&gt;&gt;columnMenu.Name" xml:space="preserve">
     <value>columnMenu</value>
@@ -385,13 +328,40 @@
     <value>True</value>
   </metadata>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>9, 20</value>
-  </data>
-  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 5, 4, 5</value>
+    <value>6, 13</value>
   </data>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>890, 615</value>
+    <value>593, 400</value>
+  </data>
+  <data name="&gt;&gt;nameCol.Name" xml:space="preserve">
+    <value>nameCol</value>
+  </data>
+  <data name="&gt;&gt;nameCol.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;artistColumn.Name" xml:space="preserve">
+    <value>artistColumn</value>
+  </data>
+  <data name="&gt;&gt;artistColumn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;albumColumn.Name" xml:space="preserve">
+    <value>albumColumn</value>
+  </data>
+  <data name="&gt;&gt;albumColumn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;fixedDelayCol.Name" xml:space="preserve">
+    <value>fixedDelayCol</value>
+  </data>
+  <data name="&gt;&gt;fixedDelayCol.Type" xml:space="preserve">
+    <value>DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn, Ares.Editor.Controls, Version=3.4.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;randomDelayCol.Name" xml:space="preserve">
+    <value>randomDelayCol</value>
+  </data>
+  <data name="&gt;&gt;randomDelayCol.Type" xml:space="preserve">
+    <value>DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn, Ares.Editor.Controls, Version=3.4.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;dataGridViewTextBoxColumn1.Name" xml:space="preserve">
     <value>dataGridViewTextBoxColumn1</value>
@@ -403,13 +373,13 @@
     <value>dataGridViewNumericUpDownColumn1</value>
   </data>
   <data name="&gt;&gt;dataGridViewNumericUpDownColumn1.Type" xml:space="preserve">
-    <value>DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn, Ares.Editor.Controls, Version=3.2.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn, Ares.Editor.Controls, Version=3.4.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;dataGridViewNumericUpDownColumn2.Name" xml:space="preserve">
     <value>dataGridViewNumericUpDownColumn2</value>
   </data>
   <data name="&gt;&gt;dataGridViewNumericUpDownColumn2.Type" xml:space="preserve">
-    <value>DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn, Ares.Editor.Controls, Version=3.2.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn, Ares.Editor.Controls, Version=3.4.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;nameToolStripMenuItem.Name" xml:space="preserve">
     <value>nameToolStripMenuItem</value>
@@ -441,40 +411,10 @@
   <data name="&gt;&gt;randomDelayToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;nameCol.Name" xml:space="preserve">
-    <value>nameCol</value>
-  </data>
-  <data name="&gt;&gt;nameCol.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;artistColumn.Name" xml:space="preserve">
-    <value>artistColumn</value>
-  </data>
-  <data name="&gt;&gt;artistColumn.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;albumColumn.Name" xml:space="preserve">
-    <value>albumColumn</value>
-  </data>
-  <data name="&gt;&gt;albumColumn.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;fixedDelayCol.Name" xml:space="preserve">
-    <value>fixedDelayCol</value>
-  </data>
-  <data name="&gt;&gt;fixedDelayCol.Type" xml:space="preserve">
-    <value>DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn, Ares.Editor.Controls, Version=3.2.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;randomDelayCol.Name" xml:space="preserve">
-    <value>randomDelayCol</value>
-  </data>
-  <data name="&gt;&gt;randomDelayCol.Type" xml:space="preserve">
-    <value>DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn, Ares.Editor.Controls, Version=3.2.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>SequentialContainerControl</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>Ares.Editor.Controls.ContainerControl, Ares.Editor.Controls, Version=3.2.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>Ares.Editor.Controls.ContainerControl, Ares.Editor.Controls, Version=3.4.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
 </root>

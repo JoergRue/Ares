@@ -72,6 +72,10 @@ namespace Ares.Data
         /// Visits a music by tags element.
         /// </summary>
         void VisitMusicByTags(IMusicByTags musicByTags);
+        /// <summary>
+        /// Visits a light effects element
+        /// </summary>
+        void VisitLightEffects(ILightEffects lightEffects);
     }
 
     /// <summary>

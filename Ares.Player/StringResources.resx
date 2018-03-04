@@ -160,6 +160,9 @@
   <data name="Importing" xml:space="preserve">
     <value>Importing ...</value>
   </data>
+  <data name="LightEffects" xml:space="preserve">
+    <value>Light Effects</value>
+  </data>
   <data name="LoadError" xml:space="preserve">
     <value>Error opening the project: {0}</value>
   </data>

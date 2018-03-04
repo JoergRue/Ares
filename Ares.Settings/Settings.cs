@@ -95,10 +95,14 @@ namespace Ares.Settings
 
         public int OutputDeviceIndex { get; set; }
 
-		#if ANDROID
+        public String Tpm2NetTargetHost { get; set; }
+        public int Tpm2NetTargetPort { get; set; }
+
+#if ANDROID
 		public String ProjectDirectory {get;set;}
 		public String PlayerName {get;set;}
-		#endif
+#endif
+
     }
 
     public class Settings
@@ -179,7 +183,10 @@ namespace Ares.Settings
 
         public int OutputDeviceIndex { get { return Data.OutputDeviceIndex; } set { Data.OutputDeviceIndex = value; } }
 
-		#if ANDROID
+        public String Tpm2NetTargetHost { get { return Data.Tpm2NetTargetHost; } set { Data.Tpm2NetTargetHost = value; } }
+        public int Tpm2NetTargetPort { get { return Data.Tpm2NetTargetPort; } set { Data.Tpm2NetTargetPort = value; } }
+
+#if ANDROID
 		public String ProjectDirectory { get { return Data.ProjectDirectory; } private set { Data.ProjectDirectory = value; } }
 		public String PlayerName { get { return Data.PlayerName; } set { Data.PlayerName = value; } }
 
@@ -208,7 +215,7 @@ namespace Ares.Settings
 				ProjectDirectory = value.IOName;
 			}
 		}
-		#endif
+#endif
 
         public static Settings Instance
         {
@@ -481,6 +488,9 @@ namespace Ares.Settings
             ShowTipOfTheDay = true;
             LastTipOfTheDay = -1;
             OutputDeviceIndex = -1;
+            Tpm2NetTargetHost = "localhost";
+            Tpm2NetTargetPort = 65506;
+
 			#if ANDROID
 			ProjectFolder = GetDefaultProjectDirectory();
 			PlayerName = "Android Player";
@@ -553,6 +563,10 @@ namespace Ares.Settings
             writer.WriteStartElement("TipOfTheDay");
             writer.WriteAttributeString("ShowTip", ShowTipOfTheDay ? "true" : "false");
             writer.WriteAttributeString("LastTip", LastTipOfTheDay.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            writer.WriteEndElement();
+            writer.WriteStartElement("Tpm2NetTarget");
+            writer.WriteAttributeString("Host", Tpm2NetTargetHost);
+            writer.WriteAttributeString("Port", Tpm2NetTargetPort.ToString(System.Globalization.CultureInfo.InvariantCulture));
             writer.WriteEndElement();
             writer.WriteEndElement();
         }
@@ -751,6 +765,19 @@ namespace Ares.Settings
                 {
                     ShowTipOfTheDay = reader.GetBooleanAttributeOrDefault("ShowTip", true);
                     LastTipOfTheDay = reader.GetIntegerAttributeOrDefault("LastTip", 0);
+                    if (reader.IsEmptyElement)
+                        reader.Read();
+                    else
+                    {
+                        reader.Read();
+                        reader.ReadInnerXml();
+                        reader.ReadEndElement();
+                    }
+                }
+                else if (reader.IsStartElement("Tpm2NetTarget"))
+                {
+                    Tpm2NetTargetHost = reader.GetAttribute("Host");
+                    Tpm2NetTargetPort = reader.GetIntegerAttributeOrDefault("Port", 65506);
                     if (reader.IsEmptyElement)
                         reader.Read();
                     else

@@ -521,4 +521,10 @@ You should adapt some settings first.</value>
   <data name="PleaseSelectOnlyEntriesOfTheSameType" xml:space="preserve">
     <value>Please select only entries of the same type!</value>
   </data>
+  <data name="NewLightEffects" xml:space="preserve">
+    <value>New Light Effects</value>
+  </data>
+  <data name="LightEffects" xml:space="preserve">
+    <value>Light Effects</value>
+  </data>
 </root>

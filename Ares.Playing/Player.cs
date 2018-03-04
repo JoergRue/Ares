@@ -202,6 +202,7 @@ namespace Ares.Playing
     {
         int PlayFile(IFileElement fileElement, int fadeInTime, Action<bool> afterPlayed, bool loop);
         int PlayWebRadio(IWebRadioElement webRadioElement, int fadeInTime, Action<bool> afterPlayed);
+        void PlayLightEffects(ILightEffects lightEffectsElement, Action afterPlayed);
 
         bool Stopped { get; }
 
@@ -240,6 +241,8 @@ namespace Ares.Playing
         }
 
         public virtual void VisitMusicByTags(IMusicByTags musicByTags) { }
+
+        public abstract void VisitLightEffects(ILightEffects lightEffects);
 
         public abstract bool StopMusic(int crossFadeMusicTime);
         public abstract bool StopSounds(int fadeTime);
@@ -428,6 +431,11 @@ namespace Ares.Playing
         public int PlayWebRadio(IWebRadioElement element, int fadeInTime, Action<bool> afterPlayed)
         {
             return Client.PlayWebRadio(element, fadeInTime, afterPlayed);
+        }
+
+        public void PlayLightEffects(ILightEffects element, Action afterPlayed)
+        {
+            Client.PlayLightEffects(element, afterPlayed);
         }
 
         public void SetMusicOnAllSpeakers(bool onAllSpeakers)
@@ -708,6 +716,14 @@ namespace Ares.Playing
             {
                 ErrorHandling.ErrorOccurred(musicByTags.Id, ex.Message);
             }
+        }
+
+        public override void VisitLightEffects(ILightEffects lightEffects)
+        {
+            Client.PlayLightEffects(lightEffects, () =>
+                 {
+                     Next();
+                 });
         }
 
         // Interface for the mode player

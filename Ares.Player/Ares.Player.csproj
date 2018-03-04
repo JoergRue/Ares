@@ -96,6 +96,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LightEffectsPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="LightEffectsPage.Designer.cs">
+      <DependentUpon>LightEffectsPage.cs</DependentUpon>
+    </Compile>
     <Compile Include="MessagesForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -138,6 +144,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>StringResources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="LightEffectsPage.resx">
+      <DependentUpon>LightEffectsPage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MessagesForm.de.resx">
       <DependentUpon>MessagesForm.cs</DependentUpon>
     </EmbeddedResource>

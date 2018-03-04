@@ -11,3 +11,5 @@ Ares.AudioSource.Test/Resources/music.mp3
 Ares.AudioSource.Test/Resources/sound.mp3
 /build
 /packages
+/.vs/Ares/v15/Server/sqlite3
+/.vs

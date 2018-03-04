@@ -101,6 +101,11 @@ namespace Ares.Data
         /// Creates a music by tags element
         /// </summary>
         IMusicByTags CreateMusicByTags(String title);
+
+        /// <summary>
+        /// Creates a light effects element
+        /// </summary>
+        ILightEffects CreateLightEffects(String title);
     }
 
     class ElementFactory : IElementFactory
@@ -186,6 +191,11 @@ namespace Ares.Data
             return new MusicByTags(GetNextID(), title);
         }
 
+        public ILightEffects CreateLightEffects(String title)
+        {
+            return new LightEffects(GetNextID(), title);
+        }
+
         internal ElementFactory()
         {
             // m_NextID = 0;
@@ -261,6 +271,15 @@ namespace Ares.Data
             return new MusicByTags(reader);
         }
 
+        internal ILightEffects CreateLightEffects(System.Xml.XmlReader reader)
+        {
+            if (!reader.IsStartElement("LightEffects"))
+            {
+                XmlHelpers.ThrowException(String.Format(StringResources.ExpectedElement, "LightEffects"), reader);
+            }
+            return new LightEffects(reader);
+        }
+
         internal IElement CreateElement(System.Xml.XmlReader reader)
         {
             if (reader.IsStartElement("SequentialMusicList"))
@@ -329,6 +348,10 @@ namespace Ares.Data
             else if (reader.IsStartElement("MusicByTags"))
             {
                 return new MusicByTags(reader);
+            }
+            else if (reader.IsStartElement("LightEffects"))
+            {
+                return new LightEffects(reader);
             }
             else
             {
