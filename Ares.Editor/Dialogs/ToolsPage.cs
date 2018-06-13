@@ -35,12 +35,14 @@ namespace Ares.Editor.Dialogs
             InitializeComponent();
             audioFileEditorBox.Text = Ares.Settings.Settings.Instance.SoundFileEditor;
             musicPlayerBox.Text = Ares.Settings.Settings.Instance.ExternalMusicPlayer;
+            allowFileMove.Checked = Ares.Settings.Settings.Instance.AllowFileMove;
         }
 
         public void OnConfirm()
         {
             Ares.Settings.Settings.Instance.SoundFileEditor = audioFileEditorBox.Text;
             Ares.Settings.Settings.Instance.ExternalMusicPlayer = musicPlayerBox.Text;
+            Ares.Settings.Settings.Instance.AllowFileMove = allowFileMove.Checked;
         }
 
         private void selectFileEditorButton_Click(object sender, EventArgs e)

@@ -57,8 +57,11 @@ namespace Ares.Editor.Dialogs
             this.selectFileEditorButton = new System.Windows.Forms.Button();
             this.audioFileEditorBox = new System.Windows.Forms.TextBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.allowFileMove = new System.Windows.Forms.CheckBox();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox2
@@ -121,10 +124,24 @@ namespace Ares.Editor.Dialogs
             // 
             resources.ApplyResources(this.openFileDialog1, "openFileDialog1");
             // 
+            // groupBox3
+            // 
+            resources.ApplyResources(this.groupBox3, "groupBox3");
+            this.groupBox3.Controls.Add(this.allowFileMove);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.TabStop = false;
+            // 
+            // allowFileMove
+            // 
+            resources.ApplyResources(this.allowFileMove, "allowFileMove");
+            this.allowFileMove.Name = "allowFileMove";
+            this.allowFileMove.UseVisualStyleBackColor = true;
+            // 
             // ToolsPage
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Name = "ToolsPage";
@@ -132,6 +149,8 @@ namespace Ares.Editor.Dialogs
             this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -147,5 +166,7 @@ namespace Ares.Editor.Dialogs
         private System.Windows.Forms.Button selectFileEditorButton;
         private System.Windows.Forms.TextBox audioFileEditorBox;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.CheckBox allowFileMove;
     }
 }

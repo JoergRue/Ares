@@ -284,7 +284,14 @@ namespace Ares.Editor
                 info.Source = FileSource.LocalFileSystem;
                 info.DraggedItems = items;
                 info.TagsFilter = m_TagsFilter;
-                DoDragDrop(info, DragDropEffects.Copy | DragDropEffects.Move);
+
+                DragDropEffects allowedEffects = DragDropEffects.Copy;
+                if (Settings.Settings.Instance.AllowFileMove)
+                {
+                    allowedEffects = DragDropEffects.Move;
+                }
+
+                DoDragDrop(info, allowedEffects);
                 m_InDrag = false;
             }
         }
