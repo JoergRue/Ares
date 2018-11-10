@@ -150,6 +150,7 @@ namespace Ares.Editor.Controls
             Grid.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Grid_MouseMove);
             Grid.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Grid_MouseUp);
             Grid.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.Grid_RowsRemoved);
+            Grid.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(Grid_UserDeletingRows);
             //Grid.ContextMenuStrip = gridContextMenu;
             Grid.CellMouseClick += Grid_CellMouseClick;
         }
@@ -248,13 +249,14 @@ namespace Ares.Editor.Controls
 
         private void Grid_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
         {
+            /*
             if (!listen)
                 return;
             bool c = CancelRefillTask();
             listen = false;
             List<IElement> elements = new List<IElement>();
             IList<IContainerElement> containerElements = ElementsContainer.GetGeneralElements();
-            for (int i = 0; i < e.RowCount; ++i)
+            for (int i = 0; i < e.RowIndex; ++i)
             {
                 elements.Add(containerElements[GetElementIndex(Grid.Rows[e.RowIndex]) + i]);
             }
@@ -262,8 +264,25 @@ namespace Ares.Editor.Controls
                 GetElementIndex(Grid.Rows[e.RowIndex])), m_Project);
             listen = true;
             if (c) StartRefillTask();
+            */
         }
 
+        private void Grid_UserDeletingRows(object sender, DataGridViewRowCancelEventArgs e)
+        {
+            if (!listen)
+                return;
+            bool c = CancelRefillTask();
+            listen = false;
+            List<IElement> elements = new List<IElement>();
+            IList<IContainerElement> containerElements = ElementsContainer.GetGeneralElements();
+
+            elements.Add(containerElements[GetElementIndex(e.Row)]);
+
+            Actions.Actions.Instance.AddNew(new Actions.RemoveContainerElementsAction(mMassOperationControl, ElementsContainer, elements,
+                GetElementIndex(e.Row)), m_Project);
+            listen = true;
+            if (c) StartRefillTask();
+        }
 
         private Task<List<Object>> refillGridTask;
         private CancellationTokenSource tokenSource;
