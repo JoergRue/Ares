@@ -686,10 +686,10 @@ namespace Ares.Playing
                 switch (musicByTags.TagCategoryCombination)
                 {
                     case TagCategoryCombination.UseAnyTag:
-                        choices = readIf.GetAllFilesWithAnyTagInEachCategory(musicByTags.GetTags());
+                        choices = readIf.GetAllFilesWithAnyTag(musicByTags.GetAllTags());
                         break;
                     case TagCategoryCombination.UseOneTagOfEachCategory:
-                        choices = readIf.GetAllFilesWithAnyTag(musicByTags.GetAllTags());
+                        choices = readIf.GetAllFilesWithAnyTagInEachCategory(musicByTags.GetTags());
                         break;
                     case TagCategoryCombination.UseAllTags:
                     default:
