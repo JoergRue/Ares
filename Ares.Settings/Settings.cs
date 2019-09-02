@@ -95,6 +95,8 @@ namespace Ares.Settings
 
         public int OutputDeviceIndex { get; set; }
 
+        public bool AllowFileMove { get; set; }
+
 		#if ANDROID
 		public String ProjectDirectory {get;set;}
 		public String PlayerName {get;set;}
@@ -112,6 +114,8 @@ namespace Ares.Settings
 		public String MusicDirectory { get { return Data.MusicDirectory; } private set { Data.MusicDirectory = value; } }
 		public String SoundDirectory { get { return Data.SoundDirectory; } private set { Data.SoundDirectory = value; } }
 		#endif
+
+        public bool AllowFileMove { get { return Data.AllowFileMove; } set { Data.AllowFileMove = value; } }
 
         public String LastDownloadLocation { get { return Data.LastDownloadLocation; } set { Data.LastDownloadLocation = value; } }
 
@@ -481,6 +485,7 @@ namespace Ares.Settings
             ShowTipOfTheDay = true;
             LastTipOfTheDay = -1;
             OutputDeviceIndex = -1;
+            AllowFileMove = true;
 			#if ANDROID
 			ProjectFolder = GetDefaultProjectDirectory();
 			PlayerName = "Android Player";
@@ -522,6 +527,7 @@ namespace Ares.Settings
             writer.WriteAttributeString("ShowKeys", ShowKeysInButtons ? "true" : "false");
             writer.WriteAttributeString("GlobalKeyHook", GlobalKeyHook ? "true" : "false");
             writer.WriteAttributeString("OutputDevice", OutputDeviceIndex.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            writer.WriteAttributeString("AllowFileMove", AllowFileMove ? "true" : "false");
             writer.WriteEndElement();
             writer.WriteStartElement("Streaming");
             writer.WriteAttributeString("Active", UseStreaming ? "true" : "false");
@@ -660,6 +666,7 @@ namespace Ares.Settings
                     MessageFilterLevel = reader.GetIntegerAttribute("MessageFilterLevel");
                     ShowKeysInButtons = reader.GetBooleanAttributeOrDefault("ShowKeys", false);
                     GlobalKeyHook = reader.GetBooleanAttributeOrDefault("GlobalKeyHook", false);
+                    AllowFileMove = reader.GetBooleanAttributeOrDefault("AllowFileMove", true);
                     OutputDeviceIndex = reader.GetIntegerAttributeOrDefault("OutputDevice", -1);
                     if (reader.IsEmptyElement)
                         reader.Read();
